@@ -213,7 +213,7 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": null, "subcomponents": { "topbar": ["rg-topbar", "rg-topbar__brand", "rg-topbar__nav"], "sidebar": ["rg-sidebar-list", "rg-sidebar-item", "rg-sidebar-item--active"], "tabs": ["rg-tabs", "rg-tab", "rg-tab--active"], "breadcrumb": ["rg-breadcrumb", "rg-breadcrumb__sep", "rg-breadcrumb__current"], "pagination": ["rg-pagination", "rg-page", "rg-page--active"] } },
+      "classes": { "base": null, "subcomponents": { "topbar": ["rg-topbar", "rg-topbar__brand", "rg-topbar__nav"], "sidebar": ["rg-sidebar", "rg-sidebar__nav", "rg-sidebar__foot", "rg-sidebar-list", "rg-sidebar-item", "rg-sidebar-item--active"], "tabs": ["rg-tabs", "rg-tab", "rg-tab--active"], "breadcrumb": ["rg-breadcrumb", "rg-breadcrumb__sep", "rg-breadcrumb__current"], "pagination": ["rg-pagination", "rg-page", "rg-page--active"] } },
       "variants": ["global-header", "sidebar", "local-tabs", "breadcrumb", "pagination"],
       "states": ["default", "hover", "active", "focus"],
       "tokens": ["--rg-font-identity", "--rg-layout-header", "--rg-color-black"],

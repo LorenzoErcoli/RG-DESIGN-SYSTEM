@@ -65,7 +65,7 @@
   <header class="specimen-header"><div class="specimen-brand">RG</div><div class="specimen-title">Design System / Components Library</div><div class="specimen-version">SPECIMEN 0.1 · 2026</div></header>
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
-      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li>
+      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li>
     </ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
@@ -214,6 +214,38 @@ status         VALID</pre></div>
           <a class="rg-folder" href="#folders"><svg class="rg-folder__icon" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 6h9l2 3h13v15H2z" fill="currentColor"/></svg><span class="rg-folder__body"><span class="rg-folder__name">Archivio PE 26</span><span class="rg-folder__count">248 campioni</span></span></a>
           <a class="rg-folder" href="#folders"><svg class="rg-folder__icon" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 6h9l2 3h13v15H2z" fill="currentColor"/></svg><span class="rg-folder__body"><span class="rg-folder__name">Ricami tecnici</span><span class="rg-folder__count">96 schede</span></span></a>
           <a class="rg-folder" href="#folders"><svg class="rg-folder__icon" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 6h9l2 3h13v15H2z" fill="currentColor"/></svg><span class="rg-folder__body"><span class="rg-folder__name">Rulebook</span><span class="rg-folder__count">R1–R27</span></span></a>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="workspace">
+        <div class="specimen-section__head"><span class="specimen-section__index">16</span><h2>Workspace / App-shell tool</h2><p>Guscio delle tool: pannello parametri + canvas pan/zoom + status bar. Il pan/zoom vive su <code class="rg-mono">__layer</code> tramite variabili CSS e non si azzera al re-render del contenuto. Vedi patterns/workspace.md.</p></div>
+        <div class="rg-workspace" style="height:460px;border:1px solid var(--rg-color-black);--rg-workspace-panel:300px">
+          <aside class="rg-workspace__panel">
+            <section class="rg-param-section">
+              <div class="rg-param-section__header"><span class="rg-mono" style="font-size:10px;color:var(--rg-color-text-secondary)">01</span><h3 class="rg-h3" style="font-size:var(--rg-font-size-sm)">Griglia</h3></div>
+              <div class="rg-param-grid">
+                <label class="rg-field"><span class="rg-field__label">Lato</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" value="6.0"><span>mm</span></span></label>
+                <label class="rg-field"><span class="rg-field__label">Angolo</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" value="45"><span>°</span></span></label>
+                <label class="rg-field rg-param-grid__wide"><span class="rg-field__label">Densità cordoncino</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" value="1.8"><span>mm</span></span></label>
+              </div>
+            </section>
+            <section class="rg-param-section">
+              <div class="rg-param-section__header"><span class="rg-mono" style="font-size:10px;color:var(--rg-color-text-secondary)">02</span><h3 class="rg-h3" style="font-size:var(--rg-font-size-sm)">Bordo</h3></div>
+              <div class="rg-param-grid">
+                <label class="rg-field"><span class="rg-field__label">Rientro</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" value="8"><span>mm</span></span></label>
+                <label class="rg-toggle rg-param-grid__wide"><input type="checkbox" checked><span class="rg-toggle__track"></span><span>Nascondi travel</span></label>
+              </div>
+            </section>
+          </aside>
+          <div class="rg-workspace__stage">
+            <header class="rg-workspace__stage-header"><div><p class="rg-label">Anteprima</p><h2 class="rg-h3" style="font-size:var(--rg-font-size-md)">Tomaia — rete 45°</h2></div><span class="rg-mono" style="font-size:var(--rg-font-size-xs)">232 × 142 mm</span></header>
+            <div class="rg-workspace__canvas">
+              <div class="rg-workspace__layer" style="--rg-zoom:1;--rg-pan-x:0px;--rg-pan-y:0px">
+                <svg width="70%" viewBox="0 0 100 70" aria-hidden="true"><rect x="1" y="1" width="98" height="68" fill="none" stroke="var(--rg-color-neutral-200)"/><path d="M10 5 L60 60 M25 5 L75 60 M40 5 L90 60 M5 20 L55 65" stroke="var(--rg-color-black)" stroke-width="0.6" fill="none"/><path d="M60 5 L10 60 M75 5 L25 60 M45 5 L95 55" stroke="var(--rg-color-neutral-400)" stroke-width="0.4" fill="none"/></svg>
+              </div>
+            </div>
+            <footer class="rg-workspace__statusbar"><span>Pronto · 142 cordoncini</span><span class="rg-mono">zoom 100% · pan 0,0</span></footer>
+          </div>
         </div>
       </section>
     </main>

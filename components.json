@@ -274,6 +274,24 @@
       "keywords": ["folder", "cartella", "contenitore", "sezione", "archivio", "dashboard", "tessera"]
     },
     {
+      "id": "workspace",
+      "title": "Workspace (app-shell tool)",
+      "role": "Guscio delle tool: pannello parametri + canvas pan/zoom + status bar.",
+      "status": "stable",
+      "since": "0.3.0",
+      "kind": "component",
+      "isPattern": true,
+      "promotedFrom": "pattern-grammar-engine",
+      "classes": { "base": "rg-workspace", "elements": ["rg-workspace__panel", "rg-workspace__stage", "rg-workspace__stage-header", "rg-workspace__canvas", "rg-workspace__layer", "rg-workspace__statusbar", "rg-param-section", "rg-param-section__header", "rg-param-grid", "rg-param-grid__wide", "rg-field-with-unit"] },
+      "cssVars": ["--rg-workspace-panel", "--rg-pan-x", "--rg-pan-y", "--rg-zoom"],
+      "states": ["default", "is-dragging"],
+      "tokens": ["--rg-color-neutral-50", "--rg-space-6", "--rg-color-black"],
+      "doc": "patterns/workspace.md",
+      "specimenAnchor": "workspace",
+      "snippet": "<div class=\"rg-workspace\"><aside class=\"rg-workspace__panel\">...</aside><div class=\"rg-workspace__stage\"><header class=\"rg-workspace__stage-header\">...</header><div class=\"rg-workspace__canvas\"><div class=\"rg-workspace__layer\" style=\"--rg-zoom:1\"></div></div><footer class=\"rg-workspace__statusbar\">...</footer></div></div>",
+      "keywords": ["workspace", "tool", "editor", "canvas", "viewport", "pan", "zoom", "pannello parametri", "app shell", "generatore"]
+    },
+    {
       "id": "alert",
       "title": "Alerts",
       "role": "Messaggio contestuale info/success/warning/error.",

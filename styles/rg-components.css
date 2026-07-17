@@ -79,8 +79,8 @@
 .rg-table th { padding: var(--rg-space-3); color: var(--rg-color-text-secondary); background: var(--rg-color-white); border-top: 1px solid var(--rg-color-black); border-bottom: 1px solid var(--rg-color-border); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); }
 .rg-table td { padding: var(--rg-space-4) var(--rg-space-3); border-bottom: 1px solid var(--rg-color-border); }
 .rg-table tbody tr:hover { background: var(--rg-color-neutral-50); }
-.rg-table__numeric { text-align: right; font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; }
-.rg-table__code { font-family: var(--rg-font-mono); font-size: 12px; }
+.rg-table__numeric { text-align: right; font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rg-table__code { font-family: var(--rg-font-mono); font-size: 12px; white-space: nowrap; }
 .rg-table__row--selected, .rg-table tr.is-selected, .rg-table tr[aria-selected="true"] { background: color-mix(in srgb, var(--rg-color-accent-blue) 12%, var(--rg-color-white)); box-shadow: inset 3px 0 0 var(--rg-color-black); }
 .rg-table__row--selected:hover, .rg-table tr.is-selected:hover { background: color-mix(in srgb, var(--rg-color-accent-blue) 16%, var(--rg-color-white)); }
 .rg-table--compact th, .rg-table--compact td { padding-top: var(--rg-space-2); padding-bottom: var(--rg-space-2); font-size: var(--rg-font-size-xs); }

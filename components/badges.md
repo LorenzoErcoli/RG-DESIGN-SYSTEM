@@ -21,6 +21,6 @@ Testo 12–14 px, padding compatto, bordo 1 px, radius pill solo qui quando util
 
 ```html
 <span class="rg-badge rg-badge--validated">Validato</span>
-<span class="rg-badge rg-badge--source">Dato stimato</span>
+<span class="rg-badge rg-badge--estimated">Dato stimato</span>
 ```
 

@@ -20,10 +20,12 @@ Usare quando colonne e confronto sono centrali. Evitare per liste narrative, mob
 Caption → toolbar filtri → header → righe → paginazione/riepilogo. Header descrittivi; unità nell'header e, se ambiguo, nel valore. Numeri allineati a destra in mono con cifre tabulari. Codici non vanno troncati senza accesso al valore completo.
 
 ```html
-<table class="rg-table">
-  <caption>Consumo fili — revisione 04</caption>
-  <thead><tr><th>Codice</th><th>Materiale</th><th class="numeric">Consumo (m)</th><th>Stato</th></tr></thead>
-  <tbody><tr><td class="mono">FIL-0281</td><td>Viscosa opaca</td><td class="mono numeric">18.42</td><td>Validato</td></tr></tbody>
-</table>
+<div class="rg-table-wrap">
+  <table class="rg-table">
+    <caption>Consumo fili — revisione 04</caption>
+    <thead><tr><th>Codice</th><th>Materiale</th><th class="rg-table__numeric">Consumo (m)</th><th>Stato</th></tr></thead>
+    <tbody><tr><td class="rg-table__code">FIL-0281</td><td>Viscosa opaca</td><td class="rg-table__numeric">18.42</td><td>Validato</td></tr></tbody>
+  </table>
+</div>
 ```
 

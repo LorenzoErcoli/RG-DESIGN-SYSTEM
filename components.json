@@ -55,11 +55,11 @@
       "since": "0.1.0",
       "kind": "component",
       "classes": { "base": "rg-button", "variants": ["rg-button--primary", "rg-button--secondary", "rg-button--ghost", "rg-button--outline", "rg-button--danger", "rg-button--small", "rg-button--large"] },
-      "variants": ["primary", "secondary", "tertiary", "danger", "icon"],
+      "variants": ["primary", "secondary", "ghost", "outline", "danger"],
+      "sizes": ["small", "large"],
       "states": ["default", "hover", "focus", "disabled", "loading"],
       "tokens": ["--rg-color-action-primary", "--rg-color-action-primary-text", "--rg-space-*", "--rg-radius-md"],
       "doc": "components/buttons.md",
-      "docDrift": "buttons.md documenta 'Tertiary' e 'Icon' che non hanno classe (--tertiary/--icon assenti); nel CSS esistono --ghost, --outline, --small, --large non documentati; le icone sono il componente separato rg-icon-button",
       "specimenAnchor": "buttons",
       "snippet": "<button class=\"rg-button rg-button--primary\" type=\"button\">Calcola consumo</button>",
       "keywords": ["azione", "comando", "cta", "pulsante", "button", "conferma", "invia", "salva"]
@@ -167,7 +167,6 @@
       "states": ["default", "hover", "selected"],
       "tokens": ["--rg-font-mono", "--rg-color-border", "--rg-space-*"],
       "doc": "components/tables.md",
-      "docDrift": "tables.md usa class='numeric'/'mono', inesistenti; le classi reali sono rg-table__numeric e rg-table__code",
       "specimenAnchor": "tables",
       "snippet": "<div class=\"rg-table-wrap\"><table class=\"rg-table\"><thead><tr><th>Codice</th><th class=\"rg-table__numeric\">Consumo (m)</th></tr></thead><tbody><tr><td class=\"rg-table__code\">FIL-0281</td><td class=\"rg-table__numeric\">18.42</td></tr></tbody></table></div>",
       "keywords": ["tabella", "table", "record", "colonne", "consumi", "confronto", "dataset", "griglia dati"]
@@ -184,7 +183,6 @@
       "states": ["default", "hover", "selected"],
       "tokens": ["--rg-color-border", "--rg-radius-md", "--rg-space-*"],
       "doc": "components/cards.md",
-      "docDrift": "cards.md usa rg-card__code, inesistente nel CSS; l'elemento reale e rg-card__eyebrow",
       "specimenAnchor": "cards",
       "snippet": "<article class=\"rg-card\"><p class=\"rg-card__eyebrow\">RG-AR-0248</p><h3 class=\"rg-card__title\">Ricamo floreale</h3></article>",
       "keywords": ["card", "scheda", "entita", "tessera", "riquadro", "metrica", "kpi"]
@@ -201,7 +199,6 @@
       "states": ["default"],
       "tokens": ["--rg-color-*", "--rg-radius-pill"],
       "doc": "components/badges.md",
-      "docDrift": "badges.md usa rg-badge--source, inesistente nel CSS; per 'stimato' usare rg-badge--estimated",
       "specimenAnchor": "badges",
       "snippet": "<span class=\"rg-badge rg-badge--validated\">Validato</span>",
       "keywords": ["badge", "stato", "etichetta", "tag", "provenienza", "categoria", "pill", "chip"]

@@ -6,11 +6,15 @@ Avviare un'azione esplicita. La label usa un verbo breve e descrive il risultato
 
 ## Varianti
 
-- **Primary**: fondo nero, testo bianco; una sola azione dominante per area.
-- **Secondary**: fondo bianco, bordo nero; azione alternativa.
-- **Tertiary**: testo nero, senza contenitore; azione a bassa enfasi.
-- **Danger**: bordo/testo danger; fondo pieno solo nella conferma finale.
-- **Icon**: solo per azioni universalmente riconoscibili, con nome accessibile.
+- **Primary** (`rg-button--primary`): fondo nero, testo bianco; una sola azione dominante per area.
+- **Secondary** (`rg-button--secondary`): fondo bianco, bordo nero; azione alternativa.
+- **Ghost** (`rg-button--ghost`): testo nero senza contenitore, sottolineato all'hover; azione a bassa enfasi.
+- **Outline** (`rg-button--outline`): bordo tenue neutro; azione secondaria in contesti densi.
+- **Danger** (`rg-button--danger`): bordo/testo danger; fondo pieno solo nella conferma finale.
+- **Dimensioni** (`rg-button--small`, `rg-button--large`): per densità diverse.
+
+Per un'azione con la sola icona usa il componente `rg-icon-button` (vedi `lists.md`), non una
+variante di `rg-button`.
 
 ## Uso e limiti
 

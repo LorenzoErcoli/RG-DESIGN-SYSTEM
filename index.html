@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RG Design System</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles/rg-core.css">
+  <link rel="stylesheet" href="styles/rg-typography.css">
+  <link rel="stylesheet" href="styles/rg-components.css">
+  <link rel="stylesheet" href="styles/rg-layout.css">
+  <link rel="stylesheet" href="styles/rg-utilities.css">
+  <style>
+    /* Documentation-index composition only. */
+    .docs-header { border-bottom: 1px solid var(--rg-color-black); }
+    .docs-header__inner, .docs-main, .docs-footer { width: min(100% - 48px, var(--rg-layout-content-max)); margin-inline: auto; }
+    .docs-header__inner { min-height: var(--rg-layout-header); display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-6); }
+    .docs-brand { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-bold); text-decoration: none; }
+    .docs-nav { display: flex; flex-wrap: wrap; gap: var(--rg-space-6); }
+    .docs-nav a { color: var(--rg-color-text-secondary); font-family: var(--rg-font-identity); text-decoration: none; }
+    .docs-nav a:hover { color: var(--rg-color-black); text-decoration: underline; text-underline-offset: 6px; }
+    .docs-main { padding-block: var(--rg-space-16) var(--rg-space-24); }
+    .docs-hero { max-width: 980px; padding-bottom: var(--rg-space-24); }
+    .docs-hero__title { max-width: 820px; margin: 0; font-family: var(--rg-font-identity); font-size: clamp(44px, 8vw, 96px); line-height: .94; letter-spacing: -.045em; }
+    .docs-hero__text { max-width: 700px; margin: var(--rg-space-8) 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-md); }
+    .docs-meta { display: flex; flex-wrap: wrap; gap: var(--rg-space-4); margin-top: var(--rg-space-12); padding-top: var(--rg-space-4); border-top: 1px solid var(--rg-color-border); }
+    .docs-section { scroll-margin-top: var(--rg-space-6); }
+    .docs-section__intro { grid-column: span 3; }
+    .docs-section__content { grid-column: span 9; }
+    .docs-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--rg-color-black); }
+    .docs-link { min-height: 150px; display: flex; flex-direction: column; justify-content: space-between; gap: var(--rg-space-6); padding: var(--rg-space-6); border-right: 1px solid var(--rg-color-border); border-bottom: 1px solid var(--rg-color-border); text-decoration: none; }
+    .docs-link:nth-child(2n) { border-right: 0; }
+    .docs-link:hover { background: var(--rg-color-neutral-50); border-bottom-color: var(--rg-color-black); }
+    .docs-link:active { background: var(--rg-color-neutral-100); }
+    .docs-link__title { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); }
+    .docs-link__meta { display: flex; justify-content: space-between; gap: var(--rg-space-4); color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: 10px; text-transform: uppercase; }
+    .docs-feature { min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; padding: var(--rg-space-8); color: var(--rg-color-white); background: var(--rg-color-black); text-decoration: none; }
+    .docs-feature:hover .docs-feature__title { text-decoration: underline; text-underline-offset: 8px; }
+    .docs-feature__title { max-width: 680px; margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-2xl); line-height: var(--rg-line-height-heading); }
+    .docs-feature__meta { color: var(--rg-color-neutral-200); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
+    .docs-accent { width: 72px; height: 4px; background: var(--rg-color-accent-sage); }
+    .docs-footer { padding-block: var(--rg-space-6); border-top: 1px solid var(--rg-color-black); }
+    @media (max-width: 760px) {
+      .docs-header__inner, .docs-main, .docs-footer { width: min(100% - 32px, var(--rg-layout-content-max)); }
+      .docs-header__inner { align-items: flex-start; flex-direction: column; padding-block: var(--rg-space-4); }
+      .docs-nav { gap: var(--rg-space-4); }
+      .docs-main { padding-top: var(--rg-space-12); }
+      .docs-hero { padding-bottom: var(--rg-space-16); }
+      .docs-section__intro, .docs-section__content { grid-column: 1 / -1; }
+      .docs-links { grid-template-columns: 1fr; }
+      .docs-link, .docs-link:nth-child(2n) { border-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="docs-header">
+    <div class="docs-header__inner">
+      <a class="docs-brand" href="index.html" aria-current="page">RG / Design System</a>
+      <nav class="docs-nav" aria-label="Sezioni principali">
+        <a href="#foundations">Foundations</a><a href="#components">Components</a><a href="#patterns">Patterns</a><a href="#examples">Examples</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="docs-main">
+    <header class="docs-hero">
+      <p class="rg-label">ERREGI · Research tools · Version 0.1</p>
+      <h1 class="docs-hero__title">RG Design System</h1>
+      <p class="docs-hero__text">Base condivisa per progettare strumenti interni precisi, editoriali e coerenti con il laboratorio di ricamo e ricerca tessile ERREGI. Regole, token e componenti sono leggibili sia da persone sia da assistenti AI.</p>
+      <div class="docs-meta"><span class="rg-badge">Black / White</span><span class="rg-badge rg-badge--material">Technical</span><span class="rg-badge rg-badge--thread">Textile</span><span class="rg-badge rg-badge--operation">Framework agnostic</span></div>
+    </header>
+
+    <section class="rg-section docs-section" id="foundations">
+      <div class="rg-grid">
+        <header class="docs-section__intro"><p class="rg-label">01 / Foundations</p><h2 class="rg-h2">Fondazioni</h2><p class="rg-small rg-u-mt-4">Identità, regole, token e contesto operativo.</p></header>
+        <div class="docs-section__content docs-links">
+          <a class="docs-link" href="design-rules.md"><span class="docs-link__title">Design rules</span><span class="docs-link__meta"><span>Principi visuali</span><span>MD ↗</span></span></a>
+          <a class="docs-link" href="tokens.json"><span class="docs-link__title">Design tokens</span><span class="docs-link__meta"><span>Fonte strutturata</span><span>JSON ↗</span></span></a>
+          <a class="docs-link" href="tokens.css"><span class="docs-link__title">CSS variables</span><span class="docs-link__meta"><span>Token applicativi</span><span>CSS ↗</span></span></a>
+          <a class="docs-link" href="AI_CONTEXT.md"><span class="docs-link__title">AI context</span><span class="docs-link__meta"><span>Istruzioni assistant</span><span>MD ↗</span></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="rg-section docs-section" id="components">
+      <div class="rg-grid">
+        <header class="docs-section__intro"><p class="rg-label">02 / Components</p><h2 class="rg-h2">Componenti</h2><p class="rg-small rg-u-mt-4">Primitive combinabili, stati e varianti.</p></header>
+        <div class="docs-section__content">
+          <a class="docs-feature" href="examples/rg-components-library.html"><div class="docs-accent" aria-hidden="true"></div><h3 class="docs-feature__title">Apri la Components Library completa</h3><span class="docs-feature__meta">12 famiglie · 70+ esempi · HTML/CSS ↗</span></a>
+          <div class="docs-links rg-u-mt-6">
+            <a class="docs-link" href="components/buttons.md"><span class="docs-link__title">Buttons</span><span class="docs-link__meta"><span>Azioni</span><span>MD ↗</span></span></a>
+            <a class="docs-link" href="components/forms.md"><span class="docs-link__title">Forms</span><span class="docs-link__meta"><span>Input e controlli</span><span>MD ↗</span></span></a>
+            <a class="docs-link" href="components/tables.md"><span class="docs-link__title">Tables</span><span class="docs-link__meta"><span>Dati strutturati</span><span>MD ↗</span></span></a>
+            <a class="docs-link" href="components/cards.md"><span class="docs-link__title">Cards &amp; surfaces</span><span class="docs-link__meta"><span>Entità autonome</span><span>MD ↗</span></span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rg-section docs-section" id="patterns">
+      <div class="rg-grid">
+        <header class="docs-section__intro"><p class="rg-label">03 / Patterns</p><h2 class="rg-h2">Pattern</h2><p class="rg-small rg-u-mt-4">Strutture ricorrenti per future applicazioni RG.</p></header>
+        <div class="docs-section__content docs-links">
+          <a class="docs-link" href="patterns/archive.md"><span class="docs-link__title">Archive</span><span class="docs-link__meta"><span>Ricerca e dettaglio</span><span>MD ↗</span></span></a>
+          <a class="docs-link" href="patterns/review.md"><span class="docs-link__title">Review</span><span class="docs-link__meta"><span>Confronto</span><span>MD ↗</span></span></a>
+          <a class="docs-link" href="patterns/consumption.md"><span class="docs-link__title">Consumption</span><span class="docs-link__meta"><span>Parametri e risultati</span><span>MD ↗</span></span></a>
+          <a class="docs-link" href="patterns/rulebook.md"><span class="docs-link__title">Rulebook</span><span class="docs-link__meta"><span>Regole e versioni</span><span>MD ↗</span></span></a>
+          <a class="docs-link" href="patterns/knowledge.md"><span class="docs-link__title">Knowledge</span><span class="docs-link__meta"><span>Contenuto tecnico</span><span>MD ↗</span></span></a>
+          <a class="docs-link" href="patterns/dashboard.md"><span class="docs-link__title">Dashboard</span><span class="docs-link__meta"><span>Orientamento</span><span>MD ↗</span></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="rg-section docs-section" id="examples">
+      <div class="rg-grid">
+        <header class="docs-section__intro"><p class="rg-label">04 / Examples</p><h2 class="rg-h2">Esempi</h2><p class="rg-small rg-u-mt-4">Dimostrazioni statiche, non template applicativi.</p></header>
+        <div class="docs-section__content docs-links">
+          <a class="docs-link" href="examples/rg-components-library.html"><span class="docs-link__title">Components Library</span><span class="docs-link__meta"><span>Specimen principale</span><span>HTML ↗</span></span></a>
+          <a class="docs-link" href="examples/rg-dashboard-preview.html"><span class="docs-link__title">Consumption preview</span><span class="docs-link__meta"><span>Prova di contesto</span><span>HTML ↗</span></span></a>
+          <a class="docs-link" href="README.md"><span class="docs-link__title">Repository README</span><span class="docs-link__meta"><span>Uso e governance</span><span>MD ↗</span></span></a>
+          <a class="docs-link" href="examples/README.md"><span class="docs-link__title">Examples README</span><span class="docs-link__meta"><span>Scopo esempi</span><span>MD ↗</span></span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="docs-footer"><div class="rg-cluster"><span class="rg-label">RG Design System</span><span class="rg-small rg-mono">LOCAL DOCUMENTATION INDEX · 0.1.0</span></div></footer>
+</body>
+</html>
+

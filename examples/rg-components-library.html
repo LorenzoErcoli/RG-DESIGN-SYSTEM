@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RG Design System — Components Library</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="../styles/rg-core.css">
+  <link rel="stylesheet" href="../styles/rg-typography.css">
+  <link rel="stylesheet" href="../styles/rg-components.css">
+  <link rel="stylesheet" href="../styles/rg-layout.css">
+  <link rel="stylesheet" href="../styles/rg-utilities.css">
+  <style>
+    /* Demo-only presentation. Reusable RG styles live in ../styles/. */
+    html { scroll-behavior: smooth; }
+    .specimen-header { position: sticky; top: 0; z-index: var(--rg-z-sticky); min-height: var(--rg-layout-header); display: grid; grid-template-columns: 176px 1fr auto; color: var(--rg-color-white); background: var(--rg-color-black); }
+    .specimen-brand, .specimen-title, .specimen-version { display: flex; align-items: center; padding: var(--rg-space-3) var(--rg-space-6); }
+    .specimen-brand { border-right: 1px solid var(--rg-color-neutral-600); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-bold); }
+    .specimen-title { font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
+    .specimen-version { color: var(--rg-color-neutral-200); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
+    .specimen-shell { display: grid; grid-template-columns: 176px minmax(0, 1fr); }
+    .specimen-nav { position: sticky; top: var(--rg-layout-header); align-self: start; height: calc(100vh - var(--rg-layout-header)); padding: var(--rg-space-6) var(--rg-space-4); overflow-y: auto; border-right: 1px solid var(--rg-color-border-strong); }
+    .specimen-nav ol { margin: 0; padding: 0; list-style: none; counter-reset: nav; }
+    .specimen-nav li { counter-increment: nav; }
+    .specimen-nav a { display: grid; grid-template-columns: 24px 1fr; padding: var(--rg-space-2); color: var(--rg-color-text-secondary); font-family: var(--rg-font-identity); text-decoration: none; }
+    .specimen-nav a::before { content: counter(nav, decimal-leading-zero); font-family: var(--rg-font-mono); font-size: 10px; }
+    .specimen-nav a:hover { color: var(--rg-color-black); background: var(--rg-color-neutral-50); }
+    .specimen-main { min-width: 0; max-width: var(--rg-layout-content-max); padding: var(--rg-space-16) clamp(var(--rg-space-6), 4vw, var(--rg-space-16)) var(--rg-space-24); }
+    .specimen-intro { max-width: 920px; margin-bottom: var(--rg-space-24); }
+    .specimen-intro h1 { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-display); line-height: var(--rg-line-height-tight); letter-spacing: var(--rg-letter-tight); }
+    .specimen-intro > p { max-width: var(--rg-layout-reading-max); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-md); }
+    .specimen-index { margin-top: var(--rg-space-12); padding-top: var(--rg-space-4); border-top: 1px solid var(--rg-color-black); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
+    .specimen-section { scroll-margin-top: calc(var(--rg-layout-header) + var(--rg-space-6)); margin-bottom: var(--rg-space-24); }
+    .specimen-section__head { display: grid; grid-template-columns: 64px 1fr; gap: var(--rg-space-4); align-items: baseline; margin-bottom: var(--rg-space-8); padding-top: var(--rg-space-4); border-top: 1px solid var(--rg-color-black); }
+    .specimen-section__index, .specimen-label { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: 10px; text-transform: uppercase; }
+    .specimen-section__head h2 { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); letter-spacing: var(--rg-letter-tight); }
+    .specimen-section__head p { grid-column: 2; max-width: 720px; margin: 0; color: var(--rg-color-text-secondary); }
+    .specimen-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--rg-space-6); }
+    .specimen-cell { grid-column: span 4; min-width: 0; }
+    .specimen-cell--half { grid-column: span 6; }
+    .specimen-cell--wide { grid-column: 1 / -1; }
+    .specimen-label { display: block; margin-bottom: var(--rg-space-3); letter-spacing: .03em; }
+    .specimen-stage { height: 100%; padding: var(--rg-space-6); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); }
+    .specimen-stack { display: flex; flex-wrap: wrap; gap: var(--rg-space-3); align-items: center; }
+    .specimen-column { display: grid; gap: var(--rg-space-4); }
+    @media (max-width: 980px) {
+      .specimen-shell { display: block; }
+      .specimen-nav { position: static; width: 100%; height: auto; border-right: 0; border-bottom: 1px solid var(--rg-color-black); }
+      .specimen-nav ol { display: flex; overflow-x: auto; }
+      .specimen-nav a { min-width: 150px; }
+      .specimen-cell { grid-column: span 6; }
+      .specimen-cell--wide { grid-column: 1 / -1; }
+    }
+    @media (max-width: 680px) {
+      .specimen-header { position: static; grid-template-columns: 76px 1fr; }
+      .specimen-version { grid-column: 1 / -1; border-top: 1px solid var(--rg-color-neutral-600); }
+      .specimen-main { padding: var(--rg-space-12) var(--rg-space-4); }
+      .specimen-intro h1 { font-size: var(--rg-font-size-2xl); }
+      .specimen-section__head { grid-template-columns: 40px 1fr; }
+      .specimen-cell, .specimen-cell--half, .specimen-cell--wide { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+  <header class="specimen-header"><div class="specimen-brand">RG</div><div class="specimen-title">Design System / Components Library</div><div class="specimen-version">SPECIMEN 0.1 · 2026</div></header>
+  <div class="specimen-shell">
+    <nav class="specimen-nav" aria-label="Indice componenti"><ol>
+      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li>
+    </ol></nav>
+    <main class="specimen-main">
+      <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
+
+      <section class="specimen-section" id="typography">
+        <div class="specimen-section__head"><span class="specimen-section__index">01</span><h2>Typography</h2><p>Identità editoriale, testo leggibile e dati tecnici distinti per ruolo.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Heading scale</span><div class="specimen-stage specimen-column"><h1 class="rg-h1">Titolo di lavorazione H1</h1><h2 class="rg-h2">Sezione materiali H2</h2><h3 class="rg-h3">Dettaglio operazione H3</h3></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Editorial text</span><div class="specimen-stage specimen-column"><p class="rg-body">La qualità di un dato tecnico dipende dalla sua origine, dalla precisione dichiarata e dalla possibilità di ricostruire il processo che lo ha generato.</p><p class="rg-small">Nota secondaria: revisione aggiornata il 22 giugno 2026.</p><span class="rg-label">Label principale / Materiale</span><p class="rg-caption">Fig. 01 — Campione ricamato su organza, dettaglio scala 1:2.</p></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Technical mono / numeric / code</span><div class="specimen-stage specimen-column"><div class="rg-technical">RG-EMB-2026-00481 / REV.04</div><div class="rg-value">428,76 <span class="rg-value__unit">m</span></div><pre class="rg-code">material_id: FIL-0281
+source: machine_file
+confidence: 0.974
+status: validated</pre></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="colors">
+        <div class="specimen-section__head"><span class="specimen-section__index">02</span><h2>Color System</h2><p>Colori permanenti per la struttura, neutri per la profondità, palette annuale per accenti controllati.</p></div>
+        <div class="specimen-column">
+          <div><span class="specimen-label">Institutional</span><div class="rg-swatches"><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-black)"></div><div class="rg-swatch__name">Black</div><div class="rg-swatch__value">#000000</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-white)"></div><div class="rg-swatch__name">White</div><div class="rg-swatch__value">#FFFFFF</div></div></div></div>
+          <div><span class="specimen-label">Neutral scale</span><div class="rg-swatches"><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-neutral-50)"></div><div class="rg-swatch__name">Neutral 50</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-neutral-100)"></div><div class="rg-swatch__name">Neutral 100</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-neutral-200)"></div><div class="rg-swatch__name">Neutral 200</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-neutral-400)"></div><div class="rg-swatch__name">Neutral 400</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-neutral-600)"></div><div class="rg-swatch__name">Neutral 600</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-neutral-800)"></div><div class="rg-swatch__name">Neutral 800</div></div></div></div>
+          <div><span class="specimen-label">Perugino / seasonal</span><div class="rg-swatches"><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-perugino-sage)"></div><div class="rg-swatch__name">Sage</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-perugino-powder-blue)"></div><div class="rg-swatch__name">Powder blue</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-perugino-light-gray)"></div><div class="rg-swatch__name">Light gray</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-perugino-sand-ochre)"></div><div class="rg-swatch__name">Sand ochre</div></div></div></div>
+          <div><span class="specimen-label">Semantic states</span><div class="rg-swatches"><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-success)"></div><div class="rg-swatch__name">Success</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-warning)"></div><div class="rg-swatch__name">Warning</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-danger)"></div><div class="rg-swatch__name">Error</div></div><div class="rg-swatch"><div class="rg-swatch__color" style="--swatch:var(--rg-color-info)"></div><div class="rg-swatch__name">Info</div></div></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="buttons">
+        <div class="specimen-section__head"><span class="specimen-section__index">03</span><h2>Buttons</h2><p>Azioni sobrie, gerarchiche e nominate con un verbo esplicito.</p></div>
+        <div class="specimen-grid"><div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Variants and states</span><div class="specimen-stage specimen-stack"><button class="rg-button rg-button--primary">Salva revisione</button><button class="rg-button rg-button--secondary">Esporta scheda</button><button class="rg-button rg-button--ghost">Annulla</button><button class="rg-button rg-button--outline">Confronta</button><button class="rg-button rg-button--danger">Elimina</button><button class="rg-button" disabled>Non disponibile</button></div></div><div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Sizes</span><div class="specimen-stage specimen-stack"><button class="rg-button rg-button--primary rg-button--small">Small</button><button class="rg-button rg-button--primary">Medium</button><button class="rg-button rg-button--primary rg-button--large">Large action</button></div></div></div>
+      </section>
+
+      <section class="specimen-section" id="inputs">
+        <div class="specimen-section__head"><span class="specimen-section__index">04</span><h2>Inputs</h2><p>Controlli espliciti con label persistenti, unità e note di provenienza.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell"><span class="specimen-label">Text input</span><div class="specimen-stage"><label class="rg-field"><span class="rg-field__label">Codice materiale</span><input class="rg-input rg-mono" value="FIL-0281"><small class="rg-field__help">Codice univoco da archivio.</small></label></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Select</span><div class="specimen-stage"><label class="rg-field"><span class="rg-field__label">Origine dato</span><select class="rg-select"><option>Rilevato</option><option>Stimato</option><option>Importato</option></select></label></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Autocomplete</span><div class="specimen-stage"><label class="rg-field"><span class="rg-field__label">Materiale</span><div class="rg-autocomplete"><input class="rg-input rg-autocomplete__input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" placeholder="Scrivi per filtrare…"><ul class="rg-autocomplete__list" role="listbox" hidden><li class="rg-autocomplete__option" role="option">CANVAS NERO</li><li class="rg-autocomplete__option" role="option">POLIBOND 45GR NERO</li><li class="rg-autocomplete__option" role="option">POLIBOND 100GR NERO</li><li class="rg-autocomplete__option" role="option">TERMOGARZA PESANTE BIANCA</li><li class="rg-autocomplete__option" role="option">ORGANZA LEGGERA NERA</li><li class="rg-autocomplete__option" role="option">GROS GRAIN</li></ul></div><small class="rg-field__help">Scrivi per filtrare l'archivio; accetta anche voci nuove.</small></label></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Search</span><div class="specimen-stage"><label class="rg-field"><span class="rg-field__label">Ricerca archivio</span><input class="rg-search" type="search" placeholder="Codice, materiale, tecnica…"></label></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Textarea</span><div class="specimen-stage"><label class="rg-field"><span class="rg-field__label">Nota di revisione</span><textarea class="rg-textarea" placeholder="Descrivere la correzione e la fonte…"></textarea></label></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Checkbox / radio / toggle</span><div class="specimen-stage specimen-stack"><label class="rg-choice"><input type="checkbox" checked> Includi scarto</label><label class="rg-choice"><input type="radio" name="source" checked> Macchina</label><label class="rg-choice"><input type="radio" name="source"> Manuale</label><label class="rg-toggle"><input type="checkbox" checked><span class="rg-toggle__track"></span><span>Debug attivo</span></label></div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">File upload placeholder</span><div class="rg-upload"><div><strong>Trascina un file macchina</strong><div class="rg-small rg-mono">DST, EXP, PDF · MAX 50 MB</div></div></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="tables">
+        <div class="specimen-section__head"><span class="specimen-section__index">05</span><h2>Tables</h2><p>Confronto di record con codici, valori allineati, unità e stato leggibile.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Simple / technical / selected row</span><div class="specimen-stage"><div class="rg-table-wrap"><table class="rg-table"><caption>Consumo materiali — Revisione 04</caption><thead><tr><th>Codice</th><th>Materiale</th><th>Origine</th><th class="rg-table__numeric">Consumo</th><th class="rg-table__numeric">Scarto</th><th>Stato</th></tr></thead><tbody><tr class="rg-table__row--selected"><td class="rg-table__code">FIL-0281</td><td>Viscosa opaca 40</td><td class="rg-table__code">MACCHINA</td><td class="rg-table__numeric">184,42 m</td><td class="rg-table__numeric">+1,8%</td><td><span class="rg-badge rg-badge--validated">Validato</span></td></tr><tr><td class="rg-table__code">FIL-0314</td><td>Poliestere trilobato</td><td class="rg-table__code">STIMA</td><td class="rg-table__numeric">128,06 m</td><td class="rg-table__numeric">+2,6%</td><td><span class="rg-badge rg-badge--estimated">Stimato</span></td></tr><tr><td class="rg-table__code">SUP-0042</td><td>Organza di seta</td><td class="rg-table__code">MANUALE</td><td class="rg-table__numeric">24,10 m</td><td class="rg-table__numeric">+3,1%</td><td><span class="rg-badge rg-badge--unresolved">Verifica</span></td></tr></tbody></table></div></div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Compact table</span><div class="specimen-stage"><table class="rg-table rg-table--compact"><thead><tr><th>Operazione</th><th>Macchina</th><th class="rg-table__numeric">Punti</th><th class="rg-table__numeric">Tempo</th></tr></thead><tbody><tr><td>Contorno</td><td class="rg-table__code">TJM-X</td><td class="rg-table__numeric">42.180</td><td class="rg-table__numeric">18:42</td></tr><tr><td>Riempimento</td><td class="rg-table__code">TJM-X</td><td class="rg-table__numeric">96.220</td><td class="rg-table__numeric">41:08</td></tr></tbody></table></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="cards">
+        <div class="specimen-section__head"><span class="specimen-section__index">06</span><h2>Cards / Surfaces</h2><p>Contenitori per entità autonome; linee e spazio sostituiscono ombre decorative.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell"><span class="specimen-label">Default</span><article class="rg-card"><p class="rg-card__eyebrow">RG-AR-0248</p><h3 class="rg-card__title">Campione Fiorellini</h3><p class="rg-card__body">Organza ricamata · PE 2026</p></article></div>
+          <div class="specimen-cell"><span class="specimen-label">Technical</span><article class="rg-card rg-card--technical"><p class="rg-card__eyebrow">CALCULATION</p><h3 class="rg-card__title">Consumo filo</h3><p class="rg-card__body">method: stitch-len/v3<br>result: 428.76 m<br>confidence: 0.974</p></article></div>
+          <div class="specimen-cell"><span class="specimen-label">Editorial</span><article class="rg-card rg-card--editorial"><p class="rg-card__eyebrow">QUADERNO 26.01</p><h3 class="rg-card__title">Materia e superficie</h3><p class="rg-card__body">Ricerca stagionale Perugino</p></article></div>
+          <div class="specimen-cell"><span class="specimen-label">Metric</span><article class="rg-card rg-card--metric"><p class="rg-card__eyebrow">EFFICIENZA</p><div class="rg-value">96,8 <span class="rg-value__unit">%</span></div><p class="rg-card__body">Soglia laboratorio ≥95%</p></article></div>
+          <div class="specimen-cell"><span class="specimen-label">Warning</span><article class="rg-card rg-card--warning"><p class="rg-card__eyebrow">TOLLERANZA</p><h3 class="rg-card__title">Scostamento da verificare</h3><p class="rg-card__body">SUP-0042 supera il limite del 3%.</p></article></div>
+          <div class="specimen-cell"><span class="specimen-label">Selected</span><article class="rg-card rg-card--selected"><p class="rg-card__eyebrow">SELEZIONATO</p><h3 class="rg-card__title">Viscosa opaca 40</h3><p class="rg-card__body">FIL-0281 · Lotto 2618</p></article></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="badges">
+        <div class="specimen-section__head"><span class="specimen-section__index">07</span><h2>Badges / Tags</h2><p>Metadati brevi identificabili anche senza affidarsi al solo colore.</p></div>
+        <div class="specimen-stage specimen-stack"><span class="rg-badge rg-badge--validated">Validated</span><span class="rg-badge rg-badge--estimated">Estimated</span><span class="rg-badge rg-badge--unresolved">Unresolved</span><span class="rg-badge rg-badge--review">Review</span><span class="rg-badge rg-badge--material">Material</span><span class="rg-badge rg-badge--thread">Thread</span><span class="rg-badge rg-badge--operation">Operation</span><span class="rg-badge rg-badge--season-sage">Perugino / Sage</span><span class="rg-badge rg-badge--season-blue">Perugino / Blue</span></div>
+      </section>
+
+      <section class="specimen-section" id="navigation">
+        <div class="specimen-section__head"><span class="specimen-section__index">08</span><h2>Navigation</h2><p>Orientamento permanente in bianco e nero; stato attivo espresso con linea, peso e contrasto.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Top bar</span><nav class="rg-topbar"><strong class="rg-topbar__brand">RG</strong><div class="rg-topbar__nav"><a href="#navigation" aria-current="page">Archivio</a><a href="#navigation">Consumi</a><a href="#navigation">Regole</a></div><span class="rg-mono" style="margin-left:auto;font-size:11px">v0.8.4</span></nav></div>
+          <div class="specimen-cell"><span class="specimen-label">Sidebar item</span><div class="specimen-stage"><ul class="rg-sidebar-list"><li><a class="rg-sidebar-item rg-sidebar-item--active" href="#navigation">Overview</a></li><li><a class="rg-sidebar-item" href="#navigation">Materiali</a></li><li><a class="rg-sidebar-item" href="#navigation">Operazioni</a></li></ul></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Tabs</span><div class="specimen-stage"><nav class="rg-tabs"><a class="rg-tab rg-tab--active" href="#navigation">Dettaglio</a><a class="rg-tab" href="#navigation">Revisioni</a><a class="rg-tab" href="#navigation">File</a></nav></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Breadcrumb / pagination</span><div class="specimen-stage specimen-column"><ol class="rg-breadcrumb"><li>Archivio</li><li>Ricami</li><li>RG-0248</li></ol><nav class="rg-pagination" aria-label="Paginazione"><button class="rg-page">←</button><button class="rg-page rg-page--active">1</button><button class="rg-page">2</button><button class="rg-page">3</button><button class="rg-page">→</button></nav></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="alerts">
+        <div class="specimen-section__head"><span class="specimen-section__index">09</span><h2>Alerts / Messages</h2><p>Messaggi espliciti con segnale testuale, struttura stabile e colore semantico secondario.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Info</span><div class="rg-alert rg-alert--info"><div><p class="rg-alert__title">Fonte aggiornata</p><p class="rg-alert__message">È disponibile la revisione 04 del file macchina.</p></div></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Success</span><div class="rg-alert rg-alert--success"><div><p class="rg-alert__title">Calcolo validato</p><p class="rg-alert__message">Tutti i consumi rientrano nella tolleranza.</p></div></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Warning</span><div class="rg-alert rg-alert--warning"><div><p class="rg-alert__title">Controllo richiesto</p><p class="rg-alert__message">Un materiale supera la soglia configurata.</p></div></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Error</span><div class="rg-alert rg-alert--error"><div><p class="rg-alert__title">Importazione incompleta</p><p class="rg-alert__message">Il blocco colore 07 non contiene un codice filo.</p></div></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Empty state</span><div class="rg-empty"><h3>Nessun risultato</h3><p>Modifica i filtri oppure cerca un codice differente.</p><button class="rg-button rg-button--secondary rg-button--small">Azzera filtri</button></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Loading placeholder</span><div class="specimen-stage"><div class="rg-loading" aria-label="Caricamento"><div class="rg-loading__line"></div><div class="rg-loading__line"></div><div class="rg-loading__line"></div></div></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="data">
+        <div class="specimen-section__head"><span class="specimen-section__index">10</span><h2>Data / Technical Components</h2><p>Unità, provenienza, precisione e stato sono parte del dato.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell"><span class="specimen-label">Key-value list</span><div class="specimen-stage"><dl class="rg-key-value"><dt>Materiale</dt><dd>FIL-0281</dd><dt>Punti</dt><dd>78.420</dd><dt>Consumo</dt><dd>184,42 m</dd><dt>Origine</dt><dd>MACCHINA</dd></dl></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Progress / confidence / version</span><div class="specimen-stage specimen-column"><div class="rg-progress"><div class="rg-progress__meta"><span>Analisi file</span><span class="rg-mono">72%</span></div><div class="rg-progress__track"><div class="rg-progress__value" style="--progress:72%"></div></div></div><div class="rg-confidence"><span class="rg-label">Confidence</span><span class="rg-confidence__scale"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><strong class="rg-mono">0.91</strong></div><span class="rg-version">v3.2.1</span></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Log line</span><div class="specimen-stage"><div class="rg-log-line"><span class="rg-log-line__time">14:32:08</span><span>INFO</span><span>block_07 parsed</span></div><div class="rg-log-line"><span class="rg-log-line__time">14:32:09</span><span>WARN</span><span>tolerance +3.1%</span></div></div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Debug block</span><pre class="rg-debug">[14:32:08.114] parse:block_07
+stitches       78420
+raw_length     181.160
+waste_factor   1.018
+result_m       184.421
+status         VALID</pre></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Material / thread consumption rows</span><div class="specimen-stage"><div class="rg-consumption-row"><div><strong>Viscosa opaca 40</strong><div class="rg-small rg-mono">FIL-0281 · THREAD</div></div><div class="rg-consumption-row__bar"><span style="--consumption:78%"></span></div><strong class="rg-mono">184,42 m</strong><span class="rg-badge rg-badge--validated">Validato</span></div><div class="rg-consumption-row"><div><strong>Organza di seta</strong><div class="rg-small rg-mono">SUP-0042 · MATERIAL</div></div><div class="rg-consumption-row__bar"><span style="--consumption:42%"></span></div><strong class="rg-mono">24,10 m</strong><span class="rg-badge rg-badge--estimated">Stimato</span></div></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="forms">
+        <div class="specimen-section__head"><span class="specimen-section__index">11</span><h2>Forms / Control Groups</h2><p>Composizioni di controlli per parametri, filtri, decisioni e azioni correlate.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Parameter group</span><fieldset class="rg-parameter-group"><legend class="rg-label">Parametri calcolo</legend><div class="rg-parameter-group__grid"><label class="rg-field"><span class="rg-field__label">Lunghezza netta (m)</span><input class="rg-input rg-mono" value="181.160"></label><label class="rg-field"><span class="rg-field__label">Scarto (%)</span><input class="rg-input rg-mono" value="1.8"></label></div></fieldset></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Filter group</span><div class="rg-filter-group"><label class="rg-field"><span class="rg-field__label">Stato</span><select class="rg-select"><option>Tutti</option></select></label><label class="rg-field"><span class="rg-field__label">Origine</span><select class="rg-select"><option>Macchina</option></select></label><button class="rg-button rg-button--secondary">Applica</button></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Segmented control</span><div class="specimen-stage"><div class="rg-segmented"><button class="rg-segmented__item rg-segmented__item--active">Metrici</button><button class="rg-segmented__item">Imperiali</button><button class="rg-segmented__item">Originali</button></div></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Action bar</span><div class="rg-action-bar"><span class="rg-small rg-mono">3 MODIFICHE NON SALVATE</span><div class="specimen-stack"><button class="rg-button rg-button--ghost rg-button--small">Annulla</button><button class="rg-button rg-button--primary rg-button--small">Salva</button></div></div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Confirmation block</span><div class="rg-confirmation"><h3>Confermare la validazione?</h3><p class="rg-card__body">La revisione 04 diventerà il riferimento per i calcoli successivi. L'operazione sarà registrata.</p><div class="specimen-stack"><button class="rg-button rg-button--primary">Conferma validazione</button><button class="rg-button rg-button--secondary">Torna alla revisione</button></div></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="layout">
+        <div class="specimen-section__head"><span class="specimen-section__index">12</span><h2>Layout Blocks</h2><p>Strutture combinabili per comporre pagine future senza definire una specifica applicazione.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Section header / toolbar</span><section class="rg-section"><header class="rg-section-header"><div><p class="rg-label">Distinta tecnica</p><h3 class="rg-section-header__title">Materiali e consumi</h3></div><span class="rg-section-header__meta">12 RECORD · REV.04</span></header><div class="rg-toolbar"><div class="specimen-stack"><button class="rg-button rg-button--ghost rg-button--small">Filtra</button><button class="rg-button rg-button--ghost rg-button--small">Ordina</button></div><button class="rg-button rg-button--secondary rg-button--small">Esporta</button></div></section></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Split panel</span><div class="rg-split-panel"><div><p class="rg-label">Source</p><h3 class="rg-h3">Documento originale</h3><p class="rg-card__body">Area sorgente per PDF, immagine o file macchina.</p></div><div><p class="rg-label">Extracted data</p><h3 class="rg-h3">Valori interpretati</h3><p class="rg-card__body">Area di confronto per dati strutturati e correzioni.</p></div></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Inspector panel</span><aside class="rg-inspector"><p class="rg-label">Inspector</p><h3 class="rg-h3">FIL-0281</h3><dl class="rg-key-value" style="margin-top:24px"><dt>Tipo</dt><dd>THREAD</dd><dt>Stato</dt><dd>VALID</dd><dt>Rev.</dt><dd>04</dd></dl></aside></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Documentation block</span><div class="rg-documentation"><div class="rg-documentation__term">.rg-card--technical</div><p>Usare per un'entità tecnica autonoma con codice, parametri e stato. Evitare per testo editoriale esteso.</p></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Footer note</span><footer class="rg-footer-note">Dati dimostrativi · RG Design System 0.1 · Ultima verifica 22.06.2026</footer></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Controller di riferimento per .rg-autocomplete (indipendente da librerie).
+       Filtra le <option> presenti nel markup; selezione via click o tastiera. -->
+  <script>
+  (function () {
+    function els(ac) { return { input: ac.querySelector('.rg-autocomplete__input'), list: ac.querySelector('.rg-autocomplete__list') }; }
+    function openList(ac, show) { const { input, list } = els(ac); input.setAttribute('aria-expanded', show ? 'true' : 'false'); list.hidden = !show; }
+    function filter(ac) {
+      const { input, list } = els(ac);
+      const q = input.value.trim().toLowerCase();
+      let any = false;
+      list.querySelectorAll('.rg-autocomplete__option').forEach(li => {
+        const match = li.textContent.toLowerCase().includes(q);
+        li.hidden = !match; li.classList.remove('is-active');
+        if (match) any = true;
+      });
+      let empty = list.querySelector('.rg-autocomplete__empty');
+      if (!any) { if (!empty) { empty = document.createElement('li'); empty.className = 'rg-autocomplete__empty'; empty.textContent = 'Nessun risultato'; list.appendChild(empty); } empty.hidden = false; }
+      else if (empty) empty.hidden = true;
+      openList(ac, true);
+    }
+    function visible(list) { return Array.from(list.querySelectorAll('.rg-autocomplete__option:not([hidden])')); }
+
+    document.addEventListener('focusin', e => { const i = e.target.closest('.rg-autocomplete__input'); if (i) filter(i.closest('.rg-autocomplete')); });
+    document.addEventListener('input', e => { const i = e.target.closest('.rg-autocomplete__input'); if (i) filter(i.closest('.rg-autocomplete')); });
+    document.addEventListener('mousedown', e => {
+      const opt = e.target.closest('.rg-autocomplete__option');
+      if (opt && !opt.classList.contains('rg-autocomplete__empty')) { e.preventDefault(); const ac = opt.closest('.rg-autocomplete'); ac.querySelector('.rg-autocomplete__input').value = opt.textContent; openList(ac, false); return; }
+      if (!e.target.closest('.rg-autocomplete')) document.querySelectorAll('.rg-autocomplete').forEach(ac => openList(ac, false));
+    });
+    document.addEventListener('keydown', e => {
+      const input = e.target.closest('.rg-autocomplete__input'); if (!input) return;
+      const ac = input.closest('.rg-autocomplete'); const list = ac.querySelector('.rg-autocomplete__list');
+      if (e.key === 'Escape') { openList(ac, false); return; }
+      if (list.hidden) return;
+      const opts = visible(list); if (!opts.length) return;
+      let i = opts.findIndex(o => o.classList.contains('is-active'));
+      if (e.key === 'ArrowDown') { e.preventDefault(); i = Math.min(i + 1, opts.length - 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); i = Math.max(i - 1, 0); }
+      else if (e.key === 'Enter') { if (i >= 0) { e.preventDefault(); input.value = opts[i].textContent; openList(ac, false); } return; }
+      else return;
+      opts.forEach(o => o.classList.remove('is-active')); opts[i].classList.add('is-active'); opts[i].scrollIntoView({ block: 'nearest' });
+    });
+  })();
+  </script>
+</body>
+</html>
+
+

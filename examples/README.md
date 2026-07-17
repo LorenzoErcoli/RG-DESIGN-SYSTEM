@@ -31,7 +31,7 @@ Non introdurre qui un framework o una dipendenza come requisito del design syste
 - pannello laterale di dettaglio e debug;
 - uso della palette Perugino limitato ad accenti secondari.
 
-L'esempio è precedente alla modularizzazione degli stili e resta una prova di contesto, non una fonte CSS. Non richiede librerie, JavaScript o font inclusi.
+L'esempio **compone i componenti reali `.rg-*`** importando i moduli `styles/*.css` nello stesso ordine delle applicazioni; il CSS locale è ridotto al solo telaio di pagina (griglia a tre zone, header, summary, pannello dettaglio) e non ridefinisce componenti. Resta una prova di contesto, non la fonte dei componenti. Non richiede librerie, JavaScript o font inclusi.
 
 ## RG Components Library
 
@@ -39,6 +39,6 @@ L'esempio è precedente alla modularizzazione degli stili e resta una prova di c
 
 Le classi seguono una convenzione sistematica (`.rg-button`, `.rg-card`, `.rg-table`, `.rg-badge`, `.rg-input`, `.rg-inspector`). Gli stili reali e riutilizzabili risiedono in `/styles`; il CSS locale della pagina serve esclusivamente al telaio espositivo `.specimen-*`.
 
-`rg-dashboard-preview.html` resta una prova di contesto iniziale: dimostra come i token possano comportarsi in una schermata Consumption Assistant, ma non è la fonte primaria dei componenti. Le interfacce applicative saranno progettate successivamente componendo e specializzando gli elementi presenti nella Components Library.
+`rg-dashboard-preview.html` è una prova di contesto: dimostra come i **componenti** RG si compongano in una schermata Consumption Assistant, ma non è la fonte primaria dei componenti (quella è la Components Library). Le interfacce applicative saranno progettate componendo e specializzando gli elementi presenti nella Components Library.
 
 La specimen importa `tokens.css` e tutti i moduli `styles/*.css` nello stesso ordine richiesto alle applicazioni. Non copiare stili dalla pagina HTML: importare i moduli e usare le classi `.rg-*`.

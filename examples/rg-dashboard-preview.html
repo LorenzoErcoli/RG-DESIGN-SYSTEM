@@ -4,137 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RG Consumption Assistant — Dashboard preview</title>
+  <!-- Base RG importata nello stesso ordine richiesto alle applicazioni.
+       I componenti sono i .rg-* reali; il CSS locale sotto è SOLO il telaio di pagina
+       (griglia a 3 zone, header, summary, pannello dettaglio), non ridefinisce componenti. -->
   <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="../styles/rg-core.css">
+  <link rel="stylesheet" href="../styles/rg-typography.css">
+  <link rel="stylesheet" href="../styles/rg-components.css">
+  <link rel="stylesheet" href="../styles/rg-layout.css">
+  <link rel="stylesheet" href="../styles/rg-utilities.css">
   <style>
-    * { box-sizing: border-box; }
-    html { color-scheme: light; }
-    body {
-      margin: 0;
-      color: var(--rg-color-text-primary);
-      background: var(--rg-color-background);
-      font-family: var(--rg-font-body);
-      font-size: var(--rg-font-size-sm);
-      line-height: var(--rg-line-height-body);
-    }
-    button { font: inherit; }
-    .mono, .number, code { font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; }
-    .eyebrow {
-      margin: 0 0 var(--rg-space-2);
-      color: var(--rg-color-text-secondary);
-      font-family: var(--rg-font-identity);
-      font-size: var(--rg-font-size-xs);
-      font-weight: var(--rg-weight-medium);
-      letter-spacing: var(--rg-letter-label);
-      text-transform: uppercase;
-    }
-    .app-header {
-      height: var(--rg-layout-header);
-      display: grid;
-      grid-template-columns: 176px 1fr auto;
-      align-items: stretch;
-      border-bottom: var(--rg-border-hairline) solid var(--rg-color-border-strong);
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      padding: 0 var(--rg-space-6);
-      border-right: var(--rg-border-hairline) solid var(--rg-color-border-strong);
-      font-family: var(--rg-font-identity);
-      font-size: var(--rg-font-size-xl);
-      font-weight: var(--rg-weight-bold);
-      letter-spacing: var(--rg-letter-tight);
-    }
-    .tool-name {
-      display: flex;
-      align-items: baseline;
-      gap: var(--rg-space-3);
-      padding: 0 var(--rg-space-6);
-      font-family: var(--rg-font-identity);
-      font-weight: var(--rg-weight-medium);
-    }
+    /* Telaio di pagina — layout specifico di questa schermata, come i .specimen-* della library. */
+    .app-header { height: var(--rg-layout-header); display: grid; grid-template-columns: 176px 1fr auto; align-items: stretch; border-bottom: 1px solid var(--rg-color-border-strong); }
+    .brand { display: flex; align-items: center; padding: 0 var(--rg-space-6); border-right: 1px solid var(--rg-color-border-strong); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-bold); letter-spacing: var(--rg-letter-tight); }
+    .tool-name { display: flex; align-items: baseline; gap: var(--rg-space-3); padding: 0 var(--rg-space-6); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
     .tool-name span { color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); }
     .header-meta { display: flex; align-items: center; gap: var(--rg-space-4); padding: 0 var(--rg-space-6); }
-    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rg-color-accent-sage); display: inline-block; margin-right: var(--rg-space-2); }
+    .status-dot { width: 7px; height: 7px; margin-right: var(--rg-space-2); background: var(--rg-color-accent-sage); border-radius: 50%; display: inline-block; }
     .shell { min-height: calc(100vh - var(--rg-layout-header)); display: grid; grid-template-columns: 176px minmax(620px, 1fr) 320px; }
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      padding: var(--rg-space-8) var(--rg-space-4) var(--rg-space-6);
-      border-right: var(--rg-border-hairline) solid var(--rg-color-border-strong);
-    }
-    .sidebar nav { display: grid; gap: var(--rg-space-1); }
-    .nav-item {
-      padding: var(--rg-space-2) var(--rg-space-2);
-      color: var(--rg-color-text-secondary);
-      border-left: var(--rg-border-strong) solid transparent;
-      font-family: var(--rg-font-identity);
-      text-decoration: none;
-    }
-    .nav-item.active { color: var(--rg-color-text-primary); border-color: var(--rg-color-black); font-weight: var(--rg-weight-medium); }
-    .sidebar-foot { margin-top: auto; padding: var(--rg-space-4) var(--rg-space-2) 0; border-top: var(--rg-border-hairline) solid var(--rg-color-border); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
     main { min-width: 0; padding: var(--rg-space-12) var(--rg-space-8) var(--rg-space-16); }
     .page-intro { display: flex; justify-content: space-between; align-items: end; gap: var(--rg-space-6); margin-bottom: var(--rg-space-12); }
-    h1 { margin: 0; max-width: 700px; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-2xl); line-height: var(--rg-line-height-heading); letter-spacing: var(--rg-letter-tight); }
-    .page-intro p:last-child { margin: var(--rg-space-3) 0 0; max-width: 620px; color: var(--rg-color-text-secondary); }
-    .primary-button { padding: 11px var(--rg-space-4); color: var(--rg-color-white); background: var(--rg-color-black); border: 1px solid var(--rg-color-black); border-radius: var(--rg-radius-md); white-space: nowrap; }
-    .primary-button:focus-visible, a:focus-visible { outline: 2px solid var(--rg-color-focus); outline-offset: 3px; }
-    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: var(--rg-border-hairline) solid var(--rg-color-border-strong); border-bottom: var(--rg-border-hairline) solid var(--rg-color-border-strong); margin-bottom: var(--rg-space-12); }
-    .summary {
-      min-height: 154px;
-      padding: var(--rg-space-6) var(--rg-space-6) var(--rg-space-6) 0;
-    }
-    .summary + .summary { padding-left: var(--rg-space-6); border-left: var(--rg-border-hairline) solid var(--rg-color-border); }
-    .summary-index { color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
-    .summary-value { display: flex; align-items: baseline; gap: var(--rg-space-2); margin: var(--rg-space-6) 0 var(--rg-space-2); font-size: var(--rg-font-size-2xl); line-height: 1; }
-    .summary-value small { color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
-    .summary-label { margin: 0; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
-    .summary-note { margin: var(--rg-space-1) 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
+    .page-intro > div { min-width: 0; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: var(--rg-space-12); border-block: 1px solid var(--rg-color-border-strong); }
+    .summary { min-height: 154px; padding: var(--rg-space-6) var(--rg-space-6) var(--rg-space-6) 0; }
+    .summary + .summary { padding-left: var(--rg-space-6); border-left: 1px solid var(--rg-color-border); }
+    .summary-label { margin: var(--rg-space-2) 0 0; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
     .accent-rule { width: 40px; height: 3px; margin-top: var(--rg-space-4); background: var(--rg-color-accent-sage); }
     .section-head { display: flex; align-items: end; justify-content: space-between; gap: var(--rg-space-4); margin-bottom: var(--rg-space-4); }
-    h2 { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); }
-    .section-meta { color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
-    .table-wrap { overflow-x: auto; border-top: var(--rg-border-hairline) solid var(--rg-color-border-strong); }
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { padding: var(--rg-space-3) var(--rg-space-2); color: var(--rg-color-text-secondary); border-bottom: var(--rg-border-hairline) solid var(--rg-color-border); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: .02em; }
-    td { padding: var(--rg-space-4) var(--rg-space-2); border-bottom: var(--rg-border-hairline) solid var(--rg-color-border); vertical-align: middle; }
-    tbody tr.selected { background: color-mix(in srgb, var(--rg-color-accent-blue) 17%, var(--rg-color-white)); }
-    tbody tr:hover { background: var(--rg-color-neutral-50); }
-    td:first-child, th:first-child { padding-left: 0; }
-    td:last-child, th:last-child { padding-right: 0; }
-    .numeric { text-align: right; }
-    .material { font-weight: var(--rg-weight-medium); }
-    .material-detail { display: block; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
-    .badge { display: inline-flex; align-items: center; min-height: 24px; padding: 2px 8px; border: var(--rg-border-hairline) solid var(--rg-color-border); border-radius: var(--rg-radius-pill); font-family: var(--rg-font-mono); font-size: 11px; white-space: nowrap; }
-    .badge.valid { border-color: var(--rg-color-accent-sage); background: color-mix(in srgb, var(--rg-color-accent-sage) 13%, white); }
-    .badge.estimate { border-color: var(--rg-color-accent-sand); background: color-mix(in srgb, var(--rg-color-accent-sand) 12%, white); }
-    .detail-panel { min-width: 0; padding: var(--rg-space-8) var(--rg-space-6); background: var(--rg-color-neutral-50); border-left: var(--rg-border-hairline) solid var(--rg-color-border-strong); }
-    .detail-panel h2 { margin-bottom: var(--rg-space-1); }
-    .detail-code { color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
-    .detail-block { padding: var(--rg-space-6) 0; border-bottom: var(--rg-border-hairline) solid var(--rg-color-border); }
-    .detail-block dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: var(--rg-space-3); }
-    dt { color: var(--rg-color-text-secondary); }
-    dd { margin: 0; text-align: right; }
+    .detail-panel { min-width: 0; padding: var(--rg-space-8) var(--rg-space-6); background: var(--rg-color-neutral-50); border-left: 1px solid var(--rg-color-border-strong); }
+    .detail-block { padding: var(--rg-space-6) 0; border-bottom: 1px solid var(--rg-color-border); }
     .thread-swatch { width: 100%; height: 10px; margin: var(--rg-space-4) 0; background: var(--rg-color-accent-blue); border-left: 44px solid var(--rg-color-accent-sage); border-right: 72px solid var(--rg-color-accent-sand); }
-    .debug { margin: var(--rg-space-3) 0 0; padding: var(--rg-space-4); overflow: auto; color: var(--rg-color-neutral-800); background: var(--rg-color-white); border: var(--rg-border-hairline) solid var(--rg-color-border); font-size: 11px; line-height: 1.7; }
-    .debug .muted { color: var(--rg-color-text-secondary); }
-    .panel-foot { margin-top: var(--rg-space-6); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
     @media (max-width: 1180px) {
-      .shell { grid-template-columns: 152px minmax(560px, 1fr); }
-      .app-header { grid-template-columns: 152px 1fr auto; }
+      .shell { grid-template-columns: 176px minmax(560px, 1fr); }
+      .app-header { grid-template-columns: 176px 1fr auto; }
       .detail-panel { grid-column: 2; border-top: 1px solid var(--rg-color-border-strong); border-left: 0; }
     }
     @media (max-width: 760px) {
       .app-header { height: auto; grid-template-columns: 88px 1fr; }
-      .brand { padding: var(--rg-space-4); }
-      .tool-name { padding: var(--rg-space-4); }
+      .brand, .tool-name { padding: var(--rg-space-4); }
       .header-meta { grid-column: 1 / -1; padding: var(--rg-space-2) var(--rg-space-4); border-top: 1px solid var(--rg-color-border); }
       .shell { display: block; }
-      .sidebar { padding: var(--rg-space-3) var(--rg-space-4); border-right: 0; border-bottom: 1px solid var(--rg-color-border-strong); }
-      .sidebar nav { display: flex; overflow-x: auto; }
-      .sidebar-foot { display: none; }
       main, .detail-panel { padding: var(--rg-space-8) var(--rg-space-4); }
       .page-intro { align-items: start; flex-direction: column; }
-      h1 { font-size: var(--rg-font-size-xl); }
       .summary-grid { grid-template-columns: 1fr; }
       .summary, .summary + .summary { min-height: 0; padding: var(--rg-space-6) 0; border-left: 0; border-top: 1px solid var(--rg-color-border); }
       .summary:first-child { border-top: 0; }
@@ -145,77 +56,76 @@
   <header class="app-header">
     <div class="brand" aria-label="RG">RG</div>
     <div class="tool-name">Consumption Assistant <span>Laboratorio consumi</span></div>
-    <div class="header-meta mono"><span><i class="status-dot"></i>SYSTEM READY</span><span>v0.8.4</span></div>
+    <div class="header-meta rg-mono"><span><i class="status-dot"></i>SYSTEM READY</span><span>v0.8.4</span></div>
   </header>
 
   <div class="shell">
-    <aside class="sidebar">
-      <p class="eyebrow">Workspace</p>
-      <nav aria-label="Navigazione principale">
-        <a class="nav-item active" href="#overview" aria-current="page">Overview</a>
-        <a class="nav-item" href="#materials">Materiali</a>
-        <a class="nav-item" href="#calculations">Calcoli</a>
-        <a class="nav-item" href="#archive">Archivio</a>
-        <a class="nav-item" href="#settings">Impostazioni</a>
+    <aside class="rg-sidebar">
+      <p class="rg-label">Workspace</p>
+      <nav class="rg-sidebar__nav" aria-label="Navigazione principale">
+        <ul class="rg-sidebar-list">
+          <li><a class="rg-sidebar-item rg-sidebar-item--active" href="#overview" aria-current="page">Overview</a></li>
+          <li><a class="rg-sidebar-item" href="#materials">Materiali</a></li>
+          <li><a class="rg-sidebar-item" href="#calculations">Calcoli</a></li>
+          <li><a class="rg-sidebar-item" href="#archive">Archivio</a></li>
+          <li><a class="rg-sidebar-item" href="#settings">Impostazioni</a></li>
+        </ul>
       </nav>
-      <div class="sidebar-foot">
-        <div class="mono">DATASET / 26.06</div>
-        <div>ERREGI · Ricerca tessile</div>
-      </div>
+      <div class="rg-sidebar__foot"><div class="rg-mono">DATASET / 26.06</div><div>ERREGI · Ricerca tessile</div></div>
     </aside>
 
     <main id="overview">
       <section class="page-intro" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">Scheda di lavorazione / 22 giugno 2026</p>
-          <h1 id="page-title">Consumo materiali<br>DX TG 39 — Fiorellini</h1>
-          <p>Verifica tecnica dei consumi stimati per il ricamo su organza. Dati aggregati dalla revisione macchina corrente.</p>
+          <p class="rg-label">Scheda di lavorazione / 22 giugno 2026</p>
+          <h1 class="rg-h1" id="page-title">Consumo materiali<br>DX TG 39 — Fiorellini</h1>
+          <p class="rg-body">Verifica tecnica dei consumi stimati per il ricamo su organza. Dati aggregati dalla revisione macchina corrente.</p>
         </div>
-        <button class="primary-button" type="button">Nuovo calcolo</button>
+        <button class="rg-button rg-button--primary" type="button">Nuovo calcolo</button>
       </section>
 
       <section class="summary-grid" aria-label="Riepilogo lavorazione">
         <article class="summary">
-          <span class="summary-index mono">01 / PUNTI</span>
-          <div class="summary-value number">184.620 <small>pt</small></div>
+          <span class="rg-mono rg-small">01 / PUNTI</span>
+          <div class="rg-value">184.620 <span class="rg-value__unit">pt</span></div>
           <p class="summary-label">Volume ricamo</p>
-          <p class="summary-note">+2,4% dalla revisione 03</p>
+          <p class="rg-small">+2,4% dalla revisione 03</p>
         </article>
         <article class="summary">
-          <span class="summary-index mono">02 / FILO</span>
-          <div class="summary-value number">428,76 <small>m</small></div>
+          <span class="rg-mono rg-small">02 / FILO</span>
+          <div class="rg-value">428,76 <span class="rg-value__unit">m</span></div>
           <p class="summary-label">Consumo stimato</p>
-          <p class="summary-note">4 materiali · tolleranza ±3%</p>
+          <p class="rg-small">4 materiali · tolleranza ±3%</p>
           <div class="accent-rule" aria-hidden="true"></div>
         </article>
         <article class="summary">
-          <span class="summary-index mono">03 / EFFICIENZA</span>
-          <div class="summary-value number">96,8 <small>%</small></div>
+          <span class="rg-mono rg-small">03 / EFFICIENZA</span>
+          <div class="rg-value">96,8 <span class="rg-value__unit">%</span></div>
           <p class="summary-label">Copertura utile</p>
-          <p class="summary-note">Soglia laboratorio ≥95%</p>
+          <p class="rg-small">Soglia laboratorio ≥95%</p>
         </article>
       </section>
 
       <section id="materials" aria-labelledby="materials-title">
         <div class="section-head">
-          <div><p class="eyebrow">Distinta tecnica</p><h2 id="materials-title">Materiali e consumi</h2></div>
-          <div class="section-meta mono">4 RECORD · REV.04</div>
+          <div><p class="rg-label">Distinta tecnica</p><h2 class="rg-h3" id="materials-title">Materiali e consumi</h2></div>
+          <div class="rg-mono rg-small">4 RECORD · REV.04</div>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Codice</th><th>Materiale</th><th>Origine</th><th class="numeric">Consumo</th><th class="numeric">Scarto</th><th>Stato</th></tr></thead>
+        <div class="rg-table-wrap">
+          <table class="rg-table">
+            <thead><tr><th>Codice</th><th>Materiale</th><th>Origine</th><th class="rg-table__numeric">Consumo</th><th class="rg-table__numeric">Scarto</th><th>Stato</th></tr></thead>
             <tbody>
-              <tr class="selected">
-                <td class="mono">FIL-0281</td><td><span class="material">Viscosa opaca 40</span><span class="material-detail">Verde salvia · Lotto 2618</span></td><td class="mono">MACCHINA</td><td class="mono numeric">184,42 m</td><td class="mono numeric">+1,8%</td><td><span class="badge valid">VALIDATO</span></td>
+              <tr class="rg-table__row--selected">
+                <td class="rg-table__code">FIL-0281</td><td>Viscosa opaca 40<br><span class="rg-small">Verde salvia · Lotto 2618</span></td><td class="rg-table__code">MACCHINA</td><td class="rg-table__numeric">184,42 m</td><td class="rg-table__numeric">+1,8%</td><td><span class="rg-badge rg-badge--validated">Validato</span></td>
               </tr>
               <tr>
-                <td class="mono">FIL-0314</td><td><span class="material">Poliestere trilobato</span><span class="material-detail">Azzurro polvere · Lotto 119A</span></td><td class="mono">STIMA</td><td class="mono numeric">128,06 m</td><td class="mono numeric">+2,6%</td><td><span class="badge estimate">STIMATO</span></td>
+                <td class="rg-table__code">FIL-0314</td><td>Poliestere trilobato<br><span class="rg-small">Azzurro polvere · Lotto 119A</span></td><td class="rg-table__code">STIMA</td><td class="rg-table__numeric">128,06 m</td><td class="rg-table__numeric">+2,6%</td><td><span class="rg-badge rg-badge--estimated">Stimato</span></td>
               </tr>
               <tr>
-                <td class="mono">FIL-0098</td><td><span class="material">Cotone makò 50</span><span class="material-detail">Naturale · Lotto 602</span></td><td class="mono">RILEVATO</td><td class="mono numeric">92,18 m</td><td class="mono numeric">−0,4%</td><td><span class="badge valid">VALIDATO</span></td>
+                <td class="rg-table__code">FIL-0098</td><td>Cotone makò 50<br><span class="rg-small">Naturale · Lotto 602</span></td><td class="rg-table__code">RILEVATO</td><td class="rg-table__numeric">92,18 m</td><td class="rg-table__numeric">−0,4%</td><td><span class="rg-badge rg-badge--validated">Validato</span></td>
               </tr>
               <tr>
-                <td class="mono">SUP-0042</td><td><span class="material">Organza di seta</span><span class="material-detail">Avorio · H 138 cm</span></td><td class="mono">MANUALE</td><td class="mono numeric">24,10 m</td><td class="mono numeric">+3,1%</td><td><span class="badge estimate">VERIFICA</span></td>
+                <td class="rg-table__code">SUP-0042</td><td>Organza di seta<br><span class="rg-small">Avorio · H 138 cm</span></td><td class="rg-table__code">MANUALE</td><td class="rg-table__numeric">24,10 m</td><td class="rg-table__numeric">+3,1%</td><td><span class="rg-badge rg-badge--unresolved">Verifica</span></td>
               </tr>
             </tbody>
           </table>
@@ -224,25 +134,25 @@
     </main>
 
     <aside class="detail-panel" aria-labelledby="detail-title">
-      <p class="eyebrow">Dettaglio selezione</p>
-      <h2 id="detail-title">Viscosa opaca 40</h2>
-      <div class="detail-code mono">FIL-0281 / LOT-2618</div>
+      <p class="rg-label">Dettaglio selezione</p>
+      <h2 class="rg-h3" id="detail-title">Viscosa opaca 40</h2>
+      <div class="rg-mono rg-small">FIL-0281 / LOT-2618</div>
       <div class="thread-swatch" aria-label="Accenti cromatici del campione Perugino"></div>
 
       <section class="detail-block">
-        <p class="eyebrow">Parametri</p>
-        <dl><dt>Titolo</dt><dd class="mono">120 dtex</dd><dt>Punti associati</dt><dd class="mono">78.420</dd><dt>Lunghezza netta</dt><dd class="mono">181,16 m</dd><dt>Coefficiente scarto</dt><dd class="mono">1,018</dd><dt>Consumo calcolato</dt><dd class="mono"><strong>184,42 m</strong></dd></dl>
+        <p class="rg-label">Parametri</p>
+        <dl class="rg-key-value"><dt>Titolo</dt><dd>120 dtex</dd><dt>Punti associati</dt><dd>78.420</dd><dt>Lunghezza netta</dt><dd>181,16 m</dd><dt>Coefficiente scarto</dt><dd>1,018</dd><dt>Consumo calcolato</dt><dd><strong>184,42 m</strong></dd></dl>
       </section>
 
       <section class="detail-block" id="calculations">
-        <p class="eyebrow">Stato tecnico</p>
-        <p><span class="badge valid">VALIDATO</span> <span class="badge">CONF. 0.97</span></p>
-        <dl><dt>Metodo</dt><dd class="mono">STITCH-LEN/V3</dd><dt>Sorgente</dt><dd class="mono">DST / REV.04</dd><dt>Ultimo calcolo</dt><dd class="mono">14:32:08</dd></dl>
+        <p class="rg-label">Stato tecnico</p>
+        <p><span class="rg-badge rg-badge--validated">Validato</span> <span class="rg-badge rg-badge--review">Conf. 0.97</span></p>
+        <dl class="rg-key-value"><dt>Metodo</dt><dd>STITCH-LEN/V3</dd><dt>Sorgente</dt><dd>DST / REV.04</dd><dt>Ultimo calcolo</dt><dd>14:32:08</dd></dl>
       </section>
 
       <section class="detail-block">
-        <p class="eyebrow">Debug output</p>
-        <pre class="debug"><span class="muted">[14:32:08.114]</span> parse:block_07
+        <p class="rg-label">Debug output</p>
+        <pre class="rg-debug">[14:32:08.114] parse:block_07
 stitches     78420
 raw_length   181.160
 waste_factor 1.018
@@ -250,9 +160,8 @@ result_m     184.421
 delta_rev03  +1.8%
 status       VALID</pre>
       </section>
-      <p class="panel-foot">I valori sono dimostrativi e non rappresentano una lavorazione reale. Palette Perugino applicata solo a campioni, badge e selezione secondaria.</p>
+      <p class="rg-small" style="margin-top:var(--rg-space-6)">I valori sono dimostrativi e non rappresentano una lavorazione reale. Palette Perugino applicata solo a campioni, badge e selezione secondaria.</p>
     </aside>
   </div>
 </body>
 </html>
-

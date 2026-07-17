@@ -70,6 +70,10 @@ l'integrazione — correggi o, se è un'eccezione legittima, documentala (vedi �
 - [ ] Doc creato in `components/<nome>.md` col template: Scopo → Varianti → Uso e limiti → Struttura.
 - [ ] Sezione aggiunta a `examples/rg-components-library.html` + voce nel nav.
 - [ ] `since` = versione DS corrente; se introduce un token, versione bumpata.
+- [ ] **`npm run lint` (o `node tools/ds-lint.mjs`) passa senza violazioni** — è il gate
+      automatico di coerenza doc↔CSS: fallisce se un doc/manifest/esempio cita una classe non
+      definita nel CSS, se un `doc` punta a un file inesistente, se un `specimenAnchor` manca in
+      vetrina, o se un modulo contiene un HEX crudo.
 
 ---
 

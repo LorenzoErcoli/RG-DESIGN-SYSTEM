@@ -6,7 +6,7 @@ Raccogliere dati affidabili riducendo ambiguità, errori e perdita di contesto t
 
 ## Varianti
 
-- Input testuale/numerico, textarea, select, checkbox/radio, upload, ricerca, **autocomplete** (input con suggerimenti filtrati) e campo calcolato in sola lettura.
+- Input testuale/numerico, textarea, select, checkbox/radio, **toggle**, **segmented**, upload, ricerca, **autocomplete** (input con suggerimenti filtrati) e campo calcolato in sola lettura.
 - **Inline** per filtri semplici; **stacked** per inserimenti complessi; **step** solo quando esistono fasi reali.
 
 ## Uso e limiti
@@ -53,4 +53,42 @@ Comportamento atteso (implementazione JS di riferimento, indipendente da libreri
 ogni digitazione, filtra le `option` per sottostringa e mostra la lista; selezione con click o
 tastiera (frecce su/giù, Invio); chiusura con Esc o click esterno; se nessuna corrispondenza,
 mostra `.rg-autocomplete__empty`. Il valore libero digitato resta valido.
+
+## Toggle (`.rg-toggle`)
+
+Interruttore on/off per uno stato **non irreversibile** (es. attivare debug, autofill). Contiene un
+`<input type="checkbox">` reale nascosto ma focusabile; lo stato è comunicato da posizione + pieno
+nero, non dal solo colore. Non usare per azioni distruttive: quelle richiedono un pulsante e conferma.
+
+```html
+<label class="rg-toggle"><input type="checkbox" checked><span class="rg-toggle__track"></span><span>Debug attivo</span></label>
+```
+
+## Segmented control (`.rg-segmented`)
+
+Scelta esclusiva tra poche opzioni sorelle (2–4), alternativa compatta ai radio quando le opzioni
+sono brevi e mutuamente esclusive (es. unità mm/px/originali). L'opzione attiva è
+`rg-segmented__item--active` (o `aria-pressed="true"`).
+
+```html
+<div class="rg-segmented">
+  <button class="rg-segmented__item rg-segmented__item--active">Metrici</button>
+  <button class="rg-segmented__item">Imperiali</button>
+  <button class="rg-segmented__item">Originali</button>
+</div>
+```
+
+## Upload (`.rg-upload`)
+
+Area di caricamento file (DXF/SVG/PDF/macchina) con label esplicita e vincoli visibili. Fornire
+sempre formati accettati e dimensione massima; gestire hover/dragover ed errore.
+
+```html
+<label class="rg-upload">
+  <input type="file" hidden>
+  <div><strong>Trascina un file macchina</strong>
+    <div class="rg-small rg-mono">DST, EXP, PDF · MAX 50 MB</div>
+  </div>
+</label>
+```
 

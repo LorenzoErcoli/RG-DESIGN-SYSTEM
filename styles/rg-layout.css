@@ -22,6 +22,32 @@
 .rg-action-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--rg-space-4); padding: var(--rg-space-4); background: var(--rg-color-white); border-block: 1px solid var(--rg-color-black); }
 .rg-confirmation { border-color: var(--rg-color-black); }
 .rg-confirmation h3 { margin: 0; font-family: var(--rg-font-identity); }
+
+/* Workspace — app-shell a 2 pannelli: parametri + canvas pan/zoom (pattern, v0.3.0).
+   Riempie l'area sotto rg-topbar; l'app imposta l'altezza esterna. Il pan/zoom vive
+   su __layer via le variabili --rg-pan-x/--rg-pan-y/--rg-zoom: restano invariate a
+   ogni re-render del contenuto (nessun reset della vista). Vedi patterns/workspace.md. */
+.rg-workspace { display: grid; grid-template-columns: minmax(0, var(--rg-workspace-panel, 380px)) minmax(0, 1fr); height: 100%; min-height: 0; overflow: hidden; }
+.rg-workspace__panel { min-width: 0; overflow-y: auto; background: var(--rg-color-white); border-right: 1px solid var(--rg-color-black); }
+.rg-workspace__stage { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-width: 0; min-height: 0; overflow: hidden; background: var(--rg-color-neutral-50); }
+.rg-workspace__stage-header { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-6); padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-white); border-bottom: 1px solid var(--rg-color-black); }
+.rg-workspace__canvas { position: relative; min-width: 0; min-height: 240px; margin: var(--rg-space-6); overflow: hidden; background: var(--rg-color-white); border: 1px solid var(--rg-color-black); cursor: grab; touch-action: none; }
+.rg-workspace__canvas.is-dragging { cursor: grabbing; }
+.rg-workspace__layer { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transform-origin: center center; transform: translate(var(--rg-pan-x, 0px), var(--rg-pan-y, 0px)) scale(var(--rg-zoom, 1)); }
+.rg-workspace__statusbar { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-4); min-height: 40px; padding: 0 var(--rg-space-6); color: var(--rg-color-text-secondary); background: var(--rg-color-white); border-top: 1px solid var(--rg-color-border); font-size: var(--rg-font-size-xs); }
+.rg-param-section { padding: var(--rg-space-6); border-bottom: 1px solid var(--rg-color-border); }
+.rg-param-section__header { display: flex; align-items: baseline; gap: var(--rg-space-3); margin-bottom: var(--rg-space-4); }
+.rg-param-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rg-space-4) var(--rg-space-3); }
+.rg-param-grid__wide { grid-column: 1 / -1; }
+.rg-field-with-unit { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+.rg-field-with-unit .rg-input { border-radius: var(--rg-radius-md) 0 0 var(--rg-radius-md); }
+.rg-field-with-unit > span { display: grid; place-items: center; min-width: 42px; padding-inline: var(--rg-space-2); color: var(--rg-color-text-secondary); background: var(--rg-color-neutral-50); border: 1px solid var(--rg-color-border-strong); border-left: 0; border-radius: 0 var(--rg-radius-md) var(--rg-radius-md) 0; font-family: var(--rg-font-mono); font-size: 10px; white-space: nowrap; }
+@media (max-width: 760px) {
+  .rg-workspace { grid-template-columns: 1fr; height: auto; }
+  .rg-workspace__panel { border-right: 0; border-bottom: 1px solid var(--rg-color-black); }
+  .rg-workspace__stage { min-height: 560px; }
+  .rg-param-grid { grid-template-columns: 1fr; }
+}
 @media (max-width: 680px) {
   .rg-grid, .rg-grid--4, .rg-grid--2, .rg-filter-group, .rg-parameter-group__grid, .rg-split-panel { grid-template-columns: 1fr; }
   .rg-split-panel > div + div { border-top: 1px solid var(--rg-color-black); border-left: 0; }

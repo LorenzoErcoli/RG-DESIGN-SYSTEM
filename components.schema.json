@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RG Design System — components manifest",
+  "type": "object",
+  "required": ["schemaVersion", "dsVersion", "importOrder", "components"],
+  "properties": {
+    "schemaVersion": { "type": "string" },
+    "dsName": { "type": "string" },
+    "dsVersion": { "type": "string" },
+    "generated": { "type": "string" },
+    "note": { "type": "string" },
+    "importOrder": { "type": "array", "items": { "type": "string" } },
+    "statusValues": { "type": "array", "items": { "type": "string" } },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "role", "status", "since", "classes", "specimenAnchor", "snippet", "keywords"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "kebab-case, univoco" },
+          "title": { "type": "string" },
+          "role": { "type": "string", "description": "A cosa serve, una frase — usato per il MATCH semantico" },
+          "status": { "type": "string", "enum": ["stable", "beta", "documented-undocumented-css", "deprecated"] },
+          "since": { "type": "string", "description": "Versione DS di introduzione" },
+          "kind": { "type": "string", "enum": ["foundation", "component"] },
+          "classes": { "type": "object", "description": "base, variants, elements, related, subcomponents" },
+          "variants": { "type": "array", "items": { "type": "string" } },
+          "states": { "type": "array", "items": { "type": "string" } },
+          "tokens": { "type": "array", "items": { "type": "string" }, "description": "Token usati (rappresentativi, non esaustivi)" },
+          "doc": { "type": ["string", "null"], "description": "Percorso al doc components/*.md, null se non documentato" },
+          "rulesRef": { "type": "string" },
+          "patternRef": { "type": "string" },
+          "specimenAnchor": { "type": "string", "description": "id della sezione in examples/rg-components-library.html" },
+          "snippet": { "type": "string", "description": "HTML minimo d'uso" },
+          "keywords": { "type": "array", "items": { "type": "string" }, "description": "Sinonimi IT/EN per il MATCH — arricchire generosamente" }
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

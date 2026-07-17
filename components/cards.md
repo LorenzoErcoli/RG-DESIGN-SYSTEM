@@ -21,9 +21,9 @@ Eyebrow/stato → titolo → contenuto → metadati → azione. Bordo 1 px, radi
 
 ```html
 <article class="rg-card">
-  <p class="rg-card__code">RG-AR-0248</p>
-  <h3>Ricamo floreale su organza</h3>
-  <p>Campione archivio · PE 2026</p>
+  <p class="rg-card__eyebrow">RG-AR-0248</p>
+  <h3 class="rg-card__title">Ricamo floreale su organza</h3>
+  <p class="rg-card__body">Campione archivio · PE 2026</p>
 </article>
 ```
 

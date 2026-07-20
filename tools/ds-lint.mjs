@@ -68,18 +68,31 @@ for (const c of manifest.components) {
   }
 }
 
-// --- 1b. Doc (components + patterns) e examples ---
-for (const f of [...listFiles('components', '.md'), ...listFiles('patterns', '.md'), ...listFiles('examples', '.html')]) {
+// --- 1b. Doc (components + patterns + integration) e examples ---
+for (const f of [...listFiles('components', '.md'), ...listFiles('patterns', '.md'),
+                 ...listFiles('integration', '.md'), ...listFiles('examples', '.html')]) {
   for (const cls of rgClassesInAttr(read(p(f)))) {
     if (!isKnown(cls) && !appLocal.has(cls)) fail(f, `usa classe rg-* non definita nel CSS: .${cls}`);
   }
 }
 
-// --- 4. Nessun HEX crudo nei moduli (tokens.css escluso: è lì che i colori vivono) ---
+// --- 4. Nessun HEX crudo nei CSS (tokens.css escluso: è lì che i colori vivono).
+//        Il raccordo in integration/ è soggetto alla stessa regola. ---
 const HEX = /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g;
-for (const f of listFiles('styles', '.css')) {
+for (const f of [...listFiles('styles', '.css'), ...listFiles('integration', '.css')]) {
   const hits = stripCssComments(read(p(f))).match(HEX);
   if (hits) fail(f, `colore HEX crudo (usare un token): ${[...new Set(hits)].join(', ')}`);
+}
+
+// --- 5. Il contratto di consumo deve restare allineato all'importOrder del manifest ---
+const declaredOrder = manifest.importOrder || [];
+const helper = 'integration/rg_ds_streamlit.py';
+if (fs.existsSync(p(helper)) && declaredOrder.length) {
+  const block = read(p(helper)).match(/MODULES[^=]*=\s*\(([\s\S]*?)\)/);
+  const inHelper = block ? [...block[1].matchAll(/"([^"]+)"/g)].map(m => m[1]) : [];
+  if (inHelper.join('|') !== declaredOrder.join('|')) {
+    fail(helper, `MODULES diverge da components.json/importOrder:\n      helper:   ${inHelper.join(', ')}\n      manifest: ${declaredOrder.join(', ')}`);
+  }
 }
 
 // --- Report ---

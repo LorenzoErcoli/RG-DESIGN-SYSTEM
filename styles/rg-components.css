@@ -115,12 +115,25 @@
 .rg-badge--season-blue { background: color-mix(in srgb, var(--rg-color-accent-blue) 14%, var(--rg-color-white)); border-color: var(--rg-color-accent-blue); }
 
 /* Navigation */
-.rg-topbar { min-height: 56px; display: flex; align-items: center; gap: var(--rg-space-6); padding: 0 var(--rg-space-4); color: var(--rg-color-white); background: var(--rg-color-black); }
+/* Topbar — barra superiore dell'applicazione. Base scura (header di prodotto) e
+   variante --app chiara (chrome di suite: ritorno/identita a sinistra, titolo dello
+   strumento corrente, azioni o meta a destra in __actions). */
+.rg-topbar { min-height: var(--rg-layout-header); display: flex; align-items: center; gap: var(--rg-space-6); padding: 0 var(--rg-space-4); color: var(--rg-color-white); background: var(--rg-color-black); }
 .rg-topbar__brand { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); }
+.rg-topbar__back { display: inline-flex; min-height: 40px; align-items: center; gap: var(--rg-space-2); color: inherit; font-family: var(--rg-font-identity); text-decoration: none; }
+.rg-topbar__back:hover { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
+.rg-topbar__title { min-width: 0; margin: 0; overflow: hidden; color: inherit; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); line-height: var(--rg-line-height-heading); white-space: nowrap; text-overflow: ellipsis; }
+.rg-topbar__back + .rg-topbar__title, .rg-topbar__brand + .rg-topbar__title { padding-inline-start: var(--rg-space-6); border-inline-start: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-neutral-400); }
+.rg-topbar__actions { display: flex; align-items: center; gap: var(--rg-space-3); margin-inline-start: auto; }
 .rg-topbar__nav { display: flex; gap: var(--rg-space-4); }
 .rg-topbar__nav a { color: var(--rg-color-neutral-200); text-decoration: none; }
 .rg-topbar__nav a:hover { color: var(--rg-color-white); text-decoration: underline; text-underline-offset: 8px; }
 .rg-topbar__nav a[aria-current="page"] { color: var(--rg-color-white); text-decoration: underline; text-underline-offset: 8px; }
+.rg-topbar--app { flex: none; padding: 0 var(--rg-space-6); color: var(--rg-color-text-primary); background: var(--rg-color-background); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-topbar--app .rg-topbar__brand { font-weight: var(--rg-weight-bold); }
+.rg-topbar--app .rg-topbar__nav a { color: var(--rg-color-text-secondary); }
+.rg-topbar--app .rg-topbar__nav a:hover, .rg-topbar--app .rg-topbar__nav a[aria-current="page"] { color: var(--rg-color-black); }
+@media (max-width: 680px) { .rg-topbar--app { gap: var(--rg-space-4); padding: 0 var(--rg-space-4); } .rg-topbar--app .rg-topbar__back + .rg-topbar__title, .rg-topbar--app .rg-topbar__brand + .rg-topbar__title { padding-inline-start: var(--rg-space-4); } }
 .rg-sidebar { display: flex; flex-direction: column; padding: var(--rg-space-8) var(--rg-space-4) var(--rg-space-6); border-right: 1px solid var(--rg-color-border-strong); }
 .rg-sidebar__nav { display: grid; gap: var(--rg-space-1); }
 .rg-sidebar__foot { margin-top: auto; padding-top: var(--rg-space-4); border-top: 1px solid var(--rg-color-border); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }

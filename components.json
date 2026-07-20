@@ -213,14 +213,14 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": null, "subcomponents": { "topbar": ["rg-topbar", "rg-topbar__brand", "rg-topbar__nav"], "sidebar": ["rg-sidebar", "rg-sidebar__nav", "rg-sidebar__foot", "rg-sidebar-list", "rg-sidebar-item", "rg-sidebar-item--active"], "tabs": ["rg-tabs", "rg-tab", "rg-tab--active"], "breadcrumb": ["rg-breadcrumb", "rg-breadcrumb__sep", "rg-breadcrumb__current"], "pagination": ["rg-pagination", "rg-page", "rg-page--active"] } },
-      "variants": ["global-header", "sidebar", "local-tabs", "breadcrumb", "pagination"],
+      "classes": { "base": null, "subcomponents": { "topbar": ["rg-topbar", "rg-topbar--app", "rg-topbar__brand", "rg-topbar__back", "rg-topbar__title", "rg-topbar__actions", "rg-topbar__nav"], "sidebar": ["rg-sidebar", "rg-sidebar__nav", "rg-sidebar__foot", "rg-sidebar-list", "rg-sidebar-item", "rg-sidebar-item--active"], "tabs": ["rg-tabs", "rg-tab", "rg-tab--active"], "breadcrumb": ["rg-breadcrumb", "rg-breadcrumb__sep", "rg-breadcrumb__current"], "pagination": ["rg-pagination", "rg-page", "rg-page--active"] } },
+      "variants": ["global-header", "app-topbar", "sidebar", "local-tabs", "breadcrumb", "pagination"],
       "states": ["default", "hover", "active", "focus"],
-      "tokens": ["--rg-font-identity", "--rg-layout-header", "--rg-color-black"],
+      "tokens": ["--rg-font-identity", "--rg-layout-header", "--rg-color-black", "--rg-color-border", "--rg-border-hairline"],
       "doc": "components/navigation.md",
       "specimenAnchor": "navigation",
-      "snippet": "<nav class=\"rg-tabs\"><a class=\"rg-tab rg-tab--active\">Archivio</a><a class=\"rg-tab\">Consumi</a></nav>",
-      "keywords": ["navigazione", "menu", "header", "sidebar", "tab", "breadcrumb", "paginazione", "navbar"]
+      "snippet": "<header class=\"rg-topbar rg-topbar--app\"><a class=\"rg-topbar__back\" href=\"#/\">← RG Tools</a><h1 class=\"rg-topbar__title\">Rete 45°</h1><div class=\"rg-topbar__actions\"><span class=\"rg-mono rg-u-muted\">v0.3.0</span></div></header>",
+      "keywords": ["navigazione", "menu", "header", "sidebar", "tab", "breadcrumb", "paginazione", "navbar", "topbar", "top bar", "barra superiore", "app bar", "appbar", "chrome", "titolo", "back", "ritorno", "azioni", "toolbar", "suite"]
     },
     {
       "id": "modal",

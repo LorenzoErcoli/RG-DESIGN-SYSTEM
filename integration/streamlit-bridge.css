@@ -1,0 +1,183 @@
+/* RG Design System — raccordo Streamlit.
+ *
+ * Le classi .rg-* funzionano solo sul markup che scriviamo noi. I widget nativi di
+ * Streamlit (button, input, tabs, dataframe...) hanno un DOM generato che non possiamo
+ * marcare: questo file li riporta ai token RG agganciandosi ai selettori stabili
+ * (data-testid / data-baseweb). E' un LIVELLO DI RACCORDO, non un reskin completo:
+ * copre il chrome ricorrente, non ogni widget.
+ *
+ * Regole: solo var(--rg-*), nessun HEX. Caricato per ultimo da rg_ds_streamlit.inject().
+ * Fragilita' dichiarata: i selettori interni di Streamlit possono cambiare tra versioni
+ * major. Se un widget "torna colorato" dopo un upgrade, e' qui che si corregge — in un
+ * punto solo, per tutte e tre le app.
+ */
+
+/* --- Superficie e tipografia di base --------------------------------------- */
+.stApp,
+[data-testid="stAppViewContainer"] {
+  color: var(--rg-color-text-primary);
+  background: var(--rg-color-background);
+  font-family: var(--rg-font-body);
+}
+
+[data-testid="stHeader"] {
+  background: var(--rg-color-background);
+  border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
+}
+
+/* La barra decorativa superiore di Streamlit e' un gradiente: vietata dalle regole RG
+ * ("niente gradienti decorativi"). Rimossa, non ridipinta. */
+[data-testid="stDecoration"] { display: none; }
+
+.stApp h1, .stApp h2, .stApp h3, .stApp h4 {
+  color: var(--rg-color-text-primary);
+  font-family: var(--rg-font-identity);
+  line-height: var(--rg-line-height-heading);
+  letter-spacing: var(--rg-letter-tight);
+}
+
+/* Dati, codici, misure: sempre monospaziati. */
+.stApp code, .stApp pre, [data-testid="stMetricValue"] {
+  font-family: var(--rg-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Sidebar ---------------------------------------------------------------- */
+[data-testid="stSidebar"] {
+  background: var(--rg-color-surface);
+  border-right: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
+}
+
+[data-testid="stSidebar"] .stApp h1,
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2 {
+  font-family: var(--rg-font-identity);
+  font-size: var(--rg-font-size-lg);
+}
+
+/* --- Azioni ----------------------------------------------------------------- */
+/* Azione secondaria = default RG: superficie bianca, bordo nero. */
+.stButton > button,
+.stDownloadButton > button,
+.stFormSubmitButton > button {
+  min-height: 40px;
+  padding: var(--rg-space-2) var(--rg-space-4);
+  color: var(--rg-color-text-primary);
+  background: var(--rg-color-action-secondary);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-strong);
+  border-radius: var(--rg-radius-none);
+  font-family: var(--rg-font-identity);
+  font-weight: var(--rg-weight-medium);
+  box-shadow: var(--rg-shadow-none);
+}
+
+.stButton > button:hover,
+.stDownloadButton > button:hover,
+.stFormSubmitButton > button:hover {
+  color: var(--rg-color-action-primary-text);
+  background: var(--rg-color-action-primary);
+  border-color: var(--rg-color-action-primary);
+}
+
+/* Azione primaria: type="primary" lato Streamlit -> nero pieno RG. */
+.stButton > button[kind="primary"],
+.stFormSubmitButton > button[kind="primary"] {
+  color: var(--rg-color-action-primary-text);
+  background: var(--rg-color-action-primary);
+  border-color: var(--rg-color-action-primary);
+}
+
+.stButton > button:disabled,
+.stDownloadButton > button:disabled,
+.stFormSubmitButton > button:disabled {
+  color: var(--rg-color-neutral-400);
+  background: var(--rg-color-neutral-100);
+  border-color: var(--rg-color-border);
+}
+
+/* --- Campi ------------------------------------------------------------------ */
+.stTextInput input,
+.stNumberInput input,
+.stTextArea textarea,
+.stDateInput input,
+[data-baseweb="select"] > div {
+  min-height: 40px;
+  color: var(--rg-color-text-primary);
+  background: var(--rg-color-white);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
+  border-radius: var(--rg-radius-none);
+  font-family: var(--rg-font-body);
+}
+
+.stTextInput input:focus,
+.stNumberInput input:focus,
+.stTextArea textarea:focus {
+  border-color: var(--rg-color-border-strong);
+}
+
+/* Valori tecnici digitati: monospazio, come da regole sui dati. */
+.stNumberInput input { font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; }
+
+.stApp label,
+[data-testid="stWidgetLabel"] {
+  color: var(--rg-color-text-primary);
+  font-family: var(--rg-font-identity);
+  font-size: var(--rg-font-size-xs);
+  letter-spacing: var(--rg-letter-label);
+}
+
+/* --- Focus: sempre visibile, ad alto contrasto ------------------------------ */
+.stApp :focus-visible {
+  outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus);
+  outline-offset: 3px;
+}
+
+/* --- Tabs, expander, tabelle ------------------------------------------------ */
+.stTabs [data-baseweb="tab-list"] {
+  gap: var(--rg-space-4);
+  border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
+}
+
+.stTabs [data-baseweb="tab"] {
+  color: var(--rg-color-text-secondary);
+  background: transparent;
+  border-radius: var(--rg-radius-none);
+  font-family: var(--rg-font-identity);
+}
+
+/* Stato attivo distinguibile anche senza colore: peso + linea. */
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+  color: var(--rg-color-text-primary);
+  font-weight: var(--rg-weight-bold);
+  box-shadow: inset 0 -2px 0 var(--rg-color-black);
+}
+
+[data-testid="stExpander"] {
+  background: var(--rg-color-white);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
+  border-radius: var(--rg-radius-none);
+  box-shadow: var(--rg-shadow-none);
+}
+
+[data-testid="stDataFrame"],
+[data-testid="stTable"] {
+  font-family: var(--rg-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-testid="stMetric"] {
+  padding: var(--rg-space-3) var(--rg-space-4);
+  background: var(--rg-color-surface);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
+}
+
+[data-testid="stMetricLabel"] {
+  font-family: var(--rg-font-identity);
+  font-size: var(--rg-font-size-xs);
+  letter-spacing: var(--rg-letter-label);
+}
+
+/* --- Riduzione del movimento ------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .stApp *, .stApp *::before, .stApp *::after { transition-duration: 0.01ms !important; }
+}

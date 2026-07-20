@@ -1,0 +1,28 @@
+# RG Design System — tema nativo Streamlit.
+#
+# COPIARE questo file in <progetto>/.streamlit/config.toml.
+# E' l'unico punto del contratto in cui e' ammesso un valore HEX: il tema di Streamlit
+# e' letto prima del CSS e non accetta var(--rg-*). I valori qui sotto sono un MIRROR
+# di tokens.css e non vanno modificati localmente: se cambiano i token, cambia questo file
+# nel DS e i progetti lo ri-copiano.
+#
+# Perche' serve anche il tema, oltre al CSS: Streamlit colora alcuni elementi (spinner,
+# slider, caret, selezione) da JS in base al tema, prima e sotto il nostro CSS. Senza
+# questo file l'app resta rosso-Streamlit in quei punti.
+
+[theme]
+# --rg-color-action-primary (nero: azione primaria RG, mai un colore stagionale)
+primaryColor = "#000000"
+# --rg-color-background
+backgroundColor = "#ffffff"
+# --rg-color-surface (--rg-color-neutral-50)
+secondaryBackgroundColor = "#f7f7f5"
+# --rg-color-text-primary
+textColor = "#000000"
+# I font ufficiali RG non sono distribuiti col DS: Streamlit riceve la famiglia generica,
+# il CSS del DS applica poi AGNext / GT America dove i file sono disponibili.
+font = "sans serif"
+
+[client]
+# Sobrieta': niente barra degli errori colorata a tutta pagina nei tool interni.
+showErrorDetails = true

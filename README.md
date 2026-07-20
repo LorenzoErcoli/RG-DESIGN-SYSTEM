@@ -33,8 +33,10 @@ Per una generazione assistita da AI, fornire anche [AI_CONTEXT.md](AI_CONTEXT.md
 - `styles/`: CSS riutilizzabile, modulare e framework-agnostic.
 - `components/`: contratti visivi dei singoli elementi ([buttons](components/buttons.md), [forms](components/forms.md), [cards](components/cards.md), [badges](components/badges.md), [tables](components/tables.md), [navigation](components/navigation.md), [lists](components/lists.md)).
 - `patterns/`: composizione di schermate ricorrenti.
+- `integration/`: contratto di consumo — come i prodotti caricano il DS ([Streamlit](integration/streamlit.md), [FastAPI](integration/fastapi.md)).
 - `examples/`: future implementazioni di riferimento.
 - `figma/`: indicazioni per collegare la libreria Figma.
+- `agent/`, `tools/`: checklist di verifica e lint di coerenza. Non fanno parte della superficie servita.
 
 ## Using RG CSS
 
@@ -51,6 +53,8 @@ Ogni interfaccia RG deve caricare prima i token e poi i moduli CSS nell'ordine s
 
 `tokens.css` contiene esclusivamente valori e alias. I file in `styles/` implementano reset, tipografia, componenti, composizioni e utility. Le applicazioni possono omettere `rg-utilities.css` se non usano helper atomici, ma non devono copiare gli stili dalla specimen page.
 
+I percorsi sopra sono illustrativi. Per il modo concreto in cui un prodotto risolve questi percorsi dal submodule — mount FastAPI, iniezione Streamlit, ordine vincolante — vedi [integration/](integration/README.md).
+
 Le classi di stato condivise sono `is-selected`, `is-loading`, `is-error`, `is-warning`, `is-success`, `is-expanded`, `is-collapsed` e `is-disabled`. Quando esiste un equivalente semantico HTML/ARIA (`disabled`, `aria-selected`, `aria-expanded`, `aria-invalid`, `aria-busy`), usare entrambi in modo coerente.
 
 ## Font
@@ -59,12 +63,14 @@ I font ufficiali sono AGNext, GT-America-Standard e GT-America-Mono. I file font
 
 ## Stato e governance
 
-Questa è una base iniziale, versione `0.3.0`. Le modifiche ai token permanenti richiedono revisione trasversale; le palette stagionali possono evolvere senza modificare i ruoli semantici. Eccezioni specifiche di prodotto vanno documentate vicino al relativo pattern, non incorporate silenziosamente nei token globali.
+Versione corrente `1.0.0`: il contratto di consumo è stabile. Le modifiche ai token permanenti richiedono revisione trasversale; le palette stagionali possono evolvere senza modificare i ruoli semantici. Eccezioni specifiche di prodotto vanno documentate vicino al relativo pattern, non incorporate silenziosamente nei token globali.
+
+I prodotti consumano il DS come **git submodule pinnato a un tag** semver, mai a un branch: il pin si sposta solo con un commit esplicito nel repo consumatore. Vedi [integration/README.md](integration/README.md).
+
+Prima di proporre un merge, `npm run lint` deve uscire con 0: è il gate di coerenza fra documentazione, manifest e CSS.
 
 ### Changelog
 
-- `0.3.0` — Aggiunto il componente `rg-autocomplete` (input di testo con suggerimenti filtrati mentre si digita; alternativa al `select` con molte opzioni, accetta valori liberi). Nessun token permanente modificato. Vedi [components/forms.md](components/forms.md).
-- `0.2.0` — Aggiunti i componenti `rg-list` / `rg-list-row` (liste tecniche con azioni inline) e `rg-icon-button`, introdotti per gli editor di percorso (ThreadRoute). Nessun token permanente modificato. Vedi [components/lists.md](components/lists.md).
-- `0.1.0` — Base iniziale.
+Storico completo e politica di versionamento in [CHANGELOG.md](CHANGELOG.md).
 
 > TODO — Fonti: collegare qui il PDF istituzionale esistente e il file/libreria Figma quando saranno disponibili.

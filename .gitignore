@@ -1,0 +1,10 @@
+# Artefatti Python generati dall'helper di integrazione (integration/rg_ds_streamlit.py).
+__pycache__/
+*.py[cod]
+
+# Node: il DS non ha dipendenze runtime, ma il lint gira con npm.
+node_modules/
+
+# Sistema
+.DS_Store
+Thumbs.db

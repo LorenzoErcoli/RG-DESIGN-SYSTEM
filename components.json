@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "0.3.0",
+  "dsVersion": "1.0.0",
   "generated": "seed-2026-07-17",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalExceptions": [

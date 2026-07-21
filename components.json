@@ -2,12 +2,11 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.0.0",
+  "dsVersion": "1.1.0",
   "generated": "seed-2026-07-17",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
-  "appLocalExceptions": [
-    { "id": "recent-card", "app": "rg-product-platform", "classes": ["rg-recent-card", "rg-recent-card__name", "rg-recent-card__meta", "rg-recent-strip"], "reason": "Striscia 'Ultimi caricati' specifica della dashboard di product-platform. Eccezione dichiarata: non promossa nel DS; candidabile a variante card-in-strip se una tool ne avra bisogno.", "since": "0.3.0" }
-  ],
+  "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
+  "appLocalExceptions": [],
   "importOrder": [
     "tokens.css",
     "styles/rg-core.css",
@@ -197,14 +196,15 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-badge", "variants": ["rg-badge--validated", "rg-badge--estimated", "rg-badge--unresolved", "rg-badge--review", "rg-badge--material", "rg-badge--thread", "rg-badge--operation", "rg-badge--season-sage", "rg-badge--season-blue"] },
-      "variants": ["status", "source", "category", "count"],
+      "classes": { "base": "rg-badge", "variants": ["rg-badge--validated", "rg-badge--estimated", "rg-badge--unresolved", "rg-badge--review", "rg-badge--draft", "rg-badge--archived", "rg-badge--pending", "rg-badge--parsed", "rg-badge--count", "rg-badge--material", "rg-badge--thread", "rg-badge--operation", "rg-badge--season-sage", "rg-badge--season-blue"] },
+      "variants": ["status", "lifecycle", "pipeline", "source", "category", "count"],
       "states": ["default"],
-      "tokens": ["--rg-color-*", "--rg-radius-pill"],
+      "tokens": ["--rg-color-*", "--rg-radius-pill", "--rg-border-hairline"],
       "doc": "components/badges.md",
       "specimenAnchor": "badges",
-      "snippet": "<span class=\"rg-badge rg-badge--validated\">Validato</span>",
-      "keywords": ["badge", "stato", "etichetta", "tag", "provenienza", "categoria", "pill", "chip"]
+      "snippet": "<span class=\"rg-badge rg-badge--validated\">Validato</span>\n<span class=\"rg-badge rg-badge--draft\">Bozza</span>\n<span class=\"rg-badge rg-badge--count rg-badge--estimated\">3 anomalie</span>",
+      "notes": "Ciclo di vita: --draft, --review (in revisione), --validated, --archived. Pipeline di ingestione: --pending, --parsed. Non esiste --in-review: usare --review. Le varianti si distinguono anche in scala di grigi (pallino vuoto, bordo tratteggiato). Mai riempimenti pastello.",
+      "keywords": ["badge", "stato", "etichetta", "tag", "provenienza", "categoria", "pill", "chip", "bozza", "draft", "in revisione", "validato", "archiviato", "in attesa", "pending", "parsed", "interpretato", "ciclo di vita", "lifecycle", "conteggio", "count", "anomalie"]
     },
     {
       "id": "navigation",
@@ -213,14 +213,15 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": null, "subcomponents": { "topbar": ["rg-topbar", "rg-topbar--app", "rg-topbar__brand", "rg-topbar__back", "rg-topbar__title", "rg-topbar__actions", "rg-topbar__nav"], "sidebar": ["rg-sidebar", "rg-sidebar__nav", "rg-sidebar__foot", "rg-sidebar-list", "rg-sidebar-item", "rg-sidebar-item--active"], "tabs": ["rg-tabs", "rg-tab", "rg-tab--active"], "breadcrumb": ["rg-breadcrumb", "rg-breadcrumb__sep", "rg-breadcrumb__current"], "pagination": ["rg-pagination", "rg-page", "rg-page--active"] } },
-      "variants": ["global-header", "app-topbar", "sidebar", "local-tabs", "breadcrumb", "pagination"],
+      "classes": { "base": null, "subcomponents": { "topbar": ["rg-topbar", "rg-topbar--app", "rg-topbar--sticky", "rg-topbar__brand", "rg-topbar__back", "rg-topbar__title", "rg-topbar__actions", "rg-topbar__nav"], "sidebar": ["rg-sidebar", "rg-sidebar__nav", "rg-sidebar__foot", "rg-sidebar-list", "rg-sidebar-item", "rg-sidebar-item--active"], "tabs": ["rg-tabs", "rg-tab", "rg-tab--active", "rg-tabpanel"], "breadcrumb": ["rg-breadcrumb", "rg-breadcrumb__sep", "rg-breadcrumb__current"], "pagination": ["rg-pagination", "rg-page", "rg-page--active"] } },
+      "variants": ["global-header", "app-topbar", "sticky-topbar", "sidebar", "local-tabs", "breadcrumb", "pagination"],
       "states": ["default", "hover", "active", "focus"],
-      "tokens": ["--rg-font-identity", "--rg-layout-header", "--rg-color-black", "--rg-color-border", "--rg-border-hairline"],
+      "tokens": ["--rg-font-identity", "--rg-layout-header", "--rg-color-black", "--rg-color-border", "--rg-border-hairline", "--rg-z-sticky"],
       "doc": "components/navigation.md",
       "specimenAnchor": "navigation",
       "snippet": "<header class=\"rg-topbar rg-topbar--app\"><a class=\"rg-topbar__back\" href=\"#/\">← RG Tools</a><h1 class=\"rg-topbar__title\">Rete 45°</h1><div class=\"rg-topbar__actions\"><span class=\"rg-mono rg-u-muted\">v0.3.0</span></div></header>",
-      "keywords": ["navigazione", "menu", "header", "sidebar", "tab", "breadcrumb", "paginazione", "navbar", "topbar", "top bar", "barra superiore", "app bar", "appbar", "chrome", "titolo", "back", "ritorno", "azioni", "toolbar", "suite"]
+      "notes": "rg-tab funziona su <a> e su <button>: il reset del chrome nativo del bottone e nel DS (v1.1.0), non va riscritto in locale. Il pannello e rg-tabpanel, mostrato da is-active o aria-hidden=false. rg-topbar--sticky ancora la barra in cima.",
+      "keywords": ["navigazione", "menu", "header", "sidebar", "tab", "tabpanel", "pannello", "breadcrumb", "paginazione", "navbar", "topbar", "top bar", "barra superiore", "app bar", "appbar", "chrome", "titolo", "back", "ritorno", "azioni", "toolbar", "suite", "sticky", "ancorata"]
     },
     {
       "id": "modal",
@@ -320,7 +321,8 @@
       "doc": "components/alerts.md",
       "specimenAnchor": "data",
       "snippet": "<div class=\"rg-empty\">Nessun consumo calcolato.</div>",
-      "keywords": ["empty", "vuoto", "nessun dato", "placeholder", "stato vuoto"]
+      "notes": "Superficie aperta con filetti sopra e sotto, non un riquadro chiuso: lo stato vuoto non merita una cornice. Nomi alternativi da NON creare: rg-empty-state, rg-no-data.",
+      "keywords": ["empty", "empty state", "vuoto", "stato vuoto", "nessun dato", "nessun risultato", "placeholder", "no data", "elenco vuoto"]
     },
     {
       "id": "loading",
@@ -344,14 +346,16 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-key-value", "related": ["rg-debug", "rg-log-line", "rg-log-line__time", "rg-version"] },
+      "classes": { "base": "rg-key-value", "variants": ["rg-key-value--ruled"], "related": ["rg-debug", "rg-log-line", "rg-log-line__time", "rg-version"] },
+      "variants": ["compact", "ruled"],
       "states": ["default"],
-      "tokens": ["--rg-font-mono", "--rg-color-text-secondary"],
+      "tokens": ["--rg-font-mono", "--rg-color-text-secondary", "--rg-letter-label"],
       "doc": "components/technical-data.md",
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "data",
-      "snippet": "<dl class=\"rg-key-value\"><dt>material_id</dt><dd>FIL-0281</dd></dl>",
-      "keywords": ["key value", "chiave valore", "dato tecnico", "metadati", "log", "debug", "versione", "provenienza"]
+      "snippet": "<dl class=\"rg-key-value\"><dt>material_id</dt><dd>FIL-0281</dd></dl>\n<dl class=\"rg-key-value rg-key-value--ruled\"><dt>Codice</dt><dd>RG-AR-0248</dd><dt>Stagione</dt><dd>PE 26</dd></dl>",
+      "notes": "--ruled e la presentazione a scheda tecnica: colonna label fissa, righe rigate, valore a sinistra. Per record confrontabili fra loro serve rg-table, non questa.",
+      "keywords": ["key value", "chiave valore", "dato tecnico", "metadati", "log", "debug", "versione", "provenienza", "anagrafica", "scheda tecnica", "attributi", "data grid", "griglia dati", "specifiche", "dt dd"]
     },
     {
       "id": "progress",
@@ -406,13 +410,15 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-disclosure", "elements": ["rg-disclosure__trigger", "rg-disclosure__content"] },
+      "classes": { "base": "rg-disclosure", "elements": ["rg-disclosure__trigger", "rg-disclosure__content"], "variants": ["rg-disclosure--boxed"] },
+      "variants": ["open-surface", "boxed"],
       "states": ["collapsed", "expanded", "focus"],
-      "tokens": ["--rg-color-border", "--rg-space-*"],
+      "tokens": ["--rg-color-border", "--rg-color-surface", "--rg-radius-md", "--rg-space-*"],
       "doc": "components/disclosure.md",
       "specimenAnchor": "layout",
-      "snippet": "<details class=\"rg-disclosure\"><summary class=\"rg-disclosure__trigger\">Dettagli</summary><div class=\"rg-disclosure__content\">...</div></details>",
-      "keywords": ["disclosure", "accordion", "espandi", "collassa", "dettagli", "fisarmonica"]
+      "snippet": "<details class=\"rg-disclosure\"><summary class=\"rg-disclosure__trigger\">Dettagli</summary><div class=\"rg-disclosure__content\">...</div></details>\n<details class=\"rg-disclosure rg-disclosure--boxed\" open><summary class=\"rg-disclosure__trigger\">Materiali e consumi</summary><div class=\"rg-disclosure__content\">...</div></details>",
+      "notes": "--boxed e la sezione collassabile riquadrata di una pagina lunga (v1.1.0): NON e una card, non usarla per record o entita. Il segno +/- e generato dal DS e segue [open]/is-expanded/aria-expanded: non aggiungere un secondo indicatore.",
+      "keywords": ["disclosure", "accordion", "espandi", "collassa", "dettagli", "fisarmonica", "sezione collassabile", "section card", "toggle sezione", "riquadro apribile", "details", "summary"]
     },
     {
       "id": "list-row",
@@ -443,6 +449,45 @@
       "specimenAnchor": "layout",
       "snippet": "<button class=\"rg-icon-button\" aria-label=\"Centra sul connettore\">◎</button>",
       "keywords": ["icon button", "icona", "azione compatta", "toolbar", "bottone icona"]
+    },
+    {
+      "id": "appshell",
+      "title": "App-shell documentale",
+      "role": "Guscio delle applicazioni a pagine: topbar ancorata + colonna di contenuto centrata e limitata.",
+      "status": "stable",
+      "since": "1.1.0",
+      "kind": "component",
+      "isPattern": true,
+      "promotedFrom": "rg-product-platform",
+      "classes": { "base": "rg-appshell", "elements": ["rg-appshell__main"], "related": ["rg-topbar", "rg-topbar--app", "rg-topbar--sticky", "rg-section-header", "rg-section-header--sub", "rg-cluster", "rg-cluster--end", "rg-footer-note", "rg-u-no-print", "rg-u-inline"] },
+      "cssVars": ["--rg-appshell-max"],
+      "variants": [],
+      "states": ["default", "print"],
+      "tokens": ["--rg-layout-content-max", "--rg-layout-reading-max", "--rg-space-8", "--rg-z-sticky"],
+      "doc": "patterns/appshell.md",
+      "specimenAnchor": "appshell",
+      "snippet": "<div class=\"rg-appshell\"><header class=\"rg-topbar rg-topbar--app rg-topbar--sticky\"><span class=\"rg-topbar__brand\">RG</span><nav class=\"rg-topbar__nav\" aria-label=\"Navigazione principale\"><a href=\"/\" aria-current=\"page\">Prodotti</a><a href=\"/review\">Revisione</a></nav><div class=\"rg-topbar__actions\"></div></header><main class=\"rg-appshell__main\">...</main></div>",
+      "notes": "Complemento di rg-workspace: questo e il guscio delle app a pagine, quello e il guscio delle tool. Uno solo per documento, mai annidato. La larghezza si stringe con --rg-appshell-max usando un token di layout, non un pixel arbitrario. La stampa e gia gestita in rg-utilities.css: nessuna app riscrive il proprio @media print.",
+      "keywords": ["app shell", "appshell", "guscio", "shell", "layout applicazione", "header", "main", "pagina", "chrome", "struttura pagina", "colonna contenuto", "sticky header", "piattaforma", "rg-app", "rg-main"]
+    },
+    {
+      "id": "lightbox",
+      "title": "Lightbox",
+      "role": "Ingrandire un'immagine documentaria (campione, foto tecnica, scansione) senza lasciare la pagina.",
+      "status": "stable",
+      "since": "1.1.0",
+      "kind": "component",
+      "promotedFrom": "rg-product-platform",
+      "classes": { "base": "rg-lightbox", "elements": ["rg-lightbox__image", "rg-lightbox__thumb"] },
+      "variants": [],
+      "states": ["closed", "open", "hover"],
+      "tokens": ["--rg-z-overlay", "--rg-color-black", "--rg-radius-sm", "--rg-space-8"],
+      "doc": "components/lightbox.md",
+      "rulesRef": "design-rules.md#7-tono-visivo",
+      "specimenAnchor": "lightbox",
+      "snippet": "<button class=\"rg-lightbox__thumb\" aria-label=\"Ingrandisci: fermata 03\"><img src=\"stop-03.jpg\" alt=\"Fermata 03\" width=\"132\"></button>\n<div class=\"rg-lightbox\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Immagine ingrandita\" hidden><img class=\"rg-lightbox__image\" src=\"\" alt=\"\"></div>",
+      "notes": "Overlay di SOLA LETTURA, su --rg-z-overlay (sotto i dialog). Se serve una decisione, un form o metadati editabili, il componente e rg-modal. Chiusura obbligatoria con click sullo scrim E con Esc. La miniatura e un <button> con aria-label: il cursore zoom-in non e un'affordance accessibile.",
+      "keywords": ["lightbox", "zoom", "ingrandimento", "immagine", "foto", "anteprima", "overlay", "scrim", "miniatura", "thumbnail", "campione", "galleria"]
     }
   ]
 }

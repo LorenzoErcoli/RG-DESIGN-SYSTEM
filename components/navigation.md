@@ -61,6 +61,32 @@ le azioni della vista stanno nella `rg-action-bar`, non nella topbar.
 Nella radice della suite, dove non c'e ritorno, si usa `<span class="rg-topbar__brand">RG Tools</span>`
 al posto di `__back`.
 
+Con `rg-topbar--sticky` la barra resta ancorata in cima mentre il contenuto scorre: e la
+configurazione normale dentro `rg-appshell` (vedi `patterns/appshell.md`). Non renderla sticky
+in pagine corte o in stampa — il modulo utilities la nasconde gia in `@media print`.
+
+### Local tabs
+
+Viste sorelle della **stessa** entita: dettaglio, filati, consumi, anomalie. Non usare le tab
+per navigare fra entita diverse (quella e la nav della topbar) ne per un wizard a passi.
+
+`rg-tab` funziona indifferentemente su `<a>` (viste con URL proprio, preferibile) e su
+`<button>` (commutazione client-side): il reset del chrome nativo del bottone e nel DS, non
+serve riscriverlo in locale. Lo stato attivo si dichiara con `aria-selected="true"` o con
+`is-active`; il pannello corrispondente e `rg-tabpanel`.
+
+```html
+<div class="rg-tabs" role="tablist">
+  <button class="rg-tab is-active" role="tab" aria-selected="true" aria-controls="p-scheda" id="t-scheda">Scheda</button>
+  <button class="rg-tab" role="tab" aria-selected="false" aria-controls="p-filati" id="t-filati">Filati</button>
+</div>
+<div class="rg-tabpanel is-active" role="tabpanel" id="p-scheda" aria-labelledby="t-scheda">…</div>
+<div class="rg-tabpanel" role="tabpanel" id="p-filati" aria-labelledby="t-filati">…</div>
+```
+
+Se le tab pilotano contenuto caricato dal server, l'alternativa corretta e un link per vista con
+`aria-current="page"`: lo stato sopravvive al refresh e alla condivisione dell'URL.
+
 ### Sidebar (shell)
 
 La sidebar standard è un contenitore `rg-sidebar` (flex column, bordo destro) con: un'etichetta

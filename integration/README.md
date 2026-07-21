@@ -60,6 +60,31 @@ perimetro servito in [fastapi.md](fastapi.md#perimetro-servito).
 ## Componenti app-local
 
 Un prodotto può avere componenti propri non promossi nel DS. Vanno tenuti **fisicamente
-separati** dal submodule (es. `static/css/app-local.css`), caricati **dopo** i moduli DS, e
-dichiarati in `components.json` → `appLocalExceptions`. Non si aggiungono classi `.rg-*` fuori
-dal DS: un componente locale usa un prefisso proprio o un nome esplicitamente d'applicazione.
+separati** dal submodule (es. `static/css/app-local.css`) e caricati **dopo** i moduli DS.
+
+**Il prefisso `rg-` appartiene al DS e a nessun altro.** Un componente locale si chiama con un
+prefisso proprio (`app-`, o il nome del dominio: `sheet-`, `ts-`). Da 1.1.0 non esiste più il
+meccanismo delle eccezioni dichiarate in `appLocalExceptions`: una classe `.rg-*` definita fuori
+dal DS è una violazione, punto. La regola vale quanto è verificabile, e questa lo è con un grep:
+
+```bash
+# dalla radice del prodotto — deve non stampare nulla
+grep -rn "\.rg-[a-z-]*\s*{" --include=*.css --include=*.html . | grep -v design-system/
+```
+
+Perché non le eccezioni: un elenco di deroghe va tenuto sincronizzato a mano, invecchia in
+silenzio e sposta il confine da "si vede dal nome" a "bisogna andare a leggere un JSON". Se una
+classe merita il prefisso `rg-`, merita di stare nel DS — e allora si promuove.
+
+### Quando promuovere invece di tenere in locale
+
+Resta locale ciò che è **dominio di un solo prodotto** (una striscia della sua dashboard, una
+riga della sua scheda). Si promuove ciò che è **struttura, stato o comportamento** che un secondo
+prodotto RG riscriverebbe uguale: gusci, stati del ciclo di vita, overlay, tab, stampa. In dubbio:
+si tiene locale con un nome proprio, e si promuove alla seconda occorrenza (regole §12).
+
+### Blocchi `<style>` nei template
+
+Non sono un posto dove tenere CSS d'applicazione: vincono sui `<link>` per posizione e
+sovrascrivono silenziosamente il DS senza che nessuno se ne accorga. Il CSS locale sta in
+`app-local.css`; nel template restano solo le variabili CSS per-istanza (`style="--rg-zoom:1"`).

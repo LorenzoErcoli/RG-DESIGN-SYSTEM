@@ -7,6 +7,41 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.1.0 — 2026-07-21
+
+Assorbimento del CSS residuo di `rg-product-platform`. Nessun token nuovo, nessuna rimozione:
+**aggiornamento sicuro**, il pin si sposta senza interventi obbligati. Origine: triage delle
+~196 righe di CSS rimaste nei blocchi `<style>` dei template Jinja dopo l'adozione del DS.
+
+### Nuovi
+
+- **App-shell documentale** (`rg-appshell`, `rg-appshell__main`, var `--rg-appshell-max`) —
+  guscio delle applicazioni a pagine, complemento di `rg-workspace`. Doc `patterns/appshell.md`.
+- **Lightbox** (`rg-lightbox`, `__image`, `__thumb`) — ingrandimento di un'immagine documentaria
+  su `--rg-z-overlay`, sotto i dialog. Doc `components/lightbox.md`.
+- **Badge, ciclo di vita e pipeline** — `--draft`, `--archived`, `--pending`, `--parsed` e la
+  variante di forma `--count`, che `badges.md` prometteva dalla 0.1.0 senza implementarla.
+  Distinguibili senza colore: pallino vuoto, bordo tratteggiato, assenza di pallino.
+- **`rg-tabpanel`** — le tab avevano il controllo ma non il pannello.
+- **`rg-topbar--sticky`**, **`rg-disclosure--boxed`**, **`rg-key-value--ruled`**,
+  **`rg-cluster--end`**, **`rg-section-header--sub`**, **`rg-u-inline`**, **`rg-u-no-print`**.
+- **Regole di stampa** in `rg-utilities.css`: le schede tecniche RG si stampano, il chrome
+  sparisce e il contenuto occupa la pagina senza che ogni app riscriva il proprio `@media print`.
+
+### Correzioni
+
+- `.rg-tab` non funzionava su `<button>`: mancava il reset del chrome nativo, e ogni app se lo
+  riscriveva in locale sovrascrivendo la versione DS. Ora ha anche il font identitario e il
+  target minimo di 40 px, e riconosce `is-active`.
+- `.rg-disclosure` documenta `<summary>` come trigger ma non ne sopprimeva il marker nativo
+  (marker + segno `+`/`−` insieme) e non seguiva `[open]`.
+
+### Contratto
+
+- `appLocalExceptions` è **vuota e non va ripopolata**. Il prefisso `rg-` appartiene al DS: una
+  classe `.rg-*` definita fuori dal DS è una violazione, verificabile con un grep invece che
+  leggendo un elenco di deroghe. Vedi `integration/README.md`.
+
 ## 1.0.0 — 2026-07-20
 
 Prima release stabile e **primo contratto di consumo pubblico**. Da qui i prodotti della

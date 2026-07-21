@@ -15,6 +15,24 @@ Coppie etichetta→valore per parametri e metadati. Valore a destra in mono.
 </dl>
 ```
 
+### Variante scheda tecnica (`rg-key-value--ruled`)
+
+Per l'anagrafica completa di un'entità: colonna etichette a larghezza fissa, righe rigate, valore
+allineato a sinistra e leggibile in colonna. La variante base resta per inspector, box stretti e
+riepiloghi di poche righe; questa è per liste lunghe di attributi, dove l'occhio deve scendere.
+
+Non è una tabella: se le righe sono record confrontabili fra loro serve `rg-table`, non questa.
+Sotto i 680 px la colonna etichetta collassa sopra il valore.
+
+```html
+<dl class="rg-key-value rg-key-value--ruled">
+  <dt>Codice</dt><dd>RG-AR-0248</dd>
+  <dt>Cliente</dt><dd>—</dd>
+  <dt>Stagione</dt><dd>PE 26</dd>
+  <dt>Consumo</dt><dd>184,42 m</dd>
+</dl>
+```
+
 ## Debug, log, version (`rg-debug`, `rg-log-line`, `rg-version`)
 
 Output tecnici selezionabili in mono. Il log è a colonne (ora · livello · messaggio); il blocco

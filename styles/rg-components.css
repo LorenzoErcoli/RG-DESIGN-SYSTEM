@@ -113,6 +113,19 @@
 .rg-badge--operation::before { background: var(--rg-color-accent-sage); }
 .rg-badge--season-sage { background: color-mix(in srgb, var(--rg-color-accent-sage) 14%, var(--rg-color-white)); border-color: var(--rg-color-accent-sage); }
 .rg-badge--season-blue { background: color-mix(in srgb, var(--rg-color-accent-blue) 14%, var(--rg-color-white)); border-color: var(--rg-color-accent-blue); }
+/* Ciclo di vita del record e stato di pipeline (promossi da product-platform, v1.1.0).
+   Restano dentro il modello del badge — superficie bianca, hairline, testo sempre presente —
+   e si distinguono anche in scala di grigi: pieno / vuoto / tratteggiato, non solo colore.
+   "In revisione" NON ha una variante propria: usa --review. "Validato" usa --validated. */
+.rg-badge--draft { color: var(--rg-color-text-secondary); }
+.rg-badge--archived { color: var(--rg-color-text-secondary); border-style: dashed; }
+.rg-badge--pending { color: var(--rg-color-text-secondary); }
+.rg-badge--pending::before { background: transparent; box-shadow: inset 0 0 0 var(--rg-border-hairline) currentColor; }
+.rg-badge--parsed { color: var(--rg-color-black); border-color: var(--rg-color-black); }
+/* Count: quantita breve associata a una label (la label testuale e obbligatoria).
+   Componibile con una variante semantica, es. .rg-badge--count.rg-badge--estimated. */
+.rg-badge--count { border-radius: var(--rg-radius-sm); font-variant-numeric: tabular-nums; }
+.rg-badge--count::before { display: none; }
 
 /* Navigation */
 /* Topbar — barra superiore dell'applicazione. Base scura (header di prodotto) e
@@ -133,6 +146,9 @@
 .rg-topbar--app .rg-topbar__brand { font-weight: var(--rg-weight-bold); }
 .rg-topbar--app .rg-topbar__nav a { color: var(--rg-color-text-secondary); }
 .rg-topbar--app .rg-topbar__nav a:hover, .rg-topbar--app .rg-topbar__nav a[aria-current="page"] { color: var(--rg-color-black); }
+/* Topbar ancorata: la barra resta visibile mentre il contenuto scorre. Entrambe le superfici
+   della topbar sono opache, quindi non serve altro sfondo. Sopra il contenuto, sotto i dialog. */
+.rg-topbar--sticky { position: sticky; top: 0; z-index: var(--rg-z-sticky); }
 @media (max-width: 680px) { .rg-topbar--app { gap: var(--rg-space-4); padding: 0 var(--rg-space-4); } .rg-topbar--app .rg-topbar__back + .rg-topbar__title, .rg-topbar--app .rg-topbar__brand + .rg-topbar__title { padding-inline-start: var(--rg-space-4); } }
 .rg-sidebar { display: flex; flex-direction: column; padding: var(--rg-space-8) var(--rg-space-4) var(--rg-space-6); border-right: 1px solid var(--rg-color-border-strong); }
 .rg-sidebar__nav { display: grid; gap: var(--rg-space-1); }
@@ -142,9 +158,15 @@
 .rg-sidebar-item:hover { color: var(--rg-color-black); background: var(--rg-color-neutral-50); }
 .rg-sidebar-item--active, .rg-sidebar-item.is-selected, .rg-sidebar-item[aria-current="page"] { color: var(--rg-color-black); border-color: var(--rg-color-black); font-weight: var(--rg-weight-medium); }
 .rg-tabs { display: flex; gap: var(--rg-space-6); border-bottom: 1px solid var(--rg-color-border); }
-.rg-tab { padding: var(--rg-space-3) 0; color: var(--rg-color-text-secondary); border-bottom: 2px solid transparent; text-decoration: none; }
+/* La tab funziona sia su <a> sia su <button>: il reset del chrome nativo del bottone sta qui,
+   altrimenti ogni app se lo riscrive in locale (era il caso di product-platform). */
+.rg-tab { display: inline-flex; align-items: center; min-height: 40px; padding: var(--rg-space-3) 0; color: var(--rg-color-text-secondary); background: none; border: 0; border-bottom: var(--rg-border-strong) var(--rg-border-style) transparent; margin-bottom: calc(var(--rg-border-hairline) * -1); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); text-align: left; text-decoration: none; cursor: pointer; }
 .rg-tab:hover { color: var(--rg-color-black); border-color: var(--rg-color-neutral-400); }
-.rg-tab--active, .rg-tab.is-selected, .rg-tab[aria-selected="true"] { color: var(--rg-color-black); border-color: var(--rg-color-black); }
+.rg-tab--active, .rg-tab.is-active, .rg-tab.is-selected, .rg-tab[aria-selected="true"] { color: var(--rg-color-black); border-color: var(--rg-color-black); }
+/* Pannello della tab: nascosto per default, mostrato dallo stato. Con markup ARIA completo
+   (role="tabpanel" + hidden) l'attributo hidden basta da solo: [hidden] vince nelle utilities. */
+.rg-tabpanel { display: none; }
+.rg-tabpanel.is-active, .rg-tabpanel[aria-hidden="false"] { display: block; }
 .rg-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--rg-space-2); margin: 0; padding: 0; color: var(--rg-color-text-secondary); list-style: none; font-size: var(--rg-font-size-xs); }
 .rg-breadcrumb li + li::before { content: "/"; margin-right: var(--rg-space-2); }
 .rg-breadcrumb a { color: var(--rg-color-text-secondary); text-decoration: none; }
@@ -179,6 +201,12 @@
 .rg-key-value { display: grid; grid-template-columns: 1fr auto; gap: var(--rg-space-3) var(--rg-space-6); margin: 0; }
 .rg-key-value dt { color: var(--rg-color-text-secondary); }
 .rg-key-value dd { margin: 0; text-align: right; font-family: var(--rg-font-mono); }
+/* Variante "scheda tecnica": colonna label fissa e righe rigate, per elenchi lunghi di
+   attributi di un'entita. La variante base resta per inspector e box stretti. */
+.rg-key-value--ruled { grid-template-columns: minmax(0, 180px) minmax(0, 1fr); gap: 0; border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-key-value--ruled dt { padding: var(--rg-space-3) var(--rg-space-4) var(--rg-space-3) 0; border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-key-value--ruled dd { padding: var(--rg-space-3) 0; color: var(--rg-color-text-primary); text-align: left; border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+@media (max-width: 680px) { .rg-key-value--ruled { grid-template-columns: minmax(0, 1fr); } .rg-key-value--ruled dt { padding-bottom: 0; border-bottom: 0; } }
 .rg-debug { margin: 0; padding: var(--rg-space-4); color: var(--rg-color-neutral-200); background: var(--rg-color-neutral-800); border-left: 3px solid var(--rg-color-accent-sage); font-size: 11px; line-height: 1.7; overflow: auto; }
 .rg-log-line { display: grid; grid-template-columns: 86px 58px 1fr; gap: var(--rg-space-3); padding: var(--rg-space-2) 0; border-bottom: 1px solid var(--rg-color-border); font-family: var(--rg-font-mono); font-size: 11px; }
 .rg-log-line__time { color: var(--rg-color-text-secondary); }
@@ -201,8 +229,18 @@
 .rg-disclosure__trigger { width: 100%; display: flex; justify-content: space-between; padding: var(--rg-space-3) 0; background: transparent; border: 0; text-align: left; cursor: pointer; }
 .rg-disclosure__trigger:hover { text-decoration: underline; text-underline-offset: 4px; }
 .rg-disclosure__trigger::after { content: "+"; font-family: var(--rg-font-mono); }
-.rg-disclosure.is-expanded .rg-disclosure__trigger::after, .rg-disclosure__trigger[aria-expanded="true"]::after { content: "−"; }
+.rg-disclosure.is-expanded .rg-disclosure__trigger::after, .rg-disclosure__trigger[aria-expanded="true"]::after, .rg-disclosure[open] > .rg-disclosure__trigger::after { content: "−"; }
 .rg-disclosure__content[hidden], .rg-disclosure.is-collapsed .rg-disclosure__content { display: none; }
+/* Il doc documenta <summary> come trigger: senza questo il marker nativo convive con il +/-. */
+summary.rg-disclosure__trigger { list-style: none; }
+summary.rg-disclosure__trigger::-webkit-details-marker { display: none; }
+/* Variante riquadrata: sezione collassabile di pagina lunga, quando la superficie aperta non
+   basta piu a separare blocchi eterogenei. Non e una card: non usarla per record o entita. */
+.rg-disclosure--boxed { margin-bottom: var(--rg-space-8); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); overflow: hidden; }
+.rg-disclosure--boxed > .rg-disclosure__trigger { align-items: center; min-height: 40px; padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
+.rg-disclosure--boxed > .rg-disclosure__trigger:hover { background: var(--rg-color-neutral-100); text-decoration: none; }
+.rg-disclosure--boxed[open] > .rg-disclosure__trigger, .rg-disclosure--boxed.is-expanded > .rg-disclosure__trigger { border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-disclosure--boxed > .rg-disclosure__content { padding: var(--rg-space-6); }
 
 /* List rows — technical list item with inline actions (v0.2.0) */
 .rg-list { display: grid; gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
@@ -258,3 +296,15 @@
 .rg-folder__body { display: flex; flex-direction: column; gap: var(--rg-space-1); min-width: 0; }
 .rg-folder__name { color: var(--rg-color-black); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-bold); font-size: var(--rg-font-size-md); text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rg-folder__count { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
+
+/* Lightbox — ingrandimento di un'immagine documentaria (campione, foto tecnica, scansione).
+   Overlay di sola lettura: nessuna decisione, nessun form; per quelli si usa rg-modal.
+   Sta sul livello overlay, sotto i dialog: un modal aperto non deve finirci sotto.
+   Promosso da product-platform, v1.1.0. */
+.rg-lightbox { position: fixed; inset: 0; z-index: var(--rg-z-overlay); display: none; align-items: center; justify-content: center; padding: var(--rg-space-8); background: color-mix(in srgb, var(--rg-color-black) 60%, transparent); cursor: zoom-out; }
+.rg-lightbox.is-open { display: flex; }
+.rg-lightbox__image { max-width: 100%; max-height: 100%; background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+/* Miniatura che apre il lightbox: e un <button>, quindi focusabile e con aria-label. */
+.rg-lightbox__thumb { display: block; padding: 0; background: var(--rg-color-neutral-50); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-sm); cursor: zoom-in; }
+.rg-lightbox__thumb:hover { border-color: var(--rg-color-black); }
+.rg-lightbox__thumb img { display: block; }

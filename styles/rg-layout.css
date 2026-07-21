@@ -3,11 +3,15 @@
 .rg-section-header { display: flex; justify-content: space-between; align-items: end; gap: var(--rg-space-4); margin-bottom: var(--rg-space-6); }
 .rg-section-header__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); }
 .rg-section-header__meta { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
+.rg-section-header--sub { align-items: baseline; margin-bottom: var(--rg-space-3); }
 .rg-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--rg-layout-grid-gap); }
 .rg-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .rg-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .rg-stack { display: grid; gap: var(--rg-space-4); }
 .rg-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); }
+/* Allineamento al piede: form inline dove i campi hanno label sopra e il bottone deve
+   restare sulla linea di base dei controlli, non centrarsi sul blocco label+campo. */
+.rg-cluster--end { align-items: flex-end; }
 .rg-split-panel { display: grid; grid-template-columns: 1fr 1fr; min-height: 220px; background: var(--rg-color-white); border: 1px solid var(--rg-color-black); }
 .rg-split-panel > div { padding: var(--rg-space-6); }
 .rg-split-panel > div + div { border-left: 1px solid var(--rg-color-black); }
@@ -22,6 +26,14 @@
 .rg-action-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--rg-space-4); padding: var(--rg-space-4); background: var(--rg-color-white); border-block: 1px solid var(--rg-color-black); }
 .rg-confirmation { border-color: var(--rg-color-black); }
 .rg-confirmation h3 { margin: 0; font-family: var(--rg-font-identity); }
+
+/* App-shell documentale — guscio delle applicazioni a pagine: topbar + colonna di contenuto
+   centrata e limitata, footer opzionale. E il complemento di rg-workspace, che e il guscio
+   delle tool (pannello + canvas). Chi ha pagine e navigazione usa questo, non quello.
+   La larghezza si stringe con --rg-appshell-max, che deve restare un token di layout.
+   Promosso da product-platform, v1.1.0. */
+.rg-appshell { display: flex; flex-direction: column; min-height: 100vh; }
+.rg-appshell__main { flex: 1; width: 100%; max-width: var(--rg-appshell-max, var(--rg-layout-content-max)); margin-inline: auto; padding: var(--rg-space-8); }
 
 /* Workspace — app-shell a 2 pannelli: parametri + canvas pan/zoom (pattern, v0.3.0).
    Riempie l'area sotto rg-topbar; l'app imposta l'altezza esterna. Il pan/zoom vive
@@ -49,6 +61,7 @@
   .rg-param-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 680px) {
+  .rg-appshell__main { padding: var(--rg-space-4); }
   .rg-grid, .rg-grid--4, .rg-grid--2, .rg-filter-group, .rg-parameter-group__grid, .rg-split-panel { grid-template-columns: 1fr; }
   .rg-split-panel > div + div { border-top: 1px solid var(--rg-color-black); border-left: 0; }
   .rg-consumption-row { grid-template-columns: 1fr auto; }

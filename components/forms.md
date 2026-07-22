@@ -45,6 +45,85 @@ non è più leggibile e la label a due parole va a capo tre volte.
 - L'input non sborda mai il proprio contenitore: il DS gli impone `min-width: 0`, che annulla la
   dimensione minima automatica del controllo. Non aggiungere `width`/`min-width` locali.
 
+## Campo numerico (`.rg-input--numeric`)
+
+Un valore misurato è un dato tecnico: mono, cifre tabulari, allineato a destra e **largo quanto
+serve**, non quanto il contenitore. `rg-input--numeric` è la forma da usare per tariffe, tempi,
+quantità e soglie; sostituisce la composizione `rg-input rg-mono`, che resta valida per gli input
+di testo tecnico (codici, ID) dove l'allineamento a destra non ha senso.
+
+La larghezza è `--rg-input-numeric-width` (default `12ch`): si stringe o si allarga per caso d'uso
+sul contenitore, senza toccare il componente. Dentro `rg-field-with-unit` il campo e il riquadro
+dell'unità restano attaccati e non si stirano.
+
+```html
+<label class="rg-field">
+  <span class="rg-field__label">Tariffa macchina</span>
+  <span class="rg-field-with-unit">
+    <input class="rg-input rg-input--numeric" type="number" step="0.01" min="0" value="80"> <span>€/h</span>
+  </span>
+  <small class="rg-field__help">Costo orario della macchina da ricamo.</small>
+</label>
+```
+
+## Sola lettura (`[readonly]`)
+
+`readonly` e `disabled` non sono lo stesso stato e non vanno scambiati. **Disabled** significa
+"questo controllo non è attivo ora" (dipende da un'altra scelta, da un caricamento): il testo
+sbiadisce e il valore non viene inviato. **Read-only** significa "il valore è valido e va letto,
+ma tu non puoi cambiarlo": tipicamente perché l'utente non ha il permesso. Il valore resta a pieno
+contrasto, selezionabile, copiabile e raggiungibile da tastiera; cambiano solo la superficie e
+l'assenza di affordance in hover.
+
+Regola non negoziabile: il grigio non è la spiegazione. Il motivo va scritto accanto al form con
+un `rg-alert`, e l'azione primaria che non è più eseguibile va **omessa**, non lasciata inerte.
+
+```html
+<div class="rg-alert rg-alert--info" role="note">
+  <p class="rg-alert__title">Sola lettura</p>
+  <p class="rg-alert__message">Non hai i permessi per modificare questi valori. Richiedi l'abilitazione a un amministratore.</p>
+</div>
+<label class="rg-field">
+  <span class="rg-field__label">Velocità</span>
+  <span class="rg-field-with-unit">
+    <input class="rg-input rg-input--numeric" value="500" readonly> <span>punti/min</span>
+  </span>
+</label>
+```
+
+`<select>` non ha `readonly`: usare `aria-readonly="true"` (il DS lo stila come i campi di testo) e,
+se il valore deve comunque essere inviato, un `<input type="hidden">` gemello. Un `<fieldset>` non
+può essere read-only: l'attributo va su ogni controllo.
+
+## Gruppo di parametri (`.rg-parameter-group`)
+
+La forma RG del **form di configurazione**: un `<fieldset>` con `<legend class="rg-label">` e una
+griglia a due colonne di `rg-field`. Non è una card — è il raggruppamento nativo di un form, che
+dichiara a quale insieme di parametri appartengono i campi. Per una sola sezione su una pagina già
+intitolata si può usare direttamente `rg-parameter-group__grid` senza il riquadro.
+
+Famiglia dei control group, tutti in `styles/rg-layout.css`:
+
+| Classe | Ruolo |
+| --- | --- |
+| `rg-parameter-group` + `__grid` | parametri di calcolo o configurazione, in fieldset |
+| `rg-filter-group` | filtri di un elenco: campi + azione allineati al piede |
+| `rg-action-bar` | barra di conferma: stato a sinistra, azioni a destra |
+| `rg-confirmation` | blocco di conferma con titolo, conseguenze e azioni |
+
+```html
+<fieldset class="rg-parameter-group">
+  <legend class="rg-label">Parametri macchina</legend>
+  <div class="rg-parameter-group__grid">
+    <label class="rg-field"><span class="rg-field__label">Tariffa macchina</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" value="80"> <span>€/h</span></span></label>
+    <label class="rg-field"><span class="rg-field__label">Velocità</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" value="500"> <span>punti/min</span></span></label>
+  </div>
+</fieldset>
+```
+
+Per una pagina intera di configurazione (testata, gruppi, tabella di valori per riga, salvataggio,
+sola lettura, indisponibilità) la composizione completa è in [`patterns/settings.md`](../patterns/settings.md).
+
 ## Autocomplete (`.rg-autocomplete`)
 
 Input di testo con suggerimenti filtrati mentre si digita. È la risposta alla regola

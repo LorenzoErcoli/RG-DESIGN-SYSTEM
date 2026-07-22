@@ -7,6 +7,39 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.3.1 — 2026-07-22
+
+Il **bottone-link non esce più sottolineato**. Segnalata da `rg-product-platform` applicando il
+contratto `rg-step` di 1.3.0: l'azione "Apri" di una fase è per forza un `<a class="rg-button">`
+— naviga — e usciva con la sottolineatura dello user-agent. `rg-core.css` dichiara solo
+`a { color: inherit }` e `.rg-button` non azzerava `text-decoration`, quindi la regola
+`.rg-button--ghost:hover { text-decoration: underline }` non distingueva più nulla: era già
+sottolineato a riposo. Correzione di foglio, nessuna classe nuova, nessun token, nessun cambio di
+contratto: **patch, si aggiorna il pin e basta**.
+
+### Correzioni
+
+- **`.rg-button` — `text-decoration: none`.** La stessa riga che `rg-tab`, `rg-folder`,
+  `rg-sidebar-item`, `rg-list-row--link` e `rg-topbar__back` portavano già: una classe di
+  componente indossabile da un `<a>` neutralizza la decorazione nativa. L'affordance di hover di
+  `--ghost` torna a essere un segnale. Il focus resta quello globale di `rg-core`
+  (`:focus-visible`), che non distingue fra `<a>` e `<button>`.
+- **`.rg-topbar__brand` — `text-decoration: none` + `color: inherit`,** con l'affordance di hover
+  qualificata su `a.rg-topbar__brand:hover` così un marchio inerte (`<span>`) non finge di essere
+  cliccabile. Stesso difetto, stessa riga: non serviva un trattamento separato. I prodotti stavano
+  degradando il marchio a `<span>` — rinunciando al ritorno alla home — pur di non vedere la
+  sottolineatura; quell'aggiramento ora si può rimuovere.
+
+**Niente reset globale su `a`.** Sarebbe la correzione sbagliata: un link nel testo corrente deve
+restare sottolineato, è la sua unica affordance non cromatica (regola: nessuno stato affidato al
+solo colore). La sottolineatura si azzera **per classe di componente**, mai per elemento.
+
+### Vetrina
+
+- Sezione **03 — Buttons**: nuova tavola "Azione che naviga — la classe su un `<a>`". La vetrina
+  rendeva i bottoni solo come `<button>`: per questo il difetto è sopravvissuto a tre release.
+  Ora una regressione si vede.
+
 ## 1.3.0 — 2026-07-22
 
 La **sequenza di fasi** diventa un componente. In `rg-product-platform` l'elenco delle fasi di una

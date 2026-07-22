@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.3.0",
+  "dsVersion": "1.3.1",
   "generated": "seed-2026-07-17",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
@@ -63,9 +63,9 @@
       "tokens": ["--rg-color-action-primary", "--rg-color-action-primary-text", "--rg-space-*", "--rg-radius-md"],
       "doc": "components/buttons.md",
       "specimenAnchor": "buttons",
-      "snippet": "<button class=\"rg-button rg-button--primary\" type=\"button\">Calcola consumo</button>",
-      "notes": "Da 1.3.0 --ghost e --danger sono componibili: rg-button--ghost.rg-button--danger e testo in colore danger senza bordo a riposo, la forma giusta per un'azione distruttiva secondaria ripetuta su piu righe (es. Elimina di rg-step). --small ha min-height 32px: sotto il target di 40px, quindi solo dentro liste dense gia ammesse.",
-      "keywords": ["azione", "comando", "cta", "pulsante", "button", "conferma", "invia", "salva", "elimina", "distruttiva", "ghost", "danger"]
+      "snippet": "<button class=\"rg-button rg-button--primary\" type=\"button\">Calcola consumo</button>\n<a class=\"rg-button rg-button--ghost\" href=\"/parti/12/fasi/0\">Apri fase</a>",
+      "notes": "Da 1.3.0 --ghost e --danger sono componibili: rg-button--ghost.rg-button--danger e testo in colore danger senza bordo a riposo, la forma giusta per un'azione distruttiva secondaria ripetuta su piu righe (es. Elimina di rg-step). --small ha min-height 32px: sotto il target di 40px, quindi solo dentro liste dense gia ammesse. Da 1.3.1 la classe azzera text-decoration: un'azione che NAVIGA e un <a href> che indossa rg-button (Apri scheda, Apri fase) e non esce piu sottolineata dallo user-agent; prima i prodotti la degradavano a <span> o a <button onclick=location>. Criterio: se cambia PAGINA e <a>, se cambia STATO e <button>. Il reset vale per classe di componente, mai un reset globale su a: i link nel testo corrente restano sottolineati. Dentro rg-step__actions l'azione di apertura e sorella del toggle, mai annidata.",
+      "keywords": ["azione", "comando", "cta", "pulsante", "button", "conferma", "invia", "salva", "elimina", "distruttiva", "ghost", "danger", "link", "naviga", "navigazione", "apri", "bottone-link", "apri scheda", "apri fase"]
     },
     {
       "id": "form-field",

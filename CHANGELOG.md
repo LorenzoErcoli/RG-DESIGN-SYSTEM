@@ -7,6 +7,44 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.3.0 — 2026-07-22
+
+Densità del pannello parametri delle tool. `pattern-grammar` mostrava numeri illeggibili nei campi
+con unità: il pannello era stato stretto a `--rg-layout-sidebar` (280px, il token della
+*navigazione*) e la griglia a due colonne lasciava ~68px all'input. Il difetto non era dell'app: il
+DS non diceva quale fosse la larghezza giusta di un pannello di parametri, e `rg-param-grid`
+collassava a una colonna solo su **media query di finestra** — quindi mai, con finestra larga e
+pannello stretto. Token additivi, nessuna rimozione: **aggiornamento sicuro**.
+
+### Nuovi token
+
+- **`--rg-layout-tool-panel`** (380px) — larghezza del pannello di una tool. È ora il default di
+  `--rg-workspace-panel`, al posto del 380px letterale che stava nel CSS. Le tool hanno un token
+  proprio perché un pannello di parametri non è una colonna di navigazione.
+- **`--rg-layout-param-col-min`** (132px) — larghezza minima di una colonna di parametri, cioè la
+  misura sotto la quale un `rg-field-with-unit` smette di mostrare il valore.
+
+### Correzioni
+
+- **`rg-param-grid` impila per larghezza del contenitore, non della finestra.**
+  `rg-workspace__panel` è ora un contenitore di query (`container-type: inline-size`) e la griglia
+  passa a una colonna sotto 324px di pannello (2 × 132 + gap + padding di sezione). Vale a
+  qualsiasi larghezza di finestra: nessuna app deve più scrivere media query locali per i propri
+  parametri. La vecchia media query a 760px resta per lo stack mobile.
+- **`rg-field-with-unit .rg-input` ha `min-width: 0`** — annulla la dimensione minima automatica
+  del controllo, che in un pannello stretto faceva sbordare l'input dalla propria traccia invece
+  di comprimerlo.
+
+### Documentazione
+
+- `patterns/workspace.md`: nuova regola "Larghezza del pannello" — quale token usare, perché non
+  restringere con `--rg-layout-sidebar`, la soglia dei 324px, e la segmentazione in
+  `rg-param-section` come leva giusta quando i controlli sono molti.
+- `components/forms.md`: larghezza minima d'uso del campo con unità e motivo per cui non esiste
+  una variante compatta.
+- Vetrina, sezione 16: il workspace è mostrato alla larghezza di default e affiancato dal
+  confronto 380 / 280 che rende visibile il collasso a una colonna.
+
 ## 1.2.0 — 2026-07-22
 
 Formalizzata la **riga-record navigabile**: l'elenco che è un indice (le fasi di una parte, le

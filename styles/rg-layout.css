@@ -39,8 +39,11 @@
    Riempie l'area sotto rg-topbar; l'app imposta l'altezza esterna. Il pan/zoom vive
    su __layer via le variabili --rg-pan-x/--rg-pan-y/--rg-zoom: restano invariate a
    ogni re-render del contenuto (nessun reset della vista). Vedi patterns/workspace.md. */
-.rg-workspace { display: grid; grid-template-columns: minmax(0, var(--rg-workspace-panel, 380px)) minmax(0, 1fr); height: 100%; min-height: 0; overflow: hidden; }
-.rg-workspace__panel { min-width: 0; overflow-y: auto; background: var(--rg-color-white); border-right: 1px solid var(--rg-color-black); }
+.rg-workspace { display: grid; grid-template-columns: minmax(0, var(--rg-workspace-panel, var(--rg-layout-tool-panel))) minmax(0, 1fr); height: 100%; min-height: 0; overflow: hidden; }
+/* Il pannello e un CONTENITORE di query: la densita della griglia parametri dipende dalla
+   larghezza del pannello, non da quella della finestra (un pannello stretto in una finestra
+   larga deve comunque impilare i campi). Vedi --rg-layout-param-col-min piu sotto. */
+.rg-workspace__panel { container-type: inline-size; min-width: 0; overflow-y: auto; background: var(--rg-color-white); border-right: 1px solid var(--rg-color-black); }
 .rg-workspace__stage { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-width: 0; min-height: 0; overflow: hidden; background: var(--rg-color-neutral-50); }
 .rg-workspace__stage-header { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-6); padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-white); border-bottom: 1px solid var(--rg-color-black); }
 .rg-workspace__canvas { position: relative; min-width: 0; min-height: 240px; margin: var(--rg-space-6); overflow: hidden; background: var(--rg-color-white); border: 1px solid var(--rg-color-black); cursor: grab; touch-action: none; }
@@ -51,8 +54,18 @@
 .rg-param-section__header { display: flex; align-items: baseline; gap: var(--rg-space-3); margin-bottom: var(--rg-space-4); }
 .rg-param-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rg-space-4) var(--rg-space-3); }
 .rg-param-grid__wide { grid-column: 1 / -1; }
+/* Soglia di densita (v1.3.0). Una colonna di parametri non scende sotto
+   --rg-layout-param-col-min (132px): sotto quella misura un campo con unita non mostra piu il
+   valore. Due colonne richiedono quindi 2x132 + 12 di gap + 48 di padding della sezione = 324px
+   di pannello; sotto, la griglia impila. Il valore e letterale perche una condizione @container
+   non accetta var(). */
+@container (max-width: 324px) {
+  .rg-param-grid { grid-template-columns: minmax(0, 1fr); }
+}
 .rg-field-with-unit { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-.rg-field-with-unit .rg-input { border-radius: var(--rg-radius-md) 0 0 var(--rg-radius-md); }
+/* min-width: 0 annulla la dimensione minima automatica del campo (che deriva dall'attributo
+   size del controllo): senza, l'input sborda la propria traccia in un pannello stretto. */
+.rg-field-with-unit .rg-input { min-width: 0; border-radius: var(--rg-radius-md) 0 0 var(--rg-radius-md); }
 .rg-field-with-unit > span { display: grid; place-items: center; min-width: 42px; padding-inline: var(--rg-space-2); color: var(--rg-color-text-secondary); background: var(--rg-color-neutral-50); border: 1px solid var(--rg-color-border-strong); border-left: 0; border-radius: 0 var(--rg-radius-md) var(--rg-radius-md) 0; font-family: var(--rg-font-mono); font-size: 10px; white-space: nowrap; }
 @media (max-width: 760px) {
   .rg-workspace { grid-template-columns: 1fr; height: auto; }

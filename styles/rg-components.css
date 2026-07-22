@@ -8,7 +8,14 @@
 .rg-swatch__value { color: var(--rg-color-text-secondary); }
 
 /* Buttons */
-.rg-button { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; gap: var(--rg-space-2); padding: 9px var(--rg-space-4); color: var(--rg-color-black); background: transparent; border: 1px solid transparent; border-radius: var(--rg-radius-md); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); cursor: pointer; }
+/* text-decoration: none (v1.3.1) — un'azione che NAVIGA e un <a class="rg-button">, non un
+   <button> con onclick: il DS non azzerava la sottolineatura dello user-agent (rg-core dichiara
+   solo `a { color: inherit }`) e il bottone-link usciva sottolineato a riposo, il che annullava
+   anche l'affordance di hover di --ghost. Stessa riga che rg-tab, rg-folder, rg-sidebar-item,
+   rg-list-row--link e rg-topbar__back portavano gia: una classe di componente indossabile da un
+   <a> neutralizza la decorazione nativa. NON si risolve con un reset globale su `a`: i link nel
+   testo corrente devono restare sottolineati. */
+.rg-button { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; gap: var(--rg-space-2); padding: 9px var(--rg-space-4); color: var(--rg-color-black); background: transparent; border: 1px solid transparent; border-radius: var(--rg-radius-md); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); text-decoration: none; cursor: pointer; }
 .rg-button:hover:not(:disabled) { border-color: var(--rg-color-neutral-600); }
 .rg-button:active:not(:disabled), .rg-button.is-active { background: var(--rg-color-neutral-100); }
 .rg-button--primary { color: var(--rg-color-white); background: var(--rg-color-black); border-color: var(--rg-color-black); }
@@ -135,7 +142,12 @@
    variante --app chiara (chrome di suite: ritorno/identita a sinistra, titolo dello
    strumento corrente, azioni o meta a destra in __actions). */
 .rg-topbar { min-height: var(--rg-layout-header); display: flex; align-items: center; gap: var(--rg-space-6); padding: 0 var(--rg-space-4); color: var(--rg-color-white); background: var(--rg-color-black); }
-.rg-topbar__brand { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); }
+/* Il marchio e spesso il ritorno alla home: da 1.3.1 regge un <a> senza uscire sottolineato.
+   L'affordance di hover e qualificata su `a`, cosi un brand inerte (<span>) non finge di essere
+   cliccabile. Prima di questa riga i prodotti degradavano il marchio a <span> per non vedere la
+   sottolineatura, cioe rinunciavano alla navigazione per un difetto di foglio. */
+.rg-topbar__brand { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); color: inherit; text-decoration: none; }
+a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
 .rg-topbar__back { display: inline-flex; min-height: 40px; align-items: center; gap: var(--rg-space-2); color: inherit; font-family: var(--rg-font-identity); text-decoration: none; }
 .rg-topbar__back:hover { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
 .rg-topbar__title { min-width: 0; margin: 0; overflow: hidden; color: inherit; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); line-height: var(--rg-line-height-heading); white-space: nowrap; text-overflow: ellipsis; }

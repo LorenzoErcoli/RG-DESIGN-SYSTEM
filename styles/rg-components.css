@@ -17,6 +17,9 @@
 .rg-button--secondary { background: var(--rg-color-white); border-color: var(--rg-color-black); }
 .rg-button--secondary:hover:not(:disabled), .rg-button--outline:hover:not(:disabled) { background: var(--rg-color-neutral-50); }
 .rg-button--ghost:hover:not(:disabled) { text-decoration: underline; text-underline-offset: 4px; }
+/* Composizione ghost + danger (v1.3.0): --ghost significa "senza chrome a riposo", quindi
+   l'azione distruttiva secondaria resta testo in colore danger, non un riquadro rosso. */
+.rg-button--ghost.rg-button--danger { border-color: transparent; }
 .rg-button--outline { border-color: var(--rg-color-border); }
 .rg-button--danger { color: var(--rg-color-danger); border-color: var(--rg-color-danger); }
 .rg-button--danger:hover:not(:disabled) { color: var(--rg-color-white); background: var(--rg-color-danger); }
@@ -272,6 +275,50 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-icon-button.is-active, .rg-icon-button[aria-pressed="true"] { color: var(--rg-color-white); background: var(--rg-color-black); border-color: var(--rg-color-black); }
 .rg-icon-button--danger:hover:not(:disabled) { color: var(--rg-color-white); background: var(--rg-color-danger); border-color: var(--rg-color-danger); }
 .rg-icon-button:disabled { color: var(--rg-color-neutral-400); cursor: not-allowed; }
+
+/* Step — fase di una sequenza ordinata (v1.3.0): numero progressivo, titolo forte, contenuto
+   espandibile IN LOCO e azioni proprie sempre visibili. Non e una riga-record (rg-list-row),
+   che e piatta e senza gerarchia di sequenza, ne una sezione collassabile
+   (rg-disclosure--boxed), che non e un record e non ha azioni.
+   Perche NON <details>/<summary>: le azioni della fase stanno sulla riga di intestazione, e
+   dentro un <summary> sarebbero controlli annidati in un controllo. Qui il toggle e un
+   <button> e le azioni sono suoi FRATELLI: nessun annidamento, tab order naturale.
+   Unica fonte di verita dello stato: aria-expanded sul toggle + [hidden] sul body. */
+.rg-steps { display: grid; gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
+.rg-step { position: relative; }
+/* Filo della sequenza: unisce il centro di un numero al centro del successivo, scavalcando il
+   gap. E il segno che distingue una sequenza da un elenco piatto; l'ultima fase non lo emette. */
+.rg-step::before { content: ""; position: absolute; left: calc(var(--rg-space-2) + var(--rg-space-4)); top: calc(var(--rg-space-3) + var(--rg-space-4)); bottom: calc(-1 * (var(--rg-space-2) + var(--rg-space-3) + var(--rg-space-4))); width: var(--rg-border-hairline); background: var(--rg-color-neutral-600); }
+.rg-step:last-child::before { content: none; }
+.rg-step__head { display: flex; align-items: center; gap: var(--rg-space-2); }
+.rg-step__toggle { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: var(--rg-space-4); min-height: 40px; /* target minimo, regola 11 */ padding: var(--rg-space-3) var(--rg-space-2); color: inherit; background: transparent; border: 0; border-radius: var(--rg-radius-md); font: inherit; text-align: left; cursor: pointer; }
+.rg-step__toggle:hover { background: var(--rg-color-surface); }
+/* Affordance non affidata al solo colore: il titolo si sottolinea come un link. */
+.rg-step__toggle:hover .rg-step__title { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
+.rg-step__toggle:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: calc(-1 * var(--rg-border-strong)); }
+/* Segno +/- generato dal DS, come nella disclosure: non aggiungere un secondo indicatore.
+   Il numero non e un indicatore di apertura: dice la posizione nella sequenza. */
+.rg-step__toggle::after { content: "+"; flex: none; margin-left: auto; font-family: var(--rg-font-mono); font-size: var(--rg-font-size-md); color: var(--rg-color-text-secondary); }
+.rg-step__toggle[aria-expanded="true"]::after { content: "−"; }
+.rg-step__num { position: relative; /* copre il filo della sequenza */ flex: none; display: inline-flex; align-items: center; justify-content: center; width: var(--rg-space-8); height: var(--rg-space-8); background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-md); font-variant-numeric: tabular-nums; }
+/* Fase aperta: numero invertito. Rinforzo di aria-expanded e del segno, mai unico segnale. */
+.rg-step__toggle[aria-expanded="true"] .rg-step__num { color: var(--rg-color-white); background: var(--rg-color-black); }
+.rg-step__headline { flex: 1 1 auto; min-width: 0; display: grid; gap: var(--rg-space-1); }
+.rg-step__title { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); overflow-wrap: anywhere; }
+.rg-step__meta { display: flex; flex-wrap: wrap; gap: 0 var(--rg-space-2); color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+.rg-step__meta > * + *::before { content: "·"; padding-right: var(--rg-space-2); color: var(--rg-color-neutral-400); }
+.rg-step__aside { flex: none; display: inline-flex; align-items: center; gap: var(--rg-space-2); }
+/* Azioni della fase: sorelle del toggle, mai dentro. Sempre visibili, non su hover. */
+.rg-step__actions { flex: none; display: inline-flex; align-items: center; gap: var(--rg-space-1); }
+/* Il corpo si allinea al titolo: il filo della sequenza gli scorre a sinistra. */
+.rg-step__body { padding: 0 var(--rg-space-2) var(--rg-space-6) calc(var(--rg-space-2) + var(--rg-space-8) + var(--rg-space-4)); }
+.rg-step__body[hidden] { display: none; }
+/* Fase in stato irrisolto: bordo forte + colore, sempre accompagnata da badge o testo. */
+.rg-step--danger .rg-step__num { color: var(--rg-color-danger); border-width: var(--rg-border-strong); border-color: var(--rg-color-danger); }
+.rg-step--danger .rg-step__toggle[aria-expanded="true"] .rg-step__num { color: var(--rg-color-white); background: var(--rg-color-danger); }
+/* Sotto la soglia mobile le azioni scendono su una riga propria, allineate al titolo, invece
+   di comprimere il titolo della fase. */
+@media (max-width: 680px) { .rg-step__head { flex-wrap: wrap; } .rg-step__toggle { flex-basis: 100%; } .rg-step__actions { margin-left: calc(var(--rg-space-2) + var(--rg-space-8) + var(--rg-space-4)); } }
 
 /* Modal / dialog — overlay con backdrop; shell riusabile (promosso da product-platform, v0.3.0) */
 .rg-modal-backdrop { position: fixed; inset: 0; z-index: var(--rg-z-modal); display: none; align-items: center; justify-content: center; padding: var(--rg-space-6); background: color-mix(in srgb, var(--rg-color-black) 45%, transparent); }

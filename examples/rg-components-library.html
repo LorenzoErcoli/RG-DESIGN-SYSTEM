@@ -43,6 +43,7 @@
     .specimen-stage { height: 100%; padding: var(--rg-space-6); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); }
     .specimen-stack { display: flex; flex-wrap: wrap; gap: var(--rg-space-3); align-items: center; }
     .specimen-column { display: grid; gap: var(--rg-space-4); }
+    .specimen-note { max-width: 720px; margin: var(--rg-space-6) 0 var(--rg-space-3); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
     @media (max-width: 980px) {
       .specimen-shell { display: block; }
       .specimen-nav { position: static; width: 100%; height: auto; border-right: 0; border-bottom: 1px solid var(--rg-color-black); }
@@ -227,8 +228,8 @@ status         VALID</pre></div>
       </section>
 
       <section class="specimen-section" id="workspace">
-        <div class="specimen-section__head"><span class="specimen-section__index">16</span><h2>Workspace / App-shell tool</h2><p>Guscio delle tool: pannello parametri + canvas pan/zoom + status bar. Il pan/zoom vive su <code class="rg-mono">__layer</code> tramite variabili CSS e non si azzera al re-render del contenuto. Vedi patterns/workspace.md.</p></div>
-        <div class="rg-workspace" style="height:460px;border:1px solid var(--rg-color-black);--rg-workspace-panel:300px">
+        <div class="specimen-section__head"><span class="specimen-section__index">16</span><h2>Workspace / App-shell tool</h2><p>Guscio delle tool: pannello parametri + canvas pan/zoom + status bar. Il pan/zoom vive su <code class="rg-mono">__layer</code> tramite variabili CSS e non si azzera al re-render del contenuto. Il pannello sta alla sua larghezza di default <code class="rg-mono">--rg-layout-tool-panel</code> (380px): è il token delle tool, non <code class="rg-mono">--rg-layout-sidebar</code>, che è la colonna di navigazione. Sotto 324px di pannello <code class="rg-mono">rg-param-grid</code> impila da sé a una colonna. Vedi patterns/workspace.md.</p></div>
+        <div class="rg-workspace" style="height:460px;border:1px solid var(--rg-color-black)">
           <aside class="rg-workspace__panel">
             <section class="rg-param-section">
               <div class="rg-param-section__header"><span class="rg-mono" style="font-size:10px;color:var(--rg-color-text-secondary)">01</span><h3 class="rg-h3" style="font-size:var(--rg-font-size-sm)">Griglia</h3></div>
@@ -255,6 +256,27 @@ status         VALID</pre></div>
             </div>
             <footer class="rg-workspace__statusbar"><span>Pronto · 142 cordoncini</span><span class="rg-mono">zoom 100% · pan 0,0</span></footer>
           </div>
+        </div>
+        <p class="specimen-note">Soglia di densità: lo stesso pannello a 380px (default) e a 280px. La griglia parametri interroga la larghezza del <em>pannello</em>, non della finestra: sotto 324px impila a una colonna da sola, senza CSS locale.</p>
+        <div style="display:flex;gap:var(--rg-space-6);align-items:flex-start">
+          <aside class="rg-workspace__panel" style="width:380px;border:1px solid var(--rg-color-black)">
+            <section class="rg-param-section">
+              <div class="rg-param-section__header"><span class="rg-mono" style="font-size:10px;color:var(--rg-color-text-secondary)">380</span><h3 class="rg-h3" style="font-size:var(--rg-font-size-sm)">Default — due colonne</h3></div>
+              <div class="rg-param-grid">
+                <label class="rg-field"><span class="rg-field__label">Distanza centro-centro</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" value="12.5"><span>mm</span></span></label>
+                <label class="rg-field"><span class="rg-field__label">Ingrandimento</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" value="102.4"><span>%</span></span></label>
+              </div>
+            </section>
+          </aside>
+          <aside class="rg-workspace__panel" style="width:280px;border:1px solid var(--rg-color-black)">
+            <section class="rg-param-section">
+              <div class="rg-param-section__header"><span class="rg-mono" style="font-size:10px;color:var(--rg-color-text-secondary)">280</span><h3 class="rg-h3" style="font-size:var(--rg-font-size-sm)">Stretto — una colonna</h3></div>
+              <div class="rg-param-grid">
+                <label class="rg-field"><span class="rg-field__label">Distanza centro-centro</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" value="12.5"><span>mm</span></span></label>
+                <label class="rg-field"><span class="rg-field__label">Ingrandimento</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" value="102.4"><span>%</span></span></label>
+              </div>
+            </section>
+          </aside>
         </div>
       </section>
 

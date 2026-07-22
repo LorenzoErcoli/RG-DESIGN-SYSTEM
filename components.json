@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.3.1",
+  "dsVersion": "1.4.0",
   "generated": "seed-2026-07-17",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
@@ -81,7 +81,8 @@
       "doc": "components/forms.md",
       "specimenAnchor": "inputs",
       "snippet": "<label class=\"rg-field__label\" for=\"len\">Lunghezza filo</label>\n<input id=\"len\" class=\"rg-input\" inputmode=\"decimal\" value=\"18.42\">",
-      "keywords": ["campo", "input", "form", "testo", "numero", "textarea", "ricerca", "label", "modulo"]
+      "notes": "rg-field-with-unit ha una larghezza minima d'uso: --rg-layout-param-col-min (132px). Il suffisso unita e incomprimibile (42px), quindi sotto quella misura si comprime il valore misurato. Nessuna variante compatta: sotto la soglia si passa a una colonna sola. L'input ha min-width: 0 dal DS e non sborda mai il contenitore.",
+      "keywords": ["campo", "input", "form", "testo", "numero", "textarea", "ricerca", "label", "modulo", "unita", "campo con unita", "larghezza minima"]
     },
     {
       "id": "choice",
@@ -287,11 +288,12 @@
       "classes": { "base": "rg-workspace", "elements": ["rg-workspace__panel", "rg-workspace__stage", "rg-workspace__stage-header", "rg-workspace__canvas", "rg-workspace__layer", "rg-workspace__statusbar", "rg-param-section", "rg-param-section__header", "rg-param-grid", "rg-param-grid__wide", "rg-field-with-unit"] },
       "cssVars": ["--rg-workspace-panel", "--rg-pan-x", "--rg-pan-y", "--rg-zoom"],
       "states": ["default", "is-dragging"],
-      "tokens": ["--rg-color-neutral-50", "--rg-space-6", "--rg-color-black"],
+      "tokens": ["--rg-color-neutral-50", "--rg-space-6", "--rg-color-black", "--rg-layout-tool-panel", "--rg-layout-param-col-min"],
       "doc": "patterns/workspace.md",
       "specimenAnchor": "workspace",
       "snippet": "<div class=\"rg-workspace\"><aside class=\"rg-workspace__panel\">...</aside><div class=\"rg-workspace__stage\"><header class=\"rg-workspace__stage-header\">...</header><div class=\"rg-workspace__canvas\"><div class=\"rg-workspace__layer\" style=\"--rg-zoom:1\"></div></div><footer class=\"rg-workspace__statusbar\">...</footer></div></div>",
-      "keywords": ["workspace", "tool", "editor", "canvas", "viewport", "pan", "zoom", "pannello parametri", "app shell", "generatore"]
+      "notes": "Larghezza del pannello (1.4.0): il default e --rg-layout-tool-panel (380px), token delle tool. Non stringerlo con --rg-layout-sidebar (280px), che e la colonna di navigazione: sotto 324px un rg-field-with-unit non mostra piu il valore. rg-param-grid interroga la larghezza del PANNELLO via @container e impila da sola a una colonna sotto la soglia, anche a finestra larga: nessuna app deve scrivere media query o CSS locale per questo.",
+      "keywords": ["workspace", "tool", "editor", "canvas", "viewport", "pan", "zoom", "pannello parametri", "app shell", "generatore", "larghezza pannello", "densita parametri", "container query"]
     },
     {
       "id": "alert",

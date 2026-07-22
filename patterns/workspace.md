@@ -23,12 +23,38 @@ Derivato da `pattern-grammar-engine`, generalizzato e reso token-based.
 
 - `rg-workspace` — griglia `[panel] [stage]`. Riempie l'area sotto la topbar; l'app imposta
   l'altezza esterna (es. `height: calc(100vh - var(--rg-layout-header))`). Larghezza del pannello
-  regolabile con `--rg-workspace-panel` (default 380px).
+  regolabile con `--rg-workspace-panel` (default `--rg-layout-tool-panel`, 380px).
 - `rg-workspace__panel` — parametri, scrollabile. Comporlo con `rg-param-section` +
   `rg-param-grid` + campi `rg-field` / `rg-field-with-unit`.
 - `rg-workspace__stage` — righe `header / canvas / statusbar`.
 - `rg-workspace__canvas` — viewport che ritaglia; `cursor: grab`, `is-dragging` durante il trascinamento.
 - `rg-workspace__layer` — il livello trasformato che contiene l'anteprima (SVG/canvas).
+
+## Larghezza del pannello (regola)
+
+Il pannello di una tool **non è una sidebar di navigazione**: contiene campi con label, valore e
+unità, non voci di menu. Per questo ha un token proprio, `--rg-layout-tool-panel` (380px), ed è
+quello il default di `--rg-workspace-panel`.
+
+- **Non stringere il pannello con `--rg-layout-sidebar` (280px)**: è il token della colonna di
+  navigazione. A 280px restano ~110px per campo e un `rg-field-with-unit` scende a ~68px di
+  input: il numero non è più leggibile. Se il pannello è quello dei parametri, l'override giusto
+  è **nessun override**.
+- Chi ha davvero bisogno di più spazio allarga, non stringe:
+  `style="--rg-workspace-panel: 440px"` (o un multiplo dichiarato). Restringere si fa solo
+  accettando la griglia a una colonna.
+- **Soglia di densità**: due colonne di parametri richiedono almeno **324px** di pannello
+  (2 × `--rg-layout-param-col-min` + gap + padding di `rg-param-section`). Sotto quella misura
+  `rg-param-grid` **impila da sola** a una colonna: la regola è nel DS tramite `@container` sul
+  pannello, quindi vale anche a finestra larga e non serve CSS locale. Il default 380px sta
+  sopra la soglia e mostra due colonne.
+- Un pannello ridimensionabile dall'utente non è nel DS: se serve, l'app scrive
+  `--rg-workspace-panel` sull'elemento `rg-workspace` e il resto si adatta da sé. Mantenere un
+  minimo di 324px (o accettare consapevolmente la colonna singola).
+
+Quando i controlli sono molti (oltre ~20), la leva giusta non è la larghezza ma la
+**segmentazione**: più `rg-param-section` con header numerato, l'ordine dei gruppi coerente con
+l'ordine del calcolo, e i campi larghi (select, upload, azioni) su `rg-param-grid__wide`.
 
 ## Pan / zoom che non si azzera (regola)
 

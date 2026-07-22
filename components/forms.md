@@ -27,6 +27,24 @@ Label → controllo → unità/azione accessoria → help → errore. I campi nu
 
 Stati richiesti: default, hover, focus, filled, read-only, disabled, warning, error, success e loading dipendente.
 
+## Campo con unità (`.rg-field-with-unit`) — larghezza minima
+
+Il campo è `[input | unità]`: il suffisso unità è incomprimibile (min 42px), quindi tutto ciò che
+si toglie alla colonna lo perde il numero. **Larghezza minima d'uso: 132px**
+(`--rg-layout-param-col-min`) — sotto, un valore come `12.5` con gli spinner del `type="number"`
+non è più leggibile e la label a due parole va a capo tre volte.
+
+- In una griglia a due colonne (`rg-param-grid`) servono quindi ≥ 324px di contenitore. Non è una
+  raccomandazione da rispettare a mano: `rg-param-grid` dentro `rg-workspace__panel` impila da sé
+  a una colonna sotto quella soglia (vedi `patterns/workspace.md`).
+- In un contenitore che non è il pannello di una tool, se la colonna può scendere sotto 132px usa
+  una colonna sola: non esiste una variante compatta del campo con unità, perché comprimere un
+  valore misurato è esattamente ciò che le regole tecniche vietano (§8 di `design-rules.md`).
+- Se l'unità è la stessa per tutti i campi di un gruppo, dichiararla una volta nel titolo del
+  gruppo e usare `rg-input` semplice è preferibile a ripetere un suffisso che ruba spazio.
+- L'input non sborda mai il proprio contenitore: il DS gli impone `min-width: 0`, che annulla la
+  dimensione minima automatica del controllo. Non aggiungere `width`/`min-width` locali.
+
 ## Autocomplete (`.rg-autocomplete`)
 
 Input di testo con suggerimenti filtrati mentre si digita. È la risposta alla regola

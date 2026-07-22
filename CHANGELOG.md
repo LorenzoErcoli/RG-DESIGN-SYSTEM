@@ -7,6 +7,47 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.3.0 — 2026-07-22
+
+La **sequenza di fasi** diventa un componente. In `rg-product-platform` l'elenco delle fasi di una
+parte era stato costruito con `rg-list-row--link` (1.2.0) e il difetto era del DS, non dell'app:
+una sequenza ordinata di contenitori non è un elenco di record. Il titolo pesava quanto un
+metadato, l'ordine non si leggeva, la fase risultava indistinguibile da una tabella dati e le
+azioni della fase erano vietate dal contratto della riga navigabile. Nessun token nuovo, nessuna
+rimozione: **aggiornamento sicuro**.
+
+### Nuovi
+
+- **`rg-steps` / `rg-step`** — fase di una sequenza ordinata: **blocco rigato** (filetto forte
+  nero sopra e sotto, filetto neutro fra le fasi, come `rg-table`; nessun riquadro a pannello),
+  numero di posizione in mono dentro una casella, filo verticale generato dal DS che unisce i
+  numeri (il segno che distingue una sequenza da un elenco piatto), titolo identitario a
+  `--rg-font-size-lg`, parametri tecnici con unità in `rg-step__meta`, corpo espandibile **in
+  loco** e azioni proprie sempre visibili. Il separatore sta in testa alla fase seguente, quindi
+  chiude anche il corpo di una fase aperta invece di lasciarlo sfumare in quella dopo.
+  Varianti: `rg-step--danger` per la fase irrisolta. Parti: `__head`, `__toggle`, `__num`,
+  `__headline`, `__title`, `__meta`, `__aside`, `__actions`, `__body`.
+- **`rg-button--ghost` + `rg-button--danger` componibili** — `--ghost` significa "senza chrome a
+  riposo", quindi l'azione distruttiva secondaria è testo in colore `danger` e non un riquadro
+  rosso ripetuto su ogni riga. Una riga di CSS, nessuna classe nuova.
+
+### Decisione strutturale: niente `<details>`
+
+Le azioni di una fase stanno sulla sua riga di intestazione. Dentro un `<summary>` sarebbero
+controlli annidati in un controllo (markup invalido, tastiera rotta); fuori dal `<summary>`
+sarebbero contenuto rivelabile, quindi invisibili a fase chiusa. Il toggle è perciò un `<button>`
+e le azioni sono suoi **fratelli**: tab order toggle → Modifica → Elimina → contenuto. Il
+compromesso, dichiarato nel doc: lo stato non è nativo e richiede due attributi
+(`aria-expanded` sul toggle, `hidden` sul corpo) resi dal server o da tre righe di controller.
+
+### Documentazione
+
+- Nuovo `components/steps.md`: scopo, quando **non** serve, tastiera e accessibilità, controller
+  di riferimento, limiti (non si annida, niente drag & drop in 1.3.0).
+- `components/lists.md`: rimando esplicito a `rg-step` nel paragrafo "Uso e limiti", dove il
+  divieto di controlli in una riga-link diventava un vicolo cieco.
+- Vetrina: nuova sezione **20 — Sequenza di fasi** (aperta, chiusa, irrisolta con stato vuoto).
+
 ## 1.2.0 — 2026-07-22
 
 Formalizzata la **riga-record navigabile**: l'elenco che è un indice (le fasi di una parte, le

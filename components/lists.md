@@ -77,6 +77,10 @@ target, grande quanto la riga, con chevron di apertura sul lato destro.
   riservato ai controlli, non alle etichette di sola lettura.
 - Per record confrontabili colonna per colonna serve `rg-table`; per un contenitore-sezione di
   una dashboard serve `rg-folder`. `rg-list-row--link` è per i **record** di un elenco.
+- **Se l'elenco è una sequenza ordinata** (le fasi di una lavorazione, i passi di un percorso) e
+  ogni voce è un contenitore che si apre in loco e porta azioni proprie, il componente è
+  `rg-step` (v1.3.0), non questa riga: qui il limite sopra — niente controlli in una riga-link —
+  è insormontabile per costruzione.
 - Elenco vuoto: `rg-empty` con testo esplicito, mai una lista senza righe.
 
 ## Regole

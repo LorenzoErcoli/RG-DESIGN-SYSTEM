@@ -252,6 +252,19 @@ summary.rg-disclosure__trigger::-webkit-details-marker { display: none; }
 .rg-list-row__title { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); overflow-wrap: anywhere; }
 .rg-list-row__meta { display: flex; justify-content: space-between; align-items: center; gap: var(--rg-space-2); color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
 .rg-list-row__actions { display: inline-flex; gap: var(--rg-space-1); }
+/* Riga navigabile (v1.2.0) — la riga-record E il link al proprio dettaglio: si applica a un
+   <a> (o a un <button> se la navigazione passa da JS), mai a un <li> inerte. Il chevron e
+   generato dal DS come il +/- della disclosure: non aggiungere una freccia nel markup.
+   Limite: una riga-link non puo contenere altri controlli interattivi (niente __actions). */
+.rg-list-row--link { position: relative; align-content: center; min-height: 40px; /* target minimo, regola 11 */ padding-right: var(--rg-space-8); color: inherit; text-decoration: none; cursor: pointer; transition: background var(--rg-motion-fast), border-color var(--rg-motion-fast); }
+/* Reset del chrome nativo del bottone: sta nel DS, non va riscritto in locale. */
+button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
+.rg-list-row--link::after { content: ""; position: absolute; top: 50%; right: var(--rg-space-4); width: var(--rg-space-2); height: var(--rg-space-2); border-top: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-neutral-400); border-right: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-neutral-400); transform: translateY(-50%) rotate(45deg); transition: border-color var(--rg-motion-fast); }
+.rg-list-row--link:hover { background: var(--rg-color-surface); }
+.rg-list-row--link:hover::after { border-color: var(--rg-color-black); }
+/* Affordance non affidata al solo colore: il titolo si sottolinea come un link. */
+.rg-list-row--link:hover .rg-list-row__title { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
+.rg-list-row--link:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: 2px; }
 
 /* Icon button — compact, always paired with aria-label */
 .rg-icon-button { display: inline-flex; min-width: 34px; min-height: 34px; align-items: center; justify-content: center; padding: 5px; color: var(--rg-color-text-secondary); background: transparent; border: 1px solid transparent; border-radius: var(--rg-radius-sm); cursor: pointer; }

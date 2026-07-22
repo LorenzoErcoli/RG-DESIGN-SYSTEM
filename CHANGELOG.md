@@ -7,6 +7,28 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.2.0 — 2026-07-22
+
+Formalizzata la **riga-record navigabile**: l'elenco che è un indice (le fasi di una parte, le
+revisioni di una scheda) aveva la riga giusta ma nessuna affordance che dicesse "questa riga si
+apre", e i prodotti la stavano improvvisando componendo un `<a class="rg-list-row">` senza
+contratto. Nessun token nuovo, nessuna rimozione: **aggiornamento sicuro**.
+
+### Nuovi
+
+- **`rg-list-row--link`** — la riga-record è essa stessa il link al proprio dettaglio: target
+  pieno (min 40 px), chevron di apertura generato dal DS, hover che sottolinea il titolo (non
+  solo colore), `:focus-visible` nero. Vale su `<a>` e su `<button>`; il reset del chrome nativo
+  del bottone sta nel DS. Limite documentato: una riga-link non può contenere altri controlli
+  interattivi, quindi niente `__actions` — se servono azioni per riga, la riga resta inerte.
+
+### Documentazione
+
+- `components/lists.md` riscritto con varianti, riga navigabile, uso e limiti (badge in `__head`
+  e non in `__actions`; quando serve `rg-table` o `rg-folder` invece di una riga).
+- Vetrina: nuova sezione **19 — Elenchi tecnici**. `rg-list` aveva un doc e un manifest ma nessun
+  esemplare in `examples/`: `specimenAnchor` passa da `layout` a `lists`.
+
 ## 1.1.0 — 2026-07-21
 
 Assorbimento del CSS residuo di `rg-product-platform`. Nessun token nuovo, nessuna rimozione:

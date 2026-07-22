@@ -22,7 +22,7 @@ Clone e aggiornamento:
 ```bash
 git clone --recurse-submodules <repo>          # clone iniziale
 git submodule update --init --recursive        # se clonato senza --recurse-submodules
-cd design-system && git fetch --tags && git checkout v1.1.0 && cd ..   # bump del pin
+cd design-system && git fetch --tags && git checkout v1.2.0 && cd ..   # bump del pin
 ```
 
 **Il pin si sposta solo con un commit esplicito nel consumatore.** Un `git pull` nel DS non

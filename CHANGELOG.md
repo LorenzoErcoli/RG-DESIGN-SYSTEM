@@ -7,6 +7,47 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.4.0 — 2026-07-22
+
+Il **pannello di configurazione** diventa un pattern e il campo di un form impara due cose che il
+DS dichiarava e non implementava. `rg-product-platform` doveva costruire i "Default costo ricamo"
+(tariffa, velocità, tempi per operazione) e ha trovato tre buchi: `forms.md` elencava `read-only`
+fra gli stati obbligatori ma nessuna riga di CSS lo rendeva, un campo numerico si stirava per tutta
+la cella anche quando conteneva `1`, e il gruppo di parametri esisteva nel CSS e in vetrina dal
+seed ma non nel registro — quindi per l'agente non esisteva. Nessun token nuovo, nessuna rimozione:
+**aggiornamento sicuro**.
+
+### Nuovi
+
+- **`[readonly]` come stato reale dei campi** — `rg-input`, `rg-textarea`, `rg-search` e
+  `rg-select[aria-readonly="true"]` hanno una superficie propria: fondo tecnico, bordo neutro,
+  nessuna affordance in hover, **testo a pieno contrasto**. Read-only e disabled smettono di essere
+  sinonimi: *disabled* = "non attivo ora, non inviato"; *read-only* = "valido, ma non modificabile
+  da te", leggibile, selezionabile e nel tab order. Corollario documentato: il motivo si scrive
+  accanto al form con `rg-alert`, e l'azione primaria che l'utente non potrà mai eseguire **si
+  omette**, non si disabilita.
+- **`rg-input--numeric`** — la forma del valore misurato: mono, cifre tabulari, allineato a destra
+  e largo `--rg-input-numeric-width` (default `12ch`) invece che quanto il contenitore. Dentro
+  `rg-field-with-unit` il riquadro dell'unità resta attaccato al campo. Sostituisce la composizione
+  `rg-input rg-mono` nei campi numerici; quella resta valida per il testo tecnico (codici, ID).
+
+### Registro
+
+- **`control-group`** entra in `components.json`: `rg-parameter-group` + `__grid`,
+  `rg-filter-group`, `rg-action-bar`, `rg-confirmation`. Il CSS c'era dal seed, il MATCH no.
+  È la risposta a "form di configurazione a coppie etichetta/valore" quando i valori sono
+  **editabili**; se sono di sola lettura il componente resta `rg-key-value--ruled`.
+
+### Documentazione
+
+- Nuovo `patterns/settings.md`: pagina di configurazione completa — provenienza dei valori
+  dichiarata in testata (catalogo / valori di fabbrica), unità accanto a ogni campo, valori per
+  riga in `rg-table`, esito con `role="status"` / `role="alert"`, stati sola lettura e sorgente
+  non disponibile, e la trappola del `type="number"` con la virgola decimale.
+- `components/forms.md`: sezioni "Campo numerico", "Sola lettura" e "Gruppo di parametri".
+- Vetrina: sezione 04 con numerico e read-only affiancato a disabled; sezione 11 con il pannello
+  di configurazione completo, la sua variante in sola lettura e lo stato di indisponibilità.
+
 ## 1.3.0 — 2026-07-22
 
 La **sequenza di fasi** diventa un componente. In `rg-product-platform` l'elenco delle fasi di una

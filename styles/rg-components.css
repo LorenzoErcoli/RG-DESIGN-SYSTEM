@@ -41,6 +41,21 @@
 .rg-field.is-error .rg-field__help { color: var(--rg-color-danger); }
 .rg-field.is-warning .rg-input, .rg-field.is-warning .rg-select { border-color: var(--rg-color-warning); }
 .rg-field.is-success .rg-input, .rg-field.is-success .rg-select { border-color: var(--rg-color-success); }
+/* Sola lettura — stato distinto da disabled, non una sua variante povera (v1.4.0).
+   Disabled dice "questo campo non e attivo ora"; read-only dice "il valore vale, ma tu non
+   puoi cambiarlo": resta a pieno contrasto, selezionabile, copiabile e nel tab order. Percio
+   cambia la superficie (bordo neutro invece che forte, fondo tecnico) e sparisce l'affordance
+   di modifica in hover, ma non il testo. Il motivo del divieto non e affidato al grigio: va
+   scritto accanto al form con rg-alert. <select> non ha readonly: usare aria-readonly e, se il
+   valore deve restare inviato, un campo hidden. */
+.rg-input[readonly], .rg-textarea[readonly], .rg-search[readonly], .rg-select[aria-readonly="true"] { background: var(--rg-color-neutral-50); border-color: var(--rg-color-border); cursor: default; }
+.rg-input[readonly]:hover, .rg-textarea[readonly]:hover, .rg-search[readonly]:hover, .rg-select[aria-readonly="true"]:hover { border-color: var(--rg-color-border); }
+.rg-field-with-unit:has([readonly]) > span { border-color: var(--rg-color-border); }
+/* Campo numerico — il valore misurato e mono, tabulare e allineato a destra (regole §3 e §8),
+   e non si allarga oltre la sua cifra piu lunga: un input largo mezza pagina per "500 punti/min"
+   e rumore. La larghezza e una variabile, non un numero fisso: --rg-input-numeric-width. */
+.rg-input--numeric { max-width: var(--rg-input-numeric-width, 12ch); font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.rg-field-with-unit:has(.rg-input--numeric) { grid-template-columns: var(--rg-input-numeric-width, 12ch) auto; justify-content: start; }
 .rg-textarea { min-height: 96px; resize: vertical; }
 .rg-search { padding-left: 36px; background: var(--rg-color-white) linear-gradient(90deg, transparent 0 32px, var(--rg-color-border) 32px 33px, transparent 33px); }
 .rg-choice { display: inline-flex; align-items: center; gap: var(--rg-space-2); }

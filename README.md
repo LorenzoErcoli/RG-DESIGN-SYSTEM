@@ -63,7 +63,7 @@ I font ufficiali sono AGNext, GT-America-Standard e GT-America-Mono. I file font
 
 ## Stato e governance
 
-Versione corrente `1.3.0`: il contratto di consumo è stabile. Le modifiche ai token permanenti richiedono revisione trasversale; le palette stagionali possono evolvere senza modificare i ruoli semantici. Eccezioni specifiche di prodotto vanno documentate vicino al relativo pattern, non incorporate silenziosamente nei token globali.
+Versione corrente `1.4.0`: il contratto di consumo è stabile. Le modifiche ai token permanenti richiedono revisione trasversale; le palette stagionali possono evolvere senza modificare i ruoli semantici. Eccezioni specifiche di prodotto vanno documentate vicino al relativo pattern, non incorporate silenziosamente nei token globali.
 
 Il prefisso `rg-` appartiene al DS: nessun prodotto definisce classi `.rg-*` in locale. Un componente d'applicazione usa un prefisso proprio.
 

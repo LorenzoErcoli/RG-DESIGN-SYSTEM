@@ -66,7 +66,7 @@
   <header class="specimen-header"><div class="specimen-brand">RG</div><div class="specimen-title">Design System / Components Library</div><div class="specimen-version">SPECIMEN 0.1 · 2026</div></header>
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
-      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li>
+      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li>
     </ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
@@ -328,8 +328,94 @@ status         VALID</pre></div>
           </div>
         </div>
       </section>
+
+      <section class="specimen-section" id="steps">
+        <div class="specimen-section__head"><span class="specimen-section__index">20</span><h2>Sequenza di fasi</h2><p>Una sequenza non è un elenco piatto: il numero e il filo verticale mostrano l'ordine, il titolo pesa come un H3 e la fase è un contenitore che si apre <strong>in loco</strong>. Il blocco è <strong>rigato</strong> come una tabella — filetto forte nero sopra e sotto, filetto neutro fra le fasi — e mai riquadrato: il filetto in testa alla fase seguente è la stessa linea che chiude il corpo di quella aperta. Il toggle è un <code class="rg-mono">&lt;button&gt;</code> e le azioni sono suoi fratelli: nessun controllo annidato in un altro controllo, che è la ragione per cui qui non si usa <code class="rg-mono">&lt;details&gt;</code>. Segno <code class="rg-mono">+</code>/<code class="rg-mono">−</code> e filo sono generati dal DS.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Fasi di una lavorazione — aperta, chiusa, irrisolta</span>
+            <ol class="rg-steps">
+              <li class="rg-step">
+                <div class="rg-step__head">
+                  <button class="rg-step__toggle" type="button" id="spec-fase-1-toggle" aria-controls="spec-fase-1" aria-expanded="true">
+                    <span class="rg-step__num">1</span>
+                    <span class="rg-step__headline">
+                      <span class="rg-step__title">Ricamo piatto</span>
+                      <span class="rg-step__meta"><span>Ricamo</span><span>densità 4.2 pt/mm</span><span>altezza 2.0 mm</span><span>filo 40 dtex</span></span>
+                    </span>
+                    <span class="rg-step__aside"><span class="rg-badge rg-badge--count">4 operazioni</span></span>
+                  </button>
+                  <div class="rg-step__actions">
+                    <button class="rg-button rg-button--ghost" type="button" aria-label="Modifica fase 1: Ricamo piatto">Modifica</button>
+                    <button class="rg-button rg-button--ghost rg-button--danger" type="button" aria-label="Elimina fase 1: Ricamo piatto">Elimina</button>
+                  </div>
+                </div>
+                <div class="rg-step__body" id="spec-fase-1" role="region" aria-labelledby="spec-fase-1-toggle">
+                  <div class="rg-table-wrap"><table class="rg-table rg-table--compact">
+                    <thead><tr><th>Operazione</th><th>Macchina</th><th>Filo</th><th class="rg-table__numeric">Punti</th><th class="rg-table__numeric">Consumo (m)</th></tr></thead>
+                    <tbody>
+                      <tr><td>Contorno esterno</td><td>Tajima TFMX</td><td class="rg-table__code">FIL-0281</td><td class="rg-table__numeric">4 820</td><td class="rg-table__numeric">18.42</td></tr>
+                      <tr><td>Riempimento petali</td><td>Tajima TFMX</td><td class="rg-table__code">FIL-0281</td><td class="rg-table__numeric">12 460</td><td class="rg-table__numeric">44.07</td></tr>
+                      <tr><td>Nervature</td><td>Tajima TFMX</td><td class="rg-table__code">FIL-0344</td><td class="rg-table__numeric">2 108</td><td class="rg-table__numeric">7.93</td></tr>
+                      <tr><td>Fermatura</td><td>Manuale</td><td class="rg-table__code">FIL-0344</td><td class="rg-table__numeric">180</td><td class="rg-table__numeric">0.61</td></tr>
+                    </tbody>
+                  </table></div>
+                </div>
+              </li>
+              <li class="rg-step">
+                <div class="rg-step__head">
+                  <button class="rg-step__toggle" type="button" id="spec-fase-2-toggle" aria-controls="spec-fase-2" aria-expanded="false">
+                    <span class="rg-step__num">2</span>
+                    <span class="rg-step__headline">
+                      <span class="rg-step__title">Applicazione paillettes</span>
+                      <span class="rg-step__meta"><span>Applicazione</span><span>passo 3.0 mm</span><span>Ø 4.0 mm</span></span>
+                    </span>
+                    <span class="rg-step__aside"><span class="rg-badge rg-badge--count">2 operazioni</span><span class="rg-badge rg-badge--estimated">stimato</span></span>
+                  </button>
+                  <div class="rg-step__actions">
+                    <button class="rg-button rg-button--ghost" type="button" aria-label="Modifica fase 2: Applicazione paillettes">Modifica</button>
+                    <button class="rg-button rg-button--ghost rg-button--danger" type="button" aria-label="Elimina fase 2: Applicazione paillettes">Elimina</button>
+                  </div>
+                </div>
+                <div class="rg-step__body" id="spec-fase-2" role="region" aria-labelledby="spec-fase-2-toggle" hidden>
+                  <dl class="rg-key-value rg-key-value--ruled"><dt>Macchina</dt><dd>ZSK Sprint 6</dd><dt>Paillette</dt><dd>PAI-0112 · Ø 4.0 mm</dd><dt>Consumo stimato</dt><dd>1 240 pz</dd></dl>
+                </div>
+              </li>
+              <li class="rg-step rg-step--danger">
+                <div class="rg-step__head">
+                  <button class="rg-step__toggle" type="button" id="spec-fase-3-toggle" aria-controls="spec-fase-3" aria-expanded="false">
+                    <span class="rg-step__num">3</span>
+                    <span class="rg-step__headline">
+                      <span class="rg-step__title">Taglio laser</span>
+                      <span class="rg-step__meta"><span>Taglio</span><span>parametri non letti dal file macchina</span></span>
+                    </span>
+                    <span class="rg-step__aside"><span class="rg-badge rg-badge--unresolved">irrisolta</span></span>
+                  </button>
+                  <div class="rg-step__actions">
+                    <button class="rg-button rg-button--ghost" type="button" aria-label="Modifica fase 3: Taglio laser">Modifica</button>
+                    <button class="rg-button rg-button--ghost rg-button--danger" type="button" aria-label="Elimina fase 3: Taglio laser">Elimina</button>
+                  </div>
+                </div>
+                <div class="rg-step__body" id="spec-fase-3" role="region" aria-labelledby="spec-fase-3-toggle" hidden>
+                  <div class="rg-empty"><h3>Nessuna operazione</h3><p>Il file macchina non riporta parametri per questa fase: aggiungere le operazioni a mano oppure ricaricare il DST.</p></div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
+
+  <!-- Controller di riferimento per .rg-step: unica fonte di verita dello stato =
+       aria-expanded sul toggle + [hidden] sul corpo. Nessuna classe locale. -->
+  <script>
+  document.addEventListener('click', function (e) {
+    const t = e.target.closest('.rg-step__toggle'); if (!t) return;
+    const open = t.getAttribute('aria-expanded') === 'true';
+    t.setAttribute('aria-expanded', String(!open));
+    document.getElementById(t.getAttribute('aria-controls')).hidden = open;
+  });
+  </script>
 
   <!-- Controller di riferimento per .rg-autocomplete (indipendente da librerie).
        Filtra le <option> presenti nel markup; selezione via click o tastiera. -->

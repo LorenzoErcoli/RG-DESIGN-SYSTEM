@@ -54,7 +54,7 @@
 .rg-param-section__header { display: flex; align-items: baseline; gap: var(--rg-space-3); margin-bottom: var(--rg-space-4); }
 .rg-param-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rg-space-4) var(--rg-space-3); }
 .rg-param-grid__wide { grid-column: 1 / -1; }
-/* Soglia di densita (v1.3.0). Una colonna di parametri non scende sotto
+/* Soglia di densita (v1.4.0). Una colonna di parametri non scende sotto
    --rg-layout-param-col-min (132px): sotto quella misura un campo con unita non mostra piu il
    valore. Due colonne richiedono quindi 2x132 + 12 di gap + 48 di padding della sezione = 324px
    di pannello; sotto, la griglia impila. Il valore e letterale perche una condizione @container

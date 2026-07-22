@@ -284,11 +284,22 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    dentro un <summary> sarebbero controlli annidati in un controllo. Qui il toggle e un
    <button> e le azioni sono suoi FRATELLI: nessun annidamento, tab order naturale.
    Unica fonte di verita dello stato: aria-expanded sul toggle + [hidden] sul body. */
-.rg-steps { display: grid; gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
-.rg-step { position: relative; }
+/* Blocco rigato, non tessere sciolte (v1.3.0): filetto forte nero sopra e sotto — la sequenza
+   ha un inizio e una fine dichiarati — e filetto neutro fra una fase e l'altra, da bordo a
+   bordo. Stesso idioma di rg-table (filetto forte in testa, filetti fra le righe): la struttura
+   si mostra con le linee, non con un riquadro a pannello. Gap zero: lo spazio fra le fasi lo
+   fanno i padding, altrimenti il separatore non tocca i bordi del blocco. */
+.rg-steps { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-block: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+.rg-step { position: relative; padding-block: var(--rg-space-1); }
+/* Il filetto sta in testa alla fase SEGUENTE: cosi chiude anche il corpo di una fase aperta,
+   che altrimenti sfumerebbe nella fase dopo — e li che la struttura serve di piu. */
+.rg-step + .rg-step { border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 /* Filo della sequenza: unisce il centro di un numero al centro del successivo, scavalcando il
-   gap. E il segno che distingue una sequenza da un elenco piatto; l'ultima fase non lo emette. */
-.rg-step::before { content: ""; position: absolute; left: calc(var(--rg-space-2) + var(--rg-space-4)); top: calc(var(--rg-space-3) + var(--rg-space-4)); bottom: calc(-1 * (var(--rg-space-2) + var(--rg-space-3) + var(--rg-space-4))); width: var(--rg-border-hairline); background: var(--rg-color-neutral-600); }
+   filetto di separazione. E il segno che distingue una sequenza da un elenco piatto; l'ultima
+   fase non lo emette. Geometria (top e riferito al padding box, quindi sotto il bordo):
+   centro del numero = padding della fase + padding del toggle + meta casella = 4 + 12 + 16;
+   per arrivare al numero successivo si aggiunge lo spessore del filetto della fase seguente. */
+.rg-step::before { content: ""; position: absolute; left: calc(var(--rg-space-2) + var(--rg-space-4)); top: calc(var(--rg-space-1) + var(--rg-space-3) + var(--rg-space-4)); bottom: calc(-1 * (var(--rg-border-hairline) + var(--rg-space-1) + var(--rg-space-3) + var(--rg-space-4))); width: var(--rg-border-hairline); background: var(--rg-color-neutral-600); }
 .rg-step:last-child::before { content: none; }
 .rg-step__head { display: flex; align-items: center; gap: var(--rg-space-2); }
 .rg-step__toggle { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: var(--rg-space-4); min-height: 40px; /* target minimo, regola 11 */ padding: var(--rg-space-3) var(--rg-space-2); color: inherit; background: transparent; border: 0; border-radius: var(--rg-radius-md); font: inherit; text-align: left; cursor: pointer; }
@@ -300,7 +311,10 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    Il numero non e un indicatore di apertura: dice la posizione nella sequenza. */
 .rg-step__toggle::after { content: "+"; flex: none; margin-left: auto; font-family: var(--rg-font-mono); font-size: var(--rg-font-size-md); color: var(--rg-color-text-secondary); }
 .rg-step__toggle[aria-expanded="true"]::after { content: "−"; }
-.rg-step__num { position: relative; /* copre il filo della sequenza */ flex: none; display: inline-flex; align-items: center; justify-content: center; width: var(--rg-space-8); height: var(--rg-space-8); background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-md); font-variant-numeric: tabular-nums; }
+/* align-self: il numero e ancorato in alto, non centrato sul blocco titolo+meta: e cosi che la
+   sua posizione resta calcolabile (padding fase + padding toggle + meta casella) e il filo della
+   sequenza colpisce il centro del numero anche quando la meta va a capo. */
+.rg-step__num { position: relative; /* copre il filo della sequenza */ flex: none; align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; width: var(--rg-space-8); height: var(--rg-space-8); background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-md); font-variant-numeric: tabular-nums; }
 /* Fase aperta: numero invertito. Rinforzo di aria-expanded e del segno, mai unico segnale. */
 .rg-step__toggle[aria-expanded="true"] .rg-step__num { color: var(--rg-color-white); background: var(--rg-color-black); }
 .rg-step__headline { flex: 1 1 auto; min-width: 0; display: grid; gap: var(--rg-space-1); }

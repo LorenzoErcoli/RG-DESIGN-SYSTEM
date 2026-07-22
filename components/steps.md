@@ -59,8 +59,17 @@ toggle.
   screen reader. Il numero visibile in `rg-step__num` resta nel markup perché è **un dato**
   (il numero di fase dell'archivio), non un contatore di presentazione: se la fase 3 viene
   eliminata, il numero mostrato è quello che dice il dominio.
+- **Il blocco è rigato, non è un pannello.** Il DS mette un filetto forte nero sopra e sotto
+  l'intera sequenza — così ha un inizio e una fine dichiarati — e un filetto neutro fra una fase
+  e l'altra, da bordo a bordo: lo stesso idioma di `rg-table` (filetto forte in testa, filetti
+  fra le righe). Niente bordo perimetrale e niente sfondo: sarebbe una card, e una sequenza non
+  è una card. Non aggiungere `<hr>` né classi locali di separazione.
+- Il filetto di separazione sta **in testa alla fase seguente**, non in coda alla precedente:
+  è la stessa linea che chiude il corpo di una fase aperta. Senza, il contenuto espanso sfuma
+  nella fase successiva proprio dove la struttura serve di più.
 - Il **filo verticale** che unisce i numeri è generato dal DS (`::before` di `rg-step`): non
-  disegnare linee, frecce o connettori nel markup.
+  disegnare linee, frecce o connettori nel markup. Attraversa il filetto di separazione, perché
+  la sequenza continua da una fase all'altra.
 - Il segno `+`/`−` è generato dal DS e segue `aria-expanded`, come nella disclosure: **non**
   aggiungere un chevron. Numero e segno non sono due indicatori della stessa cosa — il numero
   dice *dove sei nella sequenza*, il segno dice *se la fase è aperta* — e stanno ai due capi
@@ -113,7 +122,9 @@ esistono altre fonti di verità dello stato: niente classe `is-open` locale.
 - `aria-controls` sul toggle punta all'`id` del corpo; il corpo è un `role="region"` etichettato
   dal toggle (`aria-labelledby`), così chi naviga per regioni ritrova la fase.
 - Target: toggle e azioni ≥ 40 px di altezza. Focus con contorno nero da 2 px, sul toggle in
-  versione interna (`outline-offset` negativo) per non invadere le azioni accanto.
+  versione interna (`outline-offset` negativo) per non invadere le azioni accanto: la fase ha un
+  padding verticale proprio, così il contorno di focus e lo sfondo di hover non vanno mai a
+  filo del separatore e restano leggibili come segnali distinti dalla riga.
 - Eliminare una fase è distruttivo: l'azione apre una conferma (`rg-modal`), non elimina al
   primo click.
 

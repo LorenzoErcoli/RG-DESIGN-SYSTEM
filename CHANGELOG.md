@@ -18,10 +18,13 @@ rimozione: **aggiornamento sicuro**.
 
 ### Nuovi
 
-- **`rg-steps` / `rg-step`** — fase di una sequenza ordinata: numero di posizione in mono dentro
-  una casella, filo verticale generato dal DS che unisce i numeri (il segno che distingue una
-  sequenza da un elenco piatto), titolo identitario a `--rg-font-size-lg`, parametri tecnici con
-  unità in `rg-step__meta`, corpo espandibile **in loco** e azioni proprie sempre visibili.
+- **`rg-steps` / `rg-step`** — fase di una sequenza ordinata: **blocco rigato** (filetto forte
+  nero sopra e sotto, filetto neutro fra le fasi, come `rg-table`; nessun riquadro a pannello),
+  numero di posizione in mono dentro una casella, filo verticale generato dal DS che unisce i
+  numeri (il segno che distingue una sequenza da un elenco piatto), titolo identitario a
+  `--rg-font-size-lg`, parametri tecnici con unità in `rg-step__meta`, corpo espandibile **in
+  loco** e azioni proprie sempre visibili. Il separatore sta in testa alla fase seguente, quindi
+  chiude anche il corpo di una fase aperta invece di lasciarlo sfumare in quella dopo.
   Varianti: `rg-step--danger` per la fase irrisolta. Parti: `__head`, `__toggle`, `__num`,
   `__headline`, `__title`, `__meta`, `__aside`, `__actions`, `__body`.
 - **`rg-button--ghost` + `rg-button--danger` componibili** — `--ghost` significa "senza chrome a

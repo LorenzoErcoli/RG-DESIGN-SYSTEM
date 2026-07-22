@@ -383,6 +383,52 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-folder__name { color: var(--rg-color-black); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-bold); font-size: var(--rg-font-size-md); text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rg-folder__count { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
 
+/* File input — caricamento file nella forma COMPATTA, da riga di form (v1.5.0).
+   Non sostituisce rg-upload: quella e l'area di rilascio grande di una pagina (116px, tratteggio,
+   drag & drop); questa e il controllo che sta in un pannello parametri largo 380px, dove il
+   caricamento e il primo campo di una sezione e non un'area a se.
+   Il controllo vero resta l'<input type="file">, coperto dal bottone che lo veste: l'input e a
+   opacita zero ma presente, quindi focusabile, tabulabile e accessibile ai lettori di schermo.
+   Poiche il bottone non e antenato del puntatore, hover e focus si propagano con :has() — senza,
+   il bottone resterebbe inerte sotto il mouse. Il file caricato non e uno stato invisibile:
+   __status dichiara nome, misura rilevata e metodo, ed e li che vive anche l'errore di import.
+   Promosso da net-45 e pattern-grammar, che lo avevano riscritto identico in locale. */
+.rg-file-input { display: grid; gap: var(--rg-space-2); }
+.rg-file-input__control { position: relative; display: block; }
+.rg-file-input__control input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.rg-file-input__control .rg-button { width: 100%; }
+.rg-file-input__control:has(input:hover) .rg-button { border-color: var(--rg-color-neutral-600); }
+.rg-file-input__control:has(input:focus-visible) .rg-button { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: 2px; }
+.rg-file-input__control:has(input:disabled) { cursor: not-allowed; }
+.rg-file-input__control:has(input:disabled) .rg-button { color: var(--rg-color-neutral-400); background: var(--rg-color-neutral-50); border-color: var(--rg-color-neutral-200); }
+.rg-file-input__status { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); overflow-wrap: anywhere; }
+/* L'errore non e affidato al colore: la riga di stato si apre con la parola "Errore". */
+.rg-file-input__status--error { color: var(--rg-color-danger); }
+
+/* Color map — attribuzione di ciò che e stato importato (v1.5.0): ogni colore o layer del file
+   di partenza riceve un ruolo nella lavorazione. E il controllo che risponde a "di questo DXF,
+   cosa uso e come": mappa completa colore→ruolo (rete, raso, bordo…) o scelta singola
+   (quale contorno fa da confine). Non e una riga-record (rg-list-row), che e inerte o naviga, ne
+   una tabella: qui ogni riga contiene una DECISIONE, e la decisione e un campo di form.
+   Regola §10: il campione non basta mai da solo — il codice colore, o il nome del layer, sta
+   sempre scritto accanto in mono. Il riconoscimento non puo essere solo cromatico.
+   Il colore e un DATO, non uno stile: arriva dal file via --swatch, come in rg-swatch__color.
+   Promosso da net-45 e pattern-grammar, v1.5.0. */
+.rg-color-map { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-block: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-color-map__row { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: var(--rg-space-2) var(--rg-space-3); padding: var(--rg-space-3) 0; }
+.rg-color-map__row + .rg-color-map__row { border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-color-map__swatch { position: relative; overflow: hidden; width: var(--rg-space-6); height: var(--rg-space-6); background: var(--swatch, transparent); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-strong); border-radius: var(--rg-radius-sm); }
+/* "Nessun riempimento" e un fatto del file, non l'assenza di un valore: si dichiara con una
+   barra, non con un campione bianco che si confonderebbe con il bianco vero. */
+.rg-color-map__swatch--none::after { content: ""; position: absolute; top: 50%; left: -20%; width: 140%; height: var(--rg-border-hairline); background: var(--rg-color-neutral-600); transform: rotate(-45deg); }
+.rg-color-map__code { min-width: 0; font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.rg-color-map__meta { color: var(--rg-color-text-secondary); }
+.rg-color-map__meta::before { content: "·"; padding-inline: var(--rg-space-1); color: var(--rg-color-neutral-400); }
+/* Il bersaglio sta su una riga propria: a pannello stretto un ruolo ("Area raso bordo") non si
+   comprime accanto al codice senza troncarsi, e un ruolo troncato non e leggibile. */
+.rg-color-map__target { grid-column: 1 / -1; }
+.rg-color-map__empty { padding: var(--rg-space-3) 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); border-block: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+
 /* Lightbox — ingrandimento di un'immagine documentaria (campione, foto tecnica, scansione).
    Overlay di sola lettura: nessuna decisione, nessun form; per quelli si usa rg-modal.
    Sta sul livello overlay, sotto i dialog: un modal aperto non deve finirci sotto.

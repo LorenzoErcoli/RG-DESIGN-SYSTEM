@@ -7,6 +7,64 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.5.0 — 2026-07-22
+
+Il **pannello di una tool** smette di essere composizione libera e prende un ordine. Con due tool
+live nella suite `rg-embroidery-commons` (`net-45`, `pattern-grammar`) è emerso che gli stessi
+argomenti stavano in posti diversi: il caricamento della sagoma era la sezione `01` in uno e stava
+sepolto dentro il gruppo `05` nell'altro; la selezione per colore era `02` in uno e una riga persa
+in fondo nell'altro. Difetto del DS, non delle app: il pattern `workspace` descriveva il guscio e
+non diceva nulla su cosa mettere dentro il pannello, né in che ordine. Nello stesso vuoto le due
+app avevano riscritto in locale, identici, il caricamento file e la mappa colore→ruolo. Nessun
+token nuovo, nessuna rimozione: **aggiornamento sicuro**.
+
+### Nuovi
+
+- **`rg-file-input`** — caricamento file nella forma **compatta**, da riga di form: bottone a
+  piena larghezza e riga di stato obbligatoria che dichiara nome, misura rilevata e metodo
+  (`__status`, con `__status--error` per l'import fallito). Non sostituisce `rg-upload`, che resta
+  l'area di rilascio grande di una pagina: le due forme convivono. Il controllo vero resta
+  l'`<input type="file">` — opacità zero ma presente, quindi focusabile e tabulabile — e hover e
+  focus raggiungono il bottone via `:has()`.
+- **`rg-color-map`** — attribuzione di ciò che è stato importato: ogni colore o layer del file
+  riceve un ruolo di lavorazione. Rende obbligatoria la regola §10 che entrambe le app violavano:
+  **il campione non basta mai da solo**, accanto sta sempre il codice colore o il nome del layer
+  in mono. Il colore è un dato letto dal file e arriva inline via `--swatch`, come in
+  `rg-swatch__color`. Parti: `__row`, `__swatch` (+ `--none`), `__code`, `__meta`, `__target`,
+  `__empty`.
+- **`rg-param-section__index` / `__title`** — indice e titolo di una sezione del pannello, che le
+  app rifacevano con stili inline. Il numero è mono, tabulare e secondario; il titolo è una label
+  identitaria, non un H3 di pagina.
+- **Sezione richiudibile del pannello** — composizione sancita
+  `details.rg-param-section.rg-disclosure` + `summary.rg-param-section__header.rg-disclosure__trigger`:
+  un solo filetto di chiusura, `+`/`−` del DS spinto a destra, testata con target di 40 px e focus
+  visibile.
+
+### Regola: ordine canonico del pannello
+
+In `patterns/workspace.md`. Il pannello ha una **testa canonica** (`Sagoma` → `Colori e ruoli` →
+`Formato e scala`), un **corpo libero** con i gruppi propri del tool **nel loro ordine**, e una
+**coda canonica** (`Esportazione` → `Preset`). La coerenza fra tool non si ottiene imponendo gli
+stessi gruppi — i parametri di generazione sono l'identità dello strumento — ma fissando l'ordine
+e il titolo di ciò che ricorre.
+
+Gli slot sono **posizioni, non contenitori**: uno slot assente non lascia buchi e la numerazione
+resta contigua, perché il numero dice dove sei nel pannello, non quale slot è. Il test di
+appartenenza segue l'ordine del lavoro (cosa entra → come lo interpreto → quanto è grande ciò che
+produco → come lo genero → cosa mi porto via) e risolve il caso tipico di errore: «larghezza reale
+mm» sembra un parametro di generazione ma senza file non vuole dire niente, quindi sta nella
+sezione Sagoma. Codificato anche ciò che **non** sta nel pannello: le azioni vivono in
+`rg-workspace__stage-header`.
+
+### Documentazione
+
+- Nuovi `components/file-input.md` e `components/color-map.md`.
+- `patterns/workspace.md`: nuova sezione "Ordine canonico del pannello".
+- `components.json`: `workspace` porta la regola nelle `notes`; `upload` dichiara il confine con
+  `rg-file-input`.
+- Vetrina: nuova sezione **21 — Pannello di una tool** (pannello completo nell'ordine canonico,
+  più gli stati di `rg-file-input` e lo stato vuoto di `rg-color-map`).
+
 ## 1.4.0 — 2026-07-22
 
 Densità del pannello parametri delle tool. `pattern-grammar` mostrava numeri illeggibili nei campi

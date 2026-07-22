@@ -52,6 +52,21 @@
 .rg-workspace__statusbar { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-4); min-height: 40px; padding: 0 var(--rg-space-6); color: var(--rg-color-text-secondary); background: var(--rg-color-white); border-top: 1px solid var(--rg-color-border); font-size: var(--rg-font-size-xs); }
 .rg-param-section { padding: var(--rg-space-6); border-bottom: 1px solid var(--rg-color-border); }
 .rg-param-section__header { display: flex; align-items: baseline; gap: var(--rg-space-3); margin-bottom: var(--rg-space-4); }
+/* Indice e titolo della sezione (v1.5.0). Erano lasciati alle app, che li rifacevano con stili
+   inline: il numero e la posizione nel pannello — mono, tabulare, secondario — e il titolo e una
+   label identitaria, non un H3 di pagina. Il numero non e un identificatore: e contiguo, e se una
+   sezione non c'e non lascia buchi. Vedi "Ordine canonico" in patterns/workspace.md. */
+.rg-param-section__index { flex: none; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+.rg-param-section__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
+/* Sezione richiudibile: composizione sancita <details class="rg-param-section rg-disclosure">
+   con <summary class="rg-param-section__header rg-disclosure__trigger">. La sezione porta gia il
+   proprio filetto di chiusura, quindi la disclosure non ne aggiunge un secondo; il +/- resta
+   quello del DS, spinto a destra, e la testata mantiene il target di 40px. */
+.rg-param-section.rg-disclosure { border-top: 0; }
+.rg-param-section__header.rg-disclosure__trigger { justify-content: flex-start; min-height: 40px; /* target minimo, regola 11 */ padding-block: var(--rg-space-1); }
+.rg-param-section__header.rg-disclosure__trigger::after { margin-left: auto; }
+.rg-param-section__header.rg-disclosure__trigger:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: 2px; }
+details.rg-param-section:not([open]) > .rg-param-section__header { margin-bottom: 0; }
 .rg-param-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rg-space-4) var(--rg-space-3); }
 .rg-param-grid__wide { grid-column: 1 / -1; }
 /* Soglia di densita (v1.4.0). Una colonna di parametri non scende sotto

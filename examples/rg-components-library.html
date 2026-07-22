@@ -65,7 +65,7 @@
   <header class="specimen-header"><div class="specimen-brand">RG</div><div class="specimen-title">Design System / Components Library</div><div class="specimen-version">SPECIMEN 0.1 · 2026</div></header>
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
-      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li>
+      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li>
     </ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
@@ -279,6 +279,31 @@ status         VALID</pre></div>
         <div class="specimen-grid">
           <div class="specimen-cell"><span class="specimen-label">Miniatura (trigger)</span><div class="specimen-stage"><button class="rg-lightbox__thumb" type="button" aria-label="Ingrandisci: fermata 03, dettaglio ricamo"><svg width="132" height="88" viewBox="0 0 132 88" aria-hidden="true"><rect width="132" height="88" fill="var(--rg-color-neutral-100)"/><path d="M18 66 L46 30 L70 60 L88 44 L114 66Z" fill="var(--rg-color-neutral-400)"/></svg></button></div></div>
           <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Overlay aperto</span><div class="rg-lightbox is-open" role="img" aria-label="Anteprima dello scrim del lightbox" style="position:relative;inset:auto;height:240px;z-index:var(--rg-z-base)"><svg class="rg-lightbox__image" width="260" height="170" viewBox="0 0 260 170" aria-hidden="true"><rect width="260" height="170" fill="var(--rg-color-white)"/><path d="M30 140 L92 60 L142 118 L180 82 L232 140Z" fill="var(--rg-color-neutral-200)"/></svg></div></div>
+        </div>
+      </section>
+
+      <section class="specimen-section" id="lists">
+        <div class="specimen-section__head"><span class="specimen-section__index">19</span><h2>Elenchi tecnici</h2><p>Righe-record brevi su superficie aperta, non card. Due forme che si escludono: la riga <strong>inerte</strong>, che porta le azioni inline, e la riga <strong>navigabile</strong> (<code class="rg-mono">--link</code>), che è essa stessa il link al proprio dettaglio e non può contenere altri controlli. Il chevron è generato dal DS.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Riga inerte — azioni inline, selezione, stato irrisolto</span>
+            <ul class="rg-list">
+              <li class="rg-list-row is-selected" aria-selected="true">
+                <div class="rg-list-row__head"><span class="rg-list-row__title">Riga 3 → Riga 4</span><span class="rg-badge rg-badge--thread">manuale</span></div>
+                <div class="rg-list-row__meta"><span>4 punti · 46 mm</span><span class="rg-list-row__actions"><button class="rg-icon-button" type="button" aria-label="Centra sul connettore">◎</button><button class="rg-icon-button" type="button" aria-label="Attiva retrace" aria-pressed="false">↺</button><button class="rg-icon-button rg-icon-button--danger" type="button" aria-label="Elimina ritocco">×</button></span></div>
+              </li>
+              <li class="rg-list-row rg-list-row--danger">
+                <div class="rg-list-row__head"><span class="rg-list-row__title">Override scollegato</span><span class="rg-badge rg-badge--unresolved">irrisolto</span></div>
+                <div class="rg-list-row__meta"><span>rev.03 · nessun target</span></div>
+              </li>
+            </ul>
+          </div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Riga navigabile — apre il dettaglio del record</span>
+            <ul class="rg-list">
+              <li><a class="rg-list-row rg-list-row--link" href="#lists"><span class="rg-list-row__head"><span class="rg-list-row__title">Ricamo piatto</span><span class="rg-badge rg-badge--count">4 operazioni</span></span><span class="rg-list-row__meta"><span>Ricamo</span><span>densità 4.2 pt/mm · altezza 2.0 mm</span></span></a></li>
+              <li><a class="rg-list-row rg-list-row--link" href="#lists"><span class="rg-list-row__head"><span class="rg-list-row__title">Taglio laser</span><span class="rg-badge rg-badge--parsed">PDF letto</span></span><span class="rg-list-row__meta"><span>Taglio</span><span>potenza 42 % · velocità 18 mm/s</span></span></a></li>
+              <li><a class="rg-list-row rg-list-row--link" href="#lists"><span class="rg-list-row__head"><span class="rg-list-row__title">Termosaldatura</span></span><span class="rg-list-row__meta"><span>Assemblaggio</span><span>nessun parametro</span></span></a></li>
+            </ul>
+          </div>
         </div>
       </section>
     </main>

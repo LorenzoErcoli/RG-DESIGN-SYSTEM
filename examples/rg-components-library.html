@@ -410,27 +410,32 @@ status         VALID</pre></div>
       </section>
 
       <section class="specimen-section" id="tool-panel">
-        <div class="specimen-section__head"><span class="specimen-section__index">21</span><h2>Pannello di una tool — ordine canonico</h2><p>Fra tool diversi non cambia dove stanno le cose: <strong>testa canonica</strong> (sagoma, colori e ruoli, formato), <strong>corpo libero</strong> coi gruppi propri dello strumento nel loro ordine, <strong>coda canonica</strong> (esportazione, preset). Gli slot sono posizioni, non contenitori: uno slot assente non lascia buchi e la numerazione resta contigua. Le azioni non stanno qui ma nella <code class="rg-mono">__stage-header</code>. Vedi patterns/workspace.md.</p></div>
+        <div class="specimen-section__head"><span class="specimen-section__index">21</span><h2>Pannello di una tool — ordine canonico e accordion</h2><p>Fra tool diversi non cambia dove stanno le cose: <strong>testa canonica</strong> aperta e non richiudibile, <strong>corpo libero</strong> coi gruppi propri nel loro ordine, <strong>coda canonica</strong> (esportazione, preset). La testa si apre con ciò che comanda la misura: qui una tool <strong>formato-guidata</strong> (testa B), quindi <strong>Formato e scala in cima</strong>, poi Sagoma (ritaglio opzionale) e Colori e ruoli; una tool sorgente-guidata (testa A) aprirebbe invece con la Sagoma e non avrebbe un Formato separato. <strong>Accordion:</strong> la testa non si chiude mai, corpo e coda sì (tutti o nessuno); con ≥ 6 sezioni resta aperto solo il primo gruppo del corpo e la coda parte chiusa. Le azioni stanno nella <code class="rg-mono">__stage-header</code>, non qui. Vedi patterns/workspace.md.</p></div>
         <div class="rg-workspace" style="height:620px;border:1px solid var(--rg-color-black);--rg-workspace-panel:340px">
           <aside class="rg-workspace__panel">
             <section class="rg-param-section">
-              <div class="rg-param-section__header"><span class="rg-param-section__index">01</span><h3 class="rg-param-section__title">Sagoma</h3></div>
+              <div class="rg-param-section__header"><span class="rg-param-section__index">01</span><h3 class="rg-param-section__title">Formato e scala</h3></div>
+              <div class="rg-param-grid">
+                <label class="rg-field"><span class="rg-field__label">Larghezza piano</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" type="number" value="120"><span>mm</span></span></label>
+                <label class="rg-field"><span class="rg-field__label">Altezza piano</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" type="number" value="160"><span>mm</span></span></label>
+              </div>
+            </section>
+            <section class="rg-param-section">
+              <div class="rg-param-section__header"><span class="rg-param-section__index">02</span><h3 class="rg-param-section__title">Sagoma</h3></div>
               <div class="rg-param-grid">
                 <div class="rg-file-input rg-param-grid__wide">
                   <label class="rg-file-input__control">
                     <input type="file" accept=".dxf,.svg">
-                    <span class="rg-button rg-button--outline">Carica DXF o SVG…</span>
+                    <span class="rg-button rg-button--outline">Carica ritaglio (opzionale)…</span>
                   </label>
                   <p class="rg-file-input__status" role="status">tomaia-42.dxf · 232 × 142 mm · 12 contorni</p>
                 </div>
                 <label class="rg-field rg-param-grid__wide"><span class="rg-field__label">Scala del file importato</span><select class="rg-select"><option>Auto: unità fisiche</option><option>Illustrator 72 dpi</option><option>ViewBox = mm</option></select></label>
-                <label class="rg-field"><span class="rg-field__label">Largh. reale</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" type="number" value="232"><span>mm</span></span></label>
-                <label class="rg-field"><span class="rg-field__label">Alt. reale</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" type="number" value="142"><span>mm</span></span></label>
                 <div class="rg-cluster rg-param-grid__wide"><button class="rg-button rg-button--ghost" type="button">Sagoma demo</button></div>
               </div>
             </section>
             <section class="rg-param-section">
-              <div class="rg-param-section__header"><span class="rg-param-section__index">02</span><h3 class="rg-param-section__title">Colori e ruoli</h3></div>
+              <div class="rg-param-section__header"><span class="rg-param-section__index">03</span><h3 class="rg-param-section__title">Colori e ruoli</h3></div>
               <ul class="rg-color-map">
                 <li class="rg-color-map__row">
                   <span class="rg-color-map__swatch" style="--swatch:#1a1a1a"></span>
@@ -449,20 +454,13 @@ status         VALID</pre></div>
                 </li>
               </ul>
             </section>
-            <section class="rg-param-section">
-              <div class="rg-param-section__header"><span class="rg-param-section__index">03</span><h3 class="rg-param-section__title">Formato e scala</h3></div>
-              <div class="rg-param-grid">
-                <label class="rg-field"><span class="rg-field__label">Larghezza</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" type="number" value="120"><span>mm</span></span></label>
-                <label class="rg-field"><span class="rg-field__label">Altezza</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" type="number" value="160"><span>mm</span></span></label>
-              </div>
-            </section>
-            <section class="rg-param-section">
-              <div class="rg-param-section__header"><span class="rg-param-section__index">04</span><h3 class="rg-param-section__title">Zig-zag orizzontale</h3></div>
+            <details class="rg-param-section rg-disclosure" open>
+              <summary class="rg-param-section__header rg-disclosure__trigger"><span class="rg-param-section__index">04</span><span class="rg-param-section__title">Zig-zag orizzontale</span></summary>
               <div class="rg-param-grid">
                 <label class="rg-field"><span class="rg-field__label">Larghezza</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" type="number" value="5.5"><span>mm</span></span></label>
                 <label class="rg-field"><span class="rg-field__label">Interlinea</span><span class="rg-field-with-unit"><input class="rg-input rg-mono" type="number" value="0.25"><span>mm</span></span></label>
               </div>
-            </section>
+            </details>
             <details class="rg-param-section rg-disclosure">
               <summary class="rg-param-section__header rg-disclosure__trigger"><span class="rg-param-section__index">05</span><span class="rg-param-section__title">Deformazioni creative</span></summary>
               <div class="rg-param-grid">
@@ -470,14 +468,21 @@ status         VALID</pre></div>
                 <label class="rg-choice rg-param-grid__wide"><input type="checkbox"> Alterna angolo per colonna</label>
               </div>
             </details>
-            <section class="rg-param-section">
-              <div class="rg-param-section__header"><span class="rg-param-section__index">06</span><h3 class="rg-param-section__title">Preset</h3></div>
+            <details class="rg-param-section rg-disclosure">
+              <summary class="rg-param-section__header rg-disclosure__trigger"><span class="rg-param-section__index">06</span><span class="rg-param-section__title">Esportazione</span></summary>
+              <div class="rg-param-grid">
+                <label class="rg-field rg-param-grid__wide"><span class="rg-field__label">Formato file</span><select class="rg-select"><option>SVG</option><option>DXF</option></select></label>
+                <label class="rg-choice rg-param-grid__wide"><input type="checkbox" checked> Includi guida di taglio</label>
+              </div>
+            </details>
+            <details class="rg-param-section rg-disclosure">
+              <summary class="rg-param-section__header rg-disclosure__trigger"><span class="rg-param-section__index">07</span><span class="rg-param-section__title">Preset</span></summary>
               <div class="rg-param-grid">
                 <label class="rg-field rg-param-grid__wide"><span class="rg-field__label">Nome preset</span><input class="rg-input" type="text" placeholder="Es. Base rete"></label>
                 <label class="rg-field rg-param-grid__wide"><span class="rg-field__label">Preset disponibili</span><select class="rg-select"><option>Seleziona preset</option></select></label>
                 <div class="rg-cluster rg-param-grid__wide"><button class="rg-button rg-button--secondary" type="button">Salva</button><button class="rg-button rg-button--ghost" type="button">Carica</button><button class="rg-button rg-button--ghost rg-button--danger" type="button">Elimina</button></div>
               </div>
-            </section>
+            </details>
           </aside>
           <div class="rg-workspace__stage">
             <header class="rg-workspace__stage-header"><h2 class="rg-h3" style="font-size:var(--rg-font-size-md)">Anteprima</h2><div class="rg-cluster"><button class="rg-button rg-button--ghost rg-button--small" type="button">Adatta</button><button class="rg-button rg-button--primary rg-button--small" type="button">Esporta SVG</button></div></header>

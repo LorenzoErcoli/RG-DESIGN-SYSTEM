@@ -57,19 +57,53 @@ Quando i controlli sono molti (oltre ~20), la leva giusta non è la larghezza ma
 **segmentazione**: più `rg-param-section` con header numerato, l'ordine dei gruppi coerente con
 l'ordine del calcolo, e i campi larghi (select, upload, azioni) su `rg-param-grid__wide`.
 
-## Ordine canonico del pannello (regola, v1.5.0)
+## Ordine canonico del pannello (regola, v1.7.0)
 
 Chi usa due tool RG di seguito non deve reimparare dove si trovano le cose. La coerenza non si
 ottiene imponendo a ogni tool gli stessi gruppi — i parametri di generazione sono l'identità dello
 strumento e non si toccano — ma fissando **l'ordine e il titolo di ciò che ricorre**.
 
-Il pannello ha una **testa canonica**, un **corpo libero** e una **coda canonica**:
+Il pannello ha una **testa canonica**, un **corpo libero** e una **coda canonica**. Corpo e coda
+non cambiano mai; la **testa ha due forme**, scelte da una sola domanda:
+
+> **La misura del prodotto nasce dalla sorgente importata, o è una decisione indipendente del tool?**
+
+La testa si apre sempre con la **radice della catena di dipendenze**: ciò da cui tutto il resto
+prende misura. È questo, non un ordine tematico fisso, a decidere se in cima c'è la Sagoma o il
+Formato.
+
+### Testa A — sorgente-guidata («importo e ne ricavo la misura»)
+
+La cosa importata *è* il soggetto e la sua misura reale definisce l'output. La sagoma comanda e
+**non esiste una sezione Formato separata**: la misura del prodotto vive dentro la Sagoma (la
+classica «larghezza reale mm», che sembra un parametro ma non lo è).
+
+| Pos. | Slot | Titolo | Contenuto |
+| --- | --- | --- | --- |
+| 01 | Sorgente | **Sagoma** | `rg-file-input`, sagoma demo, interpretazione della scala **e misura reale** (larghezza/altezza reali) |
+| 02 | Attribuzione | **Colori e ruoli** | `rg-color-map`: colore/layer → ruolo |
+
+Esempi: **net-45**, bitmap→stitch, cross-stitch da immagine.
+
+### Testa B — formato-guidata («dimensiono il piano e poi lo popolo»)
+
+Il tool produce un piano che si dimensiona da sé; la sorgente, se c'è, è un **ritaglio/maschera
+opzionale**. Il formato è la prima decisione — il foglio su cui si lavora — quindi sta **in cima**,
+e sotto vengono Sagoma e Colori (è l'ordine chiesto da chi dirige il prodotto: prima le
+larghezze/altezze del piano, poi la sagoma coi colori).
+
+| Pos. | Slot | Titolo | Contenuto |
+| --- | --- | --- | --- |
+| 01 | Formato | **Formato e scala** | dimensioni del piano prodotto, ingrandimento globale |
+| 02 | Sorgente | **Sagoma** | `rg-file-input` come ritaglio opzionale (+ scala del file) |
+| 03 | Attribuzione | **Colori e ruoli** | `rg-color-map`, quando c'è un import da interpretare |
+
+Esempi: **pattern-grammar**, oblique, 45-grid.
+
+### Corpo e coda (identici nelle due teste)
 
 | Pos. | Slot | Titolo | Contenuto | C'è quando |
 | --- | --- | --- | --- | --- |
-| testa | Sorgente | **Sagoma** (contorni) o **Sorgente** (altro input) | `rg-file-input`, sagoma demo, interpretazione della scala del file (modalità, larghezza/altezza reali) | il tool importa geometria o immagini |
-| testa | Attribuzione | **Colori e ruoli** | `rg-color-map`: colore/layer → ruolo, oppure scelta del contorno da usare | c'è qualcosa di importato da interpretare |
-| testa | Formato | **Formato e scala** | dimensioni del piano prodotto, ingrandimento globale | il risultato ha una misura propria, non derivata dalla sagoma |
 | corpo | Gruppi del tool | liberi | i parametri di generazione, **nel loro ordine** | sempre |
 | coda | Esportazione | **Esportazione** | opzioni (non azioni) che riguardano solo il file prodotto | esistono già come gruppo a sé |
 | coda | Preset | **Preset** | nome, elenco, salva/carica/elimina | il tool memorizza configurazioni |
@@ -82,21 +116,24 @@ il tool non fa.
 
 ### A quale slot appartiene un controllo
 
-L'ordine non è tematico, è quello del lavoro: **cosa entra → come lo interpreto → quanto è grande
-ciò che produco → come lo genero → cosa mi porto via**. Da qui il test, che vale anche per i tool
-futuri:
+L'ordine è quello del lavoro: **cosa comanda la misura → cosa entra → come lo interpreto → come lo
+genero → cosa mi porto via**. Il test (invariato rispetto a v1.5.0, vale per entrambe le teste e
+per i tool futuri):
 
 1. Cambia significato se cambio il file importato? → **testa** (Sagoma, oppure Colori e ruoli).
-2. Descrive la misura di ciò che esce? → **Formato e scala**.
+2. Descrive la misura di ciò che esce **ed è una decisione indipendente**? → **Formato e scala**,
+   in cima (testa B). Se invece quella misura *esce dalla sorgente*, il controllo è dentro
+   **Sagoma** (testa A) e non c'è un Formato separato.
 3. Sopravvive intatto a un cambio di file e descrive *come* si genera? → **gruppo del tool**.
 4. Riguarda solo il file che esce? → **Esportazione**.
 5. È una configurazione salvata? → **Preset**.
 
 Il caso tipico di errore è la misura reale dell'oggetto importato («larghezza reale mm», «scala
 dell'SVG importato»): sembra un parametro di generazione e finisce in mezzo agli altri, ma passa il
-test 1 — senza file non vuole dire niente — quindi è nella sezione Sagoma, accanto al caricamento
-che la produce. Simmetricamente, la larghezza del pannello generato non è della Sagoma: passa il
-test 2.
+test 1 — senza file non vuole dire niente — quindi è nella sezione Sagoma. La domanda-radice
+risolve anche il caso ibrido, un tool che importa una sagoma **e** fissa un formato proprio in cui
+la sagoma viene inscritta: è testa B (Formato in cima, indipendente), mentre la «larghezza reale»
+dell'import resta in Sagoma perché interpreta la *sorgente* (test 1), non l'output.
 
 ### Cosa non sta nel pannello
 
@@ -108,13 +145,54 @@ sull'oggetto della loro sezione (sagoma demo, salva/carica/elimina preset): vann
 
 Lo stato del lavoro sta in `rg-workspace__statusbar`: esito a sinistra, vista (zoom, pan) a destra.
 
-### Sezione richiudibile
+### Sezioni richiudibili (accordion) — regola v1.7.0
 
-Una sezione lunga o secondaria può essere richiudibile. La composizione sancita è
-`<details class="rg-param-section rg-disclosure">` con
-`<summary class="rg-param-section__header rg-disclosure__trigger">`: il `+`/`−` è quello del DS,
-il filetto di chiusura resta uno solo, la testata mantiene il target di 40 px. Le sezioni della
-testa canonica non si richiudono: sono il punto di partenza della lettura.
+Un pannello lungo (pattern-grammar arriverà a ~8 sezioni) non può essere né un muro tutto aperto né
+un mistero tutto chiuso. Una regola sola, valida per ogni tool presente e futuro:
+
+- **La testa non si richiude mai.** Sagoma, Formato e Colori e ruoli sono il punto di partenza
+  della lettura e l'ancora fra tool: restano sempre aperte, sono `<section>`, non `<details>`. È
+  l'unica parte del pannello che *non* si può chiudere — la garanzia che il lavoro non sparisce.
+- **Corpo e coda sono richiudibili, tutti o nessuno.** Un pannello con metà sezioni collassabili e
+  metà no fa esitare su *perché questa sì e questa no*: se una sezione del corpo è un accordion, lo
+  sono tutte le sezioni del corpo e della coda. Niente misto.
+- **Stati di default (alla prima apertura, senza memoria):**
+  - Testa → aperta, non collassabile.
+  - Corpo → se il pannello ha **≤ 5 sezioni** in tutto, **tutte aperte** (vedi il lavoro senza un
+    click). Se ha **≥ 6 sezioni**, resta aperto **solo il primo gruppo del corpo** — i controlli di
+    generazione principali, quelli che si toccano per primi — e i gruppi successivi partono chiusi.
+  - Coda (Esportazione, Preset) → **sempre chiusa di default**: sono opzioni di fine flusso, non il
+    lavoro.
+- **Lo stato aperto/chiuso si ricorda per tool.** L'app persiste l'apertura di ogni sezione
+  richiudibile (es. `localStorage`, chiave *tool + id sezione*). I default qui sopra valgono solo
+  quando non c'è memoria; dalla seconda sessione vince la scelta dell'utente. La testa non ha stato
+  da ricordare.
+
+Composizione sancita (invariata): `<details class="rg-param-section rg-disclosure">` con
+`<summary class="rg-param-section__header rg-disclosure__trigger">`. Il `+`/`−` è quello del DS, il
+filetto di chiusura resta uno solo, la testata mantiene il target di 40 px. Una sezione aperta di
+default porta l'attributo `open`; una chiusa lo omette.
+
+```html
+<!-- corpo: primo gruppo aperto di default -->
+<details class="rg-param-section rg-disclosure" open>
+  <summary class="rg-param-section__header rg-disclosure__trigger">
+    <span class="rg-param-section__index">04</span><span class="rg-param-section__title">Zig-zag orizzontale</span>
+  </summary>
+  <div class="rg-param-grid"><!-- campi del gruppo --></div>
+</details>
+
+<!-- coda: chiusa di default (nessun attributo open) -->
+<details class="rg-param-section rg-disclosure">
+  <summary class="rg-param-section__header rg-disclosure__trigger">
+    <span class="rg-param-section__index">07</span><span class="rg-param-section__title">Preset</span>
+  </summary>
+  <div class="rg-param-grid"><!-- salva / carica / elimina --></div>
+</details>
+```
+
+Esempio di testa (qui **testa A**, sorgente-guidata: la Sagoma comanda la misura) con un gruppo del
+corpo richiudibile e chiuso:
 
 ```html
 <aside class="rg-workspace__panel">

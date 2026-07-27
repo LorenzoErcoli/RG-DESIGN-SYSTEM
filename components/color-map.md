@@ -38,6 +38,41 @@ compatta da pannello: `rg-empty` occuperebbe mezza colonna di parametri.
 per `rg-swatch__color`. Per un contorno senza riempimento si usa `rg-color-map__swatch--none`, che
 mostra la barra del «nessun colore» invece di un campione bianco indistinguibile dal bianco vero.
 
+## Slot accessorio per-riga (`rg-color-map__aside`)
+
+Quando ogni colore porta con sé un **controllo compatto proprio** — non un ruolo su riga a sé,
+ma un piccolo campo che appartiene a quel colore (la densità per-colore di `interlace`, un
+override numerico, un'azione di riga) — va in `rg-color-map__aside`: uno slot in coda alla riga,
+allineato a destra. La terza colonna della griglia nasce solo se lo slot è presente, quindi le
+mappe che non lo usano restano identiche.
+
+Per un campo numerico inline usa `rg-field-with-unit--compact` con `rg-input--numeric`: è la
+forma compatta del campo con unità (valore stretto, mono, tabulare, allineato a destra), pensata
+per una riga densa dove il campo è un accessorio e non il soggetto di un form a colonna. La
+`rg-field-with-unit` piena resterebbe troppo larga (soglia minima 132 px).
+
+L'etichetta **non è visibile** ma resta accessibile: `aria-label` sull'input nomina il colore e
+dichiara sia l'unità sia il comportamento del vuoto — in una lista di righe simili «mm» da solo
+non dice a quale colore appartiene. Se il campo eredita un valore globale quando è vuoto, il
+`placeholder` mostra quel valore di riferimento (stato «vuoto = usa il globale») e la regola va
+scritta nell'`aria-label`, mai affidata al solo placeholder grigio.
+
+```html
+<li class="rg-color-map__row">
+  <span class="rg-color-map__swatch" style="--swatch:#1a1a1a"></span>
+  <span class="rg-color-map__code">#1A1A1A <span class="rg-color-map__meta">12 path</span></span>
+  <span class="rg-color-map__aside rg-cluster">
+    <span class="rg-field-with-unit rg-field-with-unit--compact">
+      <input class="rg-input rg-input--numeric" type="number" inputmode="decimal"
+             min="0.8" max="3.2" step="0.1" placeholder="1.6"
+             aria-label="Densità per #1A1A1A in mm (vuoto: usa la densità globale)">
+      <span>mm</span>
+    </span>
+    <button class="rg-icon-button rg-icon-button--danger" type="button" aria-label="Rimuovi #1A1A1A">×</button>
+  </span>
+</li>
+```
+
 ## Struttura
 
 Lista → riga (campione + codice/meta + bersaglio a piena larghezza).

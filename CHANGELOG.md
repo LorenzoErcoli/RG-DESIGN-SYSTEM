@@ -7,6 +7,31 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.12.0 — 2026-07-29
+
+Componente **`rg-file-card`** (documento caricato): oggetto **generico e riusabile** per «questa
+entità ha un file caricato», additivo — **aggiornamento sicuro**. Nasce nel monorepo RG-PRODUCT-SUITE
+per sostituire il documento fatto a mano (doppio titolo, paragrafo di troppo, controlli d'upload
+sciolti), ma non è legato a un dominio: gli slot sono dell'app.
+
+### Nuovi
+
+- **`rg-file-card`** (componente) — due stati e una rivelazione progressiva.
+  - **`rg-file-card--loaded`** (CARICATO): card compatta con **un solo titolo** = il nome del file
+    (`rg-file-card__title`, mono, troncato con ellissi ma leggibile per intero via `title`/testo),
+    uno slot badge (`rg-file-card__badges`) e uno slot azioni (`rg-file-card__actions`). Nessun
+    secondo titolo, nessun paragrafo esplicativo.
+  - **`rg-file-card--empty`** (VUOTO): la superficie aperta di `rg-empty` con **una sola azione
+    primaria**.
+  - **Rivelazione progressiva**: `rg-file-card__reveal` parte con `hidden` e contiene
+    `rg-file-card__options` (opzioni di lettura, slot app) + `rg-file-card__confirm` (conferma, slot
+    app); compaiono **solo dopo** che un file è stato scelto — nascosti davvero, non solo alla vista.
+    Fonte di verità = `[hidden]` su `__reveal`, pilotato dall'app (al `change` del picker: nome nel
+    titolo + `reveal.hidden = false`; su conferma/Ripristina torna a `true`).
+- Il picker **non è rifatto**: è il meccanismo di `rg-file-input` (solo `rg-file-input__control`),
+  con il bottone riportato a larghezza automatica dentro la card. Composto anche con `rg-badge` e
+  `rg-button`. Nessun token nuovo.
+
 ## 1.11.0 — 2026-07-29
 
 Utility **opt-in** per applicare il colore-label leggibile a micro-label «libere» (fuori da un

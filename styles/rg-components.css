@@ -139,6 +139,26 @@
 .rg-card.is-success { border-left: 4px solid var(--rg-color-success); }
 .rg-card--selected, .rg-card.is-selected, .rg-card[aria-selected="true"] { border: 2px solid var(--rg-color-black); box-shadow: inset 0 0 0 3px var(--rg-color-white), inset 0 0 0 4px var(--rg-color-accent-blue); }
 
+/* Section card — keystone di ogni tab (v1.10.0). Contenitore-card che avvolge il corpo di un
+   tab con un HEADER RIGATO: titolo + didascalia opzionale a sinistra, al più UNA azione primaria
+   a destra. Il filetto sotto l'header separa testa e corpo — idioma a linee, nessuna ombra.
+   Distinto da: rg-card (tessera-entità con hover e height:100%, senza filetto d'header, per
+   griglie di entità); rg-section-header (layout di pagina, non un contenitore); rg-disclosure
+   --boxed (sezione richiudibile, non la testa fissa e sempre presente di un tab). L'header di
+   tab è __header: UN solo canone, non una testa diversa per ogni tab. La regola "una sola azione
+   primaria" è di composizione, non di CSS: sta nella doc e nella vetrina. */
+.rg-section-card { background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); }
+.rg-section-card__header { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-4); min-height: 40px; padding: var(--rg-space-4) var(--rg-space-6); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-section-card__heading { display: grid; gap: var(--rg-space-1); min-width: 0; }
+.rg-section-card__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); line-height: var(--rg-line-height-heading); }
+.rg-section-card__subtitle { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
+.rg-section-card__actions { display: inline-flex; flex-shrink: 0; align-items: center; gap: var(--rg-space-2); }
+.rg-section-card__body { padding: var(--rg-space-6); }
+/* Corpo a filo (--flush): per un tab il cui corpo È una tabella o una lista rigata che deve
+   arrivare ai bordi della card senza un secondo margine; i filetti interni proseguono quelli
+   della card. */
+.rg-section-card--flush > .rg-section-card__body { padding: 0; }
+
 /* Badges */
 .rg-badge { display: inline-flex; min-height: 24px; align-items: center; gap: 6px; padding: 2px var(--rg-space-2); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); border-radius: var(--rg-radius-pill); font-family: var(--rg-font-mono); font-size: 10px; white-space: nowrap; }
 .rg-badge::before { content: ""; width: 6px; height: 6px; background: currentColor; border-radius: 50%; }

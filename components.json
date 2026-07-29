@@ -256,6 +256,24 @@
       "keywords": ["card", "scheda", "entita", "tessera", "riquadro", "metrica", "kpi"]
     },
     {
+      "id": "section-card",
+      "title": "Section card (keystone del tab)",
+      "role": "Contenitore-card che avvolge il corpo di un tab con header rigato: titolo + didascalia opzionale + al piu una azione primaria. Keystone del layout canonico della fase.",
+      "status": "stable",
+      "since": "1.10.0",
+      "kind": "component",
+      "promotedFrom": "rg-product-platform",
+      "classes": { "base": "rg-section-card", "elements": ["rg-section-card__header", "rg-section-card__heading", "rg-section-card__title", "rg-section-card__subtitle", "rg-section-card__actions", "rg-section-card__body"], "variants": ["rg-section-card--flush"], "related": ["rg-button", "rg-table", "rg-action-bar", "rg-disclosure"] },
+      "variants": ["standard", "flush"],
+      "states": ["default"],
+      "tokens": ["--rg-color-border", "--rg-radius-md", "--rg-border-hairline", "--rg-font-identity", "--rg-color-text-secondary", "--rg-space-4", "--rg-space-6"],
+      "doc": "components/section-card.md",
+      "specimenAnchor": "section-card",
+      "snippet": "<section class=\"rg-section-card\"><header class=\"rg-section-card__header\"><div class=\"rg-section-card__heading\"><h2 class=\"rg-section-card__title\">Impostazioni</h2><p class=\"rg-section-card__subtitle\">Parametri della fase, applicati al salvataggio.</p></div><div class=\"rg-section-card__actions\"><button class=\"rg-button rg-button--primary\" type=\"button\">Salva</button></div></header><div class=\"rg-section-card__body\">...</div></section>",
+      "notes": "Keystone di OGNI tab della pagina fase: un solo canone di testa (rg-section-card__header), non una testa diversa per tab. Header di tab = titolo (label identitaria, size lg) + una riga di didascalia opzionale + AL PIU UNA azione primaria a destra (rg-button--primary): le azioni secondarie vanno nel corpo o in rg-action-bar, non affiancate come seconda primaria. Il filetto sotto l'header separa testa e corpo — idioma a linee, mai ombre. Distinto da rg-card (tessera-entita con hover e height:100%, senza filetto d'header), da rg-section-header (layout di pagina, non un contenitore) e da rg-disclosure--boxed (sezione richiudibile, non la testa fissa di un tab). --flush azzera il padding del corpo per un tab il cui corpo E una tabella o lista rigata a filo dei bordi. Non annidare una section-card in un'altra. Migrazione (rg-product-platform): i tab di fase/_tab_consumi adottano questo contenitore e spariscono i <style> residui; il <dialog> nativo converge su rg-modal.",
+      "keywords": ["section card", "sezione card", "keystone", "tab", "scheda tab", "contenitore tab", "corpo del tab", "header di tab", "testa di tab", "header rigato", "filetto sotto header", "titolo di sezione", "didascalia", "sottotitolo", "azione primaria", "pagina fase", "layout fase", "impostazioni", "consumi", "corpo a filo", "flush", "tabella a filo"]
+    },
+    {
       "id": "badge",
       "title": "Badges",
       "role": "Stato, classificazione o provenienza con ingombro ridotto.",

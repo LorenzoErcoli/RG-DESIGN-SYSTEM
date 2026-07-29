@@ -7,6 +7,39 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.8.0 — 2026-07-29
+
+Due gap emersi dall'audit "revisione-percorso" di RG-PRODUCT-SUITE, entrambi con causa nel DS e
+tamponati in locale dai consumatori. Un token additivo, una variante di larghezza e una variante
+di tabella: nessuna rimozione, **aggiornamento sicuro**.
+
+> Numero di versione: proposto **1.8.0** perché `1.7.0` è già rivendicato da due proposte parallele
+> partite da `main` (`ds/color-map-aside`, `ds/workspace-order-accordion`). Se quelle vengono
+> mergeate come 1.7.0, questa è la 1.8.0; l'ordine finale e la numerazione li decide la revisione
+> umana al merge.
+
+### Nuovi
+
+- **`--rg-z-lightbox` (450)** — token di z-index additivo, tra `--rg-z-modal` (400) e
+  `--rg-z-toast` (500). `rg-lightbox` passa da `--rg-z-overlay` (300) a questo livello: un
+  ingrandimento aperto **dentro** un modal ora gli sta sopra, non dietro (era il gap, tamponato
+  con un `<style>` locale in `rg-product-platform`), ma resta sotto i toast/notifiche di sistema.
+  Mezzo-passo scelto per non rinumerare la scala: `overlay`/`modal`/`toast` non cambiano valore.
+- **`rg-modal--xl` (960px)** — quarta larghezza della modale, per contenuti larghi da leggere a
+  griglia (una tabella, un confronto affiancato). È il tetto: oltre, il contenuto è una pagina.
+- **Riga di tabella espandibile** — variante di `rg-table`: `rg-table__row--expandable` (la `<tr>`
+  madre con `rg-table__toggle`, un `<button aria-expanded>`) + `rg-table__detail` (una `<tr>` con
+  `<td colspan>` su tutte le colonne, `rg-table__detail-inner` dentro). Una riga-record che rivela
+  in loco la propria scomposizione preservando la semantica tabellare. Preferita a `rg-disclosure`
+  (sezione di pagina) e `rg-step` (sequenza numerata) quando il dato è una riga di tabella.
+
+### Documentazione
+
+- **`rg-modal-*` dichiarato pattern canonico** della modale RG in `components/modal.md`, con nota
+  di deprecazione del `<dialog>` nativo e **guida di migrazione** per il consumatore (tabella
+  prima/dopo): come sostituire `<dialog>`/`::backdrop`/`showModal()`/`z-index` locali con
+  `rg-modal-backdrop` + `rg-modal` e le sue larghezze.
+
 ## 1.6.0 — 2026-07-22
 
 Il **pannello di configurazione** diventa un pattern e il campo di un form impara due cose che il

@@ -15,9 +15,13 @@ disponibile su uno scrim, e si chiude.
 È un overlay di **sola lettura**. Se dentro serve una decisione, un form, una navigazione fra
 elementi o dei metadati editabili, il componente giusto è `rg-modal`, non questo.
 
-Sta sul livello `--rg-z-overlay`, sotto i dialog: un modal aperto non deve finire coperto da un
-ingrandimento aperto per errore. Si chiude con click sullo scrim e con `Esc`: sono entrambi
-obbligatori, il click da solo non è raggiungibile da tastiera.
+Sta sul livello `--rg-z-lightbox` (450), **sopra** il dialog (`--rg-z-modal`, 400) e sotto i
+toast (`--rg-z-toast`, 500). Il caso reale è l'ingrandimento aperto _dentro_ un modal — una foto
+di lavorazione in una scheda che si apre in dialog: deve poter salire sopra il modal, non finirci
+dietro. Resta però sotto i toast, che sono il canale di notifica di sistema e non devono mai
+essere coperti da uno zoom. Fino a 1.7.0 il lightbox stava su `--rg-z-overlay` (300), sotto il
+modal: era il gap, e i prodotti lo tamponavano con un `z-index` locale. Si chiude con click sullo
+scrim e con `Esc`: sono entrambi obbligatori, il click da solo non è raggiungibile da tastiera.
 
 La miniatura che lo apre è un `<button>` reale (`rg-lightbox__thumb`) con `aria-label` che nomina
 l'immagine: il cursore `zoom-in` è un indizio, non un'affordance accessibile. L'immagine ingrandita

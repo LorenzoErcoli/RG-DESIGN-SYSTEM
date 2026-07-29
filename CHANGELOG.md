@@ -7,6 +7,29 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.9.0 — 2026-07-29
+
+Modale canonica e riga di tabella espandibile — i due gap dell'audit «revisione-percorso». Additivo:
+un token z-index, una variante di larghezza, una variante di riga; nessuna rimozione — **aggiornamento
+sicuro**.
+
+### Nuovi
+
+- **`rg-modal--xl`** (960px) — modale larga per un confronto affiancato o una tabella. Tetto
+  dichiarato: oltre, il contenuto è una pagina, non un modal.
+- **`rg-table__row--expandable` + `rg-table__detail`** — riga-record che rivela in loco la propria
+  scomposizione (una `<tr>` di dettaglio con `<td colspan>` su tutte le colonne), preservando la
+  semantica tabellare. MATCH motivato: non `rg-step` (sequenza numerata) né `rg-disclosure` (sezione
+  di pagina).
+- **`--rg-z-lightbox`** (450) — nuovo livello z fra `--rg-z-modal` (400) e `--rg-z-toast` (500): un
+  lightbox aperto dentro una modale ora ci sta **sopra** invece che dietro. `rg-lightbox` aggiornato
+  (prima era a `--rg-z-overlay`, 300). Mezzo-passo additivo: nessun altro overlay si sposta.
+
+### Canonizzazione
+
+- `rg-modal-*` dichiarato **pattern unico** per le modali; il `<dialog>` nativo è deprecato come
+  pattern, con **guida di migrazione** in `components/modal.md` per il consumatore.
+
 ## 1.8.0 — 2026-07-27
 
 La mappa colore→ruolo impara a portare un **controllo per-riga** e nasce la forma **compatta** del

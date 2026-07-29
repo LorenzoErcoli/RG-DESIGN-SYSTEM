@@ -33,7 +33,12 @@
   --rg-layout-content-max: 1440px; --rg-layout-reading-max: 720px; --rg-layout-sidebar: 280px;
   --rg-layout-tool-panel: 380px; --rg-layout-param-col-min: 132px;
   --rg-layout-header: 64px; --rg-layout-grid-gap: 24px;
-  --rg-z-base: 0; --rg-z-sticky: 100; --rg-z-dropdown: 200; --rg-z-overlay: 300; --rg-z-modal: 400; --rg-z-toast: 500;
+  /* Scala z: layer di base a passi di 100. --rg-z-lightbox (450) e un mezzo-passo tra
+     modal (400) e toast (500): un ingrandimento aperto DENTRO un dialog deve stargli sopra,
+     ma sotto i toast/notifiche di sistema, che restano il canale piu in alto. Mezzo-passo
+     scelto di proposito per NON rinumerare la scala: overlay/modal/toast mantengono il loro
+     valore e nessun altro overlay si sposta. */
+  --rg-z-base: 0; --rg-z-sticky: 100; --rg-z-dropdown: 200; --rg-z-overlay: 300; --rg-z-modal: 400; --rg-z-lightbox: 450; --rg-z-toast: 500;
   --rg-motion-fast: 120ms; --rg-motion-normal: 200ms; --rg-motion-easing: cubic-bezier(0.2, 0, 0, 1);
 }
 

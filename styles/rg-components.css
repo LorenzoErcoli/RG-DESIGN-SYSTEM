@@ -479,6 +479,70 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* L'errore non e affidato al colore: la riga di stato si apre con la parola "Errore". */
 .rg-file-input__status--error { color: var(--rg-color-danger); }
 
+/* File card — "questa entita ha un file caricato" (v1.12.0): oggetto GENERICO e riusabile,
+   non legato a un dominio (scheda macchina, compilatore, allegato di una parte...). Risolve il
+   pasticcio del documento fatto a mano: doppio titolo, un paragrafo esplicativo di troppo,
+   controlli d'upload sciolti. Due stati e una rivelazione progressiva.
+   - CARICATO (--loaded): card compatta con UN SOLO titolo = il nome del file (mono, troncato con
+     ellissi ma leggibile per intero via title/testo completo), uno slot badge (l'app mette es.
+     "letta") e uno slot azioni (l'app mette Apri / Ripristina / Carica un altro). NESSUN paragrafo
+     e nessun secondo titolo: la provenienza e il nome file, non una frase.
+   - VUOTO (--empty): la superficie aperta di rg-empty con UNA sola azione primaria (l'app mette
+     Carica un PDF).
+   Non reimplementa il selettore file: il picker e il MECCANISMO di rg-file-input (rg-file-input__
+   control, label che copre l'input a opacita zero col bottone che lo veste). Qui si prende solo il
+   __control, non __status: la riga di stato di rg-file-input sarebbe il "paragrafo" da eliminare —
+   il nome file nel titolo e gia la provenienza. Il bottone del picker torna a larghezza automatica
+   (in rg-file-input e a piena larghezza perche li e il bersaglio unico del pannello; qui e
+   un'azione fra le altre).
+   RIVELAZIONE PROGRESSIVA (il cuore): la zona "opzioni di lettura" (__options, slot dell'app) e la
+   conferma (__confirm, slot dell'app) NON esistono finche un file non e stato scelto. La fonte di
+   verita e [hidden] su __reveal (stato non nativo, pilotato dall'app come aria-expanded altrove):
+   nascosto DAVVERO, non solo alla vista. Contratto JS minimo: al change dell'<input type=file>,
+   se un file e presente, l'app scrive il nome nel titolo e fa __reveal.hidden = false; su conferma
+   o Ripristina torna a true. Il DS non hardcoda le opzioni dell'app (nessuna "spolina%"): fornisce
+   solo contenitori, posizioni e stile. */
+.rg-file-card { display: grid; gap: var(--rg-space-3); }
+/* Il picker prestato da rg-file-input torna auto-largo: qui e un'azione, non il bersaglio unico. */
+.rg-file-card .rg-file-input__control { display: inline-block; }
+.rg-file-card .rg-file-input__control .rg-button { width: auto; }
+
+/* CARICATO (--loaded) — riga compatta: un solo titolo troncabile + slot badge + slot azioni. */
+.rg-file-card--loaded .rg-file-card__row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3);
+  padding: var(--rg-space-3) var(--rg-space-4);
+  background: var(--rg-color-white);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
+  border-radius: var(--rg-radius-md);
+}
+.rg-file-card__title {
+  flex: 1 1 12ch; min-width: 0; margin: 0;
+  font-family: var(--rg-font-mono); font-weight: var(--rg-weight-regular);
+  font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rg-file-card__badges,
+.rg-file-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); }
+.rg-file-card__actions { margin-left: auto; }
+
+/* VUOTO (--empty) — una sola azione primaria centrata nella superficie aperta di rg-empty. */
+.rg-file-card--empty .rg-file-card__empty { display: grid; justify-items: center; gap: var(--rg-space-4); }
+
+/* Slot opzioni di lettura: contenitore neutro, dà solo ritmo verticale ai controlli dell'app. */
+.rg-file-card__options { display: grid; gap: var(--rg-space-2); }
+
+/* RIVELAZIONE — zona opzioni di lettura + conferma, nascosta davvero finche il file non e scelto.
+   [hidden] deve vincere sul display:grid: senza questa riga il contenitore resterebbe visibile. */
+.rg-file-card__reveal {
+  display: grid; gap: var(--rg-space-4);
+  padding: var(--rg-space-4);
+  background: var(--rg-color-surface);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
+  border-radius: var(--rg-radius-md);
+}
+.rg-file-card__reveal[hidden] { display: none; }
+.rg-file-card__confirm { display: flex; flex-wrap: wrap; gap: var(--rg-space-2); }
+
 /* Color map — attribuzione di ciò che e stato importato (v1.5.0): ogni colore o layer del file
    di partenza riceve un ruolo nella lavorazione. E il controllo che risponde a "di questo DXF,
    cosa uso e come": mappa completa colore→ruolo (rete, raso, bordo…) o scelta singola

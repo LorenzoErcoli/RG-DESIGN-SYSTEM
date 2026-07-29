@@ -341,6 +341,21 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-icon-button--danger:hover:not(:disabled) { color: var(--rg-color-white); background: var(--rg-color-danger); border-color: var(--rg-color-danger); }
 .rg-icon-button:disabled { color: var(--rg-color-neutral-400); cursor: not-allowed; }
 
+/* Materials row — presenza e numero dei materiali caricati di una fase (pantografo, stop,
+   supporti). Rende evidente CHE ci sono materiali e QUANTI: etichetta identitaria, un rg-badge
+   di conteggio (mai il solo colore) e l'elenco in mono. Superficie aperta rigata sopra e sotto
+   (idioma di rg-empty/rg-consumption-row), non una card. Non e una riga-record (rg-list-row, un
+   record per riga) ne una tabella (confronto di record): e un riepilogo di presenza. Lo stato
+   vuoto e esplicito (--empty), mai un'assenza silenziosa. v1.10.0. */
+.rg-materials-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2) var(--rg-space-3); padding: var(--rg-space-3) 0; border-block: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-materials-row__label { flex: none; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
+.rg-materials-row__list { display: flex; flex-wrap: wrap; gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
+.rg-materials-row__item { display: inline-flex; align-items: center; gap: var(--rg-space-2); padding: var(--rg-space-1) var(--rg-space-3); background: var(--rg-color-surface); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-sm); font-size: var(--rg-font-size-sm); }
+.rg-materials-row__code { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+/* Stato vuoto: il testo esplicito accanto all'etichetta e al badge "0 caricati". L'assenza e
+   dichiarata dalla struttura (etichetta + conteggio zero + frase), non dal solo colore. */
+.rg-materials-row__empty { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+
 /* Step — fase di una sequenza ordinata (v1.3.0): numero progressivo, titolo forte, contenuto
    espandibile IN LOCO e azioni proprie sempre visibili. Non e una riga-record (rg-list-row),
    che e piatta e senza gerarchia di sequenza, ne una sezione collassabile

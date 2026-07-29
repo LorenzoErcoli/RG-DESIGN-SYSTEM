@@ -77,6 +77,47 @@ Regole:
 A riga chiusa la `<tr class="rg-table__detail">` porta l'attributo `hidden`; il JS che gestisce
 il toggle inverte `aria-expanded` e aggiunge/toglie `hidden`, nient'altro.
 
+## Colonna «Qtà»
+
+La forma canonica del valore numerico esiste già (`rg-table__numeric`: destra, mono, cifre
+tabulari). Mancava **una sola convenzione per la colonna «Qtà»**, che oggi differisce fra i tab.
+Da 1.10.0 la regola è unica e vale in **ogni** tab:
+
+- **Intestazione**: la colonna si chiama `Qtà`. Se **tutte** le righe condividono l'unità,
+  questa sta nell'header fra parentesi — `Qtà (m)`, `Qtà (pz)` — e la cella porta il **solo
+  numero**. È il caso normale.
+- **Cella**: `<td class="rg-table__numeric">` — destra, mono, tabulare. Nessuna variante di
+  allineamento nuova: `rg-table__numeric` è già la forma del valore.
+- **Unità per riga**: quando l'unità **varia** riga per riga (m, pz, cm…), l'header resta `Qtà`
+  senza unità e ogni cella porta il numero seguito da `<span class="rg-table__unit">`. L'unità è
+  secondaria e **non sostituisce mai** il numero (regola §8: unità accanto al valore, non al suo
+  posto).
+- **Precisione**: si conserva la precisione originale; l'arrotondamento è solo di presentazione.
+  Lo stato del dato (stimato/validato) resta in una colonna propria con `rg-badge`, non nel numero.
+
+Unità uniforme (nell'header):
+
+```html
+<table class="rg-table">
+  <thead><tr><th>Codice</th><th class="rg-table__numeric">Qtà (m)</th><th>Stato</th></tr></thead>
+  <tbody>
+    <tr><td class="rg-table__code">FIL-0281</td><td class="rg-table__numeric">184,42</td><td><span class="rg-badge rg-badge--validated">Validato</span></td></tr>
+  </tbody>
+</table>
+```
+
+Unità per riga (accanto al valore):
+
+```html
+<table class="rg-table">
+  <thead><tr><th>Materiale</th><th class="rg-table__numeric">Qtà</th></tr></thead>
+  <tbody>
+    <tr><td>Filato viscosa</td><td class="rg-table__numeric">184,42<span class="rg-table__unit">m</span></td></tr>
+    <tr><td>Paillettes</td><td class="rg-table__numeric">1 240<span class="rg-table__unit">pz</span></td></tr>
+  </tbody>
+</table>
+```
+
 ## Struttura
 
 Caption → toolbar filtri → header → righe → paginazione/riepilogo. Header descrittivi; unità nell'header e, se ambiguo, nel valore. Numeri allineati a destra in mono con cifre tabulari. Codici non vanno troncati senza accesso al valore completo.

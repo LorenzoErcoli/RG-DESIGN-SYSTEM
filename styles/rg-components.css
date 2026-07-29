@@ -106,6 +106,10 @@
 .rg-table tbody tr:hover { background: var(--rg-color-neutral-50); }
 .rg-table__numeric { text-align: right; font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .rg-table__code { font-family: var(--rg-font-mono); font-size: 12px; white-space: nowrap; }
+/* Convenzione "Qtà" (v1.10.0): il valore resta rg-table__numeric (destra, mono, tabulare).
+   L'unità sta nell'header quando è uniforme ("Qtà (m)"); quando varia per riga sta accanto al
+   valore in rg-table__unit — secondaria, mai al posto del numero. Vedi components/tables.md. */
+.rg-table__unit { margin-left: var(--rg-space-1); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
 .rg-table__row--selected, .rg-table tr.is-selected, .rg-table tr[aria-selected="true"] { background: color-mix(in srgb, var(--rg-color-accent-blue) 12%, var(--rg-color-white)); box-shadow: inset 3px 0 0 var(--rg-color-black); }
 .rg-table__row--selected:hover, .rg-table tr.is-selected:hover { background: color-mix(in srgb, var(--rg-color-accent-blue) 16%, var(--rg-color-white)); }
 .rg-table--compact th, .rg-table--compact td { padding-top: var(--rg-space-2); padding-bottom: var(--rg-space-2); font-size: var(--rg-font-size-xs); }

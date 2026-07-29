@@ -550,13 +550,13 @@
       "classes": { "base": "rg-lightbox", "elements": ["rg-lightbox__image", "rg-lightbox__thumb"] },
       "variants": [],
       "states": ["closed", "open", "hover"],
-      "tokens": ["--rg-z-overlay", "--rg-color-black", "--rg-radius-sm", "--rg-space-8"],
+      "tokens": ["--rg-z-lightbox", "--rg-color-black", "--rg-radius-sm", "--rg-space-8"],
       "doc": "components/lightbox.md",
       "rulesRef": "design-rules.md#7-tono-visivo",
       "specimenAnchor": "lightbox",
       "snippet": "<button class=\"rg-lightbox__thumb\" aria-label=\"Ingrandisci: fermata 03\"><img src=\"stop-03.jpg\" alt=\"Fermata 03\" width=\"132\"></button>\n<div class=\"rg-lightbox\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Immagine ingrandita\" hidden><img class=\"rg-lightbox__image\" src=\"\" alt=\"\"></div>",
-      "notes": "Overlay di SOLA LETTURA, su --rg-z-overlay (sotto i dialog). Se serve una decisione, un form o metadati editabili, il componente e rg-modal. Chiusura obbligatoria con click sullo scrim E con Esc. La miniatura e un <button> con aria-label: il cursore zoom-in non e un'affordance accessibile.",
-      "keywords": ["lightbox", "zoom", "ingrandimento", "immagine", "foto", "anteprima", "overlay", "scrim", "miniatura", "thumbnail", "campione", "galleria"]
+      "notes": "Overlay di SOLA LETTURA. Se serve una decisione, un form o metadati editabili, il componente e rg-modal. Da 1.8.0 sta su --rg-z-lightbox (450), SOPRA il dialog (--rg-z-modal 400) e sotto i toast (--rg-z-toast 500): un ingrandimento aperto dentro un modal deve poter salire sopra il modal, non finirci dietro (prima era su --rg-z-overlay 300 e i prodotti lo tamponavano in locale). Chiusura obbligatoria con click sullo scrim E con Esc. La miniatura e un <button> con aria-label: il cursore zoom-in non e un'affordance accessibile.",
+      "keywords": ["lightbox", "zoom", "ingrandimento", "immagine", "foto", "anteprima", "overlay", "scrim", "miniatura", "thumbnail", "campione", "galleria", "z-index", "layering", "sopra il modal", "dentro un modal"]
     },
     {
       "id": "step",

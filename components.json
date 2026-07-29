@@ -229,14 +229,15 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-table", "elements": ["rg-table-wrap", "rg-table__numeric", "rg-table__code", "rg-table__row--selected"], "variants": ["rg-table--compact"] },
-      "variants": ["standard", "compact", "review", "matrix"],
-      "states": ["default", "hover", "selected"],
-      "tokens": ["--rg-font-mono", "--rg-color-border", "--rg-space-*"],
+      "classes": { "base": "rg-table", "elements": ["rg-table-wrap", "rg-table__numeric", "rg-table__code", "rg-table__row--selected", "rg-table__row--expandable", "rg-table__toggle", "rg-table__toggle-label", "rg-table__detail", "rg-table__detail-inner"], "variants": ["rg-table--compact"] },
+      "variants": ["standard", "compact", "review", "matrix", "expandable"],
+      "states": ["default", "hover", "selected", "collapsed", "expanded"],
+      "tokens": ["--rg-font-mono", "--rg-color-border", "--rg-color-surface", "--rg-color-focus", "--rg-space-*"],
       "doc": "components/tables.md",
       "specimenAnchor": "tables",
       "snippet": "<div class=\"rg-table-wrap\"><table class=\"rg-table\"><thead><tr><th>Codice</th><th class=\"rg-table__numeric\">Consumo (m)</th></tr></thead><tbody><tr><td class=\"rg-table__code\">FIL-0281</td><td class=\"rg-table__numeric\">18.42</td></tr></tbody></table></div>",
-      "keywords": ["tabella", "table", "record", "colonne", "consumi", "confronto", "dataset", "griglia dati"]
+      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click.",
+      "keywords": ["tabella", "table", "record", "colonne", "consumi", "confronto", "dataset", "griglia dati", "riga espandibile", "riga espandibile tabella", "expandable row", "riga che si espande", "scomposizione", "dettaglio riga", "sotto-record", "costi", "costo prodotto", "distinta costi", "drill down in tabella", "colspan", "riga di dettaglio", "espandi in tabella"]
     },
     {
       "id": "card",

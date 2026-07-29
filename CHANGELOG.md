@@ -7,6 +7,29 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.7.0 — 2026-07-23
+
+Il pannello di una tool impara **due archetipi di testa** e una regola d'accordion, così tool diverse
+restano leggibili allo stesso modo. Solo regole e documentazione: nessun token, nessuna classe nuova,
+nessuna rimozione — **aggiornamento sicuro**.
+
+### Regole (`patterns/workspace.md`)
+
+- **Ordine canonico, testa A vs B** (aggiorna la regola 1.5.0). La testa si apre con la *radice della
+  catena di dipendenze*, scelta da una domanda: la misura del prodotto nasce dalla sorgente importata o
+  è una decisione indipendente del tool? **Testa A** (sorgente-guidata, es. net-45): `Sagoma` con scala
+  e misura reale → `Colori e ruoli`, senza un `Formato` separato. **Testa B** (formato-guidata, es.
+  oblique/pattern-grammar): `Formato e scala` in cima → `Sagoma` (ritaglio opzionale) → `Colori e
+  ruoli`. In entrambe: i gruppi del tool nel loro ordine, poi la coda fissa `Esportazione` e `Preset`.
+- **Accordion.** La testa non si richiude mai (è l'ancora che non sparisce); corpo e coda sì. Default
+  senza memoria: testa aperta, corpo tutto aperto se ≤ 5 sezioni, altrimenti solo il primo gruppo del
+  corpo; coda chiusa. Lo stato aperto/chiuso si ricorda per tool.
+
+### Vetrina
+
+- Sezione 21 «Pannello di una tool — ordine canonico e accordion»: esempio di tool formato-guidata
+  (testa B) con le sezioni richiudibili.
+
 ## 1.6.0 — 2026-07-22
 
 Il **pannello di configurazione** diventa un pattern e il campo di un form impara due cose che il

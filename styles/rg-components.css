@@ -507,8 +507,8 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-file-card .rg-file-input__control { display: inline-block; }
 .rg-file-card .rg-file-input__control .rg-button { width: auto; }
 
-/* CARICATO — riga compatta: un solo titolo troncabile + slot badge + slot azioni. */
-.rg-file-card__row {
+/* CARICATO (--loaded) — riga compatta: un solo titolo troncabile + slot badge + slot azioni. */
+.rg-file-card--loaded .rg-file-card__row {
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3);
   padding: var(--rg-space-3) var(--rg-space-4);
   background: var(--rg-color-white);
@@ -525,8 +525,11 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-file-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); }
 .rg-file-card__actions { margin-left: auto; }
 
-/* VUOTO — una sola azione primaria centrata nella superficie aperta di rg-empty. */
-.rg-file-card__empty { display: grid; justify-items: center; gap: var(--rg-space-4); }
+/* VUOTO (--empty) — una sola azione primaria centrata nella superficie aperta di rg-empty. */
+.rg-file-card--empty .rg-file-card__empty { display: grid; justify-items: center; gap: var(--rg-space-4); }
+
+/* Slot opzioni di lettura: contenitore neutro, dà solo ritmo verticale ai controlli dell'app. */
+.rg-file-card__options { display: grid; gap: var(--rg-space-2); }
 
 /* RIVELAZIONE — zona opzioni di lettura + conferma, nascosta davvero finche il file non e scelto.
    [hidden] deve vincere sul display:grid: senza questa riga il contenitore resterebbe visibile. */

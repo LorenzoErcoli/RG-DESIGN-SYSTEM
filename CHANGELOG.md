@@ -7,6 +7,18 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.11.0 — 2026-07-29
+
+Utility **opt-in** per applicare il colore-label leggibile a micro-label «libere» (fuori da un
+componente), senza `color` inline. Una classe, additiva — **aggiornamento sicuro**.
+
+### Nuovi
+
+- **`rg-u-text-label`** (utility) — applica `--rg-color-text-label` (neutral-800, ~14,8:1) a una
+  micro-label libera, es. «MATERIALI IN APPOGGIO». **Opt-in**: NON è legata a `.rg-label`, che
+  eredita il colore dal contesto e deve restare adattiva alle superfici scure (legare il token la
+  renderebbe invisibile su fondo scuro). Da usare su superficie chiara.
+
 ## 1.10.0 — 2026-07-29
 
 Mattoni per il **layout canonico della fase**: il contenitore-sezione di ogni tab, la convenzione

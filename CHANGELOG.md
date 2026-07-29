@@ -7,6 +7,20 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.8.0 — 2026-07-27
+
+La mappa colore→ruolo impara a portare un **controllo per-riga** e nasce la forma **compatta** del
+campo con unità. Additivo: due classi nuove, nessun token, nessuna rimozione — **aggiornamento sicuro**.
+
+### Nuovi
+
+- **`rg-color-map__aside`** — slot in coda a una riga di `rg-color-map`, allineato a destra, per un
+  controllo che appartiene a quel colore (densità per-colore, override numerico, azione di riga). La
+  terza colonna nasce solo se lo slot c'è: le mappe che non lo usano restano identiche.
+- **`rg-field-with-unit--compact`** — forma compatta del campo con unità (~6.5ch, box unità ridotto),
+  per una riga densa dove il campo è un accessorio. Da usare con `rg-input--numeric`; etichetta non
+  visibile ma in `aria-label` (nomina il colore, dichiara unità e comportamento del vuoto).
+
 ## 1.7.0 — 2026-07-23
 
 Il pannello di una tool impara **due archetipi di testa** e una regola d'accordion, così tool diverse

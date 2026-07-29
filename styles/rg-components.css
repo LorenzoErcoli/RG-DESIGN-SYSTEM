@@ -442,6 +442,13 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* Il bersaglio sta su una riga propria: a pannello stretto un ruolo ("Area raso bordo") non si
    comprime accanto al codice senza troncarsi, e un ruolo troncato non e leggibile. */
 .rg-color-map__target { grid-column: 1 / -1; }
+/* Slot accessorio per-riga (v1.7.0): un controllo compatto che appartiene al singolo colore —
+   la densita per-colore di interlace, o qualunque override numerico della riga. Sta in coda,
+   allineato a destra. La terza colonna nasce solo se lo slot c'e (:has), cosi le righe senza
+   accessorio restano identiche a prima. Il bersaglio a piena larghezza (rg-color-map__target)
+   passa comunque sopra tutte le colonne con grid-column 1 / -1. */
+.rg-color-map__row:has(.rg-color-map__aside) { grid-template-columns: auto minmax(0, 1fr) auto; }
+.rg-color-map__aside { justify-self: end; }
 .rg-color-map__empty { padding: var(--rg-space-3) 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); border-block: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 
 /* Lightbox — ingrandimento di un'immagine documentaria (campione, foto tecnica, scansione).

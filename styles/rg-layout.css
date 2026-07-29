@@ -82,6 +82,16 @@ details.rg-param-section:not([open]) > .rg-param-section__header { margin-bottom
    size del controllo): senza, l'input sborda la propria traccia in un pannello stretto. */
 .rg-field-with-unit .rg-input { min-width: 0; border-radius: var(--rg-radius-md) 0 0 var(--rg-radius-md); }
 .rg-field-with-unit > span { display: grid; place-items: center; min-width: 42px; padding-inline: var(--rg-space-2); color: var(--rg-color-text-secondary); background: var(--rg-color-neutral-50); border: 1px solid var(--rg-color-border-strong); border-left: 0; border-radius: 0 var(--rg-radius-md) var(--rg-radius-md) 0; font-family: var(--rg-font-mono); font-size: 10px; white-space: nowrap; }
+/* Forma COMPATTA del campo con unita (v1.7.0): per una riga densa (una voce di rg-color-map,
+   una cella di lista) dove il campo numerico e un ACCESSORIO, non il soggetto di un form a
+   colonna. Stringe il valore e la pastiglia dell'unita; il valore resta mono, tabulare e
+   allineato a destra grazie a rg-input--numeric. La larghezza passa dalla stessa variabile del
+   campo pieno (--rg-input-numeric-width), qui ridotta: la regola numerica in rg-components.css
+   la legge sia per la traccia della griglia sia per il max-width dell'input. L'etichetta non e
+   visibile ma resta accessibile via aria-label sull'input: in una lista di righe simili "mm" da
+   solo non dice a quale colore appartiene. */
+.rg-field-with-unit--compact { --rg-input-numeric-width: 6.5ch; }
+.rg-field-with-unit--compact > span { min-width: 28px; padding-inline: var(--rg-space-1); }
 @media (max-width: 760px) {
   .rg-workspace { grid-template-columns: 1fr; height: auto; }
   .rg-workspace__panel { border-right: 0; border-bottom: 1px solid var(--rg-color-black); }

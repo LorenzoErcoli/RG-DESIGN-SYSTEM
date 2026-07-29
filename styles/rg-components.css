@@ -131,7 +131,7 @@
 /* Cards */
 .rg-card { height: 100%; padding: var(--rg-space-6); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); border-radius: var(--rg-radius-md); }
 .rg-card:hover { border-color: var(--rg-color-neutral-600); }
-.rg-card__eyebrow { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: 10px; }
+.rg-card__eyebrow { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: 10px; }
 .rg-card__title { margin: 0 0 var(--rg-space-2); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); }
 .rg-card__body { margin: 0; color: var(--rg-color-text-secondary); }
 .rg-card--technical { border-color: var(--rg-color-black); border-radius: var(--rg-radius-sm); }
@@ -417,9 +417,9 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-modal__close:hover { color: var(--rg-color-black); background: var(--rg-color-neutral-100); border-color: var(--rg-color-border); }
 .rg-modal__body { flex: 1; padding: var(--rg-space-6); overflow-y: auto; }
 .rg-modal__footer { display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0; gap: var(--rg-space-2); padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface); border-top: 1px solid var(--rg-color-border); }
-.rg-modal__meta { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: 10px; letter-spacing: .06em; }
+.rg-modal__meta { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: 10px; letter-spacing: .06em; }
 .rg-modal__row { display: flex; align-items: center; gap: var(--rg-space-3); margin-bottom: var(--rg-space-3); }
-.rg-modal__row-label { min-width: 60px; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); white-space: nowrap; }
+.rg-modal__row-label { min-width: 60px; color: var(--rg-color-text-label); font-size: var(--rg-font-size-xs); white-space: nowrap; }
 .rg-modal__current { padding: 4px 8px; background: var(--rg-color-surface); border: 1px solid var(--rg-color-border); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
 
 /* Chip — pill selezionabile (checkbox) + chip "add" tratteggiata (promosso da product-platform, v0.3.0) */

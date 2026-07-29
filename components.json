@@ -318,7 +318,7 @@
       "classes": { "base": "rg-modal", "elements": ["rg-modal-backdrop", "rg-modal__header", "rg-modal__title", "rg-modal__close", "rg-modal__body", "rg-modal__footer", "rg-modal__meta", "rg-modal__row", "rg-modal__row-label", "rg-modal__current"], "variants": ["rg-modal--sm", "rg-modal--lg", "rg-modal--xl"] },
       "variants": ["standard", "small", "large", "extra-large"],
       "states": ["closed", "open"],
-      "tokens": ["--rg-z-modal", "--rg-shadow-overlay", "--rg-color-surface", "--rg-radius-md"],
+      "tokens": ["--rg-z-modal", "--rg-shadow-overlay", "--rg-color-surface", "--rg-radius-md", "--rg-color-text-label"],
       "doc": "components/modal.md",
       "specimenAnchor": "modal",
       "snippet": "<div class=\"rg-modal-backdrop is-open\" role=\"presentation\"><div class=\"rg-modal rg-modal--sm\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"m-title\"><header class=\"rg-modal__header\"><h2 class=\"rg-modal__title\" id=\"m-title\">Titolo</h2><button class=\"rg-modal__close\" aria-label=\"Chiudi\">×</button></header><div class=\"rg-modal__body\">...</div><footer class=\"rg-modal__footer\"><button class=\"rg-button rg-button--primary\">Conferma</button></footer></div></div>",

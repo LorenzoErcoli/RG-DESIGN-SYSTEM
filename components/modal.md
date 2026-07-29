@@ -111,3 +111,12 @@ Chi ha un `<dialog>` nativo o un `<style>` locale che tampona il layering lo sos
 
 Il markup interno (`rg-modal__header/__title/__close/__body/__footer`) resta invariato tra le
 larghezze: cambia solo la classe di variante sul `.rg-modal`.
+
+### Contrasto delle label (v1.10.0)
+
+Le micro-label della modale in corpo piccolo — `rg-modal__meta` (10px) e `rg-modal__row-label`
+(12px) — usavano `--rg-color-text-secondary` (neutral-600). Su bianco quel grigio misura
+**6,1:1** e supera tecnicamente WCAG AA, ma a 10px risultava esile («non si vede»). Ora usano il
+token dedicato **`--rg-color-text-label`** (neutral-800, **~14,8:1**): stessa sobrietà, nessun
+grassetto nuovo, solo un colore leggibile. Il titolo (`rg-modal__title`) e `rg-modal__current`
+restano invariati. Il consumatore non deve più correggere questi colori in locale.

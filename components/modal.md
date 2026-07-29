@@ -11,6 +11,11 @@ navigazione: quelli restano nella pagina. Promosso da `rg-product-platform` (v0.
 - **Standard** (`rg-modal`): larghezza media (480px).
 - **Small** (`rg-modal--sm`): conferme secche (360px).
 - **Large** (`rg-modal--lg`): form con più righe (640px).
+- **Extra large** (`rg-modal--xl`): contenuti larghi da leggere a griglia (960px) — una
+  tabella, un confronto affiancato di due colonne. È il tetto: 960px stanno sotto
+  `--rg-layout-content-max` e, con il padding dello scrim, restano una finestra e non un
+  takeover a schermo pieno anche su un laptop da 1024px. Oltre questa densità il contenuto
+  non appartiene a un modal ma a una pagina.
 
 ## Uso e limiti
 

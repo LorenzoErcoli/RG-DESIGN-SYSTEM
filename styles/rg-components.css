@@ -367,6 +367,12 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-modal { display: flex; flex-direction: column; width: 100%; max-width: 480px; max-height: calc(100vh - 80px); overflow: hidden; background: var(--rg-color-white); border: 1px solid var(--rg-color-black); border-radius: var(--rg-radius-md); box-shadow: var(--rg-shadow-overlay); }
 .rg-modal--sm { max-width: 360px; }
 .rg-modal--lg { max-width: 640px; }
+/* --xl: contenuti larghi che nel dialog vanno confrontati fianco a fianco o letti a
+   griglia (una tabella, due colonne di confronto). 960px = due colonne utili ~440px +
+   gap, o una tabella a 5-6 colonne; sta sotto --rg-layout-content-max (1440) e, con il
+   padding del backdrop (--rg-space-6 per lato), lascia lo scrim visibile gia a 1024px
+   (960 + 48 < 1024): il dialog resta una finestra, non diventa un takeover a schermo pieno. */
+.rg-modal--xl { max-width: 960px; }
 .rg-modal__header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface); border-bottom: 1px solid var(--rg-color-border); }
 .rg-modal__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
 .rg-modal__close { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; color: var(--rg-color-text-secondary); background: none; border: 1px solid transparent; border-radius: var(--rg-radius-sm); font-size: var(--rg-font-size-md); line-height: 1; cursor: pointer; }

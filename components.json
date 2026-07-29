@@ -296,14 +296,15 @@
       "since": "0.3.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-modal", "elements": ["rg-modal-backdrop", "rg-modal__header", "rg-modal__title", "rg-modal__close", "rg-modal__body", "rg-modal__footer", "rg-modal__meta", "rg-modal__row", "rg-modal__row-label", "rg-modal__current"], "variants": ["rg-modal--sm", "rg-modal--lg"] },
-      "variants": ["standard", "small", "large"],
+      "classes": { "base": "rg-modal", "elements": ["rg-modal-backdrop", "rg-modal__header", "rg-modal__title", "rg-modal__close", "rg-modal__body", "rg-modal__footer", "rg-modal__meta", "rg-modal__row", "rg-modal__row-label", "rg-modal__current"], "variants": ["rg-modal--sm", "rg-modal--lg", "rg-modal--xl"] },
+      "variants": ["standard", "small", "large", "extra-large"],
       "states": ["closed", "open"],
       "tokens": ["--rg-z-modal", "--rg-shadow-overlay", "--rg-color-surface", "--rg-radius-md"],
       "doc": "components/modal.md",
       "specimenAnchor": "modal",
       "snippet": "<div class=\"rg-modal-backdrop is-open\" role=\"presentation\"><div class=\"rg-modal rg-modal--sm\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"m-title\"><header class=\"rg-modal__header\"><h2 class=\"rg-modal__title\" id=\"m-title\">Titolo</h2><button class=\"rg-modal__close\" aria-label=\"Chiudi\">×</button></header><div class=\"rg-modal__body\">...</div><footer class=\"rg-modal__footer\"><button class=\"rg-button rg-button--primary\">Conferma</button></footer></div></div>",
-      "keywords": ["modal", "dialog", "finestra", "popup", "conferma", "overlay", "backdrop", "dialogo"]
+      "notes": "rg-modal-* e il pattern CANONICO della modale RG (backdrop scrim + dialog): il <dialog> nativo va fatto convergere qui (vedi components/modal.md, nota di deprecazione e guida di migrazione). Larghezze: --sm 360 conferme, standard 480, --lg 640 form a piu righe, --xl 960 per contenuti larghi a griglia (tabella, confronto affiancato) — 960 e il tetto oltre il quale il contenuto e una pagina, non un modal. Da 1.8.0 un lightbox aperto DENTRO un modal gli sta sopra: rg-lightbox e su --rg-z-lightbox (450), tra --rg-z-modal (400) e --rg-z-toast (500).",
+      "keywords": ["modal", "dialog", "finestra", "popup", "conferma", "overlay", "backdrop", "dialogo", "modale larga", "xl", "extra large", "confronto affiancato", "tabella in modale", "dialog nativo", "canonico", "deprecazione dialog"]
     },
     {
       "id": "chip",

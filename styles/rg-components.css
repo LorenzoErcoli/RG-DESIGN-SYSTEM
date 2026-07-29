@@ -106,6 +106,10 @@
 .rg-table tbody tr:hover { background: var(--rg-color-neutral-50); }
 .rg-table__numeric { text-align: right; font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .rg-table__code { font-family: var(--rg-font-mono); font-size: 12px; white-space: nowrap; }
+/* Convenzione "Qtà" (v1.10.0): il valore resta rg-table__numeric (destra, mono, tabulare).
+   L'unità sta nell'header quando è uniforme ("Qtà (m)"); quando varia per riga sta accanto al
+   valore in rg-table__unit — secondaria, mai al posto del numero. Vedi components/tables.md. */
+.rg-table__unit { margin-left: var(--rg-space-1); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
 .rg-table__row--selected, .rg-table tr.is-selected, .rg-table tr[aria-selected="true"] { background: color-mix(in srgb, var(--rg-color-accent-blue) 12%, var(--rg-color-white)); box-shadow: inset 3px 0 0 var(--rg-color-black); }
 .rg-table__row--selected:hover, .rg-table tr.is-selected:hover { background: color-mix(in srgb, var(--rg-color-accent-blue) 16%, var(--rg-color-white)); }
 .rg-table--compact th, .rg-table--compact td { padding-top: var(--rg-space-2); padding-bottom: var(--rg-space-2); font-size: var(--rg-font-size-xs); }
@@ -127,7 +131,7 @@
 /* Cards */
 .rg-card { height: 100%; padding: var(--rg-space-6); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); border-radius: var(--rg-radius-md); }
 .rg-card:hover { border-color: var(--rg-color-neutral-600); }
-.rg-card__eyebrow { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: 10px; }
+.rg-card__eyebrow { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: 10px; }
 .rg-card__title { margin: 0 0 var(--rg-space-2); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); }
 .rg-card__body { margin: 0; color: var(--rg-color-text-secondary); }
 .rg-card--technical { border-color: var(--rg-color-black); border-radius: var(--rg-radius-sm); }
@@ -138,6 +142,26 @@
 .rg-card.is-error { border-left: 4px solid var(--rg-color-danger); }
 .rg-card.is-success { border-left: 4px solid var(--rg-color-success); }
 .rg-card--selected, .rg-card.is-selected, .rg-card[aria-selected="true"] { border: 2px solid var(--rg-color-black); box-shadow: inset 0 0 0 3px var(--rg-color-white), inset 0 0 0 4px var(--rg-color-accent-blue); }
+
+/* Section card — keystone di ogni tab (v1.10.0). Contenitore-card che avvolge il corpo di un
+   tab con un HEADER RIGATO: titolo + didascalia opzionale a sinistra, al più UNA azione primaria
+   a destra. Il filetto sotto l'header separa testa e corpo — idioma a linee, nessuna ombra.
+   Distinto da: rg-card (tessera-entità con hover e height:100%, senza filetto d'header, per
+   griglie di entità); rg-section-header (layout di pagina, non un contenitore); rg-disclosure
+   --boxed (sezione richiudibile, non la testa fissa e sempre presente di un tab). L'header di
+   tab è __header: UN solo canone, non una testa diversa per ogni tab. La regola "una sola azione
+   primaria" è di composizione, non di CSS: sta nella doc e nella vetrina. */
+.rg-section-card { background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); }
+.rg-section-card__header { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-4); min-height: 40px; padding: var(--rg-space-4) var(--rg-space-6); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-section-card__heading { display: grid; gap: var(--rg-space-1); min-width: 0; }
+.rg-section-card__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); line-height: var(--rg-line-height-heading); }
+.rg-section-card__subtitle { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
+.rg-section-card__actions { display: inline-flex; flex-shrink: 0; align-items: center; gap: var(--rg-space-2); }
+.rg-section-card__body { padding: var(--rg-space-6); }
+/* Corpo a filo (--flush): per un tab il cui corpo È una tabella o una lista rigata che deve
+   arrivare ai bordi della card senza un secondo margine; i filetti interni proseguono quelli
+   della card. */
+.rg-section-card--flush > .rg-section-card__body { padding: 0; }
 
 /* Badges */
 .rg-badge { display: inline-flex; min-height: 24px; align-items: center; gap: 6px; padding: 2px var(--rg-space-2); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); border-radius: var(--rg-radius-pill); font-family: var(--rg-font-mono); font-size: 10px; white-space: nowrap; }
@@ -317,6 +341,21 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-icon-button--danger:hover:not(:disabled) { color: var(--rg-color-white); background: var(--rg-color-danger); border-color: var(--rg-color-danger); }
 .rg-icon-button:disabled { color: var(--rg-color-neutral-400); cursor: not-allowed; }
 
+/* Materials row — presenza e numero dei materiali caricati di una fase (pantografo, stop,
+   supporti). Rende evidente CHE ci sono materiali e QUANTI: etichetta identitaria, un rg-badge
+   di conteggio (mai il solo colore) e l'elenco in mono. Superficie aperta rigata sopra e sotto
+   (idioma di rg-empty/rg-consumption-row), non una card. Non e una riga-record (rg-list-row, un
+   record per riga) ne una tabella (confronto di record): e un riepilogo di presenza. Lo stato
+   vuoto e esplicito (--empty), mai un'assenza silenziosa. v1.10.0. */
+.rg-materials-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2) var(--rg-space-3); padding: var(--rg-space-3) 0; border-block: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-materials-row__label { flex: none; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
+.rg-materials-row__list { display: flex; flex-wrap: wrap; gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
+.rg-materials-row__item { display: inline-flex; align-items: center; gap: var(--rg-space-2); padding: var(--rg-space-1) var(--rg-space-3); background: var(--rg-color-surface); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-sm); font-size: var(--rg-font-size-sm); }
+.rg-materials-row__code { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+/* Stato vuoto: il testo esplicito accanto all'etichetta e al badge "0 caricati". L'assenza e
+   dichiarata dalla struttura (etichetta + conteggio zero + frase), non dal solo colore. */
+.rg-materials-row__empty { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+
 /* Step — fase di una sequenza ordinata (v1.3.0): numero progressivo, titolo forte, contenuto
    espandibile IN LOCO e azioni proprie sempre visibili. Non e una riga-record (rg-list-row),
    che e piatta e senza gerarchia di sequenza, ne una sezione collassabile
@@ -393,9 +432,9 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-modal__close:hover { color: var(--rg-color-black); background: var(--rg-color-neutral-100); border-color: var(--rg-color-border); }
 .rg-modal__body { flex: 1; padding: var(--rg-space-6); overflow-y: auto; }
 .rg-modal__footer { display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0; gap: var(--rg-space-2); padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface); border-top: 1px solid var(--rg-color-border); }
-.rg-modal__meta { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: 10px; letter-spacing: .06em; }
+.rg-modal__meta { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: 10px; letter-spacing: .06em; }
 .rg-modal__row { display: flex; align-items: center; gap: var(--rg-space-3); margin-bottom: var(--rg-space-3); }
-.rg-modal__row-label { min-width: 60px; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); white-space: nowrap; }
+.rg-modal__row-label { min-width: 60px; color: var(--rg-color-text-label); font-size: var(--rg-font-size-xs); white-space: nowrap; }
 .rg-modal__current { padding: 4px 8px; background: var(--rg-color-surface); border: 1px solid var(--rg-color-border); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
 
 /* Chip — pill selezionabile (checkbox) + chip "add" tratteggiata (promosso da product-platform, v0.3.0) */

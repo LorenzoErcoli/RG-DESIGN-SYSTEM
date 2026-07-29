@@ -7,6 +7,38 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.10.0 — 2026-07-29
+
+Mattoni per il **layout canonico della fase**: il contenitore-sezione di ogni tab, la convenzione
+della colonna «Qtà», la riga dei materiali e la leggibilità delle micro-label. Additivo, tranne il
+fix di contrasto (colore, non struttura) — **aggiornamento sicuro**.
+
+### Nuovi
+
+- **`rg-section-card`** — contenitore-sezione keystone di ogni tab: card con **header rigato**
+  (titolo + didascalia opzionale + al più UNA `rg-button--primary` a destra) e corpo. Variante
+  `--flush` per un corpo-tabella a filo dei bordi. MATCH: non `rg-card` (tessera di griglia), non
+  `rg-section-header` (layout di pagina), non `rg-disclosure--boxed` (sezione richiudibile).
+- **`rg-materials-row`** — riga che rende evidenti **presenza e numero** dei materiali di una fase
+  (badge di conteggio + elenco con codice mono), con stato vuoto esplicito.
+
+### Convenzioni
+
+- **Colonna «Qtà»** (`components/tables.md`): regola unica — unità nell'header quando uniforme
+  (`Qtà (m)`), per riga con `rg-table__unit`; il valore resta `rg-table__numeric`. Le tabelle
+  smettono di divergere fra tab.
+
+### Fix
+
+- **Contrasto delle micro-label**: nuovo token `--rg-color-text-label` (neutral-800, ~14,8:1)
+  applicato a `rg-modal__meta`, `rg-modal__row-label`, `rg-param-section__index`, `rg-card__eyebrow`
+  — prima a neutral-600 (~6:1, tecnicamente AA ma deboli a ≤10px). Solo colore, nessun peso nuovo.
+
+### Migrazione (consumatore)
+
+- `fase`/`_tab_consumi` adottano `rg-section-card`, applicano la convenzione «Qtà» e i `<style>`
+  residui spariscono; il `<dialog>` nativo converge su `rg-modal`. Edit lato product-platform.
+
 ## 1.9.0 — 2026-07-29
 
 Modale canonica e riga di tabella espandibile — i due gap dell'audit «revisione-percorso». Additivo:

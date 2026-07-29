@@ -56,7 +56,7 @@
    inline: il numero e la posizione nel pannello — mono, tabulare, secondario — e il titolo e una
    label identitaria, non un H3 di pagina. Il numero non e un identificatore: e contiguo, e se una
    sezione non c'e non lascia buchi. Vedi "Ordine canonico" in patterns/workspace.md. */
-.rg-param-section__index { flex: none; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+.rg-param-section__index { flex: none; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
 .rg-param-section__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
 /* Sezione richiudibile: composizione sancita <details class="rg-param-section rg-disclosure">
    con <summary class="rg-param-section__header rg-disclosure__trigger">. La sezione porta gia il

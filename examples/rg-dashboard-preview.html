@@ -15,14 +15,17 @@
   <link rel="stylesheet" href="../styles/rg-utilities.css">
   <style>
     /* Telaio di pagina — layout specifico di questa schermata, come i .specimen-* della library. */
-    .app-header { height: var(--rg-layout-header); display: grid; grid-template-columns: 176px 1fr auto; align-items: stretch; border-bottom: 1px solid var(--rg-color-border-strong); }
+    .app-header { height: var(--rg-layout-header); display: grid; grid-template-columns: 176px 1fr auto; align-items: stretch; background: var(--rg-color-surface-raised); border-bottom: 1px solid var(--rg-color-border-strong); }
     .brand { display: flex; align-items: center; padding: 0 var(--rg-space-6); border-right: 1px solid var(--rg-color-border-strong); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-bold); letter-spacing: var(--rg-letter-tight); }
     .tool-name { display: flex; align-items: baseline; gap: var(--rg-space-3); padding: 0 var(--rg-space-6); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
     .tool-name span { color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); }
     .header-meta { display: flex; align-items: center; gap: var(--rg-space-4); padding: 0 var(--rg-space-6); }
     .status-dot { width: 7px; height: 7px; margin-right: var(--rg-space-2); background: var(--rg-color-accent-sage); border-radius: 50%; display: inline-block; }
     .shell { min-height: calc(100vh - var(--rg-layout-header)); display: grid; grid-template-columns: 176px minmax(620px, 1fr) 320px; }
-    main { min-width: 0; padding: var(--rg-space-12) var(--rg-space-8) var(--rg-space-16); }
+    /* Le tre zone dichiarano la propria profondita (DS 1.13.0): navigazione e colonna di lavoro
+       sono superfici SOLLEVATE, il pannello di dettaglio e RIENTRANTE. Senza, la colonna di
+       lavoro erediterebbe il fondo di pagina e il dettaglio ci si confonderebbe dentro. */
+    main { min-width: 0; padding: var(--rg-space-12) var(--rg-space-8) var(--rg-space-16); background: var(--rg-color-surface-raised); }
     .page-intro { display: flex; justify-content: space-between; align-items: end; gap: var(--rg-space-6); margin-bottom: var(--rg-space-12); }
     .page-intro > div { min-width: 0; }
     .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: var(--rg-space-12); border-block: 1px solid var(--rg-color-border-strong); }
@@ -31,7 +34,7 @@
     .summary-label { margin: var(--rg-space-2) 0 0; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
     .accent-rule { width: 40px; height: 3px; margin-top: var(--rg-space-4); background: var(--rg-color-accent-sage); }
     .section-head { display: flex; align-items: end; justify-content: space-between; gap: var(--rg-space-4); margin-bottom: var(--rg-space-4); }
-    .detail-panel { min-width: 0; padding: var(--rg-space-8) var(--rg-space-6); background: var(--rg-color-neutral-50); border-left: 1px solid var(--rg-color-border-strong); }
+    .detail-panel { min-width: 0; padding: var(--rg-space-8) var(--rg-space-6); background: var(--rg-color-surface); border-left: 1px solid var(--rg-color-border-strong); }
     .detail-block { padding: var(--rg-space-6) 0; border-bottom: 1px solid var(--rg-color-border); }
     .thread-swatch { width: 100%; height: 10px; margin: var(--rg-space-4) 0; background: var(--rg-color-accent-blue); border-left: 44px solid var(--rg-color-accent-sage); border-right: 72px solid var(--rg-color-accent-sand); }
     @media (max-width: 1180px) {

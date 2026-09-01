@@ -28,6 +28,13 @@ Derivato da `pattern-grammar-engine`, generalizzato e reso token-based.
   `rg-param-grid` + campi `rg-field` / `rg-field-with-unit`, nell'**ordine canonico** descritto
   più sotto.
 - `rg-workspace__stage` — righe `header / canvas / statusbar`.
+
+> **Profondità (dal DS 1.13.0).** Il workspace aveva già i tre gradini di superficie quando il
+> resto del sistema ne usava due senza regola: è la ragione per cui la revisione 1.13.0 è una
+> generalizzazione e non un'invenzione. Pannello e canvas sono **sollevati**
+> (`--rg-color-surface-raised`), lo stage è il **fondo** (`--rg-color-background`). Dalla 1.13.0 i
+> colori letterali sono scritti con i token semantici corrispondenti: **stessi valori esatti,
+> nessun pixel cambia**. Vedi [design-rules.md §6](../design-rules.md#quale-superficie-a-quale-profondità).
 - `rg-workspace__canvas` — viewport che ritaglia; `cursor: grab`, `is-dragging` durante il trascinamento.
 - `rg-workspace__layer` — il livello trasformato che contiene l'anteprima (SVG/canvas).
 

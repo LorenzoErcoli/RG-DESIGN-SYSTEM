@@ -13,15 +13,20 @@
  */
 
 /* --- Superficie e tipografia di base --------------------------------------- */
+/* Profondita (DS 1.13.0): una pagina Streamlit e' una sola colonna di contenuto senza
+ * contenitori sovrapposti — non c'e' un fondo da mostrare sotto delle card. La colonna E'
+ * quindi la superficie SOLLEVATA, non il fondo: --rg-color-surface-raised, cioe' lo stesso
+ * bianco di prima. La barra di sistema e' chrome, e sta sullo stesso piano; la sidebar resta
+ * un gradino rientrante, come prima. Vedi design-rules.md §6. */
 .stApp,
 [data-testid="stAppViewContainer"] {
   color: var(--rg-color-text-primary);
-  background: var(--rg-color-background);
+  background: var(--rg-color-surface-raised);
   font-family: var(--rg-font-body);
 }
 
 [data-testid="stHeader"] {
-  background: var(--rg-color-background);
+  background: var(--rg-color-surface-raised);
   border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border);
 }
 

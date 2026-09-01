@@ -32,6 +32,9 @@ blocco ricorre in ogni tab di più prodotti (§12 delle regole), è un component
 - **`rg-section-card--flush`**: corpo senza padding, per un tab il cui corpo **è** una tabella
   o una lista rigata che deve arrivare ai bordi della card; i filetti interni proseguono quelli
   della card.
+- **`rg-section-card--emphasis`** (v1.13.0): il blocco che è il **soggetto della vista**. Contorno
+  nero al posto del gradino intermedio e testa su superficie rientrante
+  (`--rg-color-surface`), così testa e corpo si distinguono anche a colpo d'occhio.
 
 ## Uso e limiti
 
@@ -44,6 +47,27 @@ blocco ricorre in ogni tab di più prodotti (§12 delle regole), è un component
   la pagina ha già la sua testata sopra i tab.
 - Non annidare una `rg-section-card` dentro un'altra: per sotto-sezioni interne usare
   `rg-disclosure--boxed` o separatori.
+
+### Enfasi (`--emphasis`) — una sola per vista
+
+`--emphasis` non è uno stato e non significa nulla sul contenuto: dice soltanto *«questo è il
+soggetto, il resto è contorno»*. Serve alla pagina che mostra più blocchi allo stesso livello — il
+tab attivo accanto ai riepiloghi laterali, il form in modifica accanto ai dati di sola lettura.
+
+- **Una sola section card enfatizzata per vista.** Se tutte lo sono, nessuna lo è: è il difetto di
+  partenza che la revisione 1.13.0 corregge, non la sua soluzione.
+- L'enfasi **non sostituisce l'azione primaria**: la regola «al più una `rg-button--primary`
+  nell'header» resta valida e indipendente.
+- Non usarla per segnalare un errore o un avviso: quello è un `rg-alert` dentro il corpo, con testo
+  esplicito. L'enfasi non è leggibile come stato e non deve fingersi tale.
+
+### Superficie e contorno (dalla 1.13.0)
+
+La section card è una superficie **sollevata** (`--rg-color-surface-raised`) sul fondo di pagina, con
+contorno al gradino **intermedio** (`--rg-color-border-medium`); il nero resta riservato all'enfasi.
+Il titolo (`rg-section-card__title`) è a peso **medium** dichiarato dal DS: è una label identitaria
+di tab, non un titolo di pagina, e non cambia peso a seconda dell'elemento che lo ospita. Vedi
+[design-rules.md §6](../design-rules.md#quale-superficie-a-quale-profondità).
 
 ## Struttura
 
@@ -60,6 +84,25 @@ blocco ricorre in ogni tab di più prodotti (§12 delle regole), è un component
   </header>
   <div class="rg-section-card__body">
     <!-- corpo del tab: form, testo, key-value… -->
+  </div>
+</section>
+```
+
+Il blocco soggetto della vista:
+
+```html
+<section class="rg-section-card rg-section-card--emphasis">
+  <header class="rg-section-card__header">
+    <div class="rg-section-card__heading">
+      <h2 class="rg-section-card__title">Consumi</h2>
+      <p class="rg-section-card__subtitle">Il blocco in revisione: gli altri tab restano di contorno.</p>
+    </div>
+    <div class="rg-section-card__actions">
+      <button class="rg-button rg-button--primary" type="button">Ricalcola</button>
+    </div>
+  </header>
+  <div class="rg-section-card__body">
+    <!-- … -->
   </div>
 </section>
 ```

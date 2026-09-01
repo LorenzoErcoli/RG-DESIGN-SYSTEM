@@ -15,7 +15,7 @@
    rg-list-row--link e rg-topbar__back portavano gia: una classe di componente indossabile da un
    <a> neutralizza la decorazione nativa. NON si risolve con un reset globale su `a`: i link nel
    testo corrente devono restare sottolineati. */
-.rg-button { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; gap: var(--rg-space-2); padding: 9px var(--rg-space-4); color: var(--rg-color-black); background: transparent; border: 1px solid transparent; border-radius: var(--rg-radius-md); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); text-decoration: none; cursor: pointer; }
+.rg-button { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; gap: var(--rg-space-2); padding: 9px var(--rg-space-4); color: var(--rg-color-black); background: transparent; border: 1px solid transparent; border-radius: var(--rg-radius-md); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); text-decoration: none; cursor: pointer; }
 .rg-button:hover:not(:disabled) { border-color: var(--rg-color-neutral-600); }
 .rg-button:active:not(:disabled), .rg-button.is-active { background: var(--rg-color-neutral-100); }
 .rg-button--primary { color: var(--rg-color-white); background: var(--rg-color-black); border-color: var(--rg-color-black); }
@@ -40,7 +40,11 @@
 .rg-field { display: grid; gap: var(--rg-space-2); }
 .rg-field__label { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); }
 .rg-field__help { color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
-.rg-input, .rg-select, .rg-textarea, .rg-search { width: 100%; min-height: 40px; padding: 9px var(--rg-space-3); color: var(--rg-color-black); background: var(--rg-color-white); border: 1px solid var(--rg-color-border-strong); border-radius: var(--rg-radius-md); }
+/* Il controllo dichiara il proprio corpo (v1.13.0): con il body passato a 16 px, campi e
+   bottoni erediterebbero il corpo del testo corrente e crescerebbero. Un controllo e chrome,
+   non testo da leggere: resta a 14 (--rg-font-size-sm), che e anche il gradino gia implicito
+   nella scala del bottone (--small 12 / base 14 / --large 16). */
+.rg-input, .rg-select, .rg-textarea, .rg-search { width: 100%; min-height: 40px; padding: 9px var(--rg-space-3); color: var(--rg-color-black); background: var(--rg-color-surface-raised); border: 1px solid var(--rg-color-border-strong); border-radius: var(--rg-radius-md); font-size: var(--rg-font-size-sm); }
 .rg-input:hover:not(:disabled), .rg-select:hover:not(:disabled), .rg-textarea:hover:not(:disabled), .rg-search:hover:not(:disabled) { border-color: var(--rg-color-neutral-600); }
 .rg-input:focus-visible, .rg-select:focus-visible, .rg-textarea:focus-visible, .rg-search:focus-visible { border-color: var(--rg-color-black); outline-offset: 2px; }
 .rg-input:disabled, .rg-select:disabled, .rg-textarea:disabled, .rg-search:disabled { color: var(--rg-color-neutral-400); background: var(--rg-color-neutral-50); border-color: var(--rg-color-neutral-200); }
@@ -65,10 +69,11 @@
 .rg-field-with-unit:has(.rg-input--numeric) { grid-template-columns: var(--rg-input-numeric-width, 12ch) auto; justify-content: start; }
 .rg-textarea { min-height: 96px; resize: vertical; }
 .rg-search { padding-left: 36px; background: var(--rg-color-white) linear-gradient(90deg, transparent 0 32px, var(--rg-color-border) 32px 33px, transparent 33px); }
-.rg-choice { display: inline-flex; align-items: center; gap: var(--rg-space-2); }
+/* Etichette di controllo: 14 px come il controllo che accompagnano, non 16 del testo corrente. */
+.rg-choice { display: inline-flex; align-items: center; gap: var(--rg-space-2); font-size: var(--rg-font-size-sm); }
 .rg-choice input { width: 16px; height: 16px; accent-color: var(--rg-color-black); }
 .rg-choice:hover { text-decoration: underline; text-underline-offset: 3px; }
-.rg-toggle { display: inline-flex; align-items: center; gap: var(--rg-space-2); cursor: pointer; }
+.rg-toggle { display: inline-flex; align-items: center; gap: var(--rg-space-2); font-size: var(--rg-font-size-sm); cursor: pointer; }
 .rg-toggle input { position: absolute; opacity: 0; }
 .rg-toggle__track { width: 38px; height: 22px; padding: 2px; background: var(--rg-color-neutral-200); border: 1px solid var(--rg-color-neutral-400); border-radius: var(--rg-radius-pill); }
 .rg-toggle__track::after { content: ""; display: block; width: 16px; height: 16px; background: var(--rg-color-white); border: 1px solid var(--rg-color-neutral-600); border-radius: 50%; transition: transform var(--rg-motion-fast) var(--rg-motion-easing); }
@@ -99,9 +104,13 @@
 
 /* Tables */
 .rg-table-wrap { overflow-x: auto; }
-.rg-table { width: 100%; border-collapse: collapse; text-align: left; }
+/* La tabella E una superficie sollevata (v1.13.0): il dato tabellare non si legge sul fondo
+   pagina. Senza questa riga una tabella posata direttamente su rg-appshell__main avrebbe
+   intestazioni bianche e righe sul neutro del fondo, e l'hover (neutral-50) sparirebbe.
+   Il corpo resta a 14: dato denso, non testo corrente (regole §3, technical/small). */
+.rg-table { width: 100%; border-collapse: collapse; text-align: left; background: var(--rg-color-surface-raised); font-size: var(--rg-font-size-sm); }
 .rg-table caption { padding-bottom: var(--rg-space-3); text-align: left; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
-.rg-table th { padding: var(--rg-space-3); color: var(--rg-color-text-secondary); background: var(--rg-color-white); border-top: 1px solid var(--rg-color-black); border-bottom: 1px solid var(--rg-color-border); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); }
+.rg-table th { padding: var(--rg-space-3); color: var(--rg-color-text-secondary); background: var(--rg-color-surface-raised); border-top: 1px solid var(--rg-color-black); border-bottom: 1px solid var(--rg-color-border); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); }
 .rg-table td { padding: var(--rg-space-4) var(--rg-space-3); border-bottom: 1px solid var(--rg-color-border); }
 .rg-table tbody tr:hover { background: var(--rg-color-neutral-50); }
 .rg-table__numeric { text-align: right; font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -129,13 +138,25 @@
 .rg-table__detail-inner { padding: var(--rg-space-4) var(--rg-space-6); }
 
 /* Cards */
-.rg-card { height: 100%; padding: var(--rg-space-6); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); border-radius: var(--rg-radius-md); }
+/* Profondita e linea (v1.13.0): la card e una superficie SOLLEVATA sul fondo di pagina, e il suo
+   contorno usa il gradino intermedio --rg-color-border-medium. Prima, card bianca su pagina bianca
+   separata dal solo filetto neutro (1,35:1): il contenitore non si vedeva. Vedi design-rules.md §6. */
+.rg-card { height: 100%; padding: var(--rg-space-6); background: var(--rg-color-surface-raised); border: 1px solid var(--rg-color-border-medium); border-radius: var(--rg-radius-md); }
 .rg-card:hover { border-color: var(--rg-color-neutral-600); }
 .rg-card__eyebrow { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: 10px; }
-.rg-card__title { margin: 0 0 var(--rg-space-2); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); }
+/* Livello CONTENITORE: peso medium dichiarato dal DS, non 700 ereditato dall'<h3> ospite. */
+.rg-card__title { margin: 0 0 var(--rg-space-2); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-medium); }
 .rg-card__body { margin: 0; color: var(--rg-color-text-secondary); }
 .rg-card--technical { border-color: var(--rg-color-black); border-radius: var(--rg-radius-sm); }
 .rg-card--technical .rg-card__body { font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
+/* ENFASI (v1.13.0) — dice quale contenitore e il SOGGETTO della vista, e nient'altro: contorno
+   nero al posto del gradino intermedio. Non e uno stato e non ha significato semantico
+   (--technical dice "questo e un calcolo", --selected dice "l'hai scelto tu"): dice solo
+   "guarda prima qui". Limite d'uso, di composizione e non di CSS: UNA SOLA per vista — se tutto
+   e enfatizzato niente lo e, ed e esattamente il difetto che questa revisione corregge.
+   Anche in hover il contorno resta nero: senza la seconda meta del selettore, .rg-card:hover
+   (piu specifico) lo schiarirebbe a neutral-600. */
+.rg-card--emphasis, .rg-card--emphasis:hover { border-color: var(--rg-color-black); }
 .rg-card--editorial { min-height: 220px; display: flex; flex-direction: column; justify-content: end; background: linear-gradient(to bottom, color-mix(in srgb, var(--rg-color-accent-sage) 22%, var(--rg-color-white)), var(--rg-color-white) 72%); border: 0; border-top: 4px solid var(--rg-color-accent-sage); border-radius: 0; }
 .rg-card--metric .rg-value { margin: var(--rg-space-6) 0 var(--rg-space-3); }
 .rg-card--warning, .rg-card.is-warning { border-left: 4px solid var(--rg-color-warning); }
@@ -151,10 +172,10 @@
    --boxed (sezione richiudibile, non la testa fissa e sempre presente di un tab). L'header di
    tab è __header: UN solo canone, non una testa diversa per ogni tab. La regola "una sola azione
    primaria" è di composizione, non di CSS: sta nella doc e nella vetrina. */
-.rg-section-card { background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); }
+.rg-section-card { background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-radius: var(--rg-radius-md); }
 .rg-section-card__header { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-4); min-height: 40px; padding: var(--rg-space-4) var(--rg-space-6); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 .rg-section-card__heading { display: grid; gap: var(--rg-space-1); min-width: 0; }
-.rg-section-card__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); line-height: var(--rg-line-height-heading); }
+.rg-section-card__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); }
 .rg-section-card__subtitle { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
 .rg-section-card__actions { display: inline-flex; flex-shrink: 0; align-items: center; gap: var(--rg-space-2); }
 .rg-section-card__body { padding: var(--rg-space-6); }
@@ -162,6 +183,12 @@
    arrivare ai bordi della card senza un secondo margine; i filetti interni proseguono quelli
    della card. */
 .rg-section-card--flush > .rg-section-card__body { padding: 0; }
+/* ENFASI (v1.13.0) — stesso significato di rg-card--emphasis: il tab o il blocco che e il soggetto
+   della vista. Qui l'enfasi e doppia perche la section card ha una testa: contorno nero e testa su
+   superficie rientrante, cosi la testa si stacca dal corpo anche a colpo d'occhio. UNA SOLA per
+   vista. Il filetto sotto la testa sale al gradino intermedio per non sparire sul fondo neutro. */
+.rg-section-card--emphasis { border-color: var(--rg-color-black); }
+.rg-section-card--emphasis > .rg-section-card__header { background: var(--rg-color-surface); border-bottom-color: var(--rg-color-border-medium); }
 
 /* Badges */
 .rg-badge { display: inline-flex; min-height: 24px; align-items: center; gap: 6px; padding: 2px var(--rg-space-2); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); border-radius: var(--rg-radius-pill); font-family: var(--rg-font-mono); font-size: 10px; white-space: nowrap; }
@@ -201,16 +228,20 @@
    sottolineatura, cioe rinunciavano alla navigazione per un difetto di foglio. */
 .rg-topbar__brand { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); color: inherit; text-decoration: none; }
 a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
-.rg-topbar__back { display: inline-flex; min-height: 40px; align-items: center; gap: var(--rg-space-2); color: inherit; font-family: var(--rg-font-identity); text-decoration: none; }
+.rg-topbar__back { display: inline-flex; min-height: 40px; align-items: center; gap: var(--rg-space-2); color: inherit; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); text-decoration: none; }
 .rg-topbar__back:hover { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
 .rg-topbar__title { min-width: 0; margin: 0; overflow: hidden; color: inherit; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); line-height: var(--rg-line-height-heading); white-space: nowrap; text-overflow: ellipsis; }
 .rg-topbar__back + .rg-topbar__title, .rg-topbar__brand + .rg-topbar__title { padding-inline-start: var(--rg-space-6); border-inline-start: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-neutral-400); }
 .rg-topbar__actions { display: flex; align-items: center; gap: var(--rg-space-3); margin-inline-start: auto; }
-.rg-topbar__nav { display: flex; gap: var(--rg-space-4); }
+.rg-topbar__nav { display: flex; gap: var(--rg-space-4); font-size: var(--rg-font-size-sm); }
 .rg-topbar__nav a { color: var(--rg-color-neutral-200); text-decoration: none; }
 .rg-topbar__nav a:hover { color: var(--rg-color-white); text-decoration: underline; text-underline-offset: 8px; }
 .rg-topbar__nav a[aria-current="page"] { color: var(--rg-color-white); text-decoration: underline; text-underline-offset: 8px; }
-.rg-topbar--app { flex: none; padding: 0 var(--rg-space-6); color: var(--rg-color-text-primary); background: var(--rg-color-background); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+/* --app punta esplicitamente alla superficie SOLLEVATA, non a --rg-color-background (v1.13.0):
+   era l'unico consumatore di quel token e, con il fondo passato a neutral-50, la barra si
+   sarebbe confusa con la pagina — proprio il difetto che la revisione corregge. La topbar e
+   chrome sollevato SOPRA la pagina, come il pannello di rg-workspace. */
+.rg-topbar--app { flex: none; padding: 0 var(--rg-space-6); color: var(--rg-color-text-primary); background: var(--rg-color-surface-raised); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 .rg-topbar--app .rg-topbar__brand { font-weight: var(--rg-weight-bold); }
 .rg-topbar--app .rg-topbar__nav a { color: var(--rg-color-text-secondary); }
 .rg-topbar--app .rg-topbar__nav a:hover, .rg-topbar--app .rg-topbar__nav a[aria-current="page"] { color: var(--rg-color-black); }
@@ -218,11 +249,14 @@ a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: va
    della topbar sono opache, quindi non serve altro sfondo. Sopra il contenuto, sotto i dialog. */
 .rg-topbar--sticky { position: sticky; top: 0; z-index: var(--rg-z-sticky); }
 @media (max-width: 680px) { .rg-topbar--app { gap: var(--rg-space-4); padding: 0 var(--rg-space-4); } .rg-topbar--app .rg-topbar__back + .rg-topbar__title, .rg-topbar--app .rg-topbar__brand + .rg-topbar__title { padding-inline-start: var(--rg-space-4); } }
-.rg-sidebar { display: flex; flex-direction: column; padding: var(--rg-space-8) var(--rg-space-4) var(--rg-space-6); border-right: 1px solid var(--rg-color-border-strong); }
+/* Anche la sidebar e chrome sollevato (v1.13.0): senza fondo proprio ereditava la pagina, e
+   l'hover della voce (neutral-50) sarebbe diventato invisibile sul nuovo fondo neutro. */
+.rg-sidebar { display: flex; flex-direction: column; padding: var(--rg-space-8) var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface-raised); border-right: 1px solid var(--rg-color-border-strong); }
 .rg-sidebar__nav { display: grid; gap: var(--rg-space-1); }
 .rg-sidebar__foot { margin-top: auto; padding-top: var(--rg-space-4); border-top: 1px solid var(--rg-color-border); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
 .rg-sidebar-list { margin: 0; padding: 0; list-style: none; }
-.rg-sidebar-item { display: block; padding: var(--rg-space-2) var(--rg-space-3); color: var(--rg-color-text-secondary); border-left: 2px solid transparent; font-family: var(--rg-font-identity); text-decoration: none; }
+/* Navigazione: label identitaria a 14, non testo corrente a 16 (vale anche su <a>). */
+.rg-sidebar-item { display: block; padding: var(--rg-space-2) var(--rg-space-3); color: var(--rg-color-text-secondary); border-left: 2px solid transparent; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); text-decoration: none; }
 .rg-sidebar-item:hover { color: var(--rg-color-black); background: var(--rg-color-neutral-50); }
 .rg-sidebar-item--active, .rg-sidebar-item.is-selected, .rg-sidebar-item[aria-current="page"] { color: var(--rg-color-black); border-color: var(--rg-color-black); font-weight: var(--rg-weight-medium); }
 .rg-tabs { display: flex; gap: var(--rg-space-6); border-bottom: 1px solid var(--rg-color-border); }
@@ -257,7 +291,9 @@ a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: va
 .rg-alert__title { margin: 0; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
 .rg-alert__message { margin: var(--rg-space-1) 0 0; color: var(--rg-color-text-secondary); }
 .rg-empty { padding: var(--rg-space-12) var(--rg-space-6); text-align: center; background: var(--rg-color-white); border-block: 1px solid var(--rg-color-border); }
-.rg-empty h3 { margin: 0; font-family: var(--rg-font-identity); }
+/* Anche qui il peso e dichiarato (v1.13.0): e un titolo di livello CONTENITORE, e senza questa
+   riga resterebbe a 700 dallo user-agent, piu pesante del titolo della card che lo contiene. */
+.rg-empty h3 { margin: 0; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
 .rg-empty p { color: var(--rg-color-text-secondary); }
 .rg-loading { display: grid; gap: var(--rg-space-3); }
 .rg-loading__line { height: 12px; background: var(--rg-color-neutral-100); }
@@ -266,7 +302,8 @@ a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: va
 .is-loading { cursor: progress; }
 
 /* Technical components */
-.rg-key-value { display: grid; grid-template-columns: 1fr auto; gap: var(--rg-space-3) var(--rg-space-6); margin: 0; }
+/* Dato tecnico, non testo corrente: resta a 14 (regole §3, small/technical). */
+.rg-key-value { display: grid; grid-template-columns: 1fr auto; gap: var(--rg-space-3) var(--rg-space-6); margin: 0; font-size: var(--rg-font-size-sm); }
 .rg-key-value dt { color: var(--rg-color-text-secondary); }
 .rg-key-value dd { margin: 0; text-align: right; font-family: var(--rg-font-mono); }
 /* Variante "scheda tecnica": colonna label fissa e righe rigate, per elenchi lunghi di
@@ -294,7 +331,9 @@ a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: va
 
 /* Expandable content */
 .rg-disclosure { border-top: 1px solid var(--rg-color-border); border-bottom: 1px solid var(--rg-color-border); }
-.rg-disclosure__trigger { width: 100%; display: flex; justify-content: space-between; padding: var(--rg-space-3) 0; background: transparent; border: 0; text-align: left; cursor: pointer; }
+/* Il trigger e un controllo anche quando e un <summary>: dichiara la scala del chrome, cosi non
+   dipende dall'elemento che lo indossa (<button> o <summary>). */
+.rg-disclosure__trigger { width: 100%; display: flex; justify-content: space-between; padding: var(--rg-space-3) 0; background: transparent; border: 0; font-size: var(--rg-font-size-sm); text-align: left; cursor: pointer; }
 .rg-disclosure__trigger:hover { text-decoration: underline; text-underline-offset: 4px; }
 .rg-disclosure__trigger::after { content: "+"; font-family: var(--rg-font-mono); }
 .rg-disclosure.is-expanded .rg-disclosure__trigger::after, .rg-disclosure__trigger[aria-expanded="true"]::after, .rg-disclosure[open] > .rg-disclosure__trigger::after { content: "−"; }
@@ -306,13 +345,15 @@ summary.rg-disclosure__trigger::-webkit-details-marker { display: none; }
    basta piu a separare blocchi eterogenei. Non e una card: non usarla per record o entita. */
 .rg-disclosure--boxed { margin-bottom: var(--rg-space-8); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); overflow: hidden; }
 .rg-disclosure--boxed > .rg-disclosure__trigger { align-items: center; min-height: 40px; padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
-.rg-disclosure--boxed > .rg-disclosure__trigger:hover { background: var(--rg-color-neutral-100); text-decoration: none; }
+/* L'hover scende a neutral-200 (v1.13.0): con --rg-color-surface passato a neutral-100, la
+   testa a riposo e l'hover coincidevano e l'hover spariva. */
+.rg-disclosure--boxed > .rg-disclosure__trigger:hover { background: var(--rg-color-neutral-200); text-decoration: none; }
 .rg-disclosure--boxed[open] > .rg-disclosure__trigger, .rg-disclosure--boxed.is-expanded > .rg-disclosure__trigger { border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 .rg-disclosure--boxed > .rg-disclosure__content { padding: var(--rg-space-6); }
 
 /* List rows — technical list item with inline actions (v0.2.0) */
 .rg-list { display: grid; gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
-.rg-list-row { display: grid; gap: var(--rg-space-2); padding: var(--rg-space-3); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); border-left: 2px solid transparent; border-radius: var(--rg-radius-sm); }
+.rg-list-row { display: grid; gap: var(--rg-space-2); padding: var(--rg-space-3); background: var(--rg-color-surface-raised); border: 1px solid var(--rg-color-border); border-left: 2px solid transparent; border-radius: var(--rg-radius-sm); font-size: var(--rg-font-size-sm); }
 .rg-list-row:hover { border-color: var(--rg-color-neutral-600); }
 .rg-list-row.is-selected, .rg-list-row[aria-selected="true"] { border-color: var(--rg-color-black); border-left-color: var(--rg-color-black); background: var(--rg-color-neutral-50); }
 .rg-list-row--danger { border-left-color: var(--rg-color-danger); }
@@ -429,7 +470,9 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-modal__header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface); border-bottom: 1px solid var(--rg-color-border); }
 .rg-modal__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
 .rg-modal__close { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; color: var(--rg-color-text-secondary); background: none; border: 1px solid transparent; border-radius: var(--rg-radius-sm); font-size: var(--rg-font-size-md); line-height: 1; cursor: pointer; }
-.rg-modal__close:hover { color: var(--rg-color-black); background: var(--rg-color-neutral-100); border-color: var(--rg-color-border); }
+/* Idem: la testa della modale e su --rg-color-surface (neutral-100), quindi il riempimento di
+   hover della chiusura scende di un gradino, altrimenti coincide con la testa. */
+.rg-modal__close:hover { color: var(--rg-color-black); background: var(--rg-color-neutral-200); border-color: var(--rg-color-border); }
 .rg-modal__body { flex: 1; padding: var(--rg-space-6); overflow-y: auto; }
 .rg-modal__footer { display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0; gap: var(--rg-space-2); padding: var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface); border-top: 1px solid var(--rg-color-border); }
 .rg-modal__meta { margin: 0 0 var(--rg-space-4); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: 10px; letter-spacing: .06em; }

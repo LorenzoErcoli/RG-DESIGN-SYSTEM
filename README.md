@@ -10,6 +10,7 @@ Il sistema traduce l'identità RG in regole leggibili sia da persone sia da assi
 - Le palette annuali sono accenti contestuali, mai il colore principale di navigazione o azioni primarie.
 - AGNext dà identità; GT America Standard sostiene la lettura; GT America Mono rappresenta dati e codici.
 - Griglie, spazio bianco e linee sottili definiscono la gerarchia più di ombre o decorazioni.
+- La gerarchia è **dichiarata**: peso per livello di titolo, tre gradini di superficie (fondo, sollevata, rientrante) e tre gradini di linea (neutro, intermedio, nero). Nessuno di questi arriva dallo user-agent o dall'abitudine.
 - Ogni vista deve distinguere chiaramente contenuto editoriale, dati tecnici e azioni.
 
 ## Come usarlo
@@ -63,7 +64,7 @@ I font ufficiali sono AGNext, GT-America-Standard e GT-America-Mono. I file font
 
 ## Stato e governance
 
-Versione corrente `1.12.0`: il contratto di consumo è stabile. Le modifiche ai token permanenti richiedono revisione trasversale; le palette stagionali possono evolvere senza modificare i ruoli semantici. Eccezioni specifiche di prodotto vanno documentate vicino al relativo pattern, non incorporate silenziosamente nei token globali.
+Versione corrente `1.13.0`: il contratto di consumo è stabile. Le modifiche ai token permanenti richiedono revisione trasversale; le palette stagionali possono evolvere senza modificare i ruoli semantici. Eccezioni specifiche di prodotto vanno documentate vicino al relativo pattern, non incorporate silenziosamente nei token globali.
 
 Il prefisso `rg-` appartiene al DS: nessun prodotto definisce classi `.rg-*` in locale. Un componente d'applicazione usa un prefisso proprio.
 

@@ -13,10 +13,11 @@
 [theme]
 # --rg-color-action-primary (nero: azione primaria RG, mai un colore stagionale)
 primaryColor = "#000000"
-# --rg-color-background
+# --rg-color-surface-raised (la colonna di contenuto Streamlit e' superficie sollevata,
+# non fondo di pagina: vedi la nota in streamlit-bridge.css e design-rules.md 6)
 backgroundColor = "#ffffff"
-# --rg-color-surface (--rg-color-neutral-50)
-secondaryBackgroundColor = "#f7f7f5"
+# --rg-color-surface (--rg-color-neutral-100)
+secondaryBackgroundColor = "#efefec"
 # --rg-color-text-primary
 textColor = "#000000"
 # I font ufficiali RG non sono distribuiti col DS: Streamlit riceve la famiglia generica,

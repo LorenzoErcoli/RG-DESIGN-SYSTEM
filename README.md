@@ -68,7 +68,7 @@ Versione corrente `1.13.0`: il contratto di consumo è stabile. Le modifiche ai 
 
 Il prefisso `rg-` appartiene al DS: nessun prodotto definisce classi `.rg-*` in locale. Un componente d'applicazione usa un prefisso proprio.
 
-I prodotti consumano il DS come **git submodule pinnato a un tag** semver, mai a un branch: il pin si sposta solo con un commit esplicito nel repo consumatore. Vedi [integration/README.md](integration/README.md).
+I prodotti consumano il DS come **git submodule pinnato a un tag** semver, mai a un branch: il pin si sposta solo con un commit esplicito nel repo consumatore. Vedi [integration/README.md](integration/README.md). Per spostare il pin e sapere cosa verificare dopo, [UPGRADING.md](UPGRADING.md).
 
 Prima di proporre un merge, `npm run lint` deve uscire con 0: è il gate di coerenza fra documentazione, manifest e CSS.
 

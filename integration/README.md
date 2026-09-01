@@ -29,6 +29,9 @@ cd design-system && git fetch --tags && git checkout v1.2.0 && cd ..   # bump de
 cambia nulla nei prodotti finché qualcuno non promuove il tag: è questa la proprietà per cui
 il submodule è stato scelto.
 
+Procedura di bump, verifica dopo il bump, regola per recuperare più rilasci insieme e note di
+migrazione per versione: [UPGRADING.md](../UPGRADING.md).
+
 ## Superficie consumata
 
 Del DS i prodotti caricano **soltanto** questi file:

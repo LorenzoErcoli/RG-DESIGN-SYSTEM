@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.12.0",
+  "dsVersion": "1.13.0",
   "generated": "seed-2026-07-17",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
@@ -26,12 +26,13 @@
       "kind": "foundation",
       "classes": { "base": null, "variants": ["rg-h1", "rg-h2", "rg-h3", "rg-body", "rg-small", "rg-label", "rg-caption", "rg-technical", "rg-value", "rg-value__unit", "rg-code"] },
       "states": [],
-      "tokens": ["--rg-font-identity", "--rg-font-body", "--rg-font-mono", "--rg-font-size-*", "--rg-line-height-*"],
+      "tokens": ["--rg-font-identity", "--rg-font-body", "--rg-font-mono", "--rg-font-size-*", "--rg-line-height-*", "--rg-weight-heading", "--rg-weight-medium"],
+      "notes": "Dalla 1.13.0 il PESO e una proprieta della classe, non dell'elemento che la ospita: prima nessuna classe di titolo dichiarava font-weight e il valore arrivava dallo user-agent (700 su <h1>-<h3>, 400 su <p>). Due livelli soltanto: PAGINA/SEZIONE (rg-h1, rg-h2, rg-section-header__title -> --rg-weight-heading, 700) e CONTENITORE (rg-h3, rg-card__title, rg-section-card__title, rg-param-section__title -> --rg-weight-medium, 500). Il corpo del testo e 16px (--rg-font-size-md), come prescrive design-rules.md sezione 3; 14px e lo small. Restano a 14 per dichiarazione propria i controlli (nativi via rg-core.css, piu rg-button, rg-toggle, rg-choice, rg-disclosure__trigger), la navigazione (rg-sidebar-item, rg-topbar__nav, rg-topbar__back) e il dato denso (rg-table, rg-list-row, rg-key-value): chrome e dato non sono testo corrente. LIMITE NOTO: il livello 500 richiede un medium reale — senza i font ufficiali caricati il fallback (Arial) non ha un medium e il browser arrotonda 500 a 400, quindi la distinzione 700/500 si assottiglia. La gerarchia non e mai affidata al solo peso: reggono anche corpo, superficie e linea.",
       "doc": null,
       "rulesRef": "design-rules.md#3-tipografia",
       "specimenAnchor": "typography",
       "snippet": "<h1 class=\"rg-h1\">Titolo</h1>\n<p class=\"rg-body\">Testo</p>\n<div class=\"rg-value\">428,76 <span class=\"rg-value__unit\">m</span></div>",
-      "keywords": ["titolo", "heading", "testo", "paragrafo", "mono", "numero", "valore", "unita", "codice", "label", "caption", "tipografia"]
+      "keywords": ["titolo", "heading", "testo", "paragrafo", "mono", "numero", "valore", "unita", "codice", "label", "caption", "tipografia", "peso", "font weight", "grassetto", "bold", "medium", "gerarchia dei titoli", "heading hierarchy", "livello di titolo", "corpo del testo", "body size"]
     },
     {
       "id": "color-swatch",
@@ -246,14 +247,16 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-card", "elements": ["rg-card__eyebrow", "rg-card__title", "rg-card__body"], "variants": ["rg-card--technical", "rg-card--editorial", "rg-card--metric", "rg-card--warning", "rg-card--selected"] },
-      "variants": ["entity", "editorial", "metric", "selectable"],
+      "classes": { "base": "rg-card", "elements": ["rg-card__eyebrow", "rg-card__title", "rg-card__body"], "variants": ["rg-card--technical", "rg-card--editorial", "rg-card--metric", "rg-card--warning", "rg-card--selected", "rg-card--emphasis"] },
+      "variants": ["entity", "editorial", "metric", "selectable", "emphasis"],
+      "variantsSince": { "rg-card--emphasis": "1.13.0" },
       "states": ["default", "hover", "selected"],
-      "tokens": ["--rg-color-border", "--rg-radius-md", "--rg-space-*"],
+      "tokens": ["--rg-color-surface-raised", "--rg-color-background", "--rg-color-border-medium", "--rg-color-black", "--rg-weight-medium", "--rg-radius-md", "--rg-space-*"],
+      "notes": "Dalla 1.13.0 la card e una superficie SOLLEVATA (--rg-color-surface-raised, bianca) sul fondo di pagina (--rg-color-background, neutral-50), con contorno al gradino intermedio (--rg-color-border-medium): prima era bianca su pagina bianca, separata dal solo filetto neutro (1,35:1 di contrasto). Il titolo (rg-card__title) porta un peso dichiarato dal DS (medium, livello CONTENITORE): non dipende piu dall'elemento che lo ospita. rg-card--emphasis (1.13.0) porta il contorno al nero e dice quale card e il SOGGETTO della vista: non e uno stato e non ha significato semantico (--technical dice \"e un calcolo\", --selected dice \"l'hai scelta tu\", --warning/is-error dicono uno stato del dato). Limite d'uso, di composizione e non di CSS: UNA SOLA card enfatizzata per vista, se tutto e enfatizzato niente lo e. Se il soggetto della vista e un blocco con una testa, usare rg-section-card--emphasis.",
       "doc": "components/cards.md",
       "specimenAnchor": "cards",
       "snippet": "<article class=\"rg-card\"><p class=\"rg-card__eyebrow\">RG-AR-0248</p><h3 class=\"rg-card__title\">Ricamo floreale</h3></article>",
-      "keywords": ["card", "scheda", "entita", "tessera", "riquadro", "metrica", "kpi"]
+      "keywords": ["card", "scheda", "entita", "tessera", "riquadro", "metrica", "kpi", "enfasi", "emphasis", "in evidenza", "evidenziata", "prominenza", "prominence", "soggetto della vista", "featured", "highlight", "gerarchia", "hierarchy", "superficie sollevata", "raised surface", "profondita", "depth", "elevation", "bordo forte", "contorno nero"]
     },
     {
       "id": "section-card",
@@ -263,15 +266,16 @@
       "since": "1.10.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-section-card", "elements": ["rg-section-card__header", "rg-section-card__heading", "rg-section-card__title", "rg-section-card__subtitle", "rg-section-card__actions", "rg-section-card__body"], "variants": ["rg-section-card--flush"], "related": ["rg-button", "rg-table", "rg-action-bar", "rg-disclosure"] },
-      "variants": ["standard", "flush"],
+      "classes": { "base": "rg-section-card", "elements": ["rg-section-card__header", "rg-section-card__heading", "rg-section-card__title", "rg-section-card__subtitle", "rg-section-card__actions", "rg-section-card__body"], "variants": ["rg-section-card--flush", "rg-section-card--emphasis"], "related": ["rg-button", "rg-table", "rg-action-bar", "rg-disclosure"] },
+      "variants": ["standard", "flush", "emphasis"],
+      "variantsSince": { "rg-section-card--emphasis": "1.13.0" },
       "states": ["default"],
-      "tokens": ["--rg-color-border", "--rg-radius-md", "--rg-border-hairline", "--rg-font-identity", "--rg-color-text-secondary", "--rg-space-4", "--rg-space-6"],
+      "tokens": ["--rg-color-surface-raised", "--rg-color-surface", "--rg-color-border-medium", "--rg-color-black", "--rg-weight-medium", "--rg-radius-md", "--rg-border-hairline", "--rg-font-identity", "--rg-color-text-secondary", "--rg-space-4", "--rg-space-6"],
       "doc": "components/section-card.md",
       "specimenAnchor": "section-card",
       "snippet": "<section class=\"rg-section-card\"><header class=\"rg-section-card__header\"><div class=\"rg-section-card__heading\"><h2 class=\"rg-section-card__title\">Impostazioni</h2><p class=\"rg-section-card__subtitle\">Parametri della fase, applicati al salvataggio.</p></div><div class=\"rg-section-card__actions\"><button class=\"rg-button rg-button--primary\" type=\"button\">Salva</button></div></header><div class=\"rg-section-card__body\">...</div></section>",
-      "notes": "Keystone di OGNI tab della pagina fase: un solo canone di testa (rg-section-card__header), non una testa diversa per tab. Header di tab = titolo (label identitaria, size lg) + una riga di didascalia opzionale + AL PIU UNA azione primaria a destra (rg-button--primary): le azioni secondarie vanno nel corpo o in rg-action-bar, non affiancate come seconda primaria. Il filetto sotto l'header separa testa e corpo — idioma a linee, mai ombre. Distinto da rg-card (tessera-entita con hover e height:100%, senza filetto d'header), da rg-section-header (layout di pagina, non un contenitore) e da rg-disclosure--boxed (sezione richiudibile, non la testa fissa di un tab). --flush azzera il padding del corpo per un tab il cui corpo E una tabella o lista rigata a filo dei bordi. Non annidare una section-card in un'altra. Migrazione (rg-product-platform): i tab di fase/_tab_consumi adottano questo contenitore e spariscono i <style> residui; il <dialog> nativo converge su rg-modal.",
-      "keywords": ["section card", "sezione card", "keystone", "tab", "scheda tab", "contenitore tab", "corpo del tab", "header di tab", "testa di tab", "header rigato", "filetto sotto header", "titolo di sezione", "didascalia", "sottotitolo", "azione primaria", "pagina fase", "layout fase", "impostazioni", "consumi", "corpo a filo", "flush", "tabella a filo"]
+      "notes": "Keystone di OGNI tab della pagina fase: un solo canone di testa (rg-section-card__header), non una testa diversa per tab. Header di tab = titolo (label identitaria, size lg) + una riga di didascalia opzionale + AL PIU UNA azione primaria a destra (rg-button--primary): le azioni secondarie vanno nel corpo o in rg-action-bar, non affiancate come seconda primaria. Il filetto sotto l'header separa testa e corpo — idioma a linee, mai ombre. Distinto da rg-card (tessera-entita con hover e height:100%, senza filetto d'header), da rg-section-header (layout di pagina, non un contenitore) e da rg-disclosure--boxed (sezione richiudibile, non la testa fissa di un tab). --flush azzera il padding del corpo per un tab il cui corpo E una tabella o lista rigata a filo dei bordi. Non annidare una section-card in un'altra. Migrazione (rg-product-platform): i tab di fase/_tab_consumi adottano questo contenitore e spariscono i <style> residui; il <dialog> nativo converge su rg-modal. Dalla 1.13.0: superficie SOLLEVATA (--rg-color-surface-raised) sul fondo di pagina, contorno al gradino intermedio (--rg-color-border-medium), titolo a peso medium dichiarato dal DS. rg-section-card--emphasis (1.13.0) porta il contorno al nero e la testa su superficie rientrante (--rg-color-surface): dice qual e il SOGGETTO della vista, non e uno stato e non significa nulla sul contenuto. UNA SOLA per vista. Non sostituisce la regola dell'unica azione primaria nell'header, e non va usata per segnalare errori o avvisi: quello e un rg-alert nel corpo, con testo esplicito.",
+      "keywords": ["section card", "sezione card", "keystone", "tab", "scheda tab", "contenitore tab", "corpo del tab", "header di tab", "testa di tab", "header rigato", "filetto sotto header", "titolo di sezione", "didascalia", "sottotitolo", "azione primaria", "pagina fase", "layout fase", "impostazioni", "consumi", "corpo a filo", "flush", "tabella a filo", "enfasi", "emphasis", "in evidenza", "blocco principale", "soggetto della vista", "prominenza", "prominence", "featured", "highlight", "gerarchia", "hierarchy", "superficie sollevata", "raised surface", "profondita", "depth", "testa su fondo neutro"]
     },
     {
       "id": "materials-row",

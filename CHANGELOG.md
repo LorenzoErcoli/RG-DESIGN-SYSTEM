@@ -7,6 +7,115 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.13.0 — 2026-09-01
+
+**Revisione di fondazioni: gerarchia.** Solo token e tipografia — nessun componente nuovo, nessuna
+classe rinominata, nessuna rimozione. La superficie di consumo resta invariata: **i prodotti non
+devono toccare una riga di markup**.
+
+### Perché
+
+Il DS produceva interfacce piatte: in una vista tipica tutti i contenitori e tutti i titoli si
+leggevano allo stesso livello. Non era una questione di gusto, erano sei strumenti mancanti,
+misurati sugli stili calcolati del CSS 1.12.0.
+
+1. **Nessun titolo dichiarava il proprio peso.** `.rg-h1/.rg-h2/.rg-h3`, `.rg-card__title`,
+   `.rg-section-card__title` non avevano `font-weight`: arrivava dallo user-agent. Poiché nella
+   documentazione le classi stanno sempre su `<h1>`–`<h3>` (14 occorrenze su 14), uscivano
+   **tutte a 700** — titolo di pagina 28/700, titolo di section card 20/700, sotto-sezione 20/700.
+   Il peso non portava informazione, e la stessa classe su un `<p>` sarebbe uscita a 400.
+2. **Scala compressa.** `rg-h3`, `rg-card__title`, `rg-section-card__title` e `rg-step__title`
+   erano tutti a 20 px: i gradini realmente in uso erano 28 → 20 → 14.
+3. **Corpo sotto le regole.** `rg-core.css` fissava `body { font-size: 14px }` mentre
+   `design-rules.md` §3 prescrive body 16/24 e `.rg-body` usava già 16: il corpo coincideva con
+   lo *small*.
+4. **Due sole superfici, usate senza regola.** Bianco e neutral-50, 21 dichiarazioni di fondo
+   bianco contro 14 neutre in `rg-components.css`. Una card bianca su pagina bianca era separata
+   dal solo `--rg-color-border` (#dededa, **1,35:1** di contrasto): il contenitore non si vedeva.
+5. **Nessun gradino di linea intermedio.** Fra il filetto neutro e il nero pieno non c'era nulla:
+   per `rg-card`/`rg-section-card` il bordo forte esisteva solo legato a un *significato*
+   (`--technical`, `--selected`), mai alla sola prominenza.
+6. **Ritmo sotto le regole.** `.rg-section` aveva 32 px di padding, la stessa misura che §5
+   assegna alla separazione fra *gruppi*; per le *sezioni* prescrive 48–96 px.
+
+La revisione non inventa un idioma nuovo: **`rg-workspace` aveva già tre livelli di superficie**
+(pannello bianco, stage neutro, canvas bianco con filetto nero) quando il resto del sistema ne
+usava due a caso. Qui si generalizza al resto del sistema ciò che il workspace faceva già bene —
+e infatti il workspace ne esce senza un pixel cambiato, a parte il titolo di gruppo.
+
+### Nuovi token
+
+- **`--rg-weight-heading`** (= `--rg-weight-bold`, 700) — il peso del livello di pagina/sezione,
+  dichiarato dal DS invece che ereditato dall'elemento ospite.
+- **`--rg-color-surface-raised`** (= bianco) — la superficie **sollevata**: è lì che vive il
+  contenuto.
+- **`--rg-color-border-medium`** (= neutral-400) — il gradino di linea **intermedio**: porta il
+  contorno di un contenitore generico a ~2,8:1 su bianco senza spendere il nero, che resta
+  riservato all'enfasi e agli stati.
+
+### Token modificati
+
+- **`--rg-color-background`**: bianco → **neutral-50**. La pagina diventa fondo, non superficie di
+  lettura. `body` ora legge questo token (prima usava `--rg-color-white` letterale, quindi il
+  token semantico non governava nulla).
+- **`--rg-color-surface`**: neutral-50 → **neutral-100**. È la superficie **rientrante** dentro una
+  sollevata, non un secondo fondo pagina.
+
+### Nuove varianti
+
+- **`rg-card--emphasis`** e **`rg-section-card--emphasis`** — dicono quale contenitore è il
+  **soggetto della vista**: contorno nero, e per la section card anche la testa su superficie
+  rientrante. Non sono stati e non hanno significato semantico. **Una sola per vista**: se tutto
+  è enfatizzato niente lo è, ed è esattamente il difetto di partenza.
+
+### Cosa cambia a video
+
+- Titoli: `rg-h1`/`rg-h2`/`rg-section-header__title` restano a 700 ma ora **per dichiarazione**;
+  `rg-h3`, `rg-card__title`, `rg-section-card__title` scendono a **500**. La differenza fra
+  livello di pagina e livello di contenitore diventa visibile.
+- Corpo del testo da 14 a **16 px**. Restano a 14 **per dichiarazione propria** i controlli
+  (nativi via `rg-core.css`, più `rg-button`, `rg-toggle`, `rg-choice`, `rg-disclosure__trigger`),
+  la navigazione (`rg-sidebar-item`, `rg-topbar__nav`, `rg-topbar__back`) e il dato denso
+  (`rg-table`, `rg-list-row`, `rg-key-value`): chrome e dato non sono testo corrente, e senza
+  queste righe sarebbero cresciuti insieme al paragrafo. È il 16 a essere «nuovo»: a video crescono
+  solo il testo di lettura (corpo di card, di section card, di modale, alert, stati vuoti) e il
+  titolo di gruppo del pannello.
+- `rg-card`, `rg-section-card`, `rg-list-row`, `rg-table` e i gruppi di form salgono a superficie
+  sollevata; `rg-topbar--app` e `rg-sidebar` la dichiarano esplicitamente in quanto **chrome**.
+- `.rg-section` passa a 48 px di ritmo, `.rg-section-header` a 32 px di stacco;
+  `rg-param-section__title` da 14 a 16 px.
+
+### Note di migrazione
+
+- **Nessuna azione richiesta nei prodotti**: nessuna classe o token è rimosso o rinominato,
+  l'ordine di import non cambia, il markup non si tocca. Da qui il **minor**. Ma il valore di due
+  alias semantici cambia: prima di spostare il pin, **rileggere una vista** — in particolare le
+  superfici che un prodotto avesse dipinto in locale con `neutral-50`, che ora coincidono con il
+  fondo di pagina.
+- Una superficie aperta e rigata (`rg-consumption-row`, `rg-materials-row`, `rg-steps`,
+  `rg-disclosure`) va posata **su una superficie sollevata**, non direttamente sul fondo: i suoi
+  hover chiari presuppongono il bianco sotto. Regola scritta in `design-rules.md` §6.
+- **Limite noto**: il livello di peso 500 richiede un medium reale. Senza i font ufficiali
+  caricati, il fallback Arial non ha un medium e il browser arrotonda 500 a 400: sulle macchine
+  senza i font RG la distinzione 700/500 si assottiglia. Non è una regressione introdotta qui
+  (vale già per `rg-step__title`, `rg-list-row__title`, `rg-modal__title`), ma la gerarchia non è
+  mai affidata al solo peso: reggono anche corpo, superficie e linea.
+
+### Documentazione
+
+- `design-rules.md` §3: la tabella dei **pesi per livello**. §6: la regola **«quale superficie a
+  quale profondità»** — è la regola che mancava e che aveva prodotto i 21 fondi bianchi contro
+  14 neutri.
+- `components/cards.md` e `components/section-card.md`: la variante `--emphasis` con il limite
+  d'uso; `patterns/dashboard.md` e `patterns/workspace.md`: la profondità delle zone.
+- Intestazione di `tokens.css` riallineata (era ferma a `v1.10.0`) e `meta.version` di
+  `tokens.json` allineato alla versione del DS.
+- `integration/streamlit-bridge.css` e `integration/streamlit-config.toml`: la colonna di
+  contenuto Streamlit è dichiarata **sollevata** (resta bianca come prima) e la sidebar scende a
+  neutral-100. Senza questa riga la pagina sarebbe diventata neutra con il contenuto posato
+  direttamente sul fondo — il contrario della regola. `secondaryBackgroundColor` del tema nativo
+  passa da `#f7f7f5` a `#efefec`: i progetti che hanno copiato `config.toml` devono **ricopiarlo**.
+
 ## 1.12.0 — 2026-07-29
 
 Componente **`rg-file-card`** (documento caricato): oggetto **generico e riusabile** per «questa

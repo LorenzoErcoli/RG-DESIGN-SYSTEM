@@ -24,6 +24,27 @@ Ordine delle priorità: comprensione → accuratezza → efficienza → identit�
 - Applicare cifre tabulari ai valori confrontabili. Non simulare un font ufficiale con tracking estremo.
 - Gerarchia consigliata: display 48/52, H1 36/40, H2 28/34, H3 20/26, body 16/24, small 14/20, technical 13/18.
 
+### Il peso è una proprietà della classe, non dell'elemento
+
+Ogni classe di titolo **dichiara il proprio peso**. Un titolo che non lo dichiara lo eredita dallo
+user-agent: su `<h2>` esce 700, su `<p>` esce 400, e lo stesso ruolo si legge in due modi diversi.
+
+Due livelli, e due soltanto:
+
+| Livello | Chi | Peso |
+| --- | --- | --- |
+| **Pagina / sezione** — intesta una schermata o un blocco di primo ordine | `.rg-h1`, `.rg-h2`, `.rg-section-header__title` | `--rg-weight-heading` (700) |
+| **Contenitore** — intesta una card, un tab, un gruppo dentro la pagina | `.rg-h3`, `.rg-card__title`, `.rg-section-card__title`, `.rg-param-section__title` | `--rg-weight-medium` (500) |
+
+Il corpo del testo è 16 px (`--rg-font-size-md`); 14 px è lo *small*, non il corpo. Restano a 14,
+per dichiarazione propria, tutto ciò che non è testo corrente: **controlli** (campi, bottoni,
+toggle, trigger), **navigazione** (voci di sidebar e di topbar) e **dato denso** (celle di tabella,
+righe-record, coppie chiave-valore).
+
+Il peso non è mai l'unico segnale di gerarchia. Il livello 500 richiede un medium reale: senza i
+font ufficiali caricati, il fallback (Arial) arrotonda 500 a 400 e la distinzione 700/500 si
+assottiglia. Il corpo, la superficie e la linea devono reggere la gerarchia da soli.
+
 ## 4. Colore
 
 Nero e bianco sono fondamento e contrasto. I grigi semantici derivano dalla scala neutra e servono per bordi, testo secondario e superfici tecniche.
@@ -43,10 +64,32 @@ Usare la scala 4–8–12–16–24–32–48–64–96. Il ritmo ordinario è 8
 
 ## 6. Linee, superfici, radius e ombre
 
-- Separatore standard: 1 px neutro; forte: 1 px nero.
+- Separatore standard: 1 px neutro; **intermedio: 1 px `--rg-color-border-medium`**; forte: 1 px nero.
 - Usare linee per mostrare struttura, non per incorniciare ogni elemento.
 - Radius standard 4 px, compatto 2 px, ampio 8 px solo per contenitori speciali.
 - Ombre assenti nelle superfici ordinarie; ombra minima solo per elementi sovrapposti.
+
+### Quale superficie a quale profondità
+
+La profondità è **dichiarata**, non lasciata all'abitudine di chi scrive la regola. Tre gradini:
+
+| Gradino | Token | Cos'è | Chi la usa |
+| --- | --- | --- | --- |
+| **Fondo** | `--rg-color-background` (neutral-50) | Terreno della pagina. **Non è una superficie di lettura**: non ci si appoggia testo o dati direttamente. | `body`, `rg-appshell__main`, `rg-workspace__stage` |
+| **Sollevata** | `--rg-color-surface-raised` (bianco) | Dove vive il contenuto e dove sta il chrome che governa la pagina. | `rg-card`, `rg-section-card`, `rg-list-row`, `rg-table`, corpo di `rg-modal`, `rg-topbar--app`, `rg-sidebar`, pannello e canvas di `rg-workspace` |
+| **Rientrante** | `--rg-color-surface` (neutral-100) | Ciò che, **dentro** una superficie sollevata, deve leggersi come secondario o tecnico. | testa/piede di `rg-modal`, riga di dettaglio di `rg-table`, testa di `rg-disclosure--boxed`, `rg-filter-group`, `rg-code`, `rg-inspector` |
+
+Conseguenze operative:
+
+- Una superficie aperta e rigata (`rg-consumption-row`, `rg-materials-row`, `rg-steps`,
+  `rg-disclosure`) si posa **su una superficie sollevata**, non sul fondo: i suoi hover chiari
+  presuppongono il bianco sotto.
+- Non si scavalcano gradini: nessuna superficie rientrante direttamente sul fondo, nessuna
+  sollevata dentro un'altra sollevata senza un motivo dichiarato (annidare card resta vietato).
+- La **linea** segue la stessa scala: filetto neutro per le divisioni interne, intermedio per il
+  contorno di un contenitore generico, **nero solo per l'enfasi o per uno stato**.
+- L'**enfasi** (`rg-card--emphasis`, `rg-section-card--emphasis`) dice quale contenitore è il
+  soggetto della vista. **Una sola per vista**: se tutto è enfatizzato, niente lo è.
 
 ## 7. Tono visivo
 

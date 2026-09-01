@@ -1,24 +1,38 @@
 /* RG Core — load after tokens.css. */
 *, *::before, *::after { box-sizing: border-box; }
 html { color-scheme: light; }
+/* La pagina e FONDO, non superficie di lettura (v1.13.0): --rg-color-background e neutral-50,
+   e i contenitori di contenuto salgono a --rg-color-surface-raised. Prima di questa riga il fondo
+   era bianco letterale e --rg-color-background non lo governava: una card bianca su pagina bianca
+   era separata dal solo filetto neutro. Vedi design-rules.md §6.
+   Corpo a 16 px (--rg-font-size-md): design-rules.md §3 prescrive body 16/24 e .rg-body usava gia
+   16, mentre il body girava a 14 — il corpo coincideva con lo small. I controlli di form, i
+   bottoni e le celle di tabella restano a 14 per dichiarazione propria: sono chrome e dato denso,
+   non testo corrente (vedi rg-components.css). */
 body {
   margin: 0;
   color: var(--rg-color-text-primary);
-  background: var(--rg-color-white);
+  background: var(--rg-color-background);
   font-family: var(--rg-font-body);
-  font-size: var(--rg-font-size-sm);
+  font-size: var(--rg-font-size-md);
   line-height: var(--rg-line-height-body);
   text-rendering: optimizeLegibility;
 }
-button, input, select, textarea { font: inherit; color: inherit; }
+/* Il controllo nativo dichiara la propria scala (v1.13.0): 14 px. Con il corpo del testo salito
+   a 16, senza questa riga ogni bottone, campo e selettore crescerebbe insieme al paragrafo.
+   font-size viene DOPO font: inherit e quindi lo sovrascrive; le classi che dichiarano una
+   misura propria (rg-button--large, rg-button--small, rg-h*) vincono comunque per specificita. */
+button, input, select, textarea { font: inherit; color: inherit; font-size: var(--rg-font-size-sm); }
 button, [role="button"], a, input, select, textarea { transition: color var(--rg-motion-fast) var(--rg-motion-easing), background-color var(--rg-motion-fast) var(--rg-motion-easing), border-color var(--rg-motion-fast) var(--rg-motion-easing); }
 a { color: inherit; }
 img, svg { max-width: 100%; }
 :focus-visible { outline: 2px solid var(--rg-color-focus); outline-offset: 3px; }
 :disabled, [aria-disabled="true"] { cursor: not-allowed; }
 ::selection { color: var(--rg-color-white); background: var(--rg-color-black); }
-.rg-surface { color: var(--rg-color-text-primary); background: var(--rg-color-white); }
-.rg-surface--secondary { background: var(--rg-color-neutral-50); }
+/* Le due primitive di superficie ora dichiarano la propria PROFONDITA, non un colore letterale:
+   .rg-surface e sollevata (bianco), .rg-surface--secondary e rientrante (neutral-100). */
+.rg-surface { color: var(--rg-color-text-primary); background: var(--rg-color-surface-raised); }
+.rg-surface--secondary { background: var(--rg-color-surface); }
 .rg-interactive:hover { border-color: var(--rg-color-neutral-600); }
 .rg-interactive:active { background: var(--rg-color-neutral-100); }
 .rg-interactive.is-selected, .rg-interactive[aria-selected="true"] { border-color: var(--rg-color-black); box-shadow: inset 3px 0 0 var(--rg-color-black); }

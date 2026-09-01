@@ -40,7 +40,10 @@
     .specimen-cell--half { grid-column: span 6; }
     .specimen-cell--wide { grid-column: 1 / -1; }
     .specimen-label { display: block; margin-bottom: var(--rg-space-3); letter-spacing: .03em; }
-    .specimen-stage { height: 100%; padding: var(--rg-space-6); background: var(--rg-color-white); border: 1px solid var(--rg-color-border); }
+    .specimen-stage { height: 100%; padding: var(--rg-space-6); background: var(--rg-color-surface-raised); border: 1px solid var(--rg-color-border); }
+    /* Piano che mostra il FONDO di pagina: serve dove la dimostrazione E la profondita
+       (contenitore sollevato sul fondo neutro). Solo presentazione della tavola. */
+    .specimen-stage--page { background: var(--rg-color-background); }
     .specimen-stack { display: flex; flex-wrap: wrap; gap: var(--rg-space-3); align-items: center; }
     .specimen-column { display: grid; gap: var(--rg-space-4); }
     .specimen-note { max-width: 720px; margin: var(--rg-space-6) 0 var(--rg-space-3); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
@@ -133,6 +136,14 @@ status: validated</pre></div></div>
           <div class="specimen-cell"><span class="specimen-label">Metric</span><article class="rg-card rg-card--metric"><p class="rg-card__eyebrow">EFFICIENZA</p><div class="rg-value">96,8 <span class="rg-value__unit">%</span></div><p class="rg-card__body">Soglia laboratorio ≥95%</p></article></div>
           <div class="specimen-cell"><span class="specimen-label">Warning</span><article class="rg-card rg-card--warning"><p class="rg-card__eyebrow">TOLLERANZA</p><h3 class="rg-card__title">Scostamento da verificare</h3><p class="rg-card__body">SUP-0042 supera il limite del 3%.</p></article></div>
           <div class="specimen-cell"><span class="specimen-label">Selected</span><article class="rg-card rg-card--selected"><p class="rg-card__eyebrow">SELEZIONATO</p><h3 class="rg-card__title">Viscosa opaca 40</h3><p class="rg-card__body">FIL-0281 · Lotto 2618</p></article></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Enfasi (--emphasis) accanto alle card normali, sul fondo di pagina — una sola per vista</span><div class="specimen-stage specimen-stage--page">
+            <div class="rg-grid rg-grid--4">
+              <article class="rg-card"><p class="rg-card__eyebrow">REV. 02</p><h3 class="rg-card__title">Base tomaia</h3><p class="rg-card__body">Archiviata il 04/06</p></article>
+              <article class="rg-card"><p class="rg-card__eyebrow">REV. 03</p><h3 class="rg-card__title">Rete 45°</h3><p class="rg-card__body">Archiviata il 21/06</p></article>
+              <article class="rg-card rg-card--emphasis"><p class="rg-card__eyebrow">IN LAVORAZIONE</p><h3 class="rg-card__title">Revisione 04</h3><p class="rg-card__body">Consumi ricalcolati il 12/07 · in attesa di validazione</p></article>
+              <article class="rg-card"><p class="rg-card__eyebrow">REV. 01</p><h3 class="rg-card__title">Prova filato</h3><p class="rg-card__body">Archiviata il 12/05</p></article>
+            </div>
+          </div><p class="specimen-note">Il contenitore è una superficie <strong>sollevata</strong> (bianca) sul fondo di pagina (neutral-50), con contorno al gradino intermedio; <code class="rg-mono">--emphasis</code> porta il contorno al nero e dice qual è il soggetto della vista. Non è uno stato e non ha significato: <strong>una sola per vista</strong>.</p></div>
         </div>
       </section>
 
@@ -577,6 +588,29 @@ status         VALID</pre></div>
               </div>
             </section>
           </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Enfasi (--emphasis) accanto al blocco normale, sul fondo di pagina — una sola per vista</span><div class="specimen-stage specimen-stage--page">
+            <div class="rg-grid rg-grid--2">
+              <section class="rg-section-card rg-section-card--emphasis">
+                <header class="rg-section-card__header">
+                  <div class="rg-section-card__heading">
+                    <h2 class="rg-section-card__title">Consumi</h2>
+                    <p class="rg-section-card__subtitle">Il blocco in revisione: è qui che si lavora.</p>
+                  </div>
+                  <div class="rg-section-card__actions"><button class="rg-button rg-button--primary" type="button">Ricalcola</button></div>
+                </header>
+                <div class="rg-section-card__body"><dl class="rg-key-value"><dt>Filato</dt><dd class="rg-mono">312,48 m</dd><dt>Metodo</dt><dd class="rg-mono">stitch-len/v3</dd></dl></div>
+              </section>
+              <section class="rg-section-card">
+                <header class="rg-section-card__header">
+                  <div class="rg-section-card__heading">
+                    <h2 class="rg-section-card__title">Materiali</h2>
+                    <p class="rg-section-card__subtitle">Contorno: presente, leggibile, non prioritario.</p>
+                  </div>
+                </header>
+                <div class="rg-section-card__body"><dl class="rg-key-value"><dt>Supporti</dt><dd class="rg-mono">2</dd><dt>Ultimo import</dt><dd class="rg-mono">12/07 · 14:02</dd></dl></div>
+              </section>
+            </div>
+          </div><p class="specimen-note">L'enfasi porta il contorno al nero e la testa su superficie rientrante: testa e corpo si distinguono anche a colpo d'occhio. Non è uno stato — per un errore o un avviso resta <code class="rg-mono">rg-alert</code> nel corpo, con testo esplicito.</p></div>
         </div>
       </section>
 

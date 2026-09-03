@@ -628,3 +628,93 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-lightbox__thumb { display: block; padding: 0; background: var(--rg-color-neutral-50); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-sm); cursor: zoom-in; }
 .rg-lightbox__thumb:hover { border-color: var(--rg-color-black); }
 .rg-lightbox__thumb img { display: block; }
+
+/* Worksheet block — l'unita STAMPABILE di una fase di lavorazione (v1.14.0). Il foglio esce dalla
+   stampante, va in reparto, l'operatore ci scrive sopra a penna i valori mancanti e torna in
+   ufficio: il blocco e un oggetto di carta prima che una superficie a schermo.
+   Due decisioni portano tutto il resto:
+   1) NON occupa una pagina intera. La maggior parte delle fasi ha poco da dire, quindi i blocchi
+      si impaginano uno dopo l'altro e la carta non si spreca. Il blocco non dichiara altezza.
+   2) NON si spezza mai fra due pagine (regola di paginazione in rg-utilities.css, @media print):
+      in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca.
+   E riquadrato di proposito — eccezione dichiarata a "non incorniciare tutto" (regole §6): su
+   carta il riquadro e cio che rende il blocco separabile, e non c'e hover a fare quel lavoro. */
+.rg-worksheet-block { margin: 0 0 var(--rg-space-4); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+.rg-worksheet-block__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-2) var(--rg-space-3); padding: var(--rg-space-3) var(--rg-space-4); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-worksheet-block__index { flex: none; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+/* Livello CONTENITORE: peso medium dichiarato, come rg-card__title (regole §3). */
+.rg-worksheet-block__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); }
+/* Identificazione del foglio: codice, parte, revisione. Mono e tabulare — si legge su carta,
+   spesso fotocopiata, e si confronta con altri fogli. */
+.rg-worksheet-block__meta { margin: 0 0 0 auto; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+.rg-worksheet-block__body { padding: var(--rg-space-4); }
+/* Griglia dei campi da compilare: colonne che si adattano alla larghezza utile della pagina,
+   con la stessa misura minima di colonna-parametro gia in uso nei pannelli. */
+.rg-worksheet-block__fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--rg-layout-param-col-min), 1fr)); gap: var(--rg-space-4) var(--rg-space-6); }
+/* Piede: sigla, ora, firma — cio che si compila alla fine della fase. */
+.rg-worksheet-block__foot { display: flex; flex-wrap: wrap; gap: var(--rg-space-4) var(--rg-space-6); padding: var(--rg-space-3) var(--rg-space-4); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-worksheet-block__foot > * { flex: 1 1 var(--rg-layout-param-col-min); }
+
+/* Dept band — banda di reparto sul bordo del blocco (v1.14.0). Il foglio viene quasi sempre
+   FOTOCOPIATO IN BIANCO E NERO: il colore si perde, quindi non puo essere l'unico segnale.
+   Tre segnali ridondanti, sempre tutti e tre:
+   (a) COLORE — palette categoriale --rg-color-category-*, acceleratore per trovare il foglio nel
+       mucchio a colpo d'occhio, mai portatore unico dell'informazione;
+   (b) NOME — il reparto scritto in chiaro e in maiuscolo sulla banda, su targhetta bianca opaca
+       perche resti leggibile sopra qualsiasi trama. E CONTENUTO del markup, non generato dal CSS:
+       se il CSS non arriva, la parola resta;
+   (c) TRAMA — direzione, spessore e passo del tratteggio diversi per reparto: e l'unico dei tre
+       segnali che sopravvive intatto alla fotocopia e alla scala di grigi.
+   Il tratteggio e un repeating-linear-gradient a stop netti: non e un gradiente decorativo (vietato
+   dalle regole §2) ma una CAMPITURA che porta informazione — eccezione dichiarata, regole §12.
+   In stampa le campiture arrivano sulla carta solo con print-color-adjust: exact (rg-utilities.css). */
+.rg-dept-band { display: flex; margin: 0; align-items: center; gap: var(--rg-space-2); min-height: var(--rg-space-6); padding: var(--rg-space-1) var(--rg-space-2); background-color: var(--rg-dept-fill, transparent); background-image: var(--rg-dept-pattern, none); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-dept-color, var(--rg-color-black)); }
+.rg-dept-band__name { padding: var(--rg-space-1) var(--rg-space-2); background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* Nota accessoria della banda (macchina, turno): mono, secondaria, mai al posto del nome. */
+.rg-dept-band__note { margin-left: auto; padding: 0 var(--rg-space-1); background: var(--rg-color-white); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
+/* Sette reparti, sette coppie colore+trama. Ogni variante dichiara solo tre variabili:
+   --rg-dept-color (filetto), --rg-dept-pattern (campitura), --rg-dept-fill (campo pieno).
+   Gli stop sono in forma esplicita (colore-inizio, colore-fine, trasparente-inizio,
+   trasparente-fine): la forma compatta a doppia posizione e piu corta ma non la digeriscono tutti
+   i motori di PDF server-side, e questa campitura deve arrivare sulla carta. */
+.rg-dept-band--ricamo { --rg-dept-color: var(--rg-color-category-1); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2)); }
+.rg-dept-band--laser { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: repeating-linear-gradient(45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-3)); }
+.rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-pattern: repeating-linear-gradient(-45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent var(--rg-space-4)); }
+.rg-dept-band--strass { --rg-dept-color: var(--rg-color-category-4); --rg-dept-pattern: repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2)); }
+.rg-dept-band--finissaggio { --rg-dept-color: var(--rg-color-category-5); --rg-dept-pattern: repeating-linear-gradient(45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-4)), repeating-linear-gradient(-45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-4)); }
+.rg-dept-band--incollature { --rg-dept-color: var(--rg-color-category-6); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent var(--rg-space-6)); }
+/* Campo pieno: la settima trama e l'assenza di trama — in scala di grigi resta la piu distinta. */
+.rg-dept-band--accoppiaggi { --rg-dept-color: var(--rg-color-category-7); --rg-dept-fill: var(--rg-color-category-7); }
+
+/* Fill field — il campo che si compila A PENNA (v1.14.0). E il caso centrale della scheda di
+   lavorazione: il foglio esce dalla stampante con dei buchi APPOSTA, e il buco deve invitare a
+   scrivere invece di sembrare un errore di rendering. Da qui tre scelte:
+   - la riga e una staffa a L: la BASE e un filetto nero, perche e la riga su cui si scrive e deve
+     sopravvivere alla fotocopia (i grigi chiari li perde) e perche un oggetto grafico essenziale
+     vuole almeno 3:1 - --rg-color-border-medium su bianco si ferma a ~2,8:1; il tratto verticale
+     sinistro resta intermedio perche dice solo dove comincia. Insieme dichiarano dove inizia e
+     dove appoggia la scrittura, cosa che uno spazio vuoto non fa;
+   - l'altezza e --rg-space-8 (32px, ~8,5 mm): la misura di una grafia a mano adulta, non l'altezza
+     di una riga di testo. --tall (48px, ~12,7 mm) e per una nota di piu parole;
+   - l'etichetta e sempre presente e in chiaro: un vuoto senza etichetta non e un campo.
+   NON e un controllo: e carta. Se lo stesso dato si raccoglie a schermo si usa rg-field, che ha
+   input, focus, errore e sola lettura. Questo componente non ne ha e non deve averne. */
+.rg-fill-field { display: block; }
+.rg-fill-field__label { display: block; margin-bottom: var(--rg-space-1); color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* L'unita accompagna l'etichetta e resta mono e minuscola: "°C" non e una label identitaria
+   (regole §8 — l'unita sta accanto al valore che verra scritto, non solo nell'intestazione). */
+.rg-fill-field__unit { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-regular); letter-spacing: var(--rg-letter-normal); text-transform: none; }
+.rg-fill-field__line { display: block; height: var(--rg-space-8); background: var(--rg-color-white); border-left: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+/* Riga alta: nota, motivazione, descrizione di una difformita. */
+.rg-fill-field--tall > .rg-fill-field__line { height: var(--rg-space-12); }
+/* Etichetta e riga sulla stessa linea, per i campi brevi in fondo al blocco (sigla, ora). */
+.rg-fill-field--inline { display: flex; align-items: baseline; gap: var(--rg-space-3); }
+.rg-fill-field--inline > .rg-fill-field__label { margin-bottom: 0; white-space: nowrap; }
+.rg-fill-field--inline > .rg-fill-field__line { flex: 1 1 auto; }
+/* Forma TABELLA: la stessa cosa dentro una <td> di rg-table, dove l'etichetta sta gia nella <th>.
+   Ripristina display: table-cell (la base e block) e porta la riga all'altezza della scrittura:
+   il filetto inferiore nero distingue a colpo d'occhio la cella DA RIEMPIRE (base su cui scrivere)
+   da quella che porta gia un dato stampato (filetto neutro di rg-table). Il selettore e qualificato
+   con td di proposito: .rg-table td pesa (0,1,1) e con la sola classe (0,1,0) il filetto della
+   tabella vincerebbe su questo. */
+td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); background: var(--rg-color-white); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }

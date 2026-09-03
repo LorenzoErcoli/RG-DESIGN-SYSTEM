@@ -1,4 +1,4 @@
-/* RG Design System v1.13.0 — keep synchronized with tokens.json. */
+/* RG Design System v1.14.0 — keep synchronized with tokens.json. */
 :root {
   --rg-font-identity: AGNext, Arial, sans-serif;
   --rg-font-body: GT-America-Standard, Helvetica, Arial, sans-serif;
@@ -51,6 +51,24 @@
   --rg-color-success: #365c45; --rg-color-warning: #7a5a16; --rg-color-danger: #8a2e2e; --rg-color-info: #36596b;
   --rg-color-accent-sage: var(--rg-color-perugino-sage); --rg-color-accent-blue: var(--rg-color-perugino-powder-blue);
   --rg-color-accent-sand: var(--rg-color-perugino-sand-ochre);
+
+  /* Palette CATEGORIALE (v1.14.0) — sette valori pari-ordinati per distinguere categorie fra cui
+     NON esiste gerarchia (i sette reparti di produzione, le serie di un grafico, i layer di un
+     file). Prima non esisteva: c'erano quattro stati (che hanno un significato) e quattro accenti
+     stagionali (che sono tre, usabili), e chi doveva distinguere sette cose finiva per inventare
+     HEX. Nessun colore nuovo entra nel brand: sono ALIAS di valori gia in palette, e l'alias
+     serve a dichiarare che li il valore vale come CATEGORIA e non come significato.
+     Vincoli: mai per stato, azione primaria, navigazione o focus; mai UNICO segnale — chi la usa
+     deve affiancare un nome scritto e/o una trama (vedi rg-dept-band). Conseguenza da conoscere:
+     category-3/4/5 valgono quanto danger/warning/success, quindi non si mescolano nella stessa
+     vista con badge o alert di stato senza una ragione dichiarata. */
+  --rg-color-category-1: var(--rg-color-black);
+  --rg-color-category-2: var(--rg-color-info);
+  --rg-color-category-3: var(--rg-color-danger);
+  --rg-color-category-4: var(--rg-color-warning);
+  --rg-color-category-5: var(--rg-color-success);
+  --rg-color-category-6: var(--rg-color-accent-sand);
+  --rg-color-category-7: var(--rg-color-accent-sage);
 
   --rg-space-0: 0; --rg-space-1: 4px; --rg-space-2: 8px; --rg-space-3: 12px; --rg-space-4: 16px;
   --rg-space-6: 24px; --rg-space-8: 32px; --rg-space-12: 48px; --rg-space-16: 64px; --rg-space-24: 96px;

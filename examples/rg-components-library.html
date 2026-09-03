@@ -44,6 +44,9 @@
     /* Piano che mostra il FONDO di pagina: serve dove la dimostrazione E la profondita
        (contenitore sollevato sul fondo neutro). Solo presentazione della tavola. */
     .specimen-stage--page { background: var(--rg-color-background); }
+    /* Piano che simula la FOTOCOPIA in bianco e nero: serve dove la dimostrazione E la
+       sopravvivenza del segnale alla scala di grigi (banda di reparto). Solo presentazione. */
+    .specimen-stage--grayscale { filter: grayscale(1); }
     .specimen-stack { display: flex; flex-wrap: wrap; gap: var(--rg-space-3); align-items: center; }
     .specimen-column { display: grid; gap: var(--rg-space-4); }
     .specimen-note { max-width: 720px; margin: var(--rg-space-6) 0 var(--rg-space-3); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
@@ -69,7 +72,7 @@
   <header class="specimen-header"><div class="specimen-brand">RG</div><div class="specimen-title">Design System / Components Library</div><div class="specimen-version">SPECIMEN 0.1 · 2026</div></header>
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
-      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li>
+      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#fill-field">Campo a penna</a></li>
     </ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
@@ -705,6 +708,135 @@ status         VALID</pre></div>
           </div></div>
         </div>
       </section>
+
+      <section class="specimen-section" id="worksheet-block">
+        <div class="specimen-section__head"><span class="specimen-section__index">25</span><h2>Blocco di lavorazione stampabile</h2><p>L'unità <strong>di carta</strong> di una fase: esce dalla stampante, va in reparto, l'operatore ci scrive sopra a penna i valori mancanti, torna in ufficio prodotto. Due decisioni la definiscono. <strong>Non occupa una pagina intera</strong> — la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e la carta non si spreca. <strong>Non si spezza mai fra due pagine</strong> — in reparto il retro non lo gira nessuno, e mezzo blocco è peggio di mezza pagina bianca: il blocco che non entra scende intero alla pagina dopo. La variante <code class="rg-mono">--long</code> è per la fase con la tabella di trenta righe, che una pagina se la prende tutta: apre una pagina nuova invece di lasciarsi dietro un buco. Il riquadro è un'eccezione dichiarata (regole §6): su carta fa il lavoro che a schermo fa l'hover. Le regole di paginazione stanno nell'unico <code class="rg-mono">@media print</code> del DS, in <code class="rg-mono">rg-utilities.css</code>.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Blocco normale — banda, testa, campi, piede</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block">
+              <p class="rg-dept-band rg-dept-band--pressatura"><span class="rg-dept-band__name">Pressatura e soffiatura</span><span class="rg-dept-band__note">Fase 03 / 07</span></p>
+              <header class="rg-worksheet-block__head"><span class="rg-worksheet-block__index">03</span><h3 class="rg-worksheet-block__title">Pressatura fondo</h3><p class="rg-worksheet-block__meta">RG-2026-0481 · parte 2 di 5 · rev. 04</p></header>
+              <div class="rg-worksheet-block__body">
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </div>
+              <footer class="rg-worksheet-block__foot">
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Ora</span><span class="rg-fill-field__line"></span></div>
+              </footer>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Blocchi in sequenza — quello che sa già il sistema è stampato, non lasciato in bianco</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block">
+              <p class="rg-dept-band rg-dept-band--incollature"><span class="rg-dept-band__name">Incollature</span></p>
+              <header class="rg-worksheet-block__head"><span class="rg-worksheet-block__index">04</span><h3 class="rg-worksheet-block__title">Incollaggio profilo</h3><p class="rg-worksheet-block__meta">RG-2026-0481 · parte 2 di 5</p></header>
+              <div class="rg-worksheet-block__body">
+                <dl class="rg-key-value"><dt>Colla</dt><dd>ADS-114 / lotto 2026-B</dd><dt>Grammatura</dt><dd>38 g/m²</dd></dl>
+                <div class="rg-worksheet-block__fields rg-u-mt-4">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">min</span></span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </div>
+            </section>
+            <section class="rg-worksheet-block">
+              <p class="rg-dept-band rg-dept-band--accoppiaggi"><span class="rg-dept-band__name">Accoppiaggi</span></p>
+              <header class="rg-worksheet-block__head"><span class="rg-worksheet-block__index">05</span><h3 class="rg-worksheet-block__title">Accoppiaggio fodera</h3><p class="rg-worksheet-block__meta">RG-2026-0481 · parte 2 di 5</p></header>
+              <div class="rg-worksheet-block__body">
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tensione <span class="rg-fill-field__unit">cN</span></span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field rg-fill-field--tall"><span class="rg-fill-field__label">Difformità rilevate</span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </div>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Variante lunga — la fase che una pagina se la prende tutta</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--long">
+              <p class="rg-dept-band rg-dept-band--ricamo"><span class="rg-dept-band__name">Campionario Ricamo</span><span class="rg-dept-band__note">Fase 01 / 07</span></p>
+              <header class="rg-worksheet-block__head"><span class="rg-worksheet-block__index">01</span><h3 class="rg-worksheet-block__title">Controllo tensioni per capo</h3><p class="rg-worksheet-block__meta">RG-2026-0481 · rev. 04 · 30 righe</p></header>
+              <div class="rg-worksheet-block__body">
+                <table class="rg-table rg-table--compact">
+                  <thead><tr><th scope="col">#</th><th scope="col">Capo</th><th scope="col">Tensione (cN)</th><th scope="col">Ago</th><th scope="col">Esito</th></tr></thead>
+                  <tbody>
+                    <tr><td class="rg-table__code">01</td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                    <tr><td class="rg-table__code">02</td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                    <tr><td class="rg-table__code">03</td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                    <tr><td class="rg-table__code">04</td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <footer class="rg-worksheet-block__foot">
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Ora</span><span class="rg-fill-field__line"></span></div>
+              </footer>
+            </section>
+          </div></div>
+        </div>
+        <p class="specimen-note">Geometria del foglio: <code class="rg-mono">rg-u-print-a4</code> sul contenitore che stampa (di norma il <code class="rg-mono">&lt;body&gt;</code>) è l'opt-in per A4 verticale con margini uniformi. Il formato è un fatto del documento, non del componente: il DS non lo impone a tutti i prodotti.</p>
+      </section>
+
+      <section class="specimen-section" id="dept-band">
+        <div class="specimen-section__head"><span class="specimen-section__index">26</span><h2>Banda di reparto</h2><p>Dice a quale dei sette reparti appartiene il foglio. Il vincolo che decide la forma: <strong>il foglio viene quasi sempre fotocopiato in bianco e nero</strong>, e il colore si perde. Quindi tre segnali ridondanti, sempre tutti e tre: <strong>(a)</strong> il colore del reparto, acceleratore per trovarlo nel mucchio; <strong>(b)</strong> il nome scritto in maiuscolo sulla banda, che è contenuto del markup e non <code class="rg-mono">content:</code> generato; <strong>(c)</strong> una trama diversa per direzione, spessore e passo — l'unico dei tre che sopravvive intatto alla scala di grigi. Il colore è un acceleratore, mai l'unica informazione. La seconda tavola è la stessa, convertita in grigio: è la prova, non un'illustrazione.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Sette reparti — a colori</span><div class="specimen-stage specimen-column">
+            <p class="rg-dept-band rg-dept-band--ricamo"><span class="rg-dept-band__name">Campionario Ricamo</span></p>
+            <p class="rg-dept-band rg-dept-band--laser"><span class="rg-dept-band__name">Stampa Laser e HF</span></p>
+            <p class="rg-dept-band rg-dept-band--pressatura"><span class="rg-dept-band__name">Pressatura e soffiatura</span></p>
+            <p class="rg-dept-band rg-dept-band--strass"><span class="rg-dept-band__name">Strass e applicazioni</span></p>
+            <p class="rg-dept-band rg-dept-band--finissaggio"><span class="rg-dept-band__name">Finissaggio e Controllo Qualità</span></p>
+            <p class="rg-dept-band rg-dept-band--incollature"><span class="rg-dept-band__name">Incollature</span></p>
+            <p class="rg-dept-band rg-dept-band--accoppiaggi"><span class="rg-dept-band__name">Accoppiaggi</span></p>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Gli stessi sette — come escono dalla fotocopiatrice</span><div class="specimen-stage specimen-stage--grayscale specimen-column">
+            <p class="rg-dept-band rg-dept-band--ricamo"><span class="rg-dept-band__name">Campionario Ricamo</span></p>
+            <p class="rg-dept-band rg-dept-band--laser"><span class="rg-dept-band__name">Stampa Laser e HF</span></p>
+            <p class="rg-dept-band rg-dept-band--pressatura"><span class="rg-dept-band__name">Pressatura e soffiatura</span></p>
+            <p class="rg-dept-band rg-dept-band--strass"><span class="rg-dept-band__name">Strass e applicazioni</span></p>
+            <p class="rg-dept-band rg-dept-band--finissaggio"><span class="rg-dept-band__name">Finissaggio e Controllo Qualità</span></p>
+            <p class="rg-dept-band rg-dept-band--incollature"><span class="rg-dept-band__name">Incollature</span></p>
+            <p class="rg-dept-band rg-dept-band--accoppiaggi"><span class="rg-dept-band__name">Accoppiaggi</span></p>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Con nota accessoria, e senza variante — reparto non assegnato</span><div class="specimen-stage specimen-column">
+            <p class="rg-dept-band rg-dept-band--laser"><span class="rg-dept-band__name">Stampa Laser e HF</span><span class="rg-dept-band__note">macchina HF-02 · turno 2</span></p>
+            <p class="rg-dept-band"><span class="rg-dept-band__name">Reparto non assegnato</span></p>
+          </div></div>
+        </div>
+        <p class="specimen-note">I colori vengono dalla palette categoriale <code class="rg-mono">--rg-color-category-1…7</code>, che è un alias di valori già in palette: nessun colore nuovo entra nel brand. Conseguenza da conoscere: <code class="rg-mono">category-3/4/5</code> valgono quanto <code class="rg-mono">danger</code>, <code class="rg-mono">warning</code> e <code class="rg-mono">success</code>. Su carta non c'è nessun colore di stato accanto e il nome è scritto sulla banda, quindi il rosso non si legge come «errore»; in una vista a schermo dove convivono alert e badge di stato, quella lettura va decisa prima.</p>
+      </section>
+
+      <section class="specimen-section" id="fill-field">
+        <div class="specimen-section__head"><span class="specimen-section__index">27</span><h2>Campo da compilare a penna</h2><p>La scheda esce dalla stampante con dei buchi <strong>apposta</strong>: sono i valori che solo il reparto conosce. Il buco deve <strong>invitare a scrivere</strong>, non sembrare un errore di rendering. Da qui la <strong>staffa a L</strong>, che dichiara dove inizia e dove appoggia la scrittura — cosa che uno spazio vuoto non fa e un rettangolo pieno direbbe male (sembrerebbe un campo disabilitato). La <strong>base è nera</strong> perché è la riga su cui si scrive: deve sopravvivere alla fotocopia, che i grigi chiari li perde, e come oggetto grafico essenziale vuole almeno 3:1 di contrasto (<code class="rg-mono">--rg-color-border-medium</code> su bianco si ferma a ~2,8:1). Il tratto verticale sinistro resta intermedio: dice solo dove comincia. L'altezza è quella della <strong>mano</strong>, non quella di una riga di testo: 32 px ≈ 8,5 mm, e 48 px ≈ 12,7 mm per una nota di più parole. L'etichetta c'è sempre, e l'unità le sta accanto. Non è un controllo: è carta — a schermo lo stesso dato si raccoglie con <code class="rg-mono">rg-field</code>.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Base, alto, in linea</span><div class="specimen-stage specimen-column">
+            <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line"></span></div>
+            <div class="rg-fill-field rg-fill-field--tall"><span class="rg-fill-field__label">Difformità rilevate</span><span class="rg-fill-field__line"></span></div>
+            <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+            <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Ora</span><span class="rg-fill-field__line"></span></div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Riga di tabella con celle vuote da riempire</span><div class="specimen-stage">
+            <table class="rg-table rg-table--compact">
+              <thead><tr><th scope="col">#</th><th scope="col">Capo</th><th scope="col">Tensione (cN)</th><th scope="col">Esito</th></tr></thead>
+              <tbody>
+                <tr><td class="rg-table__code">01</td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                <tr><td class="rg-table__code">02</td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                <tr><td class="rg-table__code">03</td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+              </tbody>
+            </table>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Quanti buchi — il valore noto si stampa, solo il rilevabile resta in bianco</span><div class="specimen-stage">
+            <dl class="rg-key-value"><dt>Macchina</dt><dd>HF-02</dd><dt>Stampo</dt><dd>ST-0114</dd><dt>Grammatura</dt><dd>38 g/m²</dd></dl>
+            <div class="rg-worksheet-block__fields rg-u-mt-4">
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line"></span></div>
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line"></span></div>
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line"></span></div>
+            </div>
+          </div></div>
+        </div>
+        <p class="specimen-note">Un blocco tutto buchi non è una scheda, è un modulo in bianco: quello che il sistema sa già va stampato come dato, non lasciato all'operatore.</p>
+      </section>
+
     </main>
   </div>
 

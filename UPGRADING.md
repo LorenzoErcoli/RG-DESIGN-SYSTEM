@@ -16,9 +16,9 @@ Dalla radice del repo consumatore, con `<path>` uguale al path del submodule dic
 
 ```bash
 git -C <path> fetch --tags
-git -C <path> checkout v1.13.0
+git -C <path> checkout v1.14.0
 git add <path>
-git commit -m "chore: DS a v1.13.0"
+git commit -m "chore: DS a v1.14.0"
 ```
 
 Il commit registra il **commit** del submodule, non il nome del tag: il tag serve a rendere

@@ -52,7 +52,7 @@ Ogni interfaccia RG deve caricare prima i token e poi i moduli CSS nell'ordine s
 <link rel="stylesheet" href="/RG-DESIGN-SYSTEM/styles/rg-utilities.css">
 ```
 
-`tokens.css` contiene esclusivamente valori e alias. I file in `styles/` implementano reset, tipografia, componenti, composizioni e utility. Le applicazioni possono omettere `rg-utilities.css` se non usano helper atomici, ma non devono copiare gli stili dalla specimen page.
+`tokens.css` contiene esclusivamente valori e alias. I file in `styles/` implementano reset, tipografia, componenti, composizioni e utility. Le applicazioni possono omettere `rg-utilities.css` se non usano helper atomici — ma non chi produce documenti stampabili: da 1.14.0 la paginazione delle schede di lavorazione e la geometria di pagina opt-in vivono lì, nell’unico `@media print` del sistema. In nessun caso si copiano gli stili dalla specimen page.
 
 I percorsi sopra sono illustrativi. Per il modo concreto in cui un prodotto risolve questi percorsi dal submodule — mount FastAPI, iniezione Streamlit, ordine vincolante — vedi [integration/](integration/README.md).
 
@@ -64,7 +64,7 @@ I font ufficiali sono AGNext, GT-America-Standard e GT-America-Mono. I file font
 
 ## Stato e governance
 
-Versione corrente `1.13.0`: il contratto di consumo è stabile. Le modifiche ai token permanenti richiedono revisione trasversale; le palette stagionali possono evolvere senza modificare i ruoli semantici. Eccezioni specifiche di prodotto vanno documentate vicino al relativo pattern, non incorporate silenziosamente nei token globali.
+Versione corrente `1.14.0`: il contratto di consumo è stabile. Le modifiche ai token permanenti richiedono revisione trasversale; le palette stagionali possono evolvere senza modificare i ruoli semantici. Eccezioni specifiche di prodotto vanno documentate vicino al relativo pattern, non incorporate silenziosamente nei token globali.
 
 Il prefisso `rg-` appartiene al DS: nessun prodotto definisce classi `.rg-*` in locale. Un componente d'applicazione usa un prefisso proprio.
 

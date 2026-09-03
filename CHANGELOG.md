@@ -7,6 +7,131 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.14.0 — 2026-09-03
+
+**La carta entra nel design system.** Tre componenti nuovi e una palette nuova per un caso che il
+DS non copriva: le **schede di lavorazione** che oggi sono cartacee. Un prodotto ha più parti, ogni
+parte ha più fasi, ogni fase appartiene a uno dei sette reparti; i fogli escono dalla stampante,
+vanno in reparto, l'operatore ci scrive sopra a penna i valori mancanti, e tornano all'ufficio
+prodotto. Rilascio **additivo**: nessuna classe rinominata, nessuna rimozione, nessun token
+esistente cambia valore. Si sale e basta.
+
+### Perché
+
+Nei 36 componenti della 1.13.0 non c'era niente per un documento stampato. C'erano `.rg-u-no-print`
+e un `@media print` che toglieva topbar e sidebar — cioè il minimo per non stampare il chrome — e
+nient'altro. Tutto quello che riguarda la carta mancava, e mancava in un modo che ogni prodotto
+avrebbe risolto in locale, ognuno a modo suo:
+
+1. **Nessuna unità di stampa.** Un elenco di fasi stampato senza regole di paginazione si spezza
+   dove capita. In reparto il retro del foglio non lo gira nessuno: **mezzo blocco è peggio di
+   mezza pagina bianca**. E l'altro errore era simmetrico — dare una pagina intera a ogni fase,
+   quando la maggior parte delle fasi ha poco da dire, vuol dire sprecare carta.
+2. **Nessun modo di dire "questo foglio è di quel reparto"** che sopravviva alla fotocopia. Il
+   foglio viene quasi sempre copiato in bianco e nero: qualunque codifica affidata al solo colore
+   arriva in reparto già persa.
+3. **Nessun campo da compilare a mano.** È il caso centrale: la scheda esce con dei buchi
+   **apposta**, e in tutto il DS non c'era niente che facesse sembrare un buco *voluto* invece che
+   un errore di rendering o un dato non caricato. `rg-field` non serve: ha input, focus ed errore,
+   cose che su un foglio di carta non esistono.
+4. **Nessuna palette per distinguere sette cose pari-ordinate.** C'erano quattro colori di *stato*
+   (che hanno un significato) e quattro accenti stagionali (di cui tre usabili). Chi doveva
+   distinguere sette reparti — o sette serie di un grafico, o sette layer — finiva per inventare
+   HEX in locale.
+
+### Aggiunto
+
+**`rg-worksheet-block` — blocco di lavorazione stampabile** ([doc](components/worksheet-block.md)).
+Un blocco = una fase. Due decisioni portano tutto il resto: **non occupa una pagina intera** (i
+blocchi si impaginano uno dopo l'altro, il blocco non dichiara nessuna altezza) e **non si spezza
+mai fra due pagine** (quello che non entra scende intero alla pagina dopo). Variante
+`--long` per la fase con la tabella di trenta righe, che una pagina se la prende tutta: apre una
+pagina nuova invece di lasciarsi dietro un buco, e se è il primo blocco non lascia una pagina vuota
+prima. Il riquadro è un'eccezione dichiarata a §6: su carta fa il lavoro che a schermo fa l'hover.
+
+**`rg-dept-band` — banda di reparto** ([doc](components/dept-band.md)). **Tre segnali ridondanti**,
+sempre tutti e tre, perché il colore è quello che si perde per primo: **(a)** il colore del
+reparto, acceleratore per trovare il foglio nel mucchio; **(b)** il nome in maiuscolo sulla banda,
+che è *contenuto del markup* e non `content:` generato; **(c)** la **figura**, l'unico dei tre che
+sopravvive intatto alla scala di grigi.
+
+Il criterio della figura è arrivato dal reparto e ha cambiato il componente: non
+**distinguibile**, ma **riconoscibile**. Sette trame geometriche qualsiasi si distinguono — e poi
+vanno imparate a memoria. Una trama che evoca il lavoro del reparto si riconosce al primo colpo, e
+chi pesca il foglio dal mucchio non deve ricordarsi che il tratteggio a 45° era la stampa. Quindi:
+**pois** per gli strass (sono strass), **punto croce** per il ricamo, **due registri** per Stampa,
+Laser e HF (in alto gocce d'inchiostro e punte di laser alternate, in basso due linee: i mestieri
+sono due e la figura li nomina entrambi), **le due piastre** per la pressatura, **bandiera a
+scacchi** per il finissaggio (il traguardo: è l'ultimo reparto), **strisciate di spalmatura** per le
+incollature, **due linee appaiate** per gli accoppiaggi.
+
+Regola derivata: due reparti non stanno mai nella stessa **famiglia di segno** — croci, due
+registri, dorsi, pois, scacchiera, diagonale, coppie. E una famiglia non la fondano né il **verso**
+(una diagonale a 45° contro una a −45°, dopo una fotocopia e a dimensione di banda, è la stessa
+cosa) né il **tono** (due figure fatte di barre verticali si somigliano anche se una è scura e
+l'altra chiara).
+
+**`rg-fill-field` — campo da compilare a penna** ([doc](components/fill-field.md)). La riga è una
+**staffa a L**: dice dove inizia e dove appoggia la scrittura, cosa che uno spazio vuoto non fa e
+che un rettangolo pieno direbbe male. La base è **nera** — è la riga su cui si scrive, deve
+sopravvivere alla fotocopia e come oggetto grafico essenziale vuole almeno 3:1, mentre
+`--rg-color-border-medium` su bianco si ferma a ~2,8:1; il tratto verticale sinistro resta
+intermedio. L'altezza è quella della **mano**, non quella di una riga di testo: 32 px (~8,5 mm),
+48 px con `--tall`. Varianti `--tall`, `--inline` e `--cell` per la forma «riga di tabella con
+celle vuote da riempire»: trenta righe da riempire sono una tabella, non trenta campi.
+
+**Palette categoriale `--rg-color-category-1…7`.** Sette valori pari-ordinati per distinguere
+categorie fra cui non esiste gerarchia. **Nessun colore nuovo entra nel brand**: sono alias di
+valori già in palette, e l'alias serve a dichiarare che lì il valore vale come *categoria* e non
+come *significato*. Vincoli scritti nel token: mai per stato, azione, navigazione o focus; mai
+unico segnale.
+
+**Stampa, in `rg-utilities.css`** — l'unico `@media print` del DS, **esteso e non duplicato**:
+regole di paginazione dei blocchi (con le proprietà legacy `page-break-*` accanto a quelle moderne,
+perché i motori PDF server-side non le implementano tutte), `print-color-adjust: exact` sulla banda
+(senza, il browser butta via gli sfondi e la banda perde due segnali su tre), e la geometria di
+pagina **opt-in** `@page rg-a4` + `.rg-u-print-a4`. Il formato è un fatto del documento, non di un
+componente: imporlo a tutti i prodotti vorrebbe dire decidere al posto di chi stampa una tabella in
+orizzontale.
+
+### Eccezioni dichiarate (regole §12)
+
+- **Il riquadro del blocco** — §6 dice di non incorniciare tutto. Ambito: documenti stampati; su
+  carta il riquadro è ciò che rende il blocco separabile dal successivo.
+- **La trama della banda** — è un `repeating-linear-gradient` a stop netti, e §2 vieta i gradienti
+  *decorativi*. Qui la campitura **porta informazione**, ed è l'unica delle tre che sopravvive alla
+  fotocopia.
+- **I millimetri di `@page`** — la scala di spazio del DS è in px e non descrive un foglio di
+  carta. La misura è fisica solo lì, e solo lì è in mm.
+
+### Limiti noti
+
+- Un `rg-worksheet-block--long` che **sfora comunque** il foglio si spezza fra righe con
+  l'intestazione della tabella ripetuta, ma **la banda di reparto non si ripete**: la pagina di
+  continuazione perde il segnale di reparto. Non è risolvibile in CSS. Una fase che produce più di
+  una pagina di tabella va spezzata a monte in due blocchi, ciascuno con la sua banda.
+- `--rg-color-category-3/4/5` valgono quanto `danger`, `warning` e `success`. Su una scheda
+  stampata non c'è nessun colore di stato accanto e il nome è scritto sulla banda, quindi una banda
+  rossa non si legge come «errore». In una vista **a schermo** dove convivono alert e badge di
+  stato, quella lettura va decisa prima.
+- Le sette varianti di `rg-dept-band` portano il nome dei sette reparti RG: è un accoppiamento
+  all'organigramma, dichiarato. Un ottavo reparto è un'ottava variante nel DS — con una figura di
+  una **famiglia di segno non ancora usata**, altrimenti il criterio decade; la mappa reparto →
+  variante vive nell'app.
+- `rg-dept-band--stampa` è la figura più stretta: i due registri stanno in ~30 px di area utile
+  **senza margine**. Se la banda si abbassa è la prima che si impasta, e va rifatta, non compressa.
+- Le figure valgono per **questi** sette mestieri. Un prodotto RG che dovesse usare la banda per
+  categorie non-manifatturiere non erediterebbe nessuna evocazione: lì la palette categoriale resta
+  valida, il repertorio di figure no.
+- `rg-fill-field` non è un controllo: in lettura assistita porta la sola etichetta, perché non c'è
+  nessun campo da annunciare. È coerente col supporto, ed è la ragione per cui la versione a
+  schermo della stessa scheda **deve** usare `rg-field`.
+
+### Migrazione
+
+Nessuna. Additivo puro: nessun markup esistente cambia. L'unica nota per chi stampa è che
+`rg-utilities.css` non è più omettibile in un prodotto che produce documenti: la paginazione vive lì.
+
 ## 1.13.0 — 2026-09-01
 
 **Revisione di fondazioni: gerarchia.** Solo token e tipografia — nessun componente nuovo, nessuna

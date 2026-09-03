@@ -38,5 +38,36 @@
   .rg-topbar, .rg-sidebar { display: none !important; }
   .rg-appshell__main { max-width: none !important; padding: 0 !important; }
   body { background: var(--rg-color-white); }
+
+  /* Geometria della pagina, OPT-IN (v1.14.0). Il formato e un fatto del DOCUMENTO, non di un
+     componente, e imporlo a ogni prodotto vorrebbe dire decidere al posto di chi stampa una
+     tabella in orizzontale. Quindi pagina nominata + classe: solo chi mette rg-u-print-a4 sul
+     contenitore che stampa ottiene A4 verticale con margini uniformi. Dove le named pages non
+     sono supportate la regola decade e restano i margini di default: nessuna rottura.
+     Le misure sono in mm perche qui la misura E fisica: la scala di spazio del DS e in px e non
+     descrive un foglio di carta. Eccezione dichiarata, regole §12. */
+  @page rg-a4 { size: A4; margin: 12mm; }
+  .rg-u-print-a4 { page: rg-a4; }
+
+  /* Schede di lavorazione — paginazione dei blocchi (v1.14.0).
+     REGOLA FORTE: un blocco non si spezza mai fra due pagine. In reparto il retro del foglio non
+     lo gira nessuno, e mezzo blocco e peggio di mezza pagina bianca. I blocchi che entrano si
+     impaginano uno dopo l'altro (nessuna altezza forzata: la carta non si spreca), quello che non
+     entra scende intero alla pagina dopo. Le proprieta legacy (page-break-*) restano accanto a
+     quelle moderne perche i motori di PDF server-side non le implementano tutti. */
+  .rg-worksheet-block { break-inside: avoid; page-break-inside: avoid; }
+  /* Variante LUNGA: la fase con la tabella di trenta righe si prende la pagina, quindi APRE una
+     pagina nuova invece di lasciare un buco dietro di se. Se e la prima cosa che si stampa, non
+     apre una pagina vuota prima. Se supera comunque il foglio, si spezza fra RIGHE della tabella
+     con l'intestazione ripetuta: e il male minore, ma vedi il limite dichiarato nel doc. */
+  .rg-worksheet-block--long { break-before: page; page-break-before: always; }
+  .rg-worksheet-block--long:first-child { break-before: auto; page-break-before: auto; }
+  .rg-worksheet-block--long .rg-table thead { display: table-header-group; }
+  .rg-worksheet-block--long .rg-table tr { break-inside: avoid; page-break-inside: avoid; }
+  /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda
+     di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome. */
+  .rg-dept-band { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* Su carta non esiste il puntatore: l'evidenziazione di riga sporcherebbe e basta. */
+  .rg-table tbody tr:hover { background: transparent; }
 }
 

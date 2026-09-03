@@ -7,6 +7,32 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.14.1 — 2026-09-03
+
+**La palette categoriale entra nelle regole di design.** La 1.14.0 ha introdotto
+`--rg-color-category-1..7` documentandola in `tokens.css`, `components.json` e
+`components/dept-band.md` — cioè nei token e in un componente, ma **non in `design-rules.md`**,
+che è la Costituzione visiva e il primo documento che il README dice di leggere. Una palette è
+un concetto di sistema, non un dettaglio di `rg-dept-band`: chi domani deve colorare sette serie
+di un grafico legge §4, ci trova solo permanente e stagionale, e reinventa gli HEX — esattamente
+il problema per cui la palette è nata.
+
+Nessun CSS, nessun token, nessuna classe: **patch, si aggiorna il pin e basta.**
+
+### Documentazione
+
+- **`design-rules.md` §4** — la palette categoriale, i suoi tre vincoli (mai stato/azione/
+  navigazione/focus; mai unico segnale; nessun colore nuovo nel brand, solo alias) e il rimando a
+  `dept-band` come applicazione di riferimento.
+- **La sovrapposizione con gli stati, scritta dove si legge.** `category-3/4/5` *sono*
+  `danger/warning/success`: categorie e stati non si mescolano nella stessa vista senza una
+  ragione dichiarata. Il vincolo esisteva già nel commento di `tokens.css`, dove però lo trova
+  solo chi apre i token.
+- **Il tetto di sette, e perché.** Una categoria in più chiede un segno in più — una trama, una
+  figura — non un colore in più: oltre il settimo la distinzione non regge in scala di grigi né
+  in fotocopia, che è come queste schede vengono lette davvero. Generalizza a regola di sistema
+  il terzo limite dichiarato in `dept-band`.
+
 ## 1.14.0 — 2026-09-03
 
 **La carta entra nel design system.** Tre componenti nuovi e una palette nuova per un caso che il

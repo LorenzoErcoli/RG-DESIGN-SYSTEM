@@ -58,6 +58,16 @@ Le palette stagionali:
 
 La palette Perugino in `tokens.json` è provvisoria fino alla campionatura della fonte ufficiale.
 
+La palette **categoriale** (`--rg-color-category-1` … `-7`) distingue categorie *pari-ordinate* — i reparti di produzione, le serie di un grafico, i layer di un file importato — dove non esiste né gerarchia né significato. Prima della 1.14.0 non c'era: chi doveva distinguere sette cose trovava quattro stati, che un significato ce l'hanno, e tre accenti stagionali, e finiva per inventare HEX.
+
+- Non definisce stato, azione primaria, navigazione o focus.
+- Non è **mai** l'unico segnale: chi la usa affianca sempre un nome scritto e una trama o una figura. Vedi [dept-band](components/dept-band.md), che è l'applicazione di riferimento.
+- Non introduce colori nuovi nel brand: sono alias di valori già in palette. L'alias serve a dichiarare che lì il valore vale come **categoria**, non come significato.
+
+Conseguenza da conoscere prima di usarla: `category-3`, `-4` e `-5` **sono** `danger`, `warning` e `success`. Categorie e stati non si mescolano nella stessa vista senza una ragione dichiarata, altrimenti lo stesso rosso dice due cose diverse a due metri di distanza.
+
+La palette si ferma a sette, e non è una svista: una categoria in più chiede **un segno in più** — una trama, una figura — non un colore in più. Oltre il settimo colore la distinzione non regge né in scala di grigi né in fotocopia, ed è lì che queste cose vengono lette davvero.
+
 ## 5. Spazio e griglia
 
 Usare la scala 4–8–12–16–24–32–48–64–96. Il ritmo ordinario è 8 px; 24–32 px separano gruppi, 48–96 px separano sezioni editoriali. Layout desktop su 12 colonne, tablet 8, mobile 4. Il contenuto tecnico può essere denso, ma non compresso sotto la soglia di scansione.

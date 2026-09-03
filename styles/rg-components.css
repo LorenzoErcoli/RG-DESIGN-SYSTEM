@@ -675,27 +675,49 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    arbitraria si distingue e poi va imparata a memoria, una trama che evoca il lavoro del reparto
    si riconosce al primo colpo, e chi pesca il foglio dal mucchio non deve ricordarsi che il
    tratteggio a 45 gradi era la stampa. Criterio arrivato dal reparto, non dal design system.
-   Conseguenza operativa: due reparti non stanno mai nella stessa FAMIGLIA DI SEGNO (linea singola,
-   righe, dorsi, pois, reticolo, diagonale, coppie) — il verso di una diagonale, dopo una fotocopia
-   e a dimensione di banda, non e una differenza.
+   Conseguenza operativa: due reparti non stanno mai nella stessa FAMIGLIA DI SEGNO. Le sette in
+   uso: croci (ricamo), due registri (stampa), dorsi (pressatura), pois (strass), scacchiera
+   (finissaggio), diagonale (incollature), coppie (accoppiaggi). Il verso di una diagonale, dopo
+   una fotocopia e a dimensione di banda, non e una differenza; e non lo e nemmeno il tono, che
+   e la ragione per cui il reticolo del finissaggio (barre verticali come gli accoppiaggi) e
+   stato sostituito.
    Ogni variante dichiara solo --rg-dept-color (filetto) e --rg-dept-pattern (campitura), piu
    --rg-dept-size/-position/-repeat quando la figura e un segno unico e non un motivo che si ripete.
    Gli stop sono in forma esplicita (colore-inizio, colore-fine, trasparente-inizio, trasparente-fine):
    la forma compatta a doppia posizione e piu corta ma non la digeriscono tutti i motori di PDF
    server-side, e questa campitura deve arrivare sulla carta. */
-/* RICAMO — il punto di cucitura: una sola linea a trattini, centrata, come una cucitura corrente. */
-.rg-dept-band--ricamo { --rg-dept-color: var(--rg-color-category-1); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent var(--rg-space-3)); --rg-dept-size: 100% var(--rg-space-1); --rg-dept-position: center; --rg-dept-repeat: no-repeat; }
-/* STAMPA, LASER E HF — le righe stampate su un foglio. Il nome del reparto apre con il lavoro
-   prevalente: --stampa, non --laser (chi guardava la banda diceva "manca stampa"). */
-.rg-dept-band--stampa { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-3)); }
+/* RICAMO — il punto croce: una fila di croci, non un tratteggio. Il trattino centrato di prima
+   leggeva come "una linea tratteggiata" e basta: e il segno piu neutro che esista, e in reparto
+   non diceva ricamo. Il punto pieno (satin) sarebbe stato l'idea ovvia — barrette fitte e
+   inclinate — ma e la famiglia delle incollature, cioe l'errore laser/pressatura da capo.
+   Due diagonali sottili a passo largo si incrociano e lasciano croci staccate: famiglia propria
+   (segni discreti incrociati), non un campo di righe. Passo 24 e larghezza 4: sotto i 24 le
+   diagonali si toccano e la fila di croci diventa un reticolo pieno. */
+.rg-dept-band--ricamo { --rg-dept-color: var(--rg-color-category-1); --rg-dept-pattern: repeating-linear-gradient(45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-6)), repeating-linear-gradient(-45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-6)); --rg-dept-size: 100% var(--rg-space-6); --rg-dept-position: center; --rg-dept-repeat: no-repeat; }
+/* STAMPA, LASER E HF — due registri, perche i mestieri sono due e la figura deve nominarli
+   entrambi. IN BASSO due linee orizzontali (la stampa). IN ALTO gocce e punte alternate: una
+   goccia d'inchiostro, un raggio di laser, e via cosi — la goccia e un cerchio pieno da 8px, il
+   raggio un tratto da 2px alto quanto il registro. Le fasi sono sfalsate di mezzo passo (goccia a
+   12, raggio a 0 e 24) cosi non si sovrappongono mai.
+   E la figura piu complessa delle sette e la piu stretta: registro alto 0-16, registro basso
+   18-30 dell'area utile (~30px su una banda da 32). Ci sta, ma senza margine — se un giorno la
+   banda si abbassa, questa e la prima che si impasta. La goccia e 8px come i pois dello strass ma
+   a passo 24 e in coppia col raggio: e il composto che si legge, non il singolo segno. */
+.rg-dept-band--stampa { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-6)), repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-2)); --rg-dept-size: var(--rg-space-6) var(--rg-space-4), auto var(--rg-space-4), auto var(--rg-space-3); --rg-dept-position: 0 0, 0 0, 0 100%; --rg-dept-repeat: repeat-x, repeat-x, repeat-x; }
 /* PRESSATURA E SOFFIATURA — le due piastre della pressa: due dorsi pieni ai bordi, il materiale
    in mezzo. Figura chiusa, non un tratteggio: e cio che la separa da tutte le altre. */
 .rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-pattern: linear-gradient(to bottom, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent calc(100% - var(--rg-space-2)), var(--rg-dept-color) calc(100% - var(--rg-space-2)), var(--rg-dept-color) 100%); }
 /* STRASS E APPLICAZIONI — pois: sono strass. La figura piu letterale delle sette. */
 .rg-dept-band--strass { --rg-dept-color: var(--rg-color-category-4); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)); --rg-dept-size: var(--rg-space-4) var(--rg-space-4); }
-/* FINISSAGGIO E CONTROLLO QUALITA — il reticolo del controllo: griglia ortogonale rada, la maglia
-   su cui si verifica. Ortogonale e non a X: la X e un segno di scarto, e qui non si scarta niente. */
-.rg-dept-band--finissaggio { --rg-dept-color: var(--rg-color-category-5); --rg-dept-pattern: repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-6)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-6)); }
+/* FINISSAGGIO E CONTROLLO QUALITA — la bandiera a scacchi: il traguardo. E l'ultimo reparto, quello
+   che dice se il capo e finito, e il segno lo dice da solo senza spiegazioni.
+   Sostituisce il reticolo ortogonale, che era barre verticali come gli accoppiaggi: si
+   distinguevano a monitor e si somigliavano in fotocopia spinta, cioe la coppia piu debole delle
+   sette. La scacchiera cambia famiglia (blocchi, non righe) ed e la figura piu resistente alla
+   fotocopia di tutte: quadretti pieni da 8px, non filetti da 2 che si schiariscono.
+   Le percentuali qui sono proporzioni della tessera, non misure: e la ricetta canonica della
+   scacchiera (due strati identici sfalsati di mezza tessera), non un valore magico. */
+.rg-dept-band--finissaggio { --rg-dept-color: var(--rg-color-category-5); --rg-dept-pattern: linear-gradient(45deg, var(--rg-dept-color) 25%, transparent 25%, transparent 75%, var(--rg-dept-color) 75%), linear-gradient(45deg, var(--rg-dept-color) 25%, transparent 25%, transparent 75%, var(--rg-dept-color) 75%); --rg-dept-size: var(--rg-space-4) var(--rg-space-4); --rg-dept-position: 0 0, var(--rg-space-2) var(--rg-space-2); }
 /* INCOLLATURE — le strisciate della spalmatura: diagonali spesse, il segno che lascia la spatola. */
 .rg-dept-band--incollature { --rg-dept-color: var(--rg-color-category-7); --rg-dept-pattern: repeating-linear-gradient(45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent var(--rg-space-4)); }
 /* ACCOPPIAGGI — due linee appaiate: accoppiare e unire due strati, e la figura lo dice.

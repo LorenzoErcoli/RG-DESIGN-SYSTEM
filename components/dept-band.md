@@ -26,24 +26,27 @@ cose diverse. Ma una trama arbitraria va poi **imparata a memoria** — chi pesc
 mucchio dovrebbe ricordarsi che il tratteggio a 45° era la stampa. Una trama che **evoca il lavoro
 del reparto** si riconosce al primo colpo e non si impara: si capisce.
 
-Da qui la regola: **la figura nomina il reparto**. I pois sono strass. La linea a trattini è un
-punto di cucitura. Le due linee appaiate sono due strati accoppiati.
+Da qui la regola: **la figura nomina il reparto**. I pois sono strass. Le croci sono il punto
+croce. Le due linee appaiate sono due strati accoppiati. La bandiera a scacchi è il traguardo, e
+il finissaggio è l'ultimo reparto.
 
 E da qui la regola derivata, che è quella operativa: **due reparti non stanno mai nella stessa
-famiglia di segno**. Le famiglie in uso sono linea singola, righe, dorsi, pois, reticolo, diagonale,
-coppie. Il **verso** di una diagonale, dopo una fotocopia e a dimensione di banda, non è una
-differenza: è l'errore che aveva la prima versione, dove stampa (45°, sottile) e pressatura (−45°,
-spessa) si confondevano.
+famiglia di segno**. Le famiglie in uso sono croci, due registri, dorsi, pois, scacchiera,
+diagonale, coppie. Il **verso** di una diagonale, dopo una fotocopia e a dimensione di banda, non è
+una differenza — è l'errore della prima versione, dove stampa (45°, sottile) e pressatura (−45°,
+spessa) si confondevano. E non lo è nemmeno il **tono**: il reticolo ortogonale del finissaggio era
+fatto di barre verticali come gli accoppiaggi e si distingueva solo perché più scuro, che in
+fotocopia spinta non è una differenza. Il tono non fonda una famiglia.
 
 ## Varianti
 
 | Variante | Reparto | Figura | Perché quella |
 | --- | --- | --- | --- |
-| `rg-dept-band--ricamo` | Campionario Ricamo | linea a trattini centrata | è un **punto di cucitura** |
-| `rg-dept-band--stampa` | Stampa, Laser e HF | righe orizzontali | sono le **righe stampate** su un foglio |
+| `rg-dept-band--ricamo` | Campionario Ricamo | fila di croci | è il **punto croce** |
+| `rg-dept-band--stampa` | Stampa, Laser e HF | due registri: gocce e raggi alternati sopra, due linee sotto | in alto una **goccia d'inchiostro** e una **punta di laser**, in basso le **due linee** della stampa: i mestieri sono due e la figura li nomina entrambi |
 | `rg-dept-band--pressatura` | Pressatura e soffiatura | dorsi pieni ai bordi, centro vuoto | sono le **due piastre** della pressa, col materiale in mezzo |
 | `rg-dept-band--strass` | Strass e applicazioni | pois | **sono strass** |
-| `rg-dept-band--finissaggio` | Finissaggio e Controllo Qualità | reticolo ortogonale rado | è la **maglia del controllo** |
+| `rg-dept-band--finissaggio` | Finissaggio e Controllo Qualità | scacchiera | è la **bandiera a scacchi**: il traguardo, ed è l'ultimo reparto |
 | `rg-dept-band--incollature` | Incollature | diagonali spesse | sono le **strisciate della spalmatura** |
 | `rg-dept-band--accoppiaggi` | Accoppiaggi | coppie di linee verticali | accoppiare è **unire due strati** |
 
@@ -74,16 +77,29 @@ stampati (regole §12).
 riga in `rg-utilities.css` la banda arriverebbe sulla carta con due segnali su tre spenti. È già
 gestito dal DS, l'app non deve fare nulla.
 
-**Quanto inchiostro porta la figura.** Due delle sette usano i valori più chiari della palette
-(incollature e accoppiaggi): sono quelle che una fotocopia di fotocopia può schiarire di più. La
-figura regge perché il segno resta — diagonali spesse e coppie di linee sono forme, non toni — ma
-è la coppia da guardare per prima quando si prova la stampa su una macchina nuova. In vetrina c'è
-la tavola apposta: *prova di sforzo*, grigio più contrasto schiacciato.
+**Quanto inchiostro porta la figura.** Le sette non pesano uguale, e conviene sapere quali sono
+gli estremi. La **scacchiera** del finissaggio è la più carica (metà della banda, in quadretti pieni
+da 8&nbsp;px) ed è anche la più indistruttibile: un quadretto pieno non lo schiarisce nessuna
+fotocopia. All'estremo opposto, **incollature e accoppiaggi** usano i valori più chiari della
+palette: reggono perché il segno resta — diagonali spesse e coppie di linee sono forme, non toni —
+ma sono le prime da guardare quando si prova la stampa su una macchina nuova.
+
+**La stampa è la figura più stretta.** Due registri in una banda da 32&nbsp;px vogliono tutto lo
+spazio che c'è: registro alto 0–16, registro basso 18–30 dell'area utile. **Ci stanno, senza
+margine.** È il limite dichiarato di questa figura: se un giorno la banda si abbassa, o se il font
+identitario rimpicciolisce la targhetta e con lei l'altezza della banda, questa è la prima che si
+impasta — e va rifatta, non compressa. Per la stessa ragione la goccia è un cerchio da
+8&nbsp;px e non di più, e il raggio un tratto da 2: sono le misure massime che lasciano respirare
+i due registri.
+
+In vetrina c'è la tavola apposta per verificarlo: *prova di sforzo*, grigio più contrasto
+schiacciato.
 
 **Come si aggiunge una figura.** La variante dichiara `--rg-dept-color` (il filetto) e
 `--rg-dept-pattern` (la campitura); `--rg-dept-size`, `--rg-dept-position` e `--rg-dept-repeat`
 servono solo quando la figura è un **segno unico** e non un motivo che si ripete — è il caso del
-punto di cucitura (una sola linea centrata) e dei pois (una tessera che si ripiastrella). Le misure
+punto croce e dei pois (una tessera che si ripiastrella), o quando i registri sono più di uno
+(stampa). Le misure
 vengono dalla scala di spazio: nessun pixel arbitrario.
 
 **Il colore riusa la palette categoriale** `--rg-color-category-1…7`, che a sua volta è un alias di

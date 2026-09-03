@@ -59,11 +59,17 @@ Il criterio della figura è arrivato dal reparto e ha cambiato il componente: no
 **distinguibile**, ma **riconoscibile**. Sette trame geometriche qualsiasi si distinguono — e poi
 vanno imparate a memoria. Una trama che evoca il lavoro del reparto si riconosce al primo colpo, e
 chi pesca il foglio dal mucchio non deve ricordarsi che il tratteggio a 45° era la stampa. Quindi:
-**pois** per gli strass (sono strass), **punto di cucitura** per il ricamo, **righe stampate** per
-Stampa/Laser/HF, **le due piastre** per la pressatura, **reticolo di controllo** per il finissaggio,
-**strisciate di spalmatura** per le incollature, **due linee appaiate** per gli accoppiaggi. Regola
-derivata: due reparti non stanno mai nella stessa **famiglia di segno** — il verso di una diagonale,
-dopo una fotocopia e a dimensione di banda, non è una differenza.
+**pois** per gli strass (sono strass), **punto croce** per il ricamo, **due registri** per Stampa,
+Laser e HF (in alto gocce d'inchiostro e punte di laser alternate, in basso due linee: i mestieri
+sono due e la figura li nomina entrambi), **le due piastre** per la pressatura, **bandiera a
+scacchi** per il finissaggio (il traguardo: è l'ultimo reparto), **strisciate di spalmatura** per le
+incollature, **due linee appaiate** per gli accoppiaggi.
+
+Regola derivata: due reparti non stanno mai nella stessa **famiglia di segno** — croci, due
+registri, dorsi, pois, scacchiera, diagonale, coppie. E una famiglia non la fondano né il **verso**
+(una diagonale a 45° contro una a −45°, dopo una fotocopia e a dimensione di banda, è la stessa
+cosa) né il **tono** (due figure fatte di barre verticali si somigliano anche se una è scura e
+l'altra chiara).
 
 **`rg-fill-field` — campo da compilare a penna** ([doc](components/fill-field.md)). La riga è una
 **staffa a L**: dice dove inizia e dove appoggia la scrittura, cosa che uno spazio vuoto non fa e
@@ -112,6 +118,8 @@ orizzontale.
   all'organigramma, dichiarato. Un ottavo reparto è un'ottava variante nel DS — con una figura di
   una **famiglia di segno non ancora usata**, altrimenti il criterio decade; la mappa reparto →
   variante vive nell'app.
+- `rg-dept-band--stampa` è la figura più stretta: i due registri stanno in ~30 px di area utile
+  **senza margine**. Se la banda si abbassa è la prima che si impasta, e va rifatta, non compressa.
 - Le figure valgono per **questi** sette mestieri. Un prodotto RG che dovesse usare la banda per
   categorie non-manifatturiere non erediterebbe nessuna evocazione: lì la palette categoriale resta
   valida, il repertorio di figure no.

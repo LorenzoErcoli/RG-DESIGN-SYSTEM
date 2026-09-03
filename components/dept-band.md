@@ -12,59 +12,91 @@ colore si perde. Quindi la banda porta **tre segnali ridondanti**, sempre tutti 
 | --- | --- | --- |
 | **(a) Colore** | acceleratore: trovare il foglio a colpo d'occhio | si perde, o diventa un grigio ambiguo |
 | **(b) Nome** in maiuscolo sulla banda | l'informazione, in chiaro | resta, ma va letto |
-| **(c) Trama** (direzione, spessore, passo del tratteggio) | riconoscimento a colpo d'occhio senza leggere | **resta intatta** |
+| **(c) Figura** (la trama) | riconoscimento immediato senza leggere | **resta intatta** |
 
 Il colore è un acceleratore, **mai** l'unica informazione — è la regola generale del DS («nessuno
-stato dipende dal solo colore», regole §4 e §2 dei vincoli non negoziabili) applicata a un supporto
-che il colore lo perde per davvero.
+stato dipende dal solo colore», regole §4) applicata a un supporto che il colore lo perde davvero.
+
+## Il criterio della figura: riconoscibile, non distinguibile
+
+Questa è la parte che non si vede da dentro il design system, ed è arrivata dal reparto.
+
+Sette trame geometriche qualsiasi sono **distinguibili**: messe in fila, si vede che sono sette
+cose diverse. Ma una trama arbitraria va poi **imparata a memoria** — chi pesca il foglio dal
+mucchio dovrebbe ricordarsi che il tratteggio a 45° era la stampa. Una trama che **evoca il lavoro
+del reparto** si riconosce al primo colpo e non si impara: si capisce.
+
+Da qui la regola: **la figura nomina il reparto**. I pois sono strass. La linea a trattini è un
+punto di cucitura. Le due linee appaiate sono due strati accoppiati.
+
+E da qui la regola derivata, che è quella operativa: **due reparti non stanno mai nella stessa
+famiglia di segno**. Le famiglie in uso sono linea singola, righe, dorsi, pois, reticolo, diagonale,
+coppie. Il **verso** di una diagonale, dopo una fotocopia e a dimensione di banda, non è una
+differenza: è l'errore che aveva la prima versione, dove stampa (45°, sottile) e pressatura (−45°,
+spessa) si confondevano.
 
 ## Varianti
 
-Sette reparti, sette coppie **colore + trama**. La trama è scelta per restare distinguibile in scala
-di grigi: direzione diversa, o spessore diverso, o passo diverso — mai due varianti che differiscono
-per il solo colore.
-
-| Variante | Reparto | Trama |
-| --- | --- | --- |
-| `rg-dept-band--ricamo` | Campionario Ricamo | verticale fitta |
-| `rg-dept-band--laser` | Stampa Laser e HF | diagonale `/` sottile e rada |
-| `rg-dept-band--pressatura` | Pressatura e soffiatura | diagonale `\` spessa |
-| `rg-dept-band--strass` | Strass e applicazioni | orizzontale fitta |
-| `rg-dept-band--finissaggio` | Finissaggio e Controllo Qualità | reticolo incrociato |
-| `rg-dept-band--incollature` | Incollature | verticale larga e rada |
-| `rg-dept-band--accoppiaggi` | Accoppiaggi | campo pieno (l'assenza di trama è la settima trama) |
+| Variante | Reparto | Figura | Perché quella |
+| --- | --- | --- | --- |
+| `rg-dept-band--ricamo` | Campionario Ricamo | linea a trattini centrata | è un **punto di cucitura** |
+| `rg-dept-band--stampa` | Stampa, Laser e HF | righe orizzontali | sono le **righe stampate** su un foglio |
+| `rg-dept-band--pressatura` | Pressatura e soffiatura | dorsi pieni ai bordi, centro vuoto | sono le **due piastre** della pressa, col materiale in mezzo |
+| `rg-dept-band--strass` | Strass e applicazioni | pois | **sono strass** |
+| `rg-dept-band--finissaggio` | Finissaggio e Controllo Qualità | reticolo ortogonale rado | è la **maglia del controllo** |
+| `rg-dept-band--incollature` | Incollature | diagonali spesse | sono le **strisciate della spalmatura** |
+| `rg-dept-band--accoppiaggi` | Accoppiaggi | coppie di linee verticali | accoppiare è **unire due strati** |
 
 Senza variante la banda esiste comunque: filetto nero, nessuna campitura. È il caso «reparto non
 assegnato», e si legge come tale.
+
+Il nome della variante apre con il **lavoro prevalente** del reparto, non con la macchina più
+vistosa: `--stampa`, non `--laser`. Il reparto «Stampa, Laser e HF» è quello dove stanno le
+stampanti, e chi guardava una banda marcata `laser` diceva «manca stampa».
 
 ## Uso e limiti
 
 **Il nome è contenuto, non CSS.** `rg-dept-band__name` è testo nel markup, non `content:` generato.
 Se il CSS non arriva — mail, export, un PDF renderizzato male — la parola resta. La targhetta è
-bianca opaca con filetto nero perché il nome deve restare leggibile **sopra qualsiasi trama**.
+bianca opaca con filetto nero perché il nome deve restare leggibile **sopra qualsiasi figura**. E
+va scritto il **nome del reparto**, non lo slug della variante: sono due cose diverse e solo una
+delle due si legge in reparto.
 
 **Il maiuscolo è ammesso qui** perché è una micro-label identitaria di due o tre parole, come
 `rg-label`. Le regole vietano il maiuscolo in *paragrafi e tabelle dense* (§2), non su un'etichetta.
 
-**La trama è una campitura, non un gradiente.** Tecnicamente è un `repeating-linear-gradient` a stop
-netti, ma non è decorazione: porta informazione, ed è l'unico segnale che sopravvive alla
-fotocopia. Eccezione dichiarata alle regole §2, ambito: documenti stampati (regole §12).
+**La figura è una campitura, non un gradiente.** Tecnicamente è un `repeating-linear-gradient` (o un
+`radial-gradient` per i pois) a stop netti, ma non è decorazione: porta informazione, ed è l'unico
+segnale che sopravvive alla fotocopia. Eccezione dichiarata alle regole §2, ambito: documenti
+stampati (regole §12).
 
 **In stampa serve `print-color-adjust`.** I browser per default non stampano gli sfondi: senza la
 riga in `rg-utilities.css` la banda arriverebbe sulla carta con due segnali su tre spenti. È già
 gestito dal DS, l'app non deve fare nulla.
 
+**Quanto inchiostro porta la figura.** Due delle sette usano i valori più chiari della palette
+(incollature e accoppiaggi): sono quelle che una fotocopia di fotocopia può schiarire di più. La
+figura regge perché il segno resta — diagonali spesse e coppie di linee sono forme, non toni — ma
+è la coppia da guardare per prima quando si prova la stampa su una macchina nuova. In vetrina c'è
+la tavola apposta: *prova di sforzo*, grigio più contrasto schiacciato.
+
+**Come si aggiunge una figura.** La variante dichiara `--rg-dept-color` (il filetto) e
+`--rg-dept-pattern` (la campitura); `--rg-dept-size`, `--rg-dept-position` e `--rg-dept-repeat`
+servono solo quando la figura è un **segno unico** e non un motivo che si ripete — è il caso del
+punto di cucitura (una sola linea centrata) e dei pois (una tessera che si ripiastrella). Le misure
+vengono dalla scala di spazio: nessun pixel arbitrario.
+
 **Il colore riusa la palette categoriale** `--rg-color-category-1…7`, che a sua volta è un alias di
 valori già in palette: nessun colore nuovo entra nel brand. **Conseguenza da conoscere**:
 `category-3/4/5` valgono quanto `danger`, `warning` e `success`. Su una scheda di lavorazione
-stampata non c'è nessun colore di stato accanto, e il nome del reparto è scritto sulla banda, quindi
-una banda rossa non si legge come «errore». **Non** mettere `rg-dept-band` in una vista a schermo
-dove convivono alert e badge di stato senza aver deciso cosa succede a quella lettura.
+stampata non c'è nessun colore di stato accanto, e il nome del reparto è scritto sulla banda,
+quindi una banda rossa non si legge come «errore». **Non** mettere `rg-dept-band` in una vista a
+schermo dove convivono alert e badge di stato senza aver deciso cosa succede a quella lettura.
 
 **Il legame con l'organigramma è dichiarato.** Le sette varianti hanno il nome dei sette reparti RG
 perché sono sette e sono stabili, e perché in un template il nome parla mentre un numero no. Se
-nasce un ottavo reparto si aggiunge un'ottava variante al DS: la mappa reparto → variante vive
-nell'app, non in un `if` sparso nel markup.
+nasce un ottavo reparto si aggiunge un'ottava variante — con una figura di una famiglia di segno
+non ancora usata. La mappa reparto → variante vive nell'app, non in un `if` sparso nel markup.
 
 **Non è un badge.** `rg-badge` classifica un record dentro una lista a schermo; questa è
 un'intestazione di appartenenza sul bordo di un documento. Non ha stati, non è interattiva.
@@ -72,8 +104,8 @@ un'intestazione di appartenenza sul bordo di un documento. Non ha stati, non è 
 ## Struttura
 
 ```html
-<p class="rg-dept-band rg-dept-band--finissaggio">
-  <span class="rg-dept-band__name">Finissaggio e Controllo Qualità</span>
+<p class="rg-dept-band rg-dept-band--strass">
+  <span class="rg-dept-band__name">Strass e applicazioni</span>
   <span class="rg-dept-band__note">Fase 05 / 07</span>
 </p>
 ```
@@ -82,8 +114,8 @@ Come primo figlio di un blocco di lavorazione, a filo dei suoi bordi:
 
 ```html
 <section class="rg-worksheet-block">
-  <p class="rg-dept-band rg-dept-band--strass">
-    <span class="rg-dept-band__name">Strass e applicazioni</span>
+  <p class="rg-dept-band rg-dept-band--stampa">
+    <span class="rg-dept-band__name">Stampa, Laser e HF</span>
   </p>
   <header class="rg-worksheet-block__head">…</header>
 </section>

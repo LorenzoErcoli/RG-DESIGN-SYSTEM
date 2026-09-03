@@ -52,9 +52,18 @@ prima. Il riquadro è un'eccezione dichiarata a §6: su carta fa il lavoro che a
 **`rg-dept-band` — banda di reparto** ([doc](components/dept-band.md)). **Tre segnali ridondanti**,
 sempre tutti e tre, perché il colore è quello che si perde per primo: **(a)** il colore del
 reparto, acceleratore per trovare il foglio nel mucchio; **(b)** il nome in maiuscolo sulla banda,
-che è *contenuto del markup* e non `content:` generato; **(c)** una trama diversa per direzione,
-spessore e passo — l'unico dei tre che sopravvive intatto alla scala di grigi. Sette varianti, e
-nessuna coppia differisce per il solo colore. La settima trama è l'assenza di trama.
+che è *contenuto del markup* e non `content:` generato; **(c)** la **figura**, l'unico dei tre che
+sopravvive intatto alla scala di grigi.
+
+Il criterio della figura è arrivato dal reparto e ha cambiato il componente: non
+**distinguibile**, ma **riconoscibile**. Sette trame geometriche qualsiasi si distinguono — e poi
+vanno imparate a memoria. Una trama che evoca il lavoro del reparto si riconosce al primo colpo, e
+chi pesca il foglio dal mucchio non deve ricordarsi che il tratteggio a 45° era la stampa. Quindi:
+**pois** per gli strass (sono strass), **punto di cucitura** per il ricamo, **righe stampate** per
+Stampa/Laser/HF, **le due piastre** per la pressatura, **reticolo di controllo** per il finissaggio,
+**strisciate di spalmatura** per le incollature, **due linee appaiate** per gli accoppiaggi. Regola
+derivata: due reparti non stanno mai nella stessa **famiglia di segno** — il verso di una diagonale,
+dopo una fotocopia e a dimensione di banda, non è una differenza.
 
 **`rg-fill-field` — campo da compilare a penna** ([doc](components/fill-field.md)). La riga è una
 **staffa a L**: dice dove inizia e dove appoggia la scrittura, cosa che uno spazio vuoto non fa e
@@ -100,8 +109,12 @@ orizzontale.
   rossa non si legge come «errore». In una vista **a schermo** dove convivono alert e badge di
   stato, quella lettura va decisa prima.
 - Le sette varianti di `rg-dept-band` portano il nome dei sette reparti RG: è un accoppiamento
-  all'organigramma, dichiarato. Un ottavo reparto è un'ottava variante nel DS; la mappa reparto →
+  all'organigramma, dichiarato. Un ottavo reparto è un'ottava variante nel DS — con una figura di
+  una **famiglia di segno non ancora usata**, altrimenti il criterio decade; la mappa reparto →
   variante vive nell'app.
+- Le figure valgono per **questi** sette mestieri. Un prodotto RG che dovesse usare la banda per
+  categorie non-manifatturiere non erediterebbe nessuna evocazione: lì la palette categoriale resta
+  valida, il repertorio di figure no.
 - `rg-fill-field` non è un controllo: in lettura assistita porta la sola etichetta, perché non c'è
   nessun campo da annunciare. È coerente col supporto, ed è la ragione per cui la versione a
   schermo della stessa scheda **deve** usare `rg-field`.

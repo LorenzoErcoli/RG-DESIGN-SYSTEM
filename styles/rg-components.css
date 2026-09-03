@@ -663,28 +663,45 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    (b) NOME — il reparto scritto in chiaro e in maiuscolo sulla banda, su targhetta bianca opaca
        perche resti leggibile sopra qualsiasi trama. E CONTENUTO del markup, non generato dal CSS:
        se il CSS non arriva, la parola resta;
-   (c) TRAMA — direzione, spessore e passo del tratteggio diversi per reparto: e l'unico dei tre
-       segnali che sopravvive intatto alla fotocopia e alla scala di grigi.
-   Il tratteggio e un repeating-linear-gradient a stop netti: non e un gradiente decorativo (vietato
-   dalle regole §2) ma una CAMPITURA che porta informazione — eccezione dichiarata, regole §12.
-   In stampa le campiture arrivano sulla carta solo con print-color-adjust: exact (rg-utilities.css). */
-.rg-dept-band { display: flex; margin: 0; align-items: center; gap: var(--rg-space-2); min-height: var(--rg-space-6); padding: var(--rg-space-1) var(--rg-space-2); background-color: var(--rg-dept-fill, transparent); background-image: var(--rg-dept-pattern, none); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-dept-color, var(--rg-color-black)); }
+   (c) TRAMA — la figura del reparto, l'unico dei tre segnali che sopravvive intatto alla fotocopia.
+   La campitura e un gradiente a stop netti: non e decorazione (vietata dalle regole §2) ma
+   informazione — eccezione dichiarata, regole §12. In stampa arriva sulla carta solo con
+   print-color-adjust: exact (rg-utilities.css). */
+.rg-dept-band { display: flex; margin: 0; align-items: center; gap: var(--rg-space-2); min-height: var(--rg-space-8); padding: var(--rg-space-1) var(--rg-space-2); background-image: var(--rg-dept-pattern, none); background-size: var(--rg-dept-size, auto); background-position: var(--rg-dept-position, 0 0); background-repeat: var(--rg-dept-repeat, repeat); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-dept-color, var(--rg-color-black)); }
 .rg-dept-band__name { padding: var(--rg-space-1) var(--rg-space-2); background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 /* Nota accessoria della banda (macchina, turno): mono, secondaria, mai al posto del nome. */
 .rg-dept-band__note { margin-left: auto; padding: 0 var(--rg-space-1); background: var(--rg-color-white); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
-/* Sette reparti, sette coppie colore+trama. Ogni variante dichiara solo tre variabili:
-   --rg-dept-color (filetto), --rg-dept-pattern (campitura), --rg-dept-fill (campo pieno).
-   Gli stop sono in forma esplicita (colore-inizio, colore-fine, trasparente-inizio,
-   trasparente-fine): la forma compatta a doppia posizione e piu corta ma non la digeriscono tutti
-   i motori di PDF server-side, e questa campitura deve arrivare sulla carta. */
-.rg-dept-band--ricamo { --rg-dept-color: var(--rg-color-category-1); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2)); }
-.rg-dept-band--laser { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: repeating-linear-gradient(45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-3)); }
-.rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-pattern: repeating-linear-gradient(-45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent var(--rg-space-4)); }
-.rg-dept-band--strass { --rg-dept-color: var(--rg-color-category-4); --rg-dept-pattern: repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2)); }
-.rg-dept-band--finissaggio { --rg-dept-color: var(--rg-color-category-5); --rg-dept-pattern: repeating-linear-gradient(45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-4)), repeating-linear-gradient(-45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-4)); }
-.rg-dept-band--incollature { --rg-dept-color: var(--rg-color-category-6); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent var(--rg-space-6)); }
-/* Campo pieno: la settima trama e l'assenza di trama — in scala di grigi resta la piu distinta. */
-.rg-dept-band--accoppiaggi { --rg-dept-color: var(--rg-color-category-7); --rg-dept-fill: var(--rg-color-category-7); }
+/* Sette reparti, sette FIGURE. Il criterio non e "distinguibili" ma RICONOSCIBILI: una trama
+   arbitraria si distingue e poi va imparata a memoria, una trama che evoca il lavoro del reparto
+   si riconosce al primo colpo, e chi pesca il foglio dal mucchio non deve ricordarsi che il
+   tratteggio a 45 gradi era la stampa. Criterio arrivato dal reparto, non dal design system.
+   Conseguenza operativa: due reparti non stanno mai nella stessa FAMIGLIA DI SEGNO (linea singola,
+   righe, dorsi, pois, reticolo, diagonale, coppie) — il verso di una diagonale, dopo una fotocopia
+   e a dimensione di banda, non e una differenza.
+   Ogni variante dichiara solo --rg-dept-color (filetto) e --rg-dept-pattern (campitura), piu
+   --rg-dept-size/-position/-repeat quando la figura e un segno unico e non un motivo che si ripete.
+   Gli stop sono in forma esplicita (colore-inizio, colore-fine, trasparente-inizio, trasparente-fine):
+   la forma compatta a doppia posizione e piu corta ma non la digeriscono tutti i motori di PDF
+   server-side, e questa campitura deve arrivare sulla carta. */
+/* RICAMO — il punto di cucitura: una sola linea a trattini, centrata, come una cucitura corrente. */
+.rg-dept-band--ricamo { --rg-dept-color: var(--rg-color-category-1); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent var(--rg-space-3)); --rg-dept-size: 100% var(--rg-space-1); --rg-dept-position: center; --rg-dept-repeat: no-repeat; }
+/* STAMPA, LASER E HF — le righe stampate su un foglio. Il nome del reparto apre con il lavoro
+   prevalente: --stampa, non --laser (chi guardava la banda diceva "manca stampa"). */
+.rg-dept-band--stampa { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-3)); }
+/* PRESSATURA E SOFFIATURA — le due piastre della pressa: due dorsi pieni ai bordi, il materiale
+   in mezzo. Figura chiusa, non un tratteggio: e cio che la separa da tutte le altre. */
+.rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-pattern: linear-gradient(to bottom, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent calc(100% - var(--rg-space-2)), var(--rg-dept-color) calc(100% - var(--rg-space-2)), var(--rg-dept-color) 100%); }
+/* STRASS E APPLICAZIONI — pois: sono strass. La figura piu letterale delle sette. */
+.rg-dept-band--strass { --rg-dept-color: var(--rg-color-category-4); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)); --rg-dept-size: var(--rg-space-4) var(--rg-space-4); }
+/* FINISSAGGIO E CONTROLLO QUALITA — il reticolo del controllo: griglia ortogonale rada, la maglia
+   su cui si verifica. Ortogonale e non a X: la X e un segno di scarto, e qui non si scarta niente. */
+.rg-dept-band--finissaggio { --rg-dept-color: var(--rg-color-category-5); --rg-dept-pattern: repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-6)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-6)); }
+/* INCOLLATURE — le strisciate della spalmatura: diagonali spesse, il segno che lascia la spatola. */
+.rg-dept-band--incollature { --rg-dept-color: var(--rg-color-category-7); --rg-dept-pattern: repeating-linear-gradient(45deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent var(--rg-space-4)); }
+/* ACCOPPIAGGI — due linee appaiate: accoppiare e unire due strati, e la figura lo dice.
+   Era l'unica a tinta piena: si distingueva ma non comunicava niente, e in fotocopia una
+   campitura media rischia di impastarsi. */
+.rg-dept-band--accoppiaggi { --rg-dept-color: var(--rg-color-category-6); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2), var(--rg-dept-color) var(--rg-space-2), var(--rg-dept-color) var(--rg-space-3), transparent var(--rg-space-3), transparent var(--rg-space-6)); }
 
 /* Fill field — il campo che si compila A PENNA (v1.14.0). E il caso centrale della scheda di
    lavorazione: il foglio esce dalla stampante con dei buchi APPOSTA, e il buco deve invitare a

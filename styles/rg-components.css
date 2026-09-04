@@ -757,3 +757,92 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    con td di proposito: .rg-table td pesa (0,1,1) e con la sola classe (0,1,0) il filetto della
    tabella vincerebbe su questo. */
 td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); background: var(--rg-color-white); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+
+/* ── Larghezza dichiarata del campo (v1.15.0) ───────────────────────────────────────────────
+   La larghezza di un campo e un'AFFERMAZIONE su quanto contenuto ci si aspetta, non una scelta
+   estetica: "la larghezza di un input suggerisce all'utente la lunghezza del contenuto richiesto,
+   quindi non rendere tutti gli input della stessa dimensione per ragioni estetiche" (Adam Silver,
+   Form design: from zero to hero). Baymard formalizza tre casi: lunghezza NOTA -> larghezza esatta
+   a prescindere dagli altri campi; lunghezza variabile con media standard -> un default per quel
+   tipo; media molto diversa dal default -> larghezza propria. GOV.UK implementa la stessa cosa con
+   govuk-input--width-N, calibrata sul numero di caratteri attesi.
+   Qui la scala e in ch piu il cromo del controllo (padding 12+12 e bordo 1+1 = 26px, coperti da
+   --rg-space-8 = 32 con un margine di respiro). Il numero nel nome E il numero di caratteri attesi.
+   Il valore misurato aveva gia la sua larghezza (--rg-input-numeric-width, 12ch di default su
+   rg-input--numeric): questi modificatori servono al TESTO, che finora prendeva sempre tutta la
+   colonna anche quando conteneva tre lettere.
+   LIMITE DICHIARATO: il modificatore stringe anche l'etichetta, che va a capo. Se l'etichetta non
+   entra, o e troppo lunga per una riga o il campo e della misura sbagliata: non si allarga il campo
+   per far stare la label. */
+.rg-field--w4  { --rg-field-width: calc(4ch  + var(--rg-space-8)); }
+.rg-field--w8  { --rg-field-width: calc(8ch  + var(--rg-space-8)); }
+.rg-field--w16 { --rg-field-width: calc(16ch + var(--rg-space-8)); }
+.rg-field--w24 { --rg-field-width: calc(24ch + var(--rg-space-8)); }
+.rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24 { flex: none; width: var(--rg-field-width); max-width: 100%; }
+/* Lunghezza variabile e senza tetto ragionevole (un percorso file, una descrizione): prende lo
+   spazio che avanza sulla riga invece di dichiarare una misura falsa. Terzo caso di Baymard. */
+.rg-field--grow { flex: 1 1 calc(16ch + var(--rg-space-8)); min-width: 0; }
+
+/* Marcatore di campo (v1.15.0) — DICHIARA UNA VOLTA, MARCA MOLTE.
+   Il problema: "questo campo entra nel costo" vale per cinque campi su dodici, e ripeterlo in un
+   rg-field__help sotto ognuno e rumore, non informazione. Il W3C (WAI Forms Tutorial, Form
+   Instructions) prescrive la forma opposta: le istruzioni che valgono per l'intero gruppo si danno
+   UNA VOLTA in testa al gruppo, e si legano ai singoli controlli con aria-describedby; GOV.UK
+   aggiunge che un hint per campo deve restare una frase breve, e che una spiegazione lunga non va
+   nell'hint (gli screen reader la rileggono a ogni campo).
+   Il marcatore e quindi un SEGNO nell'etichetta, mono e secondario, il cui significato e scritto
+   una sola volta sopra il gruppo. E un carattere, non un colore: sopravvive alla scala di grigi e
+   alla fotocopia (regola 11: nessuno stato affidato al solo colore). Va sempre in coppia con
+   aria-describedby dall'input alla frase che lo spiega, altrimenti in lettura assistita e muto. */
+.rg-field__mark { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-regular); font-variant-numeric: tabular-nums; }
+
+/* ── Riga di operazione (v1.15.0) — la sequenza di lavoro COMPILABILE ───────────────────────
+   Cos'e: una lista di operazioni in ordine di esecuzione, dove ogni riga ha un tempo e da zero a
+   tre campi PROPRI, e alcune righe si ripetono (la stampa in composito e due passate, bianco e
+   poi colore). E la forma a schermo di cio che rg-steps mostra in sola lettura e rg-worksheet-block
+   stampa su carta.
+   PERCHE NON UNA TABELLA. Le operazioni non hanno le stesse colonne: preparazione ha solo il tempo,
+   stampa ha inchiostri/passate/file. Una rg-table dovrebbe portare l'UNIONE dei campi di tutte le
+   operazioni, cioe una matrice quasi vuota dove ogni riga usa due celle su sei e le altre quattro
+   sono buchi che sembrano dati mancanti. Una tabella si usa quando le righe sono omogenee; qui non
+   lo sono, e il vuoto mentirebbe.
+   PERCHE NON UNA CARD PER OPERAZIONE. Cinque riquadri sono cinque cornici, piu scroll e piu cromo
+   per lo stesso contenuto (regole §2 e §6: non trasformare ogni contenuto in una card, usare linee).
+   QUINDI: righe su superficie aperta, separate da un filetto, con la TESTA IN COLONNA — indice e
+   nome incolonnati a sinistra, cosi l'occhio scorre la sequenza in verticale senza rileggerla — e
+   la CODA che scorre: i campi prendono la larghezza del proprio contenuto (rg-field--w*) e vanno a
+   capo quando non entrano. Un'operazione da tre campi occupa una riga sola invece di due righe di
+   una griglia 1fr 1fr, che e il motivo per cui la scheda chiedeva troppo scroll.
+   ORDINE DI TABULAZIONE. Nessun roving tabindex, nessun ruolo grid: le celle sono controlli di form
+   che si compilano IN SEQUENZA, e l'APG prescrive il pattern grid solo quando serve accorciare la
+   sequenza di tab per non intrappolare l'utente in una lista lunga — qui la sequenza di tab E il
+   lavoro. Le azioni della riga stanno in fondo alla riga anche nel DOM: chi tabula attraversa i
+   campi e trova "ripeti" alla fine, non prima di aver compilato (Adam Silver: un controllo in mezzo
+   al form rompe la sequenza attesa dal tasto Tab). */
+.rg-operation-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-block: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); }
+.rg-operation-row { display: grid; grid-template-columns: minmax(0, var(--rg-operation-head, 28ch)) minmax(0, 1fr) auto; align-items: start; gap: var(--rg-space-2) var(--rg-space-4); padding: var(--rg-space-3) var(--rg-space-2); }
+.rg-operation-row + .rg-operation-row { border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+/* Hover chiaro: presuppone il bianco sotto (regole §6 — la superficie aperta e rigata si posa su
+   una superficie sollevata, non sul fondo di pagina). */
+.rg-operation-row:hover { background: var(--rg-color-neutral-50); }
+.rg-operation-row > * { min-width: 0; }
+/* La colonna-testa e una misura DERIVATA DAL CONTENUTO, non un numero: 28ch = l'indice piu circa
+   ventiquattro caratteri di nome operazione ("Preparazione materiale" ne ha 22). Stessa logica di
+   --rg-input-numeric-width (12ch): il contenitore la stringe o la allarga con --rg-operation-head,
+   il componente non decide per lui. */
+/* La testa si allinea alle ETICHETTE dei campi, non ai controlli: il nome dell'operazione e una
+   label di riga e sta sulla stessa linea ottica delle label che ha accanto. */
+.rg-operation-row__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-2); }
+.rg-operation-row__index { flex: none; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+.rg-operation-row__name { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); overflow-wrap: anywhere; }
+/* Le azioni si appoggiano alla base dei controlli, non alla cima della riga: un bottone alto 40
+   allineato in alto galleggerebbe sopra gli input. */
+.rg-operation-row__actions { align-self: end; display: inline-flex; flex-wrap: wrap; gap: var(--rg-space-1); }
+/* Ripetizione (la seconda passata della stessa operazione): rientro + filetto verticale che la
+   lega alla riga sopra. Struttura, non colore; l'indice resta scritto (01-2) perche il rientro da
+   solo non dice DI CHI e la ripetizione. */
+.rg-operation-row--repeat > .rg-operation-row__head { margin-left: var(--rg-space-4); padding-left: var(--rg-space-3); border-left: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); }
+@media (max-width: 680px) {
+  .rg-operation-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .rg-operation-row__head { grid-column: 1 / -1; padding-top: 0; }
+}

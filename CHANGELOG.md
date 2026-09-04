@@ -7,6 +7,76 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.15.0 — 2026-09-04
+
+**La scheda da compilare.** Il giudizio di chi la usa era netto: *«spazi messi a caso, non è una
+bella scheda da compilare, ci vuole troppo scroll»*. Il difetto non era estetico. Una sequenza
+piatta di `rg-field` dentro una griglia `1fr 1fr` produce tre problemi insieme — tutti i campi
+larghi uguale (un tempo da tre cifre occupa mezza pagina), le distanze fra campi e fra gruppi
+identiche (e allora non ci sono gruppi, c'è un elenco), e un'operazione da tre campi che occupa due
+righe invece di una. Rilascio **additivo**: nessuna classe rinominata, nessuna rimozione, nessun
+token cambia valore.
+
+### Perché
+
+Il DS aveva la forma **stampata** della scheda di lavorazione (`rg-worksheet-block`,
+`rg-fill-field`, dalla 1.14.0) e la forma in **sola lettura** della sequenza (`rg-steps`). Non
+aveva la forma **compilabile**: quella la ricostruivano le app con `rg-parameter-group__grid`, che
+è il gruppo di parametri di configurazione — un'altra cosa, con un'altra densità e un altro ritmo.
+
+### Componenti
+
+- **`rg-operation-row` / `rg-operation-list`** — la sequenza di lavoro compilabile. Righe rigate
+  su superficie aperta, **testa in colonna** (indice e nome incolonnati, l'occhio scorre la
+  sequenza in verticale) e **coda che scorre** (i campi larghi quanto il contenuto, a capo solo
+  quando non entrano). Variante `--repeat` per la ripetizione della riga precedente — la stampa in
+  composito è due passate, bianco e poi colore.
+  Le due decisioni motivate: **non è una `rg-table`**, perché le operazioni non hanno le stesse
+  colonne e una tabella porterebbe l'unione dei campi, cioè una matrice quasi vuota dove i buchi si
+  leggono come dati mancanti; **non è una card per operazione**, perché cinque riquadri sono cinque
+  cornici, più cromo e più scroll per lo stesso contenuto.
+
+### Varianti
+
+- **`rg-field--w4 | --w8 | --w16 | --w24 | --grow`** — la **larghezza dichiarata**. Il numero nel
+  nome è il numero di caratteri attesi. La larghezza di un campo è un'affermazione su quanto
+  contenuto ci si aspetta, non una scelta estetica: un campo largo mezza pagina per contenere `2`
+  chiede a chi compila di ricontrollare di aver capito la domanda. Senza modificatore il campo
+  resta fluido, come prima.
+- **`rg-field__mark`** — **dichiara una volta, marca molte**. «Questo campo entra nel costo» vale
+  per cinque campi su dodici: ripeterlo in un `rg-field__help` sotto ognuno è rumore, e in lettura
+  assistita è la stessa frase riletta a ogni campo. L'istruzione di gruppo si dà una volta in testa
+  al gruppo e si lega ai controlli con `aria-describedby`; nell'etichetta resta un carattere, non
+  un colore.
+
+### Pattern
+
+- **`patterns/worksheet-entry.md`** — la scheda di lavorazione da compilare: le cinque decisioni di
+  layout (una colonna di compilazione con campi larghi quanto il contenuto; due gruppi divisi per
+  *quando* si compila, non per com'è fatto il catalogo; quando la disclosure aiuta e quando fa
+  danno; la sequenza come lista di righe; il costo dichiarato una volta), il comportamento da
+  tastiera, e le fonti da cui derivano.
+
+### Documentazione
+
+- **`components/forms.md`** — tre sezioni nuove: *Larghezza dichiarata*, *Marcatore di campo*,
+  *Campi numerici: `inputmode`, non `type="number"`*, più *Ordine di tabulazione in una scheda
+  lunga*.
+- **`type="number"` non è più la forma raccomandata** per un valore che si scrive a tastiera in una
+  pagina lunga, e gli snippet sono stati aggiornati a `type="text" inputmode="decimal|numeric"`.
+  Quattro difetti documentati dalla ricerca del team GOV.UK Design System: non dettabile con
+  Dragon; annunciato da NVDA come *spin button* con due bottoni senza etichetta; arrotondamento ed
+  esponenziale sui valori grandi premendo le frecce, **senza annullamento possibile**; lettere
+  scartate in silenzio. E il quarto, che è quello che pesa in reparto: **la rotellina del mouse
+  cambia il valore** di un campo che ha il focus, mentre una scheda si compila scorrendo.
+  `type="number"` resta ammesso per un valore davvero incrementabile con uno stepper.
+
+### Aggiornamento
+
+Sicuro. Nessun consumatore deve cambiare markup: chi non usa le classi nuove vede la pagina
+identica a prima. Chi vuole la scheda corretta sostituisce `rg-parameter-group__grid` con
+`rg-operation-list` sulle operazioni e aggiunge i modificatori di larghezza ai campi.
+
 ## 1.14.1 — 2026-09-03
 
 **La palette categoriale entra nelle regole di design.** La 1.14.0 ha introdotto

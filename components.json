@@ -2,8 +2,8 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.14.1",
-  "generated": "seed-2026-07-17",
+  "dsVersion": "1.15.0",
+  "generated": "2026-09-04",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
   "appLocalExceptions": [],
@@ -15,7 +15,12 @@
     "styles/rg-layout.css",
     "styles/rg-utilities.css"
   ],
-  "statusValues": ["stable", "beta", "documented-undocumented-css", "deprecated"],
+  "statusValues": [
+    "stable",
+    "beta",
+    "documented-undocumented-css",
+    "deprecated"
+  ],
   "components": [
     {
       "id": "typography",
@@ -24,15 +29,61 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "foundation",
-      "classes": { "base": null, "variants": ["rg-h1", "rg-h2", "rg-h3", "rg-body", "rg-small", "rg-label", "rg-caption", "rg-technical", "rg-value", "rg-value__unit", "rg-code"] },
+      "classes": {
+        "base": null,
+        "variants": [
+          "rg-h1",
+          "rg-h2",
+          "rg-h3",
+          "rg-body",
+          "rg-small",
+          "rg-label",
+          "rg-caption",
+          "rg-technical",
+          "rg-value",
+          "rg-value__unit",
+          "rg-code"
+        ]
+      },
       "states": [],
-      "tokens": ["--rg-font-identity", "--rg-font-body", "--rg-font-mono", "--rg-font-size-*", "--rg-line-height-*", "--rg-weight-heading", "--rg-weight-medium"],
+      "tokens": [
+        "--rg-font-identity",
+        "--rg-font-body",
+        "--rg-font-mono",
+        "--rg-font-size-*",
+        "--rg-line-height-*",
+        "--rg-weight-heading",
+        "--rg-weight-medium"
+      ],
       "notes": "Dalla 1.13.0 il PESO e una proprieta della classe, non dell'elemento che la ospita: prima nessuna classe di titolo dichiarava font-weight e il valore arrivava dallo user-agent (700 su <h1>-<h3>, 400 su <p>). Due livelli soltanto: PAGINA/SEZIONE (rg-h1, rg-h2, rg-section-header__title -> --rg-weight-heading, 700) e CONTENITORE (rg-h3, rg-card__title, rg-section-card__title, rg-param-section__title -> --rg-weight-medium, 500). Il corpo del testo e 16px (--rg-font-size-md), come prescrive design-rules.md sezione 3; 14px e lo small. Restano a 14 per dichiarazione propria i controlli (nativi via rg-core.css, piu rg-button, rg-toggle, rg-choice, rg-disclosure__trigger), la navigazione (rg-sidebar-item, rg-topbar__nav, rg-topbar__back) e il dato denso (rg-table, rg-list-row, rg-key-value): chrome e dato non sono testo corrente. LIMITE NOTO: il livello 500 richiede un medium reale — senza i font ufficiali caricati il fallback (Arial) non ha un medium e il browser arrotonda 500 a 400, quindi la distinzione 700/500 si assottiglia. La gerarchia non e mai affidata al solo peso: reggono anche corpo, superficie e linea.",
       "doc": null,
       "rulesRef": "design-rules.md#3-tipografia",
       "specimenAnchor": "typography",
       "snippet": "<h1 class=\"rg-h1\">Titolo</h1>\n<p class=\"rg-body\">Testo</p>\n<div class=\"rg-value\">428,76 <span class=\"rg-value__unit\">m</span></div>",
-      "keywords": ["titolo", "heading", "testo", "paragrafo", "mono", "numero", "valore", "unita", "codice", "label", "caption", "tipografia", "peso", "font weight", "grassetto", "bold", "medium", "gerarchia dei titoli", "heading hierarchy", "livello di titolo", "corpo del testo", "body size"]
+      "keywords": [
+        "titolo",
+        "heading",
+        "testo",
+        "paragrafo",
+        "mono",
+        "numero",
+        "valore",
+        "unita",
+        "codice",
+        "label",
+        "caption",
+        "tipografia",
+        "peso",
+        "font weight",
+        "grassetto",
+        "bold",
+        "medium",
+        "gerarchia dei titoli",
+        "heading hierarchy",
+        "livello di titolo",
+        "corpo del testo",
+        "body size"
+      ]
     },
     {
       "id": "color-swatch",
@@ -41,14 +92,30 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "foundation",
-      "classes": { "base": "rg-swatches", "elements": ["rg-swatch", "rg-swatch__color", "rg-swatch__name", "rg-swatch__value"] },
+      "classes": {
+        "base": "rg-swatches",
+        "elements": [
+          "rg-swatch",
+          "rg-swatch__color",
+          "rg-swatch__name",
+          "rg-swatch__value"
+        ]
+      },
       "states": [],
-      "tokens": ["--rg-color-*"],
+      "tokens": [
+        "--rg-color-*"
+      ],
       "doc": null,
       "rulesRef": "design-rules.md#4-colore",
       "specimenAnchor": "colors",
       "snippet": "<div class=\"rg-swatch\"><span class=\"rg-swatch__color\" style=\"background:var(--rg-color-black)\"></span><span class=\"rg-swatch__name\">Nero</span></div>",
-      "keywords": ["colore", "swatch", "palette", "token colore", "campione"]
+      "keywords": [
+        "colore",
+        "swatch",
+        "palette",
+        "token colore",
+        "campione"
+      ]
     },
     {
       "id": "button",
@@ -57,16 +124,67 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-button", "variants": ["rg-button--primary", "rg-button--secondary", "rg-button--ghost", "rg-button--outline", "rg-button--danger", "rg-button--small", "rg-button--large"] },
-      "variants": ["primary", "secondary", "ghost", "outline", "danger"],
-      "sizes": ["small", "large"],
-      "states": ["default", "hover", "focus", "disabled", "loading"],
-      "tokens": ["--rg-color-action-primary", "--rg-color-action-primary-text", "--rg-space-*", "--rg-radius-md"],
+      "classes": {
+        "base": "rg-button",
+        "variants": [
+          "rg-button--primary",
+          "rg-button--secondary",
+          "rg-button--ghost",
+          "rg-button--outline",
+          "rg-button--danger",
+          "rg-button--small",
+          "rg-button--large"
+        ]
+      },
+      "variants": [
+        "primary",
+        "secondary",
+        "ghost",
+        "outline",
+        "danger"
+      ],
+      "sizes": [
+        "small",
+        "large"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "disabled",
+        "loading"
+      ],
+      "tokens": [
+        "--rg-color-action-primary",
+        "--rg-color-action-primary-text",
+        "--rg-space-*",
+        "--rg-radius-md"
+      ],
       "doc": "components/buttons.md",
       "specimenAnchor": "buttons",
       "snippet": "<button class=\"rg-button rg-button--primary\" type=\"button\">Calcola consumo</button>\n<a class=\"rg-button rg-button--ghost\" href=\"/parti/12/fasi/0\">Apri fase</a>",
       "notes": "Da 1.3.0 --ghost e --danger sono componibili: rg-button--ghost.rg-button--danger e testo in colore danger senza bordo a riposo, la forma giusta per un'azione distruttiva secondaria ripetuta su piu righe (es. Elimina di rg-step). --small ha min-height 32px: sotto il target di 40px, quindi solo dentro liste dense gia ammesse. Da 1.3.1 la classe azzera text-decoration: un'azione che NAVIGA e un <a href> che indossa rg-button (Apri scheda, Apri fase) e non esce piu sottolineata dallo user-agent; prima i prodotti la degradavano a <span> o a <button onclick=location>. Criterio: se cambia PAGINA e <a>, se cambia STATO e <button>. Il reset vale per classe di componente, mai un reset globale su a: i link nel testo corrente restano sottolineati. Dentro rg-step__actions l'azione di apertura e sorella del toggle, mai annidata.",
-      "keywords": ["azione", "comando", "cta", "pulsante", "button", "conferma", "invia", "salva", "elimina", "distruttiva", "ghost", "danger", "link", "naviga", "navigazione", "apri", "bottone-link", "apri scheda", "apri fase"]
+      "keywords": [
+        "azione",
+        "comando",
+        "cta",
+        "pulsante",
+        "button",
+        "conferma",
+        "invia",
+        "salva",
+        "elimina",
+        "distruttiva",
+        "ghost",
+        "danger",
+        "link",
+        "naviga",
+        "navigazione",
+        "apri",
+        "bottone-link",
+        "apri scheda",
+        "apri fase"
+      ]
     },
     {
       "id": "form-field",
@@ -75,16 +193,116 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-field", "elements": ["rg-field__label", "rg-field__help"], "variants": ["rg-input--numeric", "rg-field-with-unit--compact"], "related": ["rg-input", "rg-select", "rg-textarea", "rg-search", "rg-field-with-unit"] },
-      "variants": ["testuale", "numerico", "textarea", "ricerca", "sola-lettura", "unita-compatto"],
-      "states": ["default", "hover", "focus", "filled", "read-only", "disabled", "warning", "error", "success", "loading"],
-      "cssVars": ["--rg-input-numeric-width"],
-      "tokens": ["--rg-color-border", "--rg-color-focus", "--rg-color-neutral-50", "--rg-font-mono", "--rg-space-*"],
+      "classes": {
+        "base": "rg-field",
+        "elements": [
+          "rg-field__label",
+          "rg-field__help",
+          "rg-field__mark"
+        ],
+        "variants": [
+          "rg-input--numeric",
+          "rg-field-with-unit--compact",
+          "rg-field--w4",
+          "rg-field--w8",
+          "rg-field--w16",
+          "rg-field--w24",
+          "rg-field--grow"
+        ],
+        "related": [
+          "rg-input",
+          "rg-select",
+          "rg-textarea",
+          "rg-search",
+          "rg-field-with-unit"
+        ]
+      },
+      "variants": [
+        "testuale",
+        "numerico",
+        "textarea",
+        "ricerca",
+        "sola-lettura",
+        "unita-compatto",
+        "larghezza-dichiarata",
+        "marcatore"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "filled",
+        "read-only",
+        "disabled",
+        "warning",
+        "error",
+        "success",
+        "loading"
+      ],
+      "cssVars": [
+        "--rg-input-numeric-width",
+        "--rg-field-width"
+      ],
+      "tokens": [
+        "--rg-color-border",
+        "--rg-color-focus",
+        "--rg-color-neutral-50",
+        "--rg-font-mono",
+        "--rg-space-*"
+      ],
       "doc": "components/forms.md",
       "specimenAnchor": "inputs",
       "snippet": "<label class=\"rg-field\"><span class=\"rg-field__label\">Tariffa macchina</span><span class=\"rg-field-with-unit\"><input class=\"rg-input rg-input--numeric\" type=\"number\" step=\"0.01\" min=\"0\" value=\"80\"> <span>&#8364;/h</span></span></label>",
-      "notes": "rg-field-with-unit ha una larghezza minima d'uso: --rg-layout-param-col-min (132px). Il suffisso unita e incomprimibile (42px), quindi sotto quella misura si comprime il valore misurato. Nessuna variante compatta: sotto la soglia si passa a una colonna sola. L'input ha min-width: 0 dal DS e non sborda mai il contenitore. Da 1.6.0: rg-input--numeric e la forma del valore misurato (mono, cifre tabulari, allineato a destra, largo --rg-input-numeric-width, default 12ch) e sostituisce la composizione rg-input rg-mono nei campi numerici; rg-input rg-mono resta valida per il testo tecnico non allineato a destra (codici, ID). Lo stato di sola lettura e l'attributo nativo [readonly] (per <select>, aria-readonly=true): NON usare disabled al suo posto, sono due fatti diversi — disabled = non attivo ora e non inviato, readonly = valido ma non modificabile da te, a pieno contrasto e selezionabile. Il motivo del divieto va scritto accanto al form con rg-alert e l'azione primaria non piu eseguibile si omette invece di disabilitarla. Da 1.7.0: rg-field-with-unit--compact e la forma stretta del campo con unita per una RIGA DENSA (una voce di rg-color-map, una cella di lista) dove il numero e un accessorio e non il soggetto di un form a colonna; riduce larghezza del valore e pastiglia dell'unita riusando --rg-input-numeric-width, resta mono/tabulare/allineato a destra con rg-input--numeric, e porta l'etichetta in aria-label sull'input invece che in un rg-field__label visibile. Sotto la soglia di 132px la rg-field-with-unit piena non va: si usa questa.",
-      "keywords": ["campo", "input", "form", "testo", "numero", "textarea", "ricerca", "label", "modulo", "unita", "campo con unita", "campo con unita compatto", "campo inline", "numerico inline", "riga densa", "accessorio", "larghezza minima", "numerico", "valore", "misura", "sola lettura", "readonly", "read-only", "non modificabile", "permessi", "disabilitato", "tariffa", "parametro"]
+      "notes": "rg-field-with-unit ha una larghezza minima d'uso: --rg-layout-param-col-min (132px). Il suffisso unita e incomprimibile (42px), quindi sotto quella misura si comprime il valore misurato. Nessuna variante compatta: sotto la soglia si passa a una colonna sola. L'input ha min-width: 0 dal DS e non sborda mai il contenitore. Da 1.6.0: rg-input--numeric e la forma del valore misurato (mono, cifre tabulari, allineato a destra, largo --rg-input-numeric-width, default 12ch) e sostituisce la composizione rg-input rg-mono nei campi numerici; rg-input rg-mono resta valida per il testo tecnico non allineato a destra (codici, ID). Lo stato di sola lettura e l'attributo nativo [readonly] (per <select>, aria-readonly=true): NON usare disabled al suo posto, sono due fatti diversi — disabled = non attivo ora e non inviato, readonly = valido ma non modificabile da te, a pieno contrasto e selezionabile. Il motivo del divieto va scritto accanto al form con rg-alert e l'azione primaria non piu eseguibile si omette invece di disabilitarla. Da 1.7.0: rg-field-with-unit--compact e la forma stretta del campo con unita per una RIGA DENSA (una voce di rg-color-map, una cella di lista) dove il numero e un accessorio e non il soggetto di un form a colonna; riduce larghezza del valore e pastiglia dell'unita riusando --rg-input-numeric-width, resta mono/tabulare/allineato a destra con rg-input--numeric, e porta l'etichetta in aria-label sull'input invece che in un rg-field__label visibile. Sotto la soglia di 132px la rg-field-with-unit piena non va: si usa questa. Da 1.15.0 tre aggiunte per il FORM LUNGO DA COMPILARE. (a) LARGHEZZA DICHIARATA: rg-field--w4/w8/w16/w24 (il numero e il numero di caratteri attesi; misura = Nch + --rg-space-8 di cromo del controllo) e rg-field--grow (lunghezza variabile senza tetto: prende lo spazio che avanza sulla riga, per un percorso file o una nota). La larghezza di un campo e un'affermazione su quanto contenuto ci si aspetta, non una scelta estetica (Baymard: lunghezza nota -> larghezza esatta a prescindere dagli altri campi; variabile con media standard -> un default per quel tipo; media molto diversa dal default -> larghezza propria. GOV.UK fa la stessa cosa con govuk-input--width-N). Senza modificatore il campo resta FLUIDO e riempie la colonna: e il default giusto per un form a una colonna con campi di contenuto simile. Il valore misurato aveva gia la sua larghezza (--rg-input-numeric-width su rg-input--numeric): questi modificatori servono al TESTO. LIMITE DICHIARATO: il modificatore stringe anche l'etichetta, che va a capo; se non entra, o l'etichetta e troppo lunga per una riga di campi o il campo e della misura sbagliata - non si allarga il campo per far stare la label. (b) MARCATORE rg-field__mark: dichiara una volta, marca molte. 'Questo campo entra nel costo' vale per cinque campi su dodici e ripeterlo in un rg-field__help sotto ognuno e rumore, non informazione (e in lettura assistita e la stessa frase riletta a ogni campo). Il W3C, WAI Forms Tutorial - Form Instructions, prescrive la forma opposta: l'istruzione che vale per il gruppo si da UNA VOLTA in testa al gruppo e si lega ai controlli con aria-describedby; GOV.UK aggiunge che un hint per campo deve restare una frase breve. Il marcatore e quindi un CARATTERE mono e secondario, non un colore (regola 11 - nessuno stato affidato al solo colore), va sempre con aria-hidden=true sul segno e aria-describedby sull'input, e si mette sulle ECCEZIONI: se i campi marcati sono piu di quelli non marcati, si inverte il marcatore e si cambia la frase. Un solo asse per gruppo: il secondo asse usa un rg-badge, che ha il testo dentro. (c) INPUT NUMERICI: la doc prescrive ora type=text + inputmode=decimal|numeric al posto di type=number, e lo snippet e stato aggiornato di conseguenza. Motivo, dalla ricerca del team GOV.UK Design System: type=number non e dettabile ne selezionabile con Dragon NaturallySpeaking, NVDA lo annuncia come spin button con due bottoni senza etichetta, i browser arrotondano e convertono in notazione esponenziale i valori grandi premendo su/giu senza possibilita di annullare, Chrome scarta le lettere in silenzio, e - il punto che pesa in reparto - la rotellina del mouse CAMBIA IL VALORE di un campo che ha il focus, mentre una scheda si compila scorrendo. type=number resta ammesso solo per un valore davvero incrementabile con uno stepper, fuori da una pagina lunga.",
+      "keywords": [
+        "campo",
+        "input",
+        "form",
+        "testo",
+        "numero",
+        "textarea",
+        "ricerca",
+        "label",
+        "modulo",
+        "unita",
+        "campo con unita",
+        "campo con unita compatto",
+        "campo inline",
+        "numerico inline",
+        "riga densa",
+        "accessorio",
+        "larghezza minima",
+        "numerico",
+        "valore",
+        "misura",
+        "sola lettura",
+        "readonly",
+        "read-only",
+        "non modificabile",
+        "permessi",
+        "disabilitato",
+        "tariffa",
+        "parametro",
+        "larghezza",
+        "larghezza dichiarata",
+        "larghezza del campo",
+        "campo stretto",
+        "campo largo",
+        "quanti caratteri",
+        "caratteri attesi",
+        "marcatore",
+        "segno nell etichetta",
+        "entra nel costo",
+        "istruzione di gruppo",
+        "help ripetuto",
+        "aria-describedby",
+        "inputmode",
+        "type number",
+        "rotellina",
+        "ordine di tabulazione",
+        "tab order",
+        "form lungo"
+      ]
     },
     {
       "id": "control-group",
@@ -94,17 +312,66 @@
       "since": "0.1.0",
       "registeredIn": "1.6.0",
       "kind": "component",
-      "classes": { "base": "rg-parameter-group", "elements": ["rg-parameter-group__grid"], "related": ["rg-filter-group", "rg-action-bar", "rg-confirmation", "rg-field", "rg-label", "rg-stack"] },
-      "variants": ["parameter-group", "filter-group", "action-bar", "confirmation"],
-      "states": ["default", "read-only"],
-      "tokens": ["--rg-color-border", "--rg-color-black", "--rg-color-white", "--rg-space-4", "--rg-space-6"],
+      "classes": {
+        "base": "rg-parameter-group",
+        "elements": [
+          "rg-parameter-group__grid"
+        ],
+        "related": [
+          "rg-filter-group",
+          "rg-action-bar",
+          "rg-confirmation",
+          "rg-field",
+          "rg-label",
+          "rg-stack"
+        ]
+      },
+      "variants": [
+        "parameter-group",
+        "filter-group",
+        "action-bar",
+        "confirmation"
+      ],
+      "states": [
+        "default",
+        "read-only"
+      ],
+      "tokens": [
+        "--rg-color-border",
+        "--rg-color-black",
+        "--rg-color-white",
+        "--rg-space-4",
+        "--rg-space-6"
+      ],
       "doc": "components/forms.md",
       "patternRef": "patterns/settings.md",
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "forms",
       "snippet": "<fieldset class=\"rg-parameter-group\"><legend class=\"rg-label\">Parametri macchina</legend><div class=\"rg-parameter-group__grid\"><label class=\"rg-field\"><span class=\"rg-field__label\">Tariffa macchina</span><span class=\"rg-field-with-unit\"><input class=\"rg-input rg-input--numeric\" value=\"80\"> <span>&#8364;/h</span></span></label></div></fieldset>",
       "notes": "CSS presente dal seed in styles/rg-layout.css e gia in vetrina, ma assente dal registro fino a 1.4.0: i prodotti lo stavano riscrivendo in locale. E la risposta a 'form di configurazione a coppie etichetta/valore' quando i valori sono EDITABILI; se sono di sola lettura il componente e rg-key-value--ruled, non un form con i campi spenti. rg-parameter-group e un <fieldset> con <legend class=\"rg-label\">: raggruppamento nativo di form, non una card — per una sola sezione su una pagina gia intitolata si usa il solo __grid senza riquadro. rg-action-bar chiude il form con stato a sinistra e azioni a destra. La pagina intera di configurazione e in patterns/settings.md.",
-      "keywords": ["gruppo di campi", "fieldset", "legend", "parametri", "parameter group", "form di configurazione", "configurazione", "impostazioni", "settings", "default", "preferenze", "pannello parametri", "coppie etichetta valore", "label valore", "filtri", "filter group", "barra azioni", "action bar", "salva", "conferma", "confirmation"]
+      "keywords": [
+        "gruppo di campi",
+        "fieldset",
+        "legend",
+        "parametri",
+        "parameter group",
+        "form di configurazione",
+        "configurazione",
+        "impostazioni",
+        "settings",
+        "default",
+        "preferenze",
+        "pannello parametri",
+        "coppie etichetta valore",
+        "label valore",
+        "filtri",
+        "filter group",
+        "barra azioni",
+        "action bar",
+        "salva",
+        "conferma",
+        "confirmation"
+      ]
     },
     {
       "id": "choice",
@@ -113,13 +380,30 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-choice" },
-      "states": ["default", "checked", "focus", "disabled"],
-      "tokens": ["--rg-color-black", "--rg-color-focus"],
+      "classes": {
+        "base": "rg-choice"
+      },
+      "states": [
+        "default",
+        "checked",
+        "focus",
+        "disabled"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-focus"
+      ],
       "doc": "components/forms.md",
       "specimenAnchor": "forms",
       "snippet": "<label class=\"rg-choice\"><input type=\"checkbox\"> Includi scarti</label>",
-      "keywords": ["checkbox", "radio", "selezione", "spunta", "scelta", "flag"]
+      "keywords": [
+        "checkbox",
+        "radio",
+        "selezione",
+        "spunta",
+        "scelta",
+        "flag"
+      ]
     },
     {
       "id": "toggle",
@@ -128,13 +412,32 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-toggle", "elements": ["rg-toggle__track"] },
-      "states": ["off", "on", "focus", "disabled"],
-      "tokens": ["--rg-color-black", "--rg-motion-fast"],
+      "classes": {
+        "base": "rg-toggle",
+        "elements": [
+          "rg-toggle__track"
+        ]
+      },
+      "states": [
+        "off",
+        "on",
+        "focus",
+        "disabled"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-motion-fast"
+      ],
       "doc": "components/forms.md",
       "specimenAnchor": "forms",
       "snippet": "<label class=\"rg-toggle\"><input type=\"checkbox\"><span class=\"rg-toggle__track\"></span> Auto-fill</label>",
-      "keywords": ["toggle", "interruttore", "switch", "on off", "attiva"]
+      "keywords": [
+        "toggle",
+        "interruttore",
+        "switch",
+        "on off",
+        "attiva"
+      ]
     },
     {
       "id": "segmented",
@@ -143,13 +446,32 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-segmented", "elements": ["rg-segmented__item", "rg-segmented__item--active"] },
-      "states": ["default", "active", "focus"],
-      "tokens": ["--rg-color-black", "--rg-color-border"],
+      "classes": {
+        "base": "rg-segmented",
+        "elements": [
+          "rg-segmented__item",
+          "rg-segmented__item--active"
+        ]
+      },
+      "states": [
+        "default",
+        "active",
+        "focus"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-border"
+      ],
       "doc": "components/forms.md",
       "specimenAnchor": "forms",
       "snippet": "<div class=\"rg-segmented\"><button class=\"rg-segmented__item rg-segmented__item--active\">mm</button><button class=\"rg-segmented__item\">px</button></div>",
-      "keywords": ["segmented", "toggle gruppo", "scelta esclusiva", "tab compatti", "unita"]
+      "keywords": [
+        "segmented",
+        "toggle gruppo",
+        "scelta esclusiva",
+        "tab compatti",
+        "unita"
+      ]
     },
     {
       "id": "upload",
@@ -158,14 +480,36 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-upload" },
-      "states": ["default", "hover", "dragover", "loading", "error"],
-      "tokens": ["--rg-color-border", "--rg-space-*"],
+      "classes": {
+        "base": "rg-upload"
+      },
+      "states": [
+        "default",
+        "hover",
+        "dragover",
+        "loading",
+        "error"
+      ],
+      "tokens": [
+        "--rg-color-border",
+        "--rg-space-*"
+      ],
       "doc": "components/forms.md",
       "specimenAnchor": "forms",
       "snippet": "<label class=\"rg-upload\"><input type=\"file\"> Carica cartamodello</label>",
       "notes": "Area di rilascio GRANDE (116px, tratteggio, drag & drop) per una pagina o un modal con spazio proprio. In una riga di form o in un pannello parametri stretto il componente e rg-file-input, non questo: le due forme convivono e non si sostituiscono.",
-      "keywords": ["upload", "carica", "file", "dxf", "svg", "import", "allega", "drag and drop", "area di rilascio", "dropzone"]
+      "keywords": [
+        "upload",
+        "carica",
+        "file",
+        "dxf",
+        "svg",
+        "import",
+        "allega",
+        "drag and drop",
+        "area di rilascio",
+        "dropzone"
+      ]
     },
     {
       "id": "file-input",
@@ -175,17 +519,66 @@
       "since": "1.5.0",
       "kind": "component",
       "promotedFrom": "net-45 / pattern-grammar",
-      "classes": { "base": "rg-file-input", "elements": ["rg-file-input__control", "rg-file-input__status"], "variants": ["rg-file-input__status--error"], "related": ["rg-button", "rg-upload", "rg-param-grid__wide", "rg-badge"] },
+      "classes": {
+        "base": "rg-file-input",
+        "elements": [
+          "rg-file-input__control",
+          "rg-file-input__status"
+        ],
+        "variants": [
+          "rg-file-input__status--error"
+        ],
+        "related": [
+          "rg-button",
+          "rg-upload",
+          "rg-param-grid__wide",
+          "rg-badge"
+        ]
+      },
       "variants": [],
-      "states": ["empty", "hover", "focus", "loaded", "loading", "error", "disabled"],
-      "tokens": ["--rg-color-focus", "--rg-color-danger", "--rg-color-text-secondary", "--rg-font-mono", "--rg-space-2", "--rg-border-strong"],
+      "states": [
+        "empty",
+        "hover",
+        "focus",
+        "loaded",
+        "loading",
+        "error",
+        "disabled"
+      ],
+      "tokens": [
+        "--rg-color-focus",
+        "--rg-color-danger",
+        "--rg-color-text-secondary",
+        "--rg-font-mono",
+        "--rg-space-2",
+        "--rg-border-strong"
+      ],
       "doc": "components/file-input.md",
       "patternRef": "patterns/workspace.md",
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "tool-panel",
       "snippet": "<div class=\"rg-file-input\">\n  <label class=\"rg-file-input__control\">\n    <input type=\"file\" accept=\".dxf,.svg\">\n    <span class=\"rg-button rg-button--outline\">Carica DXF o SVG&#8230;</span>\n  </label>\n  <p class=\"rg-file-input__status\" role=\"status\">Nessun file caricato.</p>\n</div>",
       "notes": "Forma COMPATTA del caricamento: rg-upload resta l'area di rilascio grande di una pagina, questa e il controllo che sta in un pannello largo 380px. L'input type=file resta il controllo vero (opacita zero ma presente, focusabile, tabulabile): non sostituirlo con un bottone che chiama click() su un input display:none. Hover e focus arrivano al bottone via :has(), perche il bottone non e antenato del puntatore. __status e obbligatorio ed e la provenienza del dato (nome file, misura rilevata, metodo, quantita); l'errore usa __status--error, si apre con la parola 'Errore' e role=alert. Bottone a dimensione piena: nel pannello e un bersaglio primario, niente rg-button--small.",
-      "keywords": ["file", "caricamento", "carica file", "upload compatto", "input file", "sfoglia", "scegli file", "import", "importa", "dxf", "svg", "sagoma", "contorno", "boundary", "sorgente", "allegato", "stato import", "provenienza"]
+      "keywords": [
+        "file",
+        "caricamento",
+        "carica file",
+        "upload compatto",
+        "input file",
+        "sfoglia",
+        "scegli file",
+        "import",
+        "importa",
+        "dxf",
+        "svg",
+        "sagoma",
+        "contorno",
+        "boundary",
+        "sorgente",
+        "allegato",
+        "stato import",
+        "provenienza"
+      ]
     },
     {
       "id": "color-map",
@@ -195,18 +588,92 @@
       "since": "1.5.0",
       "kind": "component",
       "promotedFrom": "net-45 / pattern-grammar",
-      "classes": { "base": "rg-color-map", "elements": ["rg-color-map__row", "rg-color-map__swatch", "rg-color-map__code", "rg-color-map__meta", "rg-color-map__target", "rg-color-map__aside", "rg-color-map__empty"], "variants": ["rg-color-map__swatch--none"], "related": ["rg-select", "rg-swatch", "rg-empty", "rg-field-with-unit", "rg-field-with-unit--compact", "rg-input--numeric", "rg-icon-button"] },
-      "variants": ["mappa completa", "scelta singola"],
-      "states": ["default", "empty", "focus"],
-      "cssVars": ["--swatch"],
-      "tokens": ["--rg-color-border", "--rg-color-border-strong", "--rg-color-neutral-600", "--rg-font-mono", "--rg-space-3", "--rg-space-6", "--rg-radius-sm"],
+      "classes": {
+        "base": "rg-color-map",
+        "elements": [
+          "rg-color-map__row",
+          "rg-color-map__swatch",
+          "rg-color-map__code",
+          "rg-color-map__meta",
+          "rg-color-map__target",
+          "rg-color-map__aside",
+          "rg-color-map__empty"
+        ],
+        "variants": [
+          "rg-color-map__swatch--none"
+        ],
+        "related": [
+          "rg-select",
+          "rg-swatch",
+          "rg-empty",
+          "rg-field-with-unit",
+          "rg-field-with-unit--compact",
+          "rg-input--numeric",
+          "rg-icon-button"
+        ]
+      },
+      "variants": [
+        "mappa completa",
+        "scelta singola"
+      ],
+      "states": [
+        "default",
+        "empty",
+        "focus"
+      ],
+      "cssVars": [
+        "--swatch"
+      ],
+      "tokens": [
+        "--rg-color-border",
+        "--rg-color-border-strong",
+        "--rg-color-neutral-600",
+        "--rg-font-mono",
+        "--rg-space-3",
+        "--rg-space-6",
+        "--rg-radius-sm"
+      ],
       "doc": "components/color-map.md",
       "patternRef": "patterns/workspace.md",
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "tool-panel",
       "snippet": "<ul class=\"rg-color-map\">\n  <li class=\"rg-color-map__row\">\n    <span class=\"rg-color-map__swatch\" style=\"--swatch:#1a1a1a\"></span>\n    <span class=\"rg-color-map__code\">#1A1A1A <span class=\"rg-color-map__meta\">12 path</span></span>\n    <select class=\"rg-select rg-color-map__target\" aria-label=\"Ruolo per #1A1A1A\"><option value=\"\">&#8212; (ignora)</option><option selected>Perimetro</option></select>\n  </li>\n</ul>",
       "notes": "Regola §10 resa obbligatoria dal componente: il campione non basta mai da solo, accanto sta sempre il codice colore o il nome del layer in mono. Il colore e un DATO letto dal file e arriva inline via --swatch, come in rg-swatch__color. Ogni riga contiene una DECISIONE, quindi e un form e non un record: non usare rg-list-row (inerte o navigabile) ne rg-table (confronto di record). Il bersaglio sta su una riga propria perche a pannello stretto un ruolo lungo si troncherebbe; la prima opzione e sempre l'esclusione esplicita '— (ignora)', non un vuoto. Senza sorgente la lista non sparisce: al suo posto rg-color-map__empty (rg-empty occuperebbe mezza colonna di parametri). Nel pannello di una tool e sempre la sezione 'Colori e ruoli', subito dopo 'Sagoma'. Da 1.7.0: rg-color-map__aside e lo slot per un controllo compatto che appartiene al singolo colore (densita per-colore, override numerico, azione di riga), in coda alla riga e allineato a destra; la terza colonna della griglia nasce solo con :has(.rg-color-map__aside), quindi le mappe che non lo usano restano identiche e rg-color-map__target continua a passare sopra tutte le colonne. Per un campo numerico inline nello slot si usa rg-field-with-unit--compact + rg-input--numeric (NON la rg-field-with-unit piena, che ha soglia minima 132px): l'etichetta non e visibile ma vive in aria-label sull'input, che nomina il colore e dichiara unita e comportamento del vuoto; se il campo eredita un globale da vuoto, il placeholder mostra quel valore ma la regola sta nell'aria-label, mai nel solo grigio del placeholder.",
-      "keywords": ["colore", "colori", "ruoli", "colore ruolo", "mappa colori", "colori e ruoli", "layer", "livello", "attribuzione", "assegnazione", "selezione per colore", "campione", "swatch", "contorno", "boundary", "clipping", "dxf", "svg", "importato", "perimetro", "rete", "raso", "densita per colore", "densita per-colore", "override per riga", "campo accessorio", "controllo per riga", "campo inline", "numerico inline", "mm", "spaziatura", "aside", "slot accessorio"]
+      "keywords": [
+        "colore",
+        "colori",
+        "ruoli",
+        "colore ruolo",
+        "mappa colori",
+        "colori e ruoli",
+        "layer",
+        "livello",
+        "attribuzione",
+        "assegnazione",
+        "selezione per colore",
+        "campione",
+        "swatch",
+        "contorno",
+        "boundary",
+        "clipping",
+        "dxf",
+        "svg",
+        "importato",
+        "perimetro",
+        "rete",
+        "raso",
+        "densita per colore",
+        "densita per-colore",
+        "override per riga",
+        "campo accessorio",
+        "controllo per riga",
+        "campo inline",
+        "numerico inline",
+        "mm",
+        "spaziatura",
+        "aside",
+        "slot accessorio"
+      ]
     },
     {
       "id": "autocomplete",
@@ -215,13 +682,36 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-autocomplete", "elements": ["rg-autocomplete__input", "rg-autocomplete__list", "rg-autocomplete__option", "rg-autocomplete__empty"] },
-      "states": ["closed", "open", "filtering", "empty"],
-      "tokens": ["--rg-color-border", "--rg-color-focus"],
+      "classes": {
+        "base": "rg-autocomplete",
+        "elements": [
+          "rg-autocomplete__input",
+          "rg-autocomplete__list",
+          "rg-autocomplete__option",
+          "rg-autocomplete__empty"
+        ]
+      },
+      "states": [
+        "closed",
+        "open",
+        "filtering",
+        "empty"
+      ],
+      "tokens": [
+        "--rg-color-border",
+        "--rg-color-focus"
+      ],
       "doc": "components/forms.md",
       "specimenAnchor": "inputs",
       "snippet": "<div class=\"rg-autocomplete\"><input class=\"rg-input rg-autocomplete__input\" role=\"combobox\" aria-autocomplete=\"list\"><ul class=\"rg-autocomplete__list\" role=\"listbox\" hidden></ul></div>",
-      "keywords": ["autocomplete", "combobox", "suggerimenti", "typeahead", "ricerca filtrata", "registro"]
+      "keywords": [
+        "autocomplete",
+        "combobox",
+        "suggerimenti",
+        "typeahead",
+        "ricerca filtrata",
+        "registro"
+      ]
     },
     {
       "id": "table",
@@ -230,15 +720,82 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-table", "elements": ["rg-table-wrap", "rg-table__numeric", "rg-table__code", "rg-table__unit", "rg-table__row--selected", "rg-table__row--expandable", "rg-table__toggle", "rg-table__toggle-label", "rg-table__detail", "rg-table__detail-inner"], "variants": ["rg-table--compact"] },
-      "variants": ["standard", "compact", "review", "matrix", "expandable"],
-      "states": ["default", "hover", "selected", "collapsed", "expanded"],
-      "tokens": ["--rg-font-mono", "--rg-color-border", "--rg-color-surface", "--rg-color-focus", "--rg-space-*"],
+      "classes": {
+        "base": "rg-table",
+        "elements": [
+          "rg-table-wrap",
+          "rg-table__numeric",
+          "rg-table__code",
+          "rg-table__unit",
+          "rg-table__row--selected",
+          "rg-table__row--expandable",
+          "rg-table__toggle",
+          "rg-table__toggle-label",
+          "rg-table__detail",
+          "rg-table__detail-inner"
+        ],
+        "variants": [
+          "rg-table--compact"
+        ]
+      },
+      "variants": [
+        "standard",
+        "compact",
+        "review",
+        "matrix",
+        "expandable"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "selected",
+        "collapsed",
+        "expanded"
+      ],
+      "tokens": [
+        "--rg-font-mono",
+        "--rg-color-border",
+        "--rg-color-surface",
+        "--rg-color-focus",
+        "--rg-space-*"
+      ],
       "doc": "components/tables.md",
       "specimenAnchor": "tables",
       "snippet": "<div class=\"rg-table-wrap\"><table class=\"rg-table\"><thead><tr><th>Codice</th><th class=\"rg-table__numeric\">Consumo (m)</th></tr></thead><tbody><tr><td class=\"rg-table__code\">FIL-0281</td><td class=\"rg-table__numeric\">18.42</td></tr></tbody></table></div>",
       "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase.",
-      "keywords": ["tabella", "table", "record", "colonne", "consumi", "confronto", "dataset", "griglia dati", "riga espandibile", "riga espandibile tabella", "expandable row", "riga che si espande", "scomposizione", "dettaglio riga", "sotto-record", "costi", "costo prodotto", "distinta costi", "drill down in tabella", "colspan", "riga di dettaglio", "espandi in tabella", "qta", "quantita", "colonna qta", "colonna quantita", "unita in tabella", "valore numerico", "allineamento numerico", "convenzione qta", "unita per riga"]
+      "keywords": [
+        "tabella",
+        "table",
+        "record",
+        "colonne",
+        "consumi",
+        "confronto",
+        "dataset",
+        "griglia dati",
+        "riga espandibile",
+        "riga espandibile tabella",
+        "expandable row",
+        "riga che si espande",
+        "scomposizione",
+        "dettaglio riga",
+        "sotto-record",
+        "costi",
+        "costo prodotto",
+        "distinta costi",
+        "drill down in tabella",
+        "colspan",
+        "riga di dettaglio",
+        "espandi in tabella",
+        "qta",
+        "quantita",
+        "colonna qta",
+        "colonna quantita",
+        "unita in tabella",
+        "valore numerico",
+        "allineamento numerico",
+        "convenzione qta",
+        "unita per riga"
+      ]
     },
     {
       "id": "card",
@@ -247,16 +804,77 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-card", "elements": ["rg-card__eyebrow", "rg-card__title", "rg-card__body"], "variants": ["rg-card--technical", "rg-card--editorial", "rg-card--metric", "rg-card--warning", "rg-card--selected", "rg-card--emphasis"] },
-      "variants": ["entity", "editorial", "metric", "selectable", "emphasis"],
-      "variantsSince": { "rg-card--emphasis": "1.13.0" },
-      "states": ["default", "hover", "selected"],
-      "tokens": ["--rg-color-surface-raised", "--rg-color-background", "--rg-color-border-medium", "--rg-color-black", "--rg-weight-medium", "--rg-radius-md", "--rg-space-*"],
+      "classes": {
+        "base": "rg-card",
+        "elements": [
+          "rg-card__eyebrow",
+          "rg-card__title",
+          "rg-card__body"
+        ],
+        "variants": [
+          "rg-card--technical",
+          "rg-card--editorial",
+          "rg-card--metric",
+          "rg-card--warning",
+          "rg-card--selected",
+          "rg-card--emphasis"
+        ]
+      },
+      "variants": [
+        "entity",
+        "editorial",
+        "metric",
+        "selectable",
+        "emphasis"
+      ],
+      "variantsSince": {
+        "rg-card--emphasis": "1.13.0"
+      },
+      "states": [
+        "default",
+        "hover",
+        "selected"
+      ],
+      "tokens": [
+        "--rg-color-surface-raised",
+        "--rg-color-background",
+        "--rg-color-border-medium",
+        "--rg-color-black",
+        "--rg-weight-medium",
+        "--rg-radius-md",
+        "--rg-space-*"
+      ],
       "notes": "Dalla 1.13.0 la card e una superficie SOLLEVATA (--rg-color-surface-raised, bianca) sul fondo di pagina (--rg-color-background, neutral-50), con contorno al gradino intermedio (--rg-color-border-medium): prima era bianca su pagina bianca, separata dal solo filetto neutro (1,35:1 di contrasto). Il titolo (rg-card__title) porta un peso dichiarato dal DS (medium, livello CONTENITORE): non dipende piu dall'elemento che lo ospita. rg-card--emphasis (1.13.0) porta il contorno al nero e dice quale card e il SOGGETTO della vista: non e uno stato e non ha significato semantico (--technical dice \"e un calcolo\", --selected dice \"l'hai scelta tu\", --warning/is-error dicono uno stato del dato). Limite d'uso, di composizione e non di CSS: UNA SOLA card enfatizzata per vista, se tutto e enfatizzato niente lo e. Se il soggetto della vista e un blocco con una testa, usare rg-section-card--emphasis.",
       "doc": "components/cards.md",
       "specimenAnchor": "cards",
       "snippet": "<article class=\"rg-card\"><p class=\"rg-card__eyebrow\">RG-AR-0248</p><h3 class=\"rg-card__title\">Ricamo floreale</h3></article>",
-      "keywords": ["card", "scheda", "entita", "tessera", "riquadro", "metrica", "kpi", "enfasi", "emphasis", "in evidenza", "evidenziata", "prominenza", "prominence", "soggetto della vista", "featured", "highlight", "gerarchia", "hierarchy", "superficie sollevata", "raised surface", "profondita", "depth", "elevation", "bordo forte", "contorno nero"]
+      "keywords": [
+        "card",
+        "scheda",
+        "entita",
+        "tessera",
+        "riquadro",
+        "metrica",
+        "kpi",
+        "enfasi",
+        "emphasis",
+        "in evidenza",
+        "evidenziata",
+        "prominenza",
+        "prominence",
+        "soggetto della vista",
+        "featured",
+        "highlight",
+        "gerarchia",
+        "hierarchy",
+        "superficie sollevata",
+        "raised surface",
+        "profondita",
+        "depth",
+        "elevation",
+        "bordo forte",
+        "contorno nero"
+      ]
     },
     {
       "id": "section-card",
@@ -266,16 +884,95 @@
       "since": "1.10.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-section-card", "elements": ["rg-section-card__header", "rg-section-card__heading", "rg-section-card__title", "rg-section-card__subtitle", "rg-section-card__actions", "rg-section-card__body"], "variants": ["rg-section-card--flush", "rg-section-card--emphasis"], "related": ["rg-button", "rg-table", "rg-action-bar", "rg-disclosure"] },
-      "variants": ["standard", "flush", "emphasis"],
-      "variantsSince": { "rg-section-card--emphasis": "1.13.0" },
-      "states": ["default"],
-      "tokens": ["--rg-color-surface-raised", "--rg-color-surface", "--rg-color-border-medium", "--rg-color-black", "--rg-weight-medium", "--rg-radius-md", "--rg-border-hairline", "--rg-font-identity", "--rg-color-text-secondary", "--rg-space-4", "--rg-space-6"],
+      "classes": {
+        "base": "rg-section-card",
+        "elements": [
+          "rg-section-card__header",
+          "rg-section-card__heading",
+          "rg-section-card__title",
+          "rg-section-card__subtitle",
+          "rg-section-card__actions",
+          "rg-section-card__body"
+        ],
+        "variants": [
+          "rg-section-card--flush",
+          "rg-section-card--emphasis"
+        ],
+        "related": [
+          "rg-button",
+          "rg-table",
+          "rg-action-bar",
+          "rg-disclosure"
+        ]
+      },
+      "variants": [
+        "standard",
+        "flush",
+        "emphasis"
+      ],
+      "variantsSince": {
+        "rg-section-card--emphasis": "1.13.0"
+      },
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-surface-raised",
+        "--rg-color-surface",
+        "--rg-color-border-medium",
+        "--rg-color-black",
+        "--rg-weight-medium",
+        "--rg-radius-md",
+        "--rg-border-hairline",
+        "--rg-font-identity",
+        "--rg-color-text-secondary",
+        "--rg-space-4",
+        "--rg-space-6"
+      ],
       "doc": "components/section-card.md",
       "specimenAnchor": "section-card",
       "snippet": "<section class=\"rg-section-card\"><header class=\"rg-section-card__header\"><div class=\"rg-section-card__heading\"><h2 class=\"rg-section-card__title\">Impostazioni</h2><p class=\"rg-section-card__subtitle\">Parametri della fase, applicati al salvataggio.</p></div><div class=\"rg-section-card__actions\"><button class=\"rg-button rg-button--primary\" type=\"button\">Salva</button></div></header><div class=\"rg-section-card__body\">...</div></section>",
       "notes": "Keystone di OGNI tab della pagina fase: un solo canone di testa (rg-section-card__header), non una testa diversa per tab. Header di tab = titolo (label identitaria, size lg) + una riga di didascalia opzionale + AL PIU UNA azione primaria a destra (rg-button--primary): le azioni secondarie vanno nel corpo o in rg-action-bar, non affiancate come seconda primaria. Il filetto sotto l'header separa testa e corpo — idioma a linee, mai ombre. Distinto da rg-card (tessera-entita con hover e height:100%, senza filetto d'header), da rg-section-header (layout di pagina, non un contenitore) e da rg-disclosure--boxed (sezione richiudibile, non la testa fissa di un tab). --flush azzera il padding del corpo per un tab il cui corpo E una tabella o lista rigata a filo dei bordi. Non annidare una section-card in un'altra. Migrazione (rg-product-platform): i tab di fase/_tab_consumi adottano questo contenitore e spariscono i <style> residui; il <dialog> nativo converge su rg-modal. Dalla 1.13.0: superficie SOLLEVATA (--rg-color-surface-raised) sul fondo di pagina, contorno al gradino intermedio (--rg-color-border-medium), titolo a peso medium dichiarato dal DS. rg-section-card--emphasis (1.13.0) porta il contorno al nero e la testa su superficie rientrante (--rg-color-surface): dice qual e il SOGGETTO della vista, non e uno stato e non significa nulla sul contenuto. UNA SOLA per vista. Non sostituisce la regola dell'unica azione primaria nell'header, e non va usata per segnalare errori o avvisi: quello e un rg-alert nel corpo, con testo esplicito.",
-      "keywords": ["section card", "sezione card", "keystone", "tab", "scheda tab", "contenitore tab", "corpo del tab", "header di tab", "testa di tab", "header rigato", "filetto sotto header", "titolo di sezione", "didascalia", "sottotitolo", "azione primaria", "pagina fase", "layout fase", "impostazioni", "consumi", "corpo a filo", "flush", "tabella a filo", "enfasi", "emphasis", "in evidenza", "blocco principale", "soggetto della vista", "prominenza", "prominence", "featured", "highlight", "gerarchia", "hierarchy", "superficie sollevata", "raised surface", "profondita", "depth", "testa su fondo neutro"]
+      "keywords": [
+        "section card",
+        "sezione card",
+        "keystone",
+        "tab",
+        "scheda tab",
+        "contenitore tab",
+        "corpo del tab",
+        "header di tab",
+        "testa di tab",
+        "header rigato",
+        "filetto sotto header",
+        "titolo di sezione",
+        "didascalia",
+        "sottotitolo",
+        "azione primaria",
+        "pagina fase",
+        "layout fase",
+        "impostazioni",
+        "consumi",
+        "corpo a filo",
+        "flush",
+        "tabella a filo",
+        "enfasi",
+        "emphasis",
+        "in evidenza",
+        "blocco principale",
+        "soggetto della vista",
+        "prominenza",
+        "prominence",
+        "featured",
+        "highlight",
+        "gerarchia",
+        "hierarchy",
+        "superficie sollevata",
+        "raised surface",
+        "profondita",
+        "depth",
+        "testa su fondo neutro"
+      ]
     },
     {
       "id": "materials-row",
@@ -285,16 +982,68 @@
       "since": "1.10.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-materials-row", "elements": ["rg-materials-row__label", "rg-materials-row__list", "rg-materials-row__item", "rg-materials-row__code", "rg-materials-row__empty"], "related": ["rg-badge", "rg-empty", "rg-list-row"] },
-      "variants": ["con-materiali", "empty"],
-      "states": ["default", "empty"],
-      "tokens": ["--rg-color-border", "--rg-border-hairline", "--rg-color-surface", "--rg-font-identity", "--rg-font-mono", "--rg-color-text-secondary", "--rg-radius-sm", "--rg-space-2", "--rg-space-3"],
+      "classes": {
+        "base": "rg-materials-row",
+        "elements": [
+          "rg-materials-row__label",
+          "rg-materials-row__list",
+          "rg-materials-row__item",
+          "rg-materials-row__code",
+          "rg-materials-row__empty"
+        ],
+        "related": [
+          "rg-badge",
+          "rg-empty",
+          "rg-list-row"
+        ]
+      },
+      "variants": [
+        "con-materiali",
+        "empty"
+      ],
+      "states": [
+        "default",
+        "empty"
+      ],
+      "tokens": [
+        "--rg-color-border",
+        "--rg-border-hairline",
+        "--rg-color-surface",
+        "--rg-font-identity",
+        "--rg-font-mono",
+        "--rg-color-text-secondary",
+        "--rg-radius-sm",
+        "--rg-space-2",
+        "--rg-space-3"
+      ],
       "doc": "components/materials-row.md",
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "materials-row",
       "snippet": "<div class=\"rg-materials-row\"><span class=\"rg-materials-row__label\">Materiali</span><span class=\"rg-badge rg-badge--count rg-badge--material\">2 caricati</span><ul class=\"rg-materials-row__list\"><li class=\"rg-materials-row__item\">Pantografo <span class=\"rg-materials-row__code\">PGF-0112</span></li><li class=\"rg-materials-row__item\">Stop <span class=\"rg-materials-row__code\">STP-0043</span></li></ul></div>",
       "notes": "Riepilogo di PRESENZA + conteggio, non un elenco di record: una fase con materiali finora non mostrava nemmeno che ce ne fossero. Il conteggio e sempre un rg-badge (mai il solo colore), componibile con rg-badge--material. Ogni materiale porta nome + codice tecnico in mono (rg-materials-row__code), come richiede §10. Superficie aperta rigata sopra e sotto (idioma di rg-empty/rg-consumption-row), NON una card. Non e rg-list-row (un record per riga, navigabile o con azioni) ne rg-table (confronto di record). Stato vuoto esplicito sulla stessa riga base: etichetta + badge '0 caricati' + rg-materials-row__empty (frase), l'assenza dichiarata dalla struttura e non dal solo colore; per una sezione/pannello grande dei materiali lo stato vuoto e invece rg-empty. Riga inerte: se un materiale apre un dettaglio si usa rg-list-row--link o una tabella.",
-      "keywords": ["materiali", "materiale", "materiali caricati", "riga materiali", "materials row", "pantografo", "stop", "supporti", "presenza materiali", "conteggio materiali", "numero materiali", "quanti materiali", "elenco materiali", "caricati", "fase", "pagina fase", "stato vuoto", "nessun materiale", "empty", "riepilogo", "badge conteggio"]
+      "keywords": [
+        "materiali",
+        "materiale",
+        "materiali caricati",
+        "riga materiali",
+        "materials row",
+        "pantografo",
+        "stop",
+        "supporti",
+        "presenza materiali",
+        "conteggio materiali",
+        "numero materiali",
+        "quanti materiali",
+        "elenco materiali",
+        "caricati",
+        "fase",
+        "pagina fase",
+        "stato vuoto",
+        "nessun materiale",
+        "empty",
+        "riepilogo",
+        "badge conteggio"
+      ]
     },
     {
       "id": "badge",
@@ -303,15 +1052,69 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-badge", "variants": ["rg-badge--validated", "rg-badge--estimated", "rg-badge--unresolved", "rg-badge--review", "rg-badge--draft", "rg-badge--archived", "rg-badge--pending", "rg-badge--parsed", "rg-badge--count", "rg-badge--material", "rg-badge--thread", "rg-badge--operation", "rg-badge--season-sage", "rg-badge--season-blue"] },
-      "variants": ["status", "lifecycle", "pipeline", "source", "category", "count"],
-      "states": ["default"],
-      "tokens": ["--rg-color-*", "--rg-radius-pill", "--rg-border-hairline"],
+      "classes": {
+        "base": "rg-badge",
+        "variants": [
+          "rg-badge--validated",
+          "rg-badge--estimated",
+          "rg-badge--unresolved",
+          "rg-badge--review",
+          "rg-badge--draft",
+          "rg-badge--archived",
+          "rg-badge--pending",
+          "rg-badge--parsed",
+          "rg-badge--count",
+          "rg-badge--material",
+          "rg-badge--thread",
+          "rg-badge--operation",
+          "rg-badge--season-sage",
+          "rg-badge--season-blue"
+        ]
+      },
+      "variants": [
+        "status",
+        "lifecycle",
+        "pipeline",
+        "source",
+        "category",
+        "count"
+      ],
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-*",
+        "--rg-radius-pill",
+        "--rg-border-hairline"
+      ],
       "doc": "components/badges.md",
       "specimenAnchor": "badges",
       "snippet": "<span class=\"rg-badge rg-badge--validated\">Validato</span>\n<span class=\"rg-badge rg-badge--draft\">Bozza</span>\n<span class=\"rg-badge rg-badge--count rg-badge--estimated\">3 anomalie</span>",
       "notes": "Ciclo di vita: --draft, --review (in revisione), --validated, --archived. Pipeline di ingestione: --pending, --parsed. Non esiste --in-review: usare --review. Le varianti si distinguono anche in scala di grigi (pallino vuoto, bordo tratteggiato). Mai riempimenti pastello.",
-      "keywords": ["badge", "stato", "etichetta", "tag", "provenienza", "categoria", "pill", "chip", "bozza", "draft", "in revisione", "validato", "archiviato", "in attesa", "pending", "parsed", "interpretato", "ciclo di vita", "lifecycle", "conteggio", "count", "anomalie"]
+      "keywords": [
+        "badge",
+        "stato",
+        "etichetta",
+        "tag",
+        "provenienza",
+        "categoria",
+        "pill",
+        "chip",
+        "bozza",
+        "draft",
+        "in revisione",
+        "validato",
+        "archiviato",
+        "in attesa",
+        "pending",
+        "parsed",
+        "interpretato",
+        "ciclo di vita",
+        "lifecycle",
+        "conteggio",
+        "count",
+        "anomalie"
+      ]
     },
     {
       "id": "navigation",
@@ -320,15 +1123,98 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": null, "subcomponents": { "topbar": ["rg-topbar", "rg-topbar--app", "rg-topbar--sticky", "rg-topbar__brand", "rg-topbar__back", "rg-topbar__title", "rg-topbar__actions", "rg-topbar__nav"], "sidebar": ["rg-sidebar", "rg-sidebar__nav", "rg-sidebar__foot", "rg-sidebar-list", "rg-sidebar-item", "rg-sidebar-item--active"], "tabs": ["rg-tabs", "rg-tab", "rg-tab--active", "rg-tabpanel"], "breadcrumb": ["rg-breadcrumb", "rg-breadcrumb__sep", "rg-breadcrumb__current"], "pagination": ["rg-pagination", "rg-page", "rg-page--active"] } },
-      "variants": ["global-header", "app-topbar", "sticky-topbar", "sidebar", "local-tabs", "breadcrumb", "pagination"],
-      "states": ["default", "hover", "active", "focus"],
-      "tokens": ["--rg-font-identity", "--rg-layout-header", "--rg-color-black", "--rg-color-border", "--rg-border-hairline", "--rg-z-sticky"],
+      "classes": {
+        "base": null,
+        "subcomponents": {
+          "topbar": [
+            "rg-topbar",
+            "rg-topbar--app",
+            "rg-topbar--sticky",
+            "rg-topbar__brand",
+            "rg-topbar__back",
+            "rg-topbar__title",
+            "rg-topbar__actions",
+            "rg-topbar__nav"
+          ],
+          "sidebar": [
+            "rg-sidebar",
+            "rg-sidebar__nav",
+            "rg-sidebar__foot",
+            "rg-sidebar-list",
+            "rg-sidebar-item",
+            "rg-sidebar-item--active"
+          ],
+          "tabs": [
+            "rg-tabs",
+            "rg-tab",
+            "rg-tab--active",
+            "rg-tabpanel"
+          ],
+          "breadcrumb": [
+            "rg-breadcrumb",
+            "rg-breadcrumb__sep",
+            "rg-breadcrumb__current"
+          ],
+          "pagination": [
+            "rg-pagination",
+            "rg-page",
+            "rg-page--active"
+          ]
+        }
+      },
+      "variants": [
+        "global-header",
+        "app-topbar",
+        "sticky-topbar",
+        "sidebar",
+        "local-tabs",
+        "breadcrumb",
+        "pagination"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "active",
+        "focus"
+      ],
+      "tokens": [
+        "--rg-font-identity",
+        "--rg-layout-header",
+        "--rg-color-black",
+        "--rg-color-border",
+        "--rg-border-hairline",
+        "--rg-z-sticky"
+      ],
       "doc": "components/navigation.md",
       "specimenAnchor": "navigation",
       "snippet": "<header class=\"rg-topbar rg-topbar--app\"><a class=\"rg-topbar__back\" href=\"#/\">← RG Tools</a><h1 class=\"rg-topbar__title\">Rete 45°</h1><div class=\"rg-topbar__actions\"><span class=\"rg-mono rg-u-muted\">v0.3.0</span></div></header>",
       "notes": "rg-tab funziona su <a> e su <button>: il reset del chrome nativo del bottone e nel DS (v1.1.0), non va riscritto in locale. Il pannello e rg-tabpanel, mostrato da is-active o aria-hidden=false. rg-topbar--sticky ancora la barra in cima.",
-      "keywords": ["navigazione", "menu", "header", "sidebar", "tab", "tabpanel", "pannello", "breadcrumb", "paginazione", "navbar", "topbar", "top bar", "barra superiore", "app bar", "appbar", "chrome", "titolo", "back", "ritorno", "azioni", "toolbar", "suite", "sticky", "ancorata"]
+      "keywords": [
+        "navigazione",
+        "menu",
+        "header",
+        "sidebar",
+        "tab",
+        "tabpanel",
+        "pannello",
+        "breadcrumb",
+        "paginazione",
+        "navbar",
+        "topbar",
+        "top bar",
+        "barra superiore",
+        "app bar",
+        "appbar",
+        "chrome",
+        "titolo",
+        "back",
+        "ritorno",
+        "azioni",
+        "toolbar",
+        "suite",
+        "sticky",
+        "ancorata"
+      ]
     },
     {
       "id": "modal",
@@ -338,15 +1224,65 @@
       "since": "0.3.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-modal", "elements": ["rg-modal-backdrop", "rg-modal__header", "rg-modal__title", "rg-modal__close", "rg-modal__body", "rg-modal__footer", "rg-modal__meta", "rg-modal__row", "rg-modal__row-label", "rg-modal__current"], "variants": ["rg-modal--sm", "rg-modal--lg", "rg-modal--xl"] },
-      "variants": ["standard", "small", "large", "extra-large"],
-      "states": ["closed", "open"],
-      "tokens": ["--rg-z-modal", "--rg-shadow-overlay", "--rg-color-surface", "--rg-radius-md", "--rg-color-text-label"],
+      "classes": {
+        "base": "rg-modal",
+        "elements": [
+          "rg-modal-backdrop",
+          "rg-modal__header",
+          "rg-modal__title",
+          "rg-modal__close",
+          "rg-modal__body",
+          "rg-modal__footer",
+          "rg-modal__meta",
+          "rg-modal__row",
+          "rg-modal__row-label",
+          "rg-modal__current"
+        ],
+        "variants": [
+          "rg-modal--sm",
+          "rg-modal--lg",
+          "rg-modal--xl"
+        ]
+      },
+      "variants": [
+        "standard",
+        "small",
+        "large",
+        "extra-large"
+      ],
+      "states": [
+        "closed",
+        "open"
+      ],
+      "tokens": [
+        "--rg-z-modal",
+        "--rg-shadow-overlay",
+        "--rg-color-surface",
+        "--rg-radius-md",
+        "--rg-color-text-label"
+      ],
       "doc": "components/modal.md",
       "specimenAnchor": "modal",
       "snippet": "<div class=\"rg-modal-backdrop is-open\" role=\"presentation\"><div class=\"rg-modal rg-modal--sm\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"m-title\"><header class=\"rg-modal__header\"><h2 class=\"rg-modal__title\" id=\"m-title\">Titolo</h2><button class=\"rg-modal__close\" aria-label=\"Chiudi\">×</button></header><div class=\"rg-modal__body\">...</div><footer class=\"rg-modal__footer\"><button class=\"rg-button rg-button--primary\">Conferma</button></footer></div></div>",
       "notes": "rg-modal-* e il pattern CANONICO della modale RG (backdrop scrim + dialog): il <dialog> nativo va fatto convergere qui (vedi components/modal.md, nota di deprecazione e guida di migrazione). Larghezze: --sm 360 conferme, standard 480, --lg 640 form a piu righe, --xl 960 per contenuti larghi a griglia (tabella, confronto affiancato) — 960 e il tetto oltre il quale il contenuto e una pagina, non un modal. Da 1.8.0 un lightbox aperto DENTRO un modal gli sta sopra: rg-lightbox e su --rg-z-lightbox (450), tra --rg-z-modal (400) e --rg-z-toast (500).",
-      "keywords": ["modal", "dialog", "finestra", "popup", "conferma", "overlay", "backdrop", "dialogo", "modale larga", "xl", "extra large", "confronto affiancato", "tabella in modale", "dialog nativo", "canonico", "deprecazione dialog"]
+      "keywords": [
+        "modal",
+        "dialog",
+        "finestra",
+        "popup",
+        "conferma",
+        "overlay",
+        "backdrop",
+        "dialogo",
+        "modale larga",
+        "xl",
+        "extra large",
+        "confronto affiancato",
+        "tabella in modale",
+        "dialog nativo",
+        "canonico",
+        "deprecazione dialog"
+      ]
     },
     {
       "id": "chip",
@@ -356,14 +1292,42 @@
       "since": "0.3.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-chip", "elements": ["rg-chip-select"], "variants": ["rg-chip--add"] },
-      "variants": ["chip", "add"],
-      "states": ["default", "hover", "checked", "focus"],
-      "tokens": ["--rg-radius-pill", "--rg-color-black", "--rg-motion-fast"],
+      "classes": {
+        "base": "rg-chip",
+        "elements": [
+          "rg-chip-select"
+        ],
+        "variants": [
+          "rg-chip--add"
+        ]
+      },
+      "variants": [
+        "chip",
+        "add"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "checked",
+        "focus"
+      ],
+      "tokens": [
+        "--rg-radius-pill",
+        "--rg-color-black",
+        "--rg-motion-fast"
+      ],
       "doc": "components/chips.md",
       "specimenAnchor": "chips",
       "snippet": "<div class=\"rg-chip-select\"><label class=\"rg-chip\"><input type=\"checkbox\" value=\"a\"> Alta moda</label><button class=\"rg-chip rg-chip--add\">+ Nuova</button></div>",
-      "keywords": ["chip", "tag", "filtro", "selezione multipla", "pill interattiva", "categoria", "picker"]
+      "keywords": [
+        "chip",
+        "tag",
+        "filtro",
+        "selezione multipla",
+        "pill interattiva",
+        "categoria",
+        "picker"
+      ]
     },
     {
       "id": "folder",
@@ -373,14 +1337,39 @@
       "since": "0.3.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-folder", "elements": ["rg-folder-grid", "rg-folder__icon", "rg-folder__body", "rg-folder__name", "rg-folder__count"] },
+      "classes": {
+        "base": "rg-folder",
+        "elements": [
+          "rg-folder-grid",
+          "rg-folder__icon",
+          "rg-folder__body",
+          "rg-folder__name",
+          "rg-folder__count"
+        ]
+      },
       "variants": [],
-      "states": ["default", "hover", "focus"],
-      "tokens": ["--rg-color-surface", "--rg-radius-lg", "--rg-color-accent-sand"],
+      "states": [
+        "default",
+        "hover",
+        "focus"
+      ],
+      "tokens": [
+        "--rg-color-surface",
+        "--rg-radius-lg",
+        "--rg-color-accent-sand"
+      ],
       "doc": "components/folders.md",
       "specimenAnchor": "folders",
       "snippet": "<div class=\"rg-folder-grid\"><a class=\"rg-folder\" href=\"#\"><span class=\"rg-folder__body\"><span class=\"rg-folder__name\">Archivio PE 26</span><span class=\"rg-folder__count\">248 campioni</span></span></a></div>",
-      "keywords": ["folder", "cartella", "contenitore", "sezione", "archivio", "dashboard", "tessera"]
+      "keywords": [
+        "folder",
+        "cartella",
+        "contenitore",
+        "sezione",
+        "archivio",
+        "dashboard",
+        "tessera"
+      ]
     },
     {
       "id": "workspace",
@@ -391,15 +1380,86 @@
       "kind": "component",
       "isPattern": true,
       "promotedFrom": "pattern-grammar-engine",
-      "classes": { "base": "rg-workspace", "elements": ["rg-workspace__panel", "rg-workspace__stage", "rg-workspace__stage-header", "rg-workspace__canvas", "rg-workspace__layer", "rg-workspace__statusbar", "rg-param-section", "rg-param-section__header", "rg-param-section__index", "rg-param-section__title", "rg-param-grid", "rg-param-grid__wide", "rg-field-with-unit"], "related": ["rg-file-input", "rg-color-map", "rg-disclosure", "rg-cluster"] },
-      "cssVars": ["--rg-workspace-panel", "--rg-pan-x", "--rg-pan-y", "--rg-zoom"],
-      "states": ["default", "is-dragging"],
-      "tokens": ["--rg-color-neutral-50", "--rg-space-6", "--rg-color-black", "--rg-layout-tool-panel", "--rg-layout-param-col-min"],
+      "classes": {
+        "base": "rg-workspace",
+        "elements": [
+          "rg-workspace__panel",
+          "rg-workspace__stage",
+          "rg-workspace__stage-header",
+          "rg-workspace__canvas",
+          "rg-workspace__layer",
+          "rg-workspace__statusbar",
+          "rg-param-section",
+          "rg-param-section__header",
+          "rg-param-section__index",
+          "rg-param-section__title",
+          "rg-param-grid",
+          "rg-param-grid__wide",
+          "rg-field-with-unit"
+        ],
+        "related": [
+          "rg-file-input",
+          "rg-color-map",
+          "rg-disclosure",
+          "rg-cluster"
+        ]
+      },
+      "cssVars": [
+        "--rg-workspace-panel",
+        "--rg-pan-x",
+        "--rg-pan-y",
+        "--rg-zoom"
+      ],
+      "states": [
+        "default",
+        "is-dragging"
+      ],
+      "tokens": [
+        "--rg-color-neutral-50",
+        "--rg-space-6",
+        "--rg-color-black",
+        "--rg-layout-tool-panel",
+        "--rg-layout-param-col-min"
+      ],
       "doc": "patterns/workspace.md",
       "specimenAnchor": "workspace",
       "snippet": "<div class=\"rg-workspace\"><aside class=\"rg-workspace__panel\">...</aside><div class=\"rg-workspace__stage\"><header class=\"rg-workspace__stage-header\">...</header><div class=\"rg-workspace__canvas\"><div class=\"rg-workspace__layer\" style=\"--rg-zoom:1\"></div></div><footer class=\"rg-workspace__statusbar\">...</footer></div></div>",
       "notes": "Larghezza del pannello (1.4.0): il default e --rg-layout-tool-panel (380px), token delle tool. Non stringerlo con --rg-layout-sidebar (280px), che e la colonna di navigazione: sotto 324px un rg-field-with-unit non mostra piu il valore. rg-param-grid interroga la larghezza del PANNELLO via @container e impila da sola a una colonna sotto la soglia, anche a finestra larga: nessuna app deve scrivere media query o CSS locale per questo. Ordine canonico del pannello (1.7.0, aggiorna 1.5.0): la testa si apre con la RADICE della catena di dipendenze, decisa da una domanda — la misura del prodotto nasce dalla sorgente importata o e una decisione indipendente del tool? Testa A (sorgente-guidata, es. net-45): 'Sagoma' (rg-file-input + scala E misura reale del file) -> 'Colori e ruoli' (rg-color-map); NON c'e un 'Formato' separato, la misura vive dentro Sagoma. Testa B (formato-guidata, es. pattern-grammar/oblique): 'Formato e scala' IN CIMA (dimensioni del piano prodotto, indipendenti) -> 'Sagoma' (ritaglio opzionale) -> 'Colori e ruoli'. Poi in entrambe: i gruppi propri del tool NEL LORO ORDINE, poi la coda fissa 'Esportazione' e 'Preset'. Gli slot sono POSIZIONI: uno slot assente non lascia buchi, la numerazione (rg-param-section__index) resta contigua. Test di appartenenza: cambia significato al cambio del file? -> testa; descrive la misura di cio che esce ED e indipendente? -> Formato in cima (testa B), altrimenti dentro Sagoma (testa A); sopravvive al cambio di file e dice COME si genera? -> gruppo del tool. Le azioni non stanno nel pannello ma in rg-workspace__stage-header (Adatta = ghost, export = primary); restano nel pannello solo quelle sull'oggetto della loro sezione (sagoma demo, preset), in un rg-cluster su rg-param-grid__wide. Accordion (1.7.0): la testa NON si richiude mai (e <section>, sempre aperta, l'ancora che non sparisce); corpo e coda sono richiudibili TUTTI o nessuno con details.rg-param-section.rg-disclosure + summary.rg-param-section__header.rg-disclosure__trigger. Default senza memoria: testa aperta; corpo tutto aperto se il pannello ha <=5 sezioni, altrimenti (>=6) resta aperto solo il primo gruppo del corpo; coda (Esportazione, Preset) sempre chiusa. Lo stato aperto/chiuso si ricorda per tool (es. localStorage tool+id); i default valgono solo alla prima apertura. Sezione aperta di default = attributo open, chiusa = omesso.",
-      "keywords": ["workspace", "tool", "editor", "canvas", "viewport", "pan", "zoom", "pannello parametri", "app shell", "generatore", "larghezza pannello", "densita parametri", "container query", "pannello laterale", "ordine dei parametri", "ordine del pannello", "slot", "sezioni del pannello", "coerenza fra tool", "sagoma", "formato", "formato in cima", "sorgente guidata", "formato guidata", "testa del pannello", "archetipo pannello", "accordion", "sezione richiudibile", "collassabile", "apri chiudi", "stato di default", "persistenza", "quali aperte"]
+      "keywords": [
+        "workspace",
+        "tool",
+        "editor",
+        "canvas",
+        "viewport",
+        "pan",
+        "zoom",
+        "pannello parametri",
+        "app shell",
+        "generatore",
+        "larghezza pannello",
+        "densita parametri",
+        "container query",
+        "pannello laterale",
+        "ordine dei parametri",
+        "ordine del pannello",
+        "slot",
+        "sezioni del pannello",
+        "coerenza fra tool",
+        "sagoma",
+        "formato",
+        "formato in cima",
+        "sorgente guidata",
+        "formato guidata",
+        "testa del pannello",
+        "archetipo pannello",
+        "accordion",
+        "sezione richiudibile",
+        "collassabile",
+        "apri chiudi",
+        "stato di default",
+        "persistenza",
+        "quali aperte"
+      ]
     },
     {
       "id": "alert",
@@ -408,14 +1468,46 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-alert", "elements": ["rg-alert__title", "rg-alert__message"], "variants": ["rg-alert--info", "rg-alert--success", "rg-alert--warning", "rg-alert--error"] },
-      "variants": ["info", "success", "warning", "error"],
-      "states": ["default"],
-      "tokens": ["--rg-color-info", "--rg-color-success", "--rg-color-warning", "--rg-color-danger"],
+      "classes": {
+        "base": "rg-alert",
+        "elements": [
+          "rg-alert__title",
+          "rg-alert__message"
+        ],
+        "variants": [
+          "rg-alert--info",
+          "rg-alert--success",
+          "rg-alert--warning",
+          "rg-alert--error"
+        ]
+      },
+      "variants": [
+        "info",
+        "success",
+        "warning",
+        "error"
+      ],
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-info",
+        "--rg-color-success",
+        "--rg-color-warning",
+        "--rg-color-danger"
+      ],
       "doc": "components/alerts.md",
       "specimenAnchor": "alerts",
       "snippet": "<div class=\"rg-alert rg-alert--warning\"><p class=\"rg-alert__title\">Attenzione</p><p class=\"rg-alert__message\">Consumo stimato.</p></div>",
-      "keywords": ["alert", "avviso", "messaggio", "notifica", "errore", "warning", "banner"]
+      "keywords": [
+        "alert",
+        "avviso",
+        "messaggio",
+        "notifica",
+        "errore",
+        "warning",
+        "banner"
+      ]
     },
     {
       "id": "empty-state",
@@ -424,14 +1516,31 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-empty" },
-      "states": ["default"],
-      "tokens": ["--rg-color-text-secondary", "--rg-space-*"],
+      "classes": {
+        "base": "rg-empty"
+      },
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-text-secondary",
+        "--rg-space-*"
+      ],
       "doc": "components/alerts.md",
       "specimenAnchor": "data",
       "snippet": "<div class=\"rg-empty\">Nessun consumo calcolato.</div>",
       "notes": "Superficie aperta con filetti sopra e sotto, non un riquadro chiuso: lo stato vuoto non merita una cornice. Nomi alternativi da NON creare: rg-empty-state, rg-no-data.",
-      "keywords": ["empty", "empty state", "vuoto", "stato vuoto", "nessun dato", "nessun risultato", "placeholder", "no data", "elenco vuoto"]
+      "keywords": [
+        "empty",
+        "empty state",
+        "vuoto",
+        "stato vuoto",
+        "nessun dato",
+        "nessun risultato",
+        "placeholder",
+        "no data",
+        "elenco vuoto"
+      ]
     },
     {
       "id": "loading",
@@ -440,13 +1549,29 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-loading", "elements": ["rg-loading__line"] },
-      "states": ["default"],
-      "tokens": ["--rg-color-neutral-100", "--rg-motion-normal"],
+      "classes": {
+        "base": "rg-loading",
+        "elements": [
+          "rg-loading__line"
+        ]
+      },
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-neutral-100",
+        "--rg-motion-normal"
+      ],
       "doc": "components/alerts.md",
       "specimenAnchor": "data",
       "snippet": "<div class=\"rg-loading\"><span class=\"rg-loading__line\"></span><span class=\"rg-loading__line\"></span></div>",
-      "keywords": ["loading", "caricamento", "skeleton", "attesa", "spinner"]
+      "keywords": [
+        "loading",
+        "caricamento",
+        "skeleton",
+        "attesa",
+        "spinner"
+      ]
     },
     {
       "id": "key-value",
@@ -455,16 +1580,52 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-key-value", "variants": ["rg-key-value--ruled"], "related": ["rg-debug", "rg-log-line", "rg-log-line__time", "rg-version"] },
-      "variants": ["compact", "ruled"],
-      "states": ["default"],
-      "tokens": ["--rg-font-mono", "--rg-color-text-secondary", "--rg-letter-label"],
+      "classes": {
+        "base": "rg-key-value",
+        "variants": [
+          "rg-key-value--ruled"
+        ],
+        "related": [
+          "rg-debug",
+          "rg-log-line",
+          "rg-log-line__time",
+          "rg-version"
+        ]
+      },
+      "variants": [
+        "compact",
+        "ruled"
+      ],
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-font-mono",
+        "--rg-color-text-secondary",
+        "--rg-letter-label"
+      ],
       "doc": "components/technical-data.md",
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "data",
       "snippet": "<dl class=\"rg-key-value\"><dt>material_id</dt><dd>FIL-0281</dd></dl>\n<dl class=\"rg-key-value rg-key-value--ruled\"><dt>Codice</dt><dd>RG-AR-0248</dd><dt>Stagione</dt><dd>PE 26</dd></dl>",
       "notes": "--ruled e la presentazione a scheda tecnica: colonna label fissa, righe rigate, valore a sinistra. Per record confrontabili fra loro serve rg-table, non questa.",
-      "keywords": ["key value", "chiave valore", "dato tecnico", "metadati", "log", "debug", "versione", "provenienza", "anagrafica", "scheda tecnica", "attributi", "data grid", "griglia dati", "specifiche", "dt dd"]
+      "keywords": [
+        "key value",
+        "chiave valore",
+        "dato tecnico",
+        "metadati",
+        "log",
+        "debug",
+        "versione",
+        "provenienza",
+        "anagrafica",
+        "scheda tecnica",
+        "attributi",
+        "data grid",
+        "griglia dati",
+        "specifiche",
+        "dt dd"
+      ]
     },
     {
       "id": "progress",
@@ -473,13 +1634,31 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-progress", "elements": ["rg-progress__meta", "rg-progress__track", "rg-progress__value"] },
-      "states": ["default"],
-      "tokens": ["--rg-color-black", "--rg-color-neutral-100"],
+      "classes": {
+        "base": "rg-progress",
+        "elements": [
+          "rg-progress__meta",
+          "rg-progress__track",
+          "rg-progress__value"
+        ]
+      },
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-neutral-100"
+      ],
       "doc": "components/technical-data.md",
       "specimenAnchor": "data",
       "snippet": "<div class=\"rg-progress\"><div class=\"rg-progress__track\"><div class=\"rg-progress__value\" style=\"width:64%\"></div></div></div>",
-      "keywords": ["progress", "avanzamento", "barra", "percentuale", "processo"]
+      "keywords": [
+        "progress",
+        "avanzamento",
+        "barra",
+        "percentuale",
+        "processo"
+      ]
     },
     {
       "id": "confidence",
@@ -488,13 +1667,29 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-confidence", "elements": ["rg-confidence__scale"] },
-      "states": ["default"],
-      "tokens": ["--rg-color-black", "--rg-font-mono"],
+      "classes": {
+        "base": "rg-confidence",
+        "elements": [
+          "rg-confidence__scale"
+        ]
+      },
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-font-mono"
+      ],
       "doc": "components/technical-data.md",
       "specimenAnchor": "data",
       "snippet": "<div class=\"rg-confidence\"><span class=\"rg-confidence__scale\"></span> 0.974</div>",
-      "keywords": ["confidence", "affidabilita", "confidenza", "stima", "qualita dato"]
+      "keywords": [
+        "confidence",
+        "affidabilita",
+        "confidenza",
+        "stima",
+        "qualita dato"
+      ]
     },
     {
       "id": "consumption-row",
@@ -503,14 +1698,31 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-consumption-row", "elements": ["rg-consumption-row__bar"] },
-      "states": ["default"],
-      "tokens": ["--rg-font-mono", "--rg-color-black"],
+      "classes": {
+        "base": "rg-consumption-row",
+        "elements": [
+          "rg-consumption-row__bar"
+        ]
+      },
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-font-mono",
+        "--rg-color-black"
+      ],
       "doc": "components/technical-data.md",
       "patternRef": "patterns/consumption.md",
       "specimenAnchor": "data",
       "snippet": "<div class=\"rg-consumption-row\"><span>Viscosa</span><span class=\"rg-consumption-row__bar\" style=\"--v:.7\"></span><span>18.42 m</span></div>",
-      "keywords": ["consumo", "consumption", "filo", "materiale", "barra", "quantita"]
+      "keywords": [
+        "consumo",
+        "consumption",
+        "filo",
+        "materiale",
+        "barra",
+        "quantita"
+      ]
     },
     {
       "id": "disclosure",
@@ -519,15 +1731,49 @@
       "status": "stable",
       "since": "0.1.0",
       "kind": "component",
-      "classes": { "base": "rg-disclosure", "elements": ["rg-disclosure__trigger", "rg-disclosure__content"], "variants": ["rg-disclosure--boxed"] },
-      "variants": ["open-surface", "boxed"],
-      "states": ["collapsed", "expanded", "focus"],
-      "tokens": ["--rg-color-border", "--rg-color-surface", "--rg-radius-md", "--rg-space-*"],
+      "classes": {
+        "base": "rg-disclosure",
+        "elements": [
+          "rg-disclosure__trigger",
+          "rg-disclosure__content"
+        ],
+        "variants": [
+          "rg-disclosure--boxed"
+        ]
+      },
+      "variants": [
+        "open-surface",
+        "boxed"
+      ],
+      "states": [
+        "collapsed",
+        "expanded",
+        "focus"
+      ],
+      "tokens": [
+        "--rg-color-border",
+        "--rg-color-surface",
+        "--rg-radius-md",
+        "--rg-space-*"
+      ],
       "doc": "components/disclosure.md",
       "specimenAnchor": "layout",
       "snippet": "<details class=\"rg-disclosure\"><summary class=\"rg-disclosure__trigger\">Dettagli</summary><div class=\"rg-disclosure__content\">...</div></details>\n<details class=\"rg-disclosure rg-disclosure--boxed\" open><summary class=\"rg-disclosure__trigger\">Materiali e consumi</summary><div class=\"rg-disclosure__content\">...</div></details>",
       "notes": "--boxed e la sezione collassabile riquadrata di una pagina lunga (v1.1.0): NON e una card, non usarla per record o entita. Il segno +/- e generato dal DS e segue [open]/is-expanded/aria-expanded: non aggiungere un secondo indicatore.",
-      "keywords": ["disclosure", "accordion", "espandi", "collassa", "dettagli", "fisarmonica", "sezione collassabile", "section card", "toggle sezione", "riquadro apribile", "details", "summary"]
+      "keywords": [
+        "disclosure",
+        "accordion",
+        "espandi",
+        "collassa",
+        "dettagli",
+        "fisarmonica",
+        "sezione collassabile",
+        "section card",
+        "toggle sezione",
+        "riquadro apribile",
+        "details",
+        "summary"
+      ]
     },
     {
       "id": "list-row",
@@ -536,15 +1782,68 @@
       "status": "stable",
       "since": "0.2.0",
       "kind": "component",
-      "classes": { "base": "rg-list", "elements": ["rg-list-row", "rg-list-row__head", "rg-list-row__title", "rg-list-row__meta", "rg-list-row__actions"], "variants": ["rg-list-row--link", "rg-list-row--danger"] },
-      "variants": ["record", "link", "danger"],
-      "states": ["default", "hover", "focus", "selected", "danger"],
-      "tokens": ["--rg-font-identity", "--rg-font-mono", "--rg-color-black", "--rg-color-danger", "--rg-color-surface", "--rg-color-focus"],
+      "classes": {
+        "base": "rg-list",
+        "elements": [
+          "rg-list-row",
+          "rg-list-row__head",
+          "rg-list-row__title",
+          "rg-list-row__meta",
+          "rg-list-row__actions"
+        ],
+        "variants": [
+          "rg-list-row--link",
+          "rg-list-row--danger"
+        ]
+      },
+      "variants": [
+        "record",
+        "link",
+        "danger"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "selected",
+        "danger"
+      ],
+      "tokens": [
+        "--rg-font-identity",
+        "--rg-font-mono",
+        "--rg-color-black",
+        "--rg-color-danger",
+        "--rg-color-surface",
+        "--rg-color-focus"
+      ],
       "doc": "components/lists.md",
       "specimenAnchor": "lists",
       "snippet": "<ul class=\"rg-list\"><li class=\"rg-list-row\"><div class=\"rg-list-row__head\"><span class=\"rg-list-row__title\">Riga 3 -> Riga 4</span></div></li></ul>\n<ul class=\"rg-list\"><li><a class=\"rg-list-row rg-list-row--link\" href=\"/fasi/0\"><span class=\"rg-list-row__head\"><span class=\"rg-list-row__title\">Ricamo piatto</span><span class=\"rg-badge rg-badge--count\">4 operazioni</span></span><span class=\"rg-list-row__meta\"><span>Ricamo</span><span>densita 4.2 pt/mm</span></span></a></li></ul>",
       "notes": "Da 1.3.0: se l'elenco e una SEQUENZA ORDINATA di contenitori (fasi di una lavorazione, passi di un percorso) con numero, apertura in loco e azioni proprie, il componente e rg-step, non questa riga. rg-list-row--link (v1.2.0) e la riga-record NAVIGABILE: si applica all'<a> (o al <button> se la navigazione passa da JS) dentro un <li> nudo, mai a un <li> inerte. Il chevron di apertura e generato dal DS come il +/- della disclosure: non aggiungere frecce nel markup. Una riga --link non puo contenere altri controlli interattivi (niente __actions): se servono azioni per riga, la riga resta inerte e si usa un rg-button--small \"Apri\". Badge e conteggi vanno in __head, non in __actions. Distinta da rg-folder, che e un contenitore-sezione della famiglia card, e da rg-disclosure, che apre in loco invece di navigare.",
-      "keywords": ["lista", "list", "riga", "elenco", "record", "riga record", "riga navigabile", "riga cliccabile", "clickable row", "link row", "navigazione", "apri dettaglio", "drill down", "indice", "revisioni", "override", "operazioni", "fasi", "fase di lavorazione", "azioni inline", "chevron", "freccia"]
+      "keywords": [
+        "lista",
+        "list",
+        "riga",
+        "elenco",
+        "record",
+        "riga record",
+        "riga navigabile",
+        "riga cliccabile",
+        "clickable row",
+        "link row",
+        "navigazione",
+        "apri dettaglio",
+        "drill down",
+        "indice",
+        "revisioni",
+        "override",
+        "operazioni",
+        "fasi",
+        "fase di lavorazione",
+        "azioni inline",
+        "chevron",
+        "freccia"
+      ]
     },
     {
       "id": "icon-button",
@@ -553,13 +1852,33 @@
       "status": "stable",
       "since": "0.2.0",
       "kind": "component",
-      "classes": { "base": "rg-icon-button", "variants": ["rg-icon-button--danger"] },
-      "states": ["default", "hover", "focus", "pressed", "disabled"],
-      "tokens": ["--rg-color-black", "--rg-color-danger"],
+      "classes": {
+        "base": "rg-icon-button",
+        "variants": [
+          "rg-icon-button--danger"
+        ]
+      },
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "pressed",
+        "disabled"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-danger"
+      ],
       "doc": "components/lists.md",
       "specimenAnchor": "layout",
       "snippet": "<button class=\"rg-icon-button\" aria-label=\"Centra sul connettore\">◎</button>",
-      "keywords": ["icon button", "icona", "azione compatta", "toolbar", "bottone icona"]
+      "keywords": [
+        "icon button",
+        "icona",
+        "azione compatta",
+        "toolbar",
+        "bottone icona"
+      ]
     },
     {
       "id": "appshell",
@@ -570,16 +1889,59 @@
       "kind": "component",
       "isPattern": true,
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-appshell", "elements": ["rg-appshell__main"], "related": ["rg-topbar", "rg-topbar--app", "rg-topbar--sticky", "rg-section-header", "rg-section-header--sub", "rg-cluster", "rg-cluster--end", "rg-footer-note", "rg-u-no-print", "rg-u-inline"] },
-      "cssVars": ["--rg-appshell-max"],
+      "classes": {
+        "base": "rg-appshell",
+        "elements": [
+          "rg-appshell__main"
+        ],
+        "related": [
+          "rg-topbar",
+          "rg-topbar--app",
+          "rg-topbar--sticky",
+          "rg-section-header",
+          "rg-section-header--sub",
+          "rg-cluster",
+          "rg-cluster--end",
+          "rg-footer-note",
+          "rg-u-no-print",
+          "rg-u-inline"
+        ]
+      },
+      "cssVars": [
+        "--rg-appshell-max"
+      ],
       "variants": [],
-      "states": ["default", "print"],
-      "tokens": ["--rg-layout-content-max", "--rg-layout-reading-max", "--rg-space-8", "--rg-z-sticky"],
+      "states": [
+        "default",
+        "print"
+      ],
+      "tokens": [
+        "--rg-layout-content-max",
+        "--rg-layout-reading-max",
+        "--rg-space-8",
+        "--rg-z-sticky"
+      ],
       "doc": "patterns/appshell.md",
       "specimenAnchor": "appshell",
       "snippet": "<div class=\"rg-appshell\"><header class=\"rg-topbar rg-topbar--app rg-topbar--sticky\"><span class=\"rg-topbar__brand\">RG</span><nav class=\"rg-topbar__nav\" aria-label=\"Navigazione principale\"><a href=\"/\" aria-current=\"page\">Prodotti</a><a href=\"/review\">Revisione</a></nav><div class=\"rg-topbar__actions\"></div></header><main class=\"rg-appshell__main\">...</main></div>",
       "notes": "Complemento di rg-workspace: questo e il guscio delle app a pagine, quello e il guscio delle tool. Uno solo per documento, mai annidato. La larghezza si stringe con --rg-appshell-max usando un token di layout, non un pixel arbitrario. La stampa e gia gestita in rg-utilities.css: nessuna app riscrive il proprio @media print.",
-      "keywords": ["app shell", "appshell", "guscio", "shell", "layout applicazione", "header", "main", "pagina", "chrome", "struttura pagina", "colonna contenuto", "sticky header", "piattaforma", "rg-app", "rg-main"]
+      "keywords": [
+        "app shell",
+        "appshell",
+        "guscio",
+        "shell",
+        "layout applicazione",
+        "header",
+        "main",
+        "pagina",
+        "chrome",
+        "struttura pagina",
+        "colonna contenuto",
+        "sticky header",
+        "piattaforma",
+        "rg-app",
+        "rg-main"
+      ]
     },
     {
       "id": "lightbox",
@@ -589,16 +1951,48 @@
       "since": "1.1.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-lightbox", "elements": ["rg-lightbox__image", "rg-lightbox__thumb"] },
+      "classes": {
+        "base": "rg-lightbox",
+        "elements": [
+          "rg-lightbox__image",
+          "rg-lightbox__thumb"
+        ]
+      },
       "variants": [],
-      "states": ["closed", "open", "hover"],
-      "tokens": ["--rg-z-lightbox", "--rg-color-black", "--rg-radius-sm", "--rg-space-8"],
+      "states": [
+        "closed",
+        "open",
+        "hover"
+      ],
+      "tokens": [
+        "--rg-z-lightbox",
+        "--rg-color-black",
+        "--rg-radius-sm",
+        "--rg-space-8"
+      ],
       "doc": "components/lightbox.md",
       "rulesRef": "design-rules.md#7-tono-visivo",
       "specimenAnchor": "lightbox",
       "snippet": "<button class=\"rg-lightbox__thumb\" aria-label=\"Ingrandisci: fermata 03\"><img src=\"stop-03.jpg\" alt=\"Fermata 03\" width=\"132\"></button>\n<div class=\"rg-lightbox\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Immagine ingrandita\" hidden><img class=\"rg-lightbox__image\" src=\"\" alt=\"\"></div>",
       "notes": "Overlay di SOLA LETTURA. Se serve una decisione, un form o metadati editabili, il componente e rg-modal. Da 1.8.0 sta su --rg-z-lightbox (450), SOPRA il dialog (--rg-z-modal 400) e sotto i toast (--rg-z-toast 500): un ingrandimento aperto dentro un modal deve poter salire sopra il modal, non finirci dietro (prima era su --rg-z-overlay 300 e i prodotti lo tamponavano in locale). Chiusura obbligatoria con click sullo scrim E con Esc. La miniatura e un <button> con aria-label: il cursore zoom-in non e un'affordance accessibile.",
-      "keywords": ["lightbox", "zoom", "ingrandimento", "immagine", "foto", "anteprima", "overlay", "scrim", "miniatura", "thumbnail", "campione", "galleria", "z-index", "layering", "sopra il modal", "dentro un modal"]
+      "keywords": [
+        "lightbox",
+        "zoom",
+        "ingrandimento",
+        "immagine",
+        "foto",
+        "anteprima",
+        "overlay",
+        "scrim",
+        "miniatura",
+        "thumbnail",
+        "campione",
+        "galleria",
+        "z-index",
+        "layering",
+        "sopra il modal",
+        "dentro un modal"
+      ]
     },
     {
       "id": "step",
@@ -608,16 +2002,83 @@
       "since": "1.3.0",
       "kind": "component",
       "promotedFrom": "rg-product-platform",
-      "classes": { "base": "rg-steps", "elements": ["rg-step", "rg-step__head", "rg-step__toggle", "rg-step__num", "rg-step__headline", "rg-step__title", "rg-step__meta", "rg-step__aside", "rg-step__actions", "rg-step__body"], "variants": ["rg-step--danger"] },
-      "variants": ["standard", "danger"],
-      "states": ["collapsed", "expanded", "hover", "focus", "danger", "empty"],
-      "tokens": ["--rg-font-identity", "--rg-font-mono", "--rg-font-size-lg", "--rg-color-black", "--rg-color-neutral-600", "--rg-color-surface", "--rg-color-danger", "--rg-color-focus", "--rg-color-border", "--rg-border-hairline", "--rg-space-8", "--rg-radius-sm"],
+      "classes": {
+        "base": "rg-steps",
+        "elements": [
+          "rg-step",
+          "rg-step__head",
+          "rg-step__toggle",
+          "rg-step__num",
+          "rg-step__headline",
+          "rg-step__title",
+          "rg-step__meta",
+          "rg-step__aside",
+          "rg-step__actions",
+          "rg-step__body"
+        ],
+        "variants": [
+          "rg-step--danger"
+        ]
+      },
+      "variants": [
+        "standard",
+        "danger"
+      ],
+      "states": [
+        "collapsed",
+        "expanded",
+        "hover",
+        "focus",
+        "danger",
+        "empty"
+      ],
+      "tokens": [
+        "--rg-font-identity",
+        "--rg-font-mono",
+        "--rg-font-size-lg",
+        "--rg-color-black",
+        "--rg-color-neutral-600",
+        "--rg-color-surface",
+        "--rg-color-danger",
+        "--rg-color-focus",
+        "--rg-color-border",
+        "--rg-border-hairline",
+        "--rg-space-8",
+        "--rg-radius-sm"
+      ],
       "doc": "components/steps.md",
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "steps",
       "snippet": "<ol class=\"rg-steps\">\n  <li class=\"rg-step\">\n    <div class=\"rg-step__head\">\n      <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-1-toggle\" aria-controls=\"fase-1\" aria-expanded=\"true\">\n        <span class=\"rg-step__num\">1</span>\n        <span class=\"rg-step__headline\"><span class=\"rg-step__title\">Ricamo piatto</span><span class=\"rg-step__meta\"><span>Ricamo</span><span>densita 4.2 pt/mm</span><span>altezza 2.0 mm</span></span></span>\n        <span class=\"rg-step__aside\"><span class=\"rg-badge rg-badge--count\">4 operazioni</span></span>\n      </button>\n      <div class=\"rg-step__actions\">\n        <button class=\"rg-button rg-button--ghost\" type=\"button\" aria-label=\"Modifica fase 1: Ricamo piatto\">Modifica</button>\n        <button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"button\" aria-label=\"Elimina fase 1: Ricamo piatto\">Elimina</button>\n      </div>\n    </div>\n    <div class=\"rg-step__body\" id=\"fase-1\" role=\"region\" aria-labelledby=\"fase-1-toggle\"><!-- operazioni --></div>\n  </li>\n</ol>",
       "notes": "Blocco RIGATO: filetto forte nero sopra e sotto la sequenza, filetto neutro fra le fasi (idioma di rg-table), gap zero, nessun bordo perimetrale e nessuno sfondo — un pannello lo trasformerebbe in card. Il separatore sta in testa alla fase seguente perche e la stessa linea che chiude il corpo di una fase aperta. Contenitore di una SEQUENZA, non riga-record: usare rg-list-row/--link quando l'ordine non conta e la voce non contiene altro, rg-disclosure--boxed per una sezione di pagina senza azioni. NON usa <details>/<summary> di proposito: le azioni della fase starebbero dentro il summary (controlli annidati) o dentro il contenuto rivelabile (invisibili a fase chiusa); qui il toggle e un <button> e le azioni sono suoi fratelli. Stato = aria-expanded sul toggle + [hidden] sul corpo, nessuna classe locale. Il segno +/- e il filo verticale che unisce i numeri sono generati dal DS: non aggiungere chevron ne connettori. Numero e segno non sono due indicatori dello stesso fatto (posizione vs apertura) e stanno ai capi opposti del toggle. Non si annida.",
-      "keywords": ["fase", "fasi", "fase di lavorazione", "lavorazione", "sequenza", "sequenza ordinata", "ordine", "flusso", "step", "steps", "passo", "passi", "stadio", "timeline", "processo", "ciclo di lavorazione", "numero progressivo", "numerata", "elenco ordinato", "contenitore espandibile", "espandi in loco", "accordion con azioni", "operazioni", "scheda parte", "distinta di lavorazione", "routing"]
+      "keywords": [
+        "fase",
+        "fasi",
+        "fase di lavorazione",
+        "lavorazione",
+        "sequenza",
+        "sequenza ordinata",
+        "ordine",
+        "flusso",
+        "step",
+        "steps",
+        "passo",
+        "passi",
+        "stadio",
+        "timeline",
+        "processo",
+        "ciclo di lavorazione",
+        "numero progressivo",
+        "numerata",
+        "elenco ordinato",
+        "contenitore espandibile",
+        "espandi in loco",
+        "accordion con azioni",
+        "operazioni",
+        "scheda parte",
+        "distinta di lavorazione",
+        "routing"
+      ]
     },
     {
       "id": "file-card",
@@ -627,16 +2088,97 @@
       "since": "1.12.0",
       "kind": "component",
       "promotedFrom": "rg-product-suite",
-      "classes": { "base": "rg-file-card", "elements": ["rg-file-card__row", "rg-file-card__title", "rg-file-card__badges", "rg-file-card__actions", "rg-file-card__empty", "rg-file-card__reveal", "rg-file-card__options", "rg-file-card__confirm"], "variants": ["rg-file-card--loaded", "rg-file-card--empty"], "related": ["rg-file-input", "rg-empty", "rg-badge", "rg-button"] },
-      "variants": ["loaded", "empty"],
-      "states": ["empty", "loaded", "file-selected"],
-      "tokens": ["--rg-color-white", "--rg-color-surface", "--rg-color-border", "--rg-font-mono", "--rg-font-size-sm", "--rg-weight-regular", "--rg-line-height-technical", "--rg-border-hairline", "--rg-border-style", "--rg-radius-md", "--rg-space-2", "--rg-space-3", "--rg-space-4"],
+      "classes": {
+        "base": "rg-file-card",
+        "elements": [
+          "rg-file-card__row",
+          "rg-file-card__title",
+          "rg-file-card__badges",
+          "rg-file-card__actions",
+          "rg-file-card__empty",
+          "rg-file-card__reveal",
+          "rg-file-card__options",
+          "rg-file-card__confirm"
+        ],
+        "variants": [
+          "rg-file-card--loaded",
+          "rg-file-card--empty"
+        ],
+        "related": [
+          "rg-file-input",
+          "rg-empty",
+          "rg-badge",
+          "rg-button"
+        ]
+      },
+      "variants": [
+        "loaded",
+        "empty"
+      ],
+      "states": [
+        "empty",
+        "loaded",
+        "file-selected"
+      ],
+      "tokens": [
+        "--rg-color-white",
+        "--rg-color-surface",
+        "--rg-color-border",
+        "--rg-font-mono",
+        "--rg-font-size-sm",
+        "--rg-weight-regular",
+        "--rg-line-height-technical",
+        "--rg-border-hairline",
+        "--rg-border-style",
+        "--rg-radius-md",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4"
+      ],
       "doc": "components/file-card.md",
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "file-card",
       "snippet": "<article class=\"rg-file-card rg-file-card--loaded\">\n  <div class=\"rg-file-card__row\">\n    <h3 class=\"rg-file-card__title\" title=\"verbale-2026.pdf\">verbale-2026.pdf</h3>\n    <div class=\"rg-file-card__badges\"><span class=\"rg-badge rg-badge--parsed\">letta</span></div>\n    <div class=\"rg-file-card__actions\">\n      <a class=\"rg-button rg-button--ghost\" href=\"/doc/42\">Apri</a>\n      <label class=\"rg-file-input__control\"><input type=\"file\" accept=\"application/pdf\"><span class=\"rg-button rg-button--outline\">Carica un altro&#8230;</span></label>\n    </div>\n  </div>\n  <div class=\"rg-file-card__reveal\" hidden>\n    <div class=\"rg-file-card__options\"><!-- slot app: opzioni di lettura --></div>\n    <div class=\"rg-file-card__confirm\"><button class=\"rg-button rg-button--primary\" type=\"button\">Conferma</button></div>\n  </div>\n</article>",
       "notes": "Componente NUOVO per composizione canonizzata, non variante: nessun mattone esistente modella 'stato caricato/vuoto + rivelazione dopo la scelta'. Compone il MECCANISMO del picker di rg-file-input (solo rg-file-input__control: la label che copre l'input a opacita zero col bottone; NON rg-file-input__status, che sarebbe il 'paragrafo' da eliminare — la provenienza e il nome file nel titolo), la superficie di rg-empty per lo stato vuoto, rg-badge per lo slot stato e rg-button per le azioni. Dentro la card il bottone del picker torna a larghezza automatica (in rg-file-input e a piena larghezza perche li e il bersaglio unico del pannello). UN SOLO titolo (rg-file-card__title, mono, troncato con ellissi ma leggibile per intero: testo completo nel nodo + title): niente secondo titolo, niente paragrafo esplicativo — erano i difetti del documento fatto a mano. Gli slot (badges, actions, options, confirm) sono DELL'APP: il DS da posizioni e stile, mai i contenuti (nessuna 'spolina%', nessuna 'scheda macchina' nel CSS/markup del DS). RIVELAZIONE PROGRESSIVA: rg-file-card__reveal parte con [hidden] e contiene rg-file-card__options + rg-file-card__confirm; prima della scelta del file non esiste nemmeno per l'accessibilita (hidden nativo, non solo visivo). Fonte di verita = [hidden] su __reveal, stato non nativo pilotato dall'app come aria-expanded altrove; il CSS fa vincere [hidden] sul display del contenitore. Contratto JS minimo: al change dell'input file, se un file e presente l'app scrive il nome nel titolo e fa reveal.hidden=false; su conferma o Ripristina reveal.hidden=true. Distinto da rg-file-input (picker+status per una tool di import, senza stati caricato/vuoto), da rg-upload (area di rilascio grande) e da rg-card/rg-section-card (contenitori generici senza i due stati e la rivelazione).",
-      "keywords": ["file card", "documento", "documento caricato", "file caricato", "allegato", "allegato caricato", "documento allegato", "carica documento", "carica file", "carica pdf", "carica un altro", "pdf", "upload", "caricamento", "picker file", "selettore file", "stato caricato", "stato vuoto", "empty", "caricato", "un solo titolo", "nome file", "slot badge", "slot azioni", "apri ripristina", "rivelazione progressiva", "progressive disclosure", "rivela dopo scelta", "opzioni di lettura", "conferma", "zona nascosta", "hidden", "riusabile", "generico", "compilatore", "scheda parte", "provenienza"]
+      "keywords": [
+        "file card",
+        "documento",
+        "documento caricato",
+        "file caricato",
+        "allegato",
+        "allegato caricato",
+        "documento allegato",
+        "carica documento",
+        "carica file",
+        "carica pdf",
+        "carica un altro",
+        "pdf",
+        "upload",
+        "caricamento",
+        "picker file",
+        "selettore file",
+        "stato caricato",
+        "stato vuoto",
+        "empty",
+        "caricato",
+        "un solo titolo",
+        "nome file",
+        "slot badge",
+        "slot azioni",
+        "apri ripristina",
+        "rivelazione progressiva",
+        "progressive disclosure",
+        "rivela dopo scelta",
+        "opzioni di lettura",
+        "conferma",
+        "zona nascosta",
+        "hidden",
+        "riusabile",
+        "generico",
+        "compilatore",
+        "scheda parte",
+        "provenienza"
+      ]
     },
     {
       "id": "worksheet-block",
@@ -986,6 +2528,130 @@
         "firma",
         "sigla",
         "operatore"
+      ]
+    },
+    {
+      "id": "operation-row",
+      "title": "Operation row (sequenza di lavoro compilabile)",
+      "role": "Righe di operazioni in ordine di esecuzione, ognuna con un tempo e da zero a tre campi PROPRI e diversi fra riga e riga, alcune ripetibili: la scheda tecnica di una fase compilata a schermo.",
+      "status": "stable",
+      "since": "1.15.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-operation-row",
+        "elements": [
+          "rg-operation-row__head",
+          "rg-operation-row__index",
+          "rg-operation-row__name",
+          "rg-operation-row__actions"
+        ],
+        "variants": [
+          "rg-operation-row--repeat"
+        ],
+        "related": [
+          "rg-operation-list",
+          "rg-cluster",
+          "rg-cluster--end",
+          "rg-field",
+          "rg-field--w4",
+          "rg-field--w8",
+          "rg-field--w16",
+          "rg-field--w24",
+          "rg-field--grow",
+          "rg-field__mark",
+          "rg-steps",
+          "rg-worksheet-block",
+          "rg-section-card"
+        ]
+      },
+      "variants": [
+        "base",
+        "repeat"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "repeat",
+        "empty"
+      ],
+      "cssVars": [
+        "--rg-operation-head"
+      ],
+      "tokens": [
+        "--rg-color-border",
+        "--rg-color-border-medium",
+        "--rg-color-neutral-50",
+        "--rg-color-text-label",
+        "--rg-font-identity",
+        "--rg-font-mono",
+        "--rg-font-size-xs",
+        "--rg-font-size-sm",
+        "--rg-weight-medium",
+        "--rg-border-hairline",
+        "--rg-border-style",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4"
+      ],
+      "doc": "components/operation-row.md",
+      "patternRef": "patterns/worksheet-entry.md",
+      "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
+      "specimenAnchor": "operation-row",
+      "snippet": "<ol class=\"rg-operation-list\">\n  <li class=\"rg-operation-row\">\n    <div class=\"rg-operation-row__head\">\n      <span class=\"rg-operation-row__index\">03</span>\n      <span class=\"rg-operation-row__name\">Stampa</span>\n    </div>\n    <div class=\"rg-cluster rg-cluster--end\">\n      <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Tempo <span class=\"rg-field__mark\" aria-hidden=\"true\">&#8364;</span></span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"decimal\" value=\"12\" aria-describedby=\"nota-costo\"></label>\n      <label class=\"rg-field rg-field--w4\"><span class=\"rg-field__label\">Passate</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"numeric\" value=\"2\"></label>\n      <label class=\"rg-field rg-field--grow\"><span class=\"rg-field__label\">File</span><input class=\"rg-input rg-mono\" value=\"RG-0481_p2_uv.prn\"></label>\n    </div>\n    <div class=\"rg-operation-row__actions\">\n      <button class=\"rg-button rg-button--ghost\" type=\"submit\" name=\"ripeti\" value=\"03\">+ Ripeti</button>\n    </div>\n  </li>\n  <li class=\"rg-operation-row rg-operation-row--repeat\">\n    <div class=\"rg-operation-row__head\"><span class=\"rg-operation-row__index\">03&#183;2</span><span class=\"rg-operation-row__name\">Stampa &#8212; colore</span></div>\n    <div class=\"rg-cluster rg-cluster--end\"></div>\n    <div class=\"rg-operation-row__actions\"></div>\n  </li>\n</ol>",
+      "notes": "PERCHE NON UNA TABELLA: le operazioni non hanno le stesse colonne (preparazione ha solo il tempo, stampa ha inchiostri/passate/file), quindi una rg-table dovrebbe portare l'UNIONE dei campi di tutte le operazioni - una matrice quasi vuota dove ogni riga usa due celle su sei e le altre quattro sono buchi che si leggono come dati mancanti. La tabella e la forma delle righe OMOGENEE: se un giorno tutte le operazioni avessero gli stessi campi, la tabella tornerebbe a essere la forma giusta. PERCHE NON UNA CARD PER OPERAZIONE: cinque riquadri sono cinque cornici, piu cromo e piu scroll per lo stesso contenuto (regole 2 e 6 - non trasformare ogni contenuto in una card, usare linee per mostrare struttura). QUINDI: righe su superficie aperta separate da un filetto, con la TESTA IN COLONNA (indice e nome incolonnati a sinistra, cosi l'occhio scorre la sequenza in verticale senza rileggerla) e la CODA CHE SCORRE (i campi prendono la larghezza del proprio contenuto con rg-field--w* e vanno a capo solo quando non entrano): un'operazione da tre campi occupa UNA riga invece delle due righe di una griglia 1fr 1fr, che e la ragione per cui queste schede chiedevano troppo scroll. ORDINE DI TABULAZIONE: nessun role=grid, nessun roving tabindex - i campi restano tutti nella tab sequence nativa. L'ARIA APG prescrive il pattern grid (una sola cella nella tab sequence, frecce per navigare) quando serve ACCORCIARE la sequenza per non intrappolare l'utente in una lista lunga; qui e il contrario: cinque righe per quattro campi sono venti stop, e sono esattamente i venti gesti del compilatore. Le azioni della riga stanno in fondo alla riga ANCHE NEL DOM: chi tabula trova 'Ripeti' dopo aver compilato, non prima - un controllo in mezzo ai campi rompe la sequenza attesa dal tasto Tab. La TESTA si allinea alle ETICHETTE dei campi, non ai controlli: il nome dell'operazione e una label di riga. La larghezza della colonna-testa e --rg-operation-head (default 28ch (indice + circa 24 caratteri di nome)) e la imposta il contenitore, non il componente. SUPERFICIE: l'hover chiaro presuppone il bianco sotto, quindi la lista va nel corpo di una rg-section-card e non sul fondo di pagina (regola 6). RIPETIZIONE = struttura + testo: il rientro con filetto verticale dice CHE e una ripetizione, l'indice scritto (01-2) dice DI CHI; il colore non e ammesso come unico segnale. LIMITE NOTO: sotto i 680px la testa passa a riga propria sopra i campi e la colonna dei nomi sparisce - compromesso accettato, perche sotto quella larghezza una colonna fissa da 28ch (indice + circa 24 caratteri di nome) lascerebbe ai campi meno dello spazio minimo. NON E LA LISTA DELLE FASI: le operazioni stanno DENTRO una fase; per l'elenco delle fasi di una parte si usa rg-list-row o rg-steps. La riga non ha uno stato di errore proprio: l'errore appartiene al CAMPO (rg-field.is-error), perche e il campo a essere sbagliato, non l'operazione. I bottoni della riga usano rg-button--ghost al target pieno (40px), non rg-button--small (32px): con align-self:end si appoggiano esattamente alla base degli input, e la riga non e cosi densa da giustificare un target ridotto.",
+      "keywords": [
+        "operazione",
+        "operazioni",
+        "sequenza",
+        "sequenza di lavoro",
+        "ciclo di lavoro",
+        "fase",
+        "lavorazione",
+        "scheda tecnica",
+        "scheda di lavorazione",
+        "scheda da compilare",
+        "compilare",
+        "compilazione",
+        "tempo",
+        "tempi",
+        "tempo unitario",
+        "minuti",
+        "riga compilabile",
+        "riga editabile",
+        "riga di form",
+        "lista di righe",
+        "righe ripetibili",
+        "ripetibile",
+        "ripeti",
+        "ripetizione",
+        "aggiungi riga",
+        "add another",
+        "repeater",
+        "passata",
+        "passate",
+        "composito",
+        "bianco e colore",
+        "stampa uv",
+        "serigrafia",
+        "ricamo",
+        "pantografo",
+        "reparto",
+        "form lungo",
+        "modulo lungo",
+        "data entry",
+        "inserimento dati",
+        "tabella editabile",
+        "editable table",
+        "inline edit",
+        "campi eterogenei",
+        "colonne diverse",
+        "operation row",
+        "work sequence",
+        "routing",
+        "step compilabile",
+        "troppo scroll"
       ]
     }
   ]

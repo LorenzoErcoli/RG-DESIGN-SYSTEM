@@ -1,6 +1,6 @@
 {
   "name": "rg-design-system",
-  "version": "1.14.1",
+  "version": "1.15.0",
   "private": true,
   "type": "module",
   "description": "RG Design System — token, componenti e pattern, framework-agnostic. Nessuna dipendenza runtime.",

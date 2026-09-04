@@ -31,7 +31,7 @@ Stati richiesti: default, hover, focus, filled, read-only, disabled, warning, er
 
 Il campo è `[input | unità]`: il suffisso unità è incomprimibile (min 42px), quindi tutto ciò che
 si toglie alla colonna lo perde il numero. **Larghezza minima d'uso: 132px**
-(`--rg-layout-param-col-min`) — sotto, un valore come `12.5` con gli spinner del `type="number"`
+(`--rg-layout-param-col-min`) — sotto, un valore come `12.5` con il suffisso dell'unità
 non è più leggibile e la label a due parole va a capo tre volte.
 
 - In una griglia a due colonne (`rg-param-grid`) servono quindi ≥ 324px di contenitore. Non è una
@@ -60,11 +60,139 @@ dell'unità restano attaccati e non si stirano.
 <label class="rg-field">
   <span class="rg-field__label">Tariffa macchina</span>
   <span class="rg-field-with-unit">
-    <input class="rg-input rg-input--numeric" type="number" step="0.01" min="0" value="80"> <span>€/h</span>
+    <input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="80"> <span>€/h</span>
   </span>
   <small class="rg-field__help">Costo orario della macchina da ricamo.</small>
 </label>
 ```
+
+## Larghezza dichiarata (`.rg-field--w4|w8|w16|w24|--grow`)
+
+La larghezza di un campo è un'**affermazione su quanto contenuto ci si aspetta**, non una scelta
+estetica. Un campo largo mezza pagina per contenere `2` chiede a chi compila di ricontrollare di
+aver capito la domanda; una casella da tre caratteri per un percorso file lo costringe a scorrere
+dentro l'input per rileggere ciò che ha scritto.
+
+Il numero nel nome **è** il numero di caratteri attesi. La misura è `Nch` più il cromo del
+controllo (padding e bordo, coperti da `--rg-space-8`).
+
+| Classe | Contenuto atteso | Esempi |
+| --- | --- | --- |
+| `rg-field--w4` | 3–4 caratteri | passate, pezzi al piano, numero di teste |
+| `rg-field--w8` | 6–8 caratteri | tempo, dpi, altezza, grammatura |
+| `rg-field--w16` | 12–16 caratteri | codice, lotto, sigla inchiostri |
+| `rg-field--w24` | ~24 caratteri | nome profilo, tipo supporto, descrizione breve |
+| `rg-field--grow` | variabile e senza tetto | percorso file, note |
+
+- **Senza modificatore il campo resta fluido** e riempie la colonna che lo ospita: è il default
+  giusto per un form a una colonna dove tutti i campi hanno contenuto simile.
+- `--grow` è un flex item che prende lo spazio che avanza sulla riga: si usa dentro un
+  `rg-cluster`, non dentro una griglia a colonne fisse (lì c'è già `rg-param-grid__wide`).
+- Il **valore misurato** aveva già la sua larghezza: `rg-input--numeric` si ferma a
+  `--rg-input-numeric-width` (12ch). Questi modificatori servono al **testo**, che finora prendeva
+  sempre tutta la colonna anche quando conteneva tre lettere.
+- **Limite dichiarato:** il modificatore stringe anche l'etichetta, che va a capo. Se l'etichetta
+  non entra, o è troppo lunga per una riga di campi o il campo è della misura sbagliata: non si
+  allarga il campo per far stare la label.
+
+```html
+<div class="rg-cluster rg-cluster--end">
+  <label class="rg-field rg-field--w8"><span class="rg-field__label">Tempo</span>
+    <input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="12"></label>
+  <label class="rg-field rg-field--w4"><span class="rg-field__label">Passate</span>
+    <input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="2"></label>
+  <label class="rg-field rg-field--grow"><span class="rg-field__label">File</span>
+    <input class="rg-input rg-mono" value="RG-0481_p2_uv.prn"></label>
+</div>
+```
+
+## Marcatore di campo (`.rg-field__mark`) — dichiara una volta, marca molte
+
+«Questo campo entra nel costo» vale per cinque campi su dodici. Ripeterlo in un `rg-field__help`
+sotto ognuno è **rumore, non informazione**: cinque volte la stessa frase, e in lettura assistita
+cinque volte la stessa frase a ogni campo.
+
+La forma corretta è l'opposta: l'istruzione che vale per il gruppo si scrive **una volta sola** in
+testa al gruppo, e si lega ai singoli controlli con `aria-describedby`. Nell'etichetta resta solo
+un **segno**, mono e secondario, il cui significato è quella frase.
+
+- Il marcatore è un **carattere**, non un colore: sopravvive alla scala di grigi e alla fotocopia
+  (regola 11 — nessuno stato affidato al solo colore).
+- Va **sempre** in coppia con `aria-describedby` dall'input alla frase che lo spiega, e
+  `aria-hidden="true"` sul segno: altrimenti in lettura assistita è muto, o peggio si sente
+  «euro» senza contesto.
+- Un solo marcatore per gruppo. Due assi diversi contemporaneamente (costo *e* provenienza) non si
+  distinguono a colpo d'occhio: il secondo asse usa un `rg-badge`, che ha il testo dentro.
+- Se il gruppo ha **più campi marcati che non marcati**, il marcatore è dalla parte sbagliata:
+  marcare le eccezioni, non la regola.
+
+```html
+<p id="nota-costo" class="rg-small">
+  I campi contrassegnati <span class="rg-field__mark">€</span> entrano nel costo della fase.
+  Gli altri sono di scheda: servono a rifare il lavoro.
+</p>
+
+<label class="rg-field rg-field--w8">
+  <span class="rg-field__label">Tempo <span class="rg-field__mark" aria-hidden="true">€</span></span>
+  <input class="rg-input rg-input--numeric" type="text" inputmode="decimal"
+         value="12" aria-describedby="nota-costo">
+</label>
+```
+
+## Campi numerici: `inputmode`, non `type="number"`
+
+Per un valore che si scrive a tastiera in sequenza, `type="number"` è la scelta sbagliata, e non
+per gusto. La ricerca del team GOV.UK Design System, che ci si è basato per cambiare i propri
+componenti, elenca quattro difetti:
+
+1. **Accessibilità** — non è dettabile né selezionabile con Dragon NaturallySpeaking; NVDA lo
+   annuncia come *spin button* con due bottoni senza etichetta, e in `nvda+tab` come campo non
+   etichettato.
+2. **Solo numeri incrementabili** — la specifica HTML dice che non è adatto a input «che si dà il
+   caso siano composti di sole cifre ma non sono, propriamente, numeri». I browser arrotondano i
+   valori grandi e li convertono in notazione esponenziale premendo su/giù, **senza possibilità di
+   annullare**.
+3. **Lettere scartate in silenzio** — Chrome elimina i caratteri non numerici senza dirlo a
+   nessuno, tecnologie assistive comprese.
+4. **Scroll** — la rotellina del mouse o il gesto del trackpad **cambiano il valore** di un campo
+   che ha il focus.
+
+Il quarto punto è quello che pesa in reparto: una scheda si compila scorrendo, e un tempo che
+cambia da solo mentre si scorre è un dato sbagliato che sembra buono.
+
+La forma da usare è `type="text"` con `inputmode`, che separa *come si digita* da *cosa contiene*:
+
+```html
+<!-- decimale: tempi, misure, tariffe -->
+<input class="rg-input rg-input--numeric" type="text" inputmode="decimal" name="tempo" value="12.5">
+<!-- intero: passate, pezzi, quantità -->
+<input class="rg-input rg-input--numeric" type="text" inputmode="numeric" pattern="[0-9]*" name="passate" value="2">
+```
+
+`inputmode` fa comparire il tastierino grande sui browser mobili; `pattern="[0-9]*"` resta per
+compatibilità con iOS più vecchi. La validazione è dell'applicazione, non del browser: la
+validazione nativa è implementata in modo diverso da ogni vendor.
+
+**Eccezione ammessa:** `type="number"` va bene per un valore *davvero* incrementabile dove le
+frecce sono un servizio (uno stepper di quantità in una riga di carrello) e il campo non è
+attraversato scorrendo una pagina lunga.
+
+## Ordine di tabulazione in una scheda lunga
+
+- **Nessun `tabindex` positivo.** L'ordine di focus è l'ordine del DOM, e il DOM deve essere
+  l'ordine in cui si compila (WCAG 2.4.3 *Focus Order*: gli elementi ricevono il focus in un
+  ordine che preserva significato e operabilità).
+- **Niente controlli in mezzo ai campi.** Un pulsante o un link piazzato fra due campi rompe la
+  sequenza attesa: chi tabula si aspetta il campo successivo. Le azioni di una riga stanno **in
+  fondo** alla riga; le azioni tangenziali (un «vai al catalogo») stanno **sopra** il form.
+- **Un solo pulsante primario per form.** Con più submit, chi preme Invio dentro un campo non sa
+  quale azione partirà.
+- **Il primario allineato al bordo sinistro dei campi**, subito sotto l'ultimo campo. Nel test
+  eye-tracking di Luke Wroblewski il layout con le azioni fuori dall'asse verticale degli input
+  (allineate a destra) ha prodotto le fissazioni più lunghe e più numerose: le persone si
+  aspettavano il bottone sotto l'ultimo campo e hanno dovuto cercarlo.
+- L'ordine visivo e l'ordine di tabulazione devono coincidere: una griglia a più colonne li fa
+  divergere, ed è una ragione in più per non usarla in un form da compilare.
 
 ## Sola lettura (`[readonly]`)
 

@@ -69,6 +69,13 @@ una colonna fissa da 28ch lascerebbe ai campi meno dello spazio minimo.
 **Non è la lista delle fasi.** Le operazioni stanno *dentro* una fase. Per l'elenco delle fasi di
 una parte si usa `rg-list-row` o `rg-steps`.
 
+**La coda è una [`rg-form-row`](forms.md#riga-di-campi-rg-form-row--i-controlli-in-fila-laiuto-sotto)**
+(dalla 1.17.0). Fino alla 1.16 era `rg-cluster rg-cluster--end`, che allinea i campi al piede:
+bastava un aiuto o un errore sotto un campo per alzare il suo controllo rispetto ai vicini, e
+abbassare le azioni della riga sotto gli input. Con `rg-form-row` i controlli restano in fila, e
+le azioni si posano sulla loro linea. `rg-cluster--end` resta accettato, e senza aiuti il risultato
+è lo stesso: la migrazione è un cambio di classe.
+
 ## Struttura
 
 Contenitore `<ol>` → riga → `[testa | campi | azioni]`. La frase che spiega il marcatore sta
@@ -86,7 +93,7 @@ Contenitore `<ol>` → riga → `[testa | campi | azioni]`. La frase che spiega 
       <span class="rg-operation-row__index">01</span>
       <span class="rg-operation-row__name">Preparazione materiale</span>
     </div>
-    <div class="rg-cluster rg-cluster--end">
+    <div class="rg-form-row">
       <label class="rg-field rg-field--w8">
         <span class="rg-field__label">Tempo <span class="rg-field__mark" aria-hidden="true">€</span></span>
         <input class="rg-input rg-input--numeric" type="text" inputmode="decimal"
@@ -104,7 +111,7 @@ Contenitore `<ol>` → riga → `[testa | campi | azioni]`. La frase che spiega 
       <span class="rg-operation-row__index">03</span>
       <span class="rg-operation-row__name">Stampa</span>
     </div>
-    <div class="rg-cluster rg-cluster--end">
+    <div class="rg-form-row">
       <label class="rg-field rg-field--w8">
         <span class="rg-field__label">Tempo <span class="rg-field__mark" aria-hidden="true">€</span></span>
         <input class="rg-input rg-input--numeric" type="text" inputmode="decimal"
@@ -133,7 +140,7 @@ Contenitore `<ol>` → riga → `[testa | campi | azioni]`. La frase che spiega 
       <span class="rg-operation-row__index">03·2</span>
       <span class="rg-operation-row__name">Stampa — colore</span>
     </div>
-    <div class="rg-cluster rg-cluster--end">
+    <div class="rg-form-row">
       <!-- gli stessi campi della riga di cui è la ripetizione -->
     </div>
     <div class="rg-operation-row__actions">

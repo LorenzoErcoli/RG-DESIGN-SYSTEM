@@ -68,6 +68,21 @@ Conseguenza da conoscere prima di usarla: `category-3`, `-4` e `-5` **sono** `da
 
 La palette si ferma a sette, e non è una svista: una categoria in più chiede **un segno in più** — una trama, una figura — non un colore in più. Oltre il settimo colore la distinzione non regge né in scala di grigi né in fotocopia, ed è lì che queste cose vengono lette davvero.
 
+### Identità delle parti (dalla 1.17.0)
+
+Le parti di un prodotto (DAVANTI, DIETRO, LATO, FONDO, MANICO…) sono oggetti pari-ordinati: la
+seconda applicazione della palette categoriale, dopo i reparti. Vedi [part-mark](components/part-mark.md).
+
+- **Il colore d'identità si assegna per posizione**, non per nome: la piattaforma passa l'indice
+  della parte nel prodotto (1-based, ordine stabile), il DS decide colore e lettera.
+- **Sempre accanto al nome scritto**, e sempre con un segno non cromatico: la lettera d'ordine
+  (A, B, C…), leggibile in scala di grigi.
+- **Mai gerarchia, mai stato.** La parte A non è più importante della B, e una pastiglia rossa non
+  dice «errore». Le prime quattro parti usano i colori che **non** coincidono con uno stato (nero,
+  blu, sabbia, salvia); `success`, `warning` e `danger` arrivano solo dalla quinta parte in poi.
+- Dove la vista è governata dagli stati (revisione, anomalie), l'identità va in grigio
+  (`rg-part--quiet`): restano lettera e nome.
+
 ## 5. Spazio e griglia
 
 Usare la scala 4–8–12–16–24–32–48–64–96. Il ritmo ordinario è 8 px; 24–32 px separano gruppi, 48–96 px separano sezioni editoriali. Layout desktop su 12 colonne, tablet 8, mobile 4. Il contenuto tecnico può essere denso, ma non compresso sotto la soglia di scansione.
@@ -124,7 +139,7 @@ Conseguenze operative:
 
 ## 7. Tono visivo
 
-Il tono è editoriale-tecnico: titoli netti, descrizioni concise, dettagli materiali visibili. Le fotografie o texture tessili, quando presenti, devono essere documentarie e non decorative. Le icone sono geometriche, coerenti e accompagnate da testo quando l'azione non è universale.
+Il tono è editoriale-tecnico: titoli netti, descrizioni concise, dettagli materiali visibili. Le fotografie o texture tessili, quando presenti, devono essere documentarie e non decorative. Le icone sono geometriche, coerenti e accompagnate da testo quando l'azione non è universale. Dalla 1.17.0 il set è uno solo, `icons/rg-icons.svg`, servito in locale ([icons](components/icons.md)): nessuna icona senza nome accessibile, e mai un carattere Unicode o un'emoji al posto di un'icona. Quando sola icona, quando icona + testo e quando solo testo è scritto in [buttons](components/buttons.md#icona-testo-o-entrambi).
 
 ## 8. Interfacce tecniche
 

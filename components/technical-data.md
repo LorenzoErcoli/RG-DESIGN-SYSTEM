@@ -33,6 +33,41 @@ Sotto i 680 px la colonna etichetta collassa sopra il valore.
 </dl>
 ```
 
+### Variante in linea (`rg-key-value--inline`, dalla 1.17.0)
+
+**Identificativi e classificazione** di un'entità, in testata: codice RG, codice prodotto, variante,
+gamma, categorie, divisioni. Coppie etichetta-valore **che vanno a capo**, senza fondo e senza
+pillola.
+
+Non serviva un componente nuovo. Quelle etichette sono coppie termine-valore, cioè un `rg-key-value`
+disposto in riga. `rg-chip` è una scelta selezionabile, e `rg-badge` è per stato e classificazione
+breve, al massimo tre per riga.
+
+- **Ogni valore ha il suo termine.** «Borse» da solo non dice se è una gamma o una categoria.
+- **Identificativi in mono**: `<dd class="rg-mono">`. Classificazione nel corpo del testo.
+- **Più valori per un termine**: un `<dd>` ciascuno, il separatore lo mette il DS.
+- **La coppia che distingue questa entità dalle sorelle** (la variante di un proto) è
+  `rg-key-value__pair--distinct`: contorno nero e peso medio, **non** un fondo nero. Una sola per
+  elenco, e per prima. Il fondo nero usato finora su «VARIANTE» e sulle divisioni faceva del colore
+  una gerarchia, e lo stesso nero era usato per due cose diverse.
+- Per la **scheda completa** dell'entità (tutti gli attributi, da leggere in colonna) resta
+  `--ruled`; per i **dati di una riga** resta `rg-page-header__meta`.
+
+```html
+<dl class="rg-key-value rg-key-value--inline">
+  <div class="rg-key-value__pair rg-key-value__pair--distinct"><dt>Variante</dt><dd>Rosso</dd></div>
+  <div class="rg-key-value__pair"><dt>RG</dt><dd class="rg-mono">RG20260140-P</dd></div>
+  <div class="rg-key-value__pair"><dt>Cod.</dt><dd class="rg-mono">M1424EFI</dd></div>
+  <div class="rg-key-value__pair"><dt>Gamma</dt><dd>Borse</dd></div>
+  <div class="rg-key-value__pair"><dt>Categorie</dt><dd>Tote</dd><dd>Shopping</dd></div>
+  <div class="rg-key-value__pair"><dt>Divisioni</dt><dd>Alta moda</dd></div>
+</dl>
+```
+
+Il `<div>` che raggruppa `dt` e `dd` è HTML valido dentro un `<dl>` e tiene insieme la coppia quando
+la riga va a capo. La data di assegnazione del codice, oggi in un `title`, va nella scheda completa
+(`--ruled`), non in un suggerimento: non è il nome di un'azione.
+
 ## Debug, log, version (`rg-debug`, `rg-log-line`, `rg-version`)
 
 Output tecnici selezionabili in mono. Il log è a colonne (ora · livello · messaggio); il blocco

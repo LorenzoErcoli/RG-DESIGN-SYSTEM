@@ -134,6 +134,13 @@
           "rg-button--danger",
           "rg-button--small",
           "rg-button--large"
+        ],
+        "related": [
+          "rg-icon",
+          "rg-icon-button",
+          "rg-icon-button--full",
+          "rg-tooltip",
+          "rg-action-group"
         ]
       },
       "variants": [
@@ -162,8 +169,8 @@
       ],
       "doc": "components/buttons.md",
       "specimenAnchor": "buttons",
-      "snippet": "<button class=\"rg-button rg-button--primary\" type=\"button\">Calcola consumo</button>\n<a class=\"rg-button rg-button--ghost\" href=\"/parti/12/fasi/0\">Apri fase</a>",
-      "notes": "Da 1.3.0 --ghost e --danger sono componibili: rg-button--ghost.rg-button--danger e testo in colore danger senza bordo a riposo, la forma giusta per un'azione distruttiva secondaria ripetuta su piu righe (es. Elimina di rg-step). --small ha min-height 32px: sotto il target di 40px, quindi solo dentro liste dense gia ammesse. Da 1.3.1 la classe azzera text-decoration: un'azione che NAVIGA e un <a href> che indossa rg-button (Apri scheda, Apri fase) e non esce piu sottolineata dallo user-agent; prima i prodotti la degradavano a <span> o a <button onclick=location>. Criterio: se cambia PAGINA e <a>, se cambia STATO e <button>. Il reset vale per classe di componente, mai un reset globale su a: i link nel testo corrente restano sottolineati. Dentro rg-step__actions l'azione di apertura e sorella del toggle, mai annidata.",
+      "snippet": "<button class=\"rg-button rg-button--primary\" type=\"button\">Calcola consumo</button>\n<a class=\"rg-button rg-button--ghost\" href=\"/parti/12/fasi/0\">Apri fase</a>\n<a class=\"rg-button rg-button--primary\" href=\"/products/new\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-aggiungi\"></use></svg> Nuovo prodotto</a>",
+      "notes": "Da 1.3.0 --ghost e --danger sono componibili: rg-button--ghost.rg-button--danger e testo in colore danger senza bordo a riposo, la forma giusta per un'azione distruttiva secondaria ripetuta su piu righe (es. Elimina di rg-step). --small ha min-height 32px: sotto il target di 40px, quindi solo dentro liste dense gia ammesse. Da 1.3.1 la classe azzera text-decoration: un'azione che NAVIGA e un <a href> che indossa rg-button (Apri scheda, Apri fase) e non esce piu sottolineata dallo user-agent; prima i prodotti la degradavano a <span> o a <button onclick=location>. Criterio: se cambia PAGINA e <a>, se cambia STATO e <button>. Il reset vale per classe di componente, mai un reset globale su a: i link nel testo corrente restano sottolineati. Dentro rg-step__actions l'azione di apertura e sorella del toggle, mai annidata. Da 1.17.0 ICONA + TESTO: un <svg class=\"rg-icon\" aria-hidden=\"true\"> prima del testo (dopo solo per le frecce di direzione); gap e allineamento ottico sono gia nel bottone e nella tavola dell'icona, nessun margine locale. REGOLA (buttons.md, 'Icona, testo o entrambi'): SOLA ICONA + suggerimento per azioni frequenti di pari peso in un rg-action-group, azioni ripetute su ogni riga, azioni universali; ICONA + TESTO per la primaria (una per area), azioni rare, ambigue o con conseguenze, trigger di menu, distruttiva in testata; SOLO TESTO per i bottoni di form e conferme e dove il set non ha un'icona univoca. Nel dubbio icona + testo. Mai caratteri Unicode o emoji al posto delle icone.",
       "keywords": [
         "azione",
         "comando",
@@ -183,7 +190,12 @@
         "apri",
         "bottone-link",
         "apri scheda",
-        "apri fase"
+        "apri fase",
+        "icona e testo",
+        "bottone con icona",
+        "quando usare icona",
+        "sola icona",
+        "emoji nei bottoni"
       ]
     },
     {
@@ -1602,18 +1614,24 @@
       "classes": {
         "base": "rg-key-value",
         "variants": [
-          "rg-key-value--ruled"
+          "rg-key-value--ruled",
+          "rg-key-value--inline"
         ],
         "related": [
           "rg-debug",
           "rg-log-line",
           "rg-log-line__time",
           "rg-version"
+        ],
+        "elements": [
+          "rg-key-value__pair",
+          "rg-key-value__pair--distinct"
         ]
       },
       "variants": [
         "compact",
-        "ruled"
+        "ruled",
+        "inline"
       ],
       "states": [
         "default"
@@ -1626,8 +1644,8 @@
       "doc": "components/technical-data.md",
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "data",
-      "snippet": "<dl class=\"rg-key-value\"><dt>material_id</dt><dd>FIL-0281</dd></dl>\n<dl class=\"rg-key-value rg-key-value--ruled\"><dt>Codice</dt><dd>RG-AR-0248</dd><dt>Stagione</dt><dd>PE 26</dd></dl>",
-      "notes": "--ruled e la presentazione a scheda tecnica: colonna label fissa, righe rigate, valore a sinistra. Per record confrontabili fra loro serve rg-table, non questa.",
+      "snippet": "<dl class=\"rg-key-value\"><dt>material_id</dt><dd>FIL-0281</dd></dl>\n<dl class=\"rg-key-value rg-key-value--ruled\"><dt>Codice</dt><dd>RG-AR-0248</dd><dt>Stagione</dt><dd>PE 26</dd></dl>\n<dl class=\"rg-key-value rg-key-value--inline\"><div class=\"rg-key-value__pair rg-key-value__pair--distinct\"><dt>Variante</dt><dd>Rosso</dd></div><div class=\"rg-key-value__pair\"><dt>RG</dt><dd class=\"rg-mono\">RG20260140-P</dd></div><div class=\"rg-key-value__pair\"><dt>Categorie</dt><dd>Tote</dd><dd>Shopping</dd></div></dl>",
+      "notes": "--ruled e la presentazione a scheda tecnica: colonna label fissa, righe rigate, valore a sinistra. Per record confrontabili fra loro serve rg-table, non questa. Da 1.17.0 --inline: IDENTIFICATIVI e CLASSIFICAZIONE di un'entita in testata (codice RG, codice prodotto, variante, gamma, categorie, divisioni) come coppie termine-valore che vanno a capo, senza fondo ne pillola. Risposta a 'etichette di sola lettura': non serviva un componente nuovo (rg-chip e selezionabile, rg-badge e per stato/classificazione breve con al massimo 3 per riga). Ogni valore ha il suo termine; identificativi con <dd class=\"rg-mono\">; piu valori = piu <dd>, separatore dal DS; __pair (div che raggruppa dt+dd, valido in dl) tiene insieme la coppia a capo. __pair--distinct e la coppia che distingue l'entita dalle sorelle (la variante del proto): contorno nero e peso medio, NON fondo nero (il colore non fa gerarchia), una sola per elenco e per prima.",
       "keywords": [
         "key value",
         "chiave valore",
@@ -1643,8 +1661,25 @@
         "data grid",
         "griglia dati",
         "specifiche",
-        "dt dd"
-      ]
+        "dt dd",
+        "in linea",
+        "inline",
+        "identificativi",
+        "codice rg",
+        "codice prodotto",
+        "variante",
+        "classificazione",
+        "gamma",
+        "categorie",
+        "divisioni",
+        "etichette di sola lettura",
+        "tag",
+        "read-only tag",
+        "metadati testata"
+      ],
+      "variantsSince": {
+        "rg-key-value--inline": "1.17.0"
+      }
     },
     {
       "id": "progress",
@@ -1874,7 +1909,13 @@
       "classes": {
         "base": "rg-icon-button",
         "variants": [
-          "rg-icon-button--danger"
+          "rg-icon-button--danger",
+          "rg-icon-button--full"
+        ],
+        "related": [
+          "rg-icon",
+          "rg-tooltip",
+          "rg-action-group"
         ]
       },
       "states": [
@@ -1882,22 +1923,33 @@
         "hover",
         "focus",
         "pressed",
-        "disabled"
+        "disabled",
+        "tooltip"
       ],
       "tokens": [
         "--rg-color-black",
         "--rg-color-danger"
       ],
       "doc": "components/lists.md",
-      "specimenAnchor": "layout",
-      "snippet": "<button class=\"rg-icon-button\" aria-label=\"Centra sul connettore\">◎</button>",
+      "specimenAnchor": "action-group",
+      "snippet": "<span class=\"rg-tooltip\"><button class=\"rg-icon-button rg-icon-button--full\" type=\"button\" aria-labelledby=\"tip-modifica\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-modifica\"></use></svg></button><span class=\"rg-tooltip__text\" role=\"tooltip\" id=\"tip-modifica\">Modifica</span></span>",
       "keywords": [
         "icon button",
         "icona",
         "azione compatta",
         "toolbar",
-        "bottone icona"
-      ]
+        "bottone icona",
+        "sola icona",
+        "bottone a sola icona",
+        "40px",
+        "target pieno",
+        "azioni in riga",
+        "tooltip"
+      ],
+      "variantsSince": {
+        "rg-icon-button--full": "1.17.0"
+      },
+      "notes": "Base 34x34: ammessa SOLO nelle liste dense (lists.md). Da 1.17.0 rg-icon-button--full e il target pieno 40x40 per testate, barre e righe di tabella; l'icona interna prende 20px. Nome accessibile obbligatorio: di norma aria-labelledby verso il suo rg-tooltip__text (nome visibile anche a chi vede), altrimenti aria-label. Icona dal set rg-icon, non caratteri Unicode. Su <a> la sottolineatura nativa e azzerata dal DS. --danger per l'eliminazione ripetuta in riga, in un rg-action-group suo e sempre con conferma."
     },
     {
       "id": "appshell",
@@ -2742,6 +2794,8 @@
           "rg-operation-row--repeat"
         ],
         "related": [
+          "rg-form-row",
+          "rg-form-row__actions",
           "rg-operation-list",
           "rg-cluster",
           "rg-cluster--end",
@@ -2792,8 +2846,8 @@
       "patternRef": "patterns/worksheet-entry.md",
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "operation-row",
-      "snippet": "<ol class=\"rg-operation-list\">\n  <li class=\"rg-operation-row\">\n    <div class=\"rg-operation-row__head\">\n      <span class=\"rg-operation-row__index\">03</span>\n      <span class=\"rg-operation-row__name\">Stampa</span>\n    </div>\n    <div class=\"rg-cluster rg-cluster--end\">\n      <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Tempo <span class=\"rg-field__mark\" aria-hidden=\"true\">&#8364;</span></span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"decimal\" value=\"12\" aria-describedby=\"nota-costo\"></label>\n      <label class=\"rg-field rg-field--w4\"><span class=\"rg-field__label\">Passate</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"numeric\" value=\"2\"></label>\n      <label class=\"rg-field rg-field--grow\"><span class=\"rg-field__label\">File</span><input class=\"rg-input rg-mono\" value=\"RG-0481_p2_uv.prn\"></label>\n    </div>\n    <div class=\"rg-operation-row__actions\">\n      <button class=\"rg-button rg-button--ghost\" type=\"submit\" name=\"ripeti\" value=\"03\">+ Ripeti</button>\n    </div>\n  </li>\n  <li class=\"rg-operation-row rg-operation-row--repeat\">\n    <div class=\"rg-operation-row__head\"><span class=\"rg-operation-row__index\">03&#183;2</span><span class=\"rg-operation-row__name\">Stampa &#8212; colore</span></div>\n    <div class=\"rg-cluster rg-cluster--end\"></div>\n    <div class=\"rg-operation-row__actions\"></div>\n  </li>\n</ol>",
-      "notes": "PERCHE NON UNA TABELLA: le operazioni non hanno le stesse colonne (preparazione ha solo il tempo, stampa ha inchiostri/passate/file), quindi una rg-table dovrebbe portare l'UNIONE dei campi di tutte le operazioni - una matrice quasi vuota dove ogni riga usa due celle su sei e le altre quattro sono buchi che si leggono come dati mancanti. La tabella e la forma delle righe OMOGENEE: se un giorno tutte le operazioni avessero gli stessi campi, la tabella tornerebbe a essere la forma giusta. PERCHE NON UNA CARD PER OPERAZIONE: cinque riquadri sono cinque cornici, piu cromo e piu scroll per lo stesso contenuto (regole 2 e 6 - non trasformare ogni contenuto in una card, usare linee per mostrare struttura). QUINDI: righe su superficie aperta separate da un filetto, con la TESTA IN COLONNA (indice e nome incolonnati a sinistra, cosi l'occhio scorre la sequenza in verticale senza rileggerla) e la CODA CHE SCORRE (i campi prendono la larghezza del proprio contenuto con rg-field--w* e vanno a capo solo quando non entrano): un'operazione da tre campi occupa UNA riga invece delle due righe di una griglia 1fr 1fr, che e la ragione per cui queste schede chiedevano troppo scroll. ORDINE DI TABULAZIONE: nessun role=grid, nessun roving tabindex - i campi restano tutti nella tab sequence nativa. L'ARIA APG prescrive il pattern grid (una sola cella nella tab sequence, frecce per navigare) quando serve ACCORCIARE la sequenza per non intrappolare l'utente in una lista lunga; qui e il contrario: cinque righe per quattro campi sono venti stop, e sono esattamente i venti gesti del compilatore. Le azioni della riga stanno in fondo alla riga ANCHE NEL DOM: chi tabula trova 'Ripeti' dopo aver compilato, non prima - un controllo in mezzo ai campi rompe la sequenza attesa dal tasto Tab. La TESTA si allinea alle ETICHETTE dei campi, non ai controlli: il nome dell'operazione e una label di riga. La larghezza della colonna-testa e --rg-operation-head (default 28ch (indice + circa 24 caratteri di nome)) e la imposta il contenitore, non il componente. SUPERFICIE: l'hover chiaro presuppone il bianco sotto, quindi la lista va nel corpo di una rg-section-card e non sul fondo di pagina (regola 6). RIPETIZIONE = struttura + testo: il rientro con filetto verticale dice CHE e una ripetizione, l'indice scritto (01-2) dice DI CHI; il colore non e ammesso come unico segnale. LIMITE NOTO: sotto i 680px la testa passa a riga propria sopra i campi e la colonna dei nomi sparisce - compromesso accettato, perche sotto quella larghezza una colonna fissa da 28ch (indice + circa 24 caratteri di nome) lascerebbe ai campi meno dello spazio minimo. NON E LA LISTA DELLE FASI: le operazioni stanno DENTRO una fase; per l'elenco delle fasi di una parte si usa rg-list-row o rg-steps. La riga non ha uno stato di errore proprio: l'errore appartiene al CAMPO (rg-field.is-error), perche e il campo a essere sbagliato, non l'operazione. I bottoni della riga usano rg-button--ghost al target pieno (40px), non rg-button--small (32px): con align-self:end si appoggiano esattamente alla base degli input, e la riga non e cosi densa da giustificare un target ridotto.",
+      "snippet": "<ol class=\"rg-operation-list\">\n  <li class=\"rg-operation-row\">\n    <div class=\"rg-operation-row__head\">\n      <span class=\"rg-operation-row__index\">03</span>\n      <span class=\"rg-operation-row__name\">Stampa</span>\n    </div>\n    <div class=\"rg-form-row\">\n      <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Tempo <span class=\"rg-field__mark\" aria-hidden=\"true\">&#8364;</span></span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"decimal\" value=\"12\" aria-describedby=\"nota-costo\"></label>\n      <label class=\"rg-field rg-field--w4\"><span class=\"rg-field__label\">Passate</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"numeric\" value=\"2\"></label>\n      <label class=\"rg-field rg-field--grow\"><span class=\"rg-field__label\">File</span><input class=\"rg-input rg-mono\" value=\"RG-0481_p2_uv.prn\"></label>\n    </div>\n    <div class=\"rg-operation-row__actions\">\n      <button class=\"rg-button rg-button--ghost\" type=\"submit\" name=\"ripeti\" value=\"03\">+ Ripeti</button>\n    </div>\n  </li>\n  <li class=\"rg-operation-row rg-operation-row--repeat\">\n    <div class=\"rg-operation-row__head\"><span class=\"rg-operation-row__index\">03&#183;2</span><span class=\"rg-operation-row__name\">Stampa &#8212; colore</span></div>\n    <div class=\"rg-form-row\"></div>\n    <div class=\"rg-operation-row__actions\"></div>\n  </li>\n</ol>",
+      "notes": "PERCHE NON UNA TABELLA: le operazioni non hanno le stesse colonne (preparazione ha solo il tempo, stampa ha inchiostri/passate/file), quindi una rg-table dovrebbe portare l'UNIONE dei campi di tutte le operazioni - una matrice quasi vuota dove ogni riga usa due celle su sei e le altre quattro sono buchi che si leggono come dati mancanti. La tabella e la forma delle righe OMOGENEE: se un giorno tutte le operazioni avessero gli stessi campi, la tabella tornerebbe a essere la forma giusta. PERCHE NON UNA CARD PER OPERAZIONE: cinque riquadri sono cinque cornici, piu cromo e piu scroll per lo stesso contenuto (regole 2 e 6 - non trasformare ogni contenuto in una card, usare linee per mostrare struttura). QUINDI: righe su superficie aperta separate da un filetto, con la TESTA IN COLONNA (indice e nome incolonnati a sinistra, cosi l'occhio scorre la sequenza in verticale senza rileggerla) e la CODA CHE SCORRE (i campi prendono la larghezza del proprio contenuto con rg-field--w* e vanno a capo solo quando non entrano): un'operazione da tre campi occupa UNA riga invece delle due righe di una griglia 1fr 1fr, che e la ragione per cui queste schede chiedevano troppo scroll. ORDINE DI TABULAZIONE: nessun role=grid, nessun roving tabindex - i campi restano tutti nella tab sequence nativa. L'ARIA APG prescrive il pattern grid (una sola cella nella tab sequence, frecce per navigare) quando serve ACCORCIARE la sequenza per non intrappolare l'utente in una lista lunga; qui e il contrario: cinque righe per quattro campi sono venti stop, e sono esattamente i venti gesti del compilatore. Le azioni della riga stanno in fondo alla riga ANCHE NEL DOM: chi tabula trova 'Ripeti' dopo aver compilato, non prima - un controllo in mezzo ai campi rompe la sequenza attesa dal tasto Tab. La TESTA si allinea alle ETICHETTE dei campi, non ai controlli: il nome dell'operazione e una label di riga. La larghezza della colonna-testa e --rg-operation-head (default 28ch (indice + circa 24 caratteri di nome)) e la imposta il contenitore, non il componente. SUPERFICIE: l'hover chiaro presuppone il bianco sotto, quindi la lista va nel corpo di una rg-section-card e non sul fondo di pagina (regola 6). RIPETIZIONE = struttura + testo: il rientro con filetto verticale dice CHE e una ripetizione, l'indice scritto (01-2) dice DI CHI; il colore non e ammesso come unico segnale. LIMITE NOTO: sotto i 680px la testa passa a riga propria sopra i campi e la colonna dei nomi sparisce - compromesso accettato, perche sotto quella larghezza una colonna fissa da 28ch (indice + circa 24 caratteri di nome) lascerebbe ai campi meno dello spazio minimo. NON E LA LISTA DELLE FASI: le operazioni stanno DENTRO una fase; per l'elenco delle fasi di una parte si usa rg-list-row o rg-steps. La riga non ha uno stato di errore proprio: l'errore appartiene al CAMPO (rg-field.is-error), perche e il campo a essere sbagliato, non l'operazione. I bottoni della riga usano rg-button--ghost al target pieno (40px), non rg-button--small (32px): con align-self:end si appoggiano esattamente alla base degli input, e la riga non e cosi densa da giustificare un target ridotto. Da 1.17.0 la CODA della riga e rg-form-row (prima rg-cluster rg-cluster--end, che allinea al piede: un aiuto o un errore sotto un campo alzava il suo controllo e abbassava le azioni). rg-operation-row__actions si posa sulla linea dei controlli (salta l'altezza dell'etichetta, --rg-form-row-label) invece del piede della riga; con rg-cluster--end senza aiuti il risultato e identico, e se i campi vanno a capo le azioni restano sulla prima linea.",
       "keywords": [
         "operazione",
         "operazioni",
@@ -2844,7 +2898,9 @@
         "work sequence",
         "routing",
         "step compilabile",
-        "troppo scroll"
+        "troppo scroll",
+        "form row",
+        "aiuto sotto il campo"
       ]
     },
     {
@@ -2874,7 +2930,11 @@
           "rg-button",
           "rg-appshell__main",
           "rg-section-header",
-          "rg-topbar__back"
+          "rg-topbar__back",
+          "rg-part-edge",
+          "rg-part-mark",
+          "rg-action-group",
+          "rg-key-value--inline"
         ]
       },
       "variants": [
@@ -2971,7 +3031,8 @@
           "rg-field--grow",
           "rg-choice",
           "rg-button",
-          "rg-cluster--end"
+          "rg-cluster--end",
+          "rg-operation-row"
         ]
       },
       "variants": [
@@ -2997,7 +3058,7 @@
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "form-row",
       "snippet": "<div class=\"rg-form-row\">\n  <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Durata (min)</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"decimal\" value=\"40\"></label>\n  <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Livello 1 (cicli)</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"numeric\" placeholder=\"12\" aria-describedby=\"aiuto-l1\"><span class=\"rg-field__help\" id=\"aiuto-l1\">vale 12 per tutte</span></label>\n  <div class=\"rg-form-row__actions\"><button class=\"rg-button rg-button--ghost\" type=\"button\">+ Livello</button></div>\n</div>",
-      "notes": "PERCHE: rg-cluster--end allinea i campi al PIEDE, quindi un rg-field__help sotto un campo abbassa il suo piede e ne ALZA il controllo rispetto ai vicini (caso reale: macchina_dettaglio.html, riga di rg-field--w8 dei cicli dove un solo campo dice 'vale 12 per tutte'). rg-form-row allinea alla CIMA: le etichette sono su una riga (garantito da rg-field--w* sopra i 680px), quindi i controlli cadono sulla stessa linea e cio che sta sotto allunga solo il proprio campo. L'aiuto NON allarga il campo (width 0 + min-width 100%): va a capo dentro la larghezza del controllo. __actions (bottoni, una rg-choice 'uguale per tutti') salta l'altezza dell'etichetta (--rg-form-row-label = corpo xs x interlinea body + gap del campo) e si centra sulla linea alta 40px dei controlli; sta in fondo alla riga anche nel DOM. DOVE VA L'AIUTO IN UNA RIGA ORIZZONTALE: (1) sotto il proprio controllo, breve, legato con aria-describedby; oltre due righe alla larghezza del campo non e un aiuto da riga; (2) se la stessa frase vale per due campi o piu, una volta sopra la riga + rg-field__mark sui campi; (3) l'errore sta nello stesso posto dell'aiuto con rg-field.is-error + aria-invalid e il problema in parole; (4) un predefinito ereditato e aiuto solo sui campi che lo ereditano: se sono quasi tutti, si marcano le eccezioni. rg-cluster--end NON cambia e resta giusto per una riga senza aiuto ne errore (campo di ricerca + bottone). LIMITE: un campo fluido con etichetta che va a capo rompe la fila; sotto i 680px le etichette dei rg-field--w* tornano a capo e la fila puo rompersi, compromesso accettato (la riga di norma va gia su piu righe). rg-operation-row usa ancora rg-cluster--end nella coda: da valutare nella tappa successiva.",
+      "notes": "PERCHE: rg-cluster--end allinea i campi al PIEDE, quindi un rg-field__help sotto un campo abbassa il suo piede e ne ALZA il controllo rispetto ai vicini (caso reale: macchina_dettaglio.html, riga di rg-field--w8 dei cicli dove un solo campo dice 'vale 12 per tutte'). rg-form-row allinea alla CIMA: le etichette sono su una riga (garantito da rg-field--w* sopra i 680px), quindi i controlli cadono sulla stessa linea e cio che sta sotto allunga solo il proprio campo. L'aiuto NON allarga il campo (width 0 + min-width 100%): va a capo dentro la larghezza del controllo. __actions (bottoni, una rg-choice 'uguale per tutti') salta l'altezza dell'etichetta (--rg-form-row-label = corpo xs x interlinea body + gap del campo) e si centra sulla linea alta 40px dei controlli; sta in fondo alla riga anche nel DOM. DOVE VA L'AIUTO IN UNA RIGA ORIZZONTALE: (1) sotto il proprio controllo, breve, legato con aria-describedby; oltre due righe alla larghezza del campo non e un aiuto da riga; (2) se la stessa frase vale per due campi o piu, una volta sopra la riga + rg-field__mark sui campi; (3) l'errore sta nello stesso posto dell'aiuto con rg-field.is-error + aria-invalid e il problema in parole; (4) un predefinito ereditato e aiuto solo sui campi che lo ereditano: se sono quasi tutti, si marcano le eccezioni. rg-cluster--end NON cambia e resta giusto per una riga senza aiuto ne errore (campo di ricerca + bottone). LIMITE: un campo fluido con etichetta che va a capo rompe la fila; sotto i 680px le etichette dei rg-field--w* tornano a capo e la fila puo rompersi, compromesso accettato (la riga di norma va gia su piu righe). Da 1.17.0 anche la coda di rg-operation-row e rg-form-row.",
       "keywords": [
         "riga di campi",
         "riga form",
@@ -3022,6 +3083,352 @@
         "default ereditato",
         "cicli",
         "macchina"
+      ]
+    },
+    {
+      "id": "icon",
+      "title": "Icon (set di icone)",
+      "role": "Icona geometrica da uno sprite SVG servito in locale (icons/rg-icons.svg) per le azioni e i segnali: sempre aria-hidden, il nome sta sul controllo. Sostituisce caratteri Unicode ed emoji nei bottoni.",
+      "status": "beta",
+      "since": "1.17.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-icon",
+        "variants": [
+          "rg-icon--md",
+          "rg-icon--lg"
+        ],
+        "related": [
+          "rg-button",
+          "rg-icon-button",
+          "rg-icon-button--full",
+          "rg-tooltip",
+          "rg-action-menu__item"
+        ]
+      },
+      "assets": [
+        "icons/rg-icons.svg",
+        "icons/README.md"
+      ],
+      "icons": [
+        "aggiungi",
+        "chiudi",
+        "conferma",
+        "modifica",
+        "elimina",
+        "salva",
+        "apri",
+        "apri-esterno",
+        "indietro",
+        "avanti",
+        "scarica",
+        "carica",
+        "stampa",
+        "documento",
+        "fascicolo",
+        "etichetta",
+        "costo",
+        "collega",
+        "scollega",
+        "copia",
+        "nuova-versione",
+        "ruota",
+        "ricarica",
+        "ripristina",
+        "filtro",
+        "togli-filtri",
+        "ordina",
+        "cerca",
+        "avviso",
+        "errore",
+        "informazione",
+        "segnala",
+        "immagine",
+        "altro"
+      ],
+      "variants": [
+        "16px",
+        "20px",
+        "24px"
+      ],
+      "states": [
+        "default"
+      ],
+      "cssVars": [
+        "--rg-icon-size"
+      ],
+      "tokens": [
+        "--rg-space-1",
+        "--rg-space-4",
+        "--rg-space-6"
+      ],
+      "doc": "components/icons.md",
+      "rulesRef": "design-rules.md#7-tono-visivo",
+      "specimenAnchor": "icons",
+      "snippet": "<svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-modifica\"></use></svg>",
+      "notes": "DISEGNO PROPRIO RG, nessun codice di terzi (nessuna licenza esterna). Griglia 24, area viva 3-21, tratto 1.5 a capi quadri e spigoli vivi, fill none, colore da currentColor. Misure: 16 default (dentro bottoni col testo a 14), 20 --md (e automatico dentro rg-icon-button--full e rg-button--large), 24 --lg. SERVIRE IN LOCALE: app.mount('/ds/icons', StaticFiles(directory=DS_DIR / 'icons')); <use> verso file esterno richiede stessa origine via http (non file://). NOMI = azione, non figura: aggiungi, chiudi, conferma, modifica, elimina, salva, apri, apri-esterno, indietro, avanti, scarica, carica, stampa, documento, fascicolo, etichetta, costo, collega, scollega, copia, nuova-versione, ruota, ricarica, ripristina, filtro, togli-filtri, ordina, cerca, avviso, errore, informazione, segnala, immagine, altro. Sostituzioni: ✎→modifica, 🔗→collega, ⟳→ruota, ↓→scarica, ←/→→indietro/avanti, ✕→chiudi, ✓→conferma, ⚑→segnala, ⚠→avviso, ⓘ→informazione, ×Reset→togli-filtri. MAI un'icona senza nome accessibile sul controllo; MAI un carattere o un'emoji come icona (restano i segni generati dal DS e rg-field__mark). Il lint fallisce se un doc/esempio/snippet cita un id assente nello sprite. Aggiungere un'icona: icons/README.md.",
+      "keywords": [
+        "icona",
+        "icone",
+        "icon",
+        "icons",
+        "svg",
+        "sprite",
+        "symbol",
+        "set di icone",
+        "pittogramma",
+        "lucide",
+        "emoji",
+        "unicode",
+        "carattere nel bottone",
+        "modifica",
+        "elimina",
+        "scarica",
+        "stampa",
+        "collega",
+        "ruota",
+        "intranet",
+        "locale",
+        "senza cdn"
+      ]
+    },
+    {
+      "id": "tooltip",
+      "title": "Tooltip (suggerimento)",
+      "role": "Nome visibile di un bottone a sola icona (aria-labelledby) o descrizione breve di un bottone col testo (aria-describedby); compare a hover e a focus da tastiera, senza JS.",
+      "status": "beta",
+      "since": "1.17.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-tooltip",
+        "elements": [
+          "rg-tooltip__text"
+        ],
+        "variants": [
+          "rg-tooltip--below",
+          "rg-tooltip--start",
+          "rg-tooltip--end"
+        ],
+        "related": [
+          "rg-icon-button--full",
+          "rg-button",
+          "rg-action-group"
+        ]
+      },
+      "variants": [
+        "sopra",
+        "sotto",
+        "allineato-inizio",
+        "allineato-fine"
+      ],
+      "states": [
+        "hidden",
+        "hover",
+        "focus-visible",
+        "dismissed"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-white",
+        "--rg-font-size-xs",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-radius-sm",
+        "--rg-z-dropdown",
+        "--rg-motion-fast"
+      ],
+      "doc": "components/tooltip.md",
+      "specimenAnchor": "action-group",
+      "snippet": "<span class=\"rg-tooltip\"><button class=\"rg-icon-button rg-icon-button--full\" type=\"button\" aria-labelledby=\"tip-modifica\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-modifica\"></use></svg></button><span class=\"rg-tooltip__text\" role=\"tooltip\" id=\"tip-modifica\">Modifica</span></span>",
+      "notes": "DUE MODI, MAI INSIEME: sola icona -> il suggerimento e il NOME (aria-labelledby, niente aria-label); bottone col testo -> DESCRIZIONE (aria-describedby). Compare a :hover e a :has(:focus-visible) (non al click del mouse), resta mentre il puntatore ci passa sopra (bordo trasparente che fa da ponte, WCAG 1.4.13), non copre il bottone, non blocca il click. Solo testo breve, niente link o bottoni dentro. Escape: controller di riferimento facoltativo che aggiunge is-dismissed. Non usare title (non compare da tastiera ne su touch). Id unici: in riga porta l'id del record. Dentro rg-table-wrap il suggerimento sopra funziona sulle righe del corpo (c'e l'intestazione); prima riga senza thead -> --below. Nuova scheda dichiarata nel nome. In stampa non esce.",
+      "keywords": [
+        "tooltip",
+        "suggerimento",
+        "hint",
+        "title",
+        "etichetta al passaggio",
+        "hover",
+        "nome accessibile",
+        "aria-labelledby",
+        "aria-describedby",
+        "descrizione",
+        "icona senza testo",
+        "popover"
+      ]
+    },
+    {
+      "id": "action-group",
+      "title": "Action group (gruppo di azioni, menu, azioni in riga)",
+      "role": "Fila di azioni affini (di norma a sola icona con suggerimento), separazione dell'azione distruttiva in un gruppo suo, menu «Altre azioni» per le sole azioni secondarie, cella delle azioni ripetute in riga di tabella.",
+      "status": "beta",
+      "since": "1.17.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-action-group",
+        "elements": [
+          "rg-action-menu",
+          "rg-action-menu__trigger",
+          "rg-action-menu__list",
+          "rg-action-menu__item",
+          "rg-table__actions"
+        ],
+        "related": [
+          "rg-icon-button--full",
+          "rg-tooltip",
+          "rg-tooltip__text",
+          "rg-icon",
+          "rg-button",
+          "rg-page-header__actions",
+          "rg-table"
+        ]
+      },
+      "variants": [
+        "gruppo",
+        "gruppo-separato",
+        "menu-altre-azioni",
+        "azioni-in-riga"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "menu-open"
+      ],
+      "tokens": [
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-color-border",
+        "--rg-color-black",
+        "--rg-shadow-overlay",
+        "--rg-z-dropdown"
+      ],
+      "doc": "components/action-group.md",
+      "rulesRef": "design-rules.md#distanza-delle-azioni-dal-bordo",
+      "specimenAnchor": "action-group",
+      "snippet": "<div class=\"rg-action-group\" role=\"group\" aria-label=\"Azioni sul prodotto\"><span class=\"rg-tooltip\"><button class=\"rg-icon-button rg-icon-button--full\" type=\"button\" aria-labelledby=\"tip-modifica\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-modifica\"></use></svg></button><span class=\"rg-tooltip__text\" role=\"tooltip\" id=\"tip-modifica\">Modifica</span></span></div>\n<div class=\"rg-action-group\"><details class=\"rg-action-menu\"><summary class=\"rg-button rg-button--ghost rg-action-menu__trigger\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-altro\"></use></svg> Altre azioni</summary><ul class=\"rg-action-menu__list\"><li><button class=\"rg-action-menu__item\" type=\"button\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-nuova-versione\"></use></svg> Nuovo proto</button></li></ul></details></div>\n<div class=\"rg-action-group\"><button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"submit\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-elimina\"></use></svg> Elimina</button></div>",
+      "notes": "CASO: testata del prodotto con 9 bottoni testuali uguali (Modifica, Scheda, Etichette, Schede di reparto, Nuovo proto, Copia parti, Costi, Elimina). FORMA: gruppo di icone con suggerimento per le azioni frequenti di pari peso (Modifica, Scheda, Etichette, Costi); icona + testo per l'ambigua (Schede di reparto, vicina a Scheda); menu per le rare non distruttive (Nuovo proto, Copia parti); Elimina in un gruppo suo, con testo, dopo il filetto (rg-action-group + rg-action-group). MENU: <details> nativo (disclosure, non role=menu), trigger con icona + testo, voci icona + testo a 40px senza fondo di hover (arriverebbe al bordo del pannello, §5), al massimo sei voci; mai primaria, mai distruttiva, mai un'azione critica. RIGHE: td.rg-table__actions (stretta, a destra, nowrap), Apri e Elimina a sola icona con il NOME DEL RECORD nel suggerimento ('Elimina DAVANTI'), elimina ultima in un gruppo suo e con conferma, il nome della riga resta un link, th nascosto 'Azioni'. Tab order nativo, nessun roving tabindex. Controller facoltativo: Escape e click esterno chiudono il menu.",
+      "keywords": [
+        "gruppo di azioni",
+        "action group",
+        "toolbar di icone",
+        "bottoni in fila",
+        "troppi bottoni",
+        "testata prodotto",
+        "altre azioni",
+        "menu azioni",
+        "overflow menu",
+        "kebab",
+        "more actions",
+        "dropdown",
+        "azioni in riga",
+        "row actions",
+        "apri elimina",
+        "azioni tabella",
+        "distruttiva separata",
+        "elimina"
+      ]
+    },
+    {
+      "id": "part-mark",
+      "title": "Part mark (identità delle parti)",
+      "role": "Marcatore d'identità per oggetti fratelli (le parti di un prodotto) sulla palette categoriale: pastiglia con lettera d'ordine accanto al nome, filetto su testata o card, forma piccola per percorso e contesto. L'app passa l'indice, il DS decide colore e segno.",
+      "status": "beta",
+      "since": "1.17.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-part-mark",
+        "variants": [
+          "rg-part-mark--small",
+          "rg-part--1",
+          "rg-part--2",
+          "rg-part--3",
+          "rg-part--4",
+          "rg-part--5",
+          "rg-part--6",
+          "rg-part--7",
+          "rg-part--8",
+          "rg-part--9",
+          "rg-part--10",
+          "rg-part--11",
+          "rg-part--12",
+          "rg-part--13",
+          "rg-part--14",
+          "rg-part--quiet"
+        ],
+        "elements": [
+          "rg-part-label",
+          "rg-part-edge"
+        ],
+        "related": [
+          "rg-page-header",
+          "rg-page-header__context",
+          "rg-breadcrumb",
+          "rg-table",
+          "rg-dept-band",
+          "rg-badge"
+        ]
+      },
+      "variants": [
+        "pastiglia",
+        "pastiglia-piccola",
+        "filetto",
+        "quiet"
+      ],
+      "states": [
+        "pieno (1-7)",
+        "vuoto (8-14)",
+        "quiet (15+ o viste di stato)"
+      ],
+      "cssVars": [
+        "--rg-part",
+        "--rg-part-color",
+        "--rg-part-fill",
+        "--rg-part-ink",
+        "--rg-part-edge-style"
+      ],
+      "tokens": [
+        "--rg-color-category-1",
+        "--rg-color-category-2",
+        "--rg-color-category-3",
+        "--rg-color-category-4",
+        "--rg-color-category-5",
+        "--rg-color-category-6",
+        "--rg-color-category-7",
+        "--rg-color-neutral-600",
+        "--rg-font-mono",
+        "--rg-border-strong",
+        "--rg-space-1",
+        "--rg-space-4"
+      ],
+      "doc": "components/part-mark.md",
+      "rulesRef": "design-rules.md#identità-delle-parti-dalla-1170",
+      "specimenAnchor": "part-mark",
+      "snippet": "<span class=\"rg-part-label\"><span class=\"rg-part-mark rg-part--3\" aria-hidden=\"true\"></span><a href=\"/products/12/parts/3\">LATO DX</a></span>\n<header class=\"rg-page-header rg-part-edge rg-part--3\">...<p class=\"rg-page-header__context\">Fase della parte <span class=\"rg-part-mark rg-part-mark--small\" aria-hidden=\"true\"></span><strong>LATO DX</strong> &#183; <strong>BOOK TOTE</strong></p>...</header>",
+      "notes": "ASSEGNAZIONE per posizione: l'app passa l'indice 1-based della parte nel prodotto (ORDER BY ordine, id) come classe rg-part--N; il DS decide colore e LETTERA (generata con counter upper-alpha: 1=A). ORDINE DEI COLORI: 1 nero (category-1), 2 blu (-2), 3 sabbia (-6), 4 salvia (-7), 5 verde (-5), 6 ocra (-4), 7 rosso (-3): le prime quattro parti non usano mai i colori che coincidono con success/warning/danger. OLTRE 7: 8-14 ripetono i colori con pastiglia VUOTA (fondo bianco, contorno colorato, lettera nera) e filetto TRATTEGGIATO, lettere H-N; 15+ rg-part--quiet con style=\"--rg-part: N\". SEGNO NON CROMATICO = lettera d'ordine (non l'iniziale del nome; lettere e non numeri perche i numeri in un quadratino sono le fasi). MAI da sola: pastiglia aria-hidden accanto al nome scritto; il filetto sempre con una pastiglia nello stesso blocco. CONVIVENZA CON GLI STATI: (1) ordine dei colori, (2) forma diversa dal badge (quadrato pieno con lettera vs pillola bianca con pallino e testo), (3) rg-part--quiet nelle viste governate dagli stati (revisione, anomalie). Non va in rg-page-header__status, non e uno stato, non e cliccabile. L'identita si mette sull'antenato (rg-page-header rg-part-edge rg-part--3) e le pastiglie dentro la ereditano. Nel percorso la pastiglia sta PRIMA del link, fuori dal link. Stampa: print-color-adjust forzato.",
+      "keywords": [
+        "parte",
+        "parti",
+        "identita",
+        "colore parte",
+        "davanti",
+        "dietro",
+        "lato",
+        "fondo",
+        "manico",
+        "oggetti fratelli",
+        "pari ordinati",
+        "categoria",
+        "palette categoriale",
+        "lettera",
+        "pastiglia",
+        "swatch",
+        "filetto",
+        "marcatore",
+        "legenda",
+        "distinguere le parti",
+        "colore d identita"
       ]
     }
   ]

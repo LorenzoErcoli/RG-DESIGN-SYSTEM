@@ -95,6 +95,20 @@ if (fs.existsSync(p(helper)) && declaredOrder.length) {
   }
 }
 
+// --- 6. Icone (v1.17.0): ogni id citato (…rg-icons.svg#rg-icon-x o href="#rg-icon-x") esiste nello sprite ---
+const spriteFile = 'icons/rg-icons.svg';
+if (fs.existsSync(p(spriteFile))) {
+  const iconIds = new Set([...read(p(spriteFile)).matchAll(/<symbol[^>]*\sid="([^"]+)"/g)].map(m => m[1]));
+  const iconRefs = (txt) => [...txt.matchAll(/(?:rg-icons\.svg#|href="#)(rg-icon-[a-z0-9-]+)/g)].map(m => m[1]);
+  for (const f of [...listFiles('components', '.md'), ...listFiles('patterns', '.md'),
+                   ...listFiles('integration', '.md'), ...listFiles('examples', '.html')]) {
+    for (const id of iconRefs(read(p(f)))) if (!iconIds.has(id)) fail(f, `icona inesistente nello sprite: #${id}`);
+  }
+  for (const c of manifest.components) {
+    if (c.snippet) for (const id of iconRefs(c.snippet)) if (!iconIds.has(id)) fail(`manifest/${c.id}`, `snippet usa un'icona inesistente: #${id}`);
+  }
+}
+
 // --- Report ---
 if (violations.length) {
   console.error(`\n✗ ds-lint: ${violations.length} violazioni\n`);

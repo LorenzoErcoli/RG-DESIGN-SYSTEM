@@ -94,3 +94,8 @@ target, grande quanto la riga, con chevron di apertura sul lato destro.
   portano l'unità accanto al numero.
 - Target interattivo compatto 34×34 per le azioni inline; la riga navigabile ha altezza minima
   40 px, che è il target pieno.
+- **Dalla 1.17.0** il bottone a sola icona ha la forma a target pieno `rg-icon-button--full`
+  (40×40): è quella da usare in testate, barre e righe di tabella. La base da 34 resta per queste
+  liste dense. Al posto dei caratteri (◎ ↺ ×) va un'icona del [set](icons.md), e al posto di
+  `aria-label` di norma un [suggerimento](tooltip.md) collegato con `aria-labelledby`, che dà il nome
+  anche a chi vede.

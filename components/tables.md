@@ -77,6 +77,18 @@ Regole:
 A riga chiusa la `<tr class="rg-table__detail">` porta l'attributo `hidden`; il JS che gestisce
 il toggle inverte `aria-expanded` e aggiunge/toglie `hidden`, nient'altro.
 
+## Azioni in riga (`rg-table__actions`, dalla 1.17.0)
+
+Le azioni che si ripetono su ogni riga (Apri, Elimina) stanno nell'**ultima colonna**, in una cella
+`rg-table__actions`: stretta quanto il contenuto, a destra, senza andare a capo. Sono **a sola icona
+con suggerimento** (`rg-icon-button--full` dentro `rg-tooltip`), l'eliminazione in un gruppo suo e per
+ultima. Il nome della riga resta un link al dettaglio. Markup completo in
+[action-group](action-group.md#struttura).
+
+- Intestazione della colonna: `<th><span class="rg-u-visually-hidden">Azioni</span></th>`.
+- Il suggerimento porta il nome del record: «Elimina DAVANTI», non «Elimina».
+- Distanza dal bordo: il padding della cella (12 px) basta anche dentro `rg-section-card--flush`.
+
 ## Colonna «Qtà»
 
 La forma canonica del valore numerico esiste già (`rg-table__numeric`: destra, mono, cifre

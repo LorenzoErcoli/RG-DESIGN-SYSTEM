@@ -1043,9 +1043,13 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-operation-row__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-2); }
 .rg-operation-row__index { flex: none; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
 .rg-operation-row__name { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); overflow-wrap: anywhere; }
-/* Le azioni si appoggiano alla base dei controlli, non alla cima della riga: un bottone alto 40
-   allineato in alto galleggerebbe sopra gli input. */
-.rg-operation-row__actions { align-self: end; display: inline-flex; flex-wrap: wrap; gap: var(--rg-space-1); }
+/* Le azioni si posano sulla LINEA DEI CONTROLLI (v1.17.0), come in rg-form-row: saltano l'altezza
+   dell'etichetta e si centrano nella linea alta 40 px. Fino alla 1.16 si appoggiavano al piede della
+   riga (align-self: end), e un aiuto o un errore sotto un campo le abbassava sotto gli input. La
+   coda della riga e ora rg-form-row; rg-cluster--end resta accettato, e senza aiuti il risultato e
+   lo stesso. */
+.rg-operation-row { --rg-form-row-label: calc(var(--rg-font-size-xs) * var(--rg-line-height-body) + var(--rg-space-2)); }
+.rg-operation-row__actions { align-self: start; display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-1); min-height: calc(var(--rg-form-row-label) + 40px); padding-top: var(--rg-form-row-label); }
 /* Ripetizione (la seconda passata della stessa operazione): rientro + filetto verticale che la
    lega alla riga sopra. Struttura, non colore; l'indice resta scritto (01-2) perche il rientro da
    solo non dice DI CHI e la ripetizione. */
@@ -1054,3 +1058,119 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
   .rg-operation-row { grid-template-columns: minmax(0, 1fr) auto; }
   .rg-operation-row__head { grid-column: 1 / -1; padding-top: 0; }
 }
+
+/* ==========================================================================================
+   AZIONI, ICONE, IDENTITA DELLE PARTI (v1.17.0, seconda tappa)
+   ========================================================================================== */
+
+/* Icona — un <svg> che usa un simbolo dello sprite icons/rg-icons.svg. Griglia 24, area viva 3-21,
+   tratto 1,5 a capi quadri: il margine interno della tavola fa gia l'allineamento ottico col testo.
+   Colore da currentColor (il bottone decide), misura dalla scala di spazio: 16 (default, dentro i
+   bottoni col testo a 14), 20 (--md, bottone a sola icona e testo a 16), 24 (--lg, vetrine e stati
+   vuoti). L'icona e SEMPRE aria-hidden: il nome sta sul controllo, mai nel disegno. */
+.rg-icon { display: inline-block; flex: none; width: var(--rg-icon-size, var(--rg-space-4)); height: var(--rg-icon-size, var(--rg-space-4)); vertical-align: middle; overflow: visible; }
+:where(.rg-button--large) > .rg-icon, :where(.rg-icon-button--full) > .rg-icon { --rg-icon-size: calc(var(--rg-space-4) + var(--rg-space-1)); }
+.rg-icon--md { --rg-icon-size: calc(var(--rg-space-4) + var(--rg-space-1)); }
+.rg-icon--lg { --rg-icon-size: var(--rg-space-6); }
+
+/* Bottone a sola icona, target pieno (v1.17.0). rg-icon-button base resta 34 px: e ammesso solo
+   nelle liste dense (lists.md). --full porta il target al minimo della regola §11, 40x40, ed e la
+   forma per le testate, le barre e le righe di tabella. Nome accessibile obbligatorio: di norma
+   aria-labelledby verso il suo rg-tooltip__text, altrimenti aria-label. */
+a.rg-icon-button { text-decoration: none; }
+.rg-icon-button--full { min-width: 40px; min-height: 40px; padding: var(--rg-space-2); border-radius: var(--rg-radius-md); }
+
+/* Suggerimento (v1.17.0) — il nome visibile di un bottone a sola icona. Senza JS: compare a hover e a
+   focus DA TASTIERA (:has(:focus-visible)), non al click col mouse. E un testo, non un contenitore:
+   niente link, niente bottoni dentro. Il bottone lo usa come NOME (aria-labelledby) quando e a sola
+   icona, come DESCRIZIONE (aria-describedby) quando ha gia un testo; mai entrambi, altrimenti lo
+   screen reader lo legge due volte. Il bordo trasparente e lo spazio fra suggerimento e bottone, ma
+   appartiene al suggerimento: il puntatore ci puo passare sopra senza farlo sparire (WCAG 1.4.13,
+   hoverable). Escape lo chiude con il controller di riferimento (is-dismissed, sei righe di JS). Non
+   copre il bottone: sta sopra (default) o sotto (--below). */
+.rg-tooltip { position: relative; display: inline-flex; }
+.rg-tooltip__text { position: absolute; bottom: 100%; left: 50%; z-index: var(--rg-z-dropdown); width: max-content; max-width: 32ch; padding: var(--rg-space-1) var(--rg-space-2); color: var(--rg-color-white); background: var(--rg-color-black); background-clip: padding-box; border-bottom: var(--rg-space-1) var(--rg-border-style) transparent; border-radius: var(--rg-radius-sm); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-regular); line-height: var(--rg-line-height-technical); text-align: center; white-space: normal; visibility: hidden; transform: translateX(-50%); }
+/* Nessuna dissolvenza: il nome deve esserci nel momento in cui il focus arriva, non 120 ms dopo. */
+.rg-tooltip:hover > .rg-tooltip__text, .rg-tooltip:has(:focus-visible) > .rg-tooltip__text { visibility: visible; }
+.rg-tooltip.is-dismissed > .rg-tooltip__text { visibility: hidden; }
+.rg-tooltip--below > .rg-tooltip__text { top: 100%; bottom: auto; border-top: var(--rg-space-1) var(--rg-border-style) transparent; border-bottom: 0; }
+.rg-tooltip--start > .rg-tooltip__text { left: 0; transform: none; }
+.rg-tooltip--end > .rg-tooltip__text { right: 0; left: auto; transform: none; }
+
+/* Gruppo di azioni (v1.17.0) — una fila di azioni AFFINI, di norma a sola icona. role="group" con
+   aria-label nel markup. Due gruppi consecutivi sono separati da un filetto e da uno spazio doppio:
+   e il modo di tenere un'azione distruttiva lontana dalle altre (§2) senza un colore in piu. */
+.rg-action-group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-1); }
+.rg-action-group + .rg-action-group { margin-inline-start: var(--rg-space-2); padding-inline-start: var(--rg-space-3); border-inline-start: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+
+/* Menu «altre azioni» (v1.17.0) — <details> nativo, SOLO per azioni secondarie e non distruttive (la
+   regola della disclosure: nessuna azione critica nascosta). Il trigger ha sempre icona + testo: una
+   tendina a sola icona non dice che cosa contiene. Le voci hanno icona + testo, target 40, e nessun
+   fondo di hover: il fondo arriverebbe al bordo del pannello (§5, distanza delle azioni dal bordo).
+   L'hover sottolinea, come --ghost. Chiusura con Escape e click esterno: controller di riferimento. */
+.rg-action-menu { position: relative; display: inline-block; }
+.rg-action-menu > summary { list-style: none; }
+.rg-action-menu > summary::-webkit-details-marker { display: none; }
+.rg-action-menu[open] > .rg-action-menu__trigger { border-color: var(--rg-color-black); }
+.rg-action-menu__list { position: absolute; top: calc(100% + var(--rg-space-1)); right: 0; z-index: var(--rg-z-dropdown); display: grid; min-width: 24ch; margin: 0; padding: var(--rg-space-2) 0; list-style: none; background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-md); box-shadow: var(--rg-shadow-overlay); }
+.rg-action-menu__item { display: flex; align-items: center; gap: var(--rg-space-2); width: 100%; min-height: 40px; padding: 0 var(--rg-space-4); color: var(--rg-color-text-primary); background: none; border: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); text-align: left; text-decoration: none; white-space: nowrap; cursor: pointer; }
+.rg-action-menu__item:hover { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
+.rg-action-menu__item:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: calc(-1 * var(--rg-border-strong)); }
+
+/* Azioni in riga di tabella (v1.17.0) — la colonna azioni e stretta quanto il suo contenuto, a destra,
+   senza andare a capo. Le azioni ripetute su ogni riga sono a sola icona con suggerimento: con il
+   testo, «Apri Elimina» ripetuto venti volte e una colonna di parole uguali che nasconde i dati. La
+   distanza dal bordo e quella della cella (12 px, §5). */
+.rg-table td.rg-table__actions { width: 1%; padding-block: var(--rg-space-1); text-align: right; white-space: nowrap; }
+.rg-table__actions > .rg-action-group { flex-wrap: nowrap; }
+
+/* Identita delle parti (v1.17.0) — distinguere oggetti FRATELLI (le parti di un prodotto) con la
+   palette categoriale, sempre accanto al nome e con un segno non cromatico: la LETTERA d'ordine,
+   generata dal DS dall'indice. L'app passa solo l'indice (rg-part--N, 1-based, ordine stabile).
+   ORDINE DEI COLORI: le prime quattro parti usano categorie che NON coincidono con uno stato (nero,
+   blu, sabbia, salvia); success/warning/danger arrivano dalla quinta. OLTRE LA SETTIMA: il colore
+   ricomincia, e il segno in piu e la forma (pastiglia vuota, filetto tratteggiato) oltre alla lettera
+   (H, I, L…). Oltre la quattordicesima: rg-part--quiet con style="--rg-part: N". Non e uno stato e
+   non e una gerarchia. Lettera bianca sui colori scuri, nera su sabbia e salvia: contrasto AA. */
+.rg-part--1  { --rg-part: 1;  --rg-part-color: var(--rg-color-category-1); --rg-part-ink: var(--rg-color-white); }
+.rg-part--2  { --rg-part: 2;  --rg-part-color: var(--rg-color-category-2); --rg-part-ink: var(--rg-color-white); }
+.rg-part--3  { --rg-part: 3;  --rg-part-color: var(--rg-color-category-6); --rg-part-ink: var(--rg-color-black); }
+.rg-part--4  { --rg-part: 4;  --rg-part-color: var(--rg-color-category-7); --rg-part-ink: var(--rg-color-black); }
+.rg-part--5  { --rg-part: 5;  --rg-part-color: var(--rg-color-category-5); --rg-part-ink: var(--rg-color-white); }
+.rg-part--6  { --rg-part: 6;  --rg-part-color: var(--rg-color-category-4); --rg-part-ink: var(--rg-color-white); }
+.rg-part--7  { --rg-part: 7;  --rg-part-color: var(--rg-color-category-3); --rg-part-ink: var(--rg-color-white); }
+.rg-part--8  { --rg-part: 8;  --rg-part-color: var(--rg-color-category-1); }
+.rg-part--9  { --rg-part: 9;  --rg-part-color: var(--rg-color-category-2); }
+.rg-part--10 { --rg-part: 10; --rg-part-color: var(--rg-color-category-6); }
+.rg-part--11 { --rg-part: 11; --rg-part-color: var(--rg-color-category-7); }
+.rg-part--12 { --rg-part: 12; --rg-part-color: var(--rg-color-category-5); }
+.rg-part--13 { --rg-part: 13; --rg-part-color: var(--rg-color-category-4); }
+.rg-part--14 { --rg-part: 14; --rg-part-color: var(--rg-color-category-3); }
+.rg-part--8, .rg-part--9, .rg-part--10, .rg-part--11, .rg-part--12, .rg-part--13, .rg-part--14 { --rg-part-fill: var(--rg-color-white); --rg-part-ink: var(--rg-color-black); --rg-part-edge-style: dashed; }
+.rg-part--quiet { --rg-part-color: var(--rg-color-neutral-600); --rg-part-fill: var(--rg-part-color); --rg-part-ink: var(--rg-color-white); --rg-part-edge-style: solid; }
+.rg-part-mark { counter-reset: rg-part var(--rg-part, 0); display: inline-flex; flex: none; align-items: center; justify-content: center; box-sizing: border-box; min-width: calc(var(--rg-space-4) + var(--rg-space-1)); height: calc(var(--rg-space-4) + var(--rg-space-1)); padding-inline: var(--rg-space-1); color: var(--rg-part-ink, var(--rg-color-white)); background: var(--rg-part-fill, var(--rg-part-color, var(--rg-color-neutral-600))); border: var(--rg-border-strong) var(--rg-border-style) var(--rg-part-color, var(--rg-color-neutral-600)); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: 1; vertical-align: middle; }
+.rg-part-mark::before { content: counter(rg-part, upper-alpha); }
+.rg-part-mark--small { min-width: var(--rg-space-4); height: var(--rg-space-4); padding-inline: 0; border-width: var(--rg-border-hairline); }
+/* Pastiglia + nome: il nome e testo nel markup, la pastiglia e aria-hidden. */
+.rg-part-label { display: inline-flex; align-items: center; gap: var(--rg-space-2); min-width: 0; }
+.rg-page-header__context .rg-part-mark { margin-inline-end: var(--rg-space-1); }
+/* Filetto d'identita sul bordo sinistro di una testata o di una card. Mai da solo: nello stesso
+   blocco c'e una pastiglia con la lettera e il nome. */
+.rg-part-edge { border-inline-start: var(--rg-space-1) var(--rg-part-edge-style, solid) var(--rg-part-color, var(--rg-color-neutral-600)); }
+.rg-page-header.rg-part-edge { padding-inline-start: var(--rg-space-4); }
+
+/* Key-value IN LINEA (v1.17.0) — identificativi e classificazione di un'entita in testata: coppie
+   etichetta-valore che vanno a capo, senza fondo e senza pillola. Sostituisce le etichette fatte a
+   mano (fondo grigio o nero, padding 2px 8px): il fondo nero su «VARIANTE» e «divisioni» usava il
+   colore come gerarchia, e le etichette senza termine («Borse») non dicevano che cosa fossero.
+   Gli identificativi portano rg-mono sul <dd>. La coppia che DISTINGUE questa entita dalle sorelle
+   (la variante di un proto) e __pair--distinct: contorno nero e peso, non un colore, una sola per
+   elenco. Piu valori per lo stesso termine: un <dd> ciascuno, il separatore lo mette il DS. */
+.rg-key-value--inline { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-2) var(--rg-space-4); }
+.rg-key-value__pair { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--rg-space-2); min-width: 0; }
+.rg-key-value--inline dt { color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-key-value--inline dd { margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-sm); text-align: left; overflow-wrap: anywhere; }
+.rg-key-value--inline dd.rg-mono { font-family: var(--rg-font-mono); }
+.rg-key-value--inline dd + dd::before { content: "·"; content: "·" / ""; padding-inline-end: var(--rg-space-2); color: var(--rg-color-neutral-400); }
+.rg-key-value__pair--distinct { padding: 0 var(--rg-space-2); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); }
+.rg-key-value__pair--distinct dd { font-weight: var(--rg-weight-medium); }

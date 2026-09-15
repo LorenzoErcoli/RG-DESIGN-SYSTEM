@@ -35,6 +35,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent   # radice del progetto
 DS_DIR = BASE_DIR / "design-system"
 
 app.mount("/ds/styles", StaticFiles(directory=DS_DIR / "styles"), name="ds-styles")
+# Dalla 1.17.0: lo sprite delle icone (icons/rg-icons.svg). In locale, niente CDN.
+app.mount("/ds/icons", StaticFiles(directory=DS_DIR / "icons"), name="ds-icons")
 
 @app.get("/ds/tokens.css", include_in_schema=False)
 async def ds_tokens():

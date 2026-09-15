@@ -9,8 +9,10 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 
 ## 1.17.0 — in preparazione (non rilasciata)
 
-**La struttura della pagina.** Prima tappa dell'armonizzazione: solo struttura, niente icone e niente
-nuovi usi del colore. Il DS era a v1.16.0 e i difetti sono stati misurati su `rg-product-platform`:
+**La struttura della pagina, le azioni, l'identità delle parti.** Due tappe di armonizzazione. La
+prima riguarda la sola struttura, qui sotto. La seconda, più in basso, porta icone, suggerimenti,
+gruppi di azioni, l'identità delle parti e le etichette di sola lettura. Il DS era a v1.16.0 e i
+difetti della prima tappa sono stati misurati su `rg-product-platform`:
 - la testata di pagina esisteva in quattro forme;
 - il percorso c'era in 8 pagine su 21;
 - entrando in una fase non si capiva di quale parte e di quale prodotto fosse;
@@ -86,6 +88,87 @@ Sicuro, con tre cambi d'aspetto su classi esistenti:
 3. **`rg-steps` dentro `rg-section-card--flush`** rientra di 16 px ai lati.
 
 `rg-section-header` e `rg-cluster--end` non cambiano.
+
+### Seconda tappa — azioni, icone, identità delle parti
+
+Decisioni dell'utente, entrambe dentro le regole:
+1. **Icone**: icona + suggerimento per le azioni frequenti o secondarie; la primaria resta icona +
+   testo; nessuna icona senza nome accessibile.
+2. **Colore**: un colore d'identità per le **parti** di un prodotto, sempre accanto al nome e con un
+   segno non cromatico. Gli stati restano sui colori semantici, e nessun colore fa gerarchia.
+
+Nessun token nuovo. Nuovo file servito: `icons/rg-icons.svg`, che richiede un mount in più nell'app.
+
+#### Componenti
+
+- **Set di icone `rg-icon`** (beta), con `--md` e `--lg`: 34 icone disegnate per RG, nessun codice di
+  terzi. Griglia 24, area viva 3–21, tratto 1,5 a capi quadri, colore da `currentColor`. Sostituiscono
+  i caratteri e le emoji nei bottoni (🔗 ✎ ⟳ ↓ ← → ✕ ✓ ⚑ ⚠ ⓘ). Nomi per azione: `modifica`,
+  `elimina`, `apri`, `apri-esterno`, `aggiungi`, `chiudi`, `salva`, `indietro`, `avanti`, `scarica`,
+  `carica`, `stampa`, `documento`, `fascicolo`, `etichetta`, `costo`, `collega`, `scollega`,
+  `copia`, `nuova-versione`, `ruota`, `ricarica`, `ripristina`, `filtro`, `togli-filtri`, `ordina`,
+  `cerca`, `avviso`, `errore`, `conferma`, `segnala`, `immagine`, `informazione`, `altro`.
+- **`rg-tooltip`** (con `__text`, `--below`, `--start`, `--end`): è il nome visibile di un bottone a
+  sola icona (`aria-labelledby`), oppure la descrizione di un bottone col testo (`aria-describedby`).
+  Senza JS compare a hover e a focus da tastiera, e si può percorrere col puntatore. Escape lo chiude
+  con un controller di sei righe, facoltativo.
+- **`rg-action-group`**: una fila di azioni affini. Due gruppi consecutivi sono separati da un
+  filetto, ed è lì che sta l'azione distruttiva.
+- **`rg-action-menu`** (con `__trigger`, `__list`, `__item`): il menu «Altre azioni» su `<details>`,
+  solo per azioni secondarie e non distruttive.
+- **`rg-part-mark`** (con `--small`), **`rg-part--1…14`**, **`rg-part--quiet`**, **`rg-part-label`**,
+  **`rg-part-edge`**: l'identità delle parti di un prodotto.
+  - L'app passa l'indice, il DS mette colore e lettera d'ordine.
+  - Le prime quattro parti non usano mai i colori che coincidono con uno stato.
+  - Dall'ottava parte il colore ricomincia, e la pastiglia vuota e il filetto tratteggiato fanno da
+    segno in più. Dalla quindicesima si passa al grigio.
+
+#### Varianti
+
+- **`rg-icon-button--full`**: il bottone a sola icona da 40×40. La base da 34 resta per le liste
+  dense.
+- **`rg-table__actions`**: la cella delle azioni di riga, a sola icona con suggerimento.
+- **`rg-key-value--inline`**, con **`rg-key-value__pair`** e **`__pair--distinct`**: identificativi e
+  classificazione in testata. Sostituiscono le etichette fatte a mano con stili inline. La variante
+  del proto si distingue con contorno e peso, non col fondo nero. Qui non serviva un componente
+  nuovo: sono coppie termine-valore.
+
+#### Correzioni
+
+- **`rg-operation-row`**: le azioni della riga si posano sulla linea dei controlli e non più sul
+  piede della riga. La coda della riga diventa `rg-form-row`, e un aiuto o un errore sotto un campo
+  non sposta più né i vicini né le azioni.
+
+#### Regole
+
+- `design-rules.md` §4, *Identità delle parti*: assegnazione per posizione, sempre col nome e con la
+  lettera, mai gerarchia né stato, grigio dove governano gli stati.
+- `design-rules.md` §7: un solo set di icone, nessuna icona senza nome, nessun carattere al posto di
+  un'icona.
+- `components/buttons.md`, *Icona, testo o entrambi*: quando sola icona, quando icona + testo, quando
+  solo testo.
+
+#### Documentazione
+
+- Nuovi: `components/icons.md`, `components/tooltip.md`, `components/action-group.md`,
+  `components/part-mark.md` e `icons/README.md` (regole di disegno, provenienza).
+- Aggiornati:
+  - `components/buttons.md`, `components/lists.md`, `components/tables.md` (azioni in riga);
+  - `components/technical-data.md` (variante in linea);
+  - `components/operation-row.md`;
+  - `integration/fastapi.md` (mount `/ds/icons`).
+- `tools/ds-lint.mjs`: fallisce se un doc, un esempio o uno snippet cita un'icona che non c'è nello
+  sprite.
+
+#### Aggiornamento (seconda tappa)
+
+1. **Nell'app** aggiungere il mount delle icone:
+   `app.mount("/ds/icons", StaticFiles(directory=DS_DIR / "icons"))`.
+2. **`rg-operation-row__actions`** si allinea alla linea dei controlli. Senza aiuti né errori non
+   cambia niente. Se i campi della riga vanno a capo su più righe, le azioni restano sulla prima.
+   Nella coda, `rg-cluster rg-cluster--end` → `rg-form-row`.
+3. Tutto il resto è additivo: `rg-icon-button` a 34 px, `rg-key-value` e `rg-key-value--ruled` non
+   cambiano.
 
 ## 1.16.0 — 2026-09-15
 

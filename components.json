@@ -2,8 +2,8 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.15.0",
-  "generated": "2026-09-04",
+  "dsVersion": "1.16.0",
+  "generated": "2026-09-15",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
   "appLocalExceptions": [],
@@ -2014,15 +2014,27 @@
           "rg-step__meta",
           "rg-step__aside",
           "rg-step__actions",
-          "rg-step__body"
+          "rg-step__body",
+          "rg-step__role"
         ],
         "variants": [
-          "rg-step--danger"
+          "rg-step--danger",
+          "rg-steps--grouped",
+          "rg-step--group",
+          "rg-step--group-start",
+          "rg-step--group-end",
+          "rg-step--principal"
+        ],
+        "related": [
+          "rg-phase-switch",
+          "rg-phase-head",
+          "rg-worksheet-block__role"
         ]
       },
       "variants": [
         "standard",
-        "danger"
+        "danger",
+        "grouped (dalla 1.16.0)"
       ],
       "states": [
         "collapsed",
@@ -2050,7 +2062,7 @@
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "steps",
       "snippet": "<ol class=\"rg-steps\">\n  <li class=\"rg-step\">\n    <div class=\"rg-step__head\">\n      <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-1-toggle\" aria-controls=\"fase-1\" aria-expanded=\"true\">\n        <span class=\"rg-step__num\">1</span>\n        <span class=\"rg-step__headline\"><span class=\"rg-step__title\">Ricamo piatto</span><span class=\"rg-step__meta\"><span>Ricamo</span><span>densita 4.2 pt/mm</span><span>altezza 2.0 mm</span></span></span>\n        <span class=\"rg-step__aside\"><span class=\"rg-badge rg-badge--count\">4 operazioni</span></span>\n      </button>\n      <div class=\"rg-step__actions\">\n        <button class=\"rg-button rg-button--ghost\" type=\"button\" aria-label=\"Modifica fase 1: Ricamo piatto\">Modifica</button>\n        <button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"button\" aria-label=\"Elimina fase 1: Ricamo piatto\">Elimina</button>\n      </div>\n    </div>\n    <div class=\"rg-step__body\" id=\"fase-1\" role=\"region\" aria-labelledby=\"fase-1-toggle\"><!-- operazioni --></div>\n  </li>\n</ol>",
-      "notes": "Blocco RIGATO: filetto forte nero sopra e sotto la sequenza, filetto neutro fra le fasi (idioma di rg-table), gap zero, nessun bordo perimetrale e nessuno sfondo — un pannello lo trasformerebbe in card. Il separatore sta in testa alla fase seguente perche e la stessa linea che chiude il corpo di una fase aperta. Contenitore di una SEQUENZA, non riga-record: usare rg-list-row/--link quando l'ordine non conta e la voce non contiene altro, rg-disclosure--boxed per una sezione di pagina senza azioni. NON usa <details>/<summary> di proposito: le azioni della fase starebbero dentro il summary (controlli annidati) o dentro il contenuto rivelabile (invisibili a fase chiusa); qui il toggle e un <button> e le azioni sono suoi fratelli. Stato = aria-expanded sul toggle + [hidden] sul corpo, nessuna classe locale. Il segno +/- e il filo verticale che unisce i numeri sono generati dal DS: non aggiungere chevron ne connettori. Numero e segno non sono due indicatori dello stesso fatto (posizione vs apertura) e stanno ai capi opposti del toggle. Non si annida.",
+      "notes": "Blocco RIGATO: filetto forte nero sopra e sotto la sequenza, filetto neutro fra le fasi (idioma di rg-table), gap zero, nessun bordo perimetrale e nessuno sfondo — un pannello lo trasformerebbe in card. Il separatore sta in testa alla fase seguente perche e la stessa linea che chiude il corpo di una fase aperta. Contenitore di una SEQUENZA, non riga-record: usare rg-list-row/--link quando l'ordine non conta e la voce non contiene altro, rg-disclosure--boxed per una sezione di pagina senza azioni. NON usa <details>/<summary> di proposito: le azioni della fase starebbero dentro il summary (controlli annidati) o dentro il contenuto rivelabile (invisibili a fase chiusa); qui il toggle e un <button> e le azioni sono suoi fratelli. Stato = aria-expanded sul toggle + [hidden] sul corpo, nessuna classe locale. Il segno +/- e il filo verticale che unisce i numeri sono generati dal DS: non aggiungere chevron ne connettori. Numero e segno non sono due indicatori dello stesso fatto (posizione vs apertura) e stanno ai capi opposti del toggle. Non si annida. GRUPPO DI FASI COLLEGATE (1.16.0): una principale con 1-3 collegate contigue si dice SENZA annidare, con modificatori sulla lista piatta. rg-steps--grouped sulla <ol> riserva la colonna della graffa su tutte le righe (numeri in colonna, filo intatto). rg-step--group sulle fasi del gruppo, piu --group-start/--group-end sulla prima e sull'ultima, sempre esplicite perche due gruppi possono essere adiacenti. rg-step--principal sulla principale. rg-step__role sopra il titolo: 'Principale', 'Collegata · prima della N', 'Collegata · dopo la N'. Graffa (filo nero spesso coi capi) e dente (dalla graffa al numero della principale) sono generati dal DS. Niente numerazione 2a/2b (il numero e un dato, il foglio dice 'fase 3 di 4'). Niente li di gruppo con ol interno. Niente badge 'principale' in __aside insieme al ruolo. La collegata porta alla pagina della principale: azione 'Apri nella N'. Il numero della principale non cambia bordo (il bordo forte e il segno di --danger).",
       "keywords": [
         "fase",
         "fasi",
@@ -2077,7 +2089,127 @@
         "operazioni",
         "scheda parte",
         "distinta di lavorazione",
-        "routing"
+        "routing",
+        "fasi collegate",
+        "fase collegata",
+        "fase principale",
+        "gruppo di fasi",
+        "raggruppamento",
+        "graffa",
+        "bracket",
+        "linked steps",
+        "grouped steps",
+        "sub-step",
+        "sotto-fase",
+        "prima",
+        "dopo",
+        "forno finale",
+        "pressatura iniziale"
+      ]
+    },
+    {
+      "id": "phase-switch",
+      "title": "Selettore di fase del gruppo (fasi collegate)",
+      "role": "Primo dei due livelli della pagina di una fase principale che compila anche le sue fasi collegate: sceglie QUALE FASE del gruppo si compila (striscia rigata con numero di sequenza, ruolo, titolo, reparto) e ne dichiara la testa ('stai compilando'); le SEZIONI della fase scelta restano rg-tabs dentro il suo pannello.",
+      "status": "beta",
+      "since": "1.16.0",
+      "kind": "component",
+      "promotedFrom": "rg-product-platform",
+      "classes": {
+        "base": "rg-phase-switch",
+        "elements": [
+          "rg-phase-switch__item",
+          "rg-phase-switch__num",
+          "rg-phase-switch__text",
+          "rg-phase-switch__role",
+          "rg-phase-switch__title",
+          "rg-phase-switch__meta"
+        ],
+        "subcomponents": {
+          "head": [
+            "rg-phase-head",
+            "rg-phase-head__num",
+            "rg-phase-head__text",
+            "rg-phase-head__role",
+            "rg-phase-head__title",
+            "rg-phase-head__meta"
+          ]
+        },
+        "related": [
+          "rg-tabs",
+          "rg-tab",
+          "rg-tabpanel",
+          "rg-steps--grouped",
+          "rg-step__role",
+          "rg-section-card",
+          "rg-badge--count",
+          "rg-badge--unresolved"
+        ]
+      },
+      "variants": [
+        "base"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "selected",
+        "error",
+        "empty"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-white",
+        "--rg-color-surface",
+        "--rg-color-surface-raised",
+        "--rg-color-border",
+        "--rg-color-focus",
+        "--rg-color-text-label",
+        "--rg-color-text-secondary",
+        "--rg-font-identity",
+        "--rg-font-mono",
+        "--rg-font-size-xs",
+        "--rg-font-size-sm",
+        "--rg-font-size-xl",
+        "--rg-weight-medium",
+        "--rg-weight-heading",
+        "--rg-border-hairline",
+        "--rg-border-strong",
+        "--rg-space-8",
+        "--rg-radius-sm"
+      ],
+      "doc": "components/phase-switch.md",
+      "rulesRef": "design-rules.md#11-accessibilita-e-comportamento",
+      "specimenAnchor": "phase-switch",
+      "snippet": "<div class=\"rg-phase-switch\" role=\"tablist\" aria-label=\"Fasi del gruppo: Pressatura con Sabbiatura e soffiatura finale\">\n  <button class=\"rg-phase-switch__item\" type=\"button\" role=\"tab\" id=\"tab-fase-2\" aria-controls=\"fase-2\" aria-selected=\"false\" tabindex=\"-1\">\n    <span class=\"rg-phase-switch__num\">2</span>\n    <span class=\"rg-phase-switch__text\"><span class=\"rg-phase-switch__role\">Principale</span><span class=\"rg-phase-switch__title\">Pressatura</span><span class=\"rg-phase-switch__meta\"><span>Pressatura e soffiatura</span><span class=\"rg-badge rg-badge--count\">6 da compilare</span></span></span>\n  </button>\n  <button class=\"rg-phase-switch__item\" type=\"button\" role=\"tab\" id=\"tab-fase-3\" aria-controls=\"fase-3\" aria-selected=\"true\" tabindex=\"0\">\n    <span class=\"rg-phase-switch__num\">3</span>\n    <span class=\"rg-phase-switch__text\"><span class=\"rg-phase-switch__role\">Collegata · dopo la 2</span><span class=\"rg-phase-switch__title\">Sabbiatura e soffiatura finale</span><span class=\"rg-phase-switch__meta\"><span>Pressatura e soffiatura</span><span class=\"rg-badge rg-badge--count\">7 da compilare</span></span></span>\n  </button>\n</div>\n<div class=\"rg-tabpanel is-active\" role=\"tabpanel\" id=\"fase-3\" aria-labelledby=\"tab-fase-3\">\n  <header class=\"rg-phase-head\">\n    <span class=\"rg-phase-head__num\">3</span>\n    <div class=\"rg-phase-head__text\"><span class=\"rg-phase-head__role\">Stai compilando · collegata · dopo la 2</span><h2 class=\"rg-phase-head__title\">Sabbiatura e soffiatura finale</h2><p class=\"rg-phase-head__meta\"><span>fase 3 di 4</span><span>reparto Pressatura e soffiatura</span><span>si lavora dopo la 2, Pressatura</span></p></div>\n  </header>\n  <div class=\"rg-tabs rg-u-mb-6\" role=\"tablist\" aria-label=\"Sezioni della fase 3: Sabbiatura e soffiatura finale\">\n    <button class=\"rg-tab is-active\" type=\"button\" role=\"tab\" id=\"tab-3-base\" aria-controls=\"sez-3-base\" aria-selected=\"true\">Informazioni generali</button>\n  </div>\n  <div class=\"rg-tabpanel is-active\" role=\"tabpanel\" id=\"sez-3-base\" aria-labelledby=\"tab-3-base\"><!-- rg-section-card con h3 --></div>\n</div>",
+      "notes": "Due livelli, due controlli, due forme (NN/g Tabs Used Right: non mescolare tab di tipo diverso). Livello 1 = rg-phase-switch, tablist delle fasi del gruppo (principale compresa) in ordine di sequenza e coi numeri della sequenza. Livello 2 = rg-tabs delle sezioni DENTRO il rg-tabpanel della fase. rg-phase-head in testa a ogni pannello di fase e obbligatoria: il titolo di pagina resta quello della principale, e chi arriva direttamente su una collegata deve leggere dove si trova. Stato attivo senza colore: numero invertito + barra nera spessa + aria-selected. Un solo form: tutti i pannelli restano nel DOM, commutazione con is-active; lo stato all'arrivo e dopo il salvataggio lo rende il SERVER (niente click simulato al load). Roving tabindex, frecce (anche su/giu perche su mobile la striscia e verticale), Home/Fine, attivazione automatica. Errore su fase non visibile: rg-badge--unresolved nel __meta del segmento. Solo se la fase ha collegate; non e navigazione fra fasi non collegate; niente <a href> in un form unico; niente colore di reparto al posto del nome. Non e rg-segmented (scelta breve a 34 px con aria-pressed) ne rg-folder (tessera di dashboard). Status beta: primo consumatore rg-product-platform.",
+      "keywords": [
+        "fasi collegate",
+        "fase collegata",
+        "fase principale",
+        "gruppo di fasi",
+        "selettore di fase",
+        "scegli fase",
+        "stai compilando",
+        "tab a due livelli",
+        "due livelli",
+        "tab annidate",
+        "nested tabs",
+        "tab di secondo livello",
+        "sotto-tab",
+        "phase switcher",
+        "step switcher",
+        "linked steps",
+        "tablist",
+        "tab",
+        "sezioni",
+        "pagina fase",
+        "pagina della fase",
+        "reparto",
+        "form unico",
+        "commutazione client-side",
+        "prima",
+        "dopo"
       ]
     },
     {
@@ -2196,7 +2328,8 @@
           "rg-worksheet-block__meta",
           "rg-worksheet-block__body",
           "rg-worksheet-block__fields",
-          "rg-worksheet-block__foot"
+          "rg-worksheet-block__foot",
+          "rg-worksheet-block__role"
         ],
         "variants": [
           "rg-worksheet-block--long"
@@ -2242,7 +2375,7 @@
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "worksheet-block",
       "snippet": "<section class=\"rg-worksheet-block\">\n  <p class=\"rg-dept-band rg-dept-band--pressatura\"><span class=\"rg-dept-band__name\">Pressatura e soffiatura</span><span class=\"rg-dept-band__note\">Fase 03 / 07</span></p>\n  <header class=\"rg-worksheet-block__head\">\n    <span class=\"rg-worksheet-block__index\">03</span>\n    <h3 class=\"rg-worksheet-block__title\">Pressatura fondo</h3>\n    <p class=\"rg-worksheet-block__meta\">RG-2026-0481 &#183; parte 2 di 5 &#183; rev. 04</p>\n  </header>\n  <div class=\"rg-worksheet-block__body\">\n    <div class=\"rg-worksheet-block__fields\">\n      <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Temperatura <span class=\"rg-fill-field__unit\">&#176;C</span></span><span class=\"rg-fill-field__line\"></span></div>\n      <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Tempo <span class=\"rg-fill-field__unit\">s</span></span><span class=\"rg-fill-field__line\"></span></div>\n    </div>\n  </div>\n  <footer class=\"rg-worksheet-block__foot\">\n    <div class=\"rg-fill-field rg-fill-field--inline\"><span class=\"rg-fill-field__label\">Operatore</span><span class=\"rg-fill-field__line\"></span></div>\n  </footer>\n</section>",
-      "notes": "Oggetto di CARTA prima che superficie a schermo. Due decisioni portano tutto: (1) non occupa una pagina intera - la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e il blocco non dichiara nessuna altezza; (2) non si spezza MAI fra due pagine - in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca. La paginazione (break-inside: avoid piu page-break-inside per i motori PDF server-side) vive nell'UNICO @media print del DS, in rg-utilities.css: esteso, non duplicato, nessuna app riscrive il proprio. La variante --long e SOLO una regola di paginazione (apre una pagina nuova; se e il primo blocco non lascia una pagina vuota prima; la tabella si spezza fra righe con thead ripetuto) e non cambia nulla a schermo: non usarla per dare importanza a una fase. LIMITE DICHIARATO: se un --long sfora comunque il foglio, la banda di reparto NON si ripete sulla pagina di continuazione e quella pagina perde il suo segnale di reparto; in quel caso la fase va spezzata a monte in due blocchi con due bande. Il riquadro e un'eccezione dichiarata a regole 6 (non incorniciare tutto): su carta rende il blocco separabile, e non c'e hover a fare quel lavoro. La geometria del foglio NON e del componente ma del documento: opt-in rg-u-print-a4 sul contenitore che stampa. A schermo la stessa fase si legge con rg-section-card o rg-steps e si compila con rg-field.",
+      "notes": "Oggetto di CARTA prima che superficie a schermo. Due decisioni portano tutto: (1) non occupa una pagina intera - la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e il blocco non dichiara nessuna altezza; (2) non si spezza MAI fra due pagine - in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca. La paginazione (break-inside: avoid piu page-break-inside per i motori PDF server-side) vive nell'UNICO @media print del DS, in rg-utilities.css: esteso, non duplicato, nessuna app riscrive il proprio. La variante --long e SOLO una regola di paginazione (apre una pagina nuova; se e il primo blocco non lascia una pagina vuota prima; la tabella si spezza fra righe con thead ripetuto) e non cambia nulla a schermo: non usarla per dare importanza a una fase. LIMITE DICHIARATO: se un --long sfora comunque il foglio, la banda di reparto NON si ripete sulla pagina di continuazione e quella pagina perde il suo segnale di reparto; in quel caso la fase va spezzata a monte in due blocchi con due bande. Il riquadro e un'eccezione dichiarata a regole 6 (non incorniciare tutto): su carta rende il blocco separabile, e non c'e hover a fare quel lavoro. La geometria del foglio NON e del componente ma del documento: opt-in rg-u-print-a4 sul contenitore che stampa. A schermo la stessa fase si legge con rg-section-card o rg-steps e si compila con rg-field. FASI COLLEGATE (1.16.0): rg-worksheet-block__role nella testa, dopo il titolo, con le parole di rg-step__role e i numeri come sul foglio ('Principale · con la 03', 'Collegata · dopo la 02'); filo nero spesso a sinistra = il pezzo di graffa che ogni blocco porta con se, perche i blocchi di un gruppo possono finire su due pagine. Niente fondo pieno (non si stampa), niente riquadro (e il segno del nome di reparto).",
       "keywords": [
         "scheda di lavorazione",
         "scheda tecnica",
@@ -2279,7 +2412,11 @@
         "worksheet",
         "job sheet",
         "travel sheet",
-        "routing sheet"
+        "routing sheet",
+        "fasi collegate",
+        "fase collegata",
+        "fase principale",
+        "ruolo nel gruppo"
       ]
     },
     {

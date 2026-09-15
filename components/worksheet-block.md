@@ -29,6 +29,27 @@ riscrive il proprio.
 `--long` non cambia nulla a schermo: è **solo** una regola di paginazione. Non usarla per "dare
 importanza" a una fase — l'importanza non è una proprietà della carta.
 
+| Elemento | Quando |
+| --- | --- |
+| `rg-worksheet-block__role` | **Fase di un gruppo di fasi collegate** (v1.16.0). Nella testa, dopo il titolo: «Principale · con la 03», «Collegata · dopo la 02». |
+
+### Ruolo nel gruppo (`__role`)
+
+Il foglio di una fase collegata va in reparto da solo, a volte in un altro reparto rispetto alla sua
+principale. Deve dire a chi lo prende in mano che quella fase ne segue un'altra, o ne precede
+un'altra.
+
+- **Stesse parole dell'elenco** ([`rg-step__role`](steps.md#gruppo-di-fasi-collegate-rg-steps--grouped)),
+  con i numeri scritti come sul foglio (`02`).
+- **Il blocco porta il suo pezzo di graffa**: un filo nero spesso a sinistra dell'etichetta. Nell'elenco
+  la graffa unisce le righe; sul foglio i blocchi di un gruppo possono finire su due pagine, quindi
+  ogni blocco dice il gruppo per conto suo.
+- **Niente fondo pieno**: il browser non stampa gli sfondi per default, e un'etichetta invertita
+  uscirebbe bianca su bianco. **Niente riquadro**: il riquadro è il segno di `rg-dept-band__name`, e il
+  ruolo non deve leggersi come un reparto.
+- La relazione completa (titolo della principale) resta in `__meta`: «fase 3 di 4 · dopo
+  Pressatura (fase 2)».
+
 ## Uso e limiti
 
 **È riquadrato, ed è un'eccezione dichiarata.** Le regole (§6) dicono di non incorniciare tutto e

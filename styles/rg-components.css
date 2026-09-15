@@ -71,7 +71,9 @@
 .rg-search { padding-left: 36px; background: var(--rg-color-white) linear-gradient(90deg, transparent 0 32px, var(--rg-color-border) 32px 33px, transparent 33px); }
 /* Etichette di controllo: 14 px come il controllo che accompagnano, non 16 del testo corrente. */
 .rg-choice { display: inline-flex; align-items: center; gap: var(--rg-space-2); font-size: var(--rg-font-size-sm); }
-.rg-choice input { width: 16px; height: 16px; accent-color: var(--rg-color-black); }
+/* Solo la casella e il pallino (v1.16.0). Il selettore era "input" nudo: un campo di testo dentro
+   una scelta («Altro: ___») usciva largo 16px, schiacciato a una fessura. */
+.rg-choice input[type="checkbox"], .rg-choice input[type="radio"] { width: 16px; height: 16px; accent-color: var(--rg-color-black); }
 .rg-choice:hover { text-decoration: underline; text-underline-offset: 3px; }
 .rg-toggle { display: inline-flex; align-items: center; gap: var(--rg-space-2); font-size: var(--rg-font-size-sm); cursor: pointer; }
 .rg-toggle input { position: absolute; opacity: 0; }
@@ -455,6 +457,121 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    di comprimere il titolo della fase. */
 @media (max-width: 680px) { .rg-step__head { flex-wrap: wrap; } .rg-step__toggle { flex-basis: 100%; } .rg-step__actions { margin-left: calc(var(--rg-space-2) + var(--rg-space-8) + var(--rg-space-4)); } }
 
+/* Gruppo di fasi collegate (v1.16.0) — una fase PRINCIPALE con 1-3 fasi COLLEGATE contigue, prima
+   e/o dopo. Il gruppo si dice SENZA annidare rg-step: la lista resta piatta, ogni riga resta una
+   fase col suo numero di posizione (dato), le sue azioni e il suo corpo. Tre segnali, nessuno di
+   colore, tutti leggibili in fotocopia:
+   1) GRAFFA — filo nero spesso nella colonna a sinistra dei numeri, con i due capi chiusi: dice
+      "queste righe vanno insieme" e, coi capi, dove il gruppo comincia e finisce. Attraversa il
+      filetto fra le fasi del gruppo, come il filo della sequenza attraversa quello fra le fasi.
+   2) DENTE — un tratto orizzontale dalla graffa al numero della principale: il gruppo "pende" dalla
+      principale. Le collegate sopra il dente stanno prima, quelle sotto stanno dopo: la posizione
+      rispetto alla principale si legge dalla figura, non va imparata.
+   3) RUOLO — rg-step__role, testo nel toggle: "Principale", "Collegata · dopo la 2". Entra nel nome
+      accessibile, e regge da solo se il CSS non arriva.
+   Perche i capi sono espliciti (--group-start / --group-end) e non dedotti: due gruppi possono
+   essere adiacenti (2-3 e 4-5), e un selettore "fase di gruppo seguita da fase di gruppo" li
+   fonderebbe in uno. La colonna della graffa (--grouped) si riserva su TUTTE le righe, anche fuori
+   gruppo: altrimenti i numeri non stanno in colonna e il filo della sequenza si spezza.
+   Il numero della principale NON cambia bordo: il bordo forte e gia il segno di rg-step--danger, e
+   in fotocopia i due si confonderebbero. La principale si riconosce dal dente e dal ruolo. */
+.rg-steps--grouped > .rg-step { padding-inline-start: var(--rg-space-6); }
+.rg-steps--grouped > .rg-step::before { left: calc(var(--rg-space-6) + var(--rg-space-2) + var(--rg-space-4)); }
+.rg-steps--grouped > .rg-step--group::after { content: ""; position: absolute; left: var(--rg-space-2); top: 0; bottom: calc(-1 * var(--rg-border-hairline)); width: var(--rg-space-4); border-left: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); pointer-events: none; }
+/* Capi: allineati al bordo alto del numero della prima fase e a pari distanza dal fondo dell'ultima,
+   cosi fra due gruppi adiacenti restano due capi distinti e non una linea continua. */
+.rg-steps--grouped > .rg-step--group-start::after { top: calc(var(--rg-space-1) + var(--rg-space-3)); border-top: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
+.rg-steps--grouped > .rg-step--group-end::after { bottom: calc(var(--rg-space-1) + var(--rg-space-3)); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
+/* Dente: dalla graffa al bordo sinistro del numero (colonna 24 + padding del toggle 8 = 32), all'altezza
+   del centro del numero (padding fase 4 + padding toggle 12 + meta casella 16). Il numero, che e
+   position: relative e viene dopo nel DOM, gli si posa sopra. */
+.rg-steps--grouped > .rg-step--principal > .rg-step__head::before { content: ""; position: absolute; left: var(--rg-space-2); top: calc(var(--rg-space-1) + var(--rg-space-3) + var(--rg-space-4) - var(--rg-border-strong) / 2); width: var(--rg-space-6); height: var(--rg-border-strong); background: var(--rg-color-black); pointer-events: none; }
+/* Ruolo nel gruppo: etichetta identitaria, sopra il titolo. Stesso segno su schermo (rg-step__role,
+   rg-phase-switch__role) e su carta (rg-worksheet-block__role): le stesse parole nei tre posti in
+   cui la fase si incontra. Colore label, non secondario: e contenuto, non contorno. */
+.rg-step__role, .rg-phase-switch__role, .rg-worksheet-block__role { color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+
+/* Phase switch — QUALE FASE di un gruppo di fasi collegate si sta compilando (v1.16.0, rivisto).
+   Primo dei due livelli della pagina della fase principale; il secondo sono le SEZIONI della fase
+   scelta, che restano rg-tabs dentro il pannello (NN/g, "Tabs, Used Right": le tab di un controllo
+   sono sorelle dello stesso tipo, e una fase collegata non e una sezione).
+   PRIMA FORMA, SCARTATA dopo la prova in rg-product-platform: una striscia di segmenti rigati sopra
+   una testa "stai compilando". Il giudizio: "2 cose strane che non si capisce se sono fasi o altro",
+   e "lo sfondo grigio e uguale al colore degli hover, non si capisce niente". Due difetti veri: i
+   segmenti non dicevano ne CHE COSA erano ne CHE si potessero scegliere; e normale, hover e scelta
+   differivano per un grigio chiaro su un fondo grigio chiaro.
+   FORMA ATTUALE, due idee:
+   1) LINGUETTE ATTACCATE AL PANNELLO. La fase scelta e una linguetta bianca a bordo nero che si fonde
+      col pannello sotto (rg-phase-panel): il contenuto "e suo". Le altre stanno dietro, solo
+      contorno, sul fondo di pagina. E il raccoglitore: dice da solo sia "si sceglie" sia "questo
+      contenuto appartiene a quella". L'hover porta il bordo al nero e sottolinea il titolo, e non
+      cambia MAI il fondo: il fondo bianco e il segno esclusivo della scelta.
+   2) LA GRAFFA DELL'ELENCO, RUOTATA. Sopra le linguette una quota da disegno tecnico — filo nero coi
+      due capi — con la didascalia sul filo e il dente che scende sulla principale. E lo stesso segno
+      di rg-steps--grouped: chi arriva dall'elenco lo riconosce, e la didascalia dice a parole che
+      quelle sono fasi.
+   Il tablist e __tabs, non il contenitore: la didascalia non e una tab e non puo stare dentro un
+   role="tablist". Il fondo della didascalia e quello su cui la striscia posa, di norma il fondo di
+   pagina; su un'altra superficie si dichiara --rg-phase-switch-ground. */
+.rg-phase-switch { display: grid; justify-items: start; margin: 0; }
+.rg-phase-switch__caption { position: relative; z-index: 1; margin: 0 0 calc(-1 * var(--rg-space-3)) var(--rg-space-3); padding: 0 var(--rg-space-2); background: var(--rg-phase-switch-ground, var(--rg-color-background)); color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-space-6); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* La quota: filo in testa, capi che scendono fino al bordo alto delle linguette. Le linguette si
+   stirano alla stessa altezza (align-items: stretch) cosi il capo e il dente le toccano tutte. */
+.rg-phase-switch__tabs { position: relative; display: flex; gap: var(--rg-space-1); max-width: 100%; padding-top: calc(var(--rg-space-3) + var(--rg-space-2)); }
+.rg-phase-switch__tabs::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: calc(var(--rg-space-3) + var(--rg-space-2)); border: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); border-bottom: 0; pointer-events: none; }
+.rg-phase-switch__item { position: relative; flex: 0 1 auto; min-width: 0; display: flex; align-items: flex-start; gap: var(--rg-space-3); min-height: 40px; /* target minimo, regola 11 */ padding: var(--rg-space-3) var(--rg-space-4); color: var(--rg-color-text-secondary); background: transparent; border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-top-width: var(--rg-border-strong); border-bottom: 0; border-radius: var(--rg-radius-md) var(--rg-radius-md) 0 0; font: inherit; text-align: left; text-decoration: none; cursor: pointer; }
+/* Hover: bordo e testo al nero, titolo sottolineato. Il fondo NON cambia. */
+.rg-phase-switch__item:hover { color: var(--rg-color-black); border-color: var(--rg-color-black); }
+.rg-phase-switch__item:hover .rg-phase-switch__title { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
+.rg-phase-switch__item:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: calc(-1 * (var(--rg-border-strong) + var(--rg-space-1))); }
+/* Scelta: fondo bianco, bordo nero, e la linguetta copre il filo del pannello dove lo tocca
+   (z-index sopra il pannello, che le sale sotto di un filetto). */
+.rg-phase-switch__item.is-active, .rg-phase-switch__item[aria-selected="true"] { z-index: 1; color: var(--rg-color-black); background: var(--rg-color-surface-raised); border-color: var(--rg-color-black); }
+/* Dente: dal filo della quota al centro del numero della principale (padding 16 + meta casella 16). */
+.rg-phase-switch__item--principal::before { content: ""; position: absolute; bottom: 100%; left: calc(var(--rg-space-4) + var(--rg-space-4) - var(--rg-border-strong) / 2); width: var(--rg-border-strong); height: calc(var(--rg-space-3) + var(--rg-space-2)); background: var(--rg-color-black); pointer-events: none; }
+/* Stessa casella di rg-step__num: e lo stesso dato, e deve riconoscersi fra elenco e pagina. */
+.rg-phase-switch__num { flex: none; display: inline-flex; align-items: center; justify-content: center; width: var(--rg-space-8); height: var(--rg-space-8); color: var(--rg-color-text-secondary); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-md); font-variant-numeric: tabular-nums; }
+.rg-phase-switch__item:hover .rg-phase-switch__num { color: var(--rg-color-black); border-color: var(--rg-color-black); }
+.rg-phase-switch__item.is-active .rg-phase-switch__num, .rg-phase-switch__item[aria-selected="true"] .rg-phase-switch__num { color: var(--rg-color-white); background: var(--rg-color-black); border-color: var(--rg-color-black); }
+/* Nella linguetta il ruolo segue il colore della linguetta: dietro, non deve pesare piu del titolo. */
+.rg-phase-switch__role { color: inherit; }
+.rg-phase-switch__text { flex: 1 1 auto; min-width: 0; display: grid; align-content: start; gap: var(--rg-space-1); }
+/* Navigazione: label identitaria a 14, come rg-tab (regole §3). */
+.rg-phase-switch__title { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); overflow-wrap: anywhere; }
+/* Un conteggio, e solo quello: il reparto sta nella testa del pannello, non sulla linguetta. */
+.rg-phase-switch__aside { flex: none; align-self: center; margin-left: var(--rg-space-2); }
+/* Sotto la soglia mobile le linguette scorrono in orizzontale invece di impilarsi: una linguetta
+   impilata non si attacca piu al pannello, e la metafora si rompe. */
+@media (max-width: 680px) { .rg-phase-switch { justify-items: stretch; } .rg-phase-switch__tabs { overflow-x: auto; } .rg-phase-switch__item { flex: 0 0 auto; max-width: calc(24ch + var(--rg-space-16)); } }
+
+/* Phase panel — la fase scelta, in un pannello solo (v1.16.0). Sostituisce la testa "stai
+   compilando" (rg-phase-head, mai rilasciata), che aggiungeva un livello di intestazione e ripeteva
+   il numero gia scritto sulla linguetta. Il titolo della fase sta sulla linguetta attaccata al
+   pannello; la testa del pannello porta cio che la linguetta non dice: posizione, relazione,
+   reparto, stato del costo.
+   UN PANNELLO, NIENTE CARD DENTRO. Le sezioni della fase sono rg-tabs dentro __body e il loro
+   contenuto sta direttamente sotto le tab: una rg-section-card per sezione sarebbe una superficie
+   sollevata dentro un'altra (regole §6) e ripeterebbe come titolo l'etichetta della tab accesa.
+   Vale anche per la fase SENZA gruppo: stesso pannello, senza linguette — la pagina di una fase ha
+   una forma sola, e il gruppo aggiunge solo le linguette.
+   E contorno nero: e il soggetto della vista (una sola per vista, regole §6). */
+.rg-phase-panel { background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-md); }
+/* Attaccato alle linguette: sale di un filetto (la linguetta scelta ci si posa sopra e lo copre) e
+   perde l'angolo tondo dove comincia la prima linguetta. */
+.rg-phase-switch ~ .rg-phase-panel { margin-top: calc(-1 * var(--rg-border-hairline)); border-start-start-radius: 0; }
+.rg-phase-panel__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--rg-space-3) var(--rg-space-6); padding: var(--rg-space-4) var(--rg-space-6); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-phase-panel__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--rg-space-2); margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
+.rg-phase-panel__meta > * + *::before { content: "·"; padding-right: var(--rg-space-2); color: var(--rg-color-neutral-400); }
+.rg-phase-panel__meta strong { color: var(--rg-color-text-primary); font-weight: var(--rg-weight-medium); }
+/* Stato e reparto a destra: il costo non calcolato e il timbro del reparto (rg-dept-band--quiet). */
+.rg-phase-panel__status { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); }
+.rg-phase-panel__dept { flex: 0 1 auto; width: calc(24ch + var(--rg-space-12)); max-width: 100%; }
+.rg-phase-panel__body { padding: var(--rg-space-6); }
+/* Piede: i gesti SULLA FASE (scollega, elimina), lontani dal salvataggio e dichiarati per iscritto. */
+.rg-phase-panel__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--rg-space-2); padding: var(--rg-space-3) var(--rg-space-6); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-phase-panel__scope { margin: 0 auto 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
+@media (max-width: 680px) { .rg-phase-panel__head, .rg-phase-panel__foot { padding-inline: var(--rg-space-4); } .rg-phase-panel__body { padding: var(--rg-space-4); } }
+
 /* Modal / dialog — overlay con backdrop; shell riusabile (promosso da product-platform, v0.3.0) */
 .rg-modal-backdrop { position: fixed; inset: 0; z-index: var(--rg-z-modal); display: none; align-items: center; justify-content: center; padding: var(--rg-space-6); background: color-mix(in srgb, var(--rg-color-black) 45%, transparent); }
 .rg-modal-backdrop.is-open { display: flex; }
@@ -654,6 +771,13 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* Piede: sigla, ora, firma — cio che si compila alla fine della fase. */
 .rg-worksheet-block__foot { display: flex; flex-wrap: wrap; gap: var(--rg-space-4) var(--rg-space-6); padding: var(--rg-space-3) var(--rg-space-4); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 .rg-worksheet-block__foot > * { flex: 1 1 var(--rg-layout-param-col-min); }
+/* Ruolo nel gruppo di fasi collegate (v1.16.0): stesse parole di rg-step__role. Su carta non c'e la
+   graffa dell'elenco (i blocchi di un gruppo possono finire su due pagine, e un segno che vive fra
+   due blocchi non sopravvive al salto), quindi il blocco porta il SUO pezzo di graffa: un filo nero
+   spesso a sinistra dell'etichetta. Niente fondo pieno: il browser non stampa gli sfondi per
+   default, e un'etichetta invertita uscirebbe bianca su bianco. Niente riquadro: e il segno di
+   rg-dept-band__name, e il ruolo non deve leggersi come un reparto. */
+.rg-worksheet-block__role { flex: none; padding-left: var(--rg-space-2); border-left: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); }
 
 /* Dept band — banda di reparto sul bordo del blocco (v1.14.0). Il foglio viene quasi sempre
    FOTOCOPIATO IN BIANCO E NERO: il colore si perde, quindi non puo essere l'unico segnale.
@@ -723,6 +847,12 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* ACCOPPIAGGI — due linee appaiate: accoppiare e unire due strati, e la figura lo dice.
    Era l'unica a tinta piena: si distingueva ma non comunicava niente, e in fotocopia una
    campitura media rischia di impastarsi. */
+/* SOBRIA — la stessa figura in grigio, per lo SCHERMO (v1.16.0). Su carta il colore e un
+   acceleratore per pescare il foglio dal mucchio; a schermo la palette categoriale convive con i
+   colori di stato, e category-3/4/5 SONO danger/warning/success: una pressatura rossa accanto a un
+   badge d'errore dice due cose con lo stesso rosso. Qui resta la figura, che e il segnale che
+   riconosce il reparto, e il nome. Va DOPO le sette varianti: stesso peso, vince l'ordine. */
+.rg-dept-band--quiet { --rg-dept-color: var(--rg-color-neutral-400); }
 .rg-dept-band--accoppiaggi { --rg-dept-color: var(--rg-color-category-6); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2), var(--rg-dept-color) var(--rg-space-2), var(--rg-dept-color) var(--rg-space-3), transparent var(--rg-space-3), transparent var(--rg-space-6)); }
 
 /* Fill field — il campo che si compila A PENNA (v1.14.0). E il caso centrale della scheda di
@@ -771,14 +901,21 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
    Il valore misurato aveva gia la sua larghezza (--rg-input-numeric-width, 12ch di default su
    rg-input--numeric): questi modificatori servono al TESTO, che finora prendeva sempre tutta la
    colonna anche quando conteneva tre lettere.
-   LIMITE DICHIARATO: il modificatore stringe anche l'etichetta, che va a capo. Se l'etichetta non
-   entra, o e troppo lunga per una riga o il campo e della misura sbagliata: non si allarga il campo
-   per far stare la label. */
+   L'AFFERMAZIONE E DEL CONTROLLO, NON DELL'ETICHETTA (v1.16.0). Fino alla 1.15 il modificatore
+   stringeva tutto il campo e l'etichetta andava a capo: «Pezzi per ciclo (n)» su due righe sopra
+   una casella da quattro cifre, e la riga dei campi perdeva l'allineamento delle etichette. La
+   larghezza dichiarata dice quanto contenuto ci si aspetta, e quel contenuto sta nel controllo:
+   quindi il controllo resta alla sua misura, e il campo e largo quanto serve alla sua etichetta
+   (mai meno della misura dichiarata). Sotto la soglia mobile l'etichetta torna a capo: una riga che
+   sborda dallo schermo e peggio di una che va a capo. */
 .rg-field--w4  { --rg-field-width: calc(4ch  + var(--rg-space-8)); }
 .rg-field--w8  { --rg-field-width: calc(8ch  + var(--rg-space-8)); }
 .rg-field--w16 { --rg-field-width: calc(16ch + var(--rg-space-8)); }
 .rg-field--w24 { --rg-field-width: calc(24ch + var(--rg-space-8)); }
-.rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24 { flex: none; width: var(--rg-field-width); max-width: 100%; }
+.rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24 { flex: none; justify-items: start; width: max-content; min-width: var(--rg-field-width); max-width: 100%; }
+.rg-field--w4 > .rg-field__label, .rg-field--w8 > .rg-field__label, .rg-field--w16 > .rg-field__label, .rg-field--w24 > .rg-field__label { white-space: nowrap; }
+:is(.rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24) > :is(.rg-input, .rg-select, .rg-field-with-unit) { width: var(--rg-field-width); max-width: 100%; }
+@media (max-width: 680px) { .rg-field--w4 > .rg-field__label, .rg-field--w8 > .rg-field__label, .rg-field--w16 > .rg-field__label, .rg-field--w24 > .rg-field__label { white-space: normal; } }
 /* Lunghezza variabile e senza tetto ragionevole (un percorso file, una descrizione): prende lo
    spazio che avanza sulla riga invece di dichiarare una misura falsa. Terzo caso di Baymard. */
 .rg-field--grow { flex: 1 1 calc(16ch + var(--rg-space-8)); min-width: 0; }

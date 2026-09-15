@@ -7,6 +7,70 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.16.0 — 2026-09-15
+
+**Le fasi collegate.** Una fase principale (una stampa, una pressatura) ha ora 1–3 fasi collegate
+subito prima o subito dopo, che si compilano dalla sua pagina. Il giudizio di chi le usa: *«tutto
+sembra una fase, poi entri e sei in un'altra fase. Le tab interne sono tutte uguali. E fuori è
+difficile capire se ci sono davvero fasi collegate o no»*. Rilascio **additivo**: nessuna classe
+rinominata, nessuna rimozione, nessun token nuovo o cambiato.
+
+### Varianti
+
+- **`rg-steps--grouped`, `rg-step--group`, `--group-start`, `--group-end`, `--principal`,
+  `rg-step__role`**: il gruppo nella sequenza, **senza annidare `rg-step`**. Tre segnali senza
+  colore:
+  - una **graffa** nera coi capi chiusi a sinistra dei numeri;
+  - un **dente** dalla graffa al numero della principale: le collegate sopra stanno prima, quelle
+    sotto stanno dopo;
+  - il **ruolo** in testo sopra il titolo.
+
+  Scartate con motivazione: il `<li>` di gruppo con un `<ol>` interno (annidamento, e l'ordine
+  letto dallo screen reader non torna); la numerazione 2a/2b (il numero di posizione è un dato, e il
+  foglio dice «fase 3 di 4»); la riga-intestazione di gruppo (in una `<ol>` sarebbe una fase finta).
+- **`rg-worksheet-block__role`**: lo stesso ruolo sul foglio stampato, con il suo pezzo di graffa. Su
+  carta i blocchi di un gruppo possono finire su due pagine, quindi ogni blocco dice il gruppo per
+  conto suo.
+
+### Componenti
+
+- **`rg-phase-switch` / `rg-phase-panel`** (beta): la pagina di una fase è un pannello, con testa
+  (posizione, relazione, stato del costo, timbro di reparto), sezioni in `rg-tabs` e gesti sulla
+  fase nel piede. Se la fase è la principale di un gruppo, sopra il pannello ci sono le linguette
+  delle fasi del gruppo: la scelta è bianca e attaccata al pannello, sotto la graffa dell'elenco
+  ruotata, con la didascalia «Fasi del gruppo» e il dente sulla principale. Il fondo è il segno della
+  scelta e di nient'altro; l'hover cambia bordo e sottolinea. Nel pannello non ci sono card, e il
+  titolo della fase non si ripete. Le tab di un controllo sono sorelle dello stesso tipo (NN/g,
+  *Tabs, Used Right*). Tablist ARIA con roving tabindex, commutazione client-side in un solo form.
+
+  **Rivisto prima del rilascio.** La prima forma, striscia di segmenti più testa «Stai compilando»
+  (`rg-phase-head`), è stata provata in `rg-product-platform` e scartata: *«due cose strane che non
+  si capisce se sono fasi o altro»*, *«lo sfondo grigio è uguale al colore degli hover»*.
+  `rg-phase-head` non esiste più.
+
+### Correzioni
+
+- **`rg-choice`**: la misura 16×16 vale solo per `input[type=checkbox]` e `input[type=radio]`. Il
+  selettore era `input` nudo, e un campo di testo dentro una scelta usciva largo 16 px.
+- **Larghezza dichiarata (`rg-field--w4…w24`)**: la misura è del **controllo**. Il campo è largo
+  quanto la sua etichetta, mai meno della misura, e l'etichetta non va più a capo sopra i 680 px.
+  Fino alla 1.15 «Pezzi per ciclo (n)» andava su due righe sopra una casella da quattro cifre, e la
+  riga dei campi perdeva l'allineamento.
+- **`rg-dept-band--quiet`**: la figura del reparto in grigio, per lo schermo. Il colore del reparto
+  a schermo convive con i colori di stato, e `category-3` è `danger`.
+
+### Documentazione
+
+- `components/steps.md`: sezione *Gruppo di fasi collegate*.
+- `components/phase-switch.md`: nuovo.
+- `components/worksheet-block.md`: *Ruolo nel gruppo*.
+- `components/navigation.md`: *Local tabs* rimanda a `rg-phase-switch` per il livello sopra le
+  sezioni.
+
+### Aggiornamento
+
+Sicuro. Chi non usa le classi nuove vede tutto come prima.
+
 ## 1.15.0 — 2026-09-04
 
 **La scheda da compilare.** Il giudizio di chi la usa era netto: *«spazi messi a caso, non è una

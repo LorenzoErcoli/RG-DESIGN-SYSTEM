@@ -91,9 +91,15 @@ controllo (padding e bordo, coperti da `--rg-space-8`).
 - Il **valore misurato** aveva già la sua larghezza: `rg-input--numeric` si ferma a
   `--rg-input-numeric-width` (12ch). Questi modificatori servono al **testo**, che finora prendeva
   sempre tutta la colonna anche quando conteneva tre lettere.
-- **Limite dichiarato:** il modificatore stringe anche l'etichetta, che va a capo. Se l'etichetta
-  non entra, o è troppo lunga per una riga di campi o il campo è della misura sbagliata: non si
-  allarga il campo per far stare la label.
+- **La misura è del controllo, non dell'etichetta** (dalla 1.16.0). Input, select e
+  `rg-field-with-unit` restano alla larghezza dichiarata. Il campo è largo quanto la sua etichetta,
+  mai meno della misura, e l'etichetta non va a capo sopra i 680 px.
+  Fino alla 1.15 il modificatore stringeva anche l'etichetta: «Pezzi per ciclo (n)» andava su due
+  righe sopra una casella da quattro cifre, e la riga dei campi perdeva l'allineamento delle
+  etichette. L'affermazione «qui ci vanno quattro caratteri» riguarda il contenuto, e il contenuto
+  sta nel controllo. Sotto i 680 px l'etichetta torna a capo: sbordare dallo schermo è peggio.
+- Un'etichetta **molto** più lunga del suo controllo resta un segnale. Di solito l'unità va tolta
+  dall'etichetta e messa accanto al valore (`rg-field-with-unit`), oppure l'etichetta va accorciata.
 
 ```html
 <div class="rg-cluster rg-cluster--end">

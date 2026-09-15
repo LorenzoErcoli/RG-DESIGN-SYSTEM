@@ -70,6 +70,11 @@ in pagine corte o in stampa — il modulo utilities la nasconde gia in `@media p
 Viste sorelle della **stessa** entita: dettaglio, filati, consumi, anomalie. Non usare le tab
 per navigare fra entita diverse (quella e la nav della topbar) ne per un wizard a passi.
 
+Non mescolare nella stessa barra tab di tipo diverso. Il caso ricorrente è la pagina di una fase
+principale che compila anche le sue fasi collegate. Le sezioni della fase restano `rg-tabs`; la
+scelta di **quale fase** del gruppo si compila è un livello sopra, con una forma propria:
+[`rg-phase-switch`](phase-switch.md) (v1.16.0).
+
 `rg-tab` funziona indifferentemente su `<a>` (viste con URL proprio, preferibile) e su
 `<button>` (commutazione client-side): il reset del chrome nativo del bottone e nel DS, non
 serve riscriverlo in locale. Lo stato attivo si dichiara con `aria-selected="true"` o con

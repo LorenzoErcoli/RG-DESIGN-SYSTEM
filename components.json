@@ -2,8 +2,8 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.15.0",
-  "generated": "2026-09-04",
+  "dsVersion": "1.16.0",
+  "generated": "2026-09-15",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
   "appLocalExceptions": [],
@@ -253,7 +253,7 @@
       "doc": "components/forms.md",
       "specimenAnchor": "inputs",
       "snippet": "<label class=\"rg-field\"><span class=\"rg-field__label\">Tariffa macchina</span><span class=\"rg-field-with-unit\"><input class=\"rg-input rg-input--numeric\" type=\"number\" step=\"0.01\" min=\"0\" value=\"80\"> <span>&#8364;/h</span></span></label>",
-      "notes": "rg-field-with-unit ha una larghezza minima d'uso: --rg-layout-param-col-min (132px). Il suffisso unita e incomprimibile (42px), quindi sotto quella misura si comprime il valore misurato. Nessuna variante compatta: sotto la soglia si passa a una colonna sola. L'input ha min-width: 0 dal DS e non sborda mai il contenitore. Da 1.6.0: rg-input--numeric e la forma del valore misurato (mono, cifre tabulari, allineato a destra, largo --rg-input-numeric-width, default 12ch) e sostituisce la composizione rg-input rg-mono nei campi numerici; rg-input rg-mono resta valida per il testo tecnico non allineato a destra (codici, ID). Lo stato di sola lettura e l'attributo nativo [readonly] (per <select>, aria-readonly=true): NON usare disabled al suo posto, sono due fatti diversi — disabled = non attivo ora e non inviato, readonly = valido ma non modificabile da te, a pieno contrasto e selezionabile. Il motivo del divieto va scritto accanto al form con rg-alert e l'azione primaria non piu eseguibile si omette invece di disabilitarla. Da 1.7.0: rg-field-with-unit--compact e la forma stretta del campo con unita per una RIGA DENSA (una voce di rg-color-map, una cella di lista) dove il numero e un accessorio e non il soggetto di un form a colonna; riduce larghezza del valore e pastiglia dell'unita riusando --rg-input-numeric-width, resta mono/tabulare/allineato a destra con rg-input--numeric, e porta l'etichetta in aria-label sull'input invece che in un rg-field__label visibile. Sotto la soglia di 132px la rg-field-with-unit piena non va: si usa questa. Da 1.15.0 tre aggiunte per il FORM LUNGO DA COMPILARE. (a) LARGHEZZA DICHIARATA: rg-field--w4/w8/w16/w24 (il numero e il numero di caratteri attesi; misura = Nch + --rg-space-8 di cromo del controllo) e rg-field--grow (lunghezza variabile senza tetto: prende lo spazio che avanza sulla riga, per un percorso file o una nota). La larghezza di un campo e un'affermazione su quanto contenuto ci si aspetta, non una scelta estetica (Baymard: lunghezza nota -> larghezza esatta a prescindere dagli altri campi; variabile con media standard -> un default per quel tipo; media molto diversa dal default -> larghezza propria. GOV.UK fa la stessa cosa con govuk-input--width-N). Senza modificatore il campo resta FLUIDO e riempie la colonna: e il default giusto per un form a una colonna con campi di contenuto simile. Il valore misurato aveva gia la sua larghezza (--rg-input-numeric-width su rg-input--numeric): questi modificatori servono al TESTO. LIMITE DICHIARATO: il modificatore stringe anche l'etichetta, che va a capo; se non entra, o l'etichetta e troppo lunga per una riga di campi o il campo e della misura sbagliata - non si allarga il campo per far stare la label. (b) MARCATORE rg-field__mark: dichiara una volta, marca molte. 'Questo campo entra nel costo' vale per cinque campi su dodici e ripeterlo in un rg-field__help sotto ognuno e rumore, non informazione (e in lettura assistita e la stessa frase riletta a ogni campo). Il W3C, WAI Forms Tutorial - Form Instructions, prescrive la forma opposta: l'istruzione che vale per il gruppo si da UNA VOLTA in testa al gruppo e si lega ai controlli con aria-describedby; GOV.UK aggiunge che un hint per campo deve restare una frase breve. Il marcatore e quindi un CARATTERE mono e secondario, non un colore (regola 11 - nessuno stato affidato al solo colore), va sempre con aria-hidden=true sul segno e aria-describedby sull'input, e si mette sulle ECCEZIONI: se i campi marcati sono piu di quelli non marcati, si inverte il marcatore e si cambia la frase. Un solo asse per gruppo: il secondo asse usa un rg-badge, che ha il testo dentro. (c) INPUT NUMERICI: la doc prescrive ora type=text + inputmode=decimal|numeric al posto di type=number, e lo snippet e stato aggiornato di conseguenza. Motivo, dalla ricerca del team GOV.UK Design System: type=number non e dettabile ne selezionabile con Dragon NaturallySpeaking, NVDA lo annuncia come spin button con due bottoni senza etichetta, i browser arrotondano e convertono in notazione esponenziale i valori grandi premendo su/giu senza possibilita di annullare, Chrome scarta le lettere in silenzio, e - il punto che pesa in reparto - la rotellina del mouse CAMBIA IL VALORE di un campo che ha il focus, mentre una scheda si compila scorrendo. type=number resta ammesso solo per un valore davvero incrementabile con uno stepper, fuori da una pagina lunga.",
+      "notes": "rg-field-with-unit ha una larghezza minima d'uso: --rg-layout-param-col-min (132px). Il suffisso unita e incomprimibile (42px), quindi sotto quella misura si comprime il valore misurato. Nessuna variante compatta: sotto la soglia si passa a una colonna sola. L'input ha min-width: 0 dal DS e non sborda mai il contenitore. Da 1.6.0: rg-input--numeric e la forma del valore misurato (mono, cifre tabulari, allineato a destra, largo --rg-input-numeric-width, default 12ch) e sostituisce la composizione rg-input rg-mono nei campi numerici; rg-input rg-mono resta valida per il testo tecnico non allineato a destra (codici, ID). Lo stato di sola lettura e l'attributo nativo [readonly] (per <select>, aria-readonly=true): NON usare disabled al suo posto, sono due fatti diversi — disabled = non attivo ora e non inviato, readonly = valido ma non modificabile da te, a pieno contrasto e selezionabile. Il motivo del divieto va scritto accanto al form con rg-alert e l'azione primaria non piu eseguibile si omette invece di disabilitarla. Da 1.7.0: rg-field-with-unit--compact e la forma stretta del campo con unita per una RIGA DENSA (una voce di rg-color-map, una cella di lista) dove il numero e un accessorio e non il soggetto di un form a colonna; riduce larghezza del valore e pastiglia dell'unita riusando --rg-input-numeric-width, resta mono/tabulare/allineato a destra con rg-input--numeric, e porta l'etichetta in aria-label sull'input invece che in un rg-field__label visibile. Sotto la soglia di 132px la rg-field-with-unit piena non va: si usa questa. Da 1.15.0 tre aggiunte per il FORM LUNGO DA COMPILARE. (a) LARGHEZZA DICHIARATA: rg-field--w4/w8/w16/w24 (il numero e il numero di caratteri attesi; misura = Nch + --rg-space-8 di cromo del controllo) e rg-field--grow (lunghezza variabile senza tetto: prende lo spazio che avanza sulla riga, per un percorso file o una nota). La larghezza di un campo e un'affermazione su quanto contenuto ci si aspetta, non una scelta estetica (Baymard: lunghezza nota -> larghezza esatta a prescindere dagli altri campi; variabile con media standard -> un default per quel tipo; media molto diversa dal default -> larghezza propria. GOV.UK fa la stessa cosa con govuk-input--width-N). Senza modificatore il campo resta FLUIDO e riempie la colonna: e il default giusto per un form a una colonna con campi di contenuto simile. Il valore misurato aveva gia la sua larghezza (--rg-input-numeric-width su rg-input--numeric): questi modificatori servono al TESTO. LIMITE DICHIARATO: il modificatore stringe anche l'etichetta, che va a capo; se non entra, o l'etichetta e troppo lunga per una riga di campi o il campo e della misura sbagliata - non si allarga il campo per far stare la label. (b) MARCATORE rg-field__mark: dichiara una volta, marca molte. 'Questo campo entra nel costo' vale per cinque campi su dodici e ripeterlo in un rg-field__help sotto ognuno e rumore, non informazione (e in lettura assistita e la stessa frase riletta a ogni campo). Il W3C, WAI Forms Tutorial - Form Instructions, prescrive la forma opposta: l'istruzione che vale per il gruppo si da UNA VOLTA in testa al gruppo e si lega ai controlli con aria-describedby; GOV.UK aggiunge che un hint per campo deve restare una frase breve. Il marcatore e quindi un CARATTERE mono e secondario, non un colore (regola 11 - nessuno stato affidato al solo colore), va sempre con aria-hidden=true sul segno e aria-describedby sull'input, e si mette sulle ECCEZIONI: se i campi marcati sono piu di quelli non marcati, si inverte il marcatore e si cambia la frase. Un solo asse per gruppo: il secondo asse usa un rg-badge, che ha il testo dentro. (c) INPUT NUMERICI: la doc prescrive ora type=text + inputmode=decimal|numeric al posto di type=number, e lo snippet e stato aggiornato di conseguenza. Motivo, dalla ricerca del team GOV.UK Design System: type=number non e dettabile ne selezionabile con Dragon NaturallySpeaking, NVDA lo annuncia come spin button con due bottoni senza etichetta, i browser arrotondano e convertono in notazione esponenziale i valori grandi premendo su/giu senza possibilita di annullare, Chrome scarta le lettere in silenzio, e - il punto che pesa in reparto - la rotellina del mouse CAMBIA IL VALORE di un campo che ha il focus, mentre una scheda si compila scorrendo. type=number resta ammesso solo per un valore davvero incrementabile con uno stepper, fuori da una pagina lunga. Larghezza dichiarata (1.16.0): la misura rg-field--w4/w8/w16/w24 e del CONTROLLO (input, select, rg-field-with-unit); il campo e largo quanto la sua etichetta, mai meno della misura, e l'etichetta non va a capo sopra i 680px. Fino alla 1.15 l'etichetta andava a capo e la riga perdeva l'allineamento.",
       "keywords": [
         "campo",
         "input",
@@ -403,7 +403,8 @@
         "spunta",
         "scelta",
         "flag"
-      ]
+      ],
+      "notes": "Dalla 1.16.0 la misura 16x16 vale solo per input[type=checkbox] e input[type=radio]: prima il selettore era 'input' nudo e un campo di testo dentro una scelta usciva largo 16px."
     },
     {
       "id": "toggle",
@@ -2014,15 +2015,27 @@
           "rg-step__meta",
           "rg-step__aside",
           "rg-step__actions",
-          "rg-step__body"
+          "rg-step__body",
+          "rg-step__role"
         ],
         "variants": [
-          "rg-step--danger"
+          "rg-step--danger",
+          "rg-steps--grouped",
+          "rg-step--group",
+          "rg-step--group-start",
+          "rg-step--group-end",
+          "rg-step--principal"
+        ],
+        "related": [
+          "rg-phase-switch",
+          "rg-phase-panel",
+          "rg-worksheet-block__role"
         ]
       },
       "variants": [
         "standard",
-        "danger"
+        "danger",
+        "grouped (dalla 1.16.0)"
       ],
       "states": [
         "collapsed",
@@ -2050,7 +2063,7 @@
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "steps",
       "snippet": "<ol class=\"rg-steps\">\n  <li class=\"rg-step\">\n    <div class=\"rg-step__head\">\n      <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-1-toggle\" aria-controls=\"fase-1\" aria-expanded=\"true\">\n        <span class=\"rg-step__num\">1</span>\n        <span class=\"rg-step__headline\"><span class=\"rg-step__title\">Ricamo piatto</span><span class=\"rg-step__meta\"><span>Ricamo</span><span>densita 4.2 pt/mm</span><span>altezza 2.0 mm</span></span></span>\n        <span class=\"rg-step__aside\"><span class=\"rg-badge rg-badge--count\">4 operazioni</span></span>\n      </button>\n      <div class=\"rg-step__actions\">\n        <button class=\"rg-button rg-button--ghost\" type=\"button\" aria-label=\"Modifica fase 1: Ricamo piatto\">Modifica</button>\n        <button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"button\" aria-label=\"Elimina fase 1: Ricamo piatto\">Elimina</button>\n      </div>\n    </div>\n    <div class=\"rg-step__body\" id=\"fase-1\" role=\"region\" aria-labelledby=\"fase-1-toggle\"><!-- operazioni --></div>\n  </li>\n</ol>",
-      "notes": "Blocco RIGATO: filetto forte nero sopra e sotto la sequenza, filetto neutro fra le fasi (idioma di rg-table), gap zero, nessun bordo perimetrale e nessuno sfondo — un pannello lo trasformerebbe in card. Il separatore sta in testa alla fase seguente perche e la stessa linea che chiude il corpo di una fase aperta. Contenitore di una SEQUENZA, non riga-record: usare rg-list-row/--link quando l'ordine non conta e la voce non contiene altro, rg-disclosure--boxed per una sezione di pagina senza azioni. NON usa <details>/<summary> di proposito: le azioni della fase starebbero dentro il summary (controlli annidati) o dentro il contenuto rivelabile (invisibili a fase chiusa); qui il toggle e un <button> e le azioni sono suoi fratelli. Stato = aria-expanded sul toggle + [hidden] sul corpo, nessuna classe locale. Il segno +/- e il filo verticale che unisce i numeri sono generati dal DS: non aggiungere chevron ne connettori. Numero e segno non sono due indicatori dello stesso fatto (posizione vs apertura) e stanno ai capi opposti del toggle. Non si annida.",
+      "notes": "Blocco RIGATO: filetto forte nero sopra e sotto la sequenza, filetto neutro fra le fasi (idioma di rg-table), gap zero, nessun bordo perimetrale e nessuno sfondo — un pannello lo trasformerebbe in card. Il separatore sta in testa alla fase seguente perche e la stessa linea che chiude il corpo di una fase aperta. Contenitore di una SEQUENZA, non riga-record: usare rg-list-row/--link quando l'ordine non conta e la voce non contiene altro, rg-disclosure--boxed per una sezione di pagina senza azioni. NON usa <details>/<summary> di proposito: le azioni della fase starebbero dentro il summary (controlli annidati) o dentro il contenuto rivelabile (invisibili a fase chiusa); qui il toggle e un <button> e le azioni sono suoi fratelli. Stato = aria-expanded sul toggle + [hidden] sul corpo, nessuna classe locale. Il segno +/- e il filo verticale che unisce i numeri sono generati dal DS: non aggiungere chevron ne connettori. Numero e segno non sono due indicatori dello stesso fatto (posizione vs apertura) e stanno ai capi opposti del toggle. Non si annida. GRUPPO DI FASI COLLEGATE (1.16.0): una principale con 1-3 collegate contigue si dice SENZA annidare, con modificatori sulla lista piatta. rg-steps--grouped sulla <ol> riserva la colonna della graffa su tutte le righe (numeri in colonna, filo intatto). rg-step--group sulle fasi del gruppo, piu --group-start/--group-end sulla prima e sull'ultima, sempre esplicite perche due gruppi possono essere adiacenti. rg-step--principal sulla principale. rg-step__role sopra il titolo: 'Principale', 'Collegata · prima della N', 'Collegata · dopo la N'. Graffa (filo nero spesso coi capi) e dente (dalla graffa al numero della principale) sono generati dal DS. Niente numerazione 2a/2b (il numero e un dato, il foglio dice 'fase 3 di 4'). Niente li di gruppo con ol interno. Niente badge 'principale' in __aside insieme al ruolo. La collegata porta alla pagina della principale: azione 'Apri nella N'. Il numero della principale non cambia bordo (il bordo forte e il segno di --danger).",
       "keywords": [
         "fase",
         "fasi",
@@ -2077,7 +2090,156 @@
         "operazioni",
         "scheda parte",
         "distinta di lavorazione",
-        "routing"
+        "routing",
+        "fasi collegate",
+        "fase collegata",
+        "fase principale",
+        "gruppo di fasi",
+        "raggruppamento",
+        "graffa",
+        "bracket",
+        "linked steps",
+        "grouped steps",
+        "sub-step",
+        "sotto-fase",
+        "prima",
+        "dopo",
+        "forno finale",
+        "pressatura iniziale"
+      ]
+    },
+    {
+      "id": "phase-switch",
+      "title": "Fasi del gruppo e pannello di fase",
+      "role": "La pagina di una fase: un pannello (rg-phase-panel) con testa (posizione, relazione, stato del costo, timbro di reparto), sezioni in rg-tabs e gesti sulla fase nel piede. Se la fase e la principale di un gruppo di fasi collegate, sopra il pannello le linguette delle fasi del gruppo (rg-phase-switch): la scelta e attaccata al pannello, sotto una graffa con la didascalia 'Fasi del gruppo'.",
+      "status": "beta",
+      "since": "1.16.0",
+      "kind": "component",
+      "promotedFrom": "rg-product-platform",
+      "classes": {
+        "base": "rg-phase-switch",
+        "elements": [
+          "rg-phase-switch__caption",
+          "rg-phase-switch__tabs",
+          "rg-phase-switch__item",
+          "rg-phase-switch__item--principal",
+          "rg-phase-switch__num",
+          "rg-phase-switch__text",
+          "rg-phase-switch__role",
+          "rg-phase-switch__title",
+          "rg-phase-switch__aside"
+        ],
+        "subcomponents": {
+          "panel": [
+            "rg-phase-panel",
+            "rg-phase-panel__head",
+            "rg-phase-panel__meta",
+            "rg-phase-panel__status",
+            "rg-phase-panel__dept",
+            "rg-phase-panel__body",
+            "rg-phase-panel__foot",
+            "rg-phase-panel__scope"
+          ]
+        },
+        "related": [
+          "rg-tabs",
+          "rg-tab",
+          "rg-tabpanel",
+          "rg-steps--grouped",
+          "rg-step__role",
+          "rg-dept-band--quiet",
+          "rg-disclosure--boxed",
+          "rg-badge--count",
+          "rg-badge--unresolved",
+          "rg-badge--pending",
+          "rg-u-visually-hidden"
+        ]
+      },
+      "variants": [
+        "gruppo (linguette + pannello)",
+        "fase singola (solo pannello)"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "selected",
+        "error",
+        "empty"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-white",
+        "--rg-color-background",
+        "--rg-color-surface-raised",
+        "--rg-color-border",
+        "--rg-color-border-medium",
+        "--rg-color-focus",
+        "--rg-color-text-label",
+        "--rg-color-text-secondary",
+        "--rg-color-neutral-400",
+        "--rg-font-identity",
+        "--rg-font-mono",
+        "--rg-font-size-xs",
+        "--rg-font-size-sm",
+        "--rg-weight-medium",
+        "--rg-letter-label",
+        "--rg-border-hairline",
+        "--rg-border-strong",
+        "--rg-radius-md",
+        "--rg-radius-sm",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-space-6",
+        "--rg-space-8"
+      ],
+      "doc": "components/phase-switch.md",
+      "rulesRef": "design-rules.md#11-accessibilita-e-comportamento",
+      "specimenAnchor": "phase-switch",
+      "snippet": "<div class=\"rg-phase-switch\">\n  <p class=\"rg-phase-switch__caption\" id=\"fasi-gruppo\">Fasi del gruppo · si salvano insieme</p>\n  <div class=\"rg-phase-switch__tabs\" role=\"tablist\" aria-labelledby=\"fasi-gruppo\">\n    <button class=\"rg-phase-switch__item rg-phase-switch__item--principal\" type=\"button\" role=\"tab\" id=\"tab-fase-2\" aria-controls=\"fase-2\" aria-selected=\"false\" tabindex=\"-1\">\n      <span class=\"rg-phase-switch__num\">2</span>\n      <span class=\"rg-phase-switch__text\"><span class=\"rg-phase-switch__role\">Principale</span><span class=\"rg-phase-switch__title\">Pressatura</span></span>\n      <span class=\"rg-phase-switch__aside\"><span class=\"rg-badge rg-badge--count\">6 da compilare</span></span>\n    </button>\n    <button class=\"rg-phase-switch__item\" type=\"button\" role=\"tab\" id=\"tab-fase-3\" aria-controls=\"fase-3\" aria-selected=\"true\" tabindex=\"0\">\n      <span class=\"rg-phase-switch__num\">3</span>\n      <span class=\"rg-phase-switch__text\"><span class=\"rg-phase-switch__role\">Collegata · dopo la 2</span><span class=\"rg-phase-switch__title\">Sabbiatura e soffiatura finale</span></span>\n      <span class=\"rg-phase-switch__aside\"><span class=\"rg-badge rg-badge--count\">7 da compilare</span></span>\n    </button>\n  </div>\n</div>\n<div class=\"rg-phase-panel rg-tabpanel is-active\" role=\"tabpanel\" id=\"fase-3\" aria-labelledby=\"tab-fase-3\">\n  <header class=\"rg-phase-panel__head\">\n    <h2 class=\"rg-u-visually-hidden\">Fase 3: Sabbiatura e soffiatura finale</h2>\n    <p class=\"rg-phase-panel__meta\"><span>fase 3 di 4</span><span>si lavora <strong>dopo la 2, Pressatura</strong></span></p>\n    <div class=\"rg-phase-panel__status\"><span class=\"rg-badge rg-badge--pending\">costo non calcolato</span><p class=\"rg-dept-band rg-dept-band--pressatura rg-dept-band--quiet rg-phase-panel__dept\"><span class=\"rg-dept-band__name\">Pressatura e soffiatura</span></p></div>\n  </header>\n  <div class=\"rg-phase-panel__body\">\n    <div class=\"rg-tabs rg-u-mb-6\" role=\"tablist\" aria-label=\"Sezioni della fase 3: Sabbiatura e soffiatura finale\"><button class=\"rg-tab is-active\" type=\"button\" role=\"tab\" id=\"tab-3-base\" aria-controls=\"sez-3-base\" aria-selected=\"true\">Informazioni generali</button></div>\n    <div class=\"rg-tabpanel is-active\" role=\"tabpanel\" id=\"sez-3-base\" aria-labelledby=\"tab-3-base\"><p class=\"rg-small rg-u-mb-4\">Che lavoro e, e dove sta il file.</p><!-- rg-field --></div>\n  </div>\n  <footer class=\"rg-phase-panel__foot\"><p class=\"rg-phase-panel__scope\">Azioni sulla fase 3</p><button class=\"rg-button rg-button--ghost\" type=\"submit\">Scollega</button><button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"submit\">Elimina fase</button></footer>\n</div>",
+      "notes": "RIVISTO prima del rilascio: la prima forma (striscia di segmenti rigati + testa 'Stai compilando', rg-phase-head) e stata scartata dopo la prova - 'due cose strane che non si capisce se sono fasi o altro' e 'lo sfondo grigio e uguale al colore degli hover'. rg-phase-head non esiste piu. Forma attuale: LINGUETTE attaccate al pannello (la scelta e bianca a bordo nero e si fonde col pannello; le altre solo contorno sul fondo di pagina) e sopra la GRAFFA dell'elenco ruotata, con didascalia sul filo e dente sulla principale. Il FONDO e il segno esclusivo della scelta: l'hover cambia bordo e sottolinea, mai il fondo. Il tablist e __tabs, etichettato dalla didascalia (aria-labelledby): la didascalia non sta dentro il tablist. Il titolo della fase sta sulla linguetta; nel pannello un h2 rg-u-visually-hidden. rg-phase-panel vale anche per la fase SENZA gruppo (senza linguette): una forma sola per la pagina di fase. Nel pannello NIENTE rg-section-card (sollevata dentro sollevata, e titolo che ripete la tab): sottotitolo di sezione in rg-small, nota costo nella sezione che ha campi marcati, menu delle operazioni come rg-disclosure--boxed in coda alle righe. Conteggio 'da compilare' sulla linguetta (fase) e sulla tab (sezione), non altrove. Gesti sulla fase nel piede del pannello con __scope 'Azioni sulla fase N'; salvataggio fuori dai pannelli. Timbro di reparto con rg-dept-band--quiet (mai il colore pieno a schermo). --rg-phase-switch-ground se la striscia non posa sul fondo di pagina. Mobile: linguette in scorrimento orizzontale. Status beta.",
+      "keywords": [
+        "fasi collegate",
+        "fase collegata",
+        "fase principale",
+        "gruppo di fasi",
+        "selettore di fase",
+        "scegli fase",
+        "tab a due livelli",
+        "due livelli",
+        "tab annidate",
+        "nested tabs",
+        "tab di secondo livello",
+        "sotto-tab",
+        "phase switcher",
+        "step switcher",
+        "linked steps",
+        "tablist",
+        "tab",
+        "sezioni",
+        "pagina fase",
+        "pagina della fase",
+        "reparto",
+        "form unico",
+        "commutazione client-side",
+        "prima",
+        "dopo",
+        "linguette",
+        "linguetta",
+        "raccoglitore",
+        "folder tabs",
+        "pannello di fase",
+        "phase panel",
+        "fase singola",
+        "timbro di reparto",
+        "quota",
+        "graffa",
+        "azioni sulla fase",
+        "elimina fase",
+        "scollega"
+      ],
+      "cssVars": [
+        "--rg-phase-switch-ground"
       ]
     },
     {
@@ -2196,7 +2358,8 @@
           "rg-worksheet-block__meta",
           "rg-worksheet-block__body",
           "rg-worksheet-block__fields",
-          "rg-worksheet-block__foot"
+          "rg-worksheet-block__foot",
+          "rg-worksheet-block__role"
         ],
         "variants": [
           "rg-worksheet-block--long"
@@ -2242,7 +2405,7 @@
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "worksheet-block",
       "snippet": "<section class=\"rg-worksheet-block\">\n  <p class=\"rg-dept-band rg-dept-band--pressatura\"><span class=\"rg-dept-band__name\">Pressatura e soffiatura</span><span class=\"rg-dept-band__note\">Fase 03 / 07</span></p>\n  <header class=\"rg-worksheet-block__head\">\n    <span class=\"rg-worksheet-block__index\">03</span>\n    <h3 class=\"rg-worksheet-block__title\">Pressatura fondo</h3>\n    <p class=\"rg-worksheet-block__meta\">RG-2026-0481 &#183; parte 2 di 5 &#183; rev. 04</p>\n  </header>\n  <div class=\"rg-worksheet-block__body\">\n    <div class=\"rg-worksheet-block__fields\">\n      <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Temperatura <span class=\"rg-fill-field__unit\">&#176;C</span></span><span class=\"rg-fill-field__line\"></span></div>\n      <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Tempo <span class=\"rg-fill-field__unit\">s</span></span><span class=\"rg-fill-field__line\"></span></div>\n    </div>\n  </div>\n  <footer class=\"rg-worksheet-block__foot\">\n    <div class=\"rg-fill-field rg-fill-field--inline\"><span class=\"rg-fill-field__label\">Operatore</span><span class=\"rg-fill-field__line\"></span></div>\n  </footer>\n</section>",
-      "notes": "Oggetto di CARTA prima che superficie a schermo. Due decisioni portano tutto: (1) non occupa una pagina intera - la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e il blocco non dichiara nessuna altezza; (2) non si spezza MAI fra due pagine - in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca. La paginazione (break-inside: avoid piu page-break-inside per i motori PDF server-side) vive nell'UNICO @media print del DS, in rg-utilities.css: esteso, non duplicato, nessuna app riscrive il proprio. La variante --long e SOLO una regola di paginazione (apre una pagina nuova; se e il primo blocco non lascia una pagina vuota prima; la tabella si spezza fra righe con thead ripetuto) e non cambia nulla a schermo: non usarla per dare importanza a una fase. LIMITE DICHIARATO: se un --long sfora comunque il foglio, la banda di reparto NON si ripete sulla pagina di continuazione e quella pagina perde il suo segnale di reparto; in quel caso la fase va spezzata a monte in due blocchi con due bande. Il riquadro e un'eccezione dichiarata a regole 6 (non incorniciare tutto): su carta rende il blocco separabile, e non c'e hover a fare quel lavoro. La geometria del foglio NON e del componente ma del documento: opt-in rg-u-print-a4 sul contenitore che stampa. A schermo la stessa fase si legge con rg-section-card o rg-steps e si compila con rg-field.",
+      "notes": "Oggetto di CARTA prima che superficie a schermo. Due decisioni portano tutto: (1) non occupa una pagina intera - la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e il blocco non dichiara nessuna altezza; (2) non si spezza MAI fra due pagine - in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca. La paginazione (break-inside: avoid piu page-break-inside per i motori PDF server-side) vive nell'UNICO @media print del DS, in rg-utilities.css: esteso, non duplicato, nessuna app riscrive il proprio. La variante --long e SOLO una regola di paginazione (apre una pagina nuova; se e il primo blocco non lascia una pagina vuota prima; la tabella si spezza fra righe con thead ripetuto) e non cambia nulla a schermo: non usarla per dare importanza a una fase. LIMITE DICHIARATO: se un --long sfora comunque il foglio, la banda di reparto NON si ripete sulla pagina di continuazione e quella pagina perde il suo segnale di reparto; in quel caso la fase va spezzata a monte in due blocchi con due bande. Il riquadro e un'eccezione dichiarata a regole 6 (non incorniciare tutto): su carta rende il blocco separabile, e non c'e hover a fare quel lavoro. La geometria del foglio NON e del componente ma del documento: opt-in rg-u-print-a4 sul contenitore che stampa. A schermo la stessa fase si legge con rg-section-card o rg-steps e si compila con rg-field. FASI COLLEGATE (1.16.0): rg-worksheet-block__role nella testa, dopo il titolo, con le parole di rg-step__role e i numeri come sul foglio ('Principale · con la 03', 'Collegata · dopo la 02'); filo nero spesso a sinistra = il pezzo di graffa che ogni blocco porta con se, perche i blocchi di un gruppo possono finire su due pagine. Niente fondo pieno (non si stampa), niente riquadro (e il segno del nome di reparto).",
       "keywords": [
         "scheda di lavorazione",
         "scheda tecnica",
@@ -2279,7 +2442,11 @@
         "worksheet",
         "job sheet",
         "travel sheet",
-        "routing sheet"
+        "routing sheet",
+        "fasi collegate",
+        "fase collegata",
+        "fase principale",
+        "ruolo nel gruppo"
       ]
     },
     {
@@ -2302,11 +2469,13 @@
           "rg-dept-band--strass",
           "rg-dept-band--finissaggio",
           "rg-dept-band--incollature",
-          "rg-dept-band--accoppiaggi"
+          "rg-dept-band--accoppiaggi",
+          "rg-dept-band--quiet"
         ],
         "related": [
           "rg-worksheet-block",
-          "rg-badge"
+          "rg-badge",
+          "rg-phase-panel__dept"
         ]
       },
       "variants": [
@@ -2353,7 +2522,7 @@
       "rulesRef": "design-rules.md#4-colore",
       "specimenAnchor": "dept-band",
       "snippet": "<p class=\"rg-dept-band rg-dept-band--strass\">\n  <span class=\"rg-dept-band__name\">Strass e applicazioni</span>\n  <span class=\"rg-dept-band__note\">Fase 05 / 07</span>\n</p>",
-      "notes": "Il vincolo che decide la forma: il foglio viene QUASI SEMPRE FOTOCOPIATO IN BIANCO E NERO e il colore si perde. Tre segnali ridondanti, sempre tutti e tre: (a) COLORE = acceleratore per trovare il foglio nel mucchio, mai unica informazione; (b) NOME in maiuscolo = l'informazione in chiaro, ed e CONTENUTO del markup, non content: generato; sta su targhetta bianca opaca con filetto nero perche resti leggibile sopra qualsiasi figura; (c) FIGURA = la trama, l'unico dei tre che sopravvive intatto alla fotocopia. CRITERIO DELLA FIGURA (arrivato dal reparto, non dal design system): non 'distinguibile' ma RICONOSCIBILE. Una trama arbitraria si distingue e poi va imparata a memoria; una trama che evoca il lavoro del reparto si riconosce al primo colpo. Le sette figure: ricamo = PUNTO CROCE (fila di croci staccate), stampa = DUE REGISTRI (in alto gocce d'inchiostro e punte di laser alternate, in basso due linee: i mestieri sono due e la figura li nomina entrambi), pressatura = LE DUE PIASTRE della pressa (dorsi pieni ai bordi, materiale in mezzo), strass = POIS (sono strass), finissaggio = BANDIERA A SCACCHI (il traguardo: e l'ultimo reparto), incollature = STRISCIATE della spalmatura (diagonali spesse), accoppiaggi = DUE LINEE APPAIATE (accoppiare e unire due strati). REGOLA DERIVATA: due reparti non stanno mai nella stessa FAMIGLIA DI SEGNO (croci, due registri, dorsi, pois, scacchiera, diagonale, coppie). Non fondano una famiglia ne il VERSO (una diagonale a 45 contro una a -45, dopo una fotocopia e a dimensione di banda, e la stessa cosa) ne il TONO (due figure di barre verticali si somigliano anche se una e scura e l'altra chiara). STORICO, tutto dentro la stessa 1.14.0 e prima di qualunque rilascio: --stampa si chiamava --laser (lo slug faceva credere che mancasse la stampa, e il reparto e 'Stampa, Laser e HF', quello dove stanno le stampanti) ed era righe orizzontali; accoppiaggi era una tinta piena (si distingueva ma non comunicava niente e in fotocopia si impastava); pressatura era una diagonale e si confondeva con la stampa (stessa famiglia, verso diverso); ricamo era un tratteggio centrato (leggeva 'linea tratteggiata', il segno piu neutro che esista, non 'ricamo'); finissaggio era un reticolo ortogonale, cioe barre verticali come gli accoppiaggi, distinte solo dal tono. Per il ricamo la strada ovvia sarebbe stata il punto pieno (satin, barrette inclinate fitte): scartata perche e la famiglia delle incollature. LIMITE DICHIARATO: --stampa e la figura piu stretta delle sette. I due registri stanno in ~30px di area utile (registro alto 0-16, registro basso 18-30) senza margine: se la banda si abbassa e la prima che si impasta, e va rifatta invece che compressa. Per la stessa ragione la goccia e un cerchio da 8px e il raggio un tratto da 2. La campitura e un gradiente a stop netti: non e decorazione (vietata da regole 2) ma informazione - eccezione dichiarata, regole 12, ambito documenti stampati. Le percentuali della scacchiera sono proporzioni della tessera, non misure magiche: e la ricetta canonica (due strati identici sfalsati di mezza tessera). In stampa serve print-color-adjust: exact, altrimenti il browser butta via gli sfondi e la banda perde due segnali su tre: gia gestito in rg-utilities.css, l'app non fa nulla. PESO: la scacchiera del finissaggio e la piu carica (meta banda in quadretti pieni da 8px) ed e anche la piu resistente alla fotocopia; incollature e accoppiaggi usano i valori piu chiari della palette e sono le prime da verificare su una macchina nuova. In vetrina c'e la tavola 'prova di sforzo' (grigio + contrasto schiacciato). API della variante: --rg-dept-color (filetto) e --rg-dept-pattern (campitura), piu --rg-dept-size/-position/-repeat quando la figura e un segno unico o composta da piu registri (ricamo, stampa, strass, finissaggio); i tre accettano liste separate da virgola, una voce per strato. COLORE: palette categoriale --rg-color-category-1..7, ALIAS di valori gia in palette (nessun colore nuovo nel brand). CONSEGUENZA DA CONOSCERE: category-3/4/5 valgono quanto danger/warning/success - su carta non c'e nessun colore di stato accanto e il nome e scritto sulla banda, quindi una banda rossa non si legge come errore, ma NON mettere rg-dept-band in una vista a schermo dove convivono alert e badge di stato senza aver deciso cosa succede a quella lettura. Le varianti portano il nome dei sette reparti RG perche sono sette e stabili e perche in un template il nome parla mentre un numero no: accoppiamento all'organigramma, dichiarato; un ottavo reparto = un'ottava variante con una figura di una famiglia non ancora usata, e la mappa reparto verso variante vive nell'app. Non e un badge: qui e un'intestazione di appartenenza sul bordo di un documento, senza stati e non interattiva.",
+      "notes": "Il vincolo che decide la forma: il foglio viene QUASI SEMPRE FOTOCOPIATO IN BIANCO E NERO e il colore si perde. Tre segnali ridondanti, sempre tutti e tre: (a) COLORE = acceleratore per trovare il foglio nel mucchio, mai unica informazione; (b) NOME in maiuscolo = l'informazione in chiaro, ed e CONTENUTO del markup, non content: generato; sta su targhetta bianca opaca con filetto nero perche resti leggibile sopra qualsiasi figura; (c) FIGURA = la trama, l'unico dei tre che sopravvive intatto alla fotocopia. CRITERIO DELLA FIGURA (arrivato dal reparto, non dal design system): non 'distinguibile' ma RICONOSCIBILE. Una trama arbitraria si distingue e poi va imparata a memoria; una trama che evoca il lavoro del reparto si riconosce al primo colpo. Le sette figure: ricamo = PUNTO CROCE (fila di croci staccate), stampa = DUE REGISTRI (in alto gocce d'inchiostro e punte di laser alternate, in basso due linee: i mestieri sono due e la figura li nomina entrambi), pressatura = LE DUE PIASTRE della pressa (dorsi pieni ai bordi, materiale in mezzo), strass = POIS (sono strass), finissaggio = BANDIERA A SCACCHI (il traguardo: e l'ultimo reparto), incollature = STRISCIATE della spalmatura (diagonali spesse), accoppiaggi = DUE LINEE APPAIATE (accoppiare e unire due strati). REGOLA DERIVATA: due reparti non stanno mai nella stessa FAMIGLIA DI SEGNO (croci, due registri, dorsi, pois, scacchiera, diagonale, coppie). Non fondano una famiglia ne il VERSO (una diagonale a 45 contro una a -45, dopo una fotocopia e a dimensione di banda, e la stessa cosa) ne il TONO (due figure di barre verticali si somigliano anche se una e scura e l'altra chiara). STORICO, tutto dentro la stessa 1.14.0 e prima di qualunque rilascio: --stampa si chiamava --laser (lo slug faceva credere che mancasse la stampa, e il reparto e 'Stampa, Laser e HF', quello dove stanno le stampanti) ed era righe orizzontali; accoppiaggi era una tinta piena (si distingueva ma non comunicava niente e in fotocopia si impastava); pressatura era una diagonale e si confondeva con la stampa (stessa famiglia, verso diverso); ricamo era un tratteggio centrato (leggeva 'linea tratteggiata', il segno piu neutro che esista, non 'ricamo'); finissaggio era un reticolo ortogonale, cioe barre verticali come gli accoppiaggi, distinte solo dal tono. Per il ricamo la strada ovvia sarebbe stata il punto pieno (satin, barrette inclinate fitte): scartata perche e la famiglia delle incollature. LIMITE DICHIARATO: --stampa e la figura piu stretta delle sette. I due registri stanno in ~30px di area utile (registro alto 0-16, registro basso 18-30) senza margine: se la banda si abbassa e la prima che si impasta, e va rifatta invece che compressa. Per la stessa ragione la goccia e un cerchio da 8px e il raggio un tratto da 2. La campitura e un gradiente a stop netti: non e decorazione (vietata da regole 2) ma informazione - eccezione dichiarata, regole 12, ambito documenti stampati. Le percentuali della scacchiera sono proporzioni della tessera, non misure magiche: e la ricetta canonica (due strati identici sfalsati di mezza tessera). In stampa serve print-color-adjust: exact, altrimenti il browser butta via gli sfondi e la banda perde due segnali su tre: gia gestito in rg-utilities.css, l'app non fa nulla. PESO: la scacchiera del finissaggio e la piu carica (meta banda in quadretti pieni da 8px) ed e anche la piu resistente alla fotocopia; incollature e accoppiaggi usano i valori piu chiari della palette e sono le prime da verificare su una macchina nuova. In vetrina c'e la tavola 'prova di sforzo' (grigio + contrasto schiacciato). API della variante: --rg-dept-color (filetto) e --rg-dept-pattern (campitura), piu --rg-dept-size/-position/-repeat quando la figura e un segno unico o composta da piu registri (ricamo, stampa, strass, finissaggio); i tre accettano liste separate da virgola, una voce per strato. COLORE: palette categoriale --rg-color-category-1..7, ALIAS di valori gia in palette (nessun colore nuovo nel brand). CONSEGUENZA DA CONOSCERE: category-3/4/5 valgono quanto danger/warning/success - su carta non c'e nessun colore di stato accanto e il nome e scritto sulla banda, quindi una banda rossa non si legge come errore, ma NON mettere rg-dept-band in una vista a schermo dove convivono alert e badge di stato senza aver deciso cosa succede a quella lettura. Le varianti portano il nome dei sette reparti RG perche sono sette e stabili e perche in un template il nome parla mentre un numero no: accoppiamento all'organigramma, dichiarato; un ottavo reparto = un'ottava variante con una figura di una famiglia non ancora usata, e la mappa reparto verso variante vive nell'app. Non e un badge: qui e un'intestazione di appartenenza sul bordo di un documento, senza stati e non interattiva. rg-dept-band--quiet (1.16.0): la stessa figura in grigio, per lo SCHERMO. A schermo la palette categoriale convive con i colori di stato (category-3/4/5 = danger/warning/success); restano figura e nome. Uso di riferimento: timbro di reparto in rg-phase-panel__status. Mai su carta.",
       "keywords": [
         "reparto",
         "reparti",
@@ -2427,7 +2596,13 @@
         "incollature",
         "accoppiaggi",
         "palette categoriale",
-        "categorical"
+        "categorical",
+        "sobria",
+        "grigio",
+        "a schermo",
+        "timbro di reparto",
+        "quiet",
+        "monocromo"
       ]
     },
     {

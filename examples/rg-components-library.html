@@ -76,7 +76,7 @@
   <header class="specimen-header"><div class="specimen-brand">RG</div><div class="specimen-title">Design System / Components Library</div><div class="specimen-version">SPECIMEN 0.1 · 2026</div></header>
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
-      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi collegate</a></li>
+      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li>
     </ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
@@ -1070,91 +1070,181 @@ status         VALID</pre></div>
       </section>
 
       <section class="specimen-section" id="phase-switch">
-        <div class="specimen-section__head"><span class="specimen-section__index">29</span><h2>Fasi collegate — quale fase sto compilando</h2><p>Nella pagina della fase principale si compilano anche le sue collegate. La pagina ha quindi <strong>due livelli</strong> di natura diversa: <strong>quale fase</strong> del gruppo, che ha un altro numero e magari un altro reparto, e <strong>quale sezione</strong> di quella fase. Una sola barra di tab li mescolava con lo stesso stile. Chi arrivava dall'elenco su una collegata trovava una pagina intitolata «pressatura» con una tab accesa uguale alle altre, e non capiva di essere dentro un'altra fase. Da qui due controlli con due forme. La <strong>striscia delle fasi</strong> (<code class="rg-mono">rg-phase-switch</code>) mostra le fasi del gruppo nell'ordine e coi numeri della sequenza. La <strong>testa della fase</strong> (<code class="rg-mono">rg-phase-head</code>) dice in chiaro fase, ruolo e reparto. Sotto restano le <code class="rg-mono">rg-tabs</code> delle sezioni. Tutto sta in un solo form e la commutazione è client-side.</p></div>
+        <div class="specimen-section__head"><span class="specimen-section__index">29</span><h2>Fasi del gruppo e pannello di fase</h2><p>La pagina di una fase è <strong>un pannello</strong>. Se la fase è la principale di un gruppo, sopra il pannello ci sono le <strong>linguette</strong> delle fasi del gruppo: la fase scelta è bianca, a bordo nero, attaccata al pannello; le altre stanno dietro, solo contorno. Il <strong>fondo</strong> è il segno della scelta e di nient'altro: l'hover porta il bordo al nero e sottolinea il titolo. Sopra le linguette c'è la <strong>graffa dell'elenco, ruotata</strong>: una quota da disegno tecnico con la didascalia «Fasi del gruppo» e il dente sulla principale. Dentro il pannello: una riga di testa (posizione, relazione, stato del costo, timbro del reparto), le <code class="rg-mono">rg-tabs</code> delle sezioni, e nel piede i gesti sulla fase. Nessuna card dentro, nessun titolo ripetuto.</p></div>
         <div class="specimen-grid">
-          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Pagina della fase 2, arrivando da «Apri nella 2» sulla fase 3 — striscia, testa della fase, sezioni</span><div class="specimen-stage specimen-stage--page">
-            <p class="rg-label">Parte DAVANTI · pagina della fase 2</p>
-            <p class="rg-h1 rg-u-mb-6">Pressatura</p>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Pagina della fase 2, arrivando da «Apri nella 2» sulla fase 3</span><div class="specimen-stage specimen-stage--page">
+            <div class="rg-section-header">
+              <div><p class="rg-h2">Pressatura</p><p class="rg-small">DAVANTI · TEST — Ciclo completo</p></div>
+              <a class="rg-button rg-button--secondary rg-button--small" href="#phase-switch">Torna alla parte</a>
+            </div>
             <form action="#" method="post">
-              <div class="rg-phase-switch" role="tablist" aria-label="Fasi del gruppo: Pressatura con Sabbiatura e soffiatura finale">
-                <button class="rg-phase-switch__item" type="button" role="tab" id="spec-ps-tab-2" aria-controls="spec-ps-fase-2" aria-selected="false" tabindex="-1">
-                  <span class="rg-phase-switch__num">2</span>
-                  <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Principale</span><span class="rg-phase-switch__title">Pressatura</span><span class="rg-phase-switch__meta"><span>Pressatura e soffiatura</span><span class="rg-badge rg-badge--count">6 da compilare</span></span></span>
-                </button>
-                <button class="rg-phase-switch__item is-active" type="button" role="tab" id="spec-ps-tab-3" aria-controls="spec-ps-fase-3" aria-selected="true" tabindex="0">
-                  <span class="rg-phase-switch__num">3</span>
-                  <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Collegata · dopo la 2</span><span class="rg-phase-switch__title">Sabbiatura e soffiatura finale</span><span class="rg-phase-switch__meta"><span>Pressatura e soffiatura</span><span class="rg-badge rg-badge--count">7 da compilare</span></span></span>
-                </button>
+              <div class="rg-phase-switch">
+                <p class="rg-phase-switch__caption" id="spec-pp-fasi">Fasi del gruppo · si salvano insieme</p>
+                <div class="rg-phase-switch__tabs" role="tablist" aria-labelledby="spec-pp-fasi">
+                  <button class="rg-phase-switch__item rg-phase-switch__item--principal" type="button" role="tab" id="spec-pp-tab-2" aria-controls="spec-pp-fase-2" aria-selected="false" tabindex="-1">
+                    <span class="rg-phase-switch__num">2</span>
+                    <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Principale</span><span class="rg-phase-switch__title">Pressatura</span></span>
+                    <span class="rg-phase-switch__aside"><span class="rg-badge rg-badge--count">6 da compilare</span></span>
+                  </button>
+                  <button class="rg-phase-switch__item is-active" type="button" role="tab" id="spec-pp-tab-3" aria-controls="spec-pp-fase-3" aria-selected="true" tabindex="0">
+                    <span class="rg-phase-switch__num">3</span>
+                    <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Collegata · dopo la 2</span><span class="rg-phase-switch__title">Sabbiatura e soffiatura finale</span></span>
+                    <span class="rg-phase-switch__aside"><span class="rg-badge rg-badge--count">7 da compilare</span></span>
+                  </button>
+                </div>
               </div>
 
-              <div class="rg-tabpanel" role="tabpanel" id="spec-ps-fase-2" aria-labelledby="spec-ps-tab-2">
-                <header class="rg-phase-head">
-                  <span class="rg-phase-head__num">2</span>
-                  <div class="rg-phase-head__text"><span class="rg-phase-head__role">Stai compilando · principale</span><h3 class="rg-phase-head__title">Pressatura</h3><p class="rg-phase-head__meta"><span>fase 2 di 4</span><span>reparto Pressatura e soffiatura</span><span>con la 3, Sabbiatura e soffiatura finale</span></p></div>
+              <div class="rg-phase-panel rg-tabpanel" role="tabpanel" id="spec-pp-fase-2" aria-labelledby="spec-pp-tab-2">
+                <header class="rg-phase-panel__head">
+                  <h3 class="rg-u-visually-hidden">Fase 2: Pressatura</h3>
+                  <p class="rg-phase-panel__meta"><span>fase 2 di 4</span><span>con <strong>la 3, Sabbiatura e soffiatura finale</strong></span></p>
+                  <div class="rg-phase-panel__status"><span class="rg-badge rg-badge--pending">costo non calcolato</span><p class="rg-dept-band rg-dept-band--pressatura rg-dept-band--quiet rg-phase-panel__dept"><span class="rg-dept-band__name">Pressatura e soffiatura</span></p></div>
                 </header>
-                <div class="rg-tabs rg-u-mb-6" role="tablist" aria-label="Sezioni della fase 2: Pressatura">
-                  <button class="rg-tab is-active" type="button" role="tab" id="spec-ps-t2-base" aria-controls="spec-ps-s2-base" aria-selected="true">Informazioni generali <span class="rg-badge rg-badge--count">2</span></button>
-                  <button class="rg-tab" type="button" role="tab" id="spec-ps-t2-tec" aria-controls="spec-ps-s2-tec" aria-selected="false" tabindex="-1">Parametri tecnici <span class="rg-badge rg-badge--count">4</span></button>
+                <div class="rg-phase-panel__body">
+                  <div class="rg-tabs rg-u-mb-6" role="tablist" aria-label="Sezioni della fase 2: Pressatura">
+                    <button class="rg-tab is-active" type="button" role="tab" id="spec-pp-t2-base" aria-controls="spec-pp-s2-base" aria-selected="true">Informazioni generali <span class="rg-badge rg-badge--count">2</span></button>
+                    <button class="rg-tab" type="button" role="tab" id="spec-pp-t2-tec" aria-controls="spec-pp-s2-tec" aria-selected="false" tabindex="-1">Parametri tecnici <span class="rg-badge rg-badge--count">4</span></button>
+                  </div>
+                  <div class="rg-tabpanel is-active" role="tabpanel" id="spec-pp-s2-base" aria-labelledby="spec-pp-t2-base">
+                    <p class="rg-small rg-u-mb-4">Che lavoro è, e dove sta il file. Cambia a ogni commessa.</p>
+                    <div class="rg-cluster rg-cluster--end">
+                      <label class="rg-field rg-field--grow"><span class="rg-field__label">Cartella</span><input class="rg-input rg-mono" value=""></label>
+                      <label class="rg-field rg-field--grow"><span class="rg-field__label">File</span><input class="rg-input rg-mono" value=""></label>
+                      <label class="rg-field rg-field--w16"><span class="rg-field__label">Scopo</span><select class="rg-select"><option>rimozione garze</option><option>— non scelto</option></select><span class="rg-field__help">modificato sulla fase</span></label>
+                    </div>
+                  </div>
+                  <div class="rg-tabpanel" role="tabpanel" id="spec-pp-s2-tec" aria-labelledby="spec-pp-t2-tec"><p class="rg-small">Tempo, temperatura, pressione e pezzi per ciclo.</p></div>
                 </div>
-                <div class="rg-tabpanel is-active" role="tabpanel" id="spec-ps-s2-base" aria-labelledby="spec-ps-t2-base">
-                  <section class="rg-section-card"><header class="rg-section-card__header"><div class="rg-section-card__heading"><h4 class="rg-section-card__title">Informazioni generali</h4><p class="rg-section-card__subtitle">Si compilano una volta per commessa.</p></div></header>
-                    <div class="rg-section-card__body"><div class="rg-cluster rg-cluster--end"><label class="rg-field rg-field--w16"><span class="rg-field__label">Macchina</span><input class="rg-input" value="Pressa HP-04"></label><label class="rg-field rg-field--w16"><span class="rg-field__label">Stampo</span><input class="rg-input rg-mono" value=""></label></div></div>
-                  </section>
-                </div>
-                <div class="rg-tabpanel" role="tabpanel" id="spec-ps-s2-tec" aria-labelledby="spec-ps-t2-tec">
-                  <section class="rg-section-card"><header class="rg-section-card__header"><div class="rg-section-card__heading"><h4 class="rg-section-card__title">Parametri tecnici</h4></div></header>
-                    <div class="rg-section-card__body"><div class="rg-cluster rg-cluster--end"><label class="rg-field rg-field--w8"><span class="rg-field__label">Temperatura</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="180"><span>°C</span></span></label><label class="rg-field rg-field--w8"><span class="rg-field__label">Tempo</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="12"><span>s</span></span></label></div></div>
-                  </section>
-                </div>
+                <footer class="rg-phase-panel__foot"><p class="rg-phase-panel__scope">Azioni sulla fase 2</p><button class="rg-button rg-button--ghost rg-button--danger" type="button">Elimina fase</button></footer>
               </div>
 
-              <div class="rg-tabpanel is-active" role="tabpanel" id="spec-ps-fase-3" aria-labelledby="spec-ps-tab-3">
-                <header class="rg-phase-head">
-                  <span class="rg-phase-head__num">3</span>
-                  <div class="rg-phase-head__text"><span class="rg-phase-head__role">Stai compilando · collegata · dopo la 2</span><h3 class="rg-phase-head__title">Sabbiatura e soffiatura finale</h3><p class="rg-phase-head__meta"><span>fase 3 di 4</span><span>reparto Pressatura e soffiatura</span><span>si lavora dopo la 2, Pressatura</span></p></div>
+              <div class="rg-phase-panel rg-tabpanel is-active" role="tabpanel" id="spec-pp-fase-3" aria-labelledby="spec-pp-tab-3">
+                <header class="rg-phase-panel__head">
+                  <h3 class="rg-u-visually-hidden">Fase 3: Sabbiatura e soffiatura finale</h3>
+                  <p class="rg-phase-panel__meta"><span>fase 3 di 4</span><span>si lavora <strong>dopo la 2, Pressatura</strong></span></p>
+                  <div class="rg-phase-panel__status"><span class="rg-badge rg-badge--pending">costo non calcolato</span><p class="rg-dept-band rg-dept-band--pressatura rg-dept-band--quiet rg-phase-panel__dept"><span class="rg-dept-band__name">Pressatura e soffiatura</span></p></div>
                 </header>
-                <div class="rg-tabs rg-u-mb-6" role="tablist" aria-label="Sezioni della fase 3: Sabbiatura e soffiatura finale">
-                  <button class="rg-tab is-active" type="button" role="tab" id="spec-ps-t3-base" aria-controls="spec-ps-s3-base" aria-selected="true">Informazioni generali <span class="rg-badge rg-badge--count">3</span></button>
-                  <button class="rg-tab" type="button" role="tab" id="spec-ps-t3-tec" aria-controls="spec-ps-s3-tec" aria-selected="false" tabindex="-1">Parametri tecnici <span class="rg-badge rg-badge--count">4</span></button>
+                <div class="rg-phase-panel__body">
+                  <div class="rg-tabs rg-u-mb-6" role="tablist" aria-label="Sezioni della fase 3: Sabbiatura e soffiatura finale">
+                    <button class="rg-tab" type="button" role="tab" id="spec-pp-t3-base" aria-controls="spec-pp-s3-base" aria-selected="false" tabindex="-1">Informazioni generali <span class="rg-badge rg-badge--count">2</span></button>
+                    <button class="rg-tab is-active" type="button" role="tab" id="spec-pp-t3-tec" aria-controls="spec-pp-s3-tec" aria-selected="true">Parametri tecnici <span class="rg-badge rg-badge--count">5</span></button>
+                  </div>
+                  <div class="rg-tabpanel" role="tabpanel" id="spec-pp-s3-base" aria-labelledby="spec-pp-t3-base">
+                    <p class="rg-small rg-u-mb-4">Che lavoro è, e dove sta il file. Cambia a ogni commessa.</p>
+                    <div class="rg-cluster rg-cluster--end">
+                      <label class="rg-field rg-field--grow"><span class="rg-field__label">Cartella</span><input class="rg-input rg-mono" value=""></label>
+                      <label class="rg-field rg-field--grow"><span class="rg-field__label">File</span><input class="rg-input rg-mono" value=""></label>
+                    </div>
+                  </div>
+                  <div class="rg-tabpanel is-active" role="tabpanel" id="spec-pp-s3-tec" aria-labelledby="spec-pp-t3-tec">
+                    <p class="rg-small rg-u-mb-4" id="spec-pp-costo-3">Si riscrivono a ogni commessa. I campi <span class="rg-field__mark">€</span> entrano nel costo della fase; <span class="rg-field__mark">⇄</span> vale per tutte le passate insieme.</p>
+                    <ol class="rg-operation-list">
+                      <li class="rg-operation-row">
+                        <div class="rg-operation-row__head"><span class="rg-operation-row__name">Sabbiatura manuale</span><span class="rg-badge">per pezzo</span></div>
+                        <div class="rg-cluster rg-cluster--end">
+                          <label class="rg-field rg-field--w8"><span class="rg-field__label">Tempo (s) <span class="rg-field__mark" aria-hidden="true">€</span></span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" aria-describedby="spec-pp-costo-3"></label>
+                          <label class="rg-field rg-field--w4"><span class="rg-field__label">Pressione (bar)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal"></label>
+                          <label class="rg-field rg-field--w4"><span class="rg-field__label">Pezzi per ciclo (n)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric"></label>
+                          <label class="rg-field rg-field--w16"><span class="rg-field__label">Vetro</span><select class="rg-select"><option>— non scelto</option><option>microsfere</option></select></label>
+                          <label class="rg-field rg-field--w24"><span class="rg-field__label">Note</span><input class="rg-input"></label>
+                        </div>
+                        <div class="rg-operation-row__actions"><button class="rg-button rg-button--ghost" type="button">+ Ripeti</button></div>
+                      </li>
+                      <li class="rg-operation-row">
+                        <div class="rg-operation-row__head"><span class="rg-operation-row__name">Soffiatura</span><span class="rg-badge">per pezzo</span></div>
+                        <div class="rg-cluster rg-cluster--end">
+                          <label class="rg-field rg-field--w8"><span class="rg-field__label">Tempo (s) <span class="rg-field__mark" aria-hidden="true">€</span></span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" aria-describedby="spec-pp-costo-3"></label>
+                          <label class="rg-field rg-field--w24"><span class="rg-field__label">Note</span><input class="rg-input"></label>
+                        </div>
+                        <div class="rg-operation-row__actions"><button class="rg-button rg-button--ghost" type="button">+ Ripeti</button></div>
+                      </li>
+                    </ol>
+                    <details class="rg-disclosure rg-disclosure--boxed rg-u-mt-6">
+                      <summary class="rg-disclosure__trigger">Operazioni della fase <span class="rg-small">2 di 3 scelte</span></summary>
+                      <div class="rg-disclosure__content">
+                        <div class="rg-stack">
+                          <label class="rg-choice"><input type="checkbox" checked> Sabbiatura manuale</label>
+                          <label class="rg-choice"><input type="checkbox"> Sabbiatura automatica <span class="rg-small">· alternativa «sabbiatura»: una sola</span></label>
+                          <label class="rg-choice"><input type="checkbox" checked> Soffiatura</label>
+                        </div>
+                      </div>
+                    </details>
+                  </div>
                 </div>
-                <div class="rg-tabpanel is-active" role="tabpanel" id="spec-ps-s3-base" aria-labelledby="spec-ps-t3-base">
-                  <section class="rg-section-card"><header class="rg-section-card__header"><div class="rg-section-card__heading"><h4 class="rg-section-card__title">Informazioni generali</h4><p class="rg-section-card__subtitle">Della sabbiatura, non della pressatura.</p></div></header>
-                    <div class="rg-section-card__body"><div class="rg-cluster rg-cluster--end"><label class="rg-field rg-field--w16"><span class="rg-field__label">Macchina</span><input class="rg-input" value=""></label><label class="rg-field rg-field--w8"><span class="rg-field__label">Graniglia</span><input class="rg-input rg-mono" value=""></label></div></div>
-                  </section>
-                </div>
-                <div class="rg-tabpanel" role="tabpanel" id="spec-ps-s3-tec" aria-labelledby="spec-ps-t3-tec">
-                  <section class="rg-section-card"><header class="rg-section-card__header"><div class="rg-section-card__heading"><h4 class="rg-section-card__title">Parametri tecnici</h4></div></header>
-                    <div class="rg-section-card__body"><div class="rg-cluster rg-cluster--end"><label class="rg-field rg-field--w8"><span class="rg-field__label">Pressione aria</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="6"><span>bar</span></span></label></div></div>
-                  </section>
-                </div>
+                <footer class="rg-phase-panel__foot"><p class="rg-phase-panel__scope">Azioni sulla fase 3</p><button class="rg-button rg-button--ghost" type="button">Scollega</button><button class="rg-button rg-button--ghost rg-button--danger" type="button">Elimina fase</button></footer>
               </div>
 
-              <div class="rg-cluster rg-u-mt-6"><button class="rg-button rg-button--primary" type="button">Salva</button><span class="rg-small">Salva insieme tutte le fasi del gruppo.</span></div>
+              <div class="rg-cluster rg-u-mt-6"><button class="rg-button rg-button--primary" type="button">Salva i valori</button><span class="rg-small">Salva tutte le fasi del gruppo insieme. Un campo lasciato vuoto cancella il valore.</span></div>
             </form>
           </div></div>
 
-          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Tre fasi, collegate prima e dopo, un errore su una fase non visibile — come esce in fotocopia</span><div class="specimen-stage specimen-stage--photocopy">
-            <div class="rg-phase-switch" role="tablist" aria-label="Fasi del gruppo: Stampa UV con Pressatura iniziale e Forno finale">
-              <button class="rg-phase-switch__item" type="button" role="tab" id="spec-ps3-tab-1" aria-controls="spec-ps3-fase-1" aria-selected="false" tabindex="-1">
-                <span class="rg-phase-switch__num">1</span>
-                <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Collegata · prima della 2</span><span class="rg-phase-switch__title">Pressatura iniziale</span><span class="rg-phase-switch__meta"><span>Pressatura e soffiatura</span><span class="rg-badge rg-badge--validated">completa</span></span></span>
-              </button>
-              <button class="rg-phase-switch__item is-active" type="button" role="tab" id="spec-ps3-tab-2" aria-controls="spec-ps3-fase-2" aria-selected="true" tabindex="0">
-                <span class="rg-phase-switch__num">2</span>
-                <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Principale</span><span class="rg-phase-switch__title">Stampa UV</span><span class="rg-phase-switch__meta"><span>Stampa, Laser e HF</span><span class="rg-badge rg-badge--count">4 da compilare</span></span></span>
-              </button>
-              <button class="rg-phase-switch__item" type="button" role="tab" id="spec-ps3-tab-3" aria-controls="spec-ps3-fase-3" aria-selected="false" tabindex="-1">
-                <span class="rg-phase-switch__num">3</span>
-                <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Collegata · dopo la 2</span><span class="rg-phase-switch__title">Forno finale</span><span class="rg-phase-switch__meta"><span>Stampa, Laser e HF</span><span class="rg-badge rg-badge--unresolved">1 errore</span></span></span>
-              </button>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Tre fasi — collegate prima e dopo, un errore su una fase non visibile — come esce in fotocopia</span><div class="specimen-stage specimen-stage--page specimen-stage--photocopy">
+            <div class="rg-phase-switch">
+              <p class="rg-phase-switch__caption" id="spec-pp3-fasi">Fasi del gruppo · si salvano insieme</p>
+              <div class="rg-phase-switch__tabs" role="tablist" aria-labelledby="spec-pp3-fasi">
+                <button class="rg-phase-switch__item" type="button" role="tab" id="spec-pp3-tab-1" aria-controls="spec-pp3-fase-1" aria-selected="false" tabindex="-1">
+                  <span class="rg-phase-switch__num">1</span>
+                  <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Collegata · prima della 2</span><span class="rg-phase-switch__title">Pressatura iniziale</span></span>
+                  <span class="rg-phase-switch__aside"><span class="rg-badge rg-badge--validated">completa</span></span>
+                </button>
+                <button class="rg-phase-switch__item rg-phase-switch__item--principal is-active" type="button" role="tab" id="spec-pp3-tab-2" aria-controls="spec-pp3-fase-2" aria-selected="true" tabindex="0">
+                  <span class="rg-phase-switch__num">2</span>
+                  <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Principale</span><span class="rg-phase-switch__title">Stampa UV</span></span>
+                  <span class="rg-phase-switch__aside"><span class="rg-badge rg-badge--count">4 da compilare</span></span>
+                </button>
+                <button class="rg-phase-switch__item" type="button" role="tab" id="spec-pp3-tab-3" aria-controls="spec-pp3-fase-3" aria-selected="false" tabindex="-1">
+                  <span class="rg-phase-switch__num">3</span>
+                  <span class="rg-phase-switch__text"><span class="rg-phase-switch__role">Collegata · dopo la 2</span><span class="rg-phase-switch__title">Forno finale</span></span>
+                  <span class="rg-phase-switch__aside"><span class="rg-badge rg-badge--unresolved">1 errore</span></span>
+                </button>
+              </div>
             </div>
-            <div class="rg-tabpanel" role="tabpanel" id="spec-ps3-fase-1" aria-labelledby="spec-ps3-tab-1"><header class="rg-phase-head"><span class="rg-phase-head__num">1</span><div class="rg-phase-head__text"><span class="rg-phase-head__role">Stai compilando · collegata · prima della 2</span><h3 class="rg-phase-head__title">Pressatura iniziale</h3><p class="rg-phase-head__meta"><span>fase 1 di 4</span><span>reparto Pressatura e soffiatura</span><span>si lavora prima della 2, Stampa UV</span></p></div></header></div>
-            <div class="rg-tabpanel is-active" role="tabpanel" id="spec-ps3-fase-2" aria-labelledby="spec-ps3-tab-2"><header class="rg-phase-head"><span class="rg-phase-head__num">2</span><div class="rg-phase-head__text"><span class="rg-phase-head__role">Stai compilando · principale</span><h3 class="rg-phase-head__title">Stampa UV</h3><p class="rg-phase-head__meta"><span>fase 2 di 4</span><span>reparto Stampa, Laser e HF</span><span>con la 1 e la 3</span></p></div></header></div>
-            <div class="rg-tabpanel" role="tabpanel" id="spec-ps3-fase-3" aria-labelledby="spec-ps3-tab-3"><header class="rg-phase-head"><span class="rg-phase-head__num">3</span><div class="rg-phase-head__text"><span class="rg-phase-head__role">Stai compilando · collegata · dopo la 2</span><h3 class="rg-phase-head__title">Forno finale</h3><p class="rg-phase-head__meta"><span>fase 3 di 4</span><span>reparto Stampa, Laser e HF</span><span>si lavora dopo la 2, Stampa UV</span></p></div></header><div class="rg-alert rg-alert--error" role="alert">Tempo di cottura mancante: il valore è obbligatorio.</div></div>
+            <div class="rg-phase-panel rg-tabpanel" role="tabpanel" id="spec-pp3-fase-1" aria-labelledby="spec-pp3-tab-1">
+              <header class="rg-phase-panel__head"><h3 class="rg-u-visually-hidden">Fase 1: Pressatura iniziale</h3><p class="rg-phase-panel__meta"><span>fase 1 di 4</span><span>si lavora <strong>prima della 2, Stampa UV</strong></span></p><div class="rg-phase-panel__status"><p class="rg-dept-band rg-dept-band--pressatura rg-dept-band--quiet rg-phase-panel__dept"><span class="rg-dept-band__name">Pressatura e soffiatura</span></p></div></header>
+              <div class="rg-phase-panel__body"><p class="rg-small">Sezioni della pressatura iniziale.</p></div>
+            </div>
+            <div class="rg-phase-panel rg-tabpanel is-active" role="tabpanel" id="spec-pp3-fase-2" aria-labelledby="spec-pp3-tab-2">
+              <header class="rg-phase-panel__head"><h3 class="rg-u-visually-hidden">Fase 2: Stampa UV</h3><p class="rg-phase-panel__meta"><span>fase 2 di 4</span><span>con <strong>la 1 e la 3</strong></span></p><div class="rg-phase-panel__status"><span class="rg-badge rg-badge--pending">costo non calcolato</span><p class="rg-dept-band rg-dept-band--stampa rg-dept-band--quiet rg-phase-panel__dept"><span class="rg-dept-band__name">Stampa, Laser e HF</span></p></div></header>
+              <div class="rg-phase-panel__body"><p class="rg-small">Sezioni della stampa UV.</p></div>
+              <footer class="rg-phase-panel__foot"><p class="rg-phase-panel__scope">Azioni sulla fase 2</p><button class="rg-button rg-button--ghost rg-button--danger" type="button">Elimina fase</button></footer>
+            </div>
+            <div class="rg-phase-panel rg-tabpanel" role="tabpanel" id="spec-pp3-fase-3" aria-labelledby="spec-pp3-tab-3">
+              <header class="rg-phase-panel__head"><h3 class="rg-u-visually-hidden">Fase 3: Forno finale</h3><p class="rg-phase-panel__meta"><span>fase 3 di 4</span><span>si lavora <strong>dopo la 2, Stampa UV</strong></span></p><div class="rg-phase-panel__status"><p class="rg-dept-band rg-dept-band--stampa rg-dept-band--quiet rg-phase-panel__dept"><span class="rg-dept-band__name">Stampa, Laser e HF</span></p></div></header>
+              <div class="rg-phase-panel__body"><div class="rg-alert rg-alert--error" role="alert">Tempo di cottura mancante: il valore è obbligatorio.</div></div>
+            </div>
+          </div></div>
+
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Fase senza gruppo — lo stesso pannello, senza linguette</span><div class="specimen-stage specimen-stage--page">
+            <div class="rg-section-header">
+              <div><p class="rg-h2">Stampa UV</p><p class="rg-small">DAVANTI · TEST — Ciclo completo</p></div>
+              <a class="rg-button rg-button--secondary rg-button--small" href="#phase-switch">Torna alla parte</a>
+            </div>
+            <div class="rg-phase-panel">
+              <header class="rg-phase-panel__head"><p class="rg-phase-panel__meta"><span>fase 4 di 4</span></p><div class="rg-phase-panel__status"><span class="rg-badge rg-badge--pending">costo non calcolato</span><p class="rg-dept-band rg-dept-band--stampa rg-dept-band--quiet rg-phase-panel__dept"><span class="rg-dept-band__name">Stampa, Laser e HF</span></p></div></header>
+              <div class="rg-phase-panel__body">
+                <div class="rg-tabs rg-u-mb-6" role="tablist" aria-label="Sezioni della fase 4: Stampa UV">
+                  <button class="rg-tab is-active" type="button" role="tab" id="spec-pp1-t-base" aria-controls="spec-pp1-s-base" aria-selected="true">Informazioni generali <span class="rg-badge rg-badge--count">3</span></button>
+                  <button class="rg-tab" type="button" role="tab" id="spec-pp1-t-tec" aria-controls="spec-pp1-s-tec" aria-selected="false" tabindex="-1">Parametri tecnici <span class="rg-badge rg-badge--count">7</span></button>
+                  <button class="rg-tab" type="button" role="tab" id="spec-pp1-t-mac" aria-controls="spec-pp1-s-mac" aria-selected="false" tabindex="-1">Macchina e tempi <span class="rg-badge rg-badge--count">1</span></button>
+                </div>
+                <div class="rg-tabpanel is-active" role="tabpanel" id="spec-pp1-s-base" aria-labelledby="spec-pp1-t-base">
+                  <p class="rg-small rg-u-mb-4">Che lavoro è, e dove sta il file. Cambia a ogni commessa.</p>
+                  <div class="rg-cluster rg-cluster--end">
+                    <label class="rg-field rg-field--grow"><span class="rg-field__label">Cartella</span><input class="rg-input rg-mono" value=""></label>
+                    <label class="rg-field rg-field--grow"><span class="rg-field__label">File</span><input class="rg-input rg-mono" value=""></label>
+                    <label class="rg-field rg-field--w16"><span class="rg-field__label">Tipo supporto</span><input class="rg-input" value=""></label>
+                  </div>
+                </div>
+                <div class="rg-tabpanel" role="tabpanel" id="spec-pp1-s-tec" aria-labelledby="spec-pp1-t-tec"><p class="rg-small">Operazioni della stampa.</p></div>
+                <div class="rg-tabpanel" role="tabpanel" id="spec-pp1-s-mac" aria-labelledby="spec-pp1-t-mac"><p class="rg-small">Macchina e tempi.</p></div>
+              </div>
+              <footer class="rg-phase-panel__foot"><p class="rg-phase-panel__scope">Azioni sulla fase 4</p><button class="rg-button rg-button--ghost rg-button--danger" type="button">Elimina fase</button></footer>
+            </div>
+            <div class="rg-cluster rg-u-mt-6"><button class="rg-button rg-button--primary" type="button">Salva i valori</button><span class="rg-small">Salva tutte le sezioni insieme. Un campo lasciato vuoto cancella il valore.</span></div>
           </div></div>
         </div>
-        <p class="specimen-note">Il segmento attivo ha tre segnali, nessuno di colore: numero invertito, barra nera spessa sul fondo, <code class="rg-mono">aria-selected</code>. Il form è unico, quindi un errore può stare su una fase che non si sta guardando: lo dice il badge nel suo segmento, a parole. Frecce, Home e Fine si muovono fra i segmenti; Tab entra nel pannello, prima nelle tab di sezione e poi nei campi.</p>
-        <p class="specimen-note">Il titolo di pagina resta quello della principale, perché pagina e URL sono suoi. «Dove sono» lo dice la testa della fase, e per questo non è facoltativa. Da non fare: fasi collegate nella stessa <code class="rg-mono">rg-tabs</code> delle sezioni; segmenti con l'aspetto di una tab; <code class="rg-mono">&lt;a href&gt;</code> sui segmenti di un form unico, che perderebbe i valori non salvati; il colore del reparto al posto del nome.</p>
+        <p class="specimen-note">La scelta ha quattro segnali e nessuno è un colore: fondo bianco, contorno nero, numero invertito, e la linguetta attaccata al pannello. La linguetta di una fase non visibile con un errore lo dice a parole, nel suo badge. Il timbro del reparto è la stessa figura del foglio stampato, in grigio (<code class="rg-mono">rg-dept-band--quiet</code>): a schermo il colore del reparto convive con i colori di stato, e il rosso della pressatura è lo stesso rosso di un errore.</p>
+        <p class="specimen-note">Da non fare: fasi collegate nella stessa <code class="rg-mono">rg-tabs</code> delle sezioni; un fondo diverso in hover; card dentro il pannello, o un titolo di sezione che ripete la tab; «Elimina fase» in testa a una pagina che mostra più fasi; <code class="rg-mono">&lt;a href&gt;</code> sulle linguette di un form unico.</p>
       </section>
 
     </main>

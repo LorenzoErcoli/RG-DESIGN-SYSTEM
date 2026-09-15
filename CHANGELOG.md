@@ -34,12 +34,30 @@ rinominata, nessuna rimozione, nessun token nuovo o cambiato.
 
 ### Componenti
 
-- **`rg-phase-switch` / `rg-phase-head`** (beta): la pagina della principale ha due livelli, e ora
-  hanno due controlli con due forme. **Quale fase** del gruppo si compila: striscia rigata con
-  numero, ruolo, titolo e reparto, più una testa di pannello che dice «stai compilando». **Quale
-  sezione** di quella fase: le `rg-tabs` di sempre, dentro il pannello. Le tab di un controllo devono
-  essere sorelle dello stesso tipo (NN/g, *Tabs, Used Right*), e una fase collegata non è una sezione.
-  Tablist ARIA con roving tabindex, commutazione client-side dentro un solo form.
+- **`rg-phase-switch` / `rg-phase-panel`** (beta): la pagina di una fase è un pannello, con testa
+  (posizione, relazione, stato del costo, timbro di reparto), sezioni in `rg-tabs` e gesti sulla
+  fase nel piede. Se la fase è la principale di un gruppo, sopra il pannello ci sono le linguette
+  delle fasi del gruppo: la scelta è bianca e attaccata al pannello, sotto la graffa dell'elenco
+  ruotata, con la didascalia «Fasi del gruppo» e il dente sulla principale. Il fondo è il segno della
+  scelta e di nient'altro; l'hover cambia bordo e sottolinea. Nel pannello non ci sono card, e il
+  titolo della fase non si ripete. Le tab di un controllo sono sorelle dello stesso tipo (NN/g,
+  *Tabs, Used Right*). Tablist ARIA con roving tabindex, commutazione client-side in un solo form.
+
+  **Rivisto prima del rilascio.** La prima forma, striscia di segmenti più testa «Stai compilando»
+  (`rg-phase-head`), è stata provata in `rg-product-platform` e scartata: *«due cose strane che non
+  si capisce se sono fasi o altro»*, *«lo sfondo grigio è uguale al colore degli hover»*.
+  `rg-phase-head` non esiste più.
+
+### Correzioni
+
+- **`rg-choice`**: la misura 16×16 vale solo per `input[type=checkbox]` e `input[type=radio]`. Il
+  selettore era `input` nudo, e un campo di testo dentro una scelta usciva largo 16 px.
+- **Larghezza dichiarata (`rg-field--w4…w24`)**: la misura è del **controllo**. Il campo è largo
+  quanto la sua etichetta, mai meno della misura, e l'etichetta non va più a capo sopra i 680 px.
+  Fino alla 1.15 «Pezzi per ciclo (n)» andava su due righe sopra una casella da quattro cifre, e la
+  riga dei campi perdeva l'allineamento.
+- **`rg-dept-band--quiet`**: la figura del reparto in grigio, per lo schermo. Il colore del reparto
+  a schermo convive con i colori di stato, e `category-3` è `danger`.
 
 ### Documentazione
 

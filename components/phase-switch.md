@@ -1,200 +1,266 @@
-# Selettore di fase del gruppo (`rg-phase-switch` / `rg-phase-head`)
+# Fasi del gruppo e pannello di fase (`rg-phase-switch` / `rg-phase-panel`)
 
 ## Scopo
 
-La pagina della **fase principale** di un gruppo di fasi collegate. Nella stessa pagina si compila la
-principale e ognuna delle sue collegate («Pressatura iniziale», «Forno finale», «Sabbiatura e
-soffiatura finale»). Quindi la pagina ha **due livelli**, e questo componente è il primo:
+La pagina di una **fase**. Se la fase è la **principale** di un gruppo di fasi collegate, da quella
+pagina si compilano anche le collegate («Pressatura iniziale», «Forno finale», «Sabbiatura e
+soffiatura finale»), e la pagina ha **due livelli**:
 
-1. **Quale fase** del gruppo sto compilando: `rg-phase-switch`, una striscia con le fasi del gruppo
-   nell'ordine della sequenza. La testa del pannello scelto, `rg-phase-head`, lo dice in chiaro.
-2. **Quale sezione** di quella fase: le `rg-tabs` di sempre («Informazioni generali», «Parametri
-   tecnici», «Macchina e tempi»), **dentro** il pannello della fase.
+1. **Quale fase** del gruppo si compila: `rg-phase-switch`, linguette attaccate al pannello, sotto
+   una graffa con la didascalia «Fasi del gruppo».
+2. **Quale sezione** di quella fase: le `rg-tabs` di sempre, **dentro** il pannello `rg-phase-panel`.
 
-Aggiunto in v1.16.0. Nasce da un caso reale in `rg-product-platform`: le collegate erano tab nella
-stessa barra `rg-tabs` delle sezioni, con lo stesso stile. Chi apriva una collegata dall'elenco
-arrivava su una pagina intitolata «pressatura», con una tab accesa uguale alle altre, e non capiva
-di essere dentro un'altra fase. Il giudizio del responsabile: *«tutto sembra una fase, poi entri e
-sei in un'altra fase. Le tab interne sono tutte uguali»*.
+Una fase **senza gruppo** usa lo stesso `rg-phase-panel`, senza linguette. La pagina di una fase ha
+una forma sola; il gruppo aggiunge solo le linguette.
 
-### Perché due controlli e non una barra sola
+Aggiunto in v1.16.0, rivisto prima del rilascio.
 
-Una sezione e una fase collegata **non sono sorelle**. La sezione è una parte della fase che si sta
-compilando. La collegata è un'altra fase, con il suo numero, il suo reparto e il suo foglio stampato.
-NN/g (*Tabs, Used Right*): le tab di un controllo devono avere lo stesso tipo di contenuto, e
-«mescolare tab di contenuto e tab di navigazione nello stesso controllo disorienta». Da qui tre
-conseguenze:
+### Perché la prima forma è stata scartata
 
-- **Due controlli**: uno sceglie la fase, uno sceglie la sezione.
-- **Due forme diverse**: la fase è un segmento con numero in casella, ruolo, titolo e reparto; la
-  sezione resta un testo sottolineato. Se avessero lo stesso aspetto, i controlli sarebbero due solo
-  nel codice.
-- **Stesso numero dell'elenco**: la casella di `rg-phase-switch__num` è quella di `rg-step__num`.
-  «3» nell'elenco, «3» in pagina e «03» sul foglio sono lo stesso dato.
+La prima proposta era una striscia di segmenti rigati sopra una testa «Stai compilando». Provata in
+`rg-product-platform`, il responsabile l'ha giudicata così: *«questa testata con 2 cose strane che
+non si capisce se sono fasi o altro non va bene»* e *«lo sfondo grigio è uguale al colore degli
+hover, e quindi non si capisce niente»*. Due difetti veri:
 
-### Perché non `rg-segmented`, non `rg-tabs`, non `rg-folder`
+- **I segmenti non dicevano che cosa erano, né che si potessero scegliere.** Erano due riquadri
+  generici con dentro un numero.
+- **Normale, hover e scelta si distinguevano di un grigio chiaro su un fondo grigio chiaro.**
 
-- `rg-segmented` sceglie fra poche opzioni brevi (unità, modalità di vista): una riga di testo,
-  target compatto da 34 px, `aria-pressed`. Una fase ha bisogno di numero, ruolo, titolo e reparto,
-  e pilota un pannello: è un tablist, non un interruttore.
-- `rg-tabs` è il secondo livello. Usarla anche per il primo è il difetto da correggere.
-- `rg-folder` è una tessera di dashboard che porta a una destinazione, non un selettore dentro un
-  form.
+La testa «Stai compilando» aggiungeva inoltre un livello di intestazione in una pagina che ne aveva
+già troppi, e ripeteva il numero della fase.
+
+### La forma attuale
+
+- **Linguette attaccate al pannello.** La fase scelta è una linguetta bianca a bordo nero che si
+  fonde con il pannello sotto, quindi il contenuto è evidentemente suo. Le altre fasi stanno
+  dietro, solo contorno, sul fondo della pagina. È il raccoglitore: la forma dice da sola sia «si
+  sceglie» sia «questo contenuto appartiene a quella».
+- **Il fondo è il segno della scelta, e di nient'altro.** L'hover porta bordo e testo al nero e
+  sottolinea il titolo; non cambia mai il fondo.
+- **La graffa dell'elenco, ruotata.** Sopra le linguette c'è una quota da disegno tecnico: filo nero
+  con i due capi, didascalia sul filo, dente che scende sulla principale. È lo stesso segno di
+  [`rg-steps--grouped`](steps.md#gruppo-di-fasi-collegate-rg-steps--grouped), quindi chi arriva
+  dall'elenco lo riconosce. La didascalia dice a parole che quelle linguette sono fasi.
+- **Un pannello, niente card dentro.** Le sezioni sono tab dentro il pannello e il loro contenuto
+  sta direttamente sotto. Una `rg-section-card` per sezione sarebbe una superficie sollevata dentro
+  un'altra, vietata dalle regole §6, e ripeterebbe come titolo l'etichetta della tab accesa.
+
+### Perché non `rg-tabs`, non `rg-segmented`
+
+- `rg-tabs` è il secondo livello. Usarla anche per il primo è il difetto da cui il componente nasce.
+- `rg-segmented` sceglie fra poche opzioni brevi con `aria-pressed` e un target compatto. Una fase
+  ha numero, ruolo e titolo, e pilota un pannello: serve un tablist.
 
 ## Varianti
 
+**Fasi del gruppo**
+
 | Classe | Ruolo |
 | --- | --- |
-| `rg-phase-switch` | Striscia rigata delle fasi del gruppo (tablist). 2–4 segmenti, in ordine di sequenza. |
-| `rg-phase-switch__item` | Segmento-fase: `<button role="tab">`. Attivo con `aria-selected="true"` (o `is-active`). |
-| `rg-phase-switch__num` | Numero di posizione della fase nella sequenza della parte. |
-| `rg-phase-switch__text` | Colonna testo del segmento. |
-| `rg-phase-switch__role` | Ruolo nel gruppo: «Principale», «Collegata · prima della 2», «Collegata · dopo la 2». |
+| `rg-phase-switch` | Contenitore: didascalia + linguette. Posa sul fondo di pagina. |
+| `rg-phase-switch__caption` | Didascalia sul filo della graffa: «Fasi del gruppo · si salvano insieme». Etichetta il tablist (`id` + `aria-labelledby`). |
+| `rg-phase-switch__tabs` | Il `role="tablist"`. Il DS ci disegna sopra la graffa. |
+| `rg-phase-switch__item` | Linguetta-fase: `<button role="tab">`. Scelta con `aria-selected="true"` (o `is-active`). |
+| `rg-phase-switch__item--principal` | Linguetta della principale: il DS disegna il dente dalla graffa al suo numero. |
+| `rg-phase-switch__num` | Numero di posizione nella sequenza della parte. |
+| `rg-phase-switch__text` | Colonna testo. |
+| `rg-phase-switch__role` | «Principale», «Collegata · prima della 2», «Collegata · dopo la 2». |
 | `rg-phase-switch__title` | Titolo della fase. |
-| `rg-phase-switch__meta` | Reparto e conteggi (`rg-badge--count` «7 da compilare», `rg-badge--unresolved` «1 errore»). |
-| `rg-phase-head` | Testa del pannello di fase: «stai compilando questa fase». |
-| `rg-phase-head__num` | Numero di posizione, sempre invertito: è la fase corrente. |
-| `rg-phase-head__text` | Colonna testo. |
-| `rg-phase-head__role` | «Stai compilando · principale» / «Stai compilando · collegata · dopo la 2». |
-| `rg-phase-head__title` | Titolo della fase (`<h2>`, livello sezione: peso heading). |
-| `rg-phase-head__meta` | Posizione e reparto in chiaro: `fase 3 di 4` · `reparto Pressatura e soffiatura` · `si lavora dopo la 2, Pressatura`. |
+| `rg-phase-switch__aside` | Un solo badge: `rg-badge--count` («6 da compilare») o `rg-badge--unresolved` («1 errore»). |
 
-Stati del segmento: default, `:hover` (fondo rientrante e titolo sottolineato), `:focus-visible`
-(contorno nero interno da 2 px), **attivo**. L'attivo ha tre segnali e nessuno è di colore: numero
-invertito, barra nera spessa sul fondo del segmento, `aria-selected="true"`. Sotto i 680 px i segmenti
-si impilano.
+Variabile: `--rg-phase-switch-ground`, il fondo dietro la didascalia (default
+`--rg-color-background`). Si imposta solo se la striscia posa su un'altra superficie.
 
-Stato **errore** in una fase non visibile: il form è unico, quindi un salvataggio può fallire su
-una fase che non si sta guardando. Nel `__meta` del suo segmento va un `rg-badge--unresolved` con il
-testo («1 errore»). Dopo il salvataggio il server riapre la prima fase e la prima sezione con
-errori.
+**Pannello di fase**
 
-Stato **vuoto**: una collegata senza sezioni mostra `rg-empty` sotto la sua `rg-phase-head`. Non va
-tolta dalla striscia: la fase esiste nella sequenza.
+| Classe | Ruolo |
+| --- | --- |
+| `rg-phase-panel` | La fase. Con le linguette è anche il `role="tabpanel"` (`rg-phase-panel rg-tabpanel`). |
+| `rg-phase-panel__head` | Riga di testa: meta a sinistra, stato e reparto a destra. |
+| `rg-phase-panel__meta` | Posizione e relazione: `fase 3 di 4` · `si lavora dopo la 2, Pressatura`. Il dato forte in `<strong>`. |
+| `rg-phase-panel__status` | Stato del costo (`rg-badge`) e timbro di reparto. |
+| `rg-phase-panel__dept` | Sulla `rg-dept-band`, insieme a `rg-dept-band--quiet`: il timbro del reparto, stessa figura del foglio, in grigio. |
+| `rg-phase-panel__body` | Tab di sezione e contenuto. |
+| `rg-phase-panel__foot` | Gesti sulla fase: Scollega, Elimina fase. |
+| `rg-phase-panel__scope` | A sinistra nel piede: «Azioni sulla fase 3», cioè a chi si applicano i bottoni. |
+
+**Stati della linguetta.**
+
+| Stato | Come si vede |
+| --- | --- |
+| default | Solo contorno intermedio, testo secondario, numero su casella chiara. |
+| `:hover` | Contorno e testo neri, titolo sottolineato. |
+| `:focus-visible` | Contorno di focus nero, interno. |
+| scelta | Fondo bianco, contorno nero, numero invertito, attaccata al pannello. |
+
+La scelta ha quindi quattro segnali, e nessuno è un colore.
+
+**Errore su una fase non visibile.** Il form è unico, quindi un salvataggio può fallire su una fase
+che non si sta guardando. Quella linguetta porta `rg-badge--unresolved` («1 errore») in `__aside`,
+e il server riapre la prima fase con errori.
+
+**Vuoto.** Una fase senza parametri a catalogo mostra `rg-empty` in `__body`. Non si toglie dalla
+striscia.
 
 ## Uso e limiti
 
-- **Solo nella pagina di una fase principale con almeno una collegata.** Una fase senza collegate
-  non ha la striscia: la pagina resta quella di sempre. La presenza della striscia è il segnale
-  che il gruppo esiste.
-- **Tutte le fasi del gruppo, compresa la principale**, nell'ordine della sequenza. La principale
-  non è una fase «di default» fuori dalla striscia: se mancasse, la collegata sembrerebbe una
-  sezione di qualcos'altro. Le collegate prima della principale stanno a sinistra, quelle dopo a
-  destra: l'ordine della striscia è l'ordine del lavoro.
-- **Un solo livello di gruppo.** Il modello non ammette gruppi nel gruppo, e la striscia non ha una
-  forma per rappresentarli.
-- **Non è una navigazione fra fasi della parte.** Per andare a un'altra fase non collegata si torna
-  all'elenco (`rg-steps`) o si usa il breadcrumb. Nella striscia ci sono solo le fasi che si
-  compilano da questa pagina.
-- **Le sezioni stanno dentro il pannello della fase**, dopo la sua `rg-phase-head`. Ogni fase ha le
-  sue `rg-tabs`, se ha più di una sezione, anche quando è una collegata: stessa forma, stesso
-  posto. Con una sezione sola la tab è superflua: la section card sta direttamente sotto la testa.
-- **Livelli di titolo**: H1 della pagina (la principale) → `rg-phase-head__title` in `<h2>` →
-  `rg-section-card__title` delle sezioni in `<h3>`.
-- **Il titolo di pagina resta quello della principale**: la pagina e l'URL sono i suoi. «Dove sono»
-  lo dice la `rg-phase-head`, che cambia a ogni fase. Per questo `rg-phase-head` non è facoltativa.
-- **Il reparto si scrive per esteso.** Il colore del reparto (`rg-dept-band`) non va nella striscia:
-  a schermo la palette categoriale convive con i colori di stato dei badge, e `category-3` è
-  `danger`. Se si vuole il segno di reparto in pagina, una `rg-dept-band` sotto la
-  `rg-phase-head` è ammessa, con quella avvertenza.
+- **Linguette solo nella pagina di una principale con almeno una collegata.** La loro presenza è il
+  segnale che il gruppo esiste. Ci vanno tutte le fasi del gruppo, principale compresa, nell'ordine
+  della sequenza e coi suoi numeri.
+- **Il titolo della fase sta sulla linguetta e non si ripete nel pannello.** Per chi naviga per
+  intestazioni, il pannello ha un titolo nascosto alla vista (`<h2 class="rg-u-visually-hidden">`).
+- **Fase senza gruppo:** `rg-phase-panel` senza linguette. Il titolo è l'H1 della pagina, e il
+  pannello non ha titolo nascosto.
+- **Nel pannello nessuna card.** Il sottotitolo di una sezione è un `rg-small` sotto le tab. Il menu
+  delle operazioni sta **dentro la sezione che contiene le operazioni**, in coda alle righe, come
+  `rg-disclosure--boxed`.
+- **Il conteggio «da compilare» sta in due posti, e ciascuno dice una cosa diversa:** sulla
+  linguetta vale per la fase intera, sulla tab di sezione per la sezione. Non si ripete in testa al
+  contenuto.
+- **L'istruzione sul costo (`€`) sta nella sezione che ha campi marcati**, subito sotto le tab, e i
+  campi la richiamano con `aria-describedby`. Non va in testa alla pagina fra due filetti, dove
+  diventa un livello di intestazione.
+- **I gesti sulla fase stanno nel piede del suo pannello.** «Elimina fase» in testa alla pagina, in
+  una pagina che mostra tre fasi, non dice quale fase elimina.
+- **Il salvataggio sta fuori dai pannelli:** salva tutte le fasi insieme, e dentro un pannello
+  lascerebbe credere di salvare solo quello.
+- **Timbro di reparto a schermo sempre `--quiet`.** La palette categoriale a schermo convive con i
+  colori di stato, e `category-3` è `danger`.
 
 ## Struttura
 
+Pagina di una principale con una collegata, aperta sulla collegata:
+
 ```html
 <form method="post" action="…">
-  <div class="rg-phase-switch" role="tablist" aria-label="Fasi del gruppo: Pressatura con Sabbiatura e soffiatura finale">
-    <button class="rg-phase-switch__item" type="button" role="tab" id="tab-fase-2"
-            aria-controls="fase-2" aria-selected="false" tabindex="-1">
-      <span class="rg-phase-switch__num">2</span>
-      <span class="rg-phase-switch__text">
-        <span class="rg-phase-switch__role">Principale</span>
-        <span class="rg-phase-switch__title">Pressatura</span>
-        <span class="rg-phase-switch__meta"><span>Pressatura e soffiatura</span><span class="rg-badge rg-badge--count">6 da compilare</span></span>
-      </span>
-    </button>
-    <button class="rg-phase-switch__item" type="button" role="tab" id="tab-fase-3"
-            aria-controls="fase-3" aria-selected="true" tabindex="0">
-      <span class="rg-phase-switch__num">3</span>
-      <span class="rg-phase-switch__text">
-        <span class="rg-phase-switch__role">Collegata · dopo la 2</span>
-        <span class="rg-phase-switch__title">Sabbiatura e soffiatura finale</span>
-        <span class="rg-phase-switch__meta"><span>Pressatura e soffiatura</span><span class="rg-badge rg-badge--count">7 da compilare</span></span>
-      </span>
-    </button>
-  </div>
-
-  <!-- Pannello della principale -->
-  <div class="rg-tabpanel" role="tabpanel" id="fase-2" aria-labelledby="tab-fase-2">
-    <header class="rg-phase-head">
-      <span class="rg-phase-head__num">2</span>
-      <div class="rg-phase-head__text">
-        <span class="rg-phase-head__role">Stai compilando · principale</span>
-        <h2 class="rg-phase-head__title">Pressatura</h2>
-        <p class="rg-phase-head__meta"><span>fase 2 di 4</span><span>reparto Pressatura e soffiatura</span><span>con la 3, Sabbiatura e soffiatura finale</span></p>
-      </div>
-    </header>
-    <div class="rg-tabs rg-u-mb-6" role="tablist" aria-label="Sezioni della fase 2: Pressatura">
-      <button class="rg-tab is-active" type="button" role="tab" id="tab-2-base" aria-controls="sez-2-base" aria-selected="true">Informazioni generali <span class="rg-badge rg-badge--count">2</span></button>
-      <button class="rg-tab" type="button" role="tab" id="tab-2-tecnica" aria-controls="sez-2-tecnica" aria-selected="false" tabindex="-1">Parametri tecnici <span class="rg-badge rg-badge--count">4</span></button>
+  <div class="rg-phase-switch">
+    <p class="rg-phase-switch__caption" id="fasi-gruppo">Fasi del gruppo · si salvano insieme</p>
+    <div class="rg-phase-switch__tabs" role="tablist" aria-labelledby="fasi-gruppo">
+      <button class="rg-phase-switch__item rg-phase-switch__item--principal" type="button" role="tab"
+              id="tab-fase-2" aria-controls="fase-2" aria-selected="false" tabindex="-1">
+        <span class="rg-phase-switch__num">2</span>
+        <span class="rg-phase-switch__text">
+          <span class="rg-phase-switch__role">Principale</span>
+          <span class="rg-phase-switch__title">Pressatura</span>
+        </span>
+        <span class="rg-phase-switch__aside"><span class="rg-badge rg-badge--count">6 da compilare</span></span>
+      </button>
+      <button class="rg-phase-switch__item" type="button" role="tab"
+              id="tab-fase-3" aria-controls="fase-3" aria-selected="true" tabindex="0">
+        <span class="rg-phase-switch__num">3</span>
+        <span class="rg-phase-switch__text">
+          <span class="rg-phase-switch__role">Collegata · dopo la 2</span>
+          <span class="rg-phase-switch__title">Sabbiatura e soffiatura finale</span>
+        </span>
+        <span class="rg-phase-switch__aside"><span class="rg-badge rg-badge--count">7 da compilare</span></span>
+      </button>
     </div>
-    <div class="rg-tabpanel is-active" role="tabpanel" id="sez-2-base" aria-labelledby="tab-2-base"><!-- rg-section-card con <h3> --></div>
-    <div class="rg-tabpanel" role="tabpanel" id="sez-2-tecnica" aria-labelledby="tab-2-tecnica"><!-- … --></div>
   </div>
 
-  <!-- Pannello della collegata: attivo, perché ci si è arrivati da «Apri» sulla fase 3 -->
-  <div class="rg-tabpanel is-active" role="tabpanel" id="fase-3" aria-labelledby="tab-fase-3">
-    <header class="rg-phase-head">
-      <span class="rg-phase-head__num">3</span>
-      <div class="rg-phase-head__text">
-        <span class="rg-phase-head__role">Stai compilando · collegata · dopo la 2</span>
-        <h2 class="rg-phase-head__title">Sabbiatura e soffiatura finale</h2>
-        <p class="rg-phase-head__meta"><span>fase 3 di 4</span><span>reparto Pressatura e soffiatura</span><span>si lavora dopo la 2, Pressatura</span></p>
+  <div class="rg-phase-panel rg-tabpanel" role="tabpanel" id="fase-2" aria-labelledby="tab-fase-2">
+    <!-- come sotto -->
+  </div>
+
+  <div class="rg-phase-panel rg-tabpanel is-active" role="tabpanel" id="fase-3" aria-labelledby="tab-fase-3">
+    <header class="rg-phase-panel__head">
+      <h2 class="rg-u-visually-hidden">Fase 3: Sabbiatura e soffiatura finale</h2>
+      <p class="rg-phase-panel__meta"><span>fase 3 di 4</span><span>si lavora <strong>dopo la 2, Pressatura</strong></span></p>
+      <div class="rg-phase-panel__status">
+        <span class="rg-badge rg-badge--pending">costo non calcolato</span>
+        <p class="rg-dept-band rg-dept-band--pressatura rg-dept-band--quiet rg-phase-panel__dept">
+          <span class="rg-dept-band__name">Pressatura e soffiatura</span>
+        </p>
       </div>
     </header>
-    <!-- sue rg-tabs + rg-tabpanel di sezione, come sopra -->
+
+    <div class="rg-phase-panel__body">
+      <div class="rg-tabs rg-u-mb-6" role="tablist" aria-label="Sezioni della fase 3: Sabbiatura e soffiatura finale">
+        <button class="rg-tab is-active" type="button" role="tab" id="tab-3-base" aria-controls="sez-3-base" aria-selected="true">Informazioni generali <span class="rg-badge rg-badge--count">2</span></button>
+        <button class="rg-tab" type="button" role="tab" id="tab-3-tecnica" aria-controls="sez-3-tecnica" aria-selected="false" tabindex="-1">Parametri tecnici <span class="rg-badge rg-badge--count">5</span></button>
+      </div>
+
+      <div class="rg-tabpanel is-active" role="tabpanel" id="sez-3-base" aria-labelledby="tab-3-base">
+        <p class="rg-small rg-u-mb-4">Che lavoro è, e dove sta il file. Cambia a ogni commessa.</p>
+        <div class="rg-cluster rg-cluster--end"><!-- rg-field --></div>
+      </div>
+
+      <div class="rg-tabpanel" role="tabpanel" id="sez-3-tecnica" aria-labelledby="tab-3-tecnica">
+        <p class="rg-small rg-u-mb-4" id="nota-costo-3-tecnica">
+          I campi <span class="rg-field__mark">€</span> entrano nel costo della fase.
+          <span class="rg-field__mark">⇄</span> vale per tutte le passate insieme.
+        </p>
+        <ol class="rg-operation-list"><!-- rg-operation-row, campi con aria-describedby="nota-costo-3-tecnica" --></ol>
+        <details class="rg-disclosure rg-disclosure--boxed rg-u-mt-6">
+          <summary class="rg-disclosure__trigger">Operazioni della fase <span class="rg-small">2 di 3 scelte</span></summary>
+          <div class="rg-disclosure__content"><!-- rg-choice --></div>
+        </details>
+      </div>
+    </div>
+
+    <footer class="rg-phase-panel__foot">
+      <p class="rg-phase-panel__scope">Azioni sulla fase 3</p>
+      <button class="rg-button rg-button--ghost" type="submit" formaction="…/scollega">Scollega</button>
+      <button class="rg-button rg-button--ghost rg-button--danger" type="submit" formaction="…/delete">Elimina fase</button>
+    </footer>
   </div>
 
   <div class="rg-cluster rg-u-mt-6">
-    <button class="rg-button rg-button--primary" type="submit">Salva</button>
+    <button class="rg-button rg-button--primary" type="submit">Salva i valori</button>
+    <span class="rg-small">Salva tutte le fasi del gruppo insieme. Un campo lasciato vuoto cancella il valore.</span>
   </div>
+</form>
+```
+
+Pagina di una fase senza gruppo: lo stesso pannello, senza linguette e senza titolo nascosto.
+
+```html
+<form method="post" action="…">
+  <div class="rg-phase-panel">
+    <header class="rg-phase-panel__head">
+      <p class="rg-phase-panel__meta"><span>fase 4 di 4</span></p>
+      <div class="rg-phase-panel__status">
+        <span class="rg-badge rg-badge--pending">costo non calcolato</span>
+        <p class="rg-dept-band rg-dept-band--stampa rg-dept-band--quiet rg-phase-panel__dept"><span class="rg-dept-band__name">Stampa, Laser e HF</span></p>
+      </div>
+    </header>
+    <div class="rg-phase-panel__body"><!-- rg-tabs di sezione + rg-tabpanel --></div>
+    <footer class="rg-phase-panel__foot">
+      <p class="rg-phase-panel__scope">Azioni sulla fase 4</p>
+      <button class="rg-button rg-button--ghost rg-button--danger" type="submit" formaction="…/delete">Elimina fase</button>
+    </footer>
+  </div>
+  <div class="rg-cluster rg-u-mt-6"><button class="rg-button rg-button--primary" type="submit">Salva i valori</button></div>
 </form>
 ```
 
 ## Tastiera e accessibilità
 
-Due tablist ARIA, uno dentro l'altro: quello delle sezioni sta nel `tabpanel` della fase. Il
-pattern è ammesso dall'ARIA APG e ogni livello si usa come un tablist qualunque.
+Due tablist ARIA, uno dentro l'altro: quello delle sezioni sta nel `tabpanel` della fase.
 
-- **Tab** entra nella striscia sul segmento attivo (roving tabindex: `tabindex="0"` sull'attivo,
-  `-1` sugli altri). **Tab** di nuovo porta dentro il pannello della fase: prima le tab di sezione
-  (sull'attiva), poi i campi della sezione attiva.
-- **Freccia destra / sinistra** (anche **giù / su**, perché su mobile la striscia è verticale)
-  passano al segmento successivo o precedente e lo attivano; **Home / Fine** vanno al primo e
-  all'ultimo. Attivazione automatica: i pannelli sono già nel DOM e la commutazione non costa nulla.
-- **Il nome accessibile del segmento è il suo contenuto visibile**: «3 Collegata · dopo la 2
-  Sabbiatura e soffiatura finale Pressatura e soffiatura 7 da compilare». Non accorciarlo con un
-  `aria-label`, altrimenti chi non vede la striscia perde ruolo e reparto.
-- Il `tablist` ha un `aria-label` che nomina il gruppo, e ogni tablist di sezione nomina la sua fase:
-  due tablist anonimi nella stessa pagina non si distinguono.
-- `aria-controls` → `id` del pannello; il pannello è `role="tabpanel"` con `aria-labelledby` al
-  segmento.
-- Target: segmento ≥ 40 px di altezza (in pratica 64 px, con ruolo, titolo e meta).
+- **Tab** entra nelle linguette sulla scelta (roving tabindex: `tabindex="0"` sulla scelta, `-1`
+  sulle altre). **Tab** di nuovo porta nel pannello: prima le tab di sezione, poi i campi.
+- **Frecce destra / sinistra** (anche **giù / su**) passano alla linguetta vicina e la attivano;
+  **Home / Fine** alla prima e all'ultima. L'attivazione è automatica, perché i pannelli sono già nel
+  DOM.
+- **Il tablist è `__tabs`**, etichettato dalla didascalia con `aria-labelledby`. La didascalia non sta
+  dentro il tablist, perché un `role="tablist"` possiede solo tab.
+- **Nome accessibile della linguetta = il suo contenuto**: «3 Collegata · dopo la 2 Sabbiatura e
+  soffiatura finale 7 da compilare». Non accorciarlo con `aria-label`.
+- **Il pannello ha un `<h2>` nascosto alla vista**, così chi naviga per intestazioni trova la fase:
+  il titolo visibile è sulla linguetta.
+- **Target:** linguetta ≥ 40 px (in pratica 64). Nel piede i bottoni restano a 40 px, senza
+  `--small`.
 
-### Unico form, stato che sopravvive al salvataggio
+### Unico form
 
-Tutti i pannelli, delle fasi e delle sezioni, stanno nello **stesso `<form>`**: nascondere un pannello
-non toglie i suoi campi dall'invio. Le regole dello stato:
+- **Fonte di verità:** `aria-selected` sulla linguetta o sulla tab; il pannello la segue con
+  `is-active`.
+- **Arrivo diretto su una collegata:** lo stato lo rende il server nell'HTML, non un click simulato
+  al caricamento.
+- **Dopo il salvataggio si torna sul pannello attivo:** il controller scrive fase e sezione in un
+  campo nascosto, il server lo rilegge.
 
-- **Fonte di verità**: `aria-selected` sul segmento o sulla tab; il pannello lo segue con `is-active`.
-  Niente classi locali.
-- **Arrivo diretto su una collegata** (dall'elenco): lo stato lo rende il **server**. Segmento della
-  collegata con `aria-selected="true"` e pannello con `is-active` già nell'HTML, non un click
-  simulato in JavaScript dopo il caricamento, che mostrerebbe per un attimo la principale.
-- **Dopo il salvataggio** si torna sul pannello attivo. Il controller scrive la coppia fase/sezione
-  in un campo nascosto del form, il server la rilegge e rende lo stato. Il formato di quel campo
-  lo decide l'app.
-
-Controller di riferimento, valido per entrambi i livelli:
+Controller di riferimento, valido per i due livelli:
 
 ```js
 function rgSelectTab(tab) {
@@ -223,22 +289,21 @@ document.addEventListener('keydown', (e) => {
 
 ## Da non fare
 
-- Mettere fasi collegate e sezioni nella stessa `rg-tabs`: è il difetto da cui nasce il componente.
-- Dare ai segmenti l'aspetto di `rg-tab`, o alle tab di sezione l'aspetto dei segmenti.
-- Togliere `rg-phase-head` perché «la striscia dice già quale fase è attiva»: chi arriva
-  direttamente su una collegata legge prima il titolo, e il titolo di pagina è quello della
-  principale.
-- Usare `<a href>` per i segmenti in una pagina a form unico: la navigazione perderebbe i valori
-  non salvati. `<a>` con `aria-current="page"` solo se ogni fase ha davvero una pagina propria, e
-  allora non serve questo componente.
-- Mostrare il colore del reparto al posto del suo nome.
-- Rinumerare le fasi nella striscia (1, 2 dentro il gruppo) o usare numeri secondari (2a, 2b): il
-  numero è quello della sequenza della parte.
+- **Fasi collegate e sezioni nella stessa `rg-tabs`**, o linguette con l'aspetto di una tab.
+- **Un fondo diverso in hover:** il fondo è il segno della scelta.
+- **`rg-section-card` dentro `rg-phase-panel`**, o un titolo di sezione che ripete la tab accesa.
+- **Il numero o il titolo della fase ripetuti in testa al pannello.**
+- **«Elimina fase» in testa alla pagina** quando la pagina mostra più fasi.
+- **Il colore pieno del reparto a schermo** (`rg-dept-band` senza `--quiet`).
+- **`<a href>` sulle linguette in un form unico:** la navigazione perderebbe i valori non salvati.
+- **Rinumerare le fasi dentro il gruppo, o usare 2a/2b.**
 
 ## Fonti
 
-NN/g, *Tabs, Used Right* (tab sorelle dello stesso tipo, non mescolare contenuto e navigazione);
-W3C ARIA APG, *Tabs Pattern* (roving tabindex, frecce, Home/Fine, attivazione automatica quando i
-pannelli sono già presenti); GOV.UK Design System, *Complete multiple tasks* (compiti correlati
-raccolti sotto un'intestazione di gruppo); Carbon, *Progress indicator* (la posizione nella sequenza
-come dato visibile).
+- NN/g, *Tabs, Used Right*: le tab di un controllo sono sorelle; non si mescolano tab di contenuto e
+  di navigazione; la tab scelta deve distinguersi a colpo d'occhio e connettersi al suo contenuto.
+- W3C ARIA APG, *Tabs Pattern*: roving tabindex, frecce, Home/Fine.
+- GOV.UK Design System, *Complete multiple tasks*: i compiti correlati si raccolgono sotto
+  un'intestazione di gruppo.
+- Gestalt, *common region* e *connectedness*: ciò che condivide un contorno, o vi è attaccato, si
+  legge come una cosa sola.

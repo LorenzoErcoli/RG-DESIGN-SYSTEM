@@ -50,6 +50,10 @@ fotocopia spinta non è una differenza. Il tono non fonda una famiglia.
 | `rg-dept-band--incollature` | Incollature | diagonali spesse | sono le **strisciate della spalmatura** |
 | `rg-dept-band--accoppiaggi` | Accoppiaggi | coppie di linee verticali | accoppiare è **unire due strati** |
 
+| Modificatore | Quando |
+| --- | --- |
+| `rg-dept-band--quiet` | **A schermo** (v1.16.0), insieme a una delle sette: la stessa figura, in grigio. A schermo il colore del reparto convive con i colori di stato, e `category-3/4/5` sono `danger`, `warning` e `success`: una pressatura rossa accanto a un badge d'errore dice due cose con lo stesso rosso. Restano la figura e il nome, cioè i due segnali che riconoscono il reparto. Uso di riferimento: il timbro di reparto nella testa di [`rg-phase-panel`](phase-switch.md). Mai su carta, dove il colore serve. |
+
 Senza variante la banda esiste comunque: filetto nero, nessuna campitura. È il caso «reparto non
 assegnato», e si legge come tale.
 

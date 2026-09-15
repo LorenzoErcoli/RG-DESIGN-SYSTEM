@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.16.0 — 2026-09-15 (proposta)
+## 1.16.0 — 2026-09-15
 
 **Le fasi collegate.** Una fase principale (una stampa, una pressatura) ha ora 1–3 fasi collegate
 subito prima o subito dopo, che si compilano dalla sua pagina. Il giudizio di chi le usa: *«tutto

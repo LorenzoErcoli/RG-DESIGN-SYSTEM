@@ -598,12 +598,12 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    impilata non si attacca piu al pannello, e la metafora si rompe. */
 @media (max-width: 680px) { .rg-phase-switch { justify-items: stretch; } .rg-phase-switch__tabs { overflow-x: auto; } .rg-phase-switch__item { flex: 0 0 auto; max-width: calc(24ch + var(--rg-space-16)); } }
 
-/* Phase panel — la fase scelta, in un pannello solo (v1.16.0). Sostituisce la testa "stai
-   compilando" (rg-phase-head, mai rilasciata), che aggiungeva un livello di intestazione e ripeteva
-   il numero gia scritto sulla linguetta. Il titolo della fase sta sulla linguetta attaccata al
-   pannello; la testa del pannello porta cio che la linguetta non dice: posizione, relazione,
-   reparto, stato del costo.
-   UN PANNELLO, NIENTE CARD DENTRO. Le sezioni della fase sono rg-tabs dentro __body e il loro
+/* Phase panel — IL BLOCCO DELLA FASE (v1.16.0; testa titolata dalla 1.17.0). Sostituisce la testa
+   "stai compilando" (rg-phase-head, mai rilasciata). Nella 1.16 il titolo stava sulla linguetta o
+   nella testata della pagina, e la testa del pannello portava solo posizione, relazione, reparto e
+   stato; dalla 1.17.0 la testa del pannello e il TITOLO della fase (numero, «Fase N di M», nome),
+   vedi TESTA TITOLATA qui sotto. La markup 1.16 continua a funzionare.
+   UN PANNELLO, NIENTE SECTION CARD DENTRO. Le sezioni della fase sono rg-tabs dentro __body e il loro
    contenuto sta direttamente sotto le tab: una rg-section-card per sezione sarebbe una superficie
    sollevata dentro un'altra (regole §6) e ripeterebbe come titolo l'etichetta della tab accesa.
    Vale anche per la fase SENZA gruppo: stesso pannello, senza linguette — la pagina di una fase ha
@@ -614,17 +614,62 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    perde l'angolo tondo dove comincia la prima linguetta. */
 .rg-phase-switch ~ .rg-phase-panel { margin-top: calc(-1 * var(--rg-border-hairline)); border-start-start-radius: 0; }
 .rg-phase-panel__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--rg-space-3) var(--rg-space-6); padding: var(--rg-space-4) var(--rg-space-6); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+/* TESTA TITOLATA (v1.17.0) — il blocco della fase dice da solo «questa e una fase». Il giudizio da cui
+   nasce: «ricamo normale va sotto e va fatto capire che e una fase e deve avere qualche cosa che mette
+   insieme il titolo con quello che c'e sotto; il numero di fase e scomparso». Quindi la testa del
+   pannello porta: il NUMERO (__num, lo stesso segno di rg-step__num a fase aperta e della linguetta
+   scelta, e lo stesso numero: la posizione nella sequenza della parte), l'etichetta «Fase N di M» con
+   la relazione (__kind) e il NOME (__title, H1 se la pagina mostra una fase, H2 in un gruppo). Il
+   riepilogo della fase (__meta) va su una riga sua, allineato al nome. La testata della pagina sopra
+   si comprime (rg-page-header--compact) e parla della parte. Rivede la regola 1.16 «il titolo non si
+   ripete nel pannello»: in un gruppo il titolo sta sulla linguetta (il comando) e nella testa (il
+   titolo di cio che si compila). */
+.rg-phase-panel__heading { flex: 1 1 32ch; min-width: 0; display: flex; align-items: flex-start; gap: var(--rg-space-3); }
+/* Il numero cade sulla linea del nome: salta l'altezza dell'etichetta sopra. */
+.rg-phase-panel__num { flex: none; display: inline-flex; align-items: center; justify-content: center; width: var(--rg-space-8); height: var(--rg-space-8); margin-top: calc(var(--rg-font-size-xs) * var(--rg-line-height-technical) + var(--rg-space-1)); color: var(--rg-color-white); background: var(--rg-color-black); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-md); font-variant-numeric: tabular-nums; }
+.rg-phase-panel__name { min-width: 0; display: grid; gap: var(--rg-space-1); }
+.rg-phase-panel__kind { display: flex; flex-wrap: wrap; gap: 0 var(--rg-space-2); margin: 0; color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-phase-panel__kind > * + *::before { content: "·"; content: "·" / ""; padding-right: var(--rg-space-2); color: var(--rg-color-neutral-400); }
+.rg-phase-panel__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-heading); line-height: var(--rg-line-height-heading); overflow-wrap: anywhere; }
 .rg-phase-panel__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--rg-space-2); margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
-.rg-phase-panel__meta > * + *::before { content: "·"; padding-right: var(--rg-space-2); color: var(--rg-color-neutral-400); }
+.rg-phase-panel__meta > * + *::before { content: "·"; content: "·" / ""; padding-right: var(--rg-space-2); color: var(--rg-color-neutral-400); }
+/* Con la testa titolata la meta e il RIEPILOGO della fase (materiali · stop · fili · origine dei dati):
+   riga intera, allineata al nome e non al numero. */
+.rg-phase-panel__heading ~ .rg-phase-panel__meta { flex-basis: 100%; padding-inline-start: calc(var(--rg-space-8) + var(--rg-space-3)); }
 .rg-phase-panel__meta strong { color: var(--rg-color-text-primary); font-weight: var(--rg-weight-medium); }
 /* Stato e reparto a destra: il costo non calcolato e il timbro del reparto (rg-dept-band--quiet). */
 .rg-phase-panel__status { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); }
 .rg-phase-panel__dept { flex: 0 1 auto; width: calc(24ch + var(--rg-space-12)); max-width: 100%; }
 .rg-phase-panel__body { padding: var(--rg-space-6); }
+/* Tab di sezione ATTACCATE alla testa (v1.17.0): sulla rg-tabs, primo figlio di __body. Salgono sul
+   bordo alto del corpo e corrono da bordo a bordo; la testa perde il filetto, cosi titolo e sezioni
+   sono una testa sola e il contenuto sta sotto, dentro lo stesso contorno. */
+.rg-phase-panel__sections { margin: calc(-1 * var(--rg-space-6)) calc(-1 * var(--rg-space-6)) var(--rg-space-6); padding-inline: var(--rg-space-6); }
+.rg-phase-panel:has(> .rg-phase-panel__body > .rg-phase-panel__sections:first-child) > .rg-phase-panel__head { padding-bottom: var(--rg-space-2); border-bottom: 0; }
+/* SEZIONI APPIATTITE (v1.17.0) — dentro il blocco non ci sono rg-section-card: la testa di una
+   sezione e la sua tab accesa. La sezione comincia con __intro (didascalia a sinistra, azioni della
+   sezione a destra, al massimo una primaria); i blocchi interni sono __subsection, divisi da un
+   filetto. rg-file-card, rg-table, rg-alert e rg-disclosure--boxed restano: sono oggetti con un bordo,
+   non superfici di sezione. */
+.rg-phase-panel__intro { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--rg-space-3) var(--rg-space-6); margin-bottom: var(--rg-space-6); }
+.rg-phase-panel__intro > p { max-width: var(--rg-layout-reading-max); margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
+.rg-phase-panel__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); margin-inline-start: auto; }
+.rg-phase-panel__subsection + .rg-phase-panel__subsection { margin-top: var(--rg-space-8); padding-top: var(--rg-space-6); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+/* Testata di pagina COMPRESSA (v1.17.0) — per le pagine il cui soggetto e un blocco sotto (la fase):
+   solo percorso e riga di contesto sul contenitore, a pieno contrasto e in carattere identitario.
+   Nessun titolo visibile e nessuna azione sul soggetto: stanno nel blocco. Definita qui, accanto al
+   blocco della fase, perche e lui il suo motivo; resta una variante di rg-page-header. */
+.rg-page-header--compact { gap: 0; margin-bottom: var(--rg-space-6); }
+.rg-page-header--compact .rg-page-header__context { color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); }
 /* Piede: i gesti SULLA FASE (scollega, elimina), lontani dal salvataggio e dichiarati per iscritto. */
 .rg-phase-panel__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--rg-space-2); padding: var(--rg-space-3) var(--rg-space-6); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 .rg-phase-panel__scope { margin: 0 auto 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
-@media (max-width: 680px) { .rg-phase-panel__head, .rg-phase-panel__foot { padding-inline: var(--rg-space-4); } .rg-phase-panel__body { padding: var(--rg-space-4); } }
+@media (max-width: 680px) {
+  .rg-phase-panel__head, .rg-phase-panel__foot { padding-inline: var(--rg-space-4); }
+  .rg-phase-panel__body { padding: var(--rg-space-4); }
+  .rg-phase-panel__sections { margin: calc(-1 * var(--rg-space-4)) calc(-1 * var(--rg-space-4)) var(--rg-space-4); padding-inline: var(--rg-space-4); overflow-x: auto; }
+  .rg-phase-panel__heading ~ .rg-phase-panel__meta { padding-inline-start: 0; }
+}
 
 /* Modal / dialog — overlay con backdrop; shell riusabile (promosso da product-platform, v0.3.0) */
 .rg-modal-backdrop { position: fixed; inset: 0; z-index: var(--rg-z-modal); display: none; align-items: center; justify-content: center; padding: var(--rg-space-6); background: color-mix(in srgb, var(--rg-color-black) 45%, transparent); }

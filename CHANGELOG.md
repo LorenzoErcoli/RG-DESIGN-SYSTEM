@@ -170,6 +170,68 @@ Nessun token nuovo. Nuovo file servito: `icons/rg-icons.svg`, che richiede un mo
 3. Tutto il resto è additivo: `rg-icon-button` a 34 px, `rg-key-value` e `rg-key-value--ruled` non
    cambiano.
 
+### Terza tappa — la pagina della fase
+
+Il giudizio sulla pagina del ricamo con le tappe 1 e 2: *«la testata della fase, in questo caso Ricamo
+Normale, non è chiara per niente. […] La testata possiamo lasciarla simile e comprimerla, ma poi
+ricamo normale va sotto e va fatto capire che è una fase e deve avere qualche cosa che mette insieme il
+titolo con quello che c'è sotto. E anche riferimento alla fase: il numero di fase è scomparso»*.
+
+Nessun token nuovo. Due alternative valutate:
+- **la testa titolata**, implementata;
+- **una linguetta anche per la fase da sola**, scartata: una linguetta sola si legge come una scelta
+  senza alternative, e il titolo a 14 px non regge da titolo della pagina.
+
+#### Varianti
+
+- **`rg-page-header--compact`**: testata compressa per le pagine il cui soggetto sta in un blocco sotto.
+  Contiene percorso e riga di contesto sul contenitore («Parte · prodotto»), senza titolo visibile e
+  senza azioni sul soggetto.
+- **`rg-phase-panel`, testa titolata**. È il blocco della fase, lo stesso per il ricamo, per la fase
+  generica e per la principale di un gruppo:
+  - **`__heading`**, **`__num`**: il numero invertito, lo stesso segno e lo stesso numero di
+    `rg-step__num`;
+  - **`__name`**, **`__kind`**: «Fase N di M», con la relazione se c'è;
+  - **`__title`**: il nome della fase;
+  - **`__meta`**, a riga intera: il riepilogo (materiali · stop · fili · origine dei dati).
+- **`rg-phase-panel__sections`**: le tab di sezione attaccate sotto la testa, da bordo a bordo.
+- **`rg-phase-panel__intro`**, **`__actions`**, **`__subsection`**: le sezioni appiattite, al posto
+  delle `rg-section-card` dentro il blocco.
+
+#### Regole riviste (`components/phase-switch.md`)
+
+- **Titolo della fase.** Sta sempre nella testa del blocco. In un gruppo sta anche sulla linguetta,
+  che è il comando per sceglierla. Prima: «il titolo non si ripete nel pannello», e per la fase senza
+  gruppo «il titolo è l'H1 della pagina».
+- **Numero.** C'è sempre, anche con una fase sola.
+- **Intestazioni.** Un solo H1: il titolo del blocco se la pagina mostra una fase. In un gruppo l'H1
+  sta nascosto nella testata compressa, e ogni blocco ha il suo H2.
+- **Section card.** Nessuna nel blocco. La sezione comincia con `__intro`, i blocchi interni sono
+  `__subsection`. `rg-file-card`, `rg-table`, `rg-alert` e `rg-disclosure--boxed` sono ammessi.
+- **Posizioni fisse.**
+  - «Elimina fase» sta sempre nel piede del blocco, anche per il ricamo.
+  - `rg-part-edge` sta sulla testata compressa, mai sul blocco.
+
+#### Documentazione
+
+- `components/phase-switch.md`:
+  - *La testa titolata (1.17.0)*;
+  - l'esempio completo della pagina del ricamo;
+  - *Appiattire le sezioni*, la tabella «oggi → nel blocco» per i partial delle tab.
+- `components/page-header.md`: *Testata compressa*.
+- Vetrina `#phase-switch`: testata compressa e testa titolata negli esempi del gruppo, più il ricamo
+  completo.
+
+#### Aggiornamento (terza tappa)
+
+1. **`rg-phase-panel` con la markup della 1.16** (meta nella testa, senza `__heading`) si vede come
+   prima. Le classi nuove sono additive.
+2. **`rg-phase-panel__meta`** ha ora il separatore con testo alternativo vuoto: nessun cambio a vista.
+3. **Pagina della fase nell'app**:
+   - la testata passa a `rg-page-header--compact`;
+   - il titolo va nel blocco;
+   - le `rg-section-card` delle cinque tab del ricamo si appiattiscono secondo la tabella del doc.
+
 ## 1.16.0 — 2026-09-15
 
 **Le fasi collegate.** Una fase principale (una stampa, una pressatura) ha ora 1–3 fasi collegate

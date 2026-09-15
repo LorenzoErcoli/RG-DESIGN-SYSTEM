@@ -2181,7 +2181,7 @@
     {
       "id": "phase-switch",
       "title": "Fasi del gruppo e pannello di fase",
-      "role": "La pagina di una fase: un pannello (rg-phase-panel) con testa (posizione, relazione, stato del costo, timbro di reparto), sezioni in rg-tabs e gesti sulla fase nel piede. Se la fase e la principale di un gruppo di fasi collegate, sopra il pannello le linguette delle fasi del gruppo (rg-phase-switch): la scelta e attaccata al pannello, sotto una graffa con la didascalia 'Fasi del gruppo'.",
+      "role": "Il blocco della fase: un pannello (rg-phase-panel) con testa titolata (numero come rg-step__num, 'Fase N di M', nome, stato, reparto, riepilogo), tab di sezione attaccate sotto la testa, contenuto appiattito e gesti sulla fase nel piede; sotto una testata di pagina compressa sulla parte. Se la fase e la principale di un gruppo, sopra il blocco le linguette delle fasi del gruppo (rg-phase-switch).",
       "status": "beta",
       "since": "1.16.0",
       "kind": "component",
@@ -2208,7 +2208,16 @@
             "rg-phase-panel__dept",
             "rg-phase-panel__body",
             "rg-phase-panel__foot",
-            "rg-phase-panel__scope"
+            "rg-phase-panel__scope",
+            "rg-phase-panel__heading",
+            "rg-phase-panel__num",
+            "rg-phase-panel__name",
+            "rg-phase-panel__kind",
+            "rg-phase-panel__title",
+            "rg-phase-panel__sections",
+            "rg-phase-panel__intro",
+            "rg-phase-panel__actions",
+            "rg-phase-panel__subsection"
           ]
         },
         "related": [
@@ -2222,7 +2231,12 @@
           "rg-badge--count",
           "rg-badge--unresolved",
           "rg-badge--pending",
-          "rg-u-visually-hidden"
+          "rg-u-visually-hidden",
+          "rg-page-header--compact",
+          "rg-part-edge",
+          "rg-step__num",
+          "rg-file-card",
+          "rg-section-header--sub"
         ]
       },
       "variants": [
@@ -2266,8 +2280,8 @@
       "doc": "components/phase-switch.md",
       "rulesRef": "design-rules.md#11-accessibilita-e-comportamento",
       "specimenAnchor": "phase-switch",
-      "snippet": "<div class=\"rg-phase-switch\">\n  <p class=\"rg-phase-switch__caption\" id=\"fasi-gruppo\">Fasi del gruppo · si salvano insieme</p>\n  <div class=\"rg-phase-switch__tabs\" role=\"tablist\" aria-labelledby=\"fasi-gruppo\">\n    <button class=\"rg-phase-switch__item rg-phase-switch__item--principal\" type=\"button\" role=\"tab\" id=\"tab-fase-2\" aria-controls=\"fase-2\" aria-selected=\"false\" tabindex=\"-1\">\n      <span class=\"rg-phase-switch__num\">2</span>\n      <span class=\"rg-phase-switch__text\"><span class=\"rg-phase-switch__role\">Principale</span><span class=\"rg-phase-switch__title\">Pressatura</span></span>\n      <span class=\"rg-phase-switch__aside\"><span class=\"rg-badge rg-badge--count\">6 da compilare</span></span>\n    </button>\n    <button class=\"rg-phase-switch__item\" type=\"button\" role=\"tab\" id=\"tab-fase-3\" aria-controls=\"fase-3\" aria-selected=\"true\" tabindex=\"0\">\n      <span class=\"rg-phase-switch__num\">3</span>\n      <span class=\"rg-phase-switch__text\"><span class=\"rg-phase-switch__role\">Collegata · dopo la 2</span><span class=\"rg-phase-switch__title\">Sabbiatura e soffiatura finale</span></span>\n      <span class=\"rg-phase-switch__aside\"><span class=\"rg-badge rg-badge--count\">7 da compilare</span></span>\n    </button>\n  </div>\n</div>\n<div class=\"rg-phase-panel rg-tabpanel is-active\" role=\"tabpanel\" id=\"fase-3\" aria-labelledby=\"tab-fase-3\">\n  <header class=\"rg-phase-panel__head\">\n    <h2 class=\"rg-u-visually-hidden\">Fase 3: Sabbiatura e soffiatura finale</h2>\n    <p class=\"rg-phase-panel__meta\"><span>fase 3 di 4</span><span>si lavora <strong>dopo la 2, Pressatura</strong></span></p>\n    <div class=\"rg-phase-panel__status\"><span class=\"rg-badge rg-badge--pending\">costo non calcolato</span><p class=\"rg-dept-band rg-dept-band--pressatura rg-dept-band--quiet rg-phase-panel__dept\"><span class=\"rg-dept-band__name\">Pressatura e soffiatura</span></p></div>\n  </header>\n  <div class=\"rg-phase-panel__body\">\n    <div class=\"rg-tabs rg-u-mb-6\" role=\"tablist\" aria-label=\"Sezioni della fase 3: Sabbiatura e soffiatura finale\"><button class=\"rg-tab is-active\" type=\"button\" role=\"tab\" id=\"tab-3-base\" aria-controls=\"sez-3-base\" aria-selected=\"true\">Informazioni generali</button></div>\n    <div class=\"rg-tabpanel is-active\" role=\"tabpanel\" id=\"sez-3-base\" aria-labelledby=\"tab-3-base\"><p class=\"rg-small rg-u-mb-4\">Che lavoro e, e dove sta il file.</p><!-- rg-field --></div>\n  </div>\n  <footer class=\"rg-phase-panel__foot\"><p class=\"rg-phase-panel__scope\">Azioni sulla fase 3</p><button class=\"rg-button rg-button--ghost\" type=\"submit\">Scollega</button><button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"submit\">Elimina fase</button></footer>\n</div>",
-      "notes": "RIVISTO prima del rilascio: la prima forma (striscia di segmenti rigati + testa 'Stai compilando', rg-phase-head) e stata scartata dopo la prova - 'due cose strane che non si capisce se sono fasi o altro' e 'lo sfondo grigio e uguale al colore degli hover'. rg-phase-head non esiste piu. Forma attuale: LINGUETTE attaccate al pannello (la scelta e bianca a bordo nero e si fonde col pannello; le altre solo contorno sul fondo di pagina) e sopra la GRAFFA dell'elenco ruotata, con didascalia sul filo e dente sulla principale. Il FONDO e il segno esclusivo della scelta: l'hover cambia bordo e sottolinea, mai il fondo. Il tablist e __tabs, etichettato dalla didascalia (aria-labelledby): la didascalia non sta dentro il tablist. Il titolo della fase sta sulla linguetta; nel pannello un h2 rg-u-visually-hidden. rg-phase-panel vale anche per la fase SENZA gruppo (senza linguette): una forma sola per la pagina di fase. Nel pannello NIENTE rg-section-card (sollevata dentro sollevata, e titolo che ripete la tab): sottotitolo di sezione in rg-small, nota costo nella sezione che ha campi marcati, menu delle operazioni come rg-disclosure--boxed in coda alle righe. Conteggio 'da compilare' sulla linguetta (fase) e sulla tab (sezione), non altrove. Gesti sulla fase nel piede del pannello con __scope 'Azioni sulla fase N'; salvataggio fuori dai pannelli. Timbro di reparto con rg-dept-band--quiet (mai il colore pieno a schermo). --rg-phase-switch-ground se la striscia non posa sul fondo di pagina. Mobile: linguette in scorrimento orizzontale. Status beta.",
+      "snippet": "<header class=\"rg-page-header rg-page-header--compact rg-part-edge rg-part--1\"><nav class=\"rg-breadcrumb\" aria-label=\"Percorso\">...</nav><p class=\"rg-page-header__context\">Parte <span class=\"rg-part-mark rg-part-mark--small\" aria-hidden=\"true\"></span><strong>1296 DAV</strong> &#183; <strong>BOOK TOTE</strong></p></header>\n<section class=\"rg-phase-panel\" aria-labelledby=\"titolo-fase\"><header class=\"rg-phase-panel__head\"><div class=\"rg-phase-panel__heading\"><span class=\"rg-phase-panel__num\" aria-hidden=\"true\">1</span><div class=\"rg-phase-panel__name\"><p class=\"rg-phase-panel__kind\"><span>Fase 1 di 1</span></p><h1 class=\"rg-phase-panel__title\" id=\"titolo-fase\"><span class=\"rg-u-visually-hidden\">Fase 1: </span>Ricamo normale</h1></div></div><div class=\"rg-phase-panel__status\">...</div><p class=\"rg-phase-panel__meta\"><span>12 materiali</span><span>48 stop</span><span>9 fili</span><span>dati dal PDF caricato su questa fase</span></p></header><div class=\"rg-phase-panel__body\"><div class=\"rg-tabs rg-phase-panel__sections\" role=\"tablist\" aria-label=\"Sezioni della fase 1: Ricamo normale\">...</div><div class=\"rg-tabpanel is-active\" role=\"tabpanel\"><div class=\"rg-phase-panel__intro\"><p>...</p><div class=\"rg-phase-panel__actions\">...</div></div>...</div></div><footer class=\"rg-phase-panel__foot\"><p class=\"rg-phase-panel__scope\">Azioni sulla fase 1</p><button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"submit\">Elimina fase</button></footer></section>",
+      "notes": "RIVISTO prima del rilascio: la prima forma (striscia di segmenti rigati + testa 'Stai compilando', rg-phase-head) e stata scartata dopo la prova - 'due cose strane che non si capisce se sono fasi o altro' e 'lo sfondo grigio e uguale al colore degli hover'. rg-phase-head non esiste piu. Forma attuale: LINGUETTE attaccate al pannello (la scelta e bianca a bordo nero e si fonde col pannello; le altre solo contorno sul fondo di pagina) e sopra la GRAFFA dell'elenco ruotata, con didascalia sul filo e dente sulla principale. Il FONDO e il segno esclusivo della scelta: l'hover cambia bordo e sottolinea, mai il fondo. Il tablist e __tabs, etichettato dalla didascalia (aria-labelledby): la didascalia non sta dentro il tablist. Il titolo della fase sta sulla linguetta; nel pannello un h2 rg-u-visually-hidden. rg-phase-panel vale anche per la fase SENZA gruppo (senza linguette): una forma sola per la pagina di fase. Nel pannello NIENTE rg-section-card (sollevata dentro sollevata, e titolo che ripete la tab): sottotitolo di sezione in rg-small, nota costo nella sezione che ha campi marcati, menu delle operazioni come rg-disclosure--boxed in coda alle righe. Conteggio 'da compilare' sulla linguetta (fase) e sulla tab (sezione), non altrove. Gesti sulla fase nel piede del pannello con __scope 'Azioni sulla fase N'; salvataggio fuori dai pannelli. Timbro di reparto con rg-dept-band--quiet (mai il colore pieno a schermo). --rg-phase-switch-ground se la striscia non posa sul fondo di pagina. Mobile: linguette in scorrimento orizzontale. Status beta. DA 1.17.0 TESTA TITOLATA (feedback: 'ricamo normale va sotto e va fatto capire che e una fase e deve avere qualche cosa che mette insieme il titolo con quello che c'e sotto; il numero di fase e scomparso'). Testata della pagina: rg-page-header--compact rg-part-edge rg-part--N (percorso + 'Parte [pastiglia] nome · prodotto'), senza titolo visibile e senza azioni sulla fase. Testa del blocco: __heading > __num (numero invertito, stesso segno di rg-step__num aperto e della linguetta scelta, stesso numero = posizione nella sequenza della parte, aria-hidden) + __name > __kind ('Fase 2 di 4' · relazione, sempre anche con una fase sola) + __title (H1 se la pagina mostra una fase; H2 in un gruppo, con un H1 nascosto nella testata compressa; prefisso nascosto 'Fase N: '). __status a destra; __meta sotto a riga intera = riepilogo (materiali · stop · fili · origine dei dati), testo non badge. Tab di sezione: rg-tabs rg-phase-panel__sections come PRIMO figlio di __body, attaccate sotto la testa da bordo a bordo (la testa perde il filetto). Il contorno nero chiude titolo, tab, contenuto e piede: e il segno che li tiene insieme. 'Elimina fase' sempre nel piede, anche per il ricamo. NEL GRUPPO lo stesso blocco con le linguette sopra: il titolo sta sulla linguetta (comando) e nella testa (titolo) di proposito; rivede la regola 1.16 'il titolo non si ripete'. NESSUNA rg-section-card nel blocco: la sezione comincia con __intro (p + __actions, max una primaria), i blocchi interni sono __subsection (filetto fra due consecutive) con rg-section-header--sub e h2.rg-h3; rg-file-card, rg-table, rg-alert, rg-disclosure--boxed ammessi. rg-part-edge MAI sul blocco: e della parte, sta sulla testata. Scartata l'alternativa 'linguetta unica anche per la fase da sola': una linguetta sola si legge come scelta senza alternative e il titolo a 14px non regge da titolo di pagina.",
       "keywords": [
         "fasi collegate",
         "fase collegata",
@@ -2306,7 +2320,16 @@
         "graffa",
         "azioni sulla fase",
         "elimina fase",
-        "scollega"
+        "scollega",
+        "blocco della fase",
+        "numero di fase",
+        "fase n di m",
+        "titolo della fase",
+        "testa titolata",
+        "ricamo",
+        "sezioni appiattite",
+        "section card nel pannello",
+        "riepilogo fase"
       ],
       "cssVars": [
         "--rg-phase-switch-ground"
@@ -2935,12 +2958,16 @@
           "rg-part-mark",
           "rg-action-group",
           "rg-key-value--inline"
+        ],
+        "variants": [
+          "rg-page-header--compact"
         ]
       },
       "variants": [
         "primo-livello",
         "secondo-livello",
-        "livello-profondo"
+        "livello-profondo",
+        "compatta"
       ],
       "states": [
         "default",
@@ -2971,7 +2998,7 @@
       "patternRef": "patterns/appshell.md",
       "specimenAnchor": "page-header",
       "snippet": "<header class=\"rg-page-header\">\n  <nav class=\"rg-breadcrumb\" aria-label=\"Percorso\">\n    <ol>\n      <li><a href=\"/\">Prodotti</a></li>\n      <li><a href=\"/products/12\">BOOK TOTE</a></li>\n      <li><a href=\"/products/12/parts/3\">1296 DAV RIW OBLIQUE - GRIS</a></li>\n      <li><span class=\"rg-breadcrumb__current\" aria-current=\"page\">Ricamo normale</span></li>\n    </ol>\n  </nav>\n  <div class=\"rg-page-header__main\">\n    <div class=\"rg-page-header__heading\">\n      <p class=\"rg-page-header__context\">Fase della parte <strong>1296 DAV RIW OBLIQUE - GRIS</strong> &#183; <strong>BOOK TOTE</strong></p>\n      <div class=\"rg-page-header__headline\">\n        <h1 class=\"rg-page-header__title\">Ricamo normale</h1>\n        <span class=\"rg-page-header__status\"><span class=\"rg-badge rg-badge--pending\">costo non calcolato</span></span>\n      </div>\n      <p class=\"rg-page-header__meta\"><span>fase 2 di 4</span><span>Ricamo</span></p>\n    </div>\n    <div class=\"rg-page-header__actions\"></div>\n  </div>\n</header>",
-      "notes": "PERCHE: su rg-product-platform (DS 1.16.0) la testa di pagina esisteva in quattro forme (rg-section-header + __title; rg-section-header + h1.rg-h2 con rg-label di tipo sopra; h1.rg-h2 nudo con margini inline; link '← Indietro' al posto del percorso) e il percorso c'era in 8 pagine su 21: entrando in una fase il titolo era 'Ricamo normale' e la parte e il prodotto stavano solo in un sottotitolo piccolo. NON E rg-section-header: quella e la testa di una SEZIONE (molte per pagina, con --sub) e resta invariata; la testata di pagina e una sola per vista e dichiara percorso, contesto, stato e azioni. SLOT, in ordine: rg-breadcrumb (primo figlio, senza rg-u-mb-6) → __context (testo, non link: i link sono nel percorso e ripeterli raddoppierebbe le fermate di tabulazione; 'Tipo di <strong>genitore</strong> · <strong>nonno</strong>', al massimo due genitori, la voce di primo livello non entra) → __headline con __title (h1, il NOME non il tipo, 28px identity peso heading, la misura che l'app usava gia) e __status (al massimo tre rg-badge, limite di badges.md, uno per asse) → __subtitle (una riga) → __meta (mono, voci separate da '·' generato dal DS) | __actions (al massimo UNA rg-button--primary; un'azione distruttiva non sta accanto alla primaria, va nel piede del contenitore a cui si applica). Sotto i 680px le azioni vanno sotto il titolo, allineate a sinistra; i nomi lunghi vanno a capo, non si troncano. REGOLA DI NAVIGAZIONE: livello = distanza dalla topbar. Livello 1 (voce di rg-topbar__nav con aria-current): solo titolo, niente percorso ne contesto. Livello 2 (entita da un elenco di primo livello): percorso obbligatorio. Livello 3+: percorso e contesto obbligatori. Il percorso parte dalla voce di topbar con la stessa etichetta e finisce sulla pagina corrente (aria-current=page); segue la gerarchia, non la cronologia ('← Indietro' e 'Torna alla parte' spariscono); le tab (sezioni) NON sono voci, le cartelle di un archivio si. Mai rg-topbar__back e percorso nella stessa vista: __back e delle tool (rg-workspace); in un'app a pagine l'uscita verso la suite e a.rg-topbar__brand. Livelli persistenti: topbar + UNO dentro la pagina (rg-tabs); il percorso non conta perche e un indirizzo, non un menu; la pagina di un gruppo di fasi (rg-phase-switch + rg-tabs) e gia al limite. STATUS beta: da provare sulle 21 pagine della piattaforma prima del rilascio.",
+      "notes": "PERCHE: su rg-product-platform (DS 1.16.0) la testa di pagina esisteva in quattro forme (rg-section-header + __title; rg-section-header + h1.rg-h2 con rg-label di tipo sopra; h1.rg-h2 nudo con margini inline; link '← Indietro' al posto del percorso) e il percorso c'era in 8 pagine su 21: entrando in una fase il titolo era 'Ricamo normale' e la parte e il prodotto stavano solo in un sottotitolo piccolo. NON E rg-section-header: quella e la testa di una SEZIONE (molte per pagina, con --sub) e resta invariata; la testata di pagina e una sola per vista e dichiara percorso, contesto, stato e azioni. SLOT, in ordine: rg-breadcrumb (primo figlio, senza rg-u-mb-6) → __context (testo, non link: i link sono nel percorso e ripeterli raddoppierebbe le fermate di tabulazione; 'Tipo di <strong>genitore</strong> · <strong>nonno</strong>', al massimo due genitori, la voce di primo livello non entra) → __headline con __title (h1, il NOME non il tipo, 28px identity peso heading, la misura che l'app usava gia) e __status (al massimo tre rg-badge, limite di badges.md, uno per asse) → __subtitle (una riga) → __meta (mono, voci separate da '·' generato dal DS) | __actions (al massimo UNA rg-button--primary; un'azione distruttiva non sta accanto alla primaria, va nel piede del contenitore a cui si applica). Sotto i 680px le azioni vanno sotto il titolo, allineate a sinistra; i nomi lunghi vanno a capo, non si troncano. REGOLA DI NAVIGAZIONE: livello = distanza dalla topbar. Livello 1 (voce di rg-topbar__nav con aria-current): solo titolo, niente percorso ne contesto. Livello 2 (entita da un elenco di primo livello): percorso obbligatorio. Livello 3+: percorso e contesto obbligatori. Il percorso parte dalla voce di topbar con la stessa etichetta e finisce sulla pagina corrente (aria-current=page); segue la gerarchia, non la cronologia ('← Indietro' e 'Torna alla parte' spariscono); le tab (sezioni) NON sono voci, le cartelle di un archivio si. Mai rg-topbar__back e percorso nella stessa vista: __back e delle tool (rg-workspace); in un'app a pagine l'uscita verso la suite e a.rg-topbar__brand. Livelli persistenti: topbar + UNO dentro la pagina (rg-tabs); il percorso non conta perche e un indirizzo, non un menu; la pagina di un gruppo di fasi (rg-phase-switch + rg-tabs) e gia al limite. STATUS beta: da provare sulle 21 pagine della piattaforma prima del rilascio. DA 1.17.0 TESTATA COMPRESSA (rg-page-header--compact): per le pagine il cui SOGGETTO e un blocco sotto la testata (la pagina della fase, col suo rg-phase-panel titolato). Contiene solo percorso e riga __context sul contenitore ('Parte [pastiglia] nome · prodotto'), con rg-part-edge rg-part--N; niente __title visibile, niente __actions sul soggetto, __context in carattere identitario e a pieno contrasto. L'H1 sta nel blocco (pagina di una fase) oppure e un <h1 class='rg-u-visually-hidden'> dentro la testata compressa quando i blocchi sono piu d'uno (gruppo di fasi, ogni blocco ha H2).",
       "keywords": [
         "testata",
         "testata di pagina",
@@ -3004,8 +3031,14 @@
         "section header",
         "sottotitolo",
         "meta",
-        "prodotto parte fase"
-      ]
+        "prodotto parte fase",
+        "testata compressa",
+        "compact header",
+        "soggetto sotto"
+      ],
+      "variantsSince": {
+        "rg-page-header--compact": "1.17.0"
+      }
     },
     {
       "id": "form-row",

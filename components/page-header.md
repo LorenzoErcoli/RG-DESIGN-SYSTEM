@@ -21,8 +21,9 @@ un contratto di pagina. La testata di pagina è una sola per vista; le teste di 
 
 ## Varianti
 
-Nessuna variante: gli slot sono opzionali e la pagina usa quelli del suo livello (vedi *Regola di
-navigazione*).
+Gli slot sono opzionali e la pagina usa quelli del suo livello (vedi *Regola di navigazione*). Una
+variante: **`rg-page-header--compact`** (dalla 1.17.0), la testata compressa delle pagine il cui
+soggetto sta in un blocco sotto; vedi *Testata compressa*.
 
 | Slot | Classe | Contenuto | Obbligo |
 | --- | --- | --- | --- |
@@ -90,6 +91,38 @@ Il livello di una pagina è **la sua distanza dalla topbar**.
    (`rg-tabs`). Il percorso non conta: non è un menu di alternative, è l'indirizzo della pagina. La
    pagina di un gruppo di fasi (`rg-phase-switch` + `rg-tabs`, v1.16.0) è già al limite: non ci si
    aggiunge né una sidebar né una seconda barra di tab.
+
+## Testata compressa (`rg-page-header--compact`, dalla 1.17.0)
+
+Per le pagine il cui **soggetto è un blocco sotto la testata**: la pagina della fase, col suo
+[`rg-phase-panel`](phase-switch.md#la-testa-titolata-1170). Provata la testata piena, il giudizio è
+stato: *«la testata possiamo lasciarla simile e comprimerla, ma poi ricamo normale va sotto»*.
+
+- **Contiene** il percorso e la riga `__context` sul contenitore: «Parte [pastiglia] **nome** ·
+  **prodotto**». In questa variante il contesto è a pieno contrasto e in carattere identitario, perché
+  è l'unica riga della testata.
+- **Non contiene** il titolo visibile, lo stato o le azioni del soggetto: stanno nella testa del blocco.
+- **Identità della parte**: `rg-part-edge rg-part--N` sulla testata. Il blocco della fase non la porta:
+  si riconosce dal contorno nero e dal numero.
+- **Intestazioni**: la pagina ha comunque un solo `<h1>`.
+  - Se la pagina mostra **un blocco**, l'`<h1>` è il titolo del blocco (`rg-phase-panel__title`).
+  - Se i blocchi sono **più d'uno** (un gruppo di fasi), l'`<h1>` sta nella testata compressa, nascosto
+    alla vista (`<h1 class="rg-u-visually-hidden">Fasi del gruppo di Pressatura, parte DAVANTI</h1>`),
+    e ogni blocco ha il suo `<h2>`.
+
+```html
+<header class="rg-page-header rg-page-header--compact rg-part-edge rg-part--1">
+  <nav class="rg-breadcrumb" aria-label="Percorso">
+    <ol>
+      <li><a href="/">Prodotti</a></li>
+      <li><a href="/products/12">BOOK TOTE</a></li>
+      <li><span class="rg-part-mark rg-part-mark--small" aria-hidden="true"></span><a href="/products/12/parts/3">1296 DAV RIW OBLIQUE - GRIS</a></li>
+      <li><span class="rg-breadcrumb__current" aria-current="page">Ricamo normale</span></li>
+    </ol>
+  </nav>
+  <p class="rg-page-header__context">Parte <span class="rg-part-mark rg-part-mark--small" aria-hidden="true"></span><strong>1296 DAV RIW OBLIQUE - GRIS</strong> · <strong>BOOK TOTE</strong></p>
+</header>
+```
 
 ## Stati
 

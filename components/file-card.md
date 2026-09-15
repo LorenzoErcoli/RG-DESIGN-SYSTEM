@@ -50,6 +50,18 @@ niente controlli che galleggiano. `[hidden]` è la fonte di verità (stato non n
 dall'app come `aria-expanded` altrove) e il CSS lo fa vincere sul `display` del contenitore, così la
 zona è nascosta **davvero**, non solo alla vista.
 
+**Distanza dai bordi (dalla 1.17.0).** La radice `rg-file-card` è **trasparente e senza bordo**, e
+per questo non ha padding: le superfici con un bordo sono le sue parti. La riga caricata ha 12 px
+sopra e sotto e 16 ai lati; la zona rivelata ne ha 16; il vuoto ha il padding di `rg-empty`. Con
+queste distanze nessun bottone tocca un contorno ([design-rules §5](../design-rules.md#distanza-delle-azioni-dal-bordo)).
+Dare padding alla radice raddoppierebbe quella delle parti. Due indicazioni:
+
+- **Non dare bordo o fondo alla radice** in locale: la card comparirebbe con i bottoni a filo di un
+  contorno che il DS non conosce. Se serve una cornice, la card sta nel corpo **standard** di una
+  `rg-section-card`.
+- **Dentro un corpo `rg-section-card--flush`** la card si avvolge in `rg-section-card__inset`: il
+  bordo della riga caricata non deve incollarsi al contorno della section card.
+
 ### Contratto JS minimo
 
 L'app osserva il `change` dell'`<input type="file">` del picker:

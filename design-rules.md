@@ -72,6 +72,27 @@ La palette si ferma a sette, e non è una svista: una categoria in più chiede *
 
 Usare la scala 4–8–12–16–24–32–48–64–96. Il ritmo ordinario è 8 px; 24–32 px separano gruppi, 48–96 px separano sezioni editoriali. Layout desktop su 12 colonne, tablet 8, mobile 4. Il contenuto tecnico può essere denso, ma non compresso sotto la soglia di scansione.
 
+### Distanza delle azioni dal bordo
+
+Un'azione non tocca mai il bordo del contenitore che la ospita. Vale per un bottone, un link-bottone,
+un campo, un toggle, e anche per il fondo di hover di una riga cliccabile. È **bordo** ogni limite
+visibile: un filetto, un contorno, oppure un cambio di superficie (il bianco sul fondo di pagina).
+
+| Contenitore | Distanza minima fra bordo e controllo | Token |
+| --- | --- | --- |
+| riga densa: `rg-list-row`, riga di `rg-file-card`, cella di `rg-table` | 12 px | `--rg-space-3` |
+| barra: `rg-toolbar`, `rg-action-bar`, piede di `rg-phase-panel` | 16 px ai lati | `--rg-space-4` |
+| contenitore di contenuto: corpo di `rg-section-card`, `rg-parameter-group`, corpo di `rg-phase-panel` | 24 px | `--rg-space-6` |
+
+- **Il minimo assoluto è 12 px**, su ogni lato. Sotto, il bottone si legge come parte del bordo.
+- **Senza bordo laterale non c'è distanza da rispettare, c'è un allineamento.** Su una superficie
+  aperta (la colonna di pagina, una `rg-toolbar--open`) le azioni stanno sul filo sinistro dei campi
+  e del testo ([forms](components/forms.md)).
+- **Un contenitore senza padding lo dichiara, e passa la regola al contenuto.** Il corpo di
+  `rg-section-card--flush` porta le linee ai bordi, non le azioni: ciò che non è una tabella va in
+  `rg-section-card__inset`.
+- Una distanza non si ottiene con margini inline sul bottone: la dà il contenitore.
+
 ## 6. Linee, superfici, radius e ombre
 
 - Separatore standard: 1 px neutro; **intermedio: 1 px `--rg-color-border-medium`**; forte: 1 px nero.

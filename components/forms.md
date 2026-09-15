@@ -100,6 +100,9 @@ controllo (padding e bordo, coperti da `--rg-space-8`).
   sta nel controllo. Sotto i 680 px l'etichetta torna a capo: sbordare dallo schermo è peggio.
 - Un'etichetta **molto** più lunga del suo controllo resta un segnale. Di solito l'unità va tolta
   dall'etichetta e messa accanto al valore (`rg-field-with-unit`), oppure l'etichetta va accorciata.
+- **Se anche un solo campo della riga ha un aiuto o può mostrare un errore**, la riga è
+  `rg-form-row`, non `rg-cluster--end`. L'esempio qui sotto non ha aiuti, e il cluster va bene
+  (vedi *Riga di campi*, dalla 1.17.0).
 
 ```html
 <div class="rg-cluster rg-cluster--end">
@@ -109,6 +112,62 @@ controllo (padding e bordo, coperti da `--rg-space-8`).
     <input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="2"></label>
   <label class="rg-field rg-field--grow"><span class="rg-field__label">File</span>
     <input class="rg-input rg-mono" value="RG-0481_p2_uv.prn"></label>
+</div>
+```
+
+## Riga di campi (`.rg-form-row`) — i controlli in fila, l'aiuto sotto
+
+`rg-cluster--end` allinea i campi al **piede**. Se un campo ha un aiuto o un errore sotto, il suo
+piede è più in basso di quello dei vicini, e il suo controllo sale. Caso reale: la riga di
+`rg-field--w8` dei cicli di una macchina, dove un solo campo dice «vale 12 per tutte».
+
+`rg-form-row` allinea i campi alla **cima**. Le etichette stanno su una riga, quindi i controlli stanno
+tutti sulla stessa linea; ciò che sta sotto un controllo allunga solo il proprio campo.
+
+- **I controlli restano in fila.** Aiuto ed errore stanno sotto il loro controllo e non spostano i
+  vicini. Non allargano nemmeno il campo: vanno a capo dentro la sua larghezza.
+- **Le azioni della riga** (un «Cerca», un «+ Ripeti», una casella «uguale per tutti») stanno in
+  `rg-form-row__actions`, in fondo alla riga anche nel DOM. Il DS le posa sulla linea dei controlli.
+  Un bottone nudo nella riga si allineerebbe alle etichette.
+- **Le etichette stanno su una riga.** Con `rg-field--w4…w24` è garantito sopra i 680 px. Un campo
+  fluido con un'etichetta che va a capo rompe la fila: accorciare l'etichetta.
+- `rg-cluster--end` resta la forma giusta per una riga **senza** aiuto né errore: un campo di ricerca
+  e il suo bottone.
+
+### Dove va l'aiuto in una riga orizzontale
+
+1. **Sotto il proprio controllo**, in `rg-field__help`, legato con `aria-describedby`. Una frase
+   breve: se supera due righe alla larghezza del campo, non è un aiuto da riga. Il campo va in un
+   form a colonna, oppure la frase va sopra il gruppo.
+2. **Se la stessa frase vale per due o più campi della riga, non si ripete.** Si scrive una volta
+   sopra la riga, e i campi si marcano con [`rg-field__mark`](#marcatore-di-campo-rg-field__mark--dichiara-una-volta-marca-molte).
+3. **L'errore sta nello stesso posto dell'aiuto**, con `rg-field.is-error` e `aria-invalid="true"`
+   sull'input, e con il problema scritto in parole: il rosso non basta.
+4. **Un valore predefinito ereditato** («vale 12 per tutte») è un aiuto solo sui campi che lo
+   ereditano. Se lo ereditano quasi tutti, si marcano le eccezioni (i valori propri), non la regola.
+
+```html
+<p id="nota-cicli" class="rg-small">Vuoto = vale il valore predefinito della macchina.</p>
+<div class="rg-form-row">
+  <label class="rg-field rg-field--w8">
+    <span class="rg-field__label">Durata (min)</span>
+    <input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="40">
+  </label>
+  <label class="rg-field rg-field--w8">
+    <span class="rg-field__label">Livello 1 (cicli)</span>
+    <input class="rg-input rg-input--numeric" type="text" inputmode="numeric" placeholder="12"
+           aria-describedby="nota-cicli aiuto-l1">
+    <span class="rg-field__help" id="aiuto-l1">vale 12 per tutte</span>
+  </label>
+  <label class="rg-field rg-field--w8 is-error">
+    <span class="rg-field__label">Livello 2 (cicli)</span>
+    <input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="-3"
+           aria-invalid="true" aria-describedby="errore-l2">
+    <span class="rg-field__help" id="errore-l2">Errore: i cicli non possono essere negativi.</span>
+  </label>
+  <div class="rg-form-row__actions">
+    <button class="rg-button rg-button--ghost" type="button">+ Livello</button>
+  </div>
 </div>
 ```
 
@@ -244,6 +303,28 @@ Famiglia dei control group, tutti in `styles/rg-layout.css`:
 | `rg-filter-group` | filtri di un elenco: campi + azione allineati al piede |
 | `rg-action-bar` | barra di conferma: stato a sinistra, azioni a destra |
 | `rg-confirmation` | blocco di conferma con titolo, conseguenze e azioni |
+| `rg-toolbar` / `--open` | barra di strumenti sopra un elenco o una tabella: filtri e ordinamento a sinistra, esportazione a destra |
+
+### Barra di strumenti (`.rg-toolbar`)
+
+Strumenti che agiscono sull'elenco sotto (filtra, ordina, esporta), non conferme: quelle sono
+`rg-action-bar`. Filetti sopra e sotto, fondo bianco.
+
+- **Dalla 1.17.0 ha 16 px di respiro ai lati.** Il fondo bianco sul fondo di pagina è un bordo, e
+  fino alla 1.16 il primo e l'ultimo bottone lo toccavano ([design-rules §5](../design-rules.md#distanza-delle-azioni-dal-bordo)).
+- **`rg-toolbar--open`** toglie fondo e respiro laterale: è la barra sul filo della colonna, allineata
+  al testo della pagina. Senza superficie propria non c'è un bordo laterale da rispettare. È la forma
+  di chi usava la toolbar a filo prima della correzione.
+
+```html
+<div class="rg-toolbar">
+  <div class="rg-cluster">
+    <button class="rg-button rg-button--ghost" type="button">Filtra</button>
+    <button class="rg-button rg-button--ghost" type="button">Ordina</button>
+  </div>
+  <button class="rg-button rg-button--secondary rg-button--small" type="button">Esporta</button>
+</div>
+```
 
 ```html
 <fieldset class="rg-parameter-group">

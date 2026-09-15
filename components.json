@@ -321,6 +321,8 @@
           "rg-filter-group",
           "rg-action-bar",
           "rg-confirmation",
+          "rg-toolbar",
+          "rg-toolbar--open",
           "rg-field",
           "rg-label",
           "rg-stack"
@@ -370,7 +372,12 @@
         "action bar",
         "salva",
         "conferma",
-        "confirmation"
+        "confirmation",
+        "toolbar",
+        "barra strumenti",
+        "barra di strumenti",
+        "filtra ordina esporta",
+        "toolbar aperta"
       ]
     },
     {
@@ -893,12 +900,16 @@
           "rg-section-card__title",
           "rg-section-card__subtitle",
           "rg-section-card__actions",
-          "rg-section-card__body"
+          "rg-section-card__body",
+          "rg-section-card__inset"
         ],
         "variants": [
           "rg-section-card--flush",
           "rg-section-card--emphasis"
         ],
+        "elementsSince": {
+          "rg-section-card__inset": "1.17.0"
+        },
         "related": [
           "rg-button",
           "rg-table",
@@ -933,9 +944,13 @@
       "doc": "components/section-card.md",
       "specimenAnchor": "section-card",
       "snippet": "<section class=\"rg-section-card\"><header class=\"rg-section-card__header\"><div class=\"rg-section-card__heading\"><h2 class=\"rg-section-card__title\">Impostazioni</h2><p class=\"rg-section-card__subtitle\">Parametri della fase, applicati al salvataggio.</p></div><div class=\"rg-section-card__actions\"><button class=\"rg-button rg-button--primary\" type=\"button\">Salva</button></div></header><div class=\"rg-section-card__body\">...</div></section>",
-      "notes": "Keystone di OGNI tab della pagina fase: un solo canone di testa (rg-section-card__header), non una testa diversa per tab. Header di tab = titolo (label identitaria, size lg) + una riga di didascalia opzionale + AL PIU UNA azione primaria a destra (rg-button--primary): le azioni secondarie vanno nel corpo o in rg-action-bar, non affiancate come seconda primaria. Il filetto sotto l'header separa testa e corpo — idioma a linee, mai ombre. Distinto da rg-card (tessera-entita con hover e height:100%, senza filetto d'header), da rg-section-header (layout di pagina, non un contenitore) e da rg-disclosure--boxed (sezione richiudibile, non la testa fissa di un tab). --flush azzera il padding del corpo per un tab il cui corpo E una tabella o lista rigata a filo dei bordi. Non annidare una section-card in un'altra. Migrazione (rg-product-platform): i tab di fase/_tab_consumi adottano questo contenitore e spariscono i <style> residui; il <dialog> nativo converge su rg-modal. Dalla 1.13.0: superficie SOLLEVATA (--rg-color-surface-raised) sul fondo di pagina, contorno al gradino intermedio (--rg-color-border-medium), titolo a peso medium dichiarato dal DS. rg-section-card--emphasis (1.13.0) porta il contorno al nero e la testa su superficie rientrante (--rg-color-surface): dice qual e il SOGGETTO della vista, non e uno stato e non significa nulla sul contenuto. UNA SOLA per vista. Non sostituisce la regola dell'unica azione primaria nell'header, e non va usata per segnalare errori o avvisi: quello e un rg-alert nel corpo, con testo esplicito.",
+      "notes": "Keystone di OGNI tab della pagina fase: un solo canone di testa (rg-section-card__header), non una testa diversa per tab. Header di tab = titolo (label identitaria, size lg) + una riga di didascalia opzionale + AL PIU UNA azione primaria a destra (rg-button--primary): le azioni secondarie vanno nel corpo o in rg-action-bar, non affiancate come seconda primaria. Il filetto sotto l'header separa testa e corpo — idioma a linee, mai ombre. Distinto da rg-card (tessera-entita con hover e height:100%, senza filetto d'header), da rg-section-header (layout di pagina, non un contenitore) e da rg-disclosure--boxed (sezione richiudibile, non la testa fissa di un tab). --flush azzera il padding del corpo per un tab il cui corpo E una tabella o lista rigata a filo dei bordi. Non annidare una section-card in un'altra. Migrazione (rg-product-platform): i tab di fase/_tab_consumi adottano questo contenitore e spariscono i <style> residui; il <dialog> nativo converge su rg-modal. Dalla 1.13.0: superficie SOLLEVATA (--rg-color-surface-raised) sul fondo di pagina, contorno al gradino intermedio (--rg-color-border-medium), titolo a peso medium dichiarato dal DS. rg-section-card--emphasis (1.13.0) porta il contorno al nero e la testa su superficie rientrante (--rg-color-surface): dice qual e il SOGGETTO della vista, non e uno stato e non significa nulla sul contenuto. UNA SOLA per vista. Non sostituisce la regola dell'unica azione primaria nell'header, e non va usata per segnalare errori o avvisi: quello e un rg-alert nel corpo, con testo esplicito. DA 1.17.0 (distanza delle azioni dal bordo, design-rules §5): a filo arrivano le LINEE, non le azioni. Dentro --flush la tabella rispetta gia la regola col padding delle celle (12px); rg-steps riceve dal DS 16px di rientro sulla lista (le figure della sequenza sono posizionate rispetto a rg-step e non si spostano; il numero di fase, o la graffa di un gruppo, cade sul filo del titolo della testa); ogni altro blocco (nota, vuoto, riga di azioni sotto la tabella, rg-file-card) va in rg-section-card__inset, che riprende la distanza della testa (16 sopra/sotto, 24 ai lati) senza bordo ne fondo. Se il corpo e quasi tutto inset, --flush e la variante sbagliata.",
       "keywords": [
         "section card",
+        "inset",
+        "corpo a filo",
+        "distanza dal bordo",
+        "bottoni attaccati al bordo",
         "sezione card",
         "keystone",
         "tab",
@@ -1189,7 +1204,10 @@
       "doc": "components/navigation.md",
       "specimenAnchor": "navigation",
       "snippet": "<header class=\"rg-topbar rg-topbar--app\"><a class=\"rg-topbar__back\" href=\"#/\">← RG Tools</a><h1 class=\"rg-topbar__title\">Rete 45°</h1><div class=\"rg-topbar__actions\"><span class=\"rg-mono rg-u-muted\">v0.3.0</span></div></header>",
-      "notes": "rg-tab funziona su <a> e su <button>: il reset del chrome nativo del bottone e nel DS (v1.1.0), non va riscritto in locale. Il pannello e rg-tabpanel, mostrato da is-active o aria-hidden=false. rg-topbar--sticky ancora la barra in cima.",
+      "variantsSince": {
+        "breadcrumb (rivisto: nav > ol > li, separatore unico, target 40px)": "1.17.0"
+      },
+      "notes": "rg-tab funziona su <a> e su <button>: il reset del chrome nativo del bottone e nel DS (v1.1.0), non va riscritto in locale. Il pannello e rg-tabpanel, mostrato da is-active o aria-hidden=false. rg-topbar--sticky ancora la barra in cima. BREADCRUMB (rivisto 1.17.0): forma canonica <nav class=\"rg-breadcrumb\" aria-label=\"Percorso\"><ol><li><a href>..</a></li>...<li><span class=\"rg-breadcrumb__current\" aria-current=\"page\">..</span></li></ol></nav>. Il separatore lo genera il DS fra un li e il successivo, con testo alternativo vuoto: non scriverlo. rg-breadcrumb__sep esiste solo per la forma PIATTA (nav > a + span.__sep + span.__current, quella di rg-product-platform fino alla 1.16), che resta valida; dentro un li e nascosto, cosi il separatore non esce piu doppio. Link alti 40px e sottolineati a riposo; la voce corrente si distingue per peso, colore e assenza di sottolineatura. AGNext a 14px (prima corpo a 12). Nomi lunghi vanno a capo, non si troncano. QUANDO usarlo: vedi page-header — obbligatorio dal secondo livello in giu, mai insieme a rg-topbar__back, le tab non sono voci. Sta come primo figlio di rg-page-header, senza rg-u-mb-6.",
       "keywords": [
         "navigazione",
         "menu",
@@ -2827,6 +2845,183 @@
         "routing",
         "step compilabile",
         "troppo scroll"
+      ]
+    },
+    {
+      "id": "page-header",
+      "title": "Page header (testata di pagina)",
+      "role": "Una sola testata per ogni pagina di un'app a pagine: percorso, riga di contesto (a quale entita appartiene la pagina), titolo H1 con badge di stato, sottotitolo, meta e zona azioni con al piu una primaria. Porta la regola di navigazione: percorso obbligatorio dal secondo livello in giu.",
+      "status": "beta",
+      "since": "1.17.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-page-header",
+        "elements": [
+          "rg-page-header__main",
+          "rg-page-header__heading",
+          "rg-page-header__context",
+          "rg-page-header__headline",
+          "rg-page-header__title",
+          "rg-page-header__status",
+          "rg-page-header__subtitle",
+          "rg-page-header__meta",
+          "rg-page-header__actions"
+        ],
+        "related": [
+          "rg-breadcrumb",
+          "rg-breadcrumb__current",
+          "rg-badge",
+          "rg-button",
+          "rg-appshell__main",
+          "rg-section-header",
+          "rg-topbar__back"
+        ]
+      },
+      "variants": [
+        "primo-livello",
+        "secondo-livello",
+        "livello-profondo"
+      ],
+      "states": [
+        "default",
+        "loading",
+        "not-found",
+        "read-only",
+        "narrow"
+      ],
+      "tokens": [
+        "--rg-font-identity",
+        "--rg-font-mono",
+        "--rg-font-size-xl",
+        "--rg-font-size-sm",
+        "--rg-font-size-xs",
+        "--rg-weight-heading",
+        "--rg-weight-medium",
+        "--rg-color-text-primary",
+        "--rg-color-text-secondary",
+        "--rg-color-neutral-400",
+        "--rg-layout-reading-max",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-4",
+        "--rg-space-6",
+        "--rg-space-8"
+      ],
+      "doc": "components/page-header.md",
+      "patternRef": "patterns/appshell.md",
+      "specimenAnchor": "page-header",
+      "snippet": "<header class=\"rg-page-header\">\n  <nav class=\"rg-breadcrumb\" aria-label=\"Percorso\">\n    <ol>\n      <li><a href=\"/\">Prodotti</a></li>\n      <li><a href=\"/products/12\">BOOK TOTE</a></li>\n      <li><a href=\"/products/12/parts/3\">1296 DAV RIW OBLIQUE - GRIS</a></li>\n      <li><span class=\"rg-breadcrumb__current\" aria-current=\"page\">Ricamo normale</span></li>\n    </ol>\n  </nav>\n  <div class=\"rg-page-header__main\">\n    <div class=\"rg-page-header__heading\">\n      <p class=\"rg-page-header__context\">Fase della parte <strong>1296 DAV RIW OBLIQUE - GRIS</strong> &#183; <strong>BOOK TOTE</strong></p>\n      <div class=\"rg-page-header__headline\">\n        <h1 class=\"rg-page-header__title\">Ricamo normale</h1>\n        <span class=\"rg-page-header__status\"><span class=\"rg-badge rg-badge--pending\">costo non calcolato</span></span>\n      </div>\n      <p class=\"rg-page-header__meta\"><span>fase 2 di 4</span><span>Ricamo</span></p>\n    </div>\n    <div class=\"rg-page-header__actions\"></div>\n  </div>\n</header>",
+      "notes": "PERCHE: su rg-product-platform (DS 1.16.0) la testa di pagina esisteva in quattro forme (rg-section-header + __title; rg-section-header + h1.rg-h2 con rg-label di tipo sopra; h1.rg-h2 nudo con margini inline; link '← Indietro' al posto del percorso) e il percorso c'era in 8 pagine su 21: entrando in una fase il titolo era 'Ricamo normale' e la parte e il prodotto stavano solo in un sottotitolo piccolo. NON E rg-section-header: quella e la testa di una SEZIONE (molte per pagina, con --sub) e resta invariata; la testata di pagina e una sola per vista e dichiara percorso, contesto, stato e azioni. SLOT, in ordine: rg-breadcrumb (primo figlio, senza rg-u-mb-6) → __context (testo, non link: i link sono nel percorso e ripeterli raddoppierebbe le fermate di tabulazione; 'Tipo di <strong>genitore</strong> · <strong>nonno</strong>', al massimo due genitori, la voce di primo livello non entra) → __headline con __title (h1, il NOME non il tipo, 28px identity peso heading, la misura che l'app usava gia) e __status (al massimo tre rg-badge, limite di badges.md, uno per asse) → __subtitle (una riga) → __meta (mono, voci separate da '·' generato dal DS) | __actions (al massimo UNA rg-button--primary; un'azione distruttiva non sta accanto alla primaria, va nel piede del contenitore a cui si applica). Sotto i 680px le azioni vanno sotto il titolo, allineate a sinistra; i nomi lunghi vanno a capo, non si troncano. REGOLA DI NAVIGAZIONE: livello = distanza dalla topbar. Livello 1 (voce di rg-topbar__nav con aria-current): solo titolo, niente percorso ne contesto. Livello 2 (entita da un elenco di primo livello): percorso obbligatorio. Livello 3+: percorso e contesto obbligatori. Il percorso parte dalla voce di topbar con la stessa etichetta e finisce sulla pagina corrente (aria-current=page); segue la gerarchia, non la cronologia ('← Indietro' e 'Torna alla parte' spariscono); le tab (sezioni) NON sono voci, le cartelle di un archivio si. Mai rg-topbar__back e percorso nella stessa vista: __back e delle tool (rg-workspace); in un'app a pagine l'uscita verso la suite e a.rg-topbar__brand. Livelli persistenti: topbar + UNO dentro la pagina (rg-tabs); il percorso non conta perche e un indirizzo, non un menu; la pagina di un gruppo di fasi (rg-phase-switch + rg-tabs) e gia al limite. STATUS beta: da provare sulle 21 pagine della piattaforma prima del rilascio.",
+      "keywords": [
+        "testata",
+        "testata di pagina",
+        "intestazione pagina",
+        "page header",
+        "page title",
+        "titolo pagina",
+        "h1",
+        "header di pagina",
+        "breadcrumb",
+        "percorso",
+        "briciole",
+        "dove sono",
+        "orientamento",
+        "contesto",
+        "genitore",
+        "entita padre",
+        "appartiene a",
+        "sottopagina",
+        "livello",
+        "gerarchia",
+        "regola di navigazione",
+        "indietro",
+        "torna a",
+        "back link",
+        "stato pagina",
+        "badge di stato",
+        "azioni di pagina",
+        "azione primaria",
+        "section header",
+        "sottotitolo",
+        "meta",
+        "prodotto parte fase"
+      ]
+    },
+    {
+      "id": "form-row",
+      "title": "Form row (riga di campi allineata ai controlli)",
+      "role": "Riga orizzontale di campi i cui controlli restano sulla stessa linea anche quando alcuni campi hanno aiuto o errore sotto; le azioni della riga si posano sulla linea dei controlli.",
+      "status": "stable",
+      "since": "1.17.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-form-row",
+        "elements": [
+          "rg-form-row__actions"
+        ],
+        "related": [
+          "rg-field",
+          "rg-field__label",
+          "rg-field__help",
+          "rg-field__mark",
+          "rg-field--w4",
+          "rg-field--w8",
+          "rg-field--w16",
+          "rg-field--w24",
+          "rg-field--grow",
+          "rg-choice",
+          "rg-button",
+          "rg-cluster--end"
+        ]
+      },
+      "variants": [
+        "base"
+      ],
+      "states": [
+        "default",
+        "help",
+        "error",
+        "narrow"
+      ],
+      "cssVars": [
+        "--rg-form-row-label"
+      ],
+      "tokens": [
+        "--rg-font-size-xs",
+        "--rg-line-height-body",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4"
+      ],
+      "doc": "components/forms.md#riga-di-campi-rg-form-row--i-controlli-in-fila-laiuto-sotto",
+      "rulesRef": "design-rules.md#8-interfacce-tecniche",
+      "specimenAnchor": "form-row",
+      "snippet": "<div class=\"rg-form-row\">\n  <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Durata (min)</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"decimal\" value=\"40\"></label>\n  <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Livello 1 (cicli)</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"numeric\" placeholder=\"12\" aria-describedby=\"aiuto-l1\"><span class=\"rg-field__help\" id=\"aiuto-l1\">vale 12 per tutte</span></label>\n  <div class=\"rg-form-row__actions\"><button class=\"rg-button rg-button--ghost\" type=\"button\">+ Livello</button></div>\n</div>",
+      "notes": "PERCHE: rg-cluster--end allinea i campi al PIEDE, quindi un rg-field__help sotto un campo abbassa il suo piede e ne ALZA il controllo rispetto ai vicini (caso reale: macchina_dettaglio.html, riga di rg-field--w8 dei cicli dove un solo campo dice 'vale 12 per tutte'). rg-form-row allinea alla CIMA: le etichette sono su una riga (garantito da rg-field--w* sopra i 680px), quindi i controlli cadono sulla stessa linea e cio che sta sotto allunga solo il proprio campo. L'aiuto NON allarga il campo (width 0 + min-width 100%): va a capo dentro la larghezza del controllo. __actions (bottoni, una rg-choice 'uguale per tutti') salta l'altezza dell'etichetta (--rg-form-row-label = corpo xs x interlinea body + gap del campo) e si centra sulla linea alta 40px dei controlli; sta in fondo alla riga anche nel DOM. DOVE VA L'AIUTO IN UNA RIGA ORIZZONTALE: (1) sotto il proprio controllo, breve, legato con aria-describedby; oltre due righe alla larghezza del campo non e un aiuto da riga; (2) se la stessa frase vale per due campi o piu, una volta sopra la riga + rg-field__mark sui campi; (3) l'errore sta nello stesso posto dell'aiuto con rg-field.is-error + aria-invalid e il problema in parole; (4) un predefinito ereditato e aiuto solo sui campi che lo ereditano: se sono quasi tutti, si marcano le eccezioni. rg-cluster--end NON cambia e resta giusto per una riga senza aiuto ne errore (campo di ricerca + bottone). LIMITE: un campo fluido con etichetta che va a capo rompe la fila; sotto i 680px le etichette dei rg-field--w* tornano a capo e la fila puo rompersi, compromesso accettato (la riga di norma va gia su piu righe). rg-operation-row usa ancora rg-cluster--end nella coda: da valutare nella tappa successiva.",
+      "keywords": [
+        "riga di campi",
+        "riga form",
+        "form row",
+        "campi in linea",
+        "campi affiancati",
+        "inline form",
+        "allineamento campi",
+        "campi non allineati",
+        "controlli allineati",
+        "aiuto sotto il campo",
+        "help text",
+        "hint",
+        "errore sotto il campo",
+        "messaggio di errore",
+        "field row",
+        "cluster end",
+        "baseline",
+        "linea dei controlli",
+        "vale per tutte",
+        "predefinito",
+        "default ereditato",
+        "cicli",
+        "macchina"
       ]
     }
   ]

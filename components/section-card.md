@@ -31,7 +31,7 @@ blocco ricorre in ogni tab di più prodotti (§12 delle regole), è un component
   editoriale.
 - **`rg-section-card--flush`**: corpo senza padding, per un tab il cui corpo **è** una tabella
   o una lista rigata che deve arrivare ai bordi della card; i filetti interni proseguono quelli
-  della card.
+  della card. Arrivano ai bordi **le linee, non le azioni**: vedi *Corpo a filo e distanza dai bordi*.
 - **`rg-section-card--emphasis`** (v1.13.0): il blocco che è il **soggetto della vista**. Contorno
   nero al posto del gradino intermedio e testa su superficie rientrante
   (`--rg-color-surface`), così testa e corpo si distinguono anche a colpo d'occhio.
@@ -60,6 +60,37 @@ tab attivo accanto ai riepiloghi laterali, il form in modifica accanto ai dati d
   nell'header» resta valida e indipendente.
 - Non usarla per segnalare un errore o un avviso: quello è un `rg-alert` dentro il corpo, con testo
   esplicito. L'enfasi non è leggibile come stato e non deve fingersi tale.
+
+### Corpo a filo e distanza dai bordi (dalla 1.17.0)
+
+Regola: un'azione non tocca mai il bordo del proprio contenitore ([design-rules §5](../design-rules.md#distanza-delle-azioni-dal-bordo)).
+`--flush` toglie il padding al corpo, quindi a rispettarla deve essere il contenuto.
+
+| Contenuto del corpo `--flush` | Distanza dal bordo | Cosa fare |
+| --- | --- | --- |
+| `rg-table-wrap` > `rg-table` | 12 px, dal padding delle celle | niente |
+| `rg-steps` | 16 px, dati dal DS dalla 1.17.0 | niente. Il numero di fase, o la graffa di un gruppo, si allinea al titolo della testa |
+| qualsiasi altro blocco (nota, vuoto, riga di azioni sotto la tabella, `rg-file-card`) | nessuna | avvolgerlo in `rg-section-card__inset` |
+
+`rg-section-card__inset` è il blocco che, dentro un corpo a filo, **riprende la distanza ordinaria**
+(16 px sopra e sotto, 24 ai lati, come la testa). Non è una card e non ha bordo. Se il corpo è quasi
+tutto inset, `--flush` è la variante sbagliata: si usa il corpo standard.
+
+Cosa cambia per chi usa già `--flush` con `rg-steps` (la lista delle fasi della parte): il blocco
+rientra di 16 px per lato. Il filetto nero sopra e sotto la sequenza resta da bordo a bordo; i filetti
+fra una fase e l'altra, l'hover del toggle e le azioni della fase si staccano dal contorno della card.
+
+```html
+<section class="rg-section-card rg-section-card--flush">
+  <header class="rg-section-card__header">…</header>
+  <div class="rg-section-card__body">
+    <div class="rg-table-wrap"><table class="rg-table"><!-- … --></table></div>
+    <div class="rg-section-card__inset">
+      <button class="rg-button rg-button--secondary" type="button">Aggiungi riga</button>
+    </div>
+  </div>
+</section>
+```
 
 ### Superficie e contorno (dalla 1.13.0)
 

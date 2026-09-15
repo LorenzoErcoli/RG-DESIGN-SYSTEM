@@ -52,9 +52,13 @@ su un blocco interno produce solo pagine vuote.
   </header>
 
   <main class="rg-appshell__main">
-    <header class="rg-section-header">
-      <div><p class="rg-label">Archivio</p><h1 class="rg-section-header__title">Prodotti</h1></div>
-      <span class="rg-section-header__meta">248 RECORD</span>
+    <header class="rg-page-header">
+      <div class="rg-page-header__main">
+        <div class="rg-page-header__heading">
+          <h1 class="rg-page-header__title">Prodotti</h1>
+          <p class="rg-page-header__meta"><span>248 prodotti</span></p>
+        </div>
+      </div>
     </header>
     <!-- contenuto della vista -->
   </main>

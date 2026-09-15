@@ -25,19 +25,22 @@ nell'intestazione: "1" e "1 min per cambio spolina, per testa" non sono lo stess
 
 ## Struttura
 
-Guscio `rg-appshell` (vedi [appshell.md](appshell.md)), testata `rg-section-header`, gruppi
-`rg-parameter-group`, valori per riga in `rg-table`, salvataggio in fondo.
+Guscio `rg-appshell` (vedi [appshell.md](appshell.md)), testata `rg-page-header` (dalla 1.17.0;
+prima `rg-section-header`), gruppi `rg-parameter-group`, valori per riga in `rg-table`, salvataggio
+in fondo.
 
 ```html
 <main class="rg-appshell__main">
-  <header class="rg-section-header">
-    <div>
-      <h1 class="rg-section-header__title">Default costo ricamo</h1>
-      <p class="rg-small">Sotto-tipo: ricamo normale</p>
+  <header class="rg-page-header">
+    <div class="rg-page-header__main">
+      <div class="rg-page-header__heading">
+        <div class="rg-page-header__headline">
+          <h1 class="rg-page-header__title">Default costo ricamo</h1>
+          <span class="rg-page-header__status"><span class="rg-badge rg-badge--validated">Da catalogo</span></span>
+        </div>
+        <p class="rg-page-header__subtitle">Sotto-tipo: ricamo normale</p>
+      </div>
     </div>
-    <span class="rg-section-header__meta">
-      <span class="rg-badge rg-badge--validated">Da catalogo</span>
-    </span>
   </header>
 
   <form method="post" action="/costi/default" class="rg-stack">

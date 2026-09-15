@@ -7,6 +7,86 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.17.0 — in preparazione (non rilasciata)
+
+**La struttura della pagina.** Prima tappa dell'armonizzazione: solo struttura, niente icone e niente
+nuovi usi del colore. Il DS era a v1.16.0 e i difetti sono stati misurati su `rg-product-platform`:
+- la testata di pagina esisteva in quattro forme;
+- il percorso c'era in 8 pagine su 21;
+- entrando in una fase non si capiva di quale parte e di quale prodotto fosse;
+- un aiuto sotto un campo alzava il controllo rispetto ai vicini;
+- i bottoni toccavano il bordo del contenitore.
+
+Rilascio **additivo**: nessuna classe rinominata o rimossa, nessun token nuovo o cambiato. Tre
+correzioni cambiano l'aspetto di classi esistenti, elencate in *Aggiornamento*.
+
+### Componenti
+
+- **`rg-page-header`** (con `__main`, `__heading`, `__context`, `__headline`, `__title`, `__status`,
+  `__subtitle`, `__meta`, `__actions`): una sola testata per ogni pagina di un'app a pagine. Gli slot
+  sono, in ordine: percorso, riga di contesto («Fase della parte **1296 DAV…** · **BOOK TOTE**»), H1
+  con al massimo tre badge di stato, sottotitolo, meta in mono, zona azioni con al massimo una
+  primaria. Sotto i 680 px le azioni vanno sotto il titolo.
+  **Regola di navigazione**: il percorso è obbligatorio dal secondo livello in giù, e le pagine di
+  primo livello raggiunte dalla topbar hanno solo il titolo. Il contesto è obbligatorio dal terzo
+  livello. Mai `rg-topbar__back` e percorso nella stessa vista, e le tab non entrano nel percorso.
+- **`rg-form-row`** con **`rg-form-row__actions`**: la riga di campi allineata sulla linea dei
+  controlli. Aiuto ed errore stanno sotto il loro campo senza spostare i vicini e senza allargare il
+  campo. I bottoni e le scelte della riga stanno sulla linea dei controlli.
+
+### Varianti
+
+- **`rg-toolbar--open`**: la barra senza fondo, sul filo della colonna. È la forma di chi voleva la
+  toolbar allineata al testo.
+- **`rg-section-card__inset`**: dentro un corpo `--flush`, il blocco che riprende la distanza
+  ordinaria dai bordi.
+
+### Correzioni
+
+- **`rg-breadcrumb`**:
+  - separatore mai doppio: dentro un `li` il `__sep` è nascosto, e il separatore generato ha testo
+    alternativo vuoto;
+  - forma canonica `nav` > `ol` > `li` con `aria-current="page"`;
+  - link alti 40 px e sottolineati a riposo;
+  - AGNext a 14 px al posto del corpo a 12, come ogni navigazione.
+
+  La forma piatta `nav` > `a` + `span.__sep` + `span.__current` resta valida.
+- **`rg-toolbar`**: padding orizzontale 16 px. Il fondo bianco sul fondo di pagina è un bordo, e il
+  primo e l'ultimo bottone lo toccavano.
+- **`rg-section-card--flush` con `rg-steps`**: la sequenza rientra di 16 px per lato, mentre il
+  filetto nero sopra e sotto resta da bordo a bordo. Il numero di fase, o la graffa di un
+  gruppo, si allinea al titolo della testa.
+
+### Regole
+
+- `design-rules.md` §5: **Distanza delle azioni dal bordo**. Un'azione non tocca mai il bordo del
+  suo contenitore:
+  - minimo 12 px nelle righe dense, 16 px ai lati delle barre, 24 px nei contenitori di contenuto;
+  - su una superficie aperta vale l'allineamento, non la distanza.
+
+### Documentazione
+
+- `components/page-header.md`: nuovo, con la regola di navigazione e la migrazione delle quattro
+  testate.
+- `components/navigation.md`: sezione *Breadcrumb* vera, con markup, separatore, area cliccabile e
+  compatibilità.
+- `components/forms.md`: *Riga di campi* (dove va l'aiuto in una riga orizzontale) e *Barra di
+  strumenti*.
+- `components/section-card.md`: *Corpo a filo e distanza dai bordi*.
+- `components/file-card.md`: perché la radice non ha padding, e dove metterla.
+- `patterns/appshell.md`, `patterns/settings.md`: la testata è `rg-page-header`.
+
+### Aggiornamento
+
+Sicuro, con tre cambi d'aspetto su classi esistenti:
+
+1. **`rg-breadcrumb`** passa da 12 a 14 px in AGNext, con link sottolineati e riga alta 40 px. Il
+   markup attuale non va toccato. Dentro `rg-page-header` si toglie `rg-u-mb-6`.
+2. **`rg-toolbar`** rientra di 16 px ai lati. Chi la voleva a filo della colonna usa `rg-toolbar--open`.
+3. **`rg-steps` dentro `rg-section-card--flush`** rientra di 16 px ai lati.
+
+`rg-section-header` e `rg-cluster--end` non cambiano.
+
 ## 1.16.0 — 2026-09-15
 
 **Le fasi collegate.** Una fase principale (una stampa, una pressatura) ha ora 1–3 fasi collegate

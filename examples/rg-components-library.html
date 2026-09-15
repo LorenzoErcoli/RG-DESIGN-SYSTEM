@@ -76,7 +76,7 @@
   <header class="specimen-header"><div class="specimen-brand">RG</div><div class="specimen-title">Design System / Components Library</div><div class="specimen-version">SPECIMEN 0.1 · 2026</div></header>
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
-      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li>
+      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li>
     </ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
@@ -171,7 +171,9 @@ status: validated</pre></div></div>
           <div class="specimen-cell"><span class="specimen-label">Sidebar (shell)</span><aside class="rg-sidebar" style="min-height:280px"><p class="rg-label">Workspace</p><nav class="rg-sidebar__nav" aria-label="Navigazione"><ul class="rg-sidebar-list"><li><a class="rg-sidebar-item rg-sidebar-item--active" href="#navigation">Overview</a></li><li><a class="rg-sidebar-item" href="#navigation">Materiali</a></li><li><a class="rg-sidebar-item" href="#navigation">Calcoli</a></li><li><a class="rg-sidebar-item" href="#navigation">Archivio</a></li></ul></nav><div class="rg-sidebar__foot"><div class="rg-mono">DATASET / 26.06</div><div>ERREGI · Ricerca tessile</div></div></aside></div>
           <div class="specimen-cell"><span class="specimen-label">Tabs — link (vista con URL proprio)</span><div class="specimen-stage"><nav class="rg-tabs"><a class="rg-tab rg-tab--active" href="#navigation">Dettaglio</a><a class="rg-tab" href="#navigation">Revisioni</a><a class="rg-tab" href="#navigation">File</a></nav></div></div>
           <div class="specimen-cell"><span class="specimen-label">Tabs — button + tabpanel</span><div class="specimen-stage"><div class="rg-tabs" role="tablist"><button class="rg-tab is-active" role="tab" aria-selected="true" id="spec-t1" aria-controls="spec-p1" type="button">Scheda</button><button class="rg-tab" role="tab" aria-selected="false" id="spec-t2" aria-controls="spec-p2" type="button">Filati</button></div><div class="rg-tabpanel is-active" role="tabpanel" id="spec-p1" aria-labelledby="spec-t1"><p class="rg-small rg-u-mt-4">Pannello attivo: il contenuto della vista corrente.</p></div><div class="rg-tabpanel" role="tabpanel" id="spec-p2" aria-labelledby="spec-t2"><p class="rg-small">Pannello nascosto.</p></div></div></div>
-          <div class="specimen-cell"><span class="specimen-label">Breadcrumb / pagination</span><div class="specimen-stage specimen-column"><ol class="rg-breadcrumb"><li>Archivio</li><li>Ricami</li><li>RG-0248</li></ol><nav class="rg-pagination" aria-label="Paginazione"><button class="rg-page">←</button><button class="rg-page rg-page--active">1</button><button class="rg-page">2</button><button class="rg-page">3</button><button class="rg-page">→</button></nav></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Breadcrumb — forma canonica (nav › ol › li, aria-current)</span><div class="specimen-stage"><nav class="rg-breadcrumb" aria-label="Percorso"><ol><li><a href="#navigation">Prodotti</a></li><li><a href="#navigation">BOOK TOTE</a></li><li><a href="#navigation">1296 DAV RIW OBLIQUE - GRIS</a></li><li><span class="rg-breadcrumb__current" aria-current="page">Ricamo normale</span></li></ol></nav></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Breadcrumb — forma piatta (compatibilità 1.16)</span><div class="specimen-stage"><nav class="rg-breadcrumb" aria-label="Percorso"><a href="#navigation">Prodotti</a><span class="rg-breadcrumb__sep" aria-hidden="true">/</span><a href="#navigation">BOOK TOTE</a><span class="rg-breadcrumb__sep" aria-hidden="true">/</span><span class="rg-breadcrumb__current" aria-current="page">1296 DAV RIW OBLIQUE - GRIS</span></nav></div></div>
+          <div class="specimen-cell"><span class="specimen-label">Pagination</span><div class="specimen-stage specimen-column"><nav class="rg-pagination" aria-label="Paginazione"><button class="rg-page">←</button><button class="rg-page rg-page--active">1</button><button class="rg-page">2</button><button class="rg-page">3</button><button class="rg-page">→</button></nav></div></div>
         </div>
       </section>
 
@@ -221,7 +223,8 @@ status         VALID</pre></div>
       <section class="specimen-section" id="layout">
         <div class="specimen-section__head"><span class="specimen-section__index">12</span><h2>Layout Blocks</h2><p>Strutture combinabili per comporre pagine future senza definire una specifica applicazione.</p></div>
         <div class="specimen-grid">
-          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Section header / toolbar</span><section class="rg-section"><header class="rg-section-header"><div><p class="rg-label">Distinta tecnica</p><h3 class="rg-section-header__title">Materiali e consumi</h3></div><span class="rg-section-header__meta">12 RECORD · REV.04</span></header><div class="rg-toolbar"><div class="specimen-stack"><button class="rg-button rg-button--ghost">Filtra</button><button class="rg-button rg-button--ghost">Ordina</button></div><button class="rg-button rg-button--secondary rg-button--small">Esporta</button></div></section></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Section header / toolbar — 16 px di respiro ai lati (1.17.0)</span><div class="specimen-stage specimen-stage--page"><section class="rg-section"><header class="rg-section-header"><div><p class="rg-label">Distinta tecnica</p><h3 class="rg-section-header__title">Materiali e consumi</h3></div><span class="rg-section-header__meta">12 RECORD · REV.04</span></header><div class="rg-toolbar"><div class="specimen-stack"><button class="rg-button rg-button--ghost">Filtra</button><button class="rg-button rg-button--ghost">Ordina</button></div><button class="rg-button rg-button--secondary rg-button--small">Esporta</button></div></section></div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Toolbar aperta (--open) — senza fondo, sul filo della colonna</span><div class="specimen-stage"><div class="rg-toolbar rg-toolbar--open"><div class="specimen-stack"><button class="rg-button rg-button--ghost">Filtra</button><button class="rg-button rg-button--ghost">Ordina</button></div><button class="rg-button rg-button--secondary rg-button--small">Esporta</button></div></div><p class="specimen-note">Un'azione non tocca mai il bordo del suo contenitore (design-rules §5): minimo 12 px nelle righe dense, 16 ai lati delle barre, 24 nei contenitori di contenuto. Sul fondo di pagina il bianco della toolbar è un bordo; senza fondo, come in <code class="rg-mono">--open</code>, vale l'allineamento al testo.</p></div>
           <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Split panel</span><div class="rg-split-panel"><div><p class="rg-label">Source</p><h3 class="rg-h3">Documento originale</h3><p class="rg-card__body">Area sorgente per PDF, immagine o file macchina.</p></div><div><p class="rg-label">Extracted data</p><h3 class="rg-h3">Valori interpretati</h3><p class="rg-card__body">Area di confronto per dati strutturati e correzioni.</p></div></div></div>
           <div class="specimen-cell"><span class="specimen-label">Inspector panel</span><aside class="rg-inspector"><p class="rg-label">Inspector</p><h3 class="rg-h3">FIL-0281</h3><dl class="rg-key-value" style="margin-top:24px"><dt>Tipo</dt><dd>THREAD</dd><dt>Stato</dt><dd>VALID</dd><dt>Rev.</dt><dd>04</dd></dl></aside></div>
           <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Documentation block</span><div class="rg-documentation"><div class="rg-documentation__term">.rg-card--technical</div><p>Usare per un'entità tecnica autonoma con codice, parametri e stato. Evitare per testo editoriale esteso.</p></div></div>
@@ -700,6 +703,36 @@ status         VALID</pre></div>
               </div>
             </section>
           </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Corpo a filo con una sequenza e un blocco inset — le linee ai bordi, le azioni no (1.17.0)</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-section-card rg-section-card--flush">
+              <header class="rg-section-card__header">
+                <div class="rg-section-card__heading">
+                  <h2 class="rg-section-card__title">Fasi</h2>
+                  <p class="rg-section-card__subtitle">2 fasi su questa parte. Aprine una per lavorarci.</p>
+                </div>
+                <div class="rg-section-card__actions"><button class="rg-button rg-button--primary rg-button--small" type="button">+ Aggiungi fase</button></div>
+              </header>
+              <div class="rg-section-card__body">
+                <ol class="rg-steps">
+                  <li class="rg-step">
+                    <div class="rg-step__head">
+                      <button class="rg-step__toggle" type="button" aria-expanded="false" aria-controls="spec-flush-s1" id="spec-flush-t1"><span class="rg-step__num">1</span><span class="rg-step__headline"><span class="rg-step__title">Ricamo normale</span><span class="rg-step__meta"><span>Ricamo</span><span>12 operazioni</span></span></span></button>
+                      <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#section-card">Apri</a></div>
+                    </div>
+                    <div class="rg-step__body" id="spec-flush-s1" hidden><p class="rg-small">Anteprima delle operazioni.</p></div>
+                  </li>
+                  <li class="rg-step">
+                    <div class="rg-step__head">
+                      <button class="rg-step__toggle" type="button" aria-expanded="false" aria-controls="spec-flush-s2" id="spec-flush-t2"><span class="rg-step__num">2</span><span class="rg-step__headline"><span class="rg-step__title">Pressatura</span><span class="rg-step__meta"><span>Pressatura e soffiatura</span><span>3 operazioni</span></span></span></button>
+                      <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#section-card">Apri</a></div>
+                    </div>
+                    <div class="rg-step__body" id="spec-flush-s2" hidden><p class="rg-small">Anteprima delle operazioni.</p></div>
+                  </li>
+                </ol>
+                <div class="rg-section-card__inset"><p class="rg-small rg-u-m-0">L'ordine delle fasi è quello di lavorazione. Per spostarne una, aprila.</p></div>
+              </div>
+            </section>
+          </div><p class="specimen-note">Il numero di fase cade sul filo del titolo della testa (16 px di rientro più gli 8 del toggle; in una sequenza con gruppi ci cade la graffa), il filetto nero della sequenza resta da bordo a bordo, il fondo di hover e «Apri» si staccano dal contorno. Ciò che non è tabella né sequenza va in <code class="rg-mono">rg-section-card__inset</code>.</p></div>
           <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Enfasi (--emphasis) accanto al blocco normale, sul fondo di pagina — una sola per vista</span><div class="specimen-stage specimen-stage--page">
             <div class="rg-grid rg-grid--2">
               <section class="rg-section-card rg-section-card--emphasis">
@@ -1245,6 +1278,96 @@ status         VALID</pre></div>
         </div>
         <p class="specimen-note">La scelta ha quattro segnali e nessuno è un colore: fondo bianco, contorno nero, numero invertito, e la linguetta attaccata al pannello. La linguetta di una fase non visibile con un errore lo dice a parole, nel suo badge. Il timbro del reparto è la stessa figura del foglio stampato, in grigio (<code class="rg-mono">rg-dept-band--quiet</code>): a schermo il colore del reparto convive con i colori di stato, e il rosso della pressatura è lo stesso rosso di un errore.</p>
         <p class="specimen-note">Da non fare: fasi collegate nella stessa <code class="rg-mono">rg-tabs</code> delle sezioni; un fondo diverso in hover; card dentro il pannello, o un titolo di sezione che ripete la tab; «Elimina fase» in testa a una pagina che mostra più fasi; <code class="rg-mono">&lt;a href&gt;</code> sulle linguette di un form unico.</p>
+      </section>
+
+      <section class="specimen-section" id="page-header">
+        <div class="specimen-section__head"><span class="specimen-section__index">30</span><h2>Testata di pagina</h2><p><strong>Una sola forma</strong> per la testa di ogni pagina: percorso → contesto → titolo con lo stato → meta, e la zona azioni con al più una primaria. Il livello decide gli slot. Al <strong>primo livello</strong>, raggiunto dalla topbar, c'è solo il titolo. Dal <strong>secondo</strong> il percorso è obbligatorio. Dal <strong>terzo</strong> anche la riga di contesto, che dice a parole a chi appartiene la pagina. Mai <code class="rg-mono">rg-topbar__back</code> insieme al percorso; le tab non sono voci del percorso. Vedi components/page-header.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Livello 1 — Prodotti, dalla topbar: solo titolo, meta e azione</span><div class="specimen-stage specimen-stage--page">
+            <header class="rg-page-header rg-u-m-0">
+              <div class="rg-page-header__main">
+                <div class="rg-page-header__heading">
+                  <h3 class="rg-page-header__title">Prodotti</h3>
+                  <p class="rg-page-header__meta"><span>248 prodotti</span><span>ultimo import 18/07 14:32</span></p>
+                </div>
+                <div class="rg-page-header__actions"><a class="rg-button rg-button--primary" href="#page-header">Nuovo prodotto</a></div>
+              </div>
+            </header>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Livello 2 — un prodotto dall'elenco: percorso obbligatorio, stato accanto al titolo</span><div class="specimen-stage specimen-stage--page">
+            <header class="rg-page-header rg-u-m-0">
+              <nav class="rg-breadcrumb" aria-label="Percorso"><ol><li><a href="#page-header">Prodotti</a></li><li><span class="rg-breadcrumb__current" aria-current="page">BOOK TOTE</span></li></ol></nav>
+              <div class="rg-page-header__main">
+                <div class="rg-page-header__heading">
+                  <div class="rg-page-header__headline"><h3 class="rg-page-header__title">BOOK TOTE</h3><span class="rg-page-header__status"><span class="rg-badge rg-badge--draft">Bozza</span></span></div>
+                  <p class="rg-page-header__meta"><span>RG-PRD-0248</span><span>3 parti</span></p>
+                </div>
+                <div class="rg-page-header__actions"><a class="rg-button rg-button--secondary" href="#page-header">Costi</a><a class="rg-button rg-button--primary" href="#page-header">Compila schede</a></div>
+              </div>
+            </header>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Livello 4 — una fase: percorso fino alla fase, contesto con parte e prodotto, niente «Torna alla parte»</span><div class="specimen-stage specimen-stage--page">
+            <header class="rg-page-header rg-u-m-0">
+              <nav class="rg-breadcrumb" aria-label="Percorso"><ol><li><a href="#page-header">Prodotti</a></li><li><a href="#page-header">BOOK TOTE</a></li><li><a href="#page-header">1296 DAV RIW OBLIQUE - GRIS</a></li><li><span class="rg-breadcrumb__current" aria-current="page">Ricamo normale</span></li></ol></nav>
+              <div class="rg-page-header__main">
+                <div class="rg-page-header__heading">
+                  <p class="rg-page-header__context">Fase della parte <strong>1296 DAV RIW OBLIQUE - GRIS</strong> · <strong>BOOK TOTE</strong></p>
+                  <div class="rg-page-header__headline"><h3 class="rg-page-header__title">Ricamo normale</h3><span class="rg-page-header__status"><span class="rg-badge rg-badge--pending">costo non calcolato</span></span></div>
+                  <p class="rg-page-header__meta"><span>fase 2 di 4</span><span>Ricamo</span></p>
+                </div>
+              </div>
+            </header>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Colonna stretta — le azioni vanno sotto, i nomi lunghi a capo</span><div class="specimen-stage specimen-stage--page">
+            <header class="rg-page-header rg-u-m-0">
+              <nav class="rg-breadcrumb" aria-label="Percorso"><ol><li><a href="#page-header">Prodotti</a></li><li><a href="#page-header">BOOK TOTE</a></li><li><span class="rg-breadcrumb__current" aria-current="page">1296 DAV RIW OBLIQUE - GRIS</span></li></ol></nav>
+              <div class="rg-page-header__main">
+                <div class="rg-page-header__heading">
+                  <p class="rg-page-header__context">Parte di <strong>BOOK TOTE</strong></p>
+                  <h3 class="rg-page-header__title">1296 DAV RIW OBLIQUE - GRIS</h3>
+                  <p class="rg-page-header__subtitle">Davanti, ricamo obliquo su tela grigia.</p>
+                </div>
+                <div class="rg-page-header__actions"><button class="rg-button rg-button--primary" type="button">Carica PDF</button></div>
+              </div>
+            </header>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Da non fare — le quattro teste di oggi</span><div class="specimen-stage specimen-column">
+            <p class="rg-small rg-u-m-0">1. <code class="rg-mono">rg-section-header</code> con <code class="rg-mono">__title</code>; 2. <code class="rg-mono">rg-section-header</code> con <code class="rg-mono">h1.rg-h2</code> e un <code class="rg-mono">rg-label</code> di tipo sopra («PRESSATURA / Pressatura»); 3. <code class="rg-mono">h1.rg-h2</code> nudo con margini inline; 4. «← Indietro» testuale al posto del percorso.</p>
+            <p class="rg-small rg-u-m-0">Tutte diventano <code class="rg-mono">rg-page-header</code>. <code class="rg-mono">rg-section-header</code> resta per le teste di sezione dentro la pagina.</p>
+          </div></div>
+        </div>
+        <p class="specimen-note">Il contesto è testo, non link: i link verso i genitori stanno nel percorso, e ripeterli raddoppierebbe le fermate di tabulazione. Nella tavola i titoli sono <code class="rg-mono">h3</code> per non rompere la struttura della pagina di specimen; in un'app il titolo è l'unico <code class="rg-mono">h1</code>.</p>
+      </section>
+
+      <section class="specimen-section" id="form-row">
+        <div class="specimen-section__head"><span class="specimen-section__index">31</span><h2>Riga di campi</h2><p><code class="rg-mono">rg-form-row</code> allinea i campi alla <strong>cima</strong>: i controlli restano in fila anche quando uno solo ha un aiuto o un errore sotto. <code class="rg-mono">rg-cluster--end</code> allinea al piede, e l'aiuto alza il controllo del suo campo. Le azioni della riga stanno in <code class="rg-mono">__actions</code>, posate sulla linea dei controlli. Vedi components/forms.md, «Riga di campi».</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Prima — rg-cluster--end: il campo con l'aiuto sale</span><div class="specimen-stage">
+            <div class="rg-cluster rg-cluster--end">
+              <label class="rg-field rg-field--w8"><span class="rg-field__label">Durata (min)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="40"></label>
+              <label class="rg-field rg-field--w8"><span class="rg-field__label">Livello 1 (cicli)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" placeholder="12"><span class="rg-field__help">vale 12 per tutte</span></label>
+              <label class="rg-field rg-field--w8"><span class="rg-field__label">Livello 2 (cicli)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="8"></label>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Dopo — rg-form-row: i controlli in fila, l'aiuto sotto</span><div class="specimen-stage">
+            <div class="rg-form-row">
+              <label class="rg-field rg-field--w8"><span class="rg-field__label">Durata (min)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="40"></label>
+              <label class="rg-field rg-field--w8"><span class="rg-field__label">Livello 1 (cicli)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" placeholder="12" aria-describedby="spec-fr-aiuto"><span class="rg-field__help" id="spec-fr-aiuto">vale 12 per tutte</span></label>
+              <label class="rg-field rg-field--w8"><span class="rg-field__label">Livello 2 (cicli)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="8"></label>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Aiuto, errore e azioni nella stessa riga — l'aiuto va a capo dentro il suo campo, il bottone e la scelta stanno sulla linea dei controlli</span><div class="specimen-stage">
+            <p class="rg-small rg-u-mb-4" id="spec-fr-nota">I campi <span class="rg-field__mark">€</span> entrano nel costo della macchina.</p>
+            <div class="rg-form-row">
+              <label class="rg-field rg-field--w8"><span class="rg-field__label">Durata (min) <span class="rg-field__mark" aria-hidden="true">€</span></span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="40" aria-describedby="spec-fr-nota"></label>
+              <label class="rg-field rg-field--w8"><span class="rg-field__label">Livello 1 (cicli)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" placeholder="12" aria-describedby="spec-fr-aiuto2"><span class="rg-field__help" id="spec-fr-aiuto2">vuoto: vale il predefinito della macchina, 12</span></label>
+              <label class="rg-field rg-field--w8 is-error"><span class="rg-field__label">Livello 2 (cicli)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="-3" aria-invalid="true" aria-describedby="spec-fr-errore"><span class="rg-field__help" id="spec-fr-errore">Errore: i cicli non possono essere negativi.</span></label>
+              <label class="rg-field rg-field--w16"><span class="rg-field__label">Programma</span><select class="rg-select"><option>Standard</option><option>Delicato</option></select></label>
+              <div class="rg-form-row__actions"><label class="rg-choice"><input type="checkbox"> Uguale per tutte</label><button class="rg-button rg-button--ghost" type="button">+ Livello</button></div>
+            </div>
+          </div></div>
+        </div>
+        <p class="specimen-note">Dove va l'aiuto in una riga: sotto il proprio controllo, breve e legato con <code class="rg-mono">aria-describedby</code>. Se la stessa frase vale per due campi o più, si scrive una volta sopra la riga e si marca con <code class="rg-mono">rg-field__mark</code>. L'errore sta nello stesso posto dell'aiuto, con il problema scritto in parole.</p>
       </section>
 
     </main>

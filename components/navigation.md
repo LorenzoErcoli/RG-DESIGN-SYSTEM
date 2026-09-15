@@ -11,7 +11,8 @@ Rendere evidente posizione, ambito e passaggio tra strumenti RG senza competere 
   ritorno/identita a sinistra, titolo dello strumento corrente, azioni o meta a destra.
 - **Sidebar**: sezioni stabili di applicazioni complesse.
 - **Local tabs**: viste sorelle della stessa entità.
-- **Breadcrumb**: gerarchie profonde di archivio e rulebook.
+- **Breadcrumb (percorso)**: la catena dei genitori di una pagina dal secondo livello in giù (v1.17.0,
+  vedi la sezione *Breadcrumb* e la regola di navigazione in [page-header](page-header.md)).
 - **Pagination**: dataset e risultati.
 
 ## Uso e limiti
@@ -26,6 +27,52 @@ Navigazione nera/bianca; mai palette stagionale come selezione principale. Lo st
 ```
 
 AGNext per label. Header desktop 64 px (`--rg-layout-header`). Su mobile preservare nome prodotto, azione primaria contestuale e accesso al menu. Breadcrumb non sostituisce il titolo pagina.
+
+### Breadcrumb
+
+Il percorso dice **dove si trova la pagina nella gerarchia**: Prodotti → BOOK TOTE → 1296 DAV RIW
+OBLIQUE - GRIS → Ricamo normale. Sta come primo figlio di [`rg-page-header`](page-header.md), che
+contiene anche la regola su **quando** è obbligatorio (dal secondo livello in giù) e sul rapporto con
+`rg-topbar__back` (mai entrambi).
+
+```html
+<nav class="rg-breadcrumb" aria-label="Percorso">
+  <ol>
+    <li><a href="/">Prodotti</a></li>
+    <li><a href="/products/12">BOOK TOTE</a></li>
+    <li><a href="/products/12/parts/3">1296 DAV RIW OBLIQUE - GRIS</a></li>
+    <li><span class="rg-breadcrumb__current" aria-current="page">Ricamo normale</span></li>
+  </ol>
+</nav>
+```
+
+- **Markup**: `nav` con `aria-label="Percorso"` → `ol` → un `li` per voce. L'ultima voce è la
+  pagina corrente: un `span.rg-breadcrumb__current` con `aria-current="page"`, **non** un link.
+- **Separatore**: lo genera il DS fra un `li` e il successivo, con testo alternativo vuoto. Non
+  scriverlo nel markup. Lo screen reader annuncia «elenco, 4 voci», non «barra».
+- **Voci**: le etichette sono i nomi delle entità come appaiono nei loro titoli. La prima voce ha la
+  stessa etichetta della voce di topbar da cui si parte. Le tab non sono voci.
+- **Area cliccabile**: ogni link è alto 40 px (regola §11) e sottolineato anche a riposo. La voce
+  corrente si distingue per peso, colore e assenza di sottolineatura, non per il solo colore.
+- **Nomi lunghi**: vanno a capo, non si troncano. Un codice di parte tagliato da un'ellissi è un dato
+  perso proprio dove serve per orientarsi.
+- **Tipografia**: AGNext a 14 px, come ogni navigazione (§3). Fino alla 1.16 era corpo a 12.
+
+**Compatibilità.** La forma piatta usata finora da `rg-product-platform` resta valida, e non
+richiede modifiche per continuare a funzionare:
+
+```html
+<nav class="rg-breadcrumb" aria-label="Percorso">
+  <a href="/">Prodotti</a>
+  <span class="rg-breadcrumb__sep" aria-hidden="true">/</span>
+  <span class="rg-breadcrumb__current" aria-current="page">BOOK TOTE</span>
+</nav>
+```
+
+`rg-breadcrumb__sep` esiste **solo** per questa forma. Dentro un `li` è nascosto: fino alla 1.16 un
+`__sep` dentro la lista usciva doppio, perché il DS generava già il suo. Chi tocca il template passa
+alla forma a lista, che dà all'assistenza il numero di livelli. La forma piatta non verrà rimossa
+prima di una major.
 
 ### Topbar
 

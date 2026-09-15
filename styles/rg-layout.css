@@ -21,7 +21,12 @@
 .rg-split-panel > div { padding: var(--rg-space-6); }
 .rg-split-panel > div + div { border-left: 1px solid var(--rg-color-black); }
 .rg-inspector { padding: var(--rg-space-6); background: var(--rg-color-surface); border-left: 1px solid var(--rg-color-black); }
-.rg-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--rg-space-3); padding: var(--rg-space-3) 0; background: var(--rg-color-white); border-block: 1px solid var(--rg-color-border); }
+/* Toolbar — respiro laterale dalla 1.17.0 (design-rules §5, «Distanza delle azioni dal bordo").
+   Il fondo bianco sul fondo di pagina e un bordo visibile: con padding orizzontale 0 il primo e
+   l'ultimo bottone lo toccavano. --open e la barra senza fondo, sul filo della colonna: senza
+   superficie propria non ha un bordo laterale, e allora vale l'allineamento al testo. */
+.rg-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--rg-space-3); padding: var(--rg-space-3) var(--rg-space-4); background: var(--rg-color-white); border-block: 1px solid var(--rg-color-border); }
+.rg-toolbar--open { padding-inline: 0; background: transparent; }
 .rg-footer-note { padding-top: var(--rg-space-4); color: var(--rg-color-text-secondary); border-top: 1px solid var(--rg-color-border); font-size: var(--rg-font-size-xs); }
 .rg-documentation { display: grid; grid-template-columns: 180px 1fr; gap: var(--rg-space-6); padding: var(--rg-space-6); background: var(--rg-color-surface); border-left: 3px solid var(--rg-color-black); }
 .rg-documentation__term { font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }

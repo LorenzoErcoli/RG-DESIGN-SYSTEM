@@ -185,6 +185,18 @@
    arrivare ai bordi della card senza un secondo margine; i filetti interni proseguono quelli
    della card. */
 .rg-section-card--flush > .rg-section-card__body { padding: 0; }
+/* A filo arrivano le LINEE, non le azioni (v1.17.0, design-rules §5 «Distanza delle azioni dal
+   bordo»). La tabella rispetta gia la regola col padding delle celle (12 px). rg-steps no: il toggle
+   ha 8 px di padding e il suo fondo di hover, come le azioni della fase, toccava il contorno. Il
+   rientro va sulla LISTA e non sulla fase: le figure della sequenza (filo, graffa, dente) sono
+   posizionate rispetto a .rg-step e restano dove sono; il filetto nero sopra e sotto resta da bordo a
+   bordo. 16 + 8 del toggle = 24: il primo segno della sequenza (il numero, o la graffa in rg-steps--grouped)
+   cade sul filo del titolo della testa. */
+.rg-section-card--flush > .rg-section-card__body > .rg-steps { padding-inline: var(--rg-space-4); }
+/* Tutto il resto dentro un corpo a filo (una nota, un vuoto, una riga di azioni sotto la tabella,
+   una rg-file-card) riprende la distanza ordinaria: quella della testa, 16 sopra e sotto, 24 ai lati.
+   Non e una card: niente bordo, niente fondo. */
+.rg-section-card__inset { padding: var(--rg-space-4) var(--rg-space-6); }
 /* ENFASI (v1.13.0) — stesso significato di rg-card--emphasis: il tab o il blocco che e il soggetto
    della vista. Qui l'enfasi e doppia perche la section card ha una testa: contorno nero e testa su
    superficie rientrante, cosi la testa si stacca dal corpo anche a colpo d'occhio. UNA SOLA per
@@ -271,12 +283,54 @@ a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: va
    (role="tabpanel" + hidden) l'attributo hidden basta da solo: [hidden] vince nelle utilities. */
 .rg-tabpanel { display: none; }
 .rg-tabpanel.is-active, .rg-tabpanel[aria-hidden="false"] { display: block; }
-.rg-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--rg-space-2); margin: 0; padding: 0; color: var(--rg-color-text-secondary); list-style: none; font-size: var(--rg-font-size-xs); }
-.rg-breadcrumb li + li::before { content: "/"; margin-right: var(--rg-space-2); }
-.rg-breadcrumb a { color: var(--rg-color-text-secondary); text-decoration: none; }
-.rg-breadcrumb a:hover { color: var(--rg-color-black); text-decoration: underline; text-underline-offset: 3px; }
+/* Breadcrumb (rivisto v1.17.0) — dove sono e dentro cosa.
+   Forma canonica: <nav class="rg-breadcrumb" aria-label="Percorso"> > <ol> > <li>, ultima voce
+   <span class="rg-breadcrumb__current" aria-current="page">. Il separatore lo genera il DS fra un
+   <li> e il successivo, con testo alternativo vuoto: lo screen reader legge l'elenco, non le barre.
+   COMPATIBILITA: la forma piatta <nav class="rg-breadcrumb"> con <a>, span.__sep e span.__current
+   (quella di rg-product-platform fino alla 1.16) resta valida; __sep e ammesso solo li. Fino alla
+   1.16 un __sep dentro un <li> usciva DOPPIO (quello scritto piu quello generato): dentro un <li>
+   ora e nascosto, cosi il separatore e sempre uno solo.
+   Navigazione = AGNext a 14 (regola §3), non corpo a 12. Il link e sottolineato anche a riposo:
+   la voce corrente si distingue per peso, colore e assenza di sottolineatura, non solo per colore.
+   Target 40 px in altezza (regola §11): la riga del percorso e alta quanto un controllo. */
+.rg-breadcrumb, .rg-breadcrumb > ol { display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--rg-space-2); row-gap: 0; margin: 0; padding: 0; list-style: none; }
+.rg-breadcrumb { color: var(--rg-color-text-secondary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
+.rg-breadcrumb li { display: inline-flex; align-items: center; gap: var(--rg-space-2); min-width: 0; }
+.rg-breadcrumb li + li::before { content: "/"; content: "/" / ""; color: var(--rg-color-neutral-400); }
+.rg-breadcrumb li > .rg-breadcrumb__sep { display: none; }
+.rg-breadcrumb a { display: inline-flex; align-items: center; min-width: 0; min-height: 40px; color: var(--rg-color-text-secondary); text-decoration: underline; text-decoration-thickness: var(--rg-border-hairline); text-underline-offset: var(--rg-space-1); overflow-wrap: anywhere; }
+.rg-breadcrumb a:hover { color: var(--rg-color-black); text-decoration-thickness: var(--rg-border-strong); }
 .rg-breadcrumb__sep { color: var(--rg-color-neutral-400); }
-.rg-breadcrumb__current { color: var(--rg-color-black); font-weight: var(--rg-weight-medium); }
+.rg-breadcrumb__current, .rg-breadcrumb [aria-current="page"] { display: inline-flex; align-items: center; min-width: 0; min-height: 40px; color: var(--rg-color-text-primary); font-weight: var(--rg-weight-medium); text-decoration: none; overflow-wrap: anywhere; }
+
+/* Testata di pagina (v1.17.0) — UNA forma per la testa di ogni pagina di un'app a pagine.
+   Prima c'erano quattro teste diverse (section-header con __title, section-header con h1.rg-h2,
+   h1 nudo con margini inline, link «← Indietro» al posto del percorso) e la stessa informazione
+   stava in un posto diverso a ogni pagina. Slot, tutti opzionali tranne il titolo, in quest'ordine:
+   percorso (rg-breadcrumb) → riga di contesto (a chi appartiene questa entita) → titolo H1 con i
+   badge di stato accanto → sottotitolo (una riga) → meta (dati, mono) | zona azioni.
+   Il titolo resta a 28 (--rg-font-size-xl, peso heading): e la misura che le pagine dell'app
+   usavano gia (rg-section-header__title, rg-h2), cosi la migrazione non cambia la gerarchia.
+   Il contesto e TESTO, non link: i link verso i genitori stanno nel percorso, e ripeterli
+   raddoppierebbe le fermate di tabulazione. La zona azioni si allinea al piede del blocco titolo e
+   va a capo sotto di esso quando non c'e spazio. */
+.rg-page-header { display: grid; gap: var(--rg-space-2); margin-bottom: var(--rg-space-8); }
+.rg-page-header__main { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--rg-space-4) var(--rg-space-6); }
+.rg-page-header__heading { flex: 1 1 32ch; min-width: 0; display: grid; gap: var(--rg-space-1); }
+.rg-page-header__context { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); overflow-wrap: anywhere; }
+.rg-page-header__context strong { color: var(--rg-color-text-primary); font-weight: var(--rg-weight-medium); }
+.rg-page-header__headline { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-2) var(--rg-space-3); min-width: 0; }
+.rg-page-header__title { min-width: 0; margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-heading); line-height: var(--rg-line-height-heading); overflow-wrap: anywhere; }
+.rg-page-header__status { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); }
+.rg-page-header__subtitle { max-width: var(--rg-layout-reading-max); margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
+.rg-page-header__meta { display: flex; flex-wrap: wrap; gap: 0 var(--rg-space-2); margin: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+.rg-page-header__meta > * + *::before { content: "·"; content: "·" / ""; padding-right: var(--rg-space-2); color: var(--rg-color-neutral-400); }
+.rg-page-header__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); }
+@media (max-width: 680px) {
+  .rg-page-header__main { flex-direction: column; align-items: stretch; }
+  .rg-page-header__actions { justify-content: flex-start; }
+}
 .rg-pagination { display: flex; gap: var(--rg-space-1); }
 .rg-page { min-width: 34px; min-height: 34px; background: var(--rg-color-white); border: 1px solid transparent; cursor: pointer; }
 .rg-page:hover { border-color: var(--rg-color-neutral-600); }
@@ -919,6 +973,23 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 /* Lunghezza variabile e senza tetto ragionevole (un percorso file, una descrizione): prende lo
    spazio che avanza sulla riga invece di dichiarare una misura falsa. Terzo caso di Baymard. */
 .rg-field--grow { flex: 1 1 calc(16ch + var(--rg-space-8)); min-width: 0; }
+
+/* Riga di campi (v1.17.0) — i CONTROLLI in fila, aiuto ed errore sotto senza spostare i vicini.
+   rg-cluster--end allinea al piede: un rg-field__help sotto un campo abbassa il suo piede e ne alza
+   il controllo rispetto ai vicini (caso reale: la riga dei cicli di una macchina, dove un solo campo
+   dice «vale 12 per tutte»). Qui la riga allinea alla CIMA: le etichette sono su una riga sola
+   (garantito da rg-field--w* sopra i 680 px), quindi i controlli cadono tutti sulla stessa linea, e
+   cio che sta sotto un controllo allunga soltanto il proprio campo.
+   L'aiuto non allarga il campo: width 0 + min-width 100% lo toglie dal calcolo della larghezza
+   intrinseca e poi lo stende sulla larghezza che il campo ha gia; va a capo li dentro.
+   L'altezza dell'etichetta e resa esplicita (corpo xs per interlinea body) perche la zona azioni
+   deve saltarla: le azioni della riga si posano sulla linea dei controlli, non su quella delle
+   etichette, e dentro quella linea alta 40 px (target minimo) si centrano — un bottone e una
+   casella di scelta stanno sullo stesso asse degli input. */
+.rg-form-row { --rg-form-row-label: calc(var(--rg-font-size-xs) * var(--rg-line-height-body) + var(--rg-space-2)); display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--rg-space-4) var(--rg-space-3); }
+.rg-form-row > .rg-field > .rg-field__label { line-height: var(--rg-line-height-body); }
+.rg-form-row > .rg-field > .rg-field__help { width: 0; min-width: 100%; }
+.rg-form-row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); min-height: calc(var(--rg-form-row-label) + 40px); padding-top: var(--rg-form-row-label); }
 
 /* Marcatore di campo (v1.15.0) — DICHIARA UNA VOLTA, MARCA MOLTE.
    Il problema: "questo campo entra nel costo" vale per cinque campi su dodici, e ripeterlo in un

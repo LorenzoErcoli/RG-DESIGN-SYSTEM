@@ -7,6 +7,32 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.19.1 — 2026-09-16
+
+**Il valore torna attaccato alla sua unità.** Nel campo `rg-field-with-unit` con
+`rg-input--numeric`, fra il numero e il riquadro dell'unità restava un buco — `100      mm` — in
+ogni campo e sempre della stessa misura. La documentazione prometteva il contrario: *«il campo e il
+riquadro dell'unità restano attaccati e non si stirano»*. Trovato nella suite RG Embroidery Tools,
+dove era in tutti i 106 campi numerici dei 12 tool.
+
+Nessuna classe, nessun token, nessun cambio di markup: **patch, si aggiorna il pin e basta.**
+
+### Corretto
+
+- **`.rg-field-with-unit .rg-input--numeric { max-width: none; }`** — La causa è un'unità relativa
+  risolta due volte in due font. `--rg-input-numeric-width` vale `12ch`, e `ch` è la larghezza
+  dello «0» *nel font di chi la usa*: la traccia della griglia (`:has(.rg-input--numeric)`) la
+  calcolava nel font del contenitore, il `max-width` dell'input nel suo mono a 14px. Misurato con
+  GT America: **traccia 106,8px, input 92,4px, buco 14px**. Ora dentro il campo con unità la
+  larghezza la decide la traccia, e l'input — che è un elemento di griglia — la riempie da sé.
+  Fuori dal campo con unità il `max-width` resta com'era.
+- Vale anche per `rg-field-with-unit--compact`, che usa la stessa variabile.
+
+### Documentazione
+
+- **`components/forms.md`** — il perché scritto accanto alla promessa, così la prossima modifica
+  alla larghezza del campo numerico non riapre il buco.
+
 ## 1.19.0 — 2026-09-16
 
 **La fascia del reparto in testa al blocco della fase, e «Elimina fase» a icona.** Richiesta di chi

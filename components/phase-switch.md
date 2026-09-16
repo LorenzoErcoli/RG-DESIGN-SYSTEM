@@ -109,7 +109,7 @@ In entrambi i casi il titolo porta il numero in un prefisso nascosto alla vista 
 | `rg-phase-switch__num` | Numero di posizione nella sequenza della parte. |
 | `rg-phase-switch__text` | Colonna testo. |
 | `rg-phase-switch__role` | «Principale», «Collegata · prima della 2», «Collegata · dopo la 2». |
-| `rg-phase-switch__title` | Titolo della fase. |
+| `rg-phase-switch__title` | Titolo della fase. Dalla 1.20.0 comincia con la tessera del reparto (`rg-dept-mark--quiet`, `role="img"`, `aria-label`). |
 | `rg-phase-switch__aside` | Un solo badge: `rg-badge--count` («6 da compilare») o `rg-badge--unresolved` («1 errore»). |
 
 Variabile: `--rg-phase-switch-ground`, il fondo dietro la didascalia (default
@@ -124,11 +124,11 @@ Variabile: `--rg-phase-switch-ground`, il fondo dietro la didascalia (default
 | `rg-phase-panel__heading` | (1.17.0) Numero, etichetta e nome. |
 | `rg-phase-panel__num` | (1.17.0) Il numero della fase, invertito come `rg-step__num` a fase aperta. `aria-hidden`: il numero lo dice il titolo. |
 | `rg-phase-panel__name` | (1.17.0) Colonna di etichetta e nome. |
-| `rg-phase-panel__kind` | (1.17.0) «Fase 2 di 4», poi la relazione: «Principale · con la 3», «Collegata · dopo la 2». Sempre, anche con una fase sola. |
+| `rg-phase-panel__kind` | (1.17.0) «Fase 2 di 4», poi la relazione: «Principale · con la 3», «Collegata · dopo la 2». Sempre, anche con una fase sola. Dalla 1.20.0 il **primo elemento** è il reparto: `rg-dept-label` (tessera `rg-dept-mark--quiet` + nome). |
 | `rg-phase-panel__title` | (1.17.0) Il nome della fase: `<h1>` se la pagina mostra una fase, `<h2>` in un gruppo. |
 | `rg-phase-panel__meta` | Riepilogo della fase: `12 materiali` · `48 stop` · `9 fili` · `dati dal PDF caricato su questa fase`. Senza testa titolata (forma 1.16) è posizione e relazione. |
 | `rg-phase-panel__status` | Stato del costo (`rg-badge`) e timbro di reparto. |
-| `rg-phase-panel__band` | (1.19.0) Sulla `rg-dept-band`, con `--quiet`: la **fascia del reparto**, primo figlio del blocco, da bordo a bordo, alta 48 px, etichetta a sinistra sul filo del numero. |
+| `rg-phase-panel__band` | (1.19.0) Sulla `rg-dept-band`, con `--quiet`: la **fascia del reparto**, primo figlio del blocco, da bordo a bordo, alta 48 px, etichetta a sinistra sul filo del numero. **A schermo superata dalla 1.20.0**: il reparto va in `__kind` con `rg-dept-label` (vedi *Il reparto senza fascia*). |
 | `rg-phase-panel__dept` | **Superato dalla 1.19.0** (usare `__band`). Il timbro del reparto dentro la testa. |
 | `rg-phase-panel__body` | Tab di sezione e contenuto. |
 | `rg-phase-panel__sections` | (1.17.0) Sulla `rg-tabs` delle sezioni, **primo figlio** di `__body`: le tab si attaccano sotto la testa, da bordo a bordo. |
@@ -506,7 +506,7 @@ scheda, sopra proprio il tipo di fase e di eliminare. Ovviamente che sta dentro 
 con il pattern che ha una altezza e la label centrata alto basso e allineata a sinistra, tutto con lo
 stesso padding. Eliminare usa icona come in dash del prodotto»*.
 
-**La fascia del reparto** (`rg-phase-panel__band`, sulla `rg-dept-band`):
+**La fascia del reparto** (`rg-phase-panel__band`, sulla `rg-dept-band`). *A schermo superata dalla 1.20.0: sotto le linguette si leggeva come il loro bordo. Vedi [Il reparto senza fascia](#il-reparto-senza-fascia-1200).*
 
 - **È il primo figlio del blocco**, prima di `__head`: da bordo a bordo, dentro il contorno, con gli
   angoli alti arrotondati come il blocco. Sotto una linguetta attaccata (`rg-phase-switch`) l'angolo
@@ -578,6 +578,67 @@ Reparto non assegnato:
 <p class="rg-dept-band rg-dept-band--quiet rg-phase-panel__band"><span class="rg-dept-band__name">Reparto da assegnare</span></p>
 ```
 
+### Il reparto senza fascia (1.20.0)
+
+Prova a schermo sulla 1.19.0: la fascia grigia `__band`, subito sotto le linguette, **si legge come
+il bordo delle linguette, non come «reparto»**; e il nome del reparto è già sulla linguetta.
+Decisione: **a schermo la fascia sopra il blocco della fase si toglie**. Il reparto passa in due segni
+piccoli, con la tessera [`rg-dept-mark`](dept-mark.md) — la figura della banda ridotta a 20 px:
+
+- **sulla linguetta**, la tessera `--quiet` davanti al titolo, dentro `__title`. È sola (il nome del
+  reparto non c'è), quindi porta `role="img"` e `aria-label="Reparto: <nome>"`, più `title` per il
+  puntatore. Prende il colore del testo della linguetta: grigio dietro, nero sulla scelta e in hover;
+- **nel blocco**, `rg-dept-label` (tessera + nome) come **primo elemento** di `__kind`:
+  «[tessera] PRESSATURA E SOFFIATURA · FASE 2 DI 6 · RIMOZIONE GARZE · CON LA 3». Il nome è scritto,
+  la tessera è `aria-hidden`. Il nome è in nero, il resto della riga resta nel colore d'etichetta.
+- **reparto non assegnato**: tessera senza variante (vuota, bordo tratteggiato) e «Reparto da
+  assegnare» come primo elemento di `__kind`.
+
+**Il blocco senza fascia non ha un modificatore**, e non serve. La testa `__head` torna primo figlio
+del blocco, col suo padding (16 sopra, 24 ai lati; 16 sotto i 680 px), come fino alla 1.18.0; l'unica
+regola che la fascia aveva introdotto (l'angolo vivo sotto la linguetta) sta sulla `__band` e se ne va
+con lei. Misurato: sotto le linguette il bordo nero del blocco, poi 16 px, poi la riga `__kind`; la
+tessera sporge di 2 px sopra e sotto senza alzare la riga, e il numero della fase resta sul filo del
+titolo. Il marcatore `rg-phase-panel__band` resta nel CSS per chi non ha ancora tolto la fascia.
+
+**Sul foglio stampato non cambia nulla**: `rg-worksheet-block` con `rg-dept-band` a colori, `__name`
+e `__note`.
+
+```html
+<div class="rg-phase-switch">
+  <p class="rg-phase-switch__caption" id="fasi-gruppo">Fasi del gruppo · si salvano insieme</p>
+  <div class="rg-phase-switch__tabs" role="tablist" aria-labelledby="fasi-gruppo">
+    <button class="rg-phase-switch__item rg-phase-switch__item--principal" type="button" role="tab" id="tab-fase-2" aria-controls="fase-2" aria-selected="true" tabindex="0">
+      <span class="rg-phase-switch__num">2</span>
+      <span class="rg-phase-switch__text">
+        <span class="rg-phase-switch__role">Principale</span>
+        <span class="rg-phase-switch__title"><span class="rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet" role="img" aria-label="Reparto: Pressatura e soffiatura" title="Pressatura e soffiatura"></span>Rimozione garze</span>
+      </span>
+      <span class="rg-phase-switch__aside"><span class="rg-badge rg-badge--count">6 da compilare</span></span>
+    </button>
+    <!-- le altre linguette, ciascuna con la tessera del suo reparto -->
+  </div>
+</div>
+
+<section class="rg-phase-panel rg-tabpanel is-active" role="tabpanel" id="fase-2" aria-labelledby="tab-fase-2">
+  <header class="rg-phase-panel__head">
+    <div class="rg-phase-panel__heading">
+      <span class="rg-phase-panel__num" aria-hidden="true">2</span>
+      <div class="rg-phase-panel__name">
+        <p class="rg-phase-panel__kind">
+          <span class="rg-dept-label"><span class="rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet" aria-hidden="true"></span>Pressatura e soffiatura</span>
+          <span>Fase 2 di 6</span>
+          <span>Rimozione garze · con la 3</span>
+        </p>
+        <h2 class="rg-phase-panel__title"><span class="rg-u-visually-hidden">Fase 2: </span>Rimozione garze</h2>
+      </div>
+    </div>
+    <!-- __gestures, __summary, __document come nella 1.18.0 / 1.19.0 -->
+  </header>
+  <div class="rg-phase-panel__body"><!-- tab di sezione e contenuto --></div>
+</section>
+```
+
 ## Tastiera e accessibilità
 
 
@@ -593,7 +654,9 @@ Due tablist ARIA, uno dentro l'altro: quello delle sezioni sta nel `tabpanel` de
 - **Il tablist è `__tabs`**, etichettato dalla didascalia con `aria-labelledby`. La didascalia non sta
   dentro il tablist, perché un `role="tablist"` possiede solo tab.
 - **Nome accessibile della linguetta = il suo contenuto**: «3 Collegata · dopo la 2 Sabbiatura e
-  soffiatura finale 7 da compilare». Non accorciarlo con `aria-label`.
+  soffiatura finale 7 da compilare»; dalla 1.20.0 con il reparto dalla tessera, «3 Collegata · dopo
+  la 2 Reparto: Pressatura e soffiatura Sabbiatura e soffiatura finale 7 da compilare». Non
+  accorciarlo con `aria-label` sulla linguetta.
 - **Il blocco ha un titolo visibile** (`__title`, dalla 1.17.0), con il numero in un prefisso nascosto
   alla vista («Fase 3: »): chi naviga per intestazioni trova la fase e il suo numero.
 - **Target:** linguetta ≥ 40 px (in pratica 64). Nel piede i bottoni restano a 40 px, senza
@@ -648,6 +711,8 @@ document.addEventListener('keydown', (e) => {
   sta nella testa del blocco, in `__gestures`.
 - **Il compilatore fra sei bottoni uguali**: è la primaria della sezione Sequenza stop.
 - **Il colore pieno del reparto a schermo** (`rg-dept-band` senza `--quiet`).
+- **La fascia `__band` subito sotto le linguette** (dalla 1.20.0): si legge come il loro bordo. A schermo il reparto sta nella tessera.
+- **La tessera del reparto sola e muta**: sulla linguetta ha `role="img"` e `aria-label`, nella riga `__kind` ha il nome accanto.
 - **`<a href>` sulle linguette in un form unico:** la navigazione perderebbe i valori non salvati.
 - **Rinumerare le fasi dentro il gruppo, o usare 2a/2b.**
 

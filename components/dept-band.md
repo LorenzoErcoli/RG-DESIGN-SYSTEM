@@ -52,7 +52,7 @@ fotocopia spinta non è una differenza. Il tono non fonda una famiglia.
 
 | Modificatore | Quando |
 | --- | --- |
-| `rg-dept-band--quiet` | **A schermo** (v1.16.0), insieme a una delle sette: la stessa figura, in grigio. A schermo il colore del reparto convive con i colori di stato, e `category-3/4/5` sono `danger`, `warning` e `success`: una pressatura rossa accanto a un badge d'errore dice due cose con lo stesso rosso. Restano la figura e il nome, cioè i due segnali che riconoscono il reparto. Uso di riferimento: il timbro di reparto nella testa di [`rg-phase-panel`](phase-switch.md). Mai su carta, dove il colore serve. |
+| `rg-dept-band--quiet` | **A schermo** (v1.16.0), insieme a una delle sette: la stessa figura, in grigio. A schermo il colore del reparto convive con i colori di stato, e `category-3/4/5` sono `danger`, `warning` e `success`: una pressatura rossa accanto a un badge d'errore dice due cose con lo stesso rosso. Restano la figura e il nome, cioè i due segnali che riconoscono il reparto. Uso di riferimento: il timbro di reparto nella testa di [`rg-phase-panel`](phase-switch.md). Mai su carta, dove il colore serve. In linea (una tessera da 20 px) la stessa figura è [`rg-dept-mark--quiet`](dept-mark.md), che usa il colore del testo e non questo grigio. |
 
 Senza variante la banda esiste comunque: filetto nero, nessuna campitura. È il caso «reparto non
 assegnato», e si legge come tale.
@@ -63,6 +63,11 @@ sinistra sul filo del numero della fase, sempre `--quiet`. Le figure reggono l'a
 riempiono la banda (pois, scacchiera, diagonale, coppie) o stanno sulla **mezzeria** (croci, registri
 della stampa, piastre). Con il reparto non assegnato la fascia c'è, senza
 variante, con «Reparto da assegnare». Vedi [phase-switch](phase-switch.md#la-fascia-del-reparto-e-elimina-fase-a-icona-1190).
+
+**A schermo, dalla 1.20.0, la fascia si toglie** dal blocco della fase: subito sotto le linguette si
+leggeva come il loro bordo, non come «reparto». Il reparto in linea è la **tessera**
+[`rg-dept-mark`](dept-mark.md): la stessa famiglia di figura, ridotta per reparto a 20 px, davanti al
+titolo della linguetta e in testa alla riga «Fase N di M». **Sul foglio stampato la banda resta com'è.**
 
 Il nome della variante apre con il **lavoro prevalente** del reparto, non con la macchina più
 vistosa: `--stampa`, non `--laser`. Il reparto «Stampa, Laser e HF» è quello dove stanno le

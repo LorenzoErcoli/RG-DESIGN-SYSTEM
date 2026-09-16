@@ -15,6 +15,8 @@
 <symbol id="rg-icon-apri-esterno" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M13.5 3.5h7v7M20.5 3.5l-9 9M18 14v6.5H3.5V6H10"/></symbol>
 <symbol id="rg-icon-indietro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M20 12H4.5M10.5 6l-6 6 6 6"/></symbol>
 <symbol id="rg-icon-avanti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M4 12h15.5M13.5 6l6 6-6 6"/></symbol>
+<symbol id="rg-icon-sposta-su" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 20V4.5M6 10.5l6-6 6 6"/></symbol>
+<symbol id="rg-icon-sposta-giu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 4v15.5M6 13.5l6 6 6-6"/></symbol>
 <symbol id="rg-icon-scarica" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 3.5v12M6.5 10l5.5 5.5 5.5-5.5M4 20.5h16"/></symbol>
 <symbol id="rg-icon-carica" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 15.5v-12M6.5 9l5.5-5.5L17.5 9M4 20.5h16"/></symbol>
 <symbol id="rg-icon-stampa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6.5 9V3.5h11V9M6.5 17h-3V9h17v8h-3M6.5 13.5h11v7h-11z"/></symbol>

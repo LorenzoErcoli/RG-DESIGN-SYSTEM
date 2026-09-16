@@ -66,7 +66,7 @@
   .rg-worksheet-block--long .rg-table tr { break-inside: avoid; page-break-inside: avoid; }
   /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda
      di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome. */
-  .rg-dept-band, .rg-part-mark, .rg-part-edge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .rg-dept-band, .rg-dept-mark, .rg-part-mark, .rg-part-edge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   /* Su carta non c'e il puntatore: suggerimenti e menu non si stampano. */
   .rg-tooltip__text, .rg-action-menu__list { display: none !important; }
   /* Su carta non esiste il puntatore: l'evidenziazione di riga sporcherebbe e basta. */

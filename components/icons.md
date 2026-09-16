@@ -34,6 +34,7 @@ Il nome è l'**azione**, non la figura.
 | `chiudi` | croce | Chiudi, chiusura di modale | ✕ × |
 | `salva` | dischetto | Salva | |
 | `indietro` / `avanti` | frecce | ← Prec / Succ → | ← → |
+| `sposta-su` / `sposta-giu` | freccia in su / in giù, senza base | Sposta in su / in giù una riga della sequenza delle operazioni (1.20.0) | ↑ ↓ accanto a una riga (il ↓ di «Scarica» resta `scarica`) |
 | `scarica` | freccia sulla base | ↓ Scarica, ↓ Scarica PDF, ↓ Esporta Excel, ↓ PDF | ↓ |
 | `carica` | freccia dalla base | Carica, Carica un altro…, Carica PDF scheda macchina… | |
 | `stampa` | stampante | Stampa | |
@@ -57,6 +58,11 @@ Il nome è l'**azione**, non la figura.
 | `immagine` | cornice con monte | Scegli un'immagine…, Togli immagine | |
 | `informazione` | cerchio con i | note informative | ⓘ |
 | `altro` | tre punti | trigger del menu «Altre azioni» | ⋯ |
+
+**Frecce vicine, da non scambiare.** `sposta-su`/`sposta-giu` sono le frecce di `indietro`/`avanti`
+ruotate: asta intera e punta aperta, **nessuna base**. `scarica` e `carica` hanno la base (il file che
+arriva o parte), `ordina` ha due frecce affiancate (l'ordine di una colonna, non di una riga).
+Riordinare una riga è sempre la coppia su/giù, mai `ordina`.
 
 ## Uso e limiti
 

@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.18.0 — in preparazione (non rilasciata)
+## 1.18.0 — 2026-09-16
 
 **Il documento della fase, e i gesti sulla fase in alto.** Giudizio sulla 1.17.0 provata sul campo:
 *«l'hai portata in fondo con elimina, ma non va bene. In realtà non va bene nemmeno quell'oggetto in

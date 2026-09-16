@@ -164,6 +164,69 @@ all'aggiunta che al salvataggio, e il primario resta l'ultima cosa che si incont
 </div>
 ```
 
+## Riordinare le righe: ↑ ↓ (1.20.0)
+
+Decisione di prodotto (2026-09-16): **le righe della sequenza si riordinano con due bottoni, sposta in
+su e sposta in giù, non con il trascinamento.** Il trascinamento non ha un equivalente da tastiera se
+non lo si costruisce a parte, su una riga piena di campi si confonde con la selezione del testo, e a
+schermo tattile si scontra con lo scorrimento. Due bottoni per riga funzionano con il mouse, con la
+tastiera e senza JavaScript (un `submit` per mossa).
+
+**Forma: sola icona con suggerimento**, come «Elimina» in riga e «Elimina la fase» nella testa del
+blocco. È un'azione **ripetuta su ogni riga**, le frecce su e giù sono **universali**, e il gesto è
+reversibile con un clic: la regola di [buttons](buttons.md#icona-testo-o-entrambi) dice sola icona.
+Non `rg-button--ghost` con icona e testo: «Sposta su · Sposta giù · + Ripeti» su ogni riga fa una
+colonna di parole uguali più larga dei campi.
+
+- `rg-icon-button rg-icon-button--full` (40×40, il target minimo) con [`rg-tooltip`](tooltip.md): il
+  suggerimento è il **nome** del bottone (`aria-labelledby`) e nomina la riga, perché venti bottoni
+  «Sposta in su» uguali non dicono quale: «Sposta in su: 03 Stampa — bianco».
+- Icone `sposta-su` e `sposta-giu`, sempre in quest'ordine: su prima di giù, nel DOM e a vista.
+- Le due frecce stanno in un [`rg-action-group`](action-group.md) proprio, **prima** delle altre
+  azioni della riga («+ Ripeti», «Rimuovi»), con `role="group"` e `aria-label` «Ordine di 03 Stampa —
+  bianco». Il filetto del gruppo le separa da Ripeti/Rimuovi, che cambiano il **contenuto** della
+  sequenza e non solo l'ordine.
+- **Prima riga: «sposta in su» disabilitato; ultima riga: «sposta in giù» disabilitato.** Il bottone
+  **resta al suo posto** (`disabled`), non si nasconde: le frecce restano in colonna su tutte le righe
+  e la mano trova sempre lo stesso bottone nello stesso punto. Il motivo è a vista (non c'è una riga
+  sopra, o sotto), e il suggerimento lo dice: «Già la prima: 01 Preparazione materiale». Con una sola
+  riga, tutti e due disabilitati. Aspetto: `.rg-icon-button:disabled`, icona grigia, niente bordo in hover.
+- **Dopo lo spostamento il fuoco segue la riga.** Con il `submit` la pagina si ricarica: il server
+  rimette il fuoco sulla stessa freccia della riga spostata (`autofocus`, o un'ancora per riga), e
+  se quella freccia ora è disabilitata (la riga è diventata la prima o l'ultima) sull'altra. Senza
+  questo, chi usa la tastiera ricomincia da capo a ogni mossa.
+- **Le ripetizioni** (`--repeat`) si muovono con la riga di cui sono ripetizione, o solo dentro il suo
+  gruppo: è una regola del dominio e la decide la piattaforma. Il DS dà solo i bottoni; se una
+  ripetizione non può uscire dal suo gruppo, la freccia che la farebbe uscire è disabilitata con il
+  motivo nel suggerimento.
+- L'indice (`01`, `03·2`) si **rinumera** dopo la mossa: è la posizione nella sequenza, non un
+  identificativo.
+
+```html
+<li class="rg-operation-row">
+  <div class="rg-operation-row__head">
+    <span class="rg-operation-row__index">01</span>
+    <span class="rg-operation-row__name">Preparazione materiale</span>
+  </div>
+  <div class="rg-form-row"><!-- campi --></div>
+  <div class="rg-operation-row__actions">
+    <div class="rg-action-group" role="group" aria-label="Ordine di 01 Preparazione materiale">
+      <span class="rg-tooltip">
+        <button class="rg-icon-button rg-icon-button--full" type="submit" name="sposta_su" value="01" disabled aria-labelledby="tip-su-01"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-sposta-su"></use></svg></button>
+        <span class="rg-tooltip__text" role="tooltip" id="tip-su-01">Già la prima: 01 Preparazione materiale</span>
+      </span>
+      <span class="rg-tooltip">
+        <button class="rg-icon-button rg-icon-button--full" type="submit" name="sposta_giu" value="01" aria-labelledby="tip-giu-01"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-sposta-giu"></use></svg></button>
+        <span class="rg-tooltip__text" role="tooltip" id="tip-giu-01">Sposta in giù: 01 Preparazione materiale</span>
+      </span>
+    </div>
+    <div class="rg-action-group">
+      <button class="rg-button rg-button--ghost" type="submit" name="ripeti" value="01">+ Ripeti</button>
+    </div>
+  </div>
+</li>
+```
+
 ## Stati
 
 `default`, `hover` (superficie chiara), `focus` (sui controlli, dal DS), `repeat` (rientro +

@@ -7,6 +7,75 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.20.0 — 2026-09-16
+
+**Minor**: una classe nuova con le sue varianti (`rg-dept-mark`), un elemento in linea
+(`rg-dept-label`), due icone. Niente di rimosso o rinominato, nessun token. Il ramo `ds/dept-mark`
+parte da `ds/dept-band-figure` e lo contiene.
+
+### Il segno del reparto, e il blocco della fase senza fascia (ramo `ds/dept-mark`)
+
+Prova a schermo sulla 1.19.0: la fascia grigia `rg-phase-panel__band`, subito sotto le linguette,
+**si legge come il bordo delle linguette, non come «reparto»**; e il nome del reparto è già sulla
+linguetta. Decisione: a schermo la fascia si toglie, il reparto passa in un segno piccolo. Sul foglio
+stampato la banda resta com'è.
+
+- **`rg-dept-mark`** (beta): tessera da 20 px con la figura del reparto **ridotta**, non scalata (a
+  20 px la trama della banda si impasta). Sette riduzioni nella stessa famiglia di segno: una croce
+  (ricamo); goccia e raggio sopra, due linee sotto (stampa); due piastre sopra e due sotto col filo
+  (pressatura); quattro pois (strass); scacchiera 3×3 (finissaggio); diagonali spesse (incollature);
+  una coppia di linee sottili (accoppiaggi). **Senza variante** = reparto da assegnare: tessera vuota a
+  bordo tratteggiato.
+- **`rg-dept-mark--quiet`**: a schermo, sempre. Prende il colore del **testo intorno**
+  (`currentColor`), non il `neutral-400` della banda sobria, che a 20 px non regge un segno da 2 px.
+- **`rg-dept-label`**: tessera + nome del reparto in linea; la tessera è `aria-hidden`, il nome è testo.
+  In linea e non `inline-flex`, così il nome sta sulla linea di base del testo accanto. La tessera
+  sporge di 2 px sopra e sotto senza alzare righe da 12/14 px.
+- **Linguetta**: la tessera davanti al titolo, dentro `rg-phase-switch__title`, con `role="img"` e
+  `aria-label="Reparto: <nome>"`.
+- **Blocco della fase**: `rg-dept-label` come primo elemento di `rg-phase-panel__kind`, in nero.
+  **Il blocco senza `__band` non ha un modificatore**: la testa torna primo figlio col suo padding
+  (16 sopra, 24 ai lati), com'era fino alla 1.18.0. `rg-phase-panel__band` resta nel CSS.
+- Stampa: `rg-dept-mark` in `print-color-adjust: exact`.
+- Documenti: nuovo `components/dept-mark.md`; `phase-switch.md` (*Il reparto senza fascia*),
+  `dept-band.md`. Vetrina: sezione «Segno del reparto» (le sezioni seguenti scalano di un numero), e
+  gli esempi del pannello di fase senza fascia, con le tessere.
+
+### Riordinare le operazioni con su e giù (ramo `ds/dept-mark`)
+
+Decisione di prodotto (2026-09-16): le righe della sequenza delle operazioni si riordinano con ↑ ↓,
+non con il trascinamento.
+
+- **Icone `rg-icon-sposta-su` e `rg-icon-sposta-giu`**: le frecce di `indietro`/`avanti` ruotate, senza
+  base (la base è di `scarica`/`carica`). Il set passa a 36.
+- **Forma in `rg-operation-row__actions`**: `rg-icon-button rg-icon-button--full` con `rg-tooltip`
+  (sola icona: azione ripetuta su ogni riga, frecce universali, gesto reversibile), in un
+  `rg-action-group` proprio prima di Ripeti/Rimuovi. Il suggerimento nomina la riga.
+- **Prima e ultima riga**: la freccia che non può muovere è `disabled` e resta al suo posto; il
+  suggerimento dice «Già la prima» / «Già l'ultima». Dopo la mossa il fuoco torna sulla stessa freccia.
+- Documenti: `operation-row.md` (*Riordinare le righe*), `icons.md`. Vetrina: tavola «Riordinare».
+
+### Le figure del reparto a 48 px (ramo `ds/dept-band-figure`)
+
+**Le figure del reparto a 48 px: niente più cornici.** Sulla pagina di una fase di Pressatura la
+fascia `rg-phase-panel__band` «ha l'etichetta ma non il disegno di sfondo che ha il Ricamo»: i due
+dorsi pieni della pressatura, ancorati ai bordi, con il contorno del blocco si leggevano come una
+cornice.
+
+Da sola sarebbe una patch: nessuna classe nuova o rimossa, nessun token, nessun cambio di markup.
+
+- **`rg-dept-band--pressatura`**: nuova figura, stessa idea. Una fila di piastre (blocchi 16×12,
+  luce 8) sopra e una sotto, allineate in colonna, con il filo del materiale da 2 px in mezzo. Alta
+  32 px, centrata come il punto croce. Scartate due file di trattini 16×8 (linea tratteggiata doppia).
+- **`rg-dept-band--stampa`**: i due registri, prima ancorati al bordo alto e al bordo basso, stanno
+  sulla mezzeria. A 32 px non cambia quasi nulla; a 48 px non si aprono più in un bordo sopra e uno sotto.
+- **`rg-dept-band--quiet`**: la regola stava prima di `--accoppiaggi`, e la fascia sobria degli
+  accoppiaggi usciva a colori pieni. Ora segue le sette varianti.
+- Ricamo, strass, finissaggio, incollature: invariati (riempiono la banda o stanno già al centro).
+- Regola scritta in `dept-band.md`: mai una figura ancorata ai bordi. Coppia da tenere d'occhio:
+  pressatura e finissaggio, entrambe a blocchi, separate per disposizione e non per tono.
+- Vetrina: nuova tavola con le sette fasce da 48 px `--quiet`.
+
 ## 1.19.1 — 2026-09-16
 
 **Il valore torna attaccato alla sua unità.** Nel campo `rg-field-with-unit` con

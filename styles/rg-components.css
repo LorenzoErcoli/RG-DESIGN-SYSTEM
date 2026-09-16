@@ -660,8 +660,10 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-phase-panel__status { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); }
 /* FASCIA DEL REPARTO (v1.19.0) — la rg-dept-band come intestazione del blocco della fase: PRIMO
    figlio del blocco, da bordo a bordo, dentro il contorno arrotondato (angoli alti come il blocco,
-   meno il filetto). Altezza fissa 48 px, filetto del reparto compreso: le sette figure la reggono,
-   perche i loro registri sono ancorati in alto, in basso o al centro. Etichetta centrata in verticale
+   meno il filetto). Altezza fissa 48 px, filetto del reparto compreso: le sette figure la reggono
+   se riempiono la banda (pois, scacchiera, diagonale, coppie) o stanno sulla mezzeria (croci,
+   registri della stampa, piastre). Mai una figura ancorata ai bordi: a 48 px, col contorno del
+   blocco, un segno sul bordo si legge come cornice (1.19.x, pressatura e stampa). Etichetta centrata in verticale
    (lo fa gia la banda) e allineata a sinistra, con lo stesso padding orizzontale della testa: cade
    sul filo del numero della fase. A schermo sempre --quiet (nella pagina convivono badge di stato, e
    category-3/4/5 sono danger/warning/success). Senza variante di reparto e il caso «Reparto da
@@ -669,6 +671,14 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-dept-band.rg-phase-panel__band { box-sizing: border-box; height: var(--rg-space-12); min-height: 0; padding: 0 var(--rg-space-6); border-start-start-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); border-start-end-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); }
 .rg-phase-switch ~ .rg-phase-panel > .rg-phase-panel__band { border-start-start-radius: 0; }
 .rg-phase-panel__band > .rg-dept-band__name { flex: none; }
+/* IL REPARTO SENZA FASCIA (v1.20.0) — a schermo la fascia __band, subito sotto le linguette, «si
+   legge come il bordo delle linguette, non come reparto». Il reparto passa in due segni piccoli:
+   la tessera rg-dept-mark--quiet davanti al titolo della linguetta (role="img", aria-label col nome
+   del reparto) e rg-dept-label come PRIMO elemento di __kind («[tessera] PRESSATURA E SOFFIATURA ·
+   FASE 2 DI 6 · …»). Il blocco senza __band non ha bisogno di un modificatore: la testa e gia il
+   primo figlio, col suo padding (16 sopra, 24 ai lati), com'era fino alla 1.18.0. La tessera sporge
+   di 2 px sopra e sotto e non alza la riga: il numero della fase resta sul filo del titolo. */
+.rg-phase-panel__kind > .rg-dept-label { color: var(--rg-color-text-primary); }
 /* SUPERATO dalla 1.19.0 nella testa del blocco: il timbro del reparto e la fascia __band. */
 .rg-phase-panel__dept { flex: 0 1 auto; width: calc(24ch + var(--rg-space-12)); max-width: 100%; }
 .rg-phase-panel__body { padding: var(--rg-space-6); }
@@ -996,7 +1006,7 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    si riconosce al primo colpo, e chi pesca il foglio dal mucchio non deve ricordarsi che il
    tratteggio a 45 gradi era la stampa. Criterio arrivato dal reparto, non dal design system.
    Conseguenza operativa: due reparti non stanno mai nella stessa FAMIGLIA DI SEGNO. Le sette in
-   uso: croci (ricamo), due registri (stampa), dorsi (pressatura), pois (strass), scacchiera
+   uso: croci (ricamo), due registri (stampa), piastre (pressatura), pois (strass), scacchiera
    (finissaggio), diagonale (incollature), coppie (accoppiaggi). Il verso di una diagonale, dopo
    una fotocopia e a dimensione di banda, non e una differenza; e non lo e nemmeno il tono, che
    e la ragione per cui il reticolo del finissaggio (barre verticali come gli accoppiaggi) e
@@ -1022,11 +1032,26 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    E la figura piu complessa delle sette e la piu stretta: registro alto 0-16, registro basso
    18-30 dell'area utile (~30px su una banda da 32). Ci sta, ma senza margine — se un giorno la
    banda si abbassa, questa e la prima che si impasta. La goccia e 8px come i pois dello strass ma
-   a passo 24 e in coppia col raggio: e il composto che si legge, non il singolo segno. */
-.rg-dept-band--stampa { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-6)), repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-2)); --rg-dept-size: var(--rg-space-6) var(--rg-space-4), auto var(--rg-space-4), auto var(--rg-space-3); --rg-dept-position: 0 0, 0 0, 0 100%; --rg-dept-repeat: repeat-x, repeat-x, repeat-x; }
-/* PRESSATURA E SOFFIATURA — le due piastre della pressa: due dorsi pieni ai bordi, il materiale
-   in mezzo. Figura chiusa, non un tratteggio: e cio che la separa da tutte le altre. */
-.rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-pattern: linear-gradient(to bottom, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent calc(100% - var(--rg-space-2)), var(--rg-dept-color) calc(100% - var(--rg-space-2)), var(--rg-dept-color) 100%); }
+   a passo 24 e in coppia col raggio: e il composto che si legge, non il singolo segno.
+   CENTRATA (1.19.x): i due registri stavano ancorati ai bordi (alto a 0, basso a 100%). In una
+   banda da 32 non cambia nulla; nella fascia da 48 del blocco della fase si aprivano 16 px di vuoto
+   in mezzo, le due linee si incollavano al filetto e la figura diventava un bordo sopra e un bordo
+   sotto: lo stesso difetto della cornice della pressatura. Ora il blocco da 30 sta sulla mezzeria
+   (registro alto 16 sopra, registro basso 12 sotto, 2 di luce), a qualunque altezza di banda. */
+.rg-dept-band--stampa { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-6)), repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-2)); --rg-dept-size: var(--rg-space-6) var(--rg-space-4), auto var(--rg-space-4), auto var(--rg-space-3); --rg-dept-position: 0 calc(50% - var(--rg-space-2)), 0 calc(50% - var(--rg-space-2)), 0 calc(50% + var(--rg-space-2)); --rg-dept-repeat: repeat-x, repeat-x, repeat-x; }
+/* PRESSATURA E SOFFIATURA — le piastre della pressa: una fila di piastre sopra, una sotto, allineate
+   in colonna, e in mezzo il filo del materiale stretto fra le due. Tessera da 24: piastra 16x12,
+   luce 8; figura alta 32 e CENTRATA come il punto croce, filo da 2 sulla mezzeria.
+   Rivista (1.19.x). La prima forma erano due dorsi pieni sui bordi della banda: nella fascia da
+   48 px del blocco della fase, col contorno del pannello e il filetto sotto, si leggeva come una
+   CORNICE e non come un disegno («ha l'etichetta ma non il disegno di sfondo che ha il Ricamo»).
+   Una figura continua da bordo a bordo e un bordo, non una figura: serve un segno che si ripete.
+   Scartate: due file di trattini 16x8 (si leggono come una linea tratteggiata doppia, il segno
+   neutro che il ricamo aveva gia scartato). La piastra 16x12 e un blocco, non un trattino.
+   Vicina da tenere d'occhio: la scacchiera del finissaggio, anch'essa a blocchi. Si separano per
+   disposizione e non per tono: qui i blocchi sono ALLINEATI in colonna e tagliati da un filo
+   continuo, la i quadretti sono SFALSATI e riempiono la banda senza filo. */
+.rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-4), transparent var(--rg-space-4), transparent var(--rg-space-6)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-4), transparent var(--rg-space-4), transparent var(--rg-space-6)), linear-gradient(var(--rg-dept-color), var(--rg-dept-color)); --rg-dept-size: 100% var(--rg-space-3), 100% var(--rg-space-3), 100% var(--rg-border-strong); --rg-dept-position: 0 calc(50% - var(--rg-space-2) - var(--rg-border-strong)), 0 calc(50% + var(--rg-space-2) + var(--rg-border-strong)), 0 center; --rg-dept-repeat: no-repeat; }
 /* STRASS E APPLICAZIONI — pois: sono strass. La figura piu letterale delle sette. */
 .rg-dept-band--strass { --rg-dept-color: var(--rg-color-category-4); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)); --rg-dept-size: var(--rg-space-4) var(--rg-space-4); }
 /* FINISSAGGIO E CONTROLLO QUALITA — la bandiera a scacchi: il traguardo. E l'ultimo reparto, quello
@@ -1043,13 +1068,71 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* ACCOPPIAGGI — due linee appaiate: accoppiare e unire due strati, e la figura lo dice.
    Era l'unica a tinta piena: si distingueva ma non comunicava niente, e in fotocopia una
    campitura media rischia di impastarsi. */
+.rg-dept-band--accoppiaggi { --rg-dept-color: var(--rg-color-category-6); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2), var(--rg-dept-color) var(--rg-space-2), var(--rg-dept-color) var(--rg-space-3), transparent var(--rg-space-3), transparent var(--rg-space-6)); }
 /* SOBRIA — la stessa figura in grigio, per lo SCHERMO (v1.16.0). Su carta il colore e un
    acceleratore per pescare il foglio dal mucchio; a schermo la palette categoriale convive con i
    colori di stato, e category-3/4/5 SONO danger/warning/success: una pressatura rossa accanto a un
    badge d'errore dice due cose con lo stesso rosso. Qui resta la figura, che e il segnale che
-   riconosce il reparto, e il nome. Va DOPO le sette varianti: stesso peso, vince l'ordine. */
+   riconosce il reparto, e il nome. Va DOPO le sette varianti: stesso peso, vince l'ordine.
+   Fino alla 1.19.0 la regola degli accoppiaggi stava sotto questa, e la fascia --quiet degli
+   accoppiaggi usciva a colori pieni: ora le sette stanno tutte sopra. */
 .rg-dept-band--quiet { --rg-dept-color: var(--rg-color-neutral-400); }
-.rg-dept-band--accoppiaggi { --rg-dept-color: var(--rg-color-category-6); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2), var(--rg-dept-color) var(--rg-space-2), var(--rg-dept-color) var(--rg-space-3), transparent var(--rg-space-3), transparent var(--rg-space-6)); }
+
+/* Dept mark — IL SEGNO DEL REPARTO, IN LINEA (v1.20.0). La tessera da 20 px che nomina un reparto
+   dove una fascia non ci sta o non serve: sulla linguetta di una fase (rg-phase-switch__title), in
+   testa alla riga «Fase N di M» (rg-phase-panel__kind), in un elenco. Nasce da una prova a schermo:
+   la fascia grigia del blocco della fase, appena sotto le linguette, «si legge come il bordo delle
+   linguette, non come reparto», e il nome del reparto era gia sulla linguetta. A schermo la fascia
+   lascia il posto a questa tessera; sul foglio stampato rg-dept-band resta com'e.
+   STESSA FAMIGLIA, RIDOTTA, NON RIMPICCIOLITA. La trama della banda scalata a 20 px si impasta (le
+   croci a passo 24 non ci stanno nemmeno una volta, la fila di piastre diventa una riga grigia).
+   Ogni reparto ha quindi la sua RIDUZIONE: il segno della banda preso una volta, o nel numero minimo
+   che ne dice ancora la famiglia.
+     ricamo       una croce da 12                 (la fila di croci -> una croce)
+     stampa       goccia e raggio, sotto due linee (i due registri, una goccia e un raggio soli)
+     pressatura   due piastre, il filo, due piastre (piastre 6x4 in colonna, filo da bordo a bordo)
+     strass       quattro pois da 6                (2x2: meno pois, piu grandi)
+     finissaggio  scacchiera 3x3 da 6              (quadretti piu grandi: nove)
+     incollature  diagonali spesse da 4            (la stessa diagonale, passo dimezzato)
+     accoppiaggi  una coppia di linee 2x12, luce 2 (la coppia, una volta sola, staccata dal bordo)
+   Da tenere d'occhio a questa misura: pois e scacchiera. Si separano per NUMERO e FORMA (quattro
+   tondi staccati, nove quadretti sfalsati), mai per tono.
+   Tessera: bordo 1 px, fondo bianco, angoli da 2; la figura sta nell'area interna da 18
+   (background-clip padding-box). SENZA VARIANTE e «reparto da assegnare»: tessera vuota a bordo
+   tratteggiato.
+   --quiet (lo schermo): la figura prende il colore del TESTO intorno (currentColor), non il grigio
+   400 della banda. A 20 px quel grigio (~2,8:1) non regge un segno fine; il colore del testo regge
+   quanto il testo che la tessera accompagna, e sulla linguetta scelta diventa nero con lei.
+   Il nome del reparto non lo porta la tessera: o e scritto accanto (rg-dept-label, tessera
+   aria-hidden), o la tessera ha role="img" e aria-label. Mai sola e muta.
+   Le proprieta sono --rg-dept-mark-* e non --rg-dept-*: le variabili si ereditano, e una tessera
+   dentro una rg-dept-band prenderebbe la trama della banda. */
+.rg-dept-mark { display: inline-block; flex: none; box-sizing: border-box; width: calc(var(--rg-space-4) + var(--rg-space-1)); height: calc(var(--rg-space-4) + var(--rg-space-1)); vertical-align: middle; background-color: var(--rg-color-surface-raised); background-image: var(--rg-dept-mark-pattern, none); background-size: var(--rg-dept-mark-size, auto); background-position: var(--rg-dept-mark-position, center); background-repeat: var(--rg-dept-mark-repeat, no-repeat); background-clip: padding-box; border: var(--rg-border-hairline) var(--rg-dept-mark-edge, dashed) var(--rg-dept-mark-color, currentColor); border-radius: var(--rg-radius-sm); }
+/* RICAMO — una croce da 12, tratto 2, al centro. */
+.rg-dept-mark--ricamo { --rg-dept-mark-color: var(--rg-color-category-1); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: linear-gradient(45deg, transparent calc(50% - var(--rg-border-hairline)), var(--rg-dept-mark-color) calc(50% - var(--rg-border-hairline)), var(--rg-dept-mark-color) calc(50% + var(--rg-border-hairline)), transparent calc(50% + var(--rg-border-hairline))), linear-gradient(-45deg, transparent calc(50% - var(--rg-border-hairline)), var(--rg-dept-mark-color) calc(50% - var(--rg-border-hairline)), var(--rg-dept-mark-color) calc(50% + var(--rg-border-hairline)), transparent calc(50% + var(--rg-border-hairline))); --rg-dept-mark-size: var(--rg-space-3) var(--rg-space-3); --rg-dept-mark-position: center; --rg-dept-mark-repeat: no-repeat; }
+/* STAMPA — in alto una goccia da 8 e un raggio 2x8, in basso due linee da 2: figura 16x16, a 1 px dal bordo. */
+.rg-dept-mark--stampa { --rg-dept-mark-color: var(--rg-color-category-2); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: radial-gradient(circle, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) var(--rg-radius-md), transparent var(--rg-radius-md)), linear-gradient(var(--rg-dept-mark-color), var(--rg-dept-mark-color)), linear-gradient(var(--rg-dept-mark-color), var(--rg-dept-mark-color)), linear-gradient(var(--rg-dept-mark-color), var(--rg-dept-mark-color)); --rg-dept-mark-size: var(--rg-space-2) var(--rg-space-2), var(--rg-border-strong) var(--rg-space-2), var(--rg-space-4) var(--rg-border-strong), var(--rg-space-4) var(--rg-border-strong); --rg-dept-mark-position: var(--rg-border-hairline) var(--rg-border-hairline), calc(var(--rg-border-hairline) + var(--rg-space-3)) var(--rg-border-hairline), var(--rg-border-hairline) calc(var(--rg-border-hairline) + var(--rg-space-2) + var(--rg-border-strong)), var(--rg-border-hairline) calc(var(--rg-border-hairline) + var(--rg-space-3) + var(--rg-border-strong)); --rg-dept-mark-repeat: no-repeat; }
+/* PRESSATURA — due piastre 6x4 sopra e due sotto, allineate in colonna, e il filo da 2 da bordo a bordo. */
+.rg-dept-mark--pressatura { --rg-dept-mark-color: var(--rg-color-category-3); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: repeating-linear-gradient(90deg, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) calc(var(--rg-space-1) + var(--rg-border-strong)), transparent calc(var(--rg-space-1) + var(--rg-border-strong)), transparent var(--rg-space-2)), repeating-linear-gradient(90deg, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) calc(var(--rg-space-1) + var(--rg-border-strong)), transparent calc(var(--rg-space-1) + var(--rg-border-strong)), transparent var(--rg-space-2)), linear-gradient(var(--rg-dept-mark-color), var(--rg-dept-mark-color)); --rg-dept-mark-size: calc(var(--rg-space-3) + var(--rg-border-strong)) var(--rg-space-1), calc(var(--rg-space-3) + var(--rg-border-strong)) var(--rg-space-1), 100% var(--rg-border-strong); --rg-dept-mark-position: center calc(50% - var(--rg-space-1) - var(--rg-border-hairline)), center calc(50% + var(--rg-space-1) + var(--rg-border-hairline)), center; --rg-dept-mark-repeat: no-repeat; }
+/* STRASS — quattro pois da 6, uno per quadrante (repeat: space distribuisce due tessere da 8 per lato). */
+.rg-dept-mark--strass { --rg-dept-mark-color: var(--rg-color-category-4); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: radial-gradient(circle, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) calc(var(--rg-radius-md) - var(--rg-border-hairline)), transparent calc(var(--rg-radius-md) - var(--rg-border-hairline))); --rg-dept-mark-size: var(--rg-space-2) var(--rg-space-2); --rg-dept-mark-position: 0 0; --rg-dept-mark-repeat: space; }
+/* FINISSAGGIO — scacchiera 3x3 da 6: la ricetta della banda, tessera da 12. */
+.rg-dept-mark--finissaggio { --rg-dept-mark-color: var(--rg-color-category-5); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: linear-gradient(45deg, var(--rg-dept-mark-color) 25%, transparent 25%, transparent 75%, var(--rg-dept-mark-color) 75%), linear-gradient(45deg, var(--rg-dept-mark-color) 25%, transparent 25%, transparent 75%, var(--rg-dept-mark-color) 75%); --rg-dept-mark-size: var(--rg-space-3) var(--rg-space-3); --rg-dept-mark-position: 0 0, calc(var(--rg-space-1) + var(--rg-border-strong)) calc(var(--rg-space-1) + var(--rg-border-strong)); --rg-dept-mark-repeat: repeat; }
+/* INCOLLATURE — diagonali spesse da 4, passo 8. */
+.rg-dept-mark--incollature { --rg-dept-mark-color: var(--rg-color-category-7); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: repeating-linear-gradient(45deg, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2)); --rg-dept-mark-size: auto; --rg-dept-mark-position: 0 0; --rg-dept-mark-repeat: no-repeat; }
+/* ACCOPPIAGGI — una coppia di linee 2x12, luce 2, al centro. Non corrono da bordo a bordo: alte quanto la
+   tessera si saldavano al bordo e si leggevano quattro barre. Non barre da 4: due barre piene
+   staccate sono il simbolo «pausa». Due linee sottili e vicine sono i due strati uniti. */
+.rg-dept-mark--accoppiaggi { --rg-dept-mark-color: var(--rg-color-category-6); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: linear-gradient(90deg, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-1), var(--rg-dept-mark-color) var(--rg-space-1), var(--rg-dept-mark-color) calc(var(--rg-space-1) + var(--rg-border-strong))); --rg-dept-mark-size: calc(var(--rg-space-1) + var(--rg-border-strong)) var(--rg-space-3); --rg-dept-mark-position: center; --rg-dept-mark-repeat: no-repeat; }
+/* SOBRIA — il colore del testo intorno. Va DOPO le sette: stesso peso, vince l'ordine. */
+.rg-dept-mark--quiet { --rg-dept-mark-color: currentColor; }
+/* Tessera + nome del reparto in linea: il nome e testo, la tessera aria-hidden. INLINE e non
+   inline-flex: una scatola flex prende la linea di base dalla tessera (che non ha testo, quindi dal
+   suo bordo basso) e il nome usciva piu alto del testo accanto. Cosi il nome sta sulla linea di base
+   della riga e la tessera si centra sull'occhio della minuscola. Sporge di 2 px sopra e sotto senza
+   alzare la riga: le righe da 12 e 14 px del DS sono alte ~17. */
+.rg-dept-label { display: inline; }
+.rg-dept-label > .rg-dept-mark, .rg-phase-switch__title > .rg-dept-mark { margin-block: calc(-1 * var(--rg-border-strong)); margin-inline-end: var(--rg-space-2); vertical-align: middle; }
 
 /* Fill field — il campo che si compila A PENNA (v1.14.0). E il caso centrale della scheda di
    lavorazione: il foglio esce dalla stampante con dei buchi APPOSTA, e il buco deve invitare a

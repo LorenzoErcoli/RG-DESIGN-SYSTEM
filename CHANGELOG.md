@@ -7,6 +7,65 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.18.0 — in preparazione (non rilasciata)
+
+**Il documento della fase, e i gesti sulla fase in alto.** Giudizio sulla 1.17.0 provata sul campo:
+*«l'hai portata in fondo con elimina, ma non va bene. In realtà non va bene nemmeno quell'oggetto in
+cima con il pdf: si rompe subito con i bottoni e non è chiaro per niente. Fai una componente più
+elegante e sposta su le funzioni in fondo. Rimetti elimina fase, magari non con quelli ma in cima. E
+dove puoi rimetti icone. In sequenza stop rimetti la possibilità di scrivere con il compilatore»*.
+
+**Minor.** Un componente e tre zone nuove, niente di rimosso, nessun token nuovo. Due forme della
+1.17.0 sono dichiarate **superate** (restano nel CSS, invariate): `rg-file-card--bar` e
+`rg-phase-panel__foot` / `__scope`.
+
+### Componenti
+
+- **`rg-document`** (beta), con `--empty`, `__bar`, `__file`, `__icon`, `__kind`, `__name`, `__reveal`,
+  `__options`, `__confirm`: il documento di lavoro di un'entità, in una riga sola.
+  - A sinistra tipo («Scheda macchina»), nome del file, tronco coi puntini se manca spazio, e stato.
+  - Poi le tre azioni di lettura a sola icona con suggerimento: Visualizza scheda compilata, Scarica
+    PDF, PDF caricato così com'è.
+  - Dopo un filetto, «Carica un'altra scheda…» con icona e testo.
+  - Senza documento, stessa riga, con la primaria «Carica la scheda».
+  - Misurata a 1024, 1280 e 1440 px: una riga da 67 px, nome intero.
+
+### Varianti
+
+- **`rg-phase-panel__gestures`**: i gesti sulla fase in alto a destra, nella riga del titolo.
+  «Torna alla prima lettura», «Scollega», «Elimina fase», con icona e testo e la conferma.
+- **`rg-phase-panel__summary`**: riepilogo a sinistra e stato a destra, su una riga.
+- **`rg-phase-panel__document`**: la zona del documento nella testa del blocco, sotto il riepilogo e
+  sopra le tab. Una volta sola per blocco.
+
+### Regole riviste (`components/phase-switch.md`, `components/document.md`)
+
+- **«Elimina fase» torna in alto**, nella testa del blocco, separata dalle azioni sul documento.
+- **«Torna alla prima lettura» sta coi gesti sulla fase**: non tocca il PDF, cambia i dati della fase.
+  Il rischio è scritto nel suggerimento e nella conferma.
+- **Il compilatore è la primaria della sezione Sequenza stop**, «Apri il compilatore», con «Parti
+  collegate» accanto. Prima era l'ultimo di sei bottoni uguali nella barra.
+- **Il documento sta una volta sola**, nella testa del blocco: non si ripete in cima alle sezioni.
+
+### Superati
+
+- **`rg-file-card--bar`** → `rg-document` nella testa del blocco. Misura d'origine: 99 px su due
+  righe a 1440 e a 1280 px, con sei bottoni dello stesso peso.
+- **`rg-phase-panel__foot`** e **`__scope`** → `rg-phase-panel__gestures`. In fondo a una pagina
+  lunga i gesti sulla fase non si trovavano.
+
+### Aggiornamento
+
+1. **Blocco della fase.** Nella testa:
+   - aggiungere `__gestures` dopo `__heading`, con i bottoni che oggi stanno nel piede;
+   - racchiudere `__meta` e `__status` in `__summary`;
+   - togliere il `<footer class="rg-phase-panel__foot">`.
+2. **Ricamo.**
+   - Togliere l'include della barra da «Scheda macchina» e da «Sequenza stop».
+   - Mettere `rg-document` una volta in `rg-phase-panel__document`.
+   - In «Sequenza stop» l'intro prende «Parti collegate» e «Apri il compilatore».
+3. **Chi non tocca niente** vede la 1.17.0 com'era: le classi superate non cambiano aspetto.
+
 ## 1.17.0 — 2026-09-16
 
 **La struttura della pagina, le azioni, l'identità delle parti.** Due tappe di armonizzazione. La

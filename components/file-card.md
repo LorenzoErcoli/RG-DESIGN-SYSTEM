@@ -63,7 +63,11 @@ Dare padding alla radice raddoppierebbe quella delle parti. Due indicazioni:
 - **Dentro un corpo `rg-section-card--flush`** la card si avvolge in `rg-section-card__inset`: il
   bordo della riga caricata non deve incollarsi al contorno della section card.
 
-### Barra della scheda (`rg-file-card--bar`, dalla 1.17.0)
+### Barra della scheda (`rg-file-card--bar`, dalla 1.17.0) — superata dalla 1.18.0
+
+> **Superata da [`rg-document`](document.md).** Sul server vero la barra era alta 99 px su due righe
+> a 1440 e a 1280 px, con sei bottoni dello stesso peso, e il compilatore, ultimo, non si trovava. La
+> classe resta nel CSS e non cambia aspetto fino a una major. La migrazione è in `document.md`.
 
 Quando **lo stesso documento serve in più sezioni** della stessa pagina — la scheda macchina di una
 fase, richiamata da «Scheda macchina» e da «Sequenza stop» — la card diventa una **riga**, identica in

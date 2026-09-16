@@ -134,7 +134,10 @@ Variabile: `--rg-phase-switch-ground`, il fondo dietro la didascalia (default
 | `rg-phase-panel__intro` | (1.17.0) Prima riga di una sezione: didascalia (`<p>`) a sinistra, azioni della sezione a destra. Prende il posto della testa di `rg-section-card`. |
 | `rg-phase-panel__actions` | (1.17.0) Le azioni della sezione, dentro `__intro`: al massimo una primaria. |
 | `rg-phase-panel__subsection` | (1.17.0) Un blocco dentro una sezione (per esempio «Materiali non riconosciuti» sopra la «Sequenza stop»): due consecutivi sono divisi da un filetto. |
-| `rg-phase-panel__foot` | Gesti sulla fase: Scollega, Elimina fase. |
+| `rg-phase-panel__gestures` | (1.18.0) Gesti sulla fase, in alto a destra nella testa: Torna alla prima lettura, Scollega, Elimina fase. |
+| `rg-phase-panel__summary` | (1.18.0) Riepilogo (`__meta`) a sinistra e stato (`__status`) a destra, su una riga. |
+| `rg-phase-panel__document` | (1.18.0) La zona del documento della fase ([`rg-document`](document.md)), sotto il riepilogo e sopra le tab. |
+| `rg-phase-panel__foot` | **Superato dalla 1.18.0** (usare `__gestures`). Gesti sulla fase in fondo al blocco. |
 | `rg-phase-panel__scope` | A sinistra nel piede: «Azioni sulla fase 3», cioè a chi si applicano i bottoni. |
 
 **Stati della linguetta.**
@@ -187,8 +190,9 @@ striscia.
 - **L'istruzione sul costo (`€`) sta nella sezione che ha campi marcati**, subito sotto le tab, e i
   campi la richiamano con `aria-describedby`. Non va in testa alla pagina fra due filetti, dove
   diventa un livello di intestazione.
-- **I gesti sulla fase stanno nel piede del suo pannello.** «Elimina fase» in testa alla pagina, in
-  una pagina che mostra tre fasi, non dice quale fase elimina.
+- **I gesti sulla fase stanno nella testa del suo blocco**, in alto a destra (`__gestures`, dalla
+  1.18.0). Non nella testata della pagina: in una pagina che mostra tre fasi non direbbe quale fase
+  elimina. Non nel piede: in fondo a una pagina lunga non si trovano.
 - **Il salvataggio sta fuori dai pannelli:** salva tutte le fasi insieme, e dentro un pannello
   lascerebbe credere di salvare solo quello.
 - **Timbro di reparto a schermo sempre `--quiet`.** La palette categoriale a schermo convive con i
@@ -387,7 +391,11 @@ Pagina di una fase da sola, il ricamo: testata compressa, blocco con testa titol
 | il bottone di salvataggio di un form nella testa (Impostazioni) | in fondo al form, in un `rg-cluster` (forms.md: il primario sotto l'ultimo campo) |
 | `rg-file-card`, `rg-alert`, `rg-disclosure--boxed`, `rg-table` | invariati |
 
-### La barra della scheda (1.17.0)
+### La barra della scheda (1.17.0) — superata dalla 1.18.0
+
+> Questa forma è **superata**: il documento sta una volta sola nella testa del blocco
+> ([`rg-document`](document.md)), e i gesti sulla fase in `__gestures`. Vedi *I gesti sulla fase e il
+> documento, in testa (1.18.0)*.
 
 Le sezioni che lavorano sullo **stesso documento** (Scheda macchina, Sequenza stop) mostrano in cima
 la stessa riga: [`rg-file-card--bar`](file-card.md#barra-della-scheda-rg-file-card--bar-dalla-1170).
@@ -404,7 +412,93 @@ la stessa riga: [`rg-file-card--bar`](file-card.md#barra-della-scheda-rg-file-ca
 - La `rg-file-card` piena **sparisce** dalla sezione Scheda macchina: la barra porta nome, badge,
   azioni e la rivelazione delle opzioni di lettura.
 
+### I gesti sulla fase e il documento, in testa (1.18.0)
+
+Provata la 1.17.0 sul campo, il giudizio: *«l'hai portata in fondo con elimina, ma non va bene. […]
+Sposta su le funzioni in fondo. Rimetti elimina fase, magari non con quelli ma in cima. E dove puoi
+rimetti icone. In sequenza stop rimetti la possibilità di scrivere con il compilatore»*.
+
+La testa del blocco ha ora quattro zone, in quest'ordine:
+
+| Zona | Classe | Che cosa |
+| --- | --- | --- |
+| Titolo | `rg-phase-panel__heading` | numero, «Fase N di M», nome |
+| **Gesti sulla fase** | `rg-phase-panel__gestures` | a destra del titolo: «Torna alla prima lettura», «Scollega» (nei gruppi), «Elimina fase» |
+| Riepilogo | `rg-phase-panel__summary` | `__meta` a sinistra, `__status` (costo, reparto) a destra |
+| **Documento** | `rg-phase-panel__document` | [`rg-document`](document.md): la scheda della fase, le sue azioni di lettura, il caricamento |
+
+Regole:
+
+- **I gesti sulla fase stanno in alto a destra, nella riga del titolo.** Sono i gesti che cambiano o
+  tolgono i dati della fase: si trovano senza scorrere, e sono lontani dalle azioni sul documento,
+  che stanno due righe sotto.
+- **Icona + testo, mai sola icona**: sono azioni rare e rischiose. Tutte hanno la conferma
+  (`data-conferma`). «Elimina fase» è `rg-button--ghost rg-button--danger`, l'ultima del gruppo.
+- **«Torna alla prima lettura» sta coi gesti sulla fase, non col documento.** Non tocca il PDF:
+  riporta stop, fili e materiali a come erano stati letti, e perde le modifiche fatte a mano. È un
+  gesto sui dati della fase, della stessa famiglia di «Elimina fase». Il rischio è scritto due volte:
+  nel suggerimento (`aria-describedby`, «Si perdono le modifiche a stop, fili e materiali») e nella
+  conferma.
+- **Il documento sta una volta sola, nella testa** (`__document`), sotto il riepilogo e sopra le tab:
+  si vede da ogni sezione, e i due stati (scheda presente, assente) hanno la stessa posizione. Le
+  fasi senza documento non hanno la zona.
+- **Il compilatore è l'azione primaria della sezione Sequenza stop**: «Apri il compilatore», icona e
+  testo, nell'intro della sezione, con «Parti collegate» accanto come secondaria. È il gesto
+  principale di quella sezione, e lì lo si cerca.
+- **Il piede del blocco (`__foot`, `__scope`) è superato.** Non ha più contenuto: i suoi gesti sono
+  saliti in testa. Resta nel CSS e non cambia aspetto, ma non va usato.
+- **Nei gruppi** ogni blocco ha i suoi gesti nella sua testa («Scollega», «Elimina fase»): la testa è
+  dentro il pannello della fase scelta, quindi il gesto dice da sé a quale fase si applica.
+
+```html
+<header class="rg-phase-panel__head">
+  <div class="rg-phase-panel__heading"><!-- numero, «Fase 1 di 1», titolo --></div>
+
+  <div class="rg-phase-panel__gestures" role="group" aria-label="Azioni sulla fase 1">
+    <form class="rg-u-inline" method="post" action="…/ripristina" data-conferma="La fase torna a come il sistema aveva letto il PDF la prima volta: si perdono le modifiche a stop, fili, materiali e attributi. Il PDF caricato non cambia.">
+      <span class="rg-tooltip rg-tooltip--below">
+        <button class="rg-button rg-button--ghost" type="submit" aria-describedby="tip-prima-lettura"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-ripristina"></use></svg>Torna alla prima lettura</button>
+        <span class="rg-tooltip__text" role="tooltip" id="tip-prima-lettura">Si perdono le modifiche a stop, fili e materiali</span>
+      </span>
+    </form>
+    <form class="rg-u-inline" method="post" action="…/delete" data-conferma="Si elimina la fase con le sue operazioni e i valori scritti.">
+      <button class="rg-button rg-button--ghost rg-button--danger" type="submit"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-elimina"></use></svg>Elimina fase</button>
+    </form>
+  </div>
+
+  <div class="rg-phase-panel__summary">
+    <p class="rg-phase-panel__meta"><span>12 materiali</span><span>48 stop</span><span>9 fili</span><span>dati dal PDF caricato su questa fase</span></p>
+    <div class="rg-phase-panel__status"><!-- badge di costo, timbro di reparto --></div>
+  </div>
+
+  <div class="rg-phase-panel__document">
+    <div class="rg-document"><!-- vedi components/document.md --></div>
+  </div>
+</header>
+```
+
+Intro della sezione Sequenza stop:
+
+```html
+<div class="rg-phase-panel__intro">
+  <p>Tutti gli stop reali della scheda; apri una riga per fili, attributi e materiali.</p>
+  <div class="rg-phase-panel__actions">
+    <a class="rg-button rg-button--secondary" href="…/gruppo"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-collega"></use></svg>Parti collegate</a>
+    <span class="rg-tooltip">
+      <a class="rg-button rg-button--primary" href="…/compila" aria-describedby="tip-compilatore"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-modifica"></use></svg>Apri il compilatore</a>
+      <span class="rg-tooltip__text" role="tooltip" id="tip-compilatore">Compila la scheda stop per stop, a schermo intero</span>
+    </span>
+  </div>
+</div>
+```
+
+**Perché «Apri il compilatore».** Chi usa la pagina lo chiama così (*«la possibilità di scrivere con
+il compilatore»*, *«compilare la scheda con il compilatore»*). L'etichetta nomina lo strumento e dice
+che si apre altrove: la pagina cambia, è un `<a>`. «Compila scheda» diceva lo scopo, ma non che si
+apre un editor a schermo intero. Lo scopo resta scritto nel suggerimento.
+
 ## Tastiera e accessibilità
+
 
 
 Due tablist ARIA, uno dentro l'altro: quello delle sezioni sta nel `tabpanel` della fase.
@@ -468,7 +562,9 @@ document.addEventListener('keydown', (e) => {
   testata parla della parte, il blocco della fase.
 - **`rg-part-edge` sul blocco della fase**: il filetto colorato è della parte, e sta sulla testata.
 - **La riga di riepilogo come fila di badge** fuori dal blocco: va in `__meta`, nella testa.
-- **«Elimina fase» in testa alla pagina**: sta nel piede del blocco, anche per il ricamo.
+- **«Elimina fase» nella testata della pagina, fra le azioni del documento, o nel piede del blocco**:
+  sta nella testa del blocco, in `__gestures`.
+- **Il compilatore fra sei bottoni uguali**: è la primaria della sezione Sequenza stop.
 - **Il colore pieno del reparto a schermo** (`rg-dept-band` senza `--quiet`).
 - **`<a href>` sulle linguette in un form unico:** la navigazione perderebbe i valori non salvati.
 - **Rinumerare le fasi dentro il gruppo, o usare 2a/2b.**

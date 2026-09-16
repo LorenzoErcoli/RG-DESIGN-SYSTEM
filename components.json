@@ -2217,7 +2217,10 @@
             "rg-phase-panel__sections",
             "rg-phase-panel__intro",
             "rg-phase-panel__actions",
-            "rg-phase-panel__subsection"
+            "rg-phase-panel__subsection",
+            "rg-phase-panel__gestures",
+            "rg-phase-panel__summary",
+            "rg-phase-panel__document"
           ]
         },
         "related": [
@@ -2237,7 +2240,8 @@
           "rg-step__num",
           "rg-file-card",
           "rg-section-header--sub",
-          "rg-file-card--bar"
+          "rg-file-card--bar",
+          "rg-document"
         ]
       },
       "variants": [
@@ -2282,7 +2286,7 @@
       "rulesRef": "design-rules.md#11-accessibilita-e-comportamento",
       "specimenAnchor": "phase-switch",
       "snippet": "<header class=\"rg-page-header rg-page-header--compact rg-part-edge rg-part--1\"><nav class=\"rg-breadcrumb\" aria-label=\"Percorso\">...</nav><p class=\"rg-page-header__context\">Parte <span class=\"rg-part-mark rg-part-mark--small\" aria-hidden=\"true\"></span><strong>1296 DAV</strong> &#183; <strong>BOOK TOTE</strong></p></header>\n<section class=\"rg-phase-panel\" aria-labelledby=\"titolo-fase\"><header class=\"rg-phase-panel__head\"><div class=\"rg-phase-panel__heading\"><span class=\"rg-phase-panel__num\" aria-hidden=\"true\">1</span><div class=\"rg-phase-panel__name\"><p class=\"rg-phase-panel__kind\"><span>Fase 1 di 1</span></p><h1 class=\"rg-phase-panel__title\" id=\"titolo-fase\"><span class=\"rg-u-visually-hidden\">Fase 1: </span>Ricamo normale</h1></div></div><div class=\"rg-phase-panel__status\">...</div><p class=\"rg-phase-panel__meta\"><span>12 materiali</span><span>48 stop</span><span>9 fili</span><span>dati dal PDF caricato su questa fase</span></p></header><div class=\"rg-phase-panel__body\"><div class=\"rg-tabs rg-phase-panel__sections\" role=\"tablist\" aria-label=\"Sezioni della fase 1: Ricamo normale\">...</div><div class=\"rg-tabpanel is-active\" role=\"tabpanel\"><div class=\"rg-phase-panel__intro\"><p>...</p><div class=\"rg-phase-panel__actions\">...</div></div>...</div></div><footer class=\"rg-phase-panel__foot\"><p class=\"rg-phase-panel__scope\">Azioni sulla fase 1</p><button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"submit\">Elimina fase</button></footer></section>",
-      "notes": "RIVISTO prima del rilascio: la prima forma (striscia di segmenti rigati + testa 'Stai compilando', rg-phase-head) e stata scartata dopo la prova - 'due cose strane che non si capisce se sono fasi o altro' e 'lo sfondo grigio e uguale al colore degli hover'. rg-phase-head non esiste piu. Forma attuale: LINGUETTE attaccate al pannello (la scelta e bianca a bordo nero e si fonde col pannello; le altre solo contorno sul fondo di pagina) e sopra la GRAFFA dell'elenco ruotata, con didascalia sul filo e dente sulla principale. Il FONDO e il segno esclusivo della scelta: l'hover cambia bordo e sottolinea, mai il fondo. Il tablist e __tabs, etichettato dalla didascalia (aria-labelledby): la didascalia non sta dentro il tablist. Il titolo della fase sta sulla linguetta; nel pannello un h2 rg-u-visually-hidden. rg-phase-panel vale anche per la fase SENZA gruppo (senza linguette): una forma sola per la pagina di fase. Nel pannello NIENTE rg-section-card (sollevata dentro sollevata, e titolo che ripete la tab): sottotitolo di sezione in rg-small, nota costo nella sezione che ha campi marcati, menu delle operazioni come rg-disclosure--boxed in coda alle righe. Conteggio 'da compilare' sulla linguetta (fase) e sulla tab (sezione), non altrove. Gesti sulla fase nel piede del pannello con __scope 'Azioni sulla fase N'; salvataggio fuori dai pannelli. Timbro di reparto con rg-dept-band--quiet (mai il colore pieno a schermo). --rg-phase-switch-ground se la striscia non posa sul fondo di pagina. Mobile: linguette in scorrimento orizzontale. Status beta. DA 1.17.0 TESTA TITOLATA (feedback: 'ricamo normale va sotto e va fatto capire che e una fase e deve avere qualche cosa che mette insieme il titolo con quello che c'e sotto; il numero di fase e scomparso'). Testata della pagina: rg-page-header--compact rg-part-edge rg-part--N (percorso + 'Parte [pastiglia] nome · prodotto'), senza titolo visibile e senza azioni sulla fase. Testa del blocco: __heading > __num (numero invertito, stesso segno di rg-step__num aperto e della linguetta scelta, stesso numero = posizione nella sequenza della parte, aria-hidden) + __name > __kind ('Fase 2 di 4' · relazione, sempre anche con una fase sola) + __title (H1 se la pagina mostra una fase; H2 in un gruppo, con un H1 nascosto nella testata compressa; prefisso nascosto 'Fase N: '). __status a destra; __meta sotto a riga intera = riepilogo (materiali · stop · fili · origine dei dati), testo non badge. Tab di sezione: rg-tabs rg-phase-panel__sections come PRIMO figlio di __body, attaccate sotto la testa da bordo a bordo (la testa perde il filetto). Il contorno nero chiude titolo, tab, contenuto e piede: e il segno che li tiene insieme. 'Elimina fase' sempre nel piede, anche per il ricamo. NEL GRUPPO lo stesso blocco con le linguette sopra: il titolo sta sulla linguetta (comando) e nella testa (titolo) di proposito; rivede la regola 1.16 'il titolo non si ripete'. NESSUNA rg-section-card nel blocco: la sezione comincia con __intro (p + __actions, max una primaria), i blocchi interni sono __subsection (filetto fra due consecutive) con rg-section-header--sub e h2.rg-h3; rg-file-card, rg-table, rg-alert, rg-disclosure--boxed ammessi. rg-part-edge MAI sul blocco: e della parte, sta sulla testata. Scartata l'alternativa 'linguetta unica anche per la fase da sola': una linguetta sola si legge come scelta senza alternative e il titolo a 14px non regge da titolo di pagina. QUARTA TAPPA 1.17.0: le sezioni che lavorano sullo stesso documento mostrano in cima la BARRA DELLA SCHEDA (rg-file-card--bar), identica in ogni sezione e in entrambi gli stati; sta SOPRA __intro; una sola primaria ('Compila scheda' col PDF, 'Carica la scheda' senza); le sezioni che non riguardano il documento non la mostrano; 'Torna alla prima lettura' sta nel piede del blocco con gli altri gesti sulla fase; la rg-file-card piena sparisce dalla sezione Scheda macchina. Sopra il blocco, la testata compressa rivista (rg-page-header--compact con __identity e i codici dell'articolo).",
+      "notes": "RIVISTO prima del rilascio: la prima forma (striscia di segmenti rigati + testa 'Stai compilando', rg-phase-head) e stata scartata dopo la prova - 'due cose strane che non si capisce se sono fasi o altro' e 'lo sfondo grigio e uguale al colore degli hover'. rg-phase-head non esiste piu. Forma attuale: LINGUETTE attaccate al pannello (la scelta e bianca a bordo nero e si fonde col pannello; le altre solo contorno sul fondo di pagina) e sopra la GRAFFA dell'elenco ruotata, con didascalia sul filo e dente sulla principale. Il FONDO e il segno esclusivo della scelta: l'hover cambia bordo e sottolinea, mai il fondo. Il tablist e __tabs, etichettato dalla didascalia (aria-labelledby): la didascalia non sta dentro il tablist. Il titolo della fase sta sulla linguetta; nel pannello un h2 rg-u-visually-hidden. rg-phase-panel vale anche per la fase SENZA gruppo (senza linguette): una forma sola per la pagina di fase. Nel pannello NIENTE rg-section-card (sollevata dentro sollevata, e titolo che ripete la tab): sottotitolo di sezione in rg-small, nota costo nella sezione che ha campi marcati, menu delle operazioni come rg-disclosure--boxed in coda alle righe. Conteggio 'da compilare' sulla linguetta (fase) e sulla tab (sezione), non altrove. Gesti sulla fase nel piede del pannello con __scope 'Azioni sulla fase N'; salvataggio fuori dai pannelli. Timbro di reparto con rg-dept-band--quiet (mai il colore pieno a schermo). --rg-phase-switch-ground se la striscia non posa sul fondo di pagina. Mobile: linguette in scorrimento orizzontale. Status beta. DA 1.17.0 TESTA TITOLATA (feedback: 'ricamo normale va sotto e va fatto capire che e una fase e deve avere qualche cosa che mette insieme il titolo con quello che c'e sotto; il numero di fase e scomparso'). Testata della pagina: rg-page-header--compact rg-part-edge rg-part--N (percorso + 'Parte [pastiglia] nome · prodotto'), senza titolo visibile e senza azioni sulla fase. Testa del blocco: __heading > __num (numero invertito, stesso segno di rg-step__num aperto e della linguetta scelta, stesso numero = posizione nella sequenza della parte, aria-hidden) + __name > __kind ('Fase 2 di 4' · relazione, sempre anche con una fase sola) + __title (H1 se la pagina mostra una fase; H2 in un gruppo, con un H1 nascosto nella testata compressa; prefisso nascosto 'Fase N: '). __status a destra; __meta sotto a riga intera = riepilogo (materiali · stop · fili · origine dei dati), testo non badge. Tab di sezione: rg-tabs rg-phase-panel__sections come PRIMO figlio di __body, attaccate sotto la testa da bordo a bordo (la testa perde il filetto). Il contorno nero chiude titolo, tab, contenuto e piede: e il segno che li tiene insieme. 'Elimina fase' sempre nel piede, anche per il ricamo. NEL GRUPPO lo stesso blocco con le linguette sopra: il titolo sta sulla linguetta (comando) e nella testa (titolo) di proposito; rivede la regola 1.16 'il titolo non si ripete'. NESSUNA rg-section-card nel blocco: la sezione comincia con __intro (p + __actions, max una primaria), i blocchi interni sono __subsection (filetto fra due consecutive) con rg-section-header--sub e h2.rg-h3; rg-file-card, rg-table, rg-alert, rg-disclosure--boxed ammessi. rg-part-edge MAI sul blocco: e della parte, sta sulla testata. Scartata l'alternativa 'linguetta unica anche per la fase da sola': una linguetta sola si legge come scelta senza alternative e il titolo a 14px non regge da titolo di pagina. QUARTA TAPPA 1.17.0: le sezioni che lavorano sullo stesso documento mostrano in cima la BARRA DELLA SCHEDA (rg-file-card--bar), identica in ogni sezione e in entrambi gli stati; sta SOPRA __intro; una sola primaria ('Compila scheda' col PDF, 'Carica la scheda' senza); le sezioni che non riguardano il documento non la mostrano; 'Torna alla prima lettura' sta nel piede del blocco con gli altri gesti sulla fase; la rg-file-card piena sparisce dalla sezione Scheda macchina. Sopra il blocco, la testata compressa rivista (rg-page-header--compact con __identity e i codici dell'articolo). DA 1.18.0 GESTI E DOCUMENTO IN TESTA (giudizio: 'l'hai portata in fondo con elimina, ma non va bene […] sposta su le funzioni in fondo, rimetti elimina fase magari non con quelli ma in cima […] in sequenza stop rimetti la possibilita di scrivere con il compilatore'). Testa del blocco in quattro zone: __heading; __gestures in alto a destra (Torna alla prima lettura, Scollega nei gruppi, Elimina fase: icona + testo, conferma, Elimina ultima e ghost danger); __summary (__meta a sinistra, __status a destra); __document (rg-document, una volta sola, sopra le tab). 'Torna alla prima lettura' sta coi gesti sulla fase e non col documento: non tocca il PDF, cambia i dati della fase; rischio scritto nel suggerimento (aria-describedby) e nella conferma. Il compilatore e la PRIMARIA dell'intro della sezione Sequenza stop: 'Apri il compilatore' (icona modifica, suggerimento 'Compila la scheda stop per stop, a schermo intero'), con 'Parti collegate' secondaria accanto. __foot e __scope SUPERATI (restano nel CSS). Stessa forma per ricamo, fase generica e gruppi.",
       "keywords": [
         "fasi collegate",
         "fase collegata",
@@ -2332,11 +2336,20 @@
         "section card nel pannello",
         "riepilogo fase",
         "barra della scheda",
-        "azioni uguali in ogni sezione"
+        "azioni uguali in ogni sezione",
+        "elimina fase in alto",
+        "gesti sulla fase",
+        "apri il compilatore",
+        "compilatore",
+        "torna alla prima lettura"
       ],
       "cssVars": [
         "--rg-phase-switch-ground"
-      ]
+      ],
+      "elementsDeprecated": {
+        "rg-phase-panel__foot": "1.18.0: usare rg-phase-panel__gestures",
+        "rg-phase-panel__scope": "1.18.0: usare rg-phase-panel__gestures"
+      }
     },
     {
       "id": "file-card",
@@ -2400,7 +2413,7 @@
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "file-card",
       "snippet": "<article class=\"rg-file-card rg-file-card--loaded\">\n  <div class=\"rg-file-card__row\">\n    <h3 class=\"rg-file-card__title\" title=\"verbale-2026.pdf\">verbale-2026.pdf</h3>\n    <div class=\"rg-file-card__badges\"><span class=\"rg-badge rg-badge--parsed\">letta</span></div>\n    <div class=\"rg-file-card__actions\">\n      <a class=\"rg-button rg-button--ghost\" href=\"/doc/42\">Apri</a>\n      <label class=\"rg-file-input__control\"><input type=\"file\" accept=\"application/pdf\"><span class=\"rg-button rg-button--outline\">Carica un altro&#8230;</span></label>\n    </div>\n  </div>\n  <div class=\"rg-file-card__reveal\" hidden>\n    <div class=\"rg-file-card__options\"><!-- slot app: opzioni di lettura --></div>\n    <div class=\"rg-file-card__confirm\"><button class=\"rg-button rg-button--primary\" type=\"button\">Conferma</button></div>\n  </div>\n</article>",
-      "notes": "Componente NUOVO per composizione canonizzata, non variante: nessun mattone esistente modella 'stato caricato/vuoto + rivelazione dopo la scelta'. Compone il MECCANISMO del picker di rg-file-input (solo rg-file-input__control: la label che copre l'input a opacita zero col bottone; NON rg-file-input__status, che sarebbe il 'paragrafo' da eliminare — la provenienza e il nome file nel titolo), la superficie di rg-empty per lo stato vuoto, rg-badge per lo slot stato e rg-button per le azioni. Dentro la card il bottone del picker torna a larghezza automatica (in rg-file-input e a piena larghezza perche li e il bersaglio unico del pannello). UN SOLO titolo (rg-file-card__title, mono, troncato con ellissi ma leggibile per intero: testo completo nel nodo + title): niente secondo titolo, niente paragrafo esplicativo — erano i difetti del documento fatto a mano. Gli slot (badges, actions, options, confirm) sono DELL'APP: il DS da posizioni e stile, mai i contenuti (nessuna 'spolina%', nessuna 'scheda macchina' nel CSS/markup del DS). RIVELAZIONE PROGRESSIVA: rg-file-card__reveal parte con [hidden] e contiene rg-file-card__options + rg-file-card__confirm; prima della scelta del file non esiste nemmeno per l'accessibilita (hidden nativo, non solo visivo). Fonte di verita = [hidden] su __reveal, stato non nativo pilotato dall'app come aria-expanded altrove; il CSS fa vincere [hidden] sul display del contenitore. Contratto JS minimo: al change dell'input file, se un file e presente l'app scrive il nome nel titolo e fa reveal.hidden=false; su conferma o Ripristina reveal.hidden=true. Distinto da rg-file-input (picker+status per una tool di import, senza stati caricato/vuoto), da rg-upload (area di rilascio grande) e da rg-card/rg-section-card (contenitori generici senza i due stati e la rivelazione). DA 1.17.0 --bar, LA BARRA DELLA SCHEDA: lo stesso documento richiamato in PIU sezioni della stessa pagina (la scheda macchina di una fase, in 'Scheda macchina' e in 'Sequenza stop') diventa una RIGA identica in ogni sezione, sempre in cima alla sezione, sopra rg-phase-panel__intro. Difetto d'origine: 'la prima riga dei bottoni in scheda macchina deve essere uguale a quella di sequenza stop', e senza PDF una sezione non offriva niente. La riga c'e in ENTRAMBI gli stati: --bar --loaded (icona, nome, badge, azioni, primaria 'Compila scheda') e --bar --empty (testo 'Nessuna scheda su questa fase.' e primaria 'Carica la scheda'); le azioni inesistenti si OMETTONO. Nella barra il nome del file NON e un'intestazione (<p>): la barra si ripete. Ordine fisso delle azioni: leggere -> portare via -> cambiare -> compilare; icona + testo. Le distruttive non ci stanno ('Torna alla prima lettura' va nel piede del blocco della fase). __reveal e il contratto JS restano. Dove il documento e il soggetto unico della vista resta la card piena, senza --bar.",
+      "notes": "Componente NUOVO per composizione canonizzata, non variante: nessun mattone esistente modella 'stato caricato/vuoto + rivelazione dopo la scelta'. Compone il MECCANISMO del picker di rg-file-input (solo rg-file-input__control: la label che copre l'input a opacita zero col bottone; NON rg-file-input__status, che sarebbe il 'paragrafo' da eliminare — la provenienza e il nome file nel titolo), la superficie di rg-empty per lo stato vuoto, rg-badge per lo slot stato e rg-button per le azioni. Dentro la card il bottone del picker torna a larghezza automatica (in rg-file-input e a piena larghezza perche li e il bersaglio unico del pannello). UN SOLO titolo (rg-file-card__title, mono, troncato con ellissi ma leggibile per intero: testo completo nel nodo + title): niente secondo titolo, niente paragrafo esplicativo — erano i difetti del documento fatto a mano. Gli slot (badges, actions, options, confirm) sono DELL'APP: il DS da posizioni e stile, mai i contenuti (nessuna 'spolina%', nessuna 'scheda macchina' nel CSS/markup del DS). RIVELAZIONE PROGRESSIVA: rg-file-card__reveal parte con [hidden] e contiene rg-file-card__options + rg-file-card__confirm; prima della scelta del file non esiste nemmeno per l'accessibilita (hidden nativo, non solo visivo). Fonte di verita = [hidden] su __reveal, stato non nativo pilotato dall'app come aria-expanded altrove; il CSS fa vincere [hidden] sul display del contenitore. Contratto JS minimo: al change dell'input file, se un file e presente l'app scrive il nome nel titolo e fa reveal.hidden=false; su conferma o Ripristina reveal.hidden=true. Distinto da rg-file-input (picker+status per una tool di import, senza stati caricato/vuoto), da rg-upload (area di rilascio grande) e da rg-card/rg-section-card (contenitori generici senza i due stati e la rivelazione). DA 1.17.0 --bar, LA BARRA DELLA SCHEDA: lo stesso documento richiamato in PIU sezioni della stessa pagina (la scheda macchina di una fase, in 'Scheda macchina' e in 'Sequenza stop') diventa una RIGA identica in ogni sezione, sempre in cima alla sezione, sopra rg-phase-panel__intro. Difetto d'origine: 'la prima riga dei bottoni in scheda macchina deve essere uguale a quella di sequenza stop', e senza PDF una sezione non offriva niente. La riga c'e in ENTRAMBI gli stati: --bar --loaded (icona, nome, badge, azioni, primaria 'Compila scheda') e --bar --empty (testo 'Nessuna scheda su questa fase.' e primaria 'Carica la scheda'); le azioni inesistenti si OMETTONO. Nella barra il nome del file NON e un'intestazione (<p>): la barra si ripete. Ordine fisso delle azioni: leggere -> portare via -> cambiare -> compilare; icona + testo. Le distruttive non ci stanno ('Torna alla prima lettura' va nel piede del blocco della fase). __reveal e il contratto JS restano. Dove il documento e il soggetto unico della vista resta la card piena, senza --bar. DA 1.18.0 rg-file-card--bar e SUPERATA da rg-document: sul server vero era alta 99px su due righe a 1440 e a 1280px, sei bottoni dello stesso peso, il compilatore ultimo e non trovato. Resta nel CSS invariata fino a una major.",
       "keywords": [
         "file card",
         "documento",
@@ -2446,6 +2459,9 @@
       ],
       "variantsSince": {
         "rg-file-card--bar": "1.17.0"
+      },
+      "variantsDeprecated": {
+        "rg-file-card--bar": "1.18.0: superata da rg-document (components/document.md)"
       }
     },
     {
@@ -3487,6 +3503,89 @@
         "numeri non lettere",
         "pastiglia tonda",
         "conflitto col numero di fase"
+      ]
+    },
+    {
+      "id": "document",
+      "title": "Document (il documento della fase)",
+      "role": "Il documento di lavoro di un'entita (la scheda macchina di una fase) in una riga sola: tipo, nome del file, stato, tre azioni di lettura a sola icona con suggerimento e il caricamento con icona e testo; stato vuoto nella stessa posizione con la primaria 'Carica la scheda'; rivelazione delle opzioni di lettura dopo la scelta del file.",
+      "status": "beta",
+      "since": "1.18.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-document",
+        "variants": [
+          "rg-document--empty"
+        ],
+        "elements": [
+          "rg-document__bar",
+          "rg-document__file",
+          "rg-document__icon",
+          "rg-document__kind",
+          "rg-document__name",
+          "rg-document__reveal",
+          "rg-document__options",
+          "rg-document__confirm"
+        ],
+        "related": [
+          "rg-phase-panel__document",
+          "rg-action-group",
+          "rg-icon-button--full",
+          "rg-tooltip",
+          "rg-file-input__control",
+          "rg-badge--parsed",
+          "rg-file-card--bar"
+        ]
+      },
+      "variants": [
+        "presente",
+        "assente",
+        "file scelto"
+      ],
+      "states": [
+        "loaded",
+        "empty",
+        "file-selected",
+        "focus",
+        "tooltip"
+      ],
+      "tokens": [
+        "--rg-color-surface",
+        "--rg-color-border",
+        "--rg-color-text-label",
+        "--rg-font-mono",
+        "--rg-font-identity",
+        "--rg-font-size-xs",
+        "--rg-font-size-sm",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-radius-md"
+      ],
+      "doc": "components/document.md",
+      "patternRef": "components/phase-switch.md",
+      "rulesRef": "design-rules.md#distanza-delle-azioni-dal-bordo",
+      "specimenAnchor": "document",
+      "snippet": "<div class=\"rg-document\"><div class=\"rg-document__bar\"><div class=\"rg-document__file\"><svg class=\"rg-icon rg-icon--md rg-document__icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-documento\"></use></svg><span class=\"rg-document__kind\">Scheda macchina</span><span class=\"rg-document__name\" title=\"1296 DAV RIW OBLIQUE - GRIS.pdf\">1296 DAV RIW OBLIQUE - GRIS.pdf</span><span class=\"rg-badge rg-badge--parsed\">letta</span></div><div class=\"rg-action-group\" role=\"group\" aria-label=\"Leggi la scheda\"><span class=\"rg-tooltip\"><a class=\"rg-icon-button rg-icon-button--full\" href=\"…/scheda-compilata?inline=1\" target=\"_blank\" rel=\"noopener\" aria-labelledby=\"tip-doc-vedi\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-apri-esterno\"></use></svg></a><span class=\"rg-tooltip__text\" role=\"tooltip\" id=\"tip-doc-vedi\">Visualizza la scheda compilata (nuova scheda)</span></span></div><div class=\"rg-action-group\"><label class=\"rg-file-input__control\"><input type=\"file\" name=\"pdf_file\" accept=\".pdf\" form=\"carica-scheda\" required><span class=\"rg-button rg-button--ghost\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-carica\"></use></svg>Carica un'altra scheda…</span></label></div></div><div class=\"rg-document__reveal\" hidden><div class=\"rg-document__options\"></div><div class=\"rg-document__confirm\"><button class=\"rg-button rg-button--primary\" type=\"submit\" form=\"carica-scheda\">Ricarica e rileggi</button></div></div></div>",
+      "notes": "SOSTITUISCE rg-file-card--bar (1.17.0), che sul server vero era alta 99px su due righe a 1440 e a 1280px con sei bottoni dello stesso peso: 'quell'oggetto in cima con il pdf si rompe subito con i bottoni e non e chiaro per niente'. TRE CORREZIONI: (1) GERARCHIA: tre azioni di lettura (Visualizza scheda compilata, Scarica PDF, PDF caricato cosi com'e) a SOLA ICONA con suggerimento (rg-icon-button--full + rg-tooltip, nome intero e 'nuova scheda' nel suggerimento); 'Carica un'altra scheda…', rara, con icona + testo in un secondo rg-action-group dopo il filetto. (2) SOLO IL DOCUMENTO: 'Parti collegate' e 'Apri il compilatore' stanno nell'intro della sezione Sequenza stop; 'Torna alla prima lettura' ed 'Elimina fase' in rg-phase-panel__gestures. (3) UNA VOLTA SOLA: in rg-phase-panel__document, nella testa del blocco, sotto il riepilogo e sopra le tab; si vede da ogni sezione e i due stati hanno la stessa posizione. Una riga, flex-wrap nowrap sopra 680px: il file si stringe per primo, il nome si accorcia coi puntini (intero in title e nel DOM). Nessuna primaria col documento presente; col documento assente (--empty) la primaria e 'Carica la scheda'. Superficie rientrante (--rg-color-surface) dentro la testa bianca, respiro 12px intorno ai controlli (§5). Il nome non e un'intestazione. Rivelazione: __reveal hidden, stesso contratto JS di rg-file-card. Il form di caricamento sta fuori, i controlli lo raggiungono con form=. Misurata a 1024, 1280, 1440px: una riga.",
+      "keywords": [
+        "documento",
+        "scheda macchina",
+        "pdf",
+        "file caricato",
+        "allegato",
+        "barra della scheda",
+        "azioni sul documento",
+        "visualizza scheda",
+        "scarica pdf",
+        "pdf caricato",
+        "carica un altra scheda",
+        "sostituisci file",
+        "documento della fase",
+        "document strip",
+        "file bar",
+        "attachment",
+        "riga del documento"
       ]
     }
   ]

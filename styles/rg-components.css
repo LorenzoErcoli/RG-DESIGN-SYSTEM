@@ -636,6 +636,17 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* Con la testa titolata la meta e il RIEPILOGO della fase (materiali · stop · fili · origine dei dati):
    riga intera, allineata al nome e non al numero. */
 .rg-phase-panel__heading ~ .rg-phase-panel__meta { flex-basis: 100%; padding-inline-start: calc(var(--rg-space-8) + var(--rg-space-3)); }
+/* GESTI SULLA FASE E DOCUMENTO, IN TESTA (v1.18.0). Giudizio sulla 1.17.0: «l'hai portata in fondo
+   con elimina, ma non va bene […] sposta su le funzioni in fondo, rimetti elimina fase magari non con
+   quelli ma in cima». La testa del blocco ha quattro zone: __heading (titolo), __gestures (in alto a
+   destra, i gesti che cambiano o tolgono i dati della fase: Torna alla prima lettura, Scollega,
+   Elimina fase, con icona + testo e conferma), __summary (riepilogo a sinistra, stato a destra) e
+   __document (rg-document, il documento della fase, una volta sola, sopra le tab). I gesti stanno
+   nella riga del titolo e il documento due righe sotto: separati senza bisogno di un colore. */
+.rg-phase-panel__gestures { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--rg-space-2); margin-inline-start: auto; }
+.rg-phase-panel__summary { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--rg-space-2) var(--rg-space-6); padding-inline-start: calc(var(--rg-space-8) + var(--rg-space-3)); }
+.rg-phase-panel__summary > .rg-phase-panel__status { margin-inline-start: auto; }
+.rg-phase-panel__document { flex-basis: 100%; min-width: 0; }
 .rg-phase-panel__meta strong { color: var(--rg-color-text-primary); font-weight: var(--rg-weight-medium); }
 /* Stato e reparto a destra: il costo non calcolato e il timbro del reparto (rg-dept-band--quiet). */
 .rg-phase-panel__status { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); }
@@ -674,6 +685,8 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* «Parte» scritto accanto al numero: il segno tondo dice quale, la parola dice di che cosa. */
 .rg-page-header__subject-kind { color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 /* Piede: i gesti SULLA FASE (scollega, elimina), lontani dal salvataggio e dichiarati per iscritto. */
+/* SUPERATO dalla 1.18.0: i gesti sulla fase stanno in __gestures, nella testa. In fondo a una pagina
+   lunga non si trovavano. Resta invariato fino a una major, per chi non ha ancora migrato. */
 .rg-phase-panel__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--rg-space-2); padding: var(--rg-space-3) var(--rg-space-6); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 .rg-phase-panel__scope { margin: 0 auto 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
 @media (max-width: 680px) {
@@ -681,6 +694,8 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
   .rg-phase-panel__body { padding: var(--rg-space-4); }
   .rg-phase-panel__sections { margin: calc(-1 * var(--rg-space-4)) calc(-1 * var(--rg-space-4)) var(--rg-space-4); padding-inline: var(--rg-space-4); overflow-x: auto; }
   .rg-phase-panel__heading ~ .rg-phase-panel__meta { padding-inline-start: 0; }
+  .rg-phase-panel__summary { padding-inline-start: 0; }
+  .rg-phase-panel__gestures { justify-content: flex-start; margin-inline-start: 0; }
 }
 
 /* Modal / dialog — overlay con backdrop; shell riusabile (promosso da product-platform, v0.3.0) */
@@ -823,6 +838,9 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    Perche una variante e non un componente nuovo: e la riga di rg-file-card (nome, badge, azioni,
    rivelazione progressiva), con lo stato vuoto portato sulla riga invece che sulla superficie aperta
    di rg-empty. */
+/* SUPERATA dalla 1.18.0 da rg-document (qui sotto). Sul server vero era alta 99 px su due righe a 1440
+   e a 1280 px, con sei bottoni dello stesso peso: il compilatore, ultimo, non si trovava. Resta
+   invariata fino a una major. */
 .rg-file-card--bar { gap: var(--rg-space-2); }
 .rg-file-card--bar .rg-file-card__row,
 .rg-file-card--bar .rg-file-card__empty { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2) var(--rg-space-3); padding: var(--rg-space-3) var(--rg-space-4); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-radius: var(--rg-radius-md); text-align: left; }
@@ -830,6 +848,35 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-file-card--bar .rg-file-card__title { flex: 0 1 auto; min-width: 12ch; }
 .rg-file-card--bar .rg-file-card__empty > p { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
 .rg-file-card--bar .rg-file-card__actions { margin-left: auto; }
+
+/* DOCUMENTO (v1.18.0) — il documento di lavoro di un'entita, in UNA RIGA che non va a capo alle
+   larghezze d'uso (misurata a 1024, 1280, 1440 px). Sostituisce rg-file-card--bar. Tre correzioni:
+   GERARCHIA (tre azioni di lettura a sola icona con suggerimento; il caricamento, raro, con icona e
+   testo dopo un filetto), SOLO IL DOCUMENTO (il compilatore e le parti collegate stanno nella loro
+   sezione, i gesti sulla fase in rg-phase-panel__gestures), UNA VOLTA SOLA (nella testa del blocco,
+   non in cima a ogni sezione). Il file si stringe per primo: il nome si accorcia coi puntini e resta
+   intero in title e nel DOM. Superficie rientrante dentro la testa bianca: un oggetto, non una card.
+   Respiro di 12 px intorno ai controlli (design-rules §5). */
+.rg-document { display: grid; gap: var(--rg-space-2); min-width: 0; }
+.rg-document__bar { display: flex; flex-wrap: nowrap; align-items: center; gap: var(--rg-space-3); padding: var(--rg-space-3) var(--rg-space-3) var(--rg-space-3) var(--rg-space-4); background: var(--rg-color-surface); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); }
+.rg-document__file { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: var(--rg-space-2); }
+.rg-document__icon { flex: none; color: var(--rg-color-text-secondary); }
+.rg-document__kind { flex: none; color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; white-space: nowrap; }
+.rg-document__name { min-width: 0; overflow: hidden; color: var(--rg-color-text-primary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); white-space: nowrap; text-overflow: ellipsis; }
+.rg-document--empty .rg-document__name { color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); }
+.rg-document__file > .rg-badge { flex: none; }
+.rg-document__bar > .rg-action-group { flex: none; flex-wrap: nowrap; }
+/* Il picker di rg-file-input torna largo quanto il suo bottone: qui e un'azione fra le altre. */
+.rg-document .rg-file-input__control { display: inline-block; }
+.rg-document .rg-file-input__control .rg-button { width: auto; }
+.rg-document__reveal { display: grid; gap: var(--rg-space-4); padding: var(--rg-space-4); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); }
+.rg-document__reveal[hidden] { display: none; }
+.rg-document__options { display: grid; gap: var(--rg-space-2); }
+.rg-document__confirm { display: flex; flex-wrap: wrap; gap: var(--rg-space-2); }
+@media (max-width: 680px) {
+  .rg-document__bar { flex-wrap: wrap; }
+  .rg-document__file { flex-basis: 100%; }
+}
 
 /* Color map — attribuzione di ciò che e stato importato (v1.5.0): ogni colore o layer del file
    di partenza riceve un ruolo nella lavorazione. E il controllo che risponde a "di questo DXF,

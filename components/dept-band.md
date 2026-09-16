@@ -31,7 +31,7 @@ croce. Le due linee appaiate sono due strati accoppiati. La bandiera a scacchi �
 il finissaggio è l'ultimo reparto.
 
 E da qui la regola derivata, che è quella operativa: **due reparti non stanno mai nella stessa
-famiglia di segno**. Le famiglie in uso sono croci, due registri, dorsi, pois, scacchiera,
+famiglia di segno**. Le famiglie in uso sono croci, due registri, piastre, pois, scacchiera,
 diagonale, coppie. Il **verso** di una diagonale, dopo una fotocopia e a dimensione di banda, non è
 una differenza — è l'errore della prima versione, dove stampa (45°, sottile) e pressatura (−45°,
 spessa) si confondevano. E non lo è nemmeno il **tono**: il reticolo ortogonale del finissaggio era
@@ -44,7 +44,7 @@ fotocopia spinta non è una differenza. Il tono non fonda una famiglia.
 | --- | --- | --- | --- |
 | `rg-dept-band--ricamo` | Campionario Ricamo | fila di croci | è il **punto croce** |
 | `rg-dept-band--stampa` | Stampa, Laser e HF | due registri: gocce e raggi alternati sopra, due linee sotto | in alto una **goccia d'inchiostro** e una **punta di laser**, in basso le **due linee** della stampa: i mestieri sono due e la figura li nomina entrambi |
-| `rg-dept-band--pressatura` | Pressatura e soffiatura | dorsi pieni ai bordi, centro vuoto | sono le **due piastre** della pressa, col materiale in mezzo |
+| `rg-dept-band--pressatura` | Pressatura e soffiatura | una fila di piastre sopra e una sotto, allineate, con un filo in mezzo | sono le **piastre** della pressa, col **materiale** stretto fra le due |
 | `rg-dept-band--strass` | Strass e applicazioni | pois | **sono strass** |
 | `rg-dept-band--finissaggio` | Finissaggio e Controllo Qualità | scacchiera | è la **bandiera a scacchi**: il traguardo, ed è l'ultimo reparto |
 | `rg-dept-band--incollature` | Incollature | diagonali spesse | sono le **strisciate della spalmatura** |
@@ -59,8 +59,9 @@ assegnato», e si legge come tale.
 
 **Fascia del blocco della fase** (`rg-phase-panel__band`, dalla 1.19.0). A schermo, la banda è
 l'intestazione del blocco della fase: primo figlio, da bordo a bordo, alta 48 px, etichetta a
-sinistra sul filo del numero della fase, sempre `--quiet`. Le figure reggono l'altezza: i registri
-sono ancorati in alto, in basso o al centro. Con il reparto non assegnato la fascia c'è, senza
+sinistra sul filo del numero della fase, sempre `--quiet`. Le figure reggono l'altezza perché o
+riempiono la banda (pois, scacchiera, diagonale, coppie) o stanno sulla **mezzeria** (croci, registri
+della stampa, piastre). Con il reparto non assegnato la fascia c'è, senza
 variante, con «Reparto da assegnare». Vedi [phase-switch](phase-switch.md#la-fascia-del-reparto-e-elimina-fase-a-icona-1190).
 
 Il nome della variante apre con il **lavoro prevalente** del reparto, non con la macchina più
@@ -104,6 +105,21 @@ i due registri.
 
 In vetrina c'è la tavola apposta per verificarlo: *prova di sforzo*, grigio più contrasto
 schiacciato.
+
+**Mai una figura ancorata ai bordi** (revisione dopo la 1.19.0). La prima pressatura erano due
+dorsi pieni, uno in alto e uno in basso: in una banda da 32 px sul foglio reggeva, ma nella fascia
+da 48 px del blocco della fase, con il contorno del pannello sopra e il filetto sotto, **si leggeva
+come una cornice** — «ha l'etichetta ma non il disegno di sfondo che ha il Ricamo». Un segno
+continuo da bordo a bordo è un bordo, non una figura. Ora la pressatura è una fila di **piastre**
+(blocchi 16×12, luce 8) sopra e una sotto, allineate in colonna, con il **filo del materiale** da
+2 px in mezzo; la figura è alta 32 px e sta sulla mezzeria come il punto croce. La stessa revisione
+ha centrato i due registri della **stampa**, che erano ancorati al bordo alto e al bordo basso: a
+48 px si aprivano in un bordo sopra e un bordo sotto. Scartata per la pressatura: due file di
+trattini 16×8, che si leggono come una linea tratteggiata doppia.
+
+**La coppia da tenere d'occhio** è ora pressatura e finissaggio: tutte e due a blocchi. Si
+separano per **disposizione**, non per tono: le piastre sono allineate in colonna e tagliate da un
+filo continuo, i quadretti della scacchiera sono sfalsati e riempiono la banda senza filo.
 
 **Come si aggiunge una figura.** La variante dichiara `--rg-dept-color` (il filetto) e
 `--rg-dept-pattern` (la campitura); `--rg-dept-size`, `--rg-dept-position` e `--rg-dept-repeat`

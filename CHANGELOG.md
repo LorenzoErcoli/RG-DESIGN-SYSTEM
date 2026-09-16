@@ -7,6 +7,27 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta di patch (ramo `ds/dept-band-figure`)
+
+**Le figure del reparto a 48 px: niente più cornici.** Sulla pagina di una fase di Pressatura la
+fascia `rg-phase-panel__band` «ha l'etichetta ma non il disegno di sfondo che ha il Ricamo»: i due
+dorsi pieni della pressatura, ancorati ai bordi, con il contorno del blocco si leggevano come una
+cornice.
+
+**Patch**: nessuna classe nuova o rimossa, nessun token, nessun cambio di markup.
+
+- **`rg-dept-band--pressatura`**: nuova figura, stessa idea. Una fila di piastre (blocchi 16×12,
+  luce 8) sopra e una sotto, allineate in colonna, con il filo del materiale da 2 px in mezzo. Alta
+  32 px, centrata come il punto croce. Scartate due file di trattini 16×8 (linea tratteggiata doppia).
+- **`rg-dept-band--stampa`**: i due registri, prima ancorati al bordo alto e al bordo basso, stanno
+  sulla mezzeria. A 32 px non cambia quasi nulla; a 48 px non si aprono più in un bordo sopra e uno sotto.
+- **`rg-dept-band--quiet`**: la regola stava prima di `--accoppiaggi`, e la fascia sobria degli
+  accoppiaggi usciva a colori pieni. Ora segue le sette varianti.
+- Ricamo, strass, finissaggio, incollature: invariati (riempiono la banda o stanno già al centro).
+- Regola scritta in `dept-band.md`: mai una figura ancorata ai bordi. Coppia da tenere d'occhio:
+  pressatura e finissaggio, entrambe a blocchi, separate per disposizione e non per tono.
+- Vetrina: nuova tavola con le sette fasce da 48 px `--quiet`.
+
 ## 1.19.0 — 2026-09-16
 
 **La fascia del reparto in testa al blocco della fase, e «Elimina fase» a icona.** Richiesta di chi

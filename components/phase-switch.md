@@ -512,7 +512,8 @@ stesso padding. Eliminare usa icona come in dash del prodotto»*.
   angoli alti arrotondati come il blocco. Sotto una linguetta attaccata (`rg-phase-switch`) l'angolo
   alto sinistro resta vivo, come quello del blocco.
 - **Altezza fissa: 48 px** (`--rg-space-12`), filetto del reparto compreso. La trama riempie la fascia;
-  le sette figure reggono l'altezza, perché i loro registri sono ancorati in alto, in basso o al centro.
+  le sette figure reggono l'altezza, perché o riempiono la banda o stanno sulla mezzeria. Nessuna è
+  ancorata ai bordi: a 48 px un segno sul bordo, col contorno del blocco, si legge come una cornice.
 - **L'etichetta (`__name`) è centrata in verticale e allineata a sinistra**, con lo stesso padding
   orizzontale della testa (24 px, 16 sotto i 680 px): il suo bordo sinistro cade sul filo del numero
   della fase.

@@ -652,8 +652,10 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-phase-panel__status { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); }
 /* FASCIA DEL REPARTO (v1.19.0) — la rg-dept-band come intestazione del blocco della fase: PRIMO
    figlio del blocco, da bordo a bordo, dentro il contorno arrotondato (angoli alti come il blocco,
-   meno il filetto). Altezza fissa 48 px, filetto del reparto compreso: le sette figure la reggono,
-   perche i loro registri sono ancorati in alto, in basso o al centro. Etichetta centrata in verticale
+   meno il filetto). Altezza fissa 48 px, filetto del reparto compreso: le sette figure la reggono
+   se riempiono la banda (pois, scacchiera, diagonale, coppie) o stanno sulla mezzeria (croci,
+   registri della stampa, piastre). Mai una figura ancorata ai bordi: a 48 px, col contorno del
+   blocco, un segno sul bordo si legge come cornice (1.19.x, pressatura e stampa). Etichetta centrata in verticale
    (lo fa gia la banda) e allineata a sinistra, con lo stesso padding orizzontale della testa: cade
    sul filo del numero della fase. A schermo sempre --quiet (nella pagina convivono badge di stato, e
    category-3/4/5 sono danger/warning/success). Senza variante di reparto e il caso «Reparto da
@@ -988,7 +990,7 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    si riconosce al primo colpo, e chi pesca il foglio dal mucchio non deve ricordarsi che il
    tratteggio a 45 gradi era la stampa. Criterio arrivato dal reparto, non dal design system.
    Conseguenza operativa: due reparti non stanno mai nella stessa FAMIGLIA DI SEGNO. Le sette in
-   uso: croci (ricamo), due registri (stampa), dorsi (pressatura), pois (strass), scacchiera
+   uso: croci (ricamo), due registri (stampa), piastre (pressatura), pois (strass), scacchiera
    (finissaggio), diagonale (incollature), coppie (accoppiaggi). Il verso di una diagonale, dopo
    una fotocopia e a dimensione di banda, non e una differenza; e non lo e nemmeno il tono, che
    e la ragione per cui il reticolo del finissaggio (barre verticali come gli accoppiaggi) e
@@ -1014,11 +1016,26 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    E la figura piu complessa delle sette e la piu stretta: registro alto 0-16, registro basso
    18-30 dell'area utile (~30px su una banda da 32). Ci sta, ma senza margine — se un giorno la
    banda si abbassa, questa e la prima che si impasta. La goccia e 8px come i pois dello strass ma
-   a passo 24 e in coppia col raggio: e il composto che si legge, non il singolo segno. */
-.rg-dept-band--stampa { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-6)), repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-2)); --rg-dept-size: var(--rg-space-6) var(--rg-space-4), auto var(--rg-space-4), auto var(--rg-space-3); --rg-dept-position: 0 0, 0 0, 0 100%; --rg-dept-repeat: repeat-x, repeat-x, repeat-x; }
-/* PRESSATURA E SOFFIATURA — le due piastre della pressa: due dorsi pieni ai bordi, il materiale
-   in mezzo. Figura chiusa, non un tratteggio: e cio che la separa da tutte le altre. */
-.rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-pattern: linear-gradient(to bottom, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-2), transparent var(--rg-space-2), transparent calc(100% - var(--rg-space-2)), var(--rg-dept-color) calc(100% - var(--rg-space-2)), var(--rg-dept-color) 100%); }
+   a passo 24 e in coppia col raggio: e il composto che si legge, non il singolo segno.
+   CENTRATA (1.19.x): i due registri stavano ancorati ai bordi (alto a 0, basso a 100%). In una
+   banda da 32 non cambia nulla; nella fascia da 48 del blocco della fase si aprivano 16 px di vuoto
+   in mezzo, le due linee si incollavano al filetto e la figura diventava un bordo sopra e un bordo
+   sotto: lo stesso difetto della cornice della pressatura. Ora il blocco da 30 sta sulla mezzeria
+   (registro alto 16 sopra, registro basso 12 sotto, 2 di luce), a qualunque altezza di banda. */
+.rg-dept-band--stampa { --rg-dept-color: var(--rg-color-category-2); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-6)), repeating-linear-gradient(0deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-2)); --rg-dept-size: var(--rg-space-6) var(--rg-space-4), auto var(--rg-space-4), auto var(--rg-space-3); --rg-dept-position: 0 calc(50% - var(--rg-space-2)), 0 calc(50% - var(--rg-space-2)), 0 calc(50% + var(--rg-space-2)); --rg-dept-repeat: repeat-x, repeat-x, repeat-x; }
+/* PRESSATURA E SOFFIATURA — le piastre della pressa: una fila di piastre sopra, una sotto, allineate
+   in colonna, e in mezzo il filo del materiale stretto fra le due. Tessera da 24: piastra 16x12,
+   luce 8; figura alta 32 e CENTRATA come il punto croce, filo da 2 sulla mezzeria.
+   Rivista (1.19.x). La prima forma erano due dorsi pieni sui bordi della banda: nella fascia da
+   48 px del blocco della fase, col contorno del pannello e il filetto sotto, si leggeva come una
+   CORNICE e non come un disegno («ha l'etichetta ma non il disegno di sfondo che ha il Ricamo»).
+   Una figura continua da bordo a bordo e un bordo, non una figura: serve un segno che si ripete.
+   Scartate: due file di trattini 16x8 (si leggono come una linea tratteggiata doppia, il segno
+   neutro che il ricamo aveva gia scartato). La piastra 16x12 e un blocco, non un trattino.
+   Vicina da tenere d'occhio: la scacchiera del finissaggio, anch'essa a blocchi. Si separano per
+   disposizione e non per tono: qui i blocchi sono ALLINEATI in colonna e tagliati da un filo
+   continuo, la i quadretti sono SFALSATI e riempiono la banda senza filo. */
+.rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-4), transparent var(--rg-space-4), transparent var(--rg-space-6)), repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-4), transparent var(--rg-space-4), transparent var(--rg-space-6)), linear-gradient(var(--rg-dept-color), var(--rg-dept-color)); --rg-dept-size: 100% var(--rg-space-3), 100% var(--rg-space-3), 100% var(--rg-border-strong); --rg-dept-position: 0 calc(50% - var(--rg-space-2) - var(--rg-border-strong)), 0 calc(50% + var(--rg-space-2) + var(--rg-border-strong)), 0 center; --rg-dept-repeat: no-repeat; }
 /* STRASS E APPLICAZIONI — pois: sono strass. La figura piu letterale delle sette. */
 .rg-dept-band--strass { --rg-dept-color: var(--rg-color-category-4); --rg-dept-pattern: radial-gradient(circle, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-radius-md), transparent var(--rg-radius-md)); --rg-dept-size: var(--rg-space-4) var(--rg-space-4); }
 /* FINISSAGGIO E CONTROLLO QUALITA — la bandiera a scacchi: il traguardo. E l'ultimo reparto, quello
@@ -1035,13 +1052,15 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* ACCOPPIAGGI — due linee appaiate: accoppiare e unire due strati, e la figura lo dice.
    Era l'unica a tinta piena: si distingueva ma non comunicava niente, e in fotocopia una
    campitura media rischia di impastarsi. */
+.rg-dept-band--accoppiaggi { --rg-dept-color: var(--rg-color-category-6); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2), var(--rg-dept-color) var(--rg-space-2), var(--rg-dept-color) var(--rg-space-3), transparent var(--rg-space-3), transparent var(--rg-space-6)); }
 /* SOBRIA — la stessa figura in grigio, per lo SCHERMO (v1.16.0). Su carta il colore e un
    acceleratore per pescare il foglio dal mucchio; a schermo la palette categoriale convive con i
    colori di stato, e category-3/4/5 SONO danger/warning/success: una pressatura rossa accanto a un
    badge d'errore dice due cose con lo stesso rosso. Qui resta la figura, che e il segnale che
-   riconosce il reparto, e il nome. Va DOPO le sette varianti: stesso peso, vince l'ordine. */
+   riconosce il reparto, e il nome. Va DOPO le sette varianti: stesso peso, vince l'ordine.
+   Fino alla 1.19.0 la regola degli accoppiaggi stava sotto questa, e la fascia --quiet degli
+   accoppiaggi usciva a colori pieni: ora le sette stanno tutte sopra. */
 .rg-dept-band--quiet { --rg-dept-color: var(--rg-color-neutral-400); }
-.rg-dept-band--accoppiaggi { --rg-dept-color: var(--rg-color-category-6); --rg-dept-pattern: repeating-linear-gradient(90deg, var(--rg-dept-color) 0, var(--rg-dept-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2), var(--rg-dept-color) var(--rg-space-2), var(--rg-dept-color) var(--rg-space-3), transparent var(--rg-space-3), transparent var(--rg-space-6)); }
 
 /* Fill field — il campo che si compila A PENNA (v1.14.0). E il caso centrale della scheda di
    lavorazione: il foglio esce dalla stampante con dei buchi APPOSTA, e il buco deve invitare a

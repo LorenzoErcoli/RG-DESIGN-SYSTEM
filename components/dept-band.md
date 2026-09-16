@@ -57,6 +57,12 @@ fotocopia spinta non è una differenza. Il tono non fonda una famiglia.
 Senza variante la banda esiste comunque: filetto nero, nessuna campitura. È il caso «reparto non
 assegnato», e si legge come tale.
 
+**Fascia del blocco della fase** (`rg-phase-panel__band`, dalla 1.19.0). A schermo, la banda è
+l'intestazione del blocco della fase: primo figlio, da bordo a bordo, alta 48 px, etichetta a
+sinistra sul filo del numero della fase, sempre `--quiet`. Le figure reggono l'altezza: i registri
+sono ancorati in alto, in basso o al centro. Con il reparto non assegnato la fascia c'è, senza
+variante, con «Reparto da assegnare». Vedi [phase-switch](phase-switch.md#la-fascia-del-reparto-e-elimina-fase-a-icona-1190).
+
 Il nome della variante apre con il **lavoro prevalente** del reparto, non con la macchina più
 vistosa: `--stampa`, non `--laser`. Il reparto «Stampa, Laser e HF» è quello dove stanno le
 stampanti, e chi guardava una banda marcata `laser` diceva «manca stampa».

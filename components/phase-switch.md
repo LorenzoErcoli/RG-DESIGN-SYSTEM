@@ -128,7 +128,8 @@ Variabile: `--rg-phase-switch-ground`, il fondo dietro la didascalia (default
 | `rg-phase-panel__title` | (1.17.0) Il nome della fase: `<h1>` se la pagina mostra una fase, `<h2>` in un gruppo. |
 | `rg-phase-panel__meta` | Riepilogo della fase: `12 materiali` · `48 stop` · `9 fili` · `dati dal PDF caricato su questa fase`. Senza testa titolata (forma 1.16) è posizione e relazione. |
 | `rg-phase-panel__status` | Stato del costo (`rg-badge`) e timbro di reparto. |
-| `rg-phase-panel__dept` | Sulla `rg-dept-band`, insieme a `rg-dept-band--quiet`: il timbro del reparto, stessa figura del foglio, in grigio. |
+| `rg-phase-panel__band` | (1.19.0) Sulla `rg-dept-band`, con `--quiet`: la **fascia del reparto**, primo figlio del blocco, da bordo a bordo, alta 48 px, etichetta a sinistra sul filo del numero. |
+| `rg-phase-panel__dept` | **Superato dalla 1.19.0** (usare `__band`). Il timbro del reparto dentro la testa. |
 | `rg-phase-panel__body` | Tab di sezione e contenuto. |
 | `rg-phase-panel__sections` | (1.17.0) Sulla `rg-tabs` delle sezioni, **primo figlio** di `__body`: le tab si attaccano sotto la testa, da bordo a bordo. |
 | `rg-phase-panel__intro` | (1.17.0) Prima riga di una sezione: didascalia (`<p>`) a sinistra, azioni della sezione a destra. Prende il posto della testa di `rg-section-card`. |
@@ -432,8 +433,9 @@ Regole:
 - **I gesti sulla fase stanno in alto a destra, nella riga del titolo.** Sono i gesti che cambiano o
   tolgono i dati della fase: si trovano senza scorrere, e sono lontani dalle azioni sul documento,
   che stanno due righe sotto.
-- **Icona + testo, mai sola icona**: sono azioni rare e rischiose. Tutte hanno la conferma
-  (`data-conferma`). «Elimina fase» è `rg-button--ghost rg-button--danger`, l'ultima del gruppo.
+- **Icona + testo per «Torna alla prima lettura» e «Scollega»**: sono azioni rare e rischiose, senza
+  un segno universale. **«Elimina fase» a sola icona** dalla 1.19.0 (vedi *La fascia del reparto e
+  «Elimina fase» a icona*), in un gruppo suo dopo il filetto. Tutti hanno la conferma (`data-conferma`).
 - **«Torna alla prima lettura» sta coi gesti sulla fase, non col documento.** Non tocca il PDF:
   riporta stop, fili e materiali a come erano stati letti, e perde le modifiche fatte a mano. È un
   gesto sui dati della fase, della stessa famiglia di «Elimina fase». Il rischio è scritto due volte:
@@ -497,7 +499,86 @@ il compilatore»*, *«compilare la scheda con il compilatore»*). L'etichetta no
 che si apre altrove: la pagina cambia, è un `<a>`. «Compila scheda» diceva lo scopo, ma non che si
 apre un editor a schermo intero. Lo scopo resta scritto nel suggerimento.
 
+### La fascia del reparto e «Elimina fase» a icona (1.19.0)
+
+Richiesta di chi usa la pagina: *«questa componente tutta lunga da destra a sinistra in testa a questa
+scheda, sopra proprio il tipo di fase e di eliminare. Ovviamente che sta dentro la scheda stondata. E
+con il pattern che ha una altezza e la label centrata alto basso e allineata a sinistra, tutto con lo
+stesso padding. Eliminare usa icona come in dash del prodotto»*.
+
+**La fascia del reparto** (`rg-phase-panel__band`, sulla `rg-dept-band`):
+
+- **È il primo figlio del blocco**, prima di `__head`: da bordo a bordo, dentro il contorno, con gli
+  angoli alti arrotondati come il blocco. Sotto una linguetta attaccata (`rg-phase-switch`) l'angolo
+  alto sinistro resta vivo, come quello del blocco.
+- **Altezza fissa: 48 px** (`--rg-space-12`), filetto del reparto compreso. La trama riempie la fascia;
+  le sette figure reggono l'altezza, perché i loro registri sono ancorati in alto, in basso o al centro.
+- **L'etichetta (`__name`) è centrata in verticale e allineata a sinistra**, con lo stesso padding
+  orizzontale della testa (24 px, 16 sotto i 680 px): il suo bordo sinistro cade sul filo del numero
+  della fase.
+- **A schermo è sempre `--quiet`**: la figura resta, il colore diventa grigio. La pagina della fase
+  mostra badge di stato («costo non calcolato», «2 non risolti»), e `category-3/4/5` sono
+  `danger`, `warning` e `success`. Una fascia rossa a tutta larghezza sopra un badge d'errore
+  direbbe due cose con lo stesso rosso. Il colore pieno resta per la carta (`rg-worksheet-block`).
+- **Reparto non assegnato**: la fascia c'è lo stesso, senza variante di reparto (filetto grigio,
+  nessuna trama) e con l'etichetta «Reparto da assegnare». La testa del blocco ha la stessa altezza in
+  ogni caso, e il dato mancante si legge come tale.
+- **Nei gruppi** ogni blocco ha la sua fascia: le fasi di un gruppo possono stare in reparti diversi.
+- Sostituisce il timbro in `__status` o in `__name` (`rg-phase-panel__dept`), che resta nel CSS.
+
+**«Elimina fase» a sola icona**, come le azioni di riga della tabella delle parti:
+`rg-icon-button rg-icon-button--full rg-icon-button--danger` con `rg-tooltip`, suggerimento
+«Elimina la fase N». Rivede la regola 1.18.0 «icona + testo, mai sola icona» per questo solo gesto:
+
+- **si applica a un solo oggetto dichiarato**, il blocco in cui sta: numero e nome sono a pochi
+  centimetri;
+- **il cestino è universale**, ed è lo stesso segno dell'eliminazione nelle righe del prodotto;
+- **ha sempre la conferma**, che nomina la fase;
+- **sta in un gruppo suo**, l'ultimo, separato dal filetto (`rg-action-group` + `rg-action-group`).
+
+**«Torna alla prima lettura» e «Scollega» restano icona + testo.** Non hanno un segno universale: una
+freccia di ritorno si legge come «annulla» o «ricarica», una catena spezzata come «scollega un link».
+E cambiano i dati in un modo che non si indovina dall'icona: il primo perde le modifiche fatte a mano,
+il secondo cambia la struttura del gruppo. Per azioni rare e con conseguenze non ovvie vale la regola
+generale: icona + testo.
+
+```html
+<section class="rg-phase-panel" aria-labelledby="titolo-fase">
+  <p class="rg-dept-band rg-dept-band--ricamo rg-dept-band--quiet rg-phase-panel__band"><span class="rg-dept-band__name">Campionario Ricamo</span></p>
+  <header class="rg-phase-panel__head">
+    <div class="rg-phase-panel__heading"><!-- numero, «Fase 1 di 6», titolo --></div>
+    <div class="rg-phase-panel__gestures" role="group" aria-label="Azioni sulla fase 1">
+      <div class="rg-action-group">
+        <form class="rg-u-inline" method="post" action="…/ripristina" data-conferma="…">
+          <span class="rg-tooltip rg-tooltip--below">
+            <button class="rg-button rg-button--ghost" type="submit" aria-describedby="tip-prima-lettura"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-ripristina"></use></svg>Torna alla prima lettura</button>
+            <span class="rg-tooltip__text" role="tooltip" id="tip-prima-lettura">Si perdono le modifiche a stop, fili e materiali</span>
+          </span>
+        </form>
+      </div>
+      <div class="rg-action-group">
+        <form class="rg-u-inline" method="post" action="…/delete" data-conferma="Si elimina la fase 1, «Ricamo normale», con le sue operazioni e i valori scritti.">
+          <span class="rg-tooltip rg-tooltip--below rg-tooltip--end">
+            <button class="rg-icon-button rg-icon-button--full rg-icon-button--danger" type="submit" aria-labelledby="tip-elimina-fase-1"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-elimina"></use></svg></button>
+            <span class="rg-tooltip__text" role="tooltip" id="tip-elimina-fase-1">Elimina la fase 1</span>
+          </span>
+        </form>
+      </div>
+    </div>
+    <!-- __summary, __document come nella 1.18.0 -->
+  </header>
+  <!-- __body -->
+</section>
+```
+
+Reparto non assegnato:
+
+```html
+<p class="rg-dept-band rg-dept-band--quiet rg-phase-panel__band"><span class="rg-dept-band__name">Reparto da assegnare</span></p>
+```
+
 ## Tastiera e accessibilità
+
 
 
 

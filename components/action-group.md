@@ -22,8 +22,9 @@ quello che cerca, e «Elimina» sta a un bottone di distanza da «Costi».
 - **Un gruppo è di azioni affini** e di pari peso: le azioni sul documento (Modifica, Scheda,
   Etichette, Costi). L'azione primaria non entra in un gruppo di icone: resta icona + testo.
 - **L'azione distruttiva sta in un gruppo suo**, l'ultimo, separato dal filetto (§2 delle regole).
-  In testata ha il testo («Elimina»); in una riga di tabella può essere a sola icona, perché si
-  ripete e porta sempre una conferma.
+  In testata di pagina ha il testo («Elimina»). A sola icona dove si applica a **un solo oggetto
+  a vista**, con la conferma: in una riga di tabella, perché si ripete, e nella testa del blocco della
+  fase («Elimina la fase N», dalla 1.19.0), perché numero e nome sono a pochi centimetri.
 - **Menu «Altre azioni» solo per azioni secondarie e non distruttive**, di uso raro: Nuovo proto,
   Copia parti. Non ci vanno l'azione primaria, un'eliminazione o qualunque azione senza la quale la
   pagina non si usa (regola della disclosure: nessuna azione critica nascosta). Il trigger ha sempre

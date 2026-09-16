@@ -27,6 +27,10 @@ Dalla 1.17.0 il DS ha un [set di icone](icons.md). Regola:
 | **Icona + testo** | l'azione **primaria** (una per area); azioni **rare**, **ambigue** o **con conseguenze**; il trigger di un menu; l'azione distruttiva in testata | + Nuovo prodotto, Schede di reparto, Ricarica e rileggi, Altre azioni, Elimina |
 | **Solo testo** | i bottoni di un **form** e di una **conferma**; azioni per cui il set non ha un'icona univoca; i link nel testo | Salva i valori, Annulla, Elimina il proto |
 
+- **Eliminare a sola icona** (dalla 1.19.0) è ammesso dove l'oggetto è uno solo e sta a vista: la
+  riga di una tabella, la testa del blocco di una fase. Sempre cestino, sempre `rg-icon-button--danger`,
+  sempre suggerimento col nome dell'oggetto e conferma. In testata di pagina l'eliminazione resta
+  icona + testo.
 - Nel dubbio fra sola icona e icona + testo: **icona + testo**. Un'icona che va spiegata non fa
   risparmiare spazio, lo fa perdere.
 - Due icone quasi uguali nello stesso gruppo (Scheda e Schede di reparto) rendono **ambigua** la

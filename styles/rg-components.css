@@ -650,6 +650,18 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-phase-panel__meta strong { color: var(--rg-color-text-primary); font-weight: var(--rg-weight-medium); }
 /* Stato e reparto a destra: il costo non calcolato e il timbro del reparto (rg-dept-band--quiet). */
 .rg-phase-panel__status { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); }
+/* FASCIA DEL REPARTO (v1.19.0) — la rg-dept-band come intestazione del blocco della fase: PRIMO
+   figlio del blocco, da bordo a bordo, dentro il contorno arrotondato (angoli alti come il blocco,
+   meno il filetto). Altezza fissa 48 px, filetto del reparto compreso: le sette figure la reggono,
+   perche i loro registri sono ancorati in alto, in basso o al centro. Etichetta centrata in verticale
+   (lo fa gia la banda) e allineata a sinistra, con lo stesso padding orizzontale della testa: cade
+   sul filo del numero della fase. A schermo sempre --quiet (nella pagina convivono badge di stato, e
+   category-3/4/5 sono danger/warning/success). Senza variante di reparto e il caso «Reparto da
+   assegnare»: filetto grigio, nessuna trama. Sostituisce __dept nella testa, che resta qui sotto. */
+.rg-dept-band.rg-phase-panel__band { box-sizing: border-box; height: var(--rg-space-12); min-height: 0; padding: 0 var(--rg-space-6); border-start-start-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); border-start-end-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); }
+.rg-phase-switch ~ .rg-phase-panel > .rg-phase-panel__band { border-start-start-radius: 0; }
+.rg-phase-panel__band > .rg-dept-band__name { flex: none; }
+/* SUPERATO dalla 1.19.0 nella testa del blocco: il timbro del reparto e la fascia __band. */
 .rg-phase-panel__dept { flex: 0 1 auto; width: calc(24ch + var(--rg-space-12)); max-width: 100%; }
 .rg-phase-panel__body { padding: var(--rg-space-6); }
 /* Tab di sezione ATTACCATE alla testa (v1.17.0): sulla rg-tabs, primo figlio di __body. Salgono sul
@@ -695,6 +707,7 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
   .rg-phase-panel__sections { margin: calc(-1 * var(--rg-space-4)) calc(-1 * var(--rg-space-4)) var(--rg-space-4); padding-inline: var(--rg-space-4); overflow-x: auto; }
   .rg-phase-panel__heading ~ .rg-phase-panel__meta { padding-inline-start: 0; }
   .rg-phase-panel__summary { padding-inline-start: 0; }
+  .rg-dept-band.rg-phase-panel__band { padding-inline: var(--rg-space-4); }
   .rg-phase-panel__gestures { justify-content: flex-start; margin-inline-start: 0; }
 }
 

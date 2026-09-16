@@ -7,6 +7,52 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.19.0 — in preparazione (non rilasciata)
+
+**La fascia del reparto in testa al blocco della fase, e «Elimina fase» a icona.** Richiesta di chi
+usa la pagina: *«questa componente tutta lunga da destra a sinistra in testa a questa scheda, sopra
+proprio il tipo di fase e di eliminare. Ovviamente che sta dentro la scheda stondata. E con il pattern
+che ha una altezza e la label centrata alto basso e allineata a sinistra, tutto con lo stesso padding.
+Eliminare usa icona come in dash del prodotto»*.
+
+**Minor**: un elemento nuovo e una regola rivista, niente di rimosso, nessun token nuovo.
+
+### Varianti
+
+- **`rg-phase-panel__band`**: la `rg-dept-band` diventa la fascia d'intestazione del blocco della
+  fase.
+  - Primo figlio del blocco, da bordo a bordo, dentro il contorno arrotondato.
+  - Altezza fissa 48 px, trama che la riempie, etichetta centrata in verticale e allineata a sinistra.
+  - Stesso padding orizzontale della testa (24 px, 16 sotto i 680 px): l'etichetta cade sul filo del
+    numero della fase.
+  - Sotto una linguetta del gruppo, angolo alto sinistro vivo.
+
+### Regole riviste (`components/phase-switch.md`, `buttons.md`, `action-group.md`, `dept-band.md`)
+
+- **La fascia a schermo è sempre `--quiet`**: nella pagina della fase convivono badge di stato, e
+  `category-3/4/5` sono `danger`, `warning` e `success`.
+- **Reparto non assegnato**: la fascia c'è, senza trama, con «Reparto da assegnare».
+- **«Elimina fase» a sola icona**, con suggerimento «Elimina la fase N»: si applica a un solo blocco,
+  il cestino è universale, c'è sempre la conferma, e sta in un gruppo suo dopo il filetto. Rivede
+  «l'azione distruttiva in testata ha il testo» per i gesti nella testa di un blocco.
+- **«Torna alla prima lettura» e «Scollega» restano icona + testo**: non hanno un segno universale,
+  e le loro conseguenze (perdere le modifiche, cambiare il gruppo) non si indovinano dall'icona.
+
+### Superati
+
+- **`rg-phase-panel__dept`** (il timbro nella testa del blocco) → `rg-phase-panel__band`. Resta nel
+  CSS invariato.
+
+### Aggiornamento
+
+1. **Timbro del reparto**: togliere la `rg-dept-band … rg-phase-panel__dept` da `__status` o da
+   `__name`, e metterla come primo figlio del blocco con `rg-phase-panel__band`. Sempre, anche
+   con «Reparto da assegnare».
+2. **«Elimina fase»**: il bottone con testo diventa `rg-icon-button rg-icon-button--full
+   rg-icon-button--danger` in `rg-tooltip rg-tooltip--below rg-tooltip--end`, in un `rg-action-group`
+   suo; gli altri gesti in un `rg-action-group` prima.
+3. **`rg-dept-band`** fuori dal blocco della fase (foglio stampato, legenda) non cambia.
+
 ## 1.18.0 — 2026-09-16
 
 **Il documento della fase, e i gesti sulla fase in alto.** Giudizio sulla 1.17.0 provata sul campo:

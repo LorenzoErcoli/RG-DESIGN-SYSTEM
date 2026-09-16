@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.19.0 — in preparazione (non rilasciata)
+## 1.19.0 — 2026-09-16
 
 **La fascia del reparto in testa al blocco della fase, e «Elimina fase» a icona.** Richiesta di chi
 usa la pagina: *«questa componente tutta lunga da destra a sinistra in testa a questa scheda, sopra

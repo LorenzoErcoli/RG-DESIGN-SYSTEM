@@ -75,8 +75,10 @@ seconda applicazione della palette categoriale, dopo i reparti. Vedi [part-mark]
 
 - **Il colore d'identità si assegna per posizione**, non per nome: la piattaforma passa l'indice
   della parte nel prodotto (1-based, ordine stabile), il DS decide colore e lettera.
-- **Sempre accanto al nome scritto**, e sempre con un segno non cromatico: la lettera d'ordine
-  (A, B, C…), leggibile in scala di grigi.
+- **Sempre accanto al nome scritto**, e sempre con un segno non cromatico: il **numero d'ordine**,
+  leggibile in scala di grigi. Il numero della parte sta in una pastiglia **tonda** e colorata; il
+  numero della fase in un **quadrato nero**. Figura, misura e colore diversi, più la parola «Parte»
+  accanto dove c'è spazio: i due numeri convivono nella stessa pagina senza confondersi.
 - **Mai gerarchia, mai stato.** La parte A non è più importante della B, e una pastiglia rossa non
   dice «errore». Le prime quattro parti usano i colori che **non** coincidono con uno stato (nero,
   blu, sabbia, salvia); `success`, `warning` e `danger` arrivano solo dalla quinta parte in poi.

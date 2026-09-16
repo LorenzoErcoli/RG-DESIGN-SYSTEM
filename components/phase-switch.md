@@ -176,6 +176,11 @@ striscia.
   operazioni**, in coda alle righe, come `rg-disclosure--boxed`.
 - **Il filetto della parte (`rg-part-edge`) sta sulla testata compressa, mai sul blocco.** Il blocco
   si riconosce dal contorno nero e dal numero; il colore d'identità è della parte, non della fase.
+- **I due numeri della pagina non si confondono**: la parte è una pastiglia **tonda** colorata da 20 px
+  nella testata, la fase un **quadrato nero** da 32 px nella testa del blocco, con «Fase N di M»
+  accanto (vedi [part-mark](part-mark.md#numeri-non-lettere-dalla-quarta-tappa-1170)).
+- **Le azioni sul documento della fase stanno nella barra della scheda**, uguale in ogni sezione che la
+  mostra (vedi *La barra della scheda*).
 - **Il conteggio «da compilare» sta in due posti, e ciascuno dice una cosa diversa:** sulla
   linguetta vale per la fase intera, sulla tab di sezione per la sezione. Non si ripete in testa al
   contenuto.
@@ -375,14 +380,32 @@ Pagina di una fase da sola, il ricamo: testata compressa, blocco con testa titol
 | `<section class="rg-section-card">` intorno al contenuto della tab | niente: il contenuto sta diretto nel `rg-tabpanel` |
 | `__header` + `__heading` + `__title` («Consumi fili») | niente: il titolo della sezione è la tab accesa |
 | `__subtitle` | `<p>` dentro `rg-phase-panel__intro` |
-| `__actions` (Parti collegate, Visualizza scheda, Scarica PDF, Compila scheda) | `rg-phase-panel__actions` dentro `__intro`, al massimo una primaria |
+| `__actions` (Parti collegate, Visualizza scheda, Scarica PDF, Compila scheda) | la **barra della scheda** (`rg-file-card--bar`), uguale in ogni sezione che la mostra; le azioni proprie della sola sezione restano in `rg-phase-panel__actions` dentro `__intro` |
 | `__body` | niente: il suo contenuto va diretto |
 | una seconda `rg-section-card` nella stessa tab («Materiali non riconosciuti») | `rg-phase-panel__subsection` con `rg-section-header rg-section-header--sub` e `<h2 class="rg-h3">` |
 | `rg-section-card--flush` con una tabella | `rg-table-wrap` diretta |
 | il bottone di salvataggio di un form nella testa (Impostazioni) | in fondo al form, in un `rg-cluster` (forms.md: il primario sotto l'ultimo campo) |
 | `rg-file-card`, `rg-alert`, `rg-disclosure--boxed`, `rg-table` | invariati |
 
+### La barra della scheda (1.17.0)
+
+Le sezioni che lavorano sullo **stesso documento** (Scheda macchina, Sequenza stop) mostrano in cima
+la stessa riga: [`rg-file-card--bar`](file-card.md#barra-della-scheda-rg-file-card--bar-dalla-1170).
+
+- **Stessa riga, stessa posizione, stesse azioni**, con o senza PDF. Prima ogni sezione aveva la sua:
+  *«la prima riga dei bottoni in scheda macchina deve essere uguale a quella di sequenza stop»*.
+- **Sta sopra `__intro`**: prima le azioni sul documento, poi la didascalia della sezione, poi il
+  contenuto.
+- **Una sola primaria**: «Compila scheda» col PDF, «Carica la scheda» senza.
+- **Le sezioni che non riguardano il documento** (Consumi fili, Consumi materiali, Impostazioni) **non
+  la mostrano**: la barra dice «questa fase ha una scheda», non è una barra di pagina.
+- **«Torna alla prima lettura» sta nel piede del blocco**, con gli altri gesti sulla fase: perde le
+  modifiche, quindi non va in una riga che si ripete in più sezioni.
+- La `rg-file-card` piena **sparisce** dalla sezione Scheda macchina: la barra porta nome, badge,
+  azioni e la rivelazione delle opzioni di lettura.
+
 ## Tastiera e accessibilità
+
 
 Due tablist ARIA, uno dentro l'altro: quello delle sezioni sta nel `tabpanel` della fase.
 

@@ -655,12 +655,24 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-phase-panel__intro > p { max-width: var(--rg-layout-reading-max); margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
 .rg-phase-panel__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); margin-inline-start: auto; }
 .rg-phase-panel__subsection + .rg-phase-panel__subsection { margin-top: var(--rg-space-8); padding-top: var(--rg-space-6); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
-/* Testata di pagina COMPRESSA (v1.17.0) — per le pagine il cui soggetto e un blocco sotto (la fase):
-   solo percorso e riga di contesto sul contenitore, a pieno contrasto e in carattere identitario.
-   Nessun titolo visibile e nessuna azione sul soggetto: stanno nel blocco. Definita qui, accanto al
-   blocco della fase, perche e lui il suo motivo; resta una variante di rg-page-header. */
-.rg-page-header--compact { gap: 0; margin-bottom: var(--rg-space-6); }
+/* Testata di pagina COMPRESSA (v1.17.0; rivista nella quarta tappa) — per le pagine il cui soggetto e
+   un blocco sotto (la fase). Nessun titolo visibile e nessuna azione sul soggetto: stanno nel blocco.
+   La prima forma era SCHIACCIATA e RIPETITIVA: «la testata mi sembra un po' schiacciata, vedo due
+   volte dei dati come il nome, uno per tornare indietro (utilissimo) e uno sopra il nome della parte.
+   Non vedo mai pero il codice dell'articolo. Poi tutto troppo attaccato e gerarchie non chiare».
+   Tre cambi: RESPIRO (12 px fra percorso e identita, 32 sotto la testata), NIENTE RIPETIZIONE (il
+   percorso naviga e tiene i nomi; la riga d'identita dichiara il SOGGETTO — la parte — e non ripete il
+   prodotto) e i CODICI dell'articolo, che in reparto sono il nome vero e prima non c'erano.
+   Gerarchia dichiarata, tre gradini che crescono: percorso 14 -> identita della parte 20 -> titolo
+   della fase 28, nel blocco sotto. */
+.rg-page-header--compact { gap: var(--rg-space-3); margin-bottom: var(--rg-space-8); }
 .rg-page-header--compact .rg-page-header__context { color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); }
+/* Riga d'identita: soggetto a sinistra, codici a destra (rg-key-value--inline), a capo se non entrano. */
+.rg-page-header__identity { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--rg-space-2) var(--rg-space-6); }
+.rg-page-header__subject { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); min-width: 0; margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); line-height: var(--rg-line-height-heading); overflow-wrap: anywhere; }
+.rg-page-header__subject strong { font-weight: var(--rg-weight-medium); }
+/* «Parte» scritto accanto al numero: il segno tondo dice quale, la parola dice di che cosa. */
+.rg-page-header__subject-kind { color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 /* Piede: i gesti SULLA FASE (scollega, elimina), lontani dal salvataggio e dichiarati per iscritto. */
 .rg-phase-panel__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--rg-space-2); padding: var(--rg-space-3) var(--rg-space-6); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 .rg-phase-panel__scope { margin: 0 auto 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
@@ -801,6 +813,23 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 }
 .rg-file-card__reveal[hidden] { display: none; }
 .rg-file-card__confirm { display: flex; flex-wrap: wrap; gap: var(--rg-space-2); }
+
+/* BARRA DELLA SCHEDA (--bar, v1.17.0, quarta tappa) — lo stesso documento richiamato in PIU sezioni
+   della stessa pagina, con le sue azioni: una riga sola, IDENTICA in ogni sezione, nome del file a
+   sinistra e azioni a destra. Nasce da un difetto misurato: «in Sequenza stop vedo solo compila
+   scheda, […] la prima riga dei bottoni in scheda macchina deve essere uguale a quella di sequenza
+   stop». Due sezioni della stessa fase raccontavano due cose diverse, e senza PDF una non offriva
+   niente. Nello stato VUOTO la riga resta: cambiano il testo e l'azione primaria, non la posizione.
+   Perche una variante e non un componente nuovo: e la riga di rg-file-card (nome, badge, azioni,
+   rivelazione progressiva), con lo stato vuoto portato sulla riga invece che sulla superficie aperta
+   di rg-empty. */
+.rg-file-card--bar { gap: var(--rg-space-2); }
+.rg-file-card--bar .rg-file-card__row,
+.rg-file-card--bar .rg-file-card__empty { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2) var(--rg-space-3); padding: var(--rg-space-3) var(--rg-space-4); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-radius: var(--rg-radius-md); text-align: left; }
+.rg-file-card--bar .rg-file-card__icon { flex: none; color: var(--rg-color-text-secondary); }
+.rg-file-card--bar .rg-file-card__title { flex: 0 1 auto; min-width: 12ch; }
+.rg-file-card--bar .rg-file-card__empty > p { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+.rg-file-card--bar .rg-file-card__actions { margin-left: auto; }
 
 /* Color map — attribuzione di ciò che e stato importato (v1.5.0): ogni colore o layer del file
    di partenza riceve un ruolo nella lavorazione. E il controllo che risponde a "di questo DXF,
@@ -1170,13 +1199,20 @@ a.rg-icon-button { text-decoration: none; }
 .rg-table__actions > .rg-action-group { flex-wrap: nowrap; }
 
 /* Identita delle parti (v1.17.0) — distinguere oggetti FRATELLI (le parti di un prodotto) con la
-   palette categoriale, sempre accanto al nome e con un segno non cromatico: la LETTERA d'ordine,
-   generata dal DS dall'indice. L'app passa solo l'indice (rg-part--N, 1-based, ordine stabile).
+   palette categoriale, sempre accanto al nome e con un segno non cromatico: il NUMERO d'ordine,
+   generato dal DS dall'indice. Quarta tappa 1.17.0: erano LETTERE, giudicate arbitrarie da chi le usa
+   («non sono convinto delle lettere per le parti, preferirei i numeri»), e in reparto la parte si
+   chiama col numero. L'app passa solo l'indice (rg-part--N, 1-based, ordine stabile).
    ORDINE DEI COLORI: le prime quattro parti usano categorie che NON coincidono con uno stato (nero,
    blu, sabbia, salvia); success/warning/danger arrivano dalla quinta. OLTRE LA SETTIMA: il colore
    ricomincia, e il segno in piu e la forma (pastiglia vuota, filetto tratteggiato) oltre alla lettera
-   (H, I, L…). Oltre la quattordicesima: rg-part--quiet con style="--rg-part: N". Non e uno stato e
-   non e una gerarchia. Lettera bianca sui colori scuri, nera su sabbia e salvia: contrasto AA. */
+   (8, 9, 10…). Oltre la quattordicesima: rg-part--quiet con style="--rg-part: N". Non e uno stato e
+   non e una gerarchia. Numero bianco sui colori scuri, nero su sabbia e salvia: contrasto AA.
+   FORMA — IL NUMERO DELLA PARTE E TONDO, QUELLO DELLA FASE E QUADRATO. Il numero di fase e un quadrato
+   nero da 32 px (rg-step__num, rg-phase-panel__num, rg-phase-switch__num); la parte e una pastiglia
+   tonda da 20 px in colore. Tre differenze insieme — figura, misura, colore — piu la parola «Parte»
+   accanto dove c'e spazio: i due numeri non si confondono nemmeno nella pagina della fase, dove
+   distano pochi centimetri. */
 .rg-part--1  { --rg-part: 1;  --rg-part-color: var(--rg-color-category-1); --rg-part-ink: var(--rg-color-white); }
 .rg-part--2  { --rg-part: 2;  --rg-part-color: var(--rg-color-category-2); --rg-part-ink: var(--rg-color-white); }
 .rg-part--3  { --rg-part: 3;  --rg-part-color: var(--rg-color-category-6); --rg-part-ink: var(--rg-color-black); }
@@ -1193,9 +1229,9 @@ a.rg-icon-button { text-decoration: none; }
 .rg-part--14 { --rg-part: 14; --rg-part-color: var(--rg-color-category-3); }
 .rg-part--8, .rg-part--9, .rg-part--10, .rg-part--11, .rg-part--12, .rg-part--13, .rg-part--14 { --rg-part-fill: var(--rg-color-white); --rg-part-ink: var(--rg-color-black); --rg-part-edge-style: dashed; }
 .rg-part--quiet { --rg-part-color: var(--rg-color-neutral-600); --rg-part-fill: var(--rg-part-color); --rg-part-ink: var(--rg-color-white); --rg-part-edge-style: solid; }
-.rg-part-mark { counter-reset: rg-part var(--rg-part, 0); display: inline-flex; flex: none; align-items: center; justify-content: center; box-sizing: border-box; min-width: calc(var(--rg-space-4) + var(--rg-space-1)); height: calc(var(--rg-space-4) + var(--rg-space-1)); padding-inline: var(--rg-space-1); color: var(--rg-part-ink, var(--rg-color-white)); background: var(--rg-part-fill, var(--rg-part-color, var(--rg-color-neutral-600))); border: var(--rg-border-strong) var(--rg-border-style) var(--rg-part-color, var(--rg-color-neutral-600)); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: 1; vertical-align: middle; }
-.rg-part-mark::before { content: counter(rg-part, upper-alpha); }
-.rg-part-mark--small { min-width: var(--rg-space-4); height: var(--rg-space-4); padding-inline: 0; border-width: var(--rg-border-hairline); }
+.rg-part-mark { counter-reset: rg-part var(--rg-part, 0); display: inline-flex; flex: none; align-items: center; justify-content: center; box-sizing: border-box; min-width: calc(var(--rg-space-4) + var(--rg-space-1)); height: calc(var(--rg-space-4) + var(--rg-space-1)); padding-inline: var(--rg-space-1); color: var(--rg-part-ink, var(--rg-color-white)); background: var(--rg-part-fill, var(--rg-part-color, var(--rg-color-neutral-600))); border: var(--rg-border-strong) var(--rg-border-style) var(--rg-part-color, var(--rg-color-neutral-600)); border-radius: var(--rg-radius-pill); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: 1; vertical-align: middle; }
+.rg-part-mark::before { content: counter(rg-part, decimal); }
+.rg-part-mark--small { min-width: var(--rg-space-4); height: var(--rg-space-4); padding-inline: var(--rg-space-1); border-width: var(--rg-border-hairline); font-size: 10px; }
 /* Pastiglia + nome: il nome e testo nel markup, la pastiglia e aria-hidden. */
 .rg-part-label { display: inline-flex; align-items: center; gap: var(--rg-space-2); min-width: 0; }
 .rg-page-header__context .rg-part-mark { margin-inline-end: var(--rg-space-1); }

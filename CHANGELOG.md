@@ -232,6 +232,64 @@ Nessun token nuovo. Due alternative valutate:
    - il titolo va nel blocco;
    - le `rg-section-card` delle cinque tab del ricamo si appiattiscono secondo la tabella del doc.
 
+### Quarta tappa — numeri delle parti, testata della fase, barra della scheda
+
+Tre cose, dal giudizio di chi usa la piattaforma con le tappe 1–3.
+
+#### Identità delle parti: numeri al posto delle lettere
+
+*«Non sono convinto delle lettere per le parti, preferirei i numeri anche se so che poi vanno in
+conflitto con i numeri delle fasi.»* La lettera era arbitraria due volte: non è l'iniziale del nome, e
+in reparto nessuno dice «la parte B». Il conflitto col numero di fase si risolve sulla **forma**:
+
+| | Parte | Fase |
+| --- | --- | --- |
+| Figura | tonda | quadrata |
+| Misura | 20 px (16 nel percorso) | 32 px |
+| Colore | categoriale | nero |
+| Parola | «Parte» | «Fase N di M» |
+
+Nessun cambio di markup: le stesse classi `rg-part--N` producono ora il numero.
+
+#### Testata della pagina della fase, rivista
+
+*«Schiacciata […] vedo due volte dei dati come il nome […] non vedo mai però il codice dell'articolo
+[…] tutto troppo attaccato e gerarchie non chiare.»*
+
+- **Respiro**: 12 px fra percorso e identità, 32 px sotto la testata.
+- **Niente ripetizione**: il percorso naviga e tiene i nomi; la nuova riga `rg-page-header__identity`
+  dichiara il soggetto (la parte) e non ripete il prodotto.
+- **I codici dell'articolo** (codice RG, codice prodotto) in `rg-key-value--inline`: in reparto
+  l'articolo si chiama così, e prima non comparivano.
+- **Gerarchia dichiarata**: percorso 14 px → identità della parte 20 px → titolo della fase 28 px.
+- Nuovi elementi: `rg-page-header__identity`, `rg-page-header__subject`, `rg-page-header__subject-kind`
+  (la parola «Parte»).
+
+#### Barra della scheda
+
+*«In Sequenza stop […] vedo solo compila scheda. Poi dove invece le schede ci sono, la prima riga dei
+bottoni in scheda macchina deve essere uguale a quella di sequenza stop.»*
+
+- **`rg-file-card--bar`**: lo stesso documento richiamato in più sezioni diventa una riga identica, in
+  cima a ogni sezione che lo usa, in entrambi gli stati.
+  - Con il PDF: nome, badge, Visualizza scheda · Scarica PDF · PDF caricato · Parti collegate · Carica
+    un'altra scheda… e la primaria **Compila scheda**.
+  - Senza PDF: «Nessuna scheda su questa fase.», Compila a mano e la primaria **Carica la scheda**. Le
+    azioni che non esistono si omettono.
+- **`rg-file-card__icon`**: l'icona del documento nella riga.
+- «Torna alla prima lettura» passa **nel piede del blocco della fase**, con gli altri gesti sulla fase.
+- Nella sezione «Scheda macchina» la `rg-file-card` piena sparisce: la barra porta nome, badge, azioni
+  e la rivelazione delle opzioni di lettura.
+
+#### Aggiornamento (quarta tappa)
+
+1. **Parti**: nessun intervento, cambiano segno e forma da sé. Solo i testi fissi che dicono «parte A»
+   vanno riscritti.
+2. **Testata della fase**: la riga `rg-page-header__context` va sostituita da `__identity` con
+   `__subject` e i codici; `--compact` da sola dà già il respiro nuovo.
+3. **Sezioni della fase**: la barra della scheda va messa in cima alle sezioni che lavorano sul
+   documento, e le stesse azioni vanno tolte dall'intro e dalla vecchia `rg-file-card`.
+
 ## 1.16.0 — 2026-09-15
 
 **Le fasi collegate.** Una fase principale (una stampa, una pressatura) ha ora 1–3 fasi collegate

@@ -29,6 +29,7 @@ soggetto sta in un blocco sotto; vedi *Testata compressa*.
 | --- | --- | --- | --- |
 | Percorso | `rg-breadcrumb` (primo figlio) | catena dei genitori, ultima voce = questa pagina | dal 2° livello in giù |
 | Contesto | `rg-page-header__context` | «*Tipo* di **genitore** · **nonno**», testo | dal 3° livello in giù |
+| Identità | `rg-page-header__identity` con `__subject` e `__subject-kind` | soggetto + codici dell'articolo, solo nella testata compressa | con `--compact` |
 | Titolo | `rg-page-header__title` (`<h1>`) | il nome dell'entità o della vista | sempre |
 | Stato | `rg-page-header__status` | `rg-badge`, al massimo tre | facoltativo |
 | Sottotitolo | `rg-page-header__subtitle` | una riga di testo | facoltativo |
@@ -95,23 +96,38 @@ Il livello di una pagina è **la sua distanza dalla topbar**.
 ## Testata compressa (`rg-page-header--compact`, dalla 1.17.0)
 
 Per le pagine il cui **soggetto è un blocco sotto la testata**: la pagina della fase, col suo
-[`rg-phase-panel`](phase-switch.md#la-testa-titolata-1170). Provata la testata piena, il giudizio è
-stato: *«la testata possiamo lasciarla simile e comprimerla, ma poi ricamo normale va sotto»*.
+[`rg-phase-panel`](phase-switch.md#la-testa-titolata-1170).
 
-- **Contiene** il percorso e la riga `__context` sul contenitore: «Parte [pastiglia] **nome** ·
-  **prodotto**». In questa variante il contesto è a pieno contrasto e in carattere identitario, perché
-  è l'unica riga della testata.
-- **Non contiene** il titolo visibile, lo stato o le azioni del soggetto: stanno nella testa del blocco.
-- **Identità della parte**: `rg-part-edge rg-part--N` sulla testata. Il blocco della fase non la porta:
-  si riconosce dal contorno nero e dal numero.
+Rivista nella quarta tappa. La prima forma metteva percorso e riga di contesto attaccati, ripeteva i
+nomi e non portava i codici: *«la testata mi sembra un po' schiacciata. Vedo due volte dei dati come
+il nome, uno per tornare indietro (utilissimo) e uno sopra il nome della parte. Non vedo mai però il
+codice dell'articolo. Poi tutto troppo attaccato e gerarchie non chiare»*.
+
+### Che cosa contiene, e perché
+
+| Riga | Che cosa dice | Perché non è un doppione |
+| --- | --- | --- |
+| **Percorso** (`rg-breadcrumb`) | dove sono, e come torno indietro | è **navigazione**: tiene i nomi perché sono i bersagli da cliccare |
+| **Identità** (`rg-page-header__identity`) | **qual è la parte che sto lavorando** e **con che codici si chiama l'articolo** | è il **soggetto**: numero e nome della parte, più i codici, che nel percorso non ci sono |
+
+- Nella riga d'identità **il prodotto non si ripete**: il suo nome è già una voce del percorso, a un
+  clic di distanza. Restano la parte (soggetto) e i codici dell'articolo.
+- **I codici** (codice RG, codice prodotto) stanno in una `rg-key-value--inline`: in reparto l'articolo
+  si chiama così, ed è l'informazione che mancava del tutto.
+- **Gerarchia dichiarata, tre gradini che crescono**: percorso 14 px → identità della parte 20 px →
+  titolo della fase 28 px, nel blocco sotto. Respiro: 12 px fra percorso e identità, 32 px sotto la
+  testata.
+- **Identità della parte**: `rg-part-edge rg-part--N` sulla testata, pastiglia tonda nella riga
+  d'identità e nel percorso. Il blocco della fase non la porta: si riconosce dal contorno nero e dal
+  numero quadrato.
+- **Non contiene** titolo visibile, stato o azioni del soggetto: stanno nella testa del blocco.
 - **Intestazioni**: la pagina ha comunque un solo `<h1>`.
   - Se la pagina mostra **un blocco**, l'`<h1>` è il titolo del blocco (`rg-phase-panel__title`).
   - Se i blocchi sono **più d'uno** (un gruppo di fasi), l'`<h1>` sta nella testata compressa, nascosto
-    alla vista (`<h1 class="rg-u-visually-hidden">Fasi del gruppo di Pressatura, parte DAVANTI</h1>`),
-    e ogni blocco ha il suo `<h2>`.
+    alla vista, e ogni blocco ha il suo `<h2>`.
 
 ```html
-<header class="rg-page-header rg-page-header--compact rg-part-edge rg-part--1">
+<header class="rg-page-header rg-page-header--compact rg-part-edge rg-part--3">
   <nav class="rg-breadcrumb" aria-label="Percorso">
     <ol>
       <li><a href="/">Prodotti</a></li>
@@ -120,9 +136,22 @@ stato: *«la testata possiamo lasciarla simile e comprimerla, ma poi ricamo norm
       <li><span class="rg-breadcrumb__current" aria-current="page">Ricamo normale</span></li>
     </ol>
   </nav>
-  <p class="rg-page-header__context">Parte <span class="rg-part-mark rg-part-mark--small" aria-hidden="true"></span><strong>1296 DAV RIW OBLIQUE - GRIS</strong> · <strong>BOOK TOTE</strong></p>
+  <div class="rg-page-header__identity">
+    <p class="rg-page-header__subject">
+      <span class="rg-part-mark" aria-hidden="true"></span>
+      <span class="rg-page-header__subject-kind">Parte</span>
+      <strong>1296 DAV RIW OBLIQUE - GRIS</strong>
+    </p>
+    <dl class="rg-key-value rg-key-value--inline">
+      <div class="rg-key-value__pair"><dt>RG</dt><dd class="rg-mono">RG20260140-P</dd></div>
+      <div class="rg-key-value__pair"><dt>Cod.</dt><dd class="rg-mono">M1424EFI</dd></div>
+    </dl>
+  </div>
+  <!-- pagina di un gruppo di fasi: <h1 class="rg-u-visually-hidden">Fasi del gruppo di Pressatura, parte 1296 DAV RIW OBLIQUE - GRIS</h1> -->
 </header>
 ```
+
+Un codice che manca **si omette**: nessuna riga vuota e nessun trattino.
 
 ## Stati
 

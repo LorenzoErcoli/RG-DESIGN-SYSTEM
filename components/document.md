@@ -27,7 +27,7 @@ Tre difetti, tre correzioni:
 
 | Classe | Stato |
 | --- | --- |
-| `rg-document` | documento presente: tipo, nome, stato, azioni di lettura, «Carica un'altro» |
+| `rg-document` | documento presente: tipo, nome, stato, azioni di lettura, «Carica un'altra scheda…» |
 | `rg-document--empty` | documento assente: tipo, «Nessuna scheda su questa fase.», primaria «Carica la scheda» |
 
 | Elemento | Ruolo |

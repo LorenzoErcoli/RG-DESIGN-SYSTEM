@@ -56,6 +56,11 @@ La larghezza è `--rg-input-numeric-width` (default `12ch`): si stringe o si all
 sul contenitore, senza toccare il componente. Dentro `rg-field-with-unit` il campo e il riquadro
 dell'unità restano attaccati e non si stirano.
 
+Il perché, da non rompere: `--rg-input-numeric-width` è in `ch`, e `ch` vale la larghezza dello «0»
+**nel font di chi la usa**. Dentro il campo con unità la larghezza la dà quindi la traccia della
+griglia, e l'input — mono, 14px — la riempie invece di ricalcolarla nel proprio font. Fino alla
+1.19.0 la ricalcolava, e fra il valore e l'unità restava un buco (14px con GT America).
+
 ```html
 <label class="rg-field">
   <span class="rg-field__label">Tariffa macchina</span>

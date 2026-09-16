@@ -67,6 +67,14 @@
    e rumore. La larghezza e una variabile, non un numero fisso: --rg-input-numeric-width. */
 .rg-input--numeric { max-width: var(--rg-input-numeric-width, 12ch); font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; text-align: right; }
 .rg-field-with-unit:has(.rg-input--numeric) { grid-template-columns: var(--rg-input-numeric-width, 12ch) auto; justify-content: start; }
+/* Dentro il campo con unita la larghezza la decide la TRACCIA, non l'input (v1.19.1). Le due righe
+   sopra risolvono la stessa --rg-input-numeric-width in due font diversi: `ch` vale lo "0" del font
+   di chi la usa, quindi la traccia la calcola nel font del contenitore e il max-width dell'input
+   nel suo mono a 14px. Misurato con GT America: traccia 106,8px, input 92,4px, e 14px di buco fra
+   il valore e la sua unita in ogni campo. Senza il tetto l'input, che e un elemento di griglia, si
+   allarga alla traccia da solo e l'unita gli resta attaccata. Fuori dal campo con unita il
+   max-width resta: li serve davvero. */
+.rg-field-with-unit .rg-input--numeric { max-width: none; }
 .rg-textarea { min-height: 96px; resize: vertical; }
 .rg-search { padding-left: 36px; background: var(--rg-color-white) linear-gradient(90deg, transparent 0 32px, var(--rg-color-border) 32px 33px, transparent 33px); }
 /* Etichette di controllo: 14 px come il controllo che accompagnano, non 16 del testo corrente. */

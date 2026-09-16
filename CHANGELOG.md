@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.17.0 — in preparazione (non rilasciata)
+## 1.17.0 — 2026-09-16
 
 **La struttura della pagina, le azioni, l'identità delle parti.** Due tappe di armonizzazione. La
 prima riguarda la sola struttura, qui sotto. La seconda, più in basso, porta icone, suggerimenti,

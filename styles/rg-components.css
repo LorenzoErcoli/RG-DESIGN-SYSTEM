@@ -441,10 +441,13 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 
 /* Icon button — compact, always paired with aria-label */
 .rg-icon-button { display: inline-flex; min-width: 34px; min-height: 34px; align-items: center; justify-content: center; padding: 5px; color: var(--rg-color-text-secondary); background: transparent; border: 1px solid transparent; border-radius: var(--rg-radius-sm); cursor: pointer; }
-.rg-icon-button:hover:not(:disabled) { color: var(--rg-color-black); border-color: var(--rg-color-neutral-600); }
+.rg-icon-button:hover:not(:disabled):not([aria-disabled="true"]) { color: var(--rg-color-black); border-color: var(--rg-color-neutral-600); }
 .rg-icon-button.is-active, .rg-icon-button[aria-pressed="true"] { color: var(--rg-color-white); background: var(--rg-color-black); border-color: var(--rg-color-black); }
-.rg-icon-button--danger:hover:not(:disabled) { color: var(--rg-color-white); background: var(--rg-color-danger); border-color: var(--rg-color-danger); }
-.rg-icon-button:disabled { color: var(--rg-color-neutral-400); cursor: not-allowed; }
+.rg-icon-button--danger:hover:not(:disabled):not([aria-disabled="true"]) { color: var(--rg-color-white); background: var(--rg-color-danger); border-color: var(--rg-color-danger); }
+/* Spento ma raggiungibile (1.22.0): aria-disabled="true" resta nella sequenza di Tab, cosi il suggerimento col
+   MOTIVO si legge anche da tastiera; stesso aspetto di :disabled. Il gesto non parte: lo blocca chi lo serve
+   (submit annullato dal controller, e rifiutato dal server). */
+.rg-icon-button:disabled, .rg-icon-button[aria-disabled="true"] { color: var(--rg-color-neutral-400); cursor: not-allowed; }
 
 /* Materials row — presenza e numero dei materiali caricati di una fase (pantografo, stop,
    supporti). Rende evidente CHE ci sono materiali e QUANTI: etichetta identitaria, un rg-badge
@@ -1339,9 +1342,9 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-operation-sequence .rg-operation-row { grid-template-columns: minmax(0, var(--rg-operation-head, 24ch)) minmax(0, 1fr) var(--rg-operation-actions); }
 .rg-operation-sequence .rg-operation-row__actions { flex-wrap: nowrap; justify-content: flex-end; }
 .rg-operation-sequence .rg-operation-row__actions > .rg-action-group { flex-wrap: nowrap; }
-/* POSTO VUOTO: il gesto non esiste per la NATURA della riga (Duplica su cambio piano). Se invece il
-   gesto non vale ORA (freccia al bordo, ultima riga obbligatoria) il bottone c'e ed e disabled, col
-   motivo nel suggerimento. Natura = posto vuoto, stato = bottone spento. */
+/* POSTO VUOTO: il gesto non esiste per la NATURA della riga (Duplica su un'operazione che non si ripete).
+   Se invece il gesto non vale ORA (freccia al bordo, unica riga obbligatoria) il bottone c'e ed e spento
+   con aria-disabled=true: resta raggiungibile con Tab e il motivo si legge nel suggerimento. */
 .rg-operation-row__slot { flex: none; width: 40px; height: 40px; }
 /* «Nota» in coda ai campi: la nota e un campo, non un gesto sulla riga. Ghost con icona, lati stretti
    (8 invece di 16: a riposo il ghost non ha bordo, quindi il padding e solo aria) per restare sulla

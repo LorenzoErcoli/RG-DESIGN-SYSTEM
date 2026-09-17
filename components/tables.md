@@ -130,6 +130,33 @@ Unità per riga (accanto al valore):
 </table>
 ```
 
+## Colonna che prende il resto (`rg-table__grow`, proposta 1.23.0)
+
+Nel layout automatico le colonne si spartiscono lo spazio in proporzione al contenuto, e una tabella
+di numeri corti su un foglio largo finisce con sei colonne da 110 px l'una. Quando una colonna sola
+chiede larghezza — Note, Descrizione, Colore — la si dichiara con `rg-table__grow` sulla `<th>`:
+prende tutto lo spazio che avanza e le altre scendono alla larghezza del proprio contenuto.
+
+- **Una per tabella.** Due colonne avide si dividono lo spazio a caso.
+- Non è una larghezza fissa: se i contenuti delle altre colonne crescono, la colonna larga cede.
+- Nasce per le tabelle da compilare a penna del [fascicolo compatto](worksheet-block.md#tabelle-eccezioni-per-stop),
+  ma vale ovunque.
+
+```html
+<table class="rg-table rg-table--compact">
+  <thead>
+    <tr>
+      <th class="rg-table__numeric" scope="col">Stop</th>
+      <th scope="col">Ago</th>
+      <th class="rg-table__grow" scope="col">Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="rg-table__numeric">4</td><td class="rg-table__numeric">3</td><td>Rallentare sulla curva</td></tr>
+  </tbody>
+</table>
+```
+
 ## Struttura
 
 Caption → toolbar filtri → header → righe → paginazione/riepilogo. Header descrittivi; unità nell'header e, se ambiguo, nel valore. Numeri allineati a destra in mono con cifre tabulari. Codici non vanno troncati senza accesso al valore completo.

@@ -109,11 +109,16 @@ l'identità del prodotto (`__meta`) a destra; se non ci sta, va a capo il `__met
 
 ### Tabelle: eccezioni per stop
 
-Non serve un componente: basta **`rg-table rg-table--compact`** con **`td.rg-fill-field--cell`** dentro un
-blocco `--compact`, che porta tutte le celle a 24 px e le intestazioni su una riga. Due regole:
+**A griglia** (proposta 1.24.0): **`rg-table rg-table--compact rg-table--grid`** con
+**`td.rg-fill-field--cell`** dentro un blocco `--compact`. La 1.23.0 indicava la sola `rg-table--compact`:
+stampata, le righe vuote avevano solo il filo in basso e si leggevano come **righe da quaderno**, senza dire in
+che colonna scrivere, e le colonne vuote prendevano larghezze a caso. Regole:
 
-- **La colonna larga dichiara di esserlo**: `rg-table__grow` sulla `<th>` di Note. Le altre (Stop, Piedino,
-  Velocità, Ago, PMI) scendono alla larghezza della propria intestazione.
+- **`--grid`**: filetto nero su tutte le celle, testata compresa, e colonne **uguali** (`table-layout: fixed`)
+  che non dipendono da cosa c'è scritto. Righe da 24 px nel blocco compatto. Vedi
+  [tables](tables.md#tabella-da-compilare-a-griglia-rg-table--grid-proposta-1240).
+- **La colonna larga dichiara di esserlo**: `rg-table__grow` sulla `<th>` di Note, che nella griglia vale
+  **il doppio** delle altre. La tabella dice quante colonne ha: `style="--rg-table-cols: 6"`.
 - **Righe già scritte e righe vuote nella stessa tabella.** Il valore noto è una `<td>` normale
   (`rg-table__numeric` per i numeri); il valore da rilevare è una `td.rg-fill-field--cell`, anche dentro una
   riga scritta. Le righe vuote in fondo sono tutte `--cell`: nessun trattino, nessuno zero finto.
@@ -301,7 +306,7 @@ coni da ritagliare in fondo.
     <p class="rg-worksheet-block__meta">COCOTTE · RG-2026-0481 · rev. 04</p>
   </header>
   <div class="rg-worksheet-block__body">
-    <table class="rg-table rg-table--compact">
+    <table class="rg-table rg-table--compact rg-table--grid" style="--rg-table-cols: 6">
       <caption>Eccezioni per stop</caption>
       <thead>
         <tr>

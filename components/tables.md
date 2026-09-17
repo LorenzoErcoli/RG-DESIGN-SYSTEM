@@ -139,8 +139,9 @@ prende tutto lo spazio che avanza e le altre scendono alla larghezza del proprio
 
 - **Una per tabella.** Due colonne avide si dividono lo spazio a caso.
 - Non è una larghezza fissa: se i contenuti delle altre colonne crescono, la colonna larga cede.
-- Nasce per le tabelle da compilare a penna del [fascicolo compatto](worksheet-block.md#tabelle-eccezioni-per-stop),
-  ma vale ovunque.
+- **Non usarla per una tabella tutta da compilare**: con le celle vuote le altre colonne non hanno
+  contenuto su cui misurarsi e collassano a una parola. Lì serve `rg-table--grid` (sotto), dove
+  `rg-table__grow` vale il doppio.
 
 ```html
 <table class="rg-table rg-table--compact">
@@ -153,6 +154,59 @@ prende tutto lo spazio che avanza e le altre scendono alla larghezza del proprio
   </thead>
   <tbody>
     <tr><td class="rg-table__numeric">4</td><td class="rg-table__numeric">3</td><td>Rallentare sulla curva</td></tr>
+  </tbody>
+</table>
+```
+
+## Tabella da compilare a griglia (`rg-table--grid`, proposta 1.24.0)
+
+La tabella **di carta** che si compila a penna riga per riga: eccezioni per stop, controlli per capo.
+Nasce dalla prima stampa del [fascicolo compatto](worksheet-block.md#tabelle-eccezioni-per-stop): con la sola
+`rg-table--compact` e le celle `td.rg-fill-field--cell`, le righe vuote avevano solo il filo in basso e si
+leggevano come **righe da quaderno** — non si capiva in che colonna scrivere — e nel layout automatico le
+colonne vuote prendevano larghezze a caso.
+
+- **Griglia**: filetto nero hairline su **tutte** le celle, testata compresa. Nero e non neutro perché la
+  tabella si fotocopia. È un'eccezione dichiarata al «niente griglie fitte» delle tabelle a schermo: su carta
+  il divisore verticale dice dove si scrive.
+- **Colonne uguali**: `table-layout: fixed`, la larghezza non dipende dal contenuto. Le intestazioni lunghe
+  vanno a capo dentro la colonna.
+- **Una colonna larga**, facoltativa: `rg-table__grow` sulla `<th>` vale **il doppio** delle altre. La
+  tabella dichiara quante colonne ha con `style="--rg-table-cols: N"` (se manca vale 6).
+- **Altezza**: le celle `--cell` sono da 32 px; dentro `rg-worksheet-block--compact` da 24 (~6,4 mm).
+- Si combina con `rg-table--compact`. Non cambia nulla alle tabelle senza la variante.
+- **Non è a schermo**: a schermo i dati si confrontano con `rg-table` e si inseriscono con `rg-field`.
+
+```html
+<table class="rg-table rg-table--compact rg-table--grid" style="--rg-table-cols: 6">
+  <caption>Eccezioni per stop</caption>
+  <thead>
+    <tr>
+      <th class="rg-table__numeric" scope="col">Stop</th>
+      <th scope="col">Piedino</th>
+      <th scope="col">Velocità</th>
+      <th scope="col">Ago</th>
+      <th scope="col">PMI</th>
+      <th class="rg-table__grow" scope="col">Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rg-table__numeric">4</td>
+      <td class="rg-table__numeric">1,5</td>
+      <td class="rg-table__numeric">650</td>
+      <td class="rg-table__numeric">3</td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td>Rallentare sulla curva</td>
+    </tr>
+    <tr>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+    </tr>
   </tbody>
 </table>
 ```

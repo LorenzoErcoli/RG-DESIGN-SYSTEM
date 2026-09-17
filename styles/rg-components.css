@@ -1252,6 +1252,21 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block--compact .rg-table :is(th, td) { padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); line-height: var(--rg-line-height-technical); }
 .rg-worksheet-block--compact td.rg-fill-field--cell { height: var(--rg-space-6); }
 .rg-worksheet-block--compact .rg-table th { white-space: nowrap; }
+/* Tabella da compilare A GRIGLIA (proposta 1.24.0). Arrivata dalla prima stampa del fascicolo compatto:
+   righe tutte di td.rg-fill-field--cell con il solo filo in basso si leggevano come righe da QUADERNO,
+   senza dire in che colonna scrivere; e nel layout automatico le colonne vuote prendevano larghezze a caso
+   (Stop e Piedino strette, Velocita larghissima), mentre rg-table__grow le schiacciava a una parola.
+   Su carta: TUTTE le celle, testata compresa, con filetto nero hairline sui quattro lati (regge la
+   fotocopia), e table-layout: fixed, cioe colonne UGUALI che non dipendono dal contenuto. Una colonna
+   larga si dichiara con rg-table__grow, che qui vale IL DOPPIO delle altre: la tabella dice quante
+   colonne ha con --rg-table-cols sulla <table> (se manca vale 6). Le intestazioni vanno a capo invece di
+   uscire dalla colonna. Righe: 32 px, 24 dentro rg-worksheet-block--compact. Opt-in: le altre tabelle
+   non cambiano. */
+.rg-table--grid { table-layout: fixed; border-collapse: collapse; }
+.rg-table--grid :is(th, td), .rg-table--grid td.rg-fill-field--cell { border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); overflow-wrap: anywhere; }
+.rg-table--grid th { color: var(--rg-color-text-label); vertical-align: bottom; }
+.rg-table--grid .rg-table__grow { width: calc(200% / (var(--rg-table-cols, 6) + 1)); }
+.rg-worksheet-block--compact .rg-table--grid th { white-space: normal; }
 .rg-worksheet-block--compact .rg-table caption { padding-bottom: var(--rg-space-1); font-size: var(--rg-font-size-sm); }
 /* Piede su UNA riga dove ci sta: Tempo, Operatore, Data prendono il loro contenuto (etichetta + almeno
    64 px di riga), la Nota prende il resto. Se non ci stanno vanno a capo, senza tagliare niente. */

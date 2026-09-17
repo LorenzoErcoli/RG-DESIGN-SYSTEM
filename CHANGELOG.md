@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## Non rilasciato — proposta 1.21.0 (ramo `ds/phase-head-reparto`)
+## 1.21.0 — 2026-09-17
 
 **Minor**: due elementi nuovi (`rg-phase-panel__department`, `rg-dept-label__kind`) e una regola
 additiva sulla linguetta (`__title` figlio diretto). Niente di rimosso o rinominato, nessun token. Il

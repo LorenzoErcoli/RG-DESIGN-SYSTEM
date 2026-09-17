@@ -31,8 +31,8 @@ croce. Le due linee appaiate sono due strati accoppiati. La bandiera a scacchi �
 il finissaggio è l'ultimo reparto.
 
 E da qui la regola derivata, che è quella operativa: **due reparti non stanno mai nella stessa
-famiglia di segno**. Le famiglie in uso sono croci, due registri, piastre, pois, scacchiera,
-diagonale, coppie. Il **verso** di una diagonale, dopo una fotocopia e a dimensione di banda, non è
+famiglia di segno**. Le famiglie in uso sono croci, gocce-raggi e linee, piastre col filo, pois,
+scacchiera, diagonale, coppie. Il **verso** di una diagonale, dopo una fotocopia e a dimensione di banda, non è
 una differenza — è l'errore della prima versione, dove stampa (45°, sottile) e pressatura (−45°,
 spessa) si confondevano. E non lo è nemmeno il **tono**: il reticolo ortogonale del finissaggio era
 fatto di barre verticali come gli accoppiaggi e si distingueva solo perché più scuro, che in
@@ -40,98 +40,119 @@ fotocopia spinta non è una differenza. Il tono non fonda una famiglia.
 
 ## Varianti
 
-| Variante | Reparto | Figura | Perché quella |
-| --- | --- | --- | --- |
-| `rg-dept-band--ricamo` | Campionario Ricamo | fila di croci | è il **punto croce** |
-| `rg-dept-band--stampa` | Stampa, Laser e HF | due registri: gocce e raggi alternati sopra, due linee sotto | in alto una **goccia d'inchiostro** e una **punta di laser**, in basso le **due linee** della stampa: i mestieri sono due e la figura li nomina entrambi |
-| `rg-dept-band--pressatura` | Pressatura e soffiatura | una fila di piastre sopra e una sotto, allineate, con un filo in mezzo | sono le **piastre** della pressa, col **materiale** stretto fra le due |
-| `rg-dept-band--strass` | Strass e applicazioni | pois | **sono strass** |
-| `rg-dept-band--finissaggio` | Finissaggio e Controllo Qualità | scacchiera | è la **bandiera a scacchi**: il traguardo, ed è l'ultimo reparto |
-| `rg-dept-band--incollature` | Incollature | diagonali spesse | sono le **strisciate della spalmatura** |
-| `rg-dept-band--accoppiaggi` | Accoppiaggi | coppie di linee verticali | accoppiare è **unire due strati** |
+| Variante | Reparto | Trama (la striscia della tessera) | Passo | Perché quella |
+| --- | --- | --- | --- | --- |
+| `rg-dept-band--ricamo` | Ricamo | croci da 6 in due file, luce 4 | 10 | è il **punto croce** |
+| `rg-dept-band--stampa` | Stampa, Laser e HF | goccia da 4 e raggio 2×6 alternati, sotto due linee continue | 12 | una **goccia d'inchiostro** e una **punta di laser**, e le **due linee** della stampa: i mestieri sono due e la figura li nomina entrambi |
+| `rg-dept-band--pressatura` | Pressatura e soffiatura | piastre 4×4 sopra e sotto, luce 2, filo continuo in mezzo | 6 | sono le **piastre** della pressa, col **materiale** stretto fra le due |
+| `rg-dept-band--strass` | Strass e applicazioni | pois da 4 in tre file, la fila di mezzo sfalsata di 3 | 6 | **sono strass** |
+| `rg-dept-band--finissaggio` | Finissaggio e Controllo Qualità | scacchiera da 4 | 8 | è la **bandiera a scacchi**: il traguardo, ed è l'ultimo reparto |
+| `rg-dept-band--incollature` | Incollature | fasce diagonali a gradini di 2 | 8 | sono le **strisciate della spalmatura** |
+| `rg-dept-band--accoppiaggi` | Accoppiaggi | coppie di linee da 2, luce 2, fra le coppie 4 | 10 | accoppiare è **unire due strati** |
 
 | Modificatore | Quando |
 | --- | --- |
-| `rg-dept-band--quiet` | **A schermo** (v1.16.0), insieme a una delle sette: la stessa figura, in grigio. A schermo il colore del reparto convive con i colori di stato, e `category-3/4/5` sono `danger`, `warning` e `success`: una pressatura rossa accanto a un badge d'errore dice due cose con lo stesso rosso. Restano la figura e il nome, cioè i due segnali che riconoscono il reparto. Uso di riferimento: il timbro di reparto nella testa di [`rg-phase-panel`](phase-switch.md). Mai su carta, dove il colore serve. In linea (una tessera da 20 px) la stessa figura è [`rg-dept-mark--quiet`](dept-mark.md), che usa il colore del testo e non questo grigio. |
+| `rg-dept-band--quiet` | **A schermo** (v1.16.0), insieme a una delle sette: la stessa trama, in grigio (`neutral-400`). A schermo il colore del reparto convive con i colori di stato, e `category-3/4/5` sono `danger`, `warning` e `success`. Mai su carta, dove il colore serve. In linea, la stessa figura è la tessera [`rg-dept-mark--quiet`](dept-mark.md). |
 
-Senza variante la banda esiste comunque: filetto nero, nessuna campitura. È il caso «reparto non
-assegnato», e si legge come tale.
+Senza variante la banda esiste comunque: filetto nero, nessuna trama. È il caso «Reparto da
+assegnare», e si legge come tale.
 
-**Fascia del blocco della fase** (`rg-phase-panel__band`, dalla 1.19.0). A schermo, la banda è
-l'intestazione del blocco della fase: primo figlio, da bordo a bordo, alta 48 px, etichetta a
-sinistra sul filo del numero della fase, sempre `--quiet`. Le figure reggono l'altezza perché o
-riempiono la banda (pois, scacchiera, diagonale, coppie) o stanno sulla **mezzeria** (croci, registri
-della stampa, piastre). Con il reparto non assegnato la fascia c'è, senza
-variante, con «Reparto da assegnare». Vedi [phase-switch](phase-switch.md#la-fascia-del-reparto-e-elimina-fase-a-icona-1190).
-
-**A schermo, dalla 1.20.0, la fascia si toglie** dal blocco della fase: subito sotto le linguette si
-leggeva come il loro bordo, non come «reparto». Il reparto in linea è la **tessera**
-[`rg-dept-mark`](dept-mark.md): la stessa famiglia di figura, ridotta per reparto a 20 px, davanti al
-titolo della linguetta e in testa alla riga «Fase N di M». **Sul foglio stampato la banda resta com'è.**
+**Fascia del blocco della fase** (`rg-phase-panel__band`, 1.19.0; **a schermo superata dalla
+1.20.0**: subito sotto le linguette si leggeva come il loro bordo). Resta nel CSS: la trama vi sta sulla
+mezzeria con il margine laterale della testa (`--rg-dept-inset` a 24, 16 sotto i 680 px). **Sul foglio
+stampato la banda resta**, ed è lì che si usa.
 
 Il nome della variante apre con il **lavoro prevalente** del reparto, non con la macchina più
-vistosa: `--stampa`, non `--laser`. Il reparto «Stampa, Laser e HF» è quello dove stanno le
-stampanti, e chi guardava una banda marcata `laser` diceva «manca stampa».
+vistosa: `--stampa`, non `--laser`.
+
+## La trama è la tessera (proposta 1.21.1)
+
+Richiesta, dopo il rilascio della 1.21.0: *«allinea però i nuovi loghi per essere pattern da usare sulle
+testate dei reparti nelle schede»*. Fino alla 1.21.0 la fascia aveva figure sue (croci a 45° a passo 24,
+piastre 16×12, due registri da 30 px), mentre la tessera [`rg-dept-mark`](dept-mark.md) era disegnata
+sui pixel: due segni per lo stesso reparto.
+
+**La forma.** La fascia porta **la stessa striscia della tessera**:
+- gli stessi elementi (croce da 6, tondo da 4, piastra 4×4, linea da 2), lo stesso tratto 2, la stessa
+  luce;
+- alta 16 come il campo della tessera, sulla mezzeria della fascia (a y intera: 10 px in una fascia da
+  38);
+- ripetuta in orizzontale col **passo del motivo** (tabella sopra).
+
+Non la tessera intera ripetuta: fra due tessere ci sarebbero 4 px di luce in più, e la fascia si
+leggerebbe come una fila di francobolli invece che come una trama. Accanto, tessera e fascia si
+riconoscono come lo stesso segno (vetrina: *La fascia accanto alla sua tessera*).
+
+**Le estremità.** La larghezza della striscia è **arrotondata al passo** (`round()`): la trama finisce
+sempre con un elemento intero, qualunque sia la larghezza del foglio. La fila di mezzo degli strass ha un
+passo in meno, così finisce intera anche lei. Senza `round()` (browser precedenti) la striscia resta larga
+quanto la fascia: stesso disegno, ultimo elemento tagliato.
+
+**Nome e nota restano sopra**, su targhetta bianca, con **4 px di bianco intorno** (`outline`, che non
+cambia l'altezza): la trama passa sotto l'etichetta e si legge coperta, non tagliata. Limite: accanto al
+margine bianco può restare visibile uno spicchio dell'elemento coperto, perché dove cade dipende dalla
+larghezza del nome.
+
+**Perché `repeating-linear-gradient` e non la maschera SVG della tessera.** La scheda si stampa dal
+browser (`window.print`). Provato con `Page.printToPDF` di Chrome e rasterizzato con PDFium (il motore di
+Chrome) a 600 dpi:
+- la **maschera SVG** e un **gradiente a tessere ripetute** diventano bitmap: sulla carta la trama esce
+  sfocata, con fili grigi ai bordi del bitmap;
+- un **`repeating-linear-gradient` orizzontale** per fila di pixel, largo quanto la striscia, resta una
+  sfumatura **vettoriale**: croci, gocce e linee nette a qualunque risoluzione. A schermo cade sui pixel lo
+  stesso (verificato a DPR 1 e 2).
+
+Stop in forma esplicita (colore-inizio, colore-fine). Le coordinate in px sono il disegno, non misure di
+layout: eccezione dichiarata (regole §12). MuPDF, per inciso, campiona male queste sfumature (anche le
+figure 1.21.0): per giudicare la stampa serve PDFium o la stampa vera.
+
+**Altezza, fotocopia, stampa: invariate.** Fascia da 38 px sul foglio (targhetta 28, padding 4, filetto 2),
+nome e nota come prima, `print-color-adjust: exact` in `rg-utilities.css`. In fotocopia con contrasto spinto
+le trame tengono; **incollature e accoppiaggi** escono grigio medio, perché usano i valori più chiari della
+palette: come con le figure precedenti, sono le prime da guardare su una macchina nuova.
+
+**La trama pesa meno di prima.** Le figure 1.21.0 occupavano 24–32 px della fascia; la striscia ne occupa
+16, con 10 px d'aria sopra e sotto. Il nome e il filetto non cambiano; la trama si riconosce per figura,
+non per massa.
 
 ## Uso e limiti
 
 **Il nome è contenuto, non CSS.** `rg-dept-band__name` è testo nel markup, non `content:` generato.
 Se il CSS non arriva — mail, export, un PDF renderizzato male — la parola resta. La targhetta è
-bianca opaca con filetto nero perché il nome deve restare leggibile **sopra qualsiasi figura**. E
-va scritto il **nome del reparto**, non lo slug della variante: sono due cose diverse e solo una
-delle due si legge in reparto.
+bianca opaca con filetto nero perché il nome deve restare leggibile **sopra qualsiasi figura**. Si
+scrive «Reparto» e il **nome del reparto** («Reparto Pressatura e soffiatura»), mai lo slug della variante.
+**Sempre in maiuscolo** (proposta 1.21.1, *«REPARTO e NOME REPARTO sempre scritto in maiuscolo ovunque,
+schede che interfacce»*): `rg-dept-band__name` lo garantisce in CSS, «Reparto da assegnare» compreso. Nel
+markup il testo resta in tondo. La stessa regola a schermo è in [dept-mark](dept-mark.md#uso-e-limiti).
 
 **Il maiuscolo è ammesso qui** perché è una micro-label identitaria di due o tre parole, come
 `rg-label`. Le regole vietano il maiuscolo in *paragrafi e tabelle dense* (§2), non su un'etichetta.
 
-**La figura è una campitura, non un gradiente.** Tecnicamente è un `repeating-linear-gradient` (o un
-`radial-gradient` per i pois) a stop netti, ma non è decorazione: porta informazione, ed è l'unico
-segnale che sopravvive alla fotocopia. Eccezione dichiarata alle regole §2, ambito: documenti
-stampati (regole §12).
+**La trama è una campitura, non decorazione.** Tecnicamente è un gradiente a stop netti, ma porta
+informazione ed è l'unico segnale che sopravvive alla fotocopia. Eccezione dichiarata alle regole §2,
+ambito: documenti stampati (regole §12).
 
 **In stampa serve `print-color-adjust`.** I browser per default non stampano gli sfondi: senza la
 riga in `rg-utilities.css` la banda arriverebbe sulla carta con due segnali su tre spenti. È già
 gestito dal DS, l'app non deve fare nulla.
 
-**Quanto inchiostro porta la figura.** Le sette non pesano uguale, e conviene sapere quali sono
-gli estremi. La **scacchiera** del finissaggio è la più carica (metà della banda, in quadretti pieni
-da 8&nbsp;px) ed è anche la più indistruttibile: un quadretto pieno non lo schiarisce nessuna
-fotocopia. All'estremo opposto, **incollature e accoppiaggi** usano i valori più chiari della
-palette: reggono perché il segno resta — diagonali spesse e coppie di linee sono forme, non toni —
-ma sono le prime da guardare quando si prova la stampa su una macchina nuova.
+**Le coppie da tenere d'occhio.** Pressatura e finissaggio sono tutte e due a blocchi: si separano per
+**disposizione** (piastre allineate attorno a un filo continuo, contro quadretti sfalsati senza filo).
+Strass e ricamo sono tutti e due a elementi piccoli in file: tondi contro croci.
 
-**La stampa è la figura più stretta.** Due registri in una banda da 32&nbsp;px vogliono tutto lo
-spazio che c'è: registro alto 0–16, registro basso 18–30 dell'area utile. **Ci stanno, senza
-margine.** È il limite dichiarato di questa figura: se un giorno la banda si abbassa, o se il font
-identitario rimpicciolisce la targhetta e con lei l'altezza della banda, questa è la prima che si
-impasta — e va rifatta, non compressa. Per la stessa ragione la goccia è un cerchio da
-8&nbsp;px e non di più, e il raggio un tratto da 2: sono le misure massime che lasciano respirare
-i due registri.
+**Storico: mai una figura ancorata ai bordi** (revisione dopo la 1.19.0). La prima pressatura erano due
+dorsi pieni in alto e in basso: nella fascia da 48 px del blocco della fase si leggeva come una cornice.
+Un segno continuo da bordo a bordo è un bordo, non una figura. La striscia 1.21.1 sta sulla mezzeria e non
+tocca né il bordo alto né il filetto.
 
-In vetrina c'è la tavola apposta per verificarlo: *prova di sforzo*, grigio più contrasto
-schiacciato.
-
-**Mai una figura ancorata ai bordi** (revisione dopo la 1.19.0). La prima pressatura erano due
-dorsi pieni, uno in alto e uno in basso: in una banda da 32 px sul foglio reggeva, ma nella fascia
-da 48 px del blocco della fase, con il contorno del pannello sopra e il filetto sotto, **si leggeva
-come una cornice** — «ha l'etichetta ma non il disegno di sfondo che ha il Ricamo». Un segno
-continuo da bordo a bordo è un bordo, non una figura. Ora la pressatura è una fila di **piastre**
-(blocchi 16×12, luce 8) sopra e una sotto, allineate in colonna, con il **filo del materiale** da
-2 px in mezzo; la figura è alta 32 px e sta sulla mezzeria come il punto croce. La stessa revisione
-ha centrato i due registri della **stampa**, che erano ancorati al bordo alto e al bordo basso: a
-48 px si aprivano in un bordo sopra e un bordo sotto. Scartata per la pressatura: due file di
-trattini 16×8, che si leggono come una linea tratteggiata doppia.
-
-**La coppia da tenere d'occhio** è ora pressatura e finissaggio: tutte e due a blocchi. Si
-separano per **disposizione**, non per tono: le piastre sono allineate in colonna e tagliate da un
-filo continuo, i quadretti della scacchiera sono sfalsati e riempiono la banda senza filo.
-
-**Come si aggiunge una figura.** La variante dichiara `--rg-dept-color` (il filetto) e
-`--rg-dept-pattern` (la campitura); `--rg-dept-size`, `--rg-dept-position` e `--rg-dept-repeat`
-servono solo quando la figura è un **segno unico** e non un motivo che si ripete — è il caso del
-punto croce e dei pois (una tessera che si ripiastrella), o quando i registri sono più di uno
-(stampa). Le misure
-vengono dalla scala di spazio: nessun pixel arbitrario.
+**Come si aggiunge una figura.** Si disegna prima la **tessera** (campo 16×16, tratto 2, elementi interi:
+[dept-mark](dept-mark.md)), poi la sua **striscia**: una fila di elementi interi alta 16, con la luce della
+tessera e il suo passo. La variante dichiara `--rg-dept-color` (il filetto e la trama), `--rg-dept-passo`,
+e gli strati `--rg-dept-trama`, `--rg-dept-trama-size`, `--rg-dept-trama-pos` (una fila di pixel = uno
+strato `repeating-linear-gradient(90deg, …)` alto quanto la fila); `--rg-dept-trama-mezzo` (con `-size` e
+`-pos`) solo se una fila è sfalsata di mezzo passo. Il generatore usato per le sette è descritto nel
+CHANGELOG 1.21.1. `--rg-dept-pattern`, `-size`, `-position` e `-repeat` restano lette dalla regola base per
+compatibilità, ma nessuna variante le usa più.
 
 **Il colore riusa la palette categoriale** `--rg-color-category-1…7`, che a sua volta è un alias di
 valori già in palette: nessun colore nuovo entra nel brand. **Conseguenza da conoscere**:
@@ -152,8 +173,8 @@ un'intestazione di appartenenza sul bordo di un documento. Non ha stati, non è 
 
 ```html
 <p class="rg-dept-band rg-dept-band--strass">
-  <span class="rg-dept-band__name">Strass e applicazioni</span>
-  <span class="rg-dept-band__note">Fase 05 / 07</span>
+  <span class="rg-dept-band__name">Reparto Strass e applicazioni</span>
+  <span class="rg-dept-band__note">Foglio 5 / 7</span>
 </p>
 ```
 
@@ -162,7 +183,8 @@ Come primo figlio di un blocco di lavorazione, a filo dei suoi bordi:
 ```html
 <section class="rg-worksheet-block">
   <p class="rg-dept-band rg-dept-band--stampa">
-    <span class="rg-dept-band__name">Stampa, Laser e HF</span>
+    <span class="rg-dept-band__name">Reparto Stampa, Laser e HF</span>
+    <span class="rg-dept-band__note">Foglio 2 / 6</span>
   </p>
   <header class="rg-worksheet-block__head">…</header>
 </section>

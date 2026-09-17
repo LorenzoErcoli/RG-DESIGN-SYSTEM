@@ -7,6 +7,43 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta (ramo `ds/operation-sequence`)
+
+**Sarebbe una minor (1.22.0)**: classi nuove e additive, nessuna classe o token rimosso o rinominato,
+nessun token nuovo. Chi non usa `rg-operation-sequence` non vede differenze.
+
+### Sequenza di operazioni: aggiunta in basso a destra, gesti a posti fissi, totale
+
+Richiesta: *«il + piazzamento + pressatura hanno bisogno di un'altra gerarchia, non sembra un bottone e
+lo metterei a destra in basso invece che a sinistra […] questa cosa delle operazioni incrementali va
+studiata bene di interfaccia perché è presente in varie fasi»*. Uno schema per pressatura, forno, stampa
+UV, MuchColours e sabbiatura; il ricamo è escluso.
+
+- **`rg-operation-sequence`**: contenitore di lista, totale e aggiunta. Estende `rg-operation-row`, non la
+  sostituisce: fissa la griglia delle righe (nome 24ch · campi · gesti 193 px, variabile
+  `--rg-operation-actions`).
+- **Aggiunta** `__add` + `__add-label`: ultima cosa della sequenza, a destra, «Aggiungi in fondo» +
+  `rg-button--secondary` con icona per tipo; da quattro tipi un `rg-action-menu`. Scartate: parole a
+  sinistra (oggi), menu unico sempre, riga-segnaposto.
+- **Gesti sulla riga**: sposta su · sposta giù · duplica | togli, a sola icona con suggerimento, in due
+  gruppi; «Nota» esce dai gesti e va in coda ai campi. Scartate: frecce + tre parole (oggi), frecce + menu
+  «Altro», gesti solo al passaggio.
+- **`rg-operation-row__slot`**: posto vuoto per il gesto che la riga non ha per natura (Duplica sul cambio
+  piano). Lo stato invece spegne il bottone col motivo (ultima obbligatoria).
+- **`rg-operation-row--off`** + **`__status`**: facoltativa non inclusa, al suo posto, con «Includi».
+- **`is-new`** + **`rg-operation-row__new`**: riga appena aggiunta o duplicata, filetto nero a sinistra
+  e «nuova»; fuoco sul primo campo, frase in `role="status"`.
+- **`__total`** (`-label`, `-formula`, `-value`) e **`__total--incomplete`**: tempo per pezzo sulla
+  griglia delle righe, filetto nero della somma; «Non calcolabile: manca …» con «Vai al campo», «—» e
+  mai 0.
+- Documenti: `patterns/operation-sequence.md` (nuovo), rimando in `operation-row.md`, manifest (voce
+  `operation-sequence`, status beta), vetrina `#operation-sequence` (Pressatura M1296, dopo «+
+  Pressatura», Stampa UV con due passate e sezione macchina, Sabbiatura, alternative scartate) con il
+  controller di riferimento per «Nota» e `is-new`.
+- Verificato in Chrome headless via server locale a 1400 e 600 px: colonna dei gesti 193 px e allineata
+  su tutte le righe; a 1400 la riga di una pressata sta su una linea. Limiti: le righe della stampa UV
+  vanno a capo; sotto i 680 px i gesti prendono una linea in più per riga.
+
 ## 1.21.1 — 2026-09-17
 
 **Patch.** Nessuna classe o token aggiunto, rimosso o rinominato; markup e altezza della fascia invariati.

@@ -150,6 +150,14 @@ Contenitore `<ol>` → riga → `[testa | campi | azioni]`. La frase che spiega 
 </ol>
 ```
 
+> **Proposta non rilasciata — sequenza di operazioni.** Per le fasi non-ricamo la lista, il tempo e
+> l'aggiunta stanno in `rg-operation-sequence` ([pattern](../patterns/operation-sequence.md)): aggiunta
+> in basso a destra con `rg-button--secondary` + icona («Aggiungi in fondo»), gesti a quattro posti fissi
+> a sola icona (su · giù · duplica | togli), «Nota» in coda ai campi, `rg-operation-row__slot` per il
+> gesto che la riga non ha, `rg-operation-row--off` per la facoltativa non inclusa, `is-new` per la riga
+> appena aggiunta, `rg-operation-sequence__total` per il tempo per pezzo. Il paragrafo che segue resta
+> valido per le liste che non sono una sequenza di fase.
+
 L'azione «aggiungi un'operazione» — quando è la *lista* a crescere, non la singola riga — sta in un
 `rg-cluster` sotto la lista e **sopra** il pulsante primario del form: si arriva prima
 all'aggiunta che al salvataggio, e il primario resta l'ultima cosa che si incontra.

@@ -1322,6 +1322,76 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 }
 
 /* ==========================================================================================
+   SEQUENZA DI OPERAZIONI (proposta, non rilasciata) — rg-operation-sequence
+   Il contenitore di una sequenza compilabile di una fase non-ricamo: la lista di rg-operation-row,
+   la riga del TOTALE e il comando di AGGIUNTA. Non e un componente nuovo accanto a operation-row:
+   e la sua composizione, con le regole che la riga da sola non poteva dare (colonna dei gesti fissa,
+   righe spente, riga appena aggiunta). Doc: components/operation-row.md, patterns/operation-sequence.md.
+   ========================================================================================== */
+/* COLONNA DEI NOMI 24ch (non 28 come la riga sola): la colonna dei gesti ne prende 193 px, e a 1400 px
+   la riga di una pressata (momento, tempo, temperatura, pressione, Nota) deve restare su una linea.
+   Un nome piu lungo va a capo nella sua colonna; --rg-operation-head resta il comando del contenitore. */
+/* COLONNA DEI GESTI A POSTI FISSI: [su giu duplica] | [togli]. Ogni riga e una griglia sua, quindi
+   con una colonna auto una riga senza Duplica avrebbe i campi piu larghi e le frecce spostate. La
+   larghezza e derivata dai posti: quattro bottoni da 40 (il target minimo, come in rg-icon-button--full),
+   i gap e il filetto fra i due gruppi (rg-action-group + rg-action-group). */
+.rg-operation-sequence { --rg-operation-actions: calc(4 * 40px + 3 * var(--rg-space-1) + var(--rg-space-2) + var(--rg-space-3) + var(--rg-border-hairline)); }
+.rg-operation-sequence .rg-operation-row { grid-template-columns: minmax(0, var(--rg-operation-head, 24ch)) minmax(0, 1fr) var(--rg-operation-actions); }
+.rg-operation-sequence .rg-operation-row__actions { flex-wrap: nowrap; justify-content: flex-end; }
+.rg-operation-sequence .rg-operation-row__actions > .rg-action-group { flex-wrap: nowrap; }
+/* POSTO VUOTO: il gesto non esiste per la NATURA della riga (Duplica su cambio piano). Se invece il
+   gesto non vale ORA (freccia al bordo, ultima riga obbligatoria) il bottone c'e ed e disabled, col
+   motivo nel suggerimento. Natura = posto vuoto, stato = bottone spento. */
+.rg-operation-row__slot { flex: none; width: 40px; height: 40px; }
+/* «Nota» in coda ai campi: la nota e un campo, non un gesto sulla riga. Ghost con icona, lati stretti
+   (8 invece di 16: a riposo il ghost non ha bordo, quindi il padding e solo aria) per restare sulla
+   linea dei campi di una pressata; se i campi non entrano va a capo come ogni campo di rg-form-row. */
+.rg-operation-sequence .rg-form-row__actions > .rg-button--ghost { padding-inline: var(--rg-space-2); }
+/* RIGA SPENTA (--off): un'operazione facoltativa non inclusa. Sta al suo posto nella sequenza, alta
+   una linea di controllo, col nome in grigio e la parola che dice lo stato (__status): il colore
+   non e l'unico segnale. Nessun hover: non c'e niente da compilare. */
+.rg-operation-row--off { align-items: center; }
+.rg-operation-row--off:hover { background: transparent; }
+.rg-operation-row--off .rg-operation-row__name { color: var(--rg-color-text-secondary); font-weight: var(--rg-weight-regular); }
+.rg-operation-row--off .rg-operation-row__actions { min-height: 40px; padding-top: 0; }
+.rg-operation-row__status { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+/* RIGA APPENA AGGIUNTA (is-new): filetto nero spesso a sinistra + parola «nuova» nella testa
+   (__new, visibile solo con is-new). Niente fondo: il fondo chiaro e dell'hover, e un fondo che
+   sparisce sotto il puntatore non si legge. Dura finche il fuoco non esce dalla riga (controller)
+   o fino al prossimo caricamento (senza JS); nessuna animazione a tempo. */
+.rg-operation-row.is-new { padding-left: calc(var(--rg-space-2) - var(--rg-border-strong)); border-left: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
+.rg-operation-row__new { display: none; }
+.rg-operation-row.is-new .rg-operation-row__new { display: inline-flex; color: var(--rg-color-black); border-color: var(--rg-color-black); }
+/* TOTALE: la stessa griglia delle righe, cosi l'etichetta cade nella colonna dei nomi, la formula
+   sotto i campi e il risultato sul filo destro dei gesti. Il filetto nero sopra e la riga della somma
+   (l'unico nero della sequenza: enfasi, design-rules §6), sovrapposto al bordo basso della lista. */
+.rg-operation-sequence__total { display: grid; grid-template-columns: minmax(0, var(--rg-operation-head, 24ch)) minmax(0, 1fr) var(--rg-operation-actions); align-items: baseline; gap: var(--rg-space-1) var(--rg-space-4); margin: calc(-1 * var(--rg-border-hairline)) 0 0; padding: var(--rg-space-3) var(--rg-space-2); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-strong); }
+.rg-operation-sequence__total-label { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
+.rg-operation-sequence__total-formula { min-width: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.rg-operation-sequence__total-value { justify-self: end; font-family: var(--rg-font-mono); font-size: var(--rg-font-size-md); font-weight: var(--rg-weight-medium); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* NON CALCOLABILE: la formula lascia il posto alla frase «non calcolabile: manca …» (icona avviso +
+   parole, in nero), il risultato e un trattino, mai 0: un tempo mancante non e un tempo nullo. */
+.rg-operation-sequence__total--incomplete .rg-operation-sequence__total-formula { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-2); color: var(--rg-color-text-primary); font-family: var(--rg-font-body); }
+.rg-operation-sequence__total--incomplete .rg-operation-sequence__total-formula > .rg-icon { align-self: center; }
+.rg-operation-sequence__total--incomplete .rg-operation-sequence__total-value { color: var(--rg-color-text-secondary); font-weight: var(--rg-weight-regular); }
+/* AGGIUNTA: in basso a destra, ultima cosa della sequenza. Bottoni secondari (bordo nero: e un
+   comando, non una parola) con icona + nome dell'operazione, preceduti da «Aggiungi in fondo», che
+   dice dove va la riga. Un bottone per tipo fino a tre; dal quarto un menu unico (rg-action-menu). */
+.rg-operation-sequence__add { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--rg-space-2); margin-top: var(--rg-space-4); padding-inline: var(--rg-space-2); }
+.rg-operation-sequence__add-label { margin-inline-end: var(--rg-space-1); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+@media (max-width: 680px) {
+  /* I gesti scendono su una linea loro sotto i campi, allineati a destra: accanto ai campi
+     lascerebbero ai controlli meno dello spazio minimo. */
+  .rg-operation-sequence .rg-operation-row { grid-template-columns: minmax(0, 1fr); }
+  .rg-operation-sequence .rg-operation-row__actions { min-height: 40px; padding-top: 0; }
+  .rg-operation-sequence .rg-operation-row--off { grid-template-columns: minmax(0, 1fr) auto; }
+  .rg-operation-sequence .rg-operation-row--off .rg-operation-row__status { grid-column: 1; }
+  .rg-operation-sequence__total { grid-template-columns: minmax(0, 1fr) auto; }
+  .rg-operation-sequence__total-label { grid-column: 1 / -1; }
+  .rg-operation-sequence__add-label { flex-basis: 100%; margin-inline-end: 0; text-align: right; }
+}
+
+/* ==========================================================================================
    AZIONI, ICONE, IDENTITA DELLE PARTI (v1.17.0, seconda tappa)
    ========================================================================================== */
 

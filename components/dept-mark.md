@@ -33,7 +33,7 @@ universale di «chiudi»; e la tessera aveva la forma di `rg-icon-button`: conto
 segno isolato al centro. Ricontrollate tutte e sette contro lo sprite ([icons](icons.md)) e contro i
 comandi comuni:
 
-| Variante | Prima (1.20.0) | Si leggeva come | Ora |
+| Variante | Prima (1.20.0) | Si leggeva come | Seconda stesura (trama tagliata, superata) |
 | --- | --- | --- | --- |
 | `--ricamo` | una croce da 12 in cornice | **chiudi**, errore, casella spuntata | **crocette** da 5 in tre file sfalsate (passo 8), tagliate dal bordo: punto croce |
 | `--stampa` | goccia e raggio attaccati, due linee, in cornice | **registra · pausa**, scheda con immagine | **gocce** da 4 e **raggi** 2×6 alternati a passo 10, tagliati dal bordo; **due linee** sotto |
@@ -45,17 +45,50 @@ comandi comuni:
 | *(nessuna)* | vuota, tratteggiata | segnaposto, non un comando | invariata: vuota, **bordo tratteggiato**, nessun fondo |
 
 **La tessera, per tutte e sette:** nessun contorno, angoli vivi, fondo `--rg-color-surface`, e un motivo
-che **continua oltre il taglio** (sempre più di una ripetizione, e almeno un elemento tagliato dal bordo).
-Un'icona è un segno isolato con margine attorno; un campione di stoffa è una trama che il bordo
-interrompe. Nessuna tessera ha più la forma di un bottone: `rg-icon-button` ha contorno e angoli tondi,
-la tessera no.
+ripetuto. Un'icona è un segno isolato; un campione di stoffa è una trama. Nessuna tessera ha la forma di
+un bottone: `rg-icon-button` ha contorno e angoli tondi, la tessera no.
 
-Scartate per il ricamo: **una griglia 3×3 intera** di crocette (una fila di «chiudi»), **due crocette
-2×2** (ancora un glifo), **punto filza** (trattini in fila: la famiglia di stampa e pressatura),
-**zigzag** (esce dalla famiglia della banda, che è a croci).
+### Disegnate sui pixel (terza stesura della proposta 1.21.0)
 
-La trama della banda **scalata** a 20&nbsp;px non regge (le croci a passo 24 non ci stanno), quindi ogni
-tessera resta una **riduzione** nella stessa famiglia di segno, a passo più fitto.
+Giudizio sulla trama tagliata: *«meglio, ma non mi sembrano così precisi i loghi, vorrei qualcosa di più
+pulito»*. A 20&nbsp;px le cause erano tre: i gradienti CSS non cadevano sui pixel (bordi sfocati), crocette
+e pois erano tagliati a metà dal bordo, e gli spessori cambiavano da un reparto all'altro. La direzione
+resta; cambia l'esecuzione.
+
+- **Un disegno SVG 20×20 a coordinate intere** per reparto, usato come **maschera** su `::after`. Il
+  colore resta `--rg-dept-mark-color`: la categoria, oppure il colore del testo con `--quiet`. Non sta
+  nello sprite delle icone: è un segno di reparto, non un comando.
+- **Una griglia per tutte**: margine 2&nbsp;px sui quattro lati, campo 16×16, **tratto 2**, elementi
+  **interi** (nessuno tagliato dal bordo), sempre ripetuti (almeno 2×2 o tre file).
+- **I tondi** (gocce, pois) sono quadrati 4×4 senza i pixel d'angolo: tondi a questa misura, e netti.
+- **Densità**: dal 31% (ricamo) al 50% (pressatura, finissaggio, incollature, accoppiaggi) del campo.
+  Il ricamo resta il più leggero: quattro croci da 6 sono il massimo che sta nel campo con la luce.
+
+| Variante | Disegno sul campo 16×16 |
+| --- | --- |
+| `--ricamo` | punto croce: **quattro croci** da 6 (cinque blocchi 2×2), 2×2, luce 4 |
+| `--stampa` | i due registri: **goccia** da 4, **raggio** 2×6, goccia da 4; sotto **due linee** da 2 |
+| `--pressatura` | **tre piastre** 4×4 sopra e tre sotto, luce 2, **filo** da 2 in mezzo |
+| `--strass` | **otto pois** da 4 sfalsati (3, 2, 3), luce 2 |
+| `--finissaggio` | **scacchiera** 4×4 da 4 |
+| `--incollature` | **tre fasce diagonali** a gradini di 2 |
+| `--accoppiaggi` | **due coppie di linee** da 2, luce 2, fra le coppie 4 |
+| *(nessuna)* | il campo **tratteggiato**: tratti lunghi 4, spessi 2, nessun fondo |
+
+**Rendering.** Senza `shape-rendering="crispEdges"`. A devicePixelRatio 1 e 2 ogni bordo cade già su
+un pixel, e il risultato è identico pixel per pixel a quello con `crispEdges`. A 1,25 e 1,5 un bordo
+cade fra due pixel: senza `crispEdges` resta un filo di sfumatura, uguale ovunque, e la forma tiene;
+con `crispEdges` i tondi diventavano trifogli e le croci si storcevano. Anche dentro `rg-dept-label`,
+dove la tessera sta a una y frazionaria, Chrome allinea la maschera ai pixel.
+
+**Le coordinate SVG sono il disegno**, come i tracciati dello sprite, non misure di layout: eccezione
+dichiarata (regole §12).
+
+Le forme precedenti, scartate: la croce sola in un quadratino bordato («chiudi», 1.20.0); la trama
+tagliata dal bordo fatta con gradienti CSS (imprecisa a 20&nbsp;px).
+
+**Dalla banda alla tessera.** La trama della banda scalata a 20&nbsp;px non regge, quindi ogni tessera è
+una **riduzione** nella stessa famiglia di segno:
 
 | Variante | Reparto | Figura nella banda |
 | --- | --- | --- |
@@ -70,7 +103,7 @@ tessera resta una **riduzione** nella stessa famiglia di segno, a passo più fit
 
 | Modificatore | Quando |
 | --- | --- |
-| `rg-dept-mark--quiet` | **A schermo, sempre.** La trama (e il tratteggio di «da assegnare») prende il colore del **testo intorno** (`currentColor`); il fondo resta `--rg-color-surface`. |
+| `rg-dept-mark--quiet` | **A schermo, sempre.** Il disegno (e il tratteggio di «da assegnare») prende il colore del **testo intorno** (`currentColor`); il fondo resta `--rg-color-surface`. |
 
 **Perché `--quiet` usa il colore del testo e non il grigio della banda.** La banda sobria usa
 `neutral-400`: su 48&nbsp;px di trama basta. Su una tessera da 20&nbsp;px con segni da 2&nbsp;px quel
@@ -87,8 +120,8 @@ reggono la forma, non il tono.
 
 - **Pois e scacchiera**: tondi staccati e sfalsati contro quadretti che si toccano agli angoli. Si
   separano per forma e disposizione, non per tono.
-- **Ricamo e incollature**: due famiglie diagonali. Il ricamo è fatto di **crocette staccate** e sottili,
-  le incollature di **diagonali continue e spesse**.
+- **Ricamo e incollature**: due famiglie diagonali. Il ricamo è fatto di **quattro croci staccate**, le
+  incollature di **tre fasce continue**.
 - **Stampa e pressatura**: entrambe con righe orizzontali. La stampa ha tondi e tratti verticali sopra e
   due linee sotto; la pressatura due file di rettangoli attorno a un filo.
 
@@ -126,14 +159,15 @@ quadrata con una figura e nessun numero**. Tre forme, tre contenuti.
 
 **Una figura nuova** (un ottavo reparto) si disegna due volte: la trama della banda e la sua
 riduzione. Le misure vengono dalla scala (4, 8, 12, 16, e i filetti 1 e 2). Dalla proposta 1.21.0 la
-riduzione è una **trama tagliata dal bordo**, mai un segno isolato al centro: prima di aggiungerla si
+riduzione è una **trama di elementi interi**, mai un segno isolato al centro: prima di aggiungerla si
 mette accanto alle icone dello sprite (tavola «Accanto alle icone» in vetrina) e non deve ricordarne
-nessuna, né un comando comune (chiudi, pausa, menu, griglia). Le variabili sono `--rg-dept-mark-color`,
-`-pattern`, `-size`, `-position`, `-repeat`, `-edge`, `-fill` (e `-cross` per il ricamo): non
+nessuna, né un comando comune (chiudi, pausa, menu, griglia). La tessera si disegna sulla griglia (campo 16×16,
+margine 2, tratto 2, elementi interi) in SVG a coordinate intere. Le variabili sono `--rg-dept-mark-color`,
+`-fill` e `-shape` (la maschera): non
 `--rg-dept-*`, perché le variabili si ereditano e una tessera dentro una banda ne prenderebbe la trama.
 
 **Non ha la forma di un bottone** (proposta 1.21.0): nessun contorno e angoli vivi, a differenza di
-`rg-icon-button`. Solo «da assegnare» ha un bordo, tratteggiato.
+`rg-icon-button`. «Da assegnare» è il campo tratteggiato, senza fondo.
 
 ## Struttura
 

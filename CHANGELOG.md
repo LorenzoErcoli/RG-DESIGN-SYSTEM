@@ -58,6 +58,23 @@ markup è lo stesso.
 - Documenti: `dept-mark.md` (*Le sette trame*, tabella prima/si leggeva come/ora). Vetrina: tavola
   «Accanto alle icone», tessere e comandi dello sprite a 1x e 3x.
 
+### Le tessere disegnate sui pixel
+
+Giudizio sulla trama tagliata: *«meglio, ma non mi sembrano così precisi i loghi, vorrei qualcosa di più
+pulito»*. Cause a 20 px: gradienti CSS fuori dai pixel, elementi tagliati a metà dal bordo, spessori diversi. La
+direzione resta (nessun contorno, trama e non glifo). Classi e markup invariati.
+
+- **Un disegno SVG 20×20 a coordinate intere** per reparto, maschera su `::after`; il colore resta
+  `--rg-dept-mark-color` (categoria o `currentColor`). Variabili: `--rg-dept-mark-color`, `-fill`, `-shape`;
+  tolte `-pattern`, `-size`, `-position`, `-repeat`, `-edge`, `-cross` (mai rilasciate).
+- **Una griglia per tutte**: margine 2 sui quattro lati, campo 16×16, tratto 2, elementi interi e ripetuti.
+- Ricamo: quattro croci da 6. Stampa: goccia, raggio, goccia; due linee. Pressatura: tre piastre sopra e
+  tre sotto, filo. Strass: otto pois sfalsati. Finissaggio: scacchiera 4×4. Incollature: tre fasce
+  diagonali. Accoppiaggi: due coppie di linee. Da assegnare: campo tratteggiato.
+- Senza `crispEdges`: a DPR 1 e 2 identico e netto; a 1,25 e 1,5 un filo di sfumatura uniforme, mentre
+  `crispEdges` deformava tondi e croci.
+- Verificato in Chrome headless a DPR 1, 1,25, 1,5 e 2, con zoom nearest-neighbor dei pixel reali.
+
 ## 1.20.0 — 2026-09-16
 
 **Minor**: una classe nuova con le sue varianti (`rg-dept-mark`), un elemento in linea

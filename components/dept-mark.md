@@ -25,27 +25,52 @@ la riga del reparto, gli elenchi e le legende.
 
 ## Varianti
 
-### Le sette riduzioni
+### Le sette trame (proposta 1.21.0)
 
-La trama della banda **scalata** a 20&nbsp;px non regge: le croci del ricamo hanno passo 24 e non ci
-stanno nemmeno una volta, la fila di piastre della pressatura diventa una riga grigia, i due registri
-della stampa si impastano. Ogni reparto ha quindi la sua **riduzione**: il segno della banda preso una
-volta, o nel numero minimo che ne dice ancora la famiglia. Le famiglie restano sette e restano diverse.
+**Trama tagliata, non glifo centrato.** Giudizio sulla prima forma (1.20.0): *«la x del ricamo messa lì
+sembra una x per chiudere. non va bene usata così»*. Una X sola in un quadratino col bordo è il segno
+universale di «chiudi»; e la tessera aveva la forma di `rg-icon-button`: contorno da 1, angoli da 2, un
+segno isolato al centro. Ricontrollate tutte e sette contro lo sprite ([icons](icons.md)) e contro i
+comandi comuni:
 
-| Variante | Reparto | Figura nella banda | Riduzione nella tessera |
+| Variante | Prima (1.20.0) | Si leggeva come | Ora |
 | --- | --- | --- | --- |
-| `rg-dept-mark--ricamo` | Campionario Ricamo | fila di croci | **una croce** da 12, tratto 2 |
-| `rg-dept-mark--stampa` | Stampa, Laser e HF | gocce e raggi alternati sopra, due linee sotto | **una goccia** da 8 e **un raggio** 2×8 sopra, **due linee** sotto |
-| `rg-dept-mark--pressatura` | Pressatura e soffiatura | fila di piastre sopra e sotto, filo in mezzo | **due piastre** 6×4 sopra e due sotto, in colonna, **filo** da bordo a bordo |
-| `rg-dept-mark--strass` | Strass e applicazioni | pois da 8, passo 16 | **quattro pois** da 6, uno per quadrante |
-| `rg-dept-mark--finissaggio` | Finissaggio e Controllo Qualità | scacchiera da 8 | **scacchiera 3×3** da 6 |
-| `rg-dept-mark--incollature` | Incollature | diagonali da 8, passo 16 | **diagonali** da 4, passo 8 |
-| `rg-dept-mark--accoppiaggi` | Accoppiaggi | coppie di linee verticali | **una coppia** di linee 2×12, luce 2, staccata dal bordo |
-| *(nessuna variante)* | **Reparto da assegnare** | banda senza trama | **tessera vuota, bordo tratteggiato** |
+| `--ricamo` | una croce da 12 in cornice | **chiudi**, errore, casella spuntata | **crocette** da 5 in tre file sfalsate (passo 8), tagliate dal bordo: punto croce |
+| `--stampa` | goccia e raggio attaccati, due linee, in cornice | **registra · pausa**, scheda con immagine | **gocce** da 4 e **raggi** 2×6 alternati a passo 10, tagliati dal bordo; **due linee** sotto |
+| `--pressatura` | due piastre sopra, due sotto, filo, in cornice | **tabella**, layout | **due file di piastre** 6×4 a passo 8, tagliate dal bordo, **filo** in mezzo |
+| `--strass` | quattro pois in cornice | **dado**, griglia di app | **pois** da 4 sfalsati a passo 8: tessuto a pois |
+| `--finissaggio` | scacchiera | nessun comando | figura invariata, senza cornice |
+| `--incollature` | diagonali spesse | nessun comando | figura invariata, senza cornice |
+| `--accoppiaggi` | una coppia di barre al centro | **pausa** | **coppie di linee** da 2, luce 1, passo 10, alte quanto la tessera e tagliate dal bordo |
+| *(nessuna)* | vuota, tratteggiata | segnaposto, non un comando | invariata: vuota, **bordo tratteggiato**, nessun fondo |
+
+**La tessera, per tutte e sette:** nessun contorno, angoli vivi, fondo `--rg-color-surface`, e un motivo
+che **continua oltre il taglio** (sempre più di una ripetizione, e almeno un elemento tagliato dal bordo).
+Un'icona è un segno isolato con margine attorno; un campione di stoffa è una trama che il bordo
+interrompe. Nessuna tessera ha più la forma di un bottone: `rg-icon-button` ha contorno e angoli tondi,
+la tessera no.
+
+Scartate per il ricamo: **una griglia 3×3 intera** di crocette (una fila di «chiudi»), **due crocette
+2×2** (ancora un glifo), **punto filza** (trattini in fila: la famiglia di stampa e pressatura),
+**zigzag** (esce dalla famiglia della banda, che è a croci).
+
+La trama della banda **scalata** a 20&nbsp;px non regge (le croci a passo 24 non ci stanno), quindi ogni
+tessera resta una **riduzione** nella stessa famiglia di segno, a passo più fitto.
+
+| Variante | Reparto | Figura nella banda |
+| --- | --- | --- |
+| `rg-dept-mark--ricamo` | Ricamo | fila di croci |
+| `rg-dept-mark--stampa` | Stampa, Laser e HF | gocce e raggi alternati sopra, due linee sotto |
+| `rg-dept-mark--pressatura` | Pressatura e soffiatura | fila di piastre sopra e sotto, filo in mezzo |
+| `rg-dept-mark--strass` | Strass e applicazioni | pois da 8, passo 16 |
+| `rg-dept-mark--finissaggio` | Finissaggio e Controllo Qualità | scacchiera da 8 |
+| `rg-dept-mark--incollature` | Incollature | diagonali da 8, passo 16 |
+| `rg-dept-mark--accoppiaggi` | Accoppiaggi | coppie di linee verticali |
+| *(nessuna variante)* | **Reparto da assegnare** | banda senza trama |
 
 | Modificatore | Quando |
 | --- | --- |
-| `rg-dept-mark--quiet` | **A schermo, sempre.** La figura e il bordo prendono il colore del **testo intorno** (`currentColor`). Vale anche per «da assegnare». |
+| `rg-dept-mark--quiet` | **A schermo, sempre.** La trama (e il tratteggio di «da assegnare») prende il colore del **testo intorno** (`currentColor`); il fondo resta `--rg-color-surface`. |
 
 **Perché `--quiet` usa il colore del testo e non il grigio della banda.** La banda sobria usa
 `neutral-400`: su 48&nbsp;px di trama basta. Su una tessera da 20&nbsp;px con segni da 2&nbsp;px quel
@@ -60,14 +85,12 @@ reggono la forma, non il tono.
 
 ### Le coppie da tenere d'occhio a questa misura
 
-- **Pois e scacchiera**: a 20&nbsp;px tondi e quadretti si avvicinano. Si separano per **numero e
-  disposizione**: quattro tondi staccati su bianco contro nove quadretti sfalsati che si toccano agli
-  angoli.
-- **Ricamo e incollature**: due diagonali. La croce è **una**, sottile e isolata al centro; le
-  incollature sono **diagonali parallele spesse** che riempiono la tessera.
-- **Accoppiaggi**: la prima riduzione erano due barre piene da 4 alte quanto la tessera. Saldate al
-  bordo si leggevano quattro barre; staccate e piene sono il simbolo «pausa». Due linee sottili e
-  vicine sono i due strati uniti.
+- **Pois e scacchiera**: tondi staccati e sfalsati contro quadretti che si toccano agli angoli. Si
+  separano per forma e disposizione, non per tono.
+- **Ricamo e incollature**: due famiglie diagonali. Il ricamo è fatto di **crocette staccate** e sottili,
+  le incollature di **diagonali continue e spesse**.
+- **Stampa e pressatura**: entrambe con righe orizzontali. La stampa ha tondi e tratti verticali sopra e
+  due linee sotto; la pressatura due file di rettangoli attorno a un filo.
 
 ## Uso e limiti
 
@@ -102,11 +125,15 @@ cambia il testo intorno. Non va dentro `rg-icon-button`, e non si usa per filtra
 quadrata con una figura e nessun numero**. Tre forme, tre contenuti.
 
 **Una figura nuova** (un ottavo reparto) si disegna due volte: la trama della banda e la sua
-riduzione. Le misure vengono dalla scala (4, 8, 12, 16, e i filetti 1 e 2), la figura sta nell'area
-interna da 18&nbsp;px e non tocca il bordo, salvo un segno continuo per disegno (il filo della
-pressatura). Le variabili sono `--rg-dept-mark-color`, `-pattern`, `-size`, `-position`, `-repeat`,
-`-edge`: non `--rg-dept-*`, perché le variabili si ereditano e una tessera dentro una banda ne
-prenderebbe la trama.
+riduzione. Le misure vengono dalla scala (4, 8, 12, 16, e i filetti 1 e 2). Dalla proposta 1.21.0 la
+riduzione è una **trama tagliata dal bordo**, mai un segno isolato al centro: prima di aggiungerla si
+mette accanto alle icone dello sprite (tavola «Accanto alle icone» in vetrina) e non deve ricordarne
+nessuna, né un comando comune (chiudi, pausa, menu, griglia). Le variabili sono `--rg-dept-mark-color`,
+`-pattern`, `-size`, `-position`, `-repeat`, `-edge`, `-fill` (e `-cross` per il ricamo): non
+`--rg-dept-*`, perché le variabili si ereditano e una tessera dentro una banda ne prenderebbe la trama.
+
+**Non ha la forma di un bottone** (proposta 1.21.0): nessun contorno e angoli vivi, a differenza di
+`rg-icon-button`. Solo «da assegnare» ha un bordo, tratteggiato.
 
 ## Struttura
 

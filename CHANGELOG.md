@@ -39,6 +39,25 @@ scriviamo Reparto Ricamo. Forse lo metterei ovunque Reparto e quello che è»*.
 - Verificato in Chrome headless a 1400 e 600 px: geometria, e nomi accessibili dall'albero di
   accessibilità («3 Sabbiatura e soffiatura finale, collegata 7 da compilare»).
 
+### Le tessere del reparto: trama tagliata, non glifo centrato
+
+Giudizio sulla proposta: *«la x del ricamo messa lì sembra una x per chiudere. non va bene usata
+così»*. La tessera 1.20.0 aveva la forma di `rg-icon-button` (contorno da 1, angoli da 2, un segno solo
+al centro). Ricontrollate tutte e sette contro lo sprite e i comandi comuni. Nessuna classe cambia; il
+markup è lo stesso.
+
+- **Tutte**: niente contorno, angoli vivi, fondo `--rg-color-surface` (nuova variabile
+  `--rg-dept-mark-fill`), motivo ripetuto e tagliato dal bordo. «Da assegnare» resta vuota e tratteggiata.
+- **`--ricamo`** (era «chiudi»): crocette da 5 in tre file sfalsate a passo 8, tagliate dal bordo.
+  Scartate la griglia 3×3 intera, le 2×2, il punto filza e lo zigzag.
+- **`--accoppiaggi`** (era «pausa»): coppie di linee da 2, luce 1, passo 10, da bordo a bordo.
+- **`--pressatura`** (era una tabella): due file di piastre 6×4 a passo 8 tagliate dal bordo, filo in mezzo.
+- **`--strass`** (era un dado): pois da 4 sfalsati a passo 8.
+- **`--stampa`** (era «registra · pausa»): gocce e raggi staccati e alternati a passo 10, due linee sotto.
+- **`--finissaggio`**, **`--incollature`**: figura invariata, senza cornice.
+- Documenti: `dept-mark.md` (*Le sette trame*, tabella prima/si leggeva come/ora). Vetrina: tavola
+  «Accanto alle icone», tessere e comandi dello sprite a 1x e 3x.
+
 ## 1.20.0 — 2026-09-16
 
 **Minor**: una classe nuova con le sue varianti (`rg-dept-mark`), un elemento in linea

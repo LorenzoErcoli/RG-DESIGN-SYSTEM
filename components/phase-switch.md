@@ -689,7 +689,9 @@ Due difetti veri:
   Pressatura e soffiatura», «Reparto da assegnare». Con uno spazio vero dopo la parola: si copia e si
   legge per intero. Il nome è quello che dà la piattaforma; per il ricamo, «Ricamo».
 - **La tessera resta**, `--quiet`, in nero: è il ponte con la fascia del foglio stampato e con l'elenco.
-  È `aria-hidden`, perché il nome è scritto.
+  È `aria-hidden`, perché il nome è scritto. Dalla stessa proposta è un **ritaglio di trama** senza
+  contorno, non un segno in un quadratino: la croce sola del ricamo si leggeva «chiudi» (vedi
+  [dept-mark](dept-mark.md#le-sette-trame-proposta-1210)).
 - **Nessun fondo, nessuna trama.** Sotto la linguetta scelta, che è bianca e si fonde col pannello, un
   fondo grigio si leggerebbe di nuovo come la base della linguetta.
 - **Reparto non assegnato**: tessera senza variante (vuota, tratteggiata) e «Reparto da assegnare».

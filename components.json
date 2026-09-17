@@ -2771,7 +2771,7 @@
     {
       "id": "dept-mark",
       "title": "Segno del reparto (tessera in linea)",
-      "role": "Nomina un reparto IN LINEA con una tessera quadrata da 20 px che porta la figura della banda di reparto ridotta (una croce, goccia e raggio con due linee, piastre col filo, quattro pois, scacchiera 3x3, diagonali, coppia di linee; vuota a bordo tratteggiato = reparto da assegnare). Si usa davanti al titolo di una linguetta di fase, in testa alla riga 'Fase N di M' del blocco della fase, in elenchi e legende; accanto al nome scritto (rg-dept-label) o con role=img e aria-label. A schermo sempre --quiet (colore del testo intorno).",
+      "role": "Nomina un reparto IN LINEA con una tessera quadrata da 20 px: un RITAGLIO della trama della banda di reparto (crocette sfalsate, gocce e raggi con due linee, file di piastre col filo, pois sfalsati, scacchiera, diagonali, coppie di linee), senza contorno, su fondo chiaro, tagliato dal bordo; vuota a bordo tratteggiato = reparto da assegnare. Si usa nella riga del reparto del blocco della fase (rg-phase-panel__department), in elenchi e legende; accanto al nome scritto (rg-dept-label) o con role=img e aria-label. A schermo sempre --quiet (colore del testo intorno).",
       "status": "beta",
       "since": "1.20.0",
       "kind": "component",
@@ -2805,14 +2805,14 @@
         ]
       },
       "variants": [
-        "ricamo (una croce da 12)",
-        "stampa (goccia da 8 e raggio 2x8 sopra, due linee sotto)",
-        "pressatura (due piastre 6x4 sopra e sotto, filo da bordo a bordo)",
-        "strass (quattro pois da 6)",
-        "finissaggio (scacchiera 3x3 da 6)",
+        "ricamo (crocette da 5 in tre file sfalsate, passo 8)",
+        "stampa (gocce da 4 e raggi 2x6 alternati a passo 10, due linee sotto)",
+        "pressatura (due file di piastre 6x4 a passo 8, filo in mezzo)",
+        "strass (pois da 4 sfalsati, passo 8)",
+        "finissaggio (scacchiera da 6)",
         "incollature (diagonali da 4, passo 8)",
-        "accoppiaggi (coppia di linee 2x12, luce 2)",
-        "nessuna variante = reparto da assegnare (tessera vuota, bordo tratteggiato)",
+        "accoppiaggi (coppie di linee da 2, luce 1, passo 10)",
+        "nessuna variante = reparto da assegnare (vuota, bordo tratteggiato)",
         "--quiet = a schermo, colore del testo intorno (currentColor)"
       ],
       "states": [
@@ -2843,7 +2843,8 @@
         "--rg-font-identity",
         "--rg-font-size-xs",
         "--rg-weight-medium",
-        "--rg-letter-label"
+        "--rg-letter-label",
+        "--rg-color-surface"
       ],
       "cssVars": [
         "--rg-dept-mark-color",
@@ -2851,13 +2852,15 @@
         "--rg-dept-mark-size",
         "--rg-dept-mark-position",
         "--rg-dept-mark-repeat",
-        "--rg-dept-mark-edge"
+        "--rg-dept-mark-edge",
+        "--rg-dept-mark-fill",
+        "--rg-dept-mark-cross"
       ],
       "doc": "components/dept-mark.md",
       "rulesRef": "design-rules.md#4-colore",
       "specimenAnchor": "dept-mark",
       "snippet": "<span class=\"rg-dept-label\"><span class=\"rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet\" aria-hidden=\"true\"></span><span class=\"rg-dept-label__kind\">Reparto</span> Pressatura e soffiatura</span>",
-      "notes": "Nasce dalla prova a schermo della 1.19.0: la fascia rg-phase-panel__band subito sotto le linguette si leggeva come il bordo delle linguette, non come reparto. A schermo la fascia si toglie e il reparto passa nella tessera; su carta rg-dept-band resta. RIDUZIONE, NON SCALA: la trama della banda scalata a 20 px si impasta, ogni reparto ha una riduzione propria nella stessa famiglia di segno. Coppie da tenere d'occhio: pois/scacchiera (numero e disposizione), ricamo/incollature (una croce isolata contro diagonali parallele). Accoppiaggi: scartate due barre piene da 4 (quattro barre col bordo, poi simbolo 'pausa'). --quiet usa currentColor e non neutral-400: a 20 px il grigio 400 (~2,8:1) non regge. La tessera non porta il nome: con il nome accanto (rg-dept-label) e aria-hidden; sola (linguetta) ha role=img + aria-label 'Reparto: <nome>' + title. Sporge 2 px sopra e sotto con margine negativo (in rg-dept-label e rg-phase-switch__title) per non alzare righe da 12/14 px. Variabili --rg-dept-mark-* e non --rg-dept-*: le variabili si ereditano. Non e un badge, non e interattiva, non e la pastiglia della parte (tondo con numero). PROPOSTA 1.21.0: la parola 'Reparto' davanti al nome ovunque (rg-dept-label__kind, maiuscola 12px colore label, spazio vero dopo: 'Reparto Ricamo', 'Reparto da assegnare'). Nel blocco della fase il reparto sta in una riga sua (rg-phase-panel__department), non piu in __kind. SUPERATE le due forme 1.20.0: tessera sola nella linguetta (la linguetta non porta piu il reparto) e rg-dept-label primo elemento di __kind.",
+      "notes": "Nasce dalla prova a schermo della 1.19.0: la fascia rg-phase-panel__band subito sotto le linguette si leggeva come il bordo delle linguette, non come reparto. A schermo la fascia si toglie e il reparto passa nella tessera; su carta rg-dept-band resta. RIDUZIONE, NON SCALA: la trama della banda scalata a 20 px si impasta, ogni reparto ha una riduzione propria nella stessa famiglia di segno. Coppie da tenere d'occhio: pois/scacchiera (numero e disposizione), ricamo/incollature (una croce isolata contro diagonali parallele). Accoppiaggi: scartate due barre piene da 4 (quattro barre col bordo, poi simbolo 'pausa'). --quiet usa currentColor e non neutral-400: a 20 px il grigio 400 (~2,8:1) non regge. La tessera non porta il nome: con il nome accanto (rg-dept-label) e aria-hidden; sola (linguetta) ha role=img + aria-label 'Reparto: <nome>' + title. Sporge 2 px sopra e sotto con margine negativo (in rg-dept-label e rg-phase-switch__title) per non alzare righe da 12/14 px. Variabili --rg-dept-mark-* e non --rg-dept-*: le variabili si ereditano. Non e un badge, non e interattiva, non e la pastiglia della parte (tondo con numero). PROPOSTA 1.21.0: la parola 'Reparto' davanti al nome ovunque (rg-dept-label__kind, maiuscola 12px colore label, spazio vero dopo: 'Reparto Ricamo', 'Reparto da assegnare'). Nel blocco della fase il reparto sta in una riga sua (rg-phase-panel__department), non piu in __kind. SUPERATE le due forme 1.20.0: tessera sola nella linguetta (la linguetta non porta piu il reparto) e rg-dept-label primo elemento di __kind. PROPOSTA 1.21.0, TRAMA TAGLIATA NON GLIFO CENTRATO (giudizio: 'la x del ricamo messa li sembra una x per chiudere. non va bene usata cosi'). La tessera 1.20.0 aveva la forma di rg-icon-button (contorno 1, angoli 2, segno isolato al centro). Ricontrollate contro lo sprite: ricamo = chiudi, accoppiaggi = pausa, pressatura = tabella, strass = dado, stampa = registra/pausa; finissaggio e incollature nessun comando. Ora tutte: nessun contorno (--rg-dept-mark-edge: none), angoli vivi, fondo --rg-color-surface (--rg-dept-mark-fill), motivo ripetuto tagliato dal bordo, sempre piu di una ripetizione. Ricamo: crocette da 5 in tre file sfalsate a passo 8, posizionate una per una (--rg-dept-mark-cross, due strati; il gradiente non si accorcia dentro la tessera); tratto 3/4 del filetto per parte. Scartate per il ricamo: griglia 3x3 intera (fila di chiudi), 2x2 (glifo), punto filza (famiglia di stampa/pressatura), zigzag (fuori famiglia). Stampa: gocce e raggi staccati a passo 10. Pressatura: piastre 6x4 a passo 8. Strass: pois da 4 sfalsati. Accoppiaggi: coppie 2+1+2 a passo 10 da bordo a bordo. Da assegnare: vuota, tratteggiata. Regola per un ottavo reparto: trama tagliata, verificata accanto allo sprite (tavola in vetrina #dept-mark-sprite).",
       "keywords": [
         "reparto",
         "segno del reparto",
@@ -2921,7 +2924,13 @@
         "Reparto Ricamo",
         "parola reparto",
         "etichetta reparto",
-        "riga del reparto"
+        "riga del reparto",
+        "ritaglio",
+        "campione di stoffa",
+        "trama tagliata",
+        "non icona",
+        "non bottone",
+        "crocette"
       ]
     },
     {

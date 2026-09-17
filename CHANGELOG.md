@@ -7,6 +7,74 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta 1.21.0 (ramo `ds/phase-head-reparto`)
+
+**Minor**: due elementi nuovi (`rg-phase-panel__department`, `rg-dept-label__kind`) e una regola
+additiva sulla linguetta (`__title` figlio diretto). Niente di rimosso o rinominato, nessun token. Il
+markup 1.20.0 continua a funzionare con lo stesso aspetto; cambia la forma raccomandata.
+
+### Il reparto in una riga sua, e la linguetta essenziale
+
+Giudizio sulla 1.20.0 a schermo: *«così è tutto attaccato reparto e fase […] basta che non sia così
+attaccata una all'altra. anche le tab sono un po' confusionarie così. troppe info. per il ricamo
+scriviamo Reparto Ricamo. Forse lo metterei ovunque Reparto e quello che è»*.
+
+- **`rg-phase-panel__department`**: la riga del reparto, primo figlio del blocco della fase, prima di
+  `__head`. `rg-dept-label` con tessera `--quiet` e «Reparto …», in tondo a 14 px, chiusa da un
+  filetto neutro **rientrato** (24 px, 16 sotto i 680 px) che non tocca il contorno del blocco.
+  Nessun fondo. La tessera cade sul filo del numero della fase; 16 px fra il filetto e la riga
+  «Fase N di M». Scartate l'etichetta a destra (contende la riga ai gesti) e la fascia bassa grigia
+  (sotto la linguetta bianca torna a leggersi come la sua base).
+- **`rg-dept-label__kind`**: la parola «Reparto» davanti al nome, maiuscola a 12 nel colore
+  d'etichetta, con uno spazio vero dopo. «Reparto Ricamo», «Reparto da assegnare».
+- **Linguetta essenziale**: numero, titolo, conteggio. `__title` diretto nella linguetta (nuova regola:
+  si centra sul numero); ruolo nascosto alla vista in coda al titolo; conteggio come numero nudo in
+  `rg-badge--count` con «da compilare» nascosto (lo stesso segno delle tab di sezione); «completa» non
+  si scrive; «1 errore» resta a parole. Altezza invariata, graffa e dente fermi.
+- **Superati** (restano nel CSS): sulla linguetta `__text`, `__role` visibile, la tessera in `__title`;
+  nel blocco `rg-dept-label` come primo elemento di `__kind`.
+- Documenti: `phase-switch.md` (*Il reparto in una riga sua e la linguetta essenziale*, con markup e
+  migrazione), `dept-mark.md`; manifest; vetrina (gruppo Pressatura + Sabbiatura, tre fasi in
+  fotocopia, fase senza gruppo con reparto da assegnare, Ricamo da solo, tavola del segno del reparto).
+- Verificato in Chrome headless a 1400 e 600 px: geometria, e nomi accessibili dall'albero di
+  accessibilità («3 Sabbiatura e soffiatura finale, collegata 7 da compilare»).
+
+### Le tessere del reparto: trama tagliata, non glifo centrato
+
+Giudizio sulla proposta: *«la x del ricamo messa lì sembra una x per chiudere. non va bene usata
+così»*. La tessera 1.20.0 aveva la forma di `rg-icon-button` (contorno da 1, angoli da 2, un segno solo
+al centro). Ricontrollate tutte e sette contro lo sprite e i comandi comuni. Nessuna classe cambia; il
+markup è lo stesso.
+
+- **Tutte**: niente contorno, angoli vivi, fondo `--rg-color-surface` (nuova variabile
+  `--rg-dept-mark-fill`), motivo ripetuto e tagliato dal bordo. «Da assegnare» resta vuota e tratteggiata.
+- **`--ricamo`** (era «chiudi»): crocette da 5 in tre file sfalsate a passo 8, tagliate dal bordo.
+  Scartate la griglia 3×3 intera, le 2×2, il punto filza e lo zigzag.
+- **`--accoppiaggi`** (era «pausa»): coppie di linee da 2, luce 1, passo 10, da bordo a bordo.
+- **`--pressatura`** (era una tabella): due file di piastre 6×4 a passo 8 tagliate dal bordo, filo in mezzo.
+- **`--strass`** (era un dado): pois da 4 sfalsati a passo 8.
+- **`--stampa`** (era «registra · pausa»): gocce e raggi staccati e alternati a passo 10, due linee sotto.
+- **`--finissaggio`**, **`--incollature`**: figura invariata, senza cornice.
+- Documenti: `dept-mark.md` (*Le sette trame*, tabella prima/si leggeva come/ora). Vetrina: tavola
+  «Accanto alle icone», tessere e comandi dello sprite a 1x e 3x.
+
+### Le tessere disegnate sui pixel
+
+Giudizio sulla trama tagliata: *«meglio, ma non mi sembrano così precisi i loghi, vorrei qualcosa di più
+pulito»*. Cause a 20 px: gradienti CSS fuori dai pixel, elementi tagliati a metà dal bordo, spessori diversi. La
+direzione resta (nessun contorno, trama e non glifo). Classi e markup invariati.
+
+- **Un disegno SVG 20×20 a coordinate intere** per reparto, maschera su `::after`; il colore resta
+  `--rg-dept-mark-color` (categoria o `currentColor`). Variabili: `--rg-dept-mark-color`, `-fill`, `-shape`;
+  tolte `-pattern`, `-size`, `-position`, `-repeat`, `-edge`, `-cross` (mai rilasciate).
+- **Una griglia per tutte**: margine 2 sui quattro lati, campo 16×16, tratto 2, elementi interi e ripetuti.
+- Ricamo: quattro croci da 6. Stampa: goccia, raggio, goccia; due linee. Pressatura: tre piastre sopra e
+  tre sotto, filo. Strass: otto pois sfalsati. Finissaggio: scacchiera 4×4. Incollature: tre fasce
+  diagonali. Accoppiaggi: due coppie di linee. Da assegnare: campo tratteggiato.
+- Senza `crispEdges`: a DPR 1 e 2 identico e netto; a 1,25 e 1,5 un filo di sfumatura uniforme, mentre
+  `crispEdges` deformava tondi e croci.
+- Verificato in Chrome headless a DPR 1, 1,25, 1,5 e 2, con zoom nearest-neighbor dei pixel reali.
+
 ## 1.20.0 — 2026-09-16
 
 **Minor**: una classe nuova con le sue varianti (`rg-dept-mark`), un elemento in linea

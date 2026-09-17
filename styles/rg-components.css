@@ -602,6 +602,15 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-phase-switch__title { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); overflow-wrap: anywhere; }
 /* Un conteggio, e solo quello: il reparto sta nella testa del pannello, non sulla linguetta. */
 .rg-phase-switch__aside { flex: none; align-self: center; margin-left: var(--rg-space-2); }
+/* LINGUETTA ESSENZIALE (proposta 1.21.0) — giudizio sulla 1.20.0: «anche le tab sono un po'
+   confusionarie cosi, troppe info». Sulla linguetta restano NUMERO, TITOLO e un CONTEGGIO: il ruolo
+   lo dice gia il dente della graffa (principale) e lo scrive la testa del pannello («Principale · con
+   la 3»); il reparto sta nella riga __department del pannello, e principale e collegate sono spesso
+   dello stesso reparto; il conteggio e un numero nudo in rg-badge--count, lo stesso segno delle tab
+   di sezione (la somma delle loro cifre). Il titolo e figlio diretto dell'item, senza __text: si
+   centra sul numero. Altezza invariata (12 + 32 + 12), dente e graffa non si spostano.
+   SUPERATI sulla linguetta, restano nel CSS: __text, __role visibile, la tessera in __title. */
+.rg-phase-switch__item > .rg-phase-switch__title { flex: 1 1 auto; min-width: 0; align-self: center; }
 /* Sotto la soglia mobile le linguette scorrono in orizzontale invece di impilarsi: una linguetta
    impilata non si attacca piu al pannello, e la metafora si rompe. */
 @media (max-width: 680px) { .rg-phase-switch { justify-items: stretch; } .rg-phase-switch__tabs { overflow-x: auto; } .rg-phase-switch__item { flex: 0 0 auto; max-width: calc(24ch + var(--rg-space-16)); } }
@@ -679,6 +688,18 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    primo figlio, col suo padding (16 sopra, 24 ai lati), com'era fino alla 1.18.0. La tessera sporge
    di 2 px sopra e sotto e non alza la riga: il numero della fase resta sul filo del titolo. */
 .rg-phase-panel__kind > .rg-dept-label { color: var(--rg-color-text-primary); }
+/* IL REPARTO IN UNA RIGA SUA (proposta 1.21.0) — giudizio sulla 1.20.0: «cosi e tutto attaccato
+   reparto e fase […] basta che non sia cosi attaccata una all'altra». In __kind il reparto era il
+   primo di quattro pezzi maiuscoli divisi da un punto: si leggeva come parte della fase. Ora il
+   reparto e una RIGA SUA, primo figlio del blocco, prima di __head:
+   «[tessera] REPARTO Pressatura e soffiatura», chiusa da un filetto neutro RIENTRATO (non tocca il
+   contorno del blocco: e una divisione interna, non il bordo delle linguette, dove la fascia della
+   1.19 sbagliava). Tre differenze dalla riga della fase: riga e filetto propri, il nome in tondo a 14
+   (la riga della fase e maiuscola a 12), la parola «Reparto» scritta davanti (rg-dept-label__kind).
+   Nessun fondo, nessuna trama: sotto la linguetta scelta, bianca, un fondo grigio si leggerebbe di
+   nuovo come la sua base. Respiro: 12 sopra; 12 + filetto + 16 (padding di __head) sotto. La tessera
+   prende il nero del testo. Da questa proposta __kind non porta piu il reparto. */
+.rg-phase-panel__department { margin: 0 var(--rg-space-6); padding: var(--rg-space-3) 0; border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); overflow-wrap: anywhere; }
 /* SUPERATO dalla 1.19.0 nella testa del blocco: il timbro del reparto e la fascia __band. */
 .rg-phase-panel__dept { flex: 0 1 auto; width: calc(24ch + var(--rg-space-12)); max-width: 100%; }
 .rg-phase-panel__body { padding: var(--rg-space-6); }
@@ -726,6 +747,7 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
   .rg-phase-panel__heading ~ .rg-phase-panel__meta { padding-inline-start: 0; }
   .rg-phase-panel__summary { padding-inline-start: 0; }
   .rg-dept-band.rg-phase-panel__band { padding-inline: var(--rg-space-4); }
+  .rg-phase-panel__department { margin-inline: var(--rg-space-4); }
   .rg-phase-panel__gestures { justify-content: flex-start; margin-inline-start: 0; }
 }
 
@@ -1088,18 +1110,31 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    croci a passo 24 non ci stanno nemmeno una volta, la fila di piastre diventa una riga grigia).
    Ogni reparto ha quindi la sua RIDUZIONE: il segno della banda preso una volta, o nel numero minimo
    che ne dice ancora la famiglia.
-     ricamo       una croce da 12                 (la fila di croci -> una croce)
-     stampa       goccia e raggio, sotto due linee (i due registri, una goccia e un raggio soli)
-     pressatura   due piastre, il filo, due piastre (piastre 6x4 in colonna, filo da bordo a bordo)
-     strass       quattro pois da 6                (2x2: meno pois, piu grandi)
-     finissaggio  scacchiera 3x3 da 6              (quadretti piu grandi: nove)
-     incollature  diagonali spesse da 4            (la stessa diagonale, passo dimezzato)
-     accoppiaggi  una coppia di linee 2x12, luce 2 (la coppia, una volta sola, staccata dal bordo)
-   Da tenere d'occhio a questa misura: pois e scacchiera. Si separano per NUMERO e FORMA (quattro
-   tondi staccati, nove quadretti sfalsati), mai per tono.
-   Tessera: bordo 1 px, fondo bianco, angoli da 2; la figura sta nell'area interna da 18
-   (background-clip padding-box). SENZA VARIANTE e «reparto da assegnare»: tessera vuota a bordo
-   tratteggiato.
+   DISEGNATE SUI PIXEL (proposta 1.21.0, terza stesura). Giudizio sulla trama tagliata: «meglio, ma non
+   mi sembrano cosi precisi i loghi, vorrei qualcosa di piu pulito». Le cause: gradienti CSS che non
+   cadono sui pixel (bordi sfocati), crocette e pois tagliati a meta dal bordo, spessori diversi da un
+   reparto all'altro. La direzione resta (nessun contorno, niente forma da bottone, trama e non glifo),
+   l'esecuzione cambia:
+   - ogni tessera e un DISEGNO SVG 20x20 a coordinate intere, usato come
+     MASCHERA su ::after: il colore resta --rg-dept-mark-color (categoria, o currentColor con --quiet);
+   - UNA GRIGLIA PER TUTTE: margine 2 sui quattro lati, campo 16x16, tratto 2, elementi INTERI (nessuno
+     tagliato dal bordo), sempre ripetuti (almeno 2x2 o tre file); fondo --rg-color-surface;
+   - i tondi (gocce, pois) sono quadrati 4x4 senza i pixel d'angolo: tondi a questa misura, e netti.
+   Non stanno nello sprite delle icone: sono segni di reparto, non comandi.
+   Le coordinate SVG sono il disegno (come i tracciati dello sprite), non misure di layout: eccezione
+   dichiarata, regole §12. A devicePixelRatio 1 e 2 ogni bordo cade su un pixel: netto senza bisogno di
+   crispEdges. A 1,25 e 1,5 un bordo cade fra due pixel: resta un filo di sfumatura, uguale ovunque, e la
+   forma tiene. Con crispEdges a quelle scale i tondi diventavano trifogli e le croci si storcevano: scartato.
+     ricamo       quattro croci da 6, 2x2                       (punto croce)
+     stampa       goccia, raggio, goccia; due linee             (i due registri)
+     pressatura   tre piastre sopra e tre sotto, il filo        (le piastre col materiale)
+     strass       otto pois da 4 sfalsati                        (tessuto a pois)
+     finissaggio  scacchiera 4x4                                 (la bandiera a scacchi)
+     incollature  fasce diagonali a gradini di 2                 (le strisciate)
+     accoppiaggi  due coppie di linee                            (due strati uniti)
+   SENZA VARIANTE e «reparto da assegnare»: il campo tratteggiato, nessun fondo.
+   Le prove precedenti, scartate: una croce sola in un quadratino bordato («chiudi», 1.20.0); la trama
+   tagliata dal bordo con gradienti CSS (imprecisa a 20 px).
    --quiet (lo schermo): la figura prende il colore del TESTO intorno (currentColor), non il grigio
    400 della banda. A 20 px quel grigio (~2,8:1) non regge un segno fine; il colore del testo regge
    quanto il testo che la tessera accompagna, e sulla linguetta scelta diventa nero con lei.
@@ -1107,24 +1142,24 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    aria-hidden), o la tessera ha role="img" e aria-label. Mai sola e muta.
    Le proprieta sono --rg-dept-mark-* e non --rg-dept-*: le variabili si ereditano, e una tessera
    dentro una rg-dept-band prenderebbe la trama della banda. */
-.rg-dept-mark { display: inline-block; flex: none; box-sizing: border-box; width: calc(var(--rg-space-4) + var(--rg-space-1)); height: calc(var(--rg-space-4) + var(--rg-space-1)); vertical-align: middle; background-color: var(--rg-color-surface-raised); background-image: var(--rg-dept-mark-pattern, none); background-size: var(--rg-dept-mark-size, auto); background-position: var(--rg-dept-mark-position, center); background-repeat: var(--rg-dept-mark-repeat, no-repeat); background-clip: padding-box; border: var(--rg-border-hairline) var(--rg-dept-mark-edge, dashed) var(--rg-dept-mark-color, currentColor); border-radius: var(--rg-radius-sm); }
-/* RICAMO — una croce da 12, tratto 2, al centro. */
-.rg-dept-mark--ricamo { --rg-dept-mark-color: var(--rg-color-category-1); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: linear-gradient(45deg, transparent calc(50% - var(--rg-border-hairline)), var(--rg-dept-mark-color) calc(50% - var(--rg-border-hairline)), var(--rg-dept-mark-color) calc(50% + var(--rg-border-hairline)), transparent calc(50% + var(--rg-border-hairline))), linear-gradient(-45deg, transparent calc(50% - var(--rg-border-hairline)), var(--rg-dept-mark-color) calc(50% - var(--rg-border-hairline)), var(--rg-dept-mark-color) calc(50% + var(--rg-border-hairline)), transparent calc(50% + var(--rg-border-hairline))); --rg-dept-mark-size: var(--rg-space-3) var(--rg-space-3); --rg-dept-mark-position: center; --rg-dept-mark-repeat: no-repeat; }
-/* STAMPA — in alto una goccia da 8 e un raggio 2x8, in basso due linee da 2: figura 16x16, a 1 px dal bordo. */
-.rg-dept-mark--stampa { --rg-dept-mark-color: var(--rg-color-category-2); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: radial-gradient(circle, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) var(--rg-radius-md), transparent var(--rg-radius-md)), linear-gradient(var(--rg-dept-mark-color), var(--rg-dept-mark-color)), linear-gradient(var(--rg-dept-mark-color), var(--rg-dept-mark-color)), linear-gradient(var(--rg-dept-mark-color), var(--rg-dept-mark-color)); --rg-dept-mark-size: var(--rg-space-2) var(--rg-space-2), var(--rg-border-strong) var(--rg-space-2), var(--rg-space-4) var(--rg-border-strong), var(--rg-space-4) var(--rg-border-strong); --rg-dept-mark-position: var(--rg-border-hairline) var(--rg-border-hairline), calc(var(--rg-border-hairline) + var(--rg-space-3)) var(--rg-border-hairline), var(--rg-border-hairline) calc(var(--rg-border-hairline) + var(--rg-space-2) + var(--rg-border-strong)), var(--rg-border-hairline) calc(var(--rg-border-hairline) + var(--rg-space-3) + var(--rg-border-strong)); --rg-dept-mark-repeat: no-repeat; }
-/* PRESSATURA — due piastre 6x4 sopra e due sotto, allineate in colonna, e il filo da 2 da bordo a bordo. */
-.rg-dept-mark--pressatura { --rg-dept-mark-color: var(--rg-color-category-3); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: repeating-linear-gradient(90deg, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) calc(var(--rg-space-1) + var(--rg-border-strong)), transparent calc(var(--rg-space-1) + var(--rg-border-strong)), transparent var(--rg-space-2)), repeating-linear-gradient(90deg, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) calc(var(--rg-space-1) + var(--rg-border-strong)), transparent calc(var(--rg-space-1) + var(--rg-border-strong)), transparent var(--rg-space-2)), linear-gradient(var(--rg-dept-mark-color), var(--rg-dept-mark-color)); --rg-dept-mark-size: calc(var(--rg-space-3) + var(--rg-border-strong)) var(--rg-space-1), calc(var(--rg-space-3) + var(--rg-border-strong)) var(--rg-space-1), 100% var(--rg-border-strong); --rg-dept-mark-position: center calc(50% - var(--rg-space-1) - var(--rg-border-hairline)), center calc(50% + var(--rg-space-1) + var(--rg-border-hairline)), center; --rg-dept-mark-repeat: no-repeat; }
-/* STRASS — quattro pois da 6, uno per quadrante (repeat: space distribuisce due tessere da 8 per lato). */
-.rg-dept-mark--strass { --rg-dept-mark-color: var(--rg-color-category-4); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: radial-gradient(circle, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) calc(var(--rg-radius-md) - var(--rg-border-hairline)), transparent calc(var(--rg-radius-md) - var(--rg-border-hairline))); --rg-dept-mark-size: var(--rg-space-2) var(--rg-space-2); --rg-dept-mark-position: 0 0; --rg-dept-mark-repeat: space; }
-/* FINISSAGGIO — scacchiera 3x3 da 6: la ricetta della banda, tessera da 12. */
-.rg-dept-mark--finissaggio { --rg-dept-mark-color: var(--rg-color-category-5); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: linear-gradient(45deg, var(--rg-dept-mark-color) 25%, transparent 25%, transparent 75%, var(--rg-dept-mark-color) 75%), linear-gradient(45deg, var(--rg-dept-mark-color) 25%, transparent 25%, transparent 75%, var(--rg-dept-mark-color) 75%); --rg-dept-mark-size: var(--rg-space-3) var(--rg-space-3); --rg-dept-mark-position: 0 0, calc(var(--rg-space-1) + var(--rg-border-strong)) calc(var(--rg-space-1) + var(--rg-border-strong)); --rg-dept-mark-repeat: repeat; }
-/* INCOLLATURE — diagonali spesse da 4, passo 8. */
-.rg-dept-mark--incollature { --rg-dept-mark-color: var(--rg-color-category-7); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: repeating-linear-gradient(45deg, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) var(--rg-space-1), transparent var(--rg-space-1), transparent var(--rg-space-2)); --rg-dept-mark-size: auto; --rg-dept-mark-position: 0 0; --rg-dept-mark-repeat: no-repeat; }
-/* ACCOPPIAGGI — una coppia di linee 2x12, luce 2, al centro. Non corrono da bordo a bordo: alte quanto la
-   tessera si saldavano al bordo e si leggevano quattro barre. Non barre da 4: due barre piene
-   staccate sono il simbolo «pausa». Due linee sottili e vicine sono i due strati uniti. */
-.rg-dept-mark--accoppiaggi { --rg-dept-mark-color: var(--rg-color-category-6); --rg-dept-mark-edge: solid; --rg-dept-mark-pattern: linear-gradient(90deg, var(--rg-dept-mark-color) 0, var(--rg-dept-mark-color) var(--rg-border-strong), transparent var(--rg-border-strong), transparent var(--rg-space-1), var(--rg-dept-mark-color) var(--rg-space-1), var(--rg-dept-mark-color) calc(var(--rg-space-1) + var(--rg-border-strong))); --rg-dept-mark-size: calc(var(--rg-space-1) + var(--rg-border-strong)) var(--rg-space-3); --rg-dept-mark-position: center; --rg-dept-mark-repeat: no-repeat; }
-/* SOBRIA — il colore del testo intorno. Va DOPO le sette: stesso peso, vince l'ordine. */
+.rg-dept-mark { position: relative; display: inline-block; flex: none; box-sizing: border-box; width: calc(var(--rg-space-4) + var(--rg-space-1)); height: calc(var(--rg-space-4) + var(--rg-space-1)); vertical-align: middle; background-color: var(--rg-dept-mark-fill, transparent); }
+.rg-dept-mark::after { content: ""; position: absolute; inset: 0; background-color: var(--rg-dept-mark-color, currentColor); -webkit-mask: var(--rg-dept-mark-shape) 0 0 / 100% 100% no-repeat; mask: var(--rg-dept-mark-shape) 0 0 / 100% 100% no-repeat; }
+/* DA ASSEGNARE (nessuna variante) — il campo 16x16 tratteggiato: tratti da 4 e da 2, luce 2, nessun fondo. */
+.rg-dept-mark { --rg-dept-mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Cpath d='M2 2h4v2h-4zM8 2h4v2h-4zM14 2h4v2h-4zM2 8h2v4h-2zM16 8h2v4h-2zM2 16h4v2h-4zM8 16h4v2h-4zM14 16h4v2h-4z'/%3E%3C/svg%3E"); }
+/* RICAMO — punto croce: quattro croci da 6 (cinque blocchi 2x2), 2x2, luce 4. */
+.rg-dept-mark--ricamo { --rg-dept-mark-color: var(--rg-color-category-1); --rg-dept-mark-fill: var(--rg-color-surface); --rg-dept-mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Cpath d='M2 2h2v2h-2zM6 2h2v2h-2zM12 2h2v2h-2zM16 2h2v2h-2zM4 4h2v2h-2zM14 4h2v2h-2zM2 6h2v2h-2zM6 6h2v2h-2zM12 6h2v2h-2zM16 6h2v2h-2zM2 12h2v2h-2zM6 12h2v2h-2zM12 12h2v2h-2zM16 12h2v2h-2zM4 14h2v2h-2zM14 14h2v2h-2zM2 16h2v2h-2zM6 16h2v2h-2zM12 16h2v2h-2zM16 16h2v2h-2z'/%3E%3C/svg%3E"); }
+/* STAMPA — i due registri: goccia da 4, raggio 2x6, goccia da 4; sotto due linee da 2. */
+.rg-dept-mark--stampa { --rg-dept-mark-color: var(--rg-color-category-2); --rg-dept-mark-fill: var(--rg-color-surface); --rg-dept-mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Cpath d='M3 3h2v1h-2zM15 3h2v1h-2zM2 4h4v2h-4zM14 4h4v2h-4zM3 6h2v1h-2zM15 6h2v1h-2zM9 2h2v6h-2zM2 12h16v2h-16zM2 16h16v2h-16z'/%3E%3C/svg%3E"); }
+/* PRESSATURA — le piastre col filo: tre piastre 4x4 sopra e tre sotto, luce 2, filo da 2 in mezzo. */
+.rg-dept-mark--pressatura { --rg-dept-mark-color: var(--rg-color-category-3); --rg-dept-mark-fill: var(--rg-color-surface); --rg-dept-mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Cpath d='M2 2h4v4h-4zM8 2h4v4h-4zM14 2h4v4h-4zM2 9h16v2h-16zM2 14h4v4h-4zM8 14h4v4h-4zM14 14h4v4h-4z'/%3E%3C/svg%3E"); }
+/* STRASS — pois: otto tondi da 4 sfalsati (3, 2, 3), luce 2. */
+.rg-dept-mark--strass { --rg-dept-mark-color: var(--rg-color-category-4); --rg-dept-mark-fill: var(--rg-color-surface); --rg-dept-mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Cpath d='M3 2h2v1h-2zM9 2h2v1h-2zM15 2h2v1h-2zM2 3h4v2h-4zM8 3h4v2h-4zM14 3h4v2h-4zM3 5h2v1h-2zM9 5h2v1h-2zM15 5h2v1h-2zM6 8h2v1h-2zM12 8h2v1h-2zM5 9h4v2h-4zM11 9h4v2h-4zM6 11h2v1h-2zM12 11h2v1h-2zM3 14h2v1h-2zM9 14h2v1h-2zM15 14h2v1h-2zM2 15h4v2h-4zM8 15h4v2h-4zM14 15h4v2h-4zM3 17h2v1h-2zM9 17h2v1h-2zM15 17h2v1h-2z'/%3E%3C/svg%3E"); }
+/* FINISSAGGIO — scacchiera 4x4 da 4. */
+.rg-dept-mark--finissaggio { --rg-dept-mark-color: var(--rg-color-category-5); --rg-dept-mark-fill: var(--rg-color-surface); --rg-dept-mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Cpath d='M2 2h4v4h-4zM10 2h4v4h-4zM6 6h4v4h-4zM14 6h4v4h-4zM2 10h4v4h-4zM10 10h4v4h-4zM6 14h4v4h-4zM14 14h4v4h-4z'/%3E%3C/svg%3E"); }
+/* INCOLLATURE — diagonali: fasce da 4 a gradini di 2, passo 8. */
+.rg-dept-mark--incollature { --rg-dept-mark-color: var(--rg-color-category-7); --rg-dept-mark-fill: var(--rg-color-surface); --rg-dept-mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Cpath d='M2 2h2v2h-2zM8 2h4v2h-4zM2 4h4v2h-4zM10 4h4v2h-4zM4 6h4v2h-4zM12 6h4v2h-4zM6 8h4v2h-4zM14 8h4v2h-4zM2 10h2v2h-2zM8 10h4v2h-4zM16 10h2v2h-2zM2 12h4v2h-4zM10 12h4v2h-4zM4 14h4v2h-4zM12 14h4v2h-4zM6 16h4v2h-4zM14 16h4v2h-4z'/%3E%3C/svg%3E"); }
+/* ACCOPPIAGGI — due coppie di linee da 2, luce 2, fra le coppie 4. */
+.rg-dept-mark--accoppiaggi { --rg-dept-mark-color: var(--rg-color-category-6); --rg-dept-mark-fill: var(--rg-color-surface); --rg-dept-mark-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' width='20' height='20'%3E%3Cpath d='M2 2h2v16h-2zM6 2h2v16h-2zM12 2h2v16h-2zM16 2h2v16h-2z'/%3E%3C/svg%3E"); }
 .rg-dept-mark--quiet { --rg-dept-mark-color: currentColor; }
 /* Tessera + nome del reparto in linea: il nome e testo, la tessera aria-hidden. INLINE e non
    inline-flex: una scatola flex prende la linea di base dalla tessera (che non ha testo, quindi dal
@@ -1133,6 +1168,10 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    alzare la riga: le righe da 12 e 14 px del DS sono alte ~17. */
 .rg-dept-label { display: inline; }
 .rg-dept-label > .rg-dept-mark, .rg-phase-switch__title > .rg-dept-mark { margin-block: calc(-1 * var(--rg-border-strong)); margin-inline-end: var(--rg-space-2); vertical-align: middle; }
+/* La parola «Reparto» davanti al nome (proposta 1.21.0): «forse lo metterei ovunque Reparto e quello
+   che e». Etichetta identitaria come le altre del DS (maiuscola a 12, colore label); il nome resta nel
+   tono della riga. Nel markup c'e uno spazio vero dopo la parola: si copia e si legge «Reparto Ricamo». */
+.rg-dept-label__kind { margin-inline-end: var(--rg-space-1); color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 
 /* Fill field — il campo che si compila A PENNA (v1.14.0). E il caso centrale della scheda di
    lavorazione: il foglio esce dalla stampante con dei buchi APPOSTA, e il buco deve invitare a

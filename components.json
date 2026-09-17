@@ -2221,7 +2221,8 @@
             "rg-phase-panel__gestures",
             "rg-phase-panel__summary",
             "rg-phase-panel__document",
-            "rg-phase-panel__band"
+            "rg-phase-panel__band",
+            "rg-phase-panel__department"
           ]
         },
         "related": [
@@ -2244,12 +2245,16 @@
           "rg-file-card--bar",
           "rg-document",
           "rg-dept-mark--quiet",
-          "rg-dept-label"
+          "rg-dept-label",
+          "rg-dept-label__kind"
         ]
       },
       "variants": [
         "gruppo (linguette + pannello)",
-        "fase singola (solo pannello)"
+        "fase singola (solo pannello)",
+        "reparto in riga sua (rg-phase-panel__department, proposta 1.21.0)",
+        "linguetta essenziale: numero, titolo, conteggio (proposta 1.21.0)",
+        "reparto da assegnare"
       ],
       "states": [
         "default",
@@ -2283,13 +2288,17 @@
         "--rg-space-3",
         "--rg-space-4",
         "--rg-space-6",
-        "--rg-space-8"
+        "--rg-space-8",
+        "--rg-color-text-primary",
+        "--rg-font-size-sm",
+        "--rg-line-height-technical",
+        "--rg-space-1"
       ],
       "doc": "components/phase-switch.md",
       "rulesRef": "design-rules.md#11-accessibilita-e-comportamento",
       "specimenAnchor": "phase-switch",
-      "snippet": "<header class=\"rg-page-header rg-page-header--compact rg-part-edge rg-part--1\"><nav class=\"rg-breadcrumb\" aria-label=\"Percorso\">...</nav><p class=\"rg-page-header__context\">Parte <span class=\"rg-part-mark rg-part-mark--small\" aria-hidden=\"true\"></span><strong>1296 DAV</strong> &#183; <strong>BOOK TOTE</strong></p></header>\n<section class=\"rg-phase-panel\" aria-labelledby=\"titolo-fase\"><header class=\"rg-phase-panel__head\"><div class=\"rg-phase-panel__heading\"><span class=\"rg-phase-panel__num\" aria-hidden=\"true\">1</span><div class=\"rg-phase-panel__name\"><p class=\"rg-phase-panel__kind\"><span>Fase 1 di 1</span></p><h1 class=\"rg-phase-panel__title\" id=\"titolo-fase\"><span class=\"rg-u-visually-hidden\">Fase 1: </span>Ricamo normale</h1></div></div><div class=\"rg-phase-panel__status\">...</div><p class=\"rg-phase-panel__meta\"><span>12 materiali</span><span>48 stop</span><span>9 fili</span><span>dati dal PDF caricato su questa fase</span></p></header><div class=\"rg-phase-panel__body\"><div class=\"rg-tabs rg-phase-panel__sections\" role=\"tablist\" aria-label=\"Sezioni della fase 1: Ricamo normale\">...</div><div class=\"rg-tabpanel is-active\" role=\"tabpanel\"><div class=\"rg-phase-panel__intro\"><p>...</p><div class=\"rg-phase-panel__actions\">...</div></div>...</div></div><footer class=\"rg-phase-panel__foot\"><p class=\"rg-phase-panel__scope\">Azioni sulla fase 1</p><button class=\"rg-button rg-button--ghost rg-button--danger\" type=\"submit\">Elimina fase</button></footer></section>",
-      "notes": "RIVISTO prima del rilascio: la prima forma (striscia di segmenti rigati + testa 'Stai compilando', rg-phase-head) e stata scartata dopo la prova - 'due cose strane che non si capisce se sono fasi o altro' e 'lo sfondo grigio e uguale al colore degli hover'. rg-phase-head non esiste piu. Forma attuale: LINGUETTE attaccate al pannello (la scelta e bianca a bordo nero e si fonde col pannello; le altre solo contorno sul fondo di pagina) e sopra la GRAFFA dell'elenco ruotata, con didascalia sul filo e dente sulla principale. Il FONDO e il segno esclusivo della scelta: l'hover cambia bordo e sottolinea, mai il fondo. Il tablist e __tabs, etichettato dalla didascalia (aria-labelledby): la didascalia non sta dentro il tablist. Il titolo della fase sta sulla linguetta; nel pannello un h2 rg-u-visually-hidden. rg-phase-panel vale anche per la fase SENZA gruppo (senza linguette): una forma sola per la pagina di fase. Nel pannello NIENTE rg-section-card (sollevata dentro sollevata, e titolo che ripete la tab): sottotitolo di sezione in rg-small, nota costo nella sezione che ha campi marcati, menu delle operazioni come rg-disclosure--boxed in coda alle righe. Conteggio 'da compilare' sulla linguetta (fase) e sulla tab (sezione), non altrove. Gesti sulla fase nel piede del pannello con __scope 'Azioni sulla fase N'; salvataggio fuori dai pannelli. Timbro di reparto con rg-dept-band--quiet (mai il colore pieno a schermo). --rg-phase-switch-ground se la striscia non posa sul fondo di pagina. Mobile: linguette in scorrimento orizzontale. Status beta. DA 1.17.0 TESTA TITOLATA (feedback: 'ricamo normale va sotto e va fatto capire che e una fase e deve avere qualche cosa che mette insieme il titolo con quello che c'e sotto; il numero di fase e scomparso'). Testata della pagina: rg-page-header--compact rg-part-edge rg-part--N (percorso + 'Parte [pastiglia] nome · prodotto'), senza titolo visibile e senza azioni sulla fase. Testa del blocco: __heading > __num (numero invertito, stesso segno di rg-step__num aperto e della linguetta scelta, stesso numero = posizione nella sequenza della parte, aria-hidden) + __name > __kind ('Fase 2 di 4' · relazione, sempre anche con una fase sola) + __title (H1 se la pagina mostra una fase; H2 in un gruppo, con un H1 nascosto nella testata compressa; prefisso nascosto 'Fase N: '). __status a destra; __meta sotto a riga intera = riepilogo (materiali · stop · fili · origine dei dati), testo non badge. Tab di sezione: rg-tabs rg-phase-panel__sections come PRIMO figlio di __body, attaccate sotto la testa da bordo a bordo (la testa perde il filetto). Il contorno nero chiude titolo, tab, contenuto e piede: e il segno che li tiene insieme. 'Elimina fase' sempre nel piede, anche per il ricamo. NEL GRUPPO lo stesso blocco con le linguette sopra: il titolo sta sulla linguetta (comando) e nella testa (titolo) di proposito; rivede la regola 1.16 'il titolo non si ripete'. NESSUNA rg-section-card nel blocco: la sezione comincia con __intro (p + __actions, max una primaria), i blocchi interni sono __subsection (filetto fra due consecutive) con rg-section-header--sub e h2.rg-h3; rg-file-card, rg-table, rg-alert, rg-disclosure--boxed ammessi. rg-part-edge MAI sul blocco: e della parte, sta sulla testata. Scartata l'alternativa 'linguetta unica anche per la fase da sola': una linguetta sola si legge come scelta senza alternative e il titolo a 14px non regge da titolo di pagina. QUARTA TAPPA 1.17.0: le sezioni che lavorano sullo stesso documento mostrano in cima la BARRA DELLA SCHEDA (rg-file-card--bar), identica in ogni sezione e in entrambi gli stati; sta SOPRA __intro; una sola primaria ('Compila scheda' col PDF, 'Carica la scheda' senza); le sezioni che non riguardano il documento non la mostrano; 'Torna alla prima lettura' sta nel piede del blocco con gli altri gesti sulla fase; la rg-file-card piena sparisce dalla sezione Scheda macchina. Sopra il blocco, la testata compressa rivista (rg-page-header--compact con __identity e i codici dell'articolo). DA 1.18.0 GESTI E DOCUMENTO IN TESTA (giudizio: 'l'hai portata in fondo con elimina, ma non va bene […] sposta su le funzioni in fondo, rimetti elimina fase magari non con quelli ma in cima […] in sequenza stop rimetti la possibilita di scrivere con il compilatore'). Testa del blocco in quattro zone: __heading; __gestures in alto a destra (Torna alla prima lettura, Scollega nei gruppi, Elimina fase: icona + testo, conferma, Elimina ultima e ghost danger); __summary (__meta a sinistra, __status a destra); __document (rg-document, una volta sola, sopra le tab). 'Torna alla prima lettura' sta coi gesti sulla fase e non col documento: non tocca il PDF, cambia i dati della fase; rischio scritto nel suggerimento (aria-describedby) e nella conferma. Il compilatore e la PRIMARIA dell'intro della sezione Sequenza stop: 'Apri il compilatore' (icona modifica, suggerimento 'Compila la scheda stop per stop, a schermo intero'), con 'Parti collegate' secondaria accanto. __foot e __scope SUPERATI (restano nel CSS). Stessa forma per ricamo, fase generica e gruppi. DA 1.19.0 FASCIA DEL REPARTO E ELIMINA A ICONA (richiesta: 'questa componente tutta lunga da destra a sinistra in testa a questa scheda, sopra proprio il tipo di fase e di eliminare […] con il pattern che ha una altezza e la label centrata alto basso e allineata a sinistra, tutto con lo stesso padding. Eliminare usa icona come in dash del prodotto'). rg-phase-panel__band sulla rg-dept-band --quiet: PRIMO figlio del blocco, da bordo a bordo, dentro il contorno arrotondato (angoli alti come il blocco; sotto una linguetta del gruppo l'angolo alto sinistro resta vivo), altezza fissa 48px con il filetto, etichetta centrata in verticale e allineata a sinistra con il padding orizzontale della testa (24px, 16 sotto 680px): cade sul filo del numero. Sempre --quiet a schermo (convive con badge di stato, category-3/4/5 = danger/warning/success). Reparto non assegnato: fascia senza variante, 'Reparto da assegnare'. Ogni blocco di un gruppo ha la sua fascia. 'Elimina fase' a SOLA ICONA: rg-icon-button--full --danger in rg-tooltip--below --end, suggerimento 'Elimina la fase N', conferma, in un rg-action-group suo dopo il filetto; 'Torna alla prima lettura' e 'Scollega' restano icona + testo (nessun segno universale, conseguenze non ovvie). rg-phase-panel__dept superato. DA 1.20.0 IL REPARTO SENZA FASCIA (proposta): a schermo la fascia __band sotto le linguette si leggeva come il bordo delle linguette. Il reparto va nella tessera rg-dept-mark--quiet davanti al titolo della linguetta (dentro __title, role=img + aria-label 'Reparto: <nome>') e in rg-dept-label come PRIMO elemento di __kind. Il blocco senza __band non ha modificatore: __head torna primo figlio col suo padding (16 sopra, 24 ai lati). Su carta rg-dept-band resta.",
+      "snippet": "<div class=\"rg-phase-switch\"><p class=\"rg-phase-switch__caption\" id=\"fasi-gruppo\">Fasi del gruppo · si salvano insieme</p><div class=\"rg-phase-switch__tabs\" role=\"tablist\" aria-labelledby=\"fasi-gruppo\">\n<button class=\"rg-phase-switch__item rg-phase-switch__item--principal\" type=\"button\" role=\"tab\" id=\"tab-fase-2\" aria-controls=\"fase-2\" aria-selected=\"true\" tabindex=\"0\"><span class=\"rg-phase-switch__num\">2</span><span class=\"rg-phase-switch__title\">Pressatura<span class=\"rg-u-visually-hidden\">, principale</span></span><span class=\"rg-phase-switch__aside\"><span class=\"rg-badge rg-badge--count\">6<span class=\"rg-u-visually-hidden\"> da compilare</span></span></span></button>\n<button class=\"rg-phase-switch__item\" type=\"button\" role=\"tab\" id=\"tab-fase-3\" aria-controls=\"fase-3\" aria-selected=\"false\" tabindex=\"-1\"><span class=\"rg-phase-switch__num\">3</span><span class=\"rg-phase-switch__title\">Sabbiatura<span class=\"rg-u-visually-hidden\">, collegata</span></span><span class=\"rg-phase-switch__aside\"><span class=\"rg-badge rg-badge--count\">7<span class=\"rg-u-visually-hidden\"> da compilare</span></span></span></button>\n</div></div>\n<section class=\"rg-phase-panel rg-tabpanel is-active\" role=\"tabpanel\" id=\"fase-2\" aria-labelledby=\"tab-fase-2\"><p class=\"rg-phase-panel__department\"><span class=\"rg-dept-label\"><span class=\"rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet\" aria-hidden=\"true\"></span><span class=\"rg-dept-label__kind\">Reparto</span> Pressatura e soffiatura</span></p><header class=\"rg-phase-panel__head\"><div class=\"rg-phase-panel__heading\"><span class=\"rg-phase-panel__num\" aria-hidden=\"true\">2</span><div class=\"rg-phase-panel__name\"><p class=\"rg-phase-panel__kind\"><span>Fase 2 di 4</span><span>rimozione garze</span><span>Principale · con la 3</span></p><h2 class=\"rg-phase-panel__title\"><span class=\"rg-u-visually-hidden\">Fase 2: </span>Pressatura</h2></div></div><div class=\"rg-phase-panel__gestures\" role=\"group\" aria-label=\"Azioni sulla fase 2\">...</div></header><div class=\"rg-phase-panel__body\"><div class=\"rg-tabs rg-phase-panel__sections\" role=\"tablist\" aria-label=\"Sezioni della fase 2: Pressatura\">...</div>...</div></section>",
+      "notes": "RIVISTO prima del rilascio: la prima forma (striscia di segmenti rigati + testa 'Stai compilando', rg-phase-head) e stata scartata dopo la prova - 'due cose strane che non si capisce se sono fasi o altro' e 'lo sfondo grigio e uguale al colore degli hover'. rg-phase-head non esiste piu. Forma attuale: LINGUETTE attaccate al pannello (la scelta e bianca a bordo nero e si fonde col pannello; le altre solo contorno sul fondo di pagina) e sopra la GRAFFA dell'elenco ruotata, con didascalia sul filo e dente sulla principale. Il FONDO e il segno esclusivo della scelta: l'hover cambia bordo e sottolinea, mai il fondo. Il tablist e __tabs, etichettato dalla didascalia (aria-labelledby): la didascalia non sta dentro il tablist. Il titolo della fase sta sulla linguetta; nel pannello un h2 rg-u-visually-hidden. rg-phase-panel vale anche per la fase SENZA gruppo (senza linguette): una forma sola per la pagina di fase. Nel pannello NIENTE rg-section-card (sollevata dentro sollevata, e titolo che ripete la tab): sottotitolo di sezione in rg-small, nota costo nella sezione che ha campi marcati, menu delle operazioni come rg-disclosure--boxed in coda alle righe. Conteggio 'da compilare' sulla linguetta (fase) e sulla tab (sezione), non altrove. Gesti sulla fase nel piede del pannello con __scope 'Azioni sulla fase N'; salvataggio fuori dai pannelli. Timbro di reparto con rg-dept-band--quiet (mai il colore pieno a schermo). --rg-phase-switch-ground se la striscia non posa sul fondo di pagina. Mobile: linguette in scorrimento orizzontale. Status beta. DA 1.17.0 TESTA TITOLATA (feedback: 'ricamo normale va sotto e va fatto capire che e una fase e deve avere qualche cosa che mette insieme il titolo con quello che c'e sotto; il numero di fase e scomparso'). Testata della pagina: rg-page-header--compact rg-part-edge rg-part--N (percorso + 'Parte [pastiglia] nome · prodotto'), senza titolo visibile e senza azioni sulla fase. Testa del blocco: __heading > __num (numero invertito, stesso segno di rg-step__num aperto e della linguetta scelta, stesso numero = posizione nella sequenza della parte, aria-hidden) + __name > __kind ('Fase 2 di 4' · relazione, sempre anche con una fase sola) + __title (H1 se la pagina mostra una fase; H2 in un gruppo, con un H1 nascosto nella testata compressa; prefisso nascosto 'Fase N: '). __status a destra; __meta sotto a riga intera = riepilogo (materiali · stop · fili · origine dei dati), testo non badge. Tab di sezione: rg-tabs rg-phase-panel__sections come PRIMO figlio di __body, attaccate sotto la testa da bordo a bordo (la testa perde il filetto). Il contorno nero chiude titolo, tab, contenuto e piede: e il segno che li tiene insieme. 'Elimina fase' sempre nel piede, anche per il ricamo. NEL GRUPPO lo stesso blocco con le linguette sopra: il titolo sta sulla linguetta (comando) e nella testa (titolo) di proposito; rivede la regola 1.16 'il titolo non si ripete'. NESSUNA rg-section-card nel blocco: la sezione comincia con __intro (p + __actions, max una primaria), i blocchi interni sono __subsection (filetto fra due consecutive) con rg-section-header--sub e h2.rg-h3; rg-file-card, rg-table, rg-alert, rg-disclosure--boxed ammessi. rg-part-edge MAI sul blocco: e della parte, sta sulla testata. Scartata l'alternativa 'linguetta unica anche per la fase da sola': una linguetta sola si legge come scelta senza alternative e il titolo a 14px non regge da titolo di pagina. QUARTA TAPPA 1.17.0: le sezioni che lavorano sullo stesso documento mostrano in cima la BARRA DELLA SCHEDA (rg-file-card--bar), identica in ogni sezione e in entrambi gli stati; sta SOPRA __intro; una sola primaria ('Compila scheda' col PDF, 'Carica la scheda' senza); le sezioni che non riguardano il documento non la mostrano; 'Torna alla prima lettura' sta nel piede del blocco con gli altri gesti sulla fase; la rg-file-card piena sparisce dalla sezione Scheda macchina. Sopra il blocco, la testata compressa rivista (rg-page-header--compact con __identity e i codici dell'articolo). DA 1.18.0 GESTI E DOCUMENTO IN TESTA (giudizio: 'l'hai portata in fondo con elimina, ma non va bene […] sposta su le funzioni in fondo, rimetti elimina fase magari non con quelli ma in cima […] in sequenza stop rimetti la possibilita di scrivere con il compilatore'). Testa del blocco in quattro zone: __heading; __gestures in alto a destra (Torna alla prima lettura, Scollega nei gruppi, Elimina fase: icona + testo, conferma, Elimina ultima e ghost danger); __summary (__meta a sinistra, __status a destra); __document (rg-document, una volta sola, sopra le tab). 'Torna alla prima lettura' sta coi gesti sulla fase e non col documento: non tocca il PDF, cambia i dati della fase; rischio scritto nel suggerimento (aria-describedby) e nella conferma. Il compilatore e la PRIMARIA dell'intro della sezione Sequenza stop: 'Apri il compilatore' (icona modifica, suggerimento 'Compila la scheda stop per stop, a schermo intero'), con 'Parti collegate' secondaria accanto. __foot e __scope SUPERATI (restano nel CSS). Stessa forma per ricamo, fase generica e gruppi. DA 1.19.0 FASCIA DEL REPARTO E ELIMINA A ICONA (richiesta: 'questa componente tutta lunga da destra a sinistra in testa a questa scheda, sopra proprio il tipo di fase e di eliminare […] con il pattern che ha una altezza e la label centrata alto basso e allineata a sinistra, tutto con lo stesso padding. Eliminare usa icona come in dash del prodotto'). rg-phase-panel__band sulla rg-dept-band --quiet: PRIMO figlio del blocco, da bordo a bordo, dentro il contorno arrotondato (angoli alti come il blocco; sotto una linguetta del gruppo l'angolo alto sinistro resta vivo), altezza fissa 48px con il filetto, etichetta centrata in verticale e allineata a sinistra con il padding orizzontale della testa (24px, 16 sotto 680px): cade sul filo del numero. Sempre --quiet a schermo (convive con badge di stato, category-3/4/5 = danger/warning/success). Reparto non assegnato: fascia senza variante, 'Reparto da assegnare'. Ogni blocco di un gruppo ha la sua fascia. 'Elimina fase' a SOLA ICONA: rg-icon-button--full --danger in rg-tooltip--below --end, suggerimento 'Elimina la fase N', conferma, in un rg-action-group suo dopo il filetto; 'Torna alla prima lettura' e 'Scollega' restano icona + testo (nessun segno universale, conseguenze non ovvie). rg-phase-panel__dept superato. DA 1.20.0 IL REPARTO SENZA FASCIA (proposta): a schermo la fascia __band sotto le linguette si leggeva come il bordo delle linguette. Il reparto va nella tessera rg-dept-mark--quiet davanti al titolo della linguetta (dentro __title, role=img + aria-label 'Reparto: <nome>') e in rg-dept-label come PRIMO elemento di __kind. Il blocco senza __band non ha modificatore: __head torna primo figlio col suo padding (16 sopra, 24 ai lati). Su carta rg-dept-band resta. PROPOSTA 1.21.0 IL REPARTO IN UNA RIGA SUA E LA LINGUETTA ESSENZIALE (giudizio sulla 1.20.0: 'cosi e tutto attaccato reparto e fase […] basta che non sia cosi attaccata una all'altra. anche le tab sono un po' confusionarie cosi. troppe info. per il ricamo scriviamo Reparto Ricamo. Forse lo metterei ovunque Reparto e quello che e'). rg-phase-panel__department: primo figlio del blocco, prima di __head; rg-dept-label con tessera --quiet + rg-dept-label__kind 'Reparto' + spazio + nome ('Reparto Ricamo', 'Reparto da assegnare' con tessera senza variante); tondo 14px identity medium; filetto neutro RIENTRATO (margin 24, 16 sotto 680px) che non tocca il contorno; nessun fondo (sotto la linguetta bianca un fondo si legge come la sua base); tessera sul filo del numero della fase, 16px fra filetto e __kind. __kind non porta piu il reparto. Scartate: etichetta a destra (contende la riga ai gesti, accanto a Elimina sembra il bersaglio) e fascia bassa grigia (stesso difetto della fascia 1.19). LINGUETTA: numero + __title diretto (senza __text, centrato sul numero) + conteggio; ruolo nascosto alla vista in coda al titolo (', principale' / ', collegata'): il dente della graffa segna la principale e la relazione e scritta in __kind; niente tessera del reparto; conteggio = numero nudo in rg-badge--count con ' da compilare' rg-u-visually-hidden (stesso segno delle tab di sezione, somma delle loro cifre); 'completa' non si scrive; '1 errore' resta a parole. Altezza invariata (12+32+12), graffa e dente fermi. Nome accessibile misurato in Chrome: '3 Sabbiatura e soffiatura finale, collegata 7 da compilare'. Scartato il ruolo in piccolo solo sulla collegata (altezze di testo diverse, ripete la relazione del pannello). SUPERATI (restano nel CSS): __text e __role visibile e tessera in __title sulla linguetta; rg-dept-label primo elemento di __kind.",
       "keywords": [
         "fasi collegate",
         "fase collegata",
@@ -2352,7 +2361,22 @@
         "segno del reparto sulla linguetta",
         "reparto nella riga fase",
         "tessera reparto",
-        "senza fascia"
+        "senza fascia",
+        "riga del reparto",
+        "reparto separato",
+        "reparto staccato dalla fase",
+        "Reparto Ricamo",
+        "parola reparto",
+        "department row",
+        "linguetta essenziale",
+        "linguetta semplice",
+        "troppe info",
+        "meno informazioni",
+        "conteggio discreto",
+        "numero da compilare",
+        "ruolo nascosto",
+        "tab essenziale",
+        "reparto da assegnare"
       ],
       "cssVars": [
         "--rg-phase-switch-ground"
@@ -2360,7 +2384,9 @@
       "elementsDeprecated": {
         "rg-phase-panel__foot": "1.18.0: usare rg-phase-panel__gestures",
         "rg-phase-panel__scope": "1.18.0: usare rg-phase-panel__gestures",
-        "rg-phase-panel__dept": "1.19.0: usare rg-phase-panel__band"
+        "rg-phase-panel__dept": "1.19.0: usare rg-phase-panel__band",
+        "rg-phase-switch__text": "1.21.0 (proposta): __title diretto nella linguetta",
+        "rg-phase-switch__role": "1.21.0 (proposta): sulla linguetta il ruolo e nascosto alla vista in __title; visibile resta in __kind del pannello"
       }
     },
     {
@@ -2745,7 +2771,7 @@
     {
       "id": "dept-mark",
       "title": "Segno del reparto (tessera in linea)",
-      "role": "Nomina un reparto IN LINEA con una tessera quadrata da 20 px che porta la figura della banda di reparto ridotta (una croce, goccia e raggio con due linee, piastre col filo, quattro pois, scacchiera 3x3, diagonali, coppia di linee; vuota a bordo tratteggiato = reparto da assegnare). Si usa davanti al titolo di una linguetta di fase, in testa alla riga 'Fase N di M' del blocco della fase, in elenchi e legende; accanto al nome scritto (rg-dept-label) o con role=img e aria-label. A schermo sempre --quiet (colore del testo intorno).",
+      "role": "Nomina un reparto IN LINEA con una tessera quadrata da 20 px: un disegno SVG a coordinate intere (maschera, colore da --rg-dept-mark-color) sulla griglia comune - campo 16x16, margine 2, tratto 2, elementi interi e ripetuti - che riduce la trama della banda di reparto: quattro croci, goccia raggio goccia e due linee, piastre col filo, otto pois sfalsati, scacchiera, tre fasce diagonali, due coppie di linee; campo tratteggiato = reparto da assegnare. Nessun contorno, fondo chiaro. Si usa nella riga del reparto del blocco della fase (rg-phase-panel__department), in elenchi e legende; accanto al nome scritto (rg-dept-label) o con role=img e aria-label. A schermo sempre --quiet (colore del testo intorno).",
       "status": "beta",
       "since": "1.20.0",
       "kind": "component",
@@ -2764,7 +2790,8 @@
         "elements": [],
         "subcomponents": {
           "label": [
-            "rg-dept-label"
+            "rg-dept-label",
+            "rg-dept-label__kind"
           ]
         },
         "related": [
@@ -2773,18 +2800,19 @@
           "rg-phase-switch__title",
           "rg-phase-panel__kind",
           "rg-phase-panel__band",
-          "rg-part-mark"
+          "rg-part-mark",
+          "rg-phase-panel__department"
         ]
       },
       "variants": [
-        "ricamo (una croce da 12)",
-        "stampa (goccia da 8 e raggio 2x8 sopra, due linee sotto)",
-        "pressatura (due piastre 6x4 sopra e sotto, filo da bordo a bordo)",
-        "strass (quattro pois da 6)",
-        "finissaggio (scacchiera 3x3 da 6)",
-        "incollature (diagonali da 4, passo 8)",
-        "accoppiaggi (coppia di linee 2x12, luce 2)",
-        "nessuna variante = reparto da assegnare (tessera vuota, bordo tratteggiato)",
+        "ricamo (quattro croci da 6, 2x2)",
+        "stampa (goccia, raggio 2x6, goccia; due linee da 2)",
+        "pressatura (tre piastre 4x4 sopra e tre sotto, filo da 2)",
+        "strass (otto pois da 4 sfalsati 3-2-3)",
+        "finissaggio (scacchiera 4x4 da 4)",
+        "incollature (tre fasce diagonali a gradini di 2)",
+        "accoppiaggi (due coppie di linee da 2)",
+        "nessuna variante = reparto da assegnare (campo tratteggiato, nessun fondo)",
         "--quiet = a schermo, colore del testo intorno (currentColor)"
       ],
       "states": [
@@ -2803,28 +2831,25 @@
         "--rg-color-category-7",
         "--rg-color-surface-raised",
         "--rg-color-text-primary",
-        "--rg-border-hairline",
-        "--rg-border-strong",
-        "--rg-radius-sm",
-        "--rg-radius-md",
         "--rg-space-1",
-        "--rg-space-2",
-        "--rg-space-3",
-        "--rg-space-4"
+        "--rg-space-4",
+        "--rg-color-text-label",
+        "--rg-font-identity",
+        "--rg-font-size-xs",
+        "--rg-weight-medium",
+        "--rg-letter-label",
+        "--rg-color-surface"
       ],
       "cssVars": [
         "--rg-dept-mark-color",
-        "--rg-dept-mark-pattern",
-        "--rg-dept-mark-size",
-        "--rg-dept-mark-position",
-        "--rg-dept-mark-repeat",
-        "--rg-dept-mark-edge"
+        "--rg-dept-mark-fill",
+        "--rg-dept-mark-shape"
       ],
       "doc": "components/dept-mark.md",
       "rulesRef": "design-rules.md#4-colore",
       "specimenAnchor": "dept-mark",
-      "snippet": "<span class=\"rg-dept-label\">\n  <span class=\"rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet\" aria-hidden=\"true\"></span>\n  Pressatura e soffiatura\n</span>",
-      "notes": "Nasce dalla prova a schermo della 1.19.0: la fascia rg-phase-panel__band subito sotto le linguette si leggeva come il bordo delle linguette, non come reparto. A schermo la fascia si toglie e il reparto passa nella tessera; su carta rg-dept-band resta. RIDUZIONE, NON SCALA: la trama della banda scalata a 20 px si impasta, ogni reparto ha una riduzione propria nella stessa famiglia di segno. Coppie da tenere d'occhio: pois/scacchiera (numero e disposizione), ricamo/incollature (una croce isolata contro diagonali parallele). Accoppiaggi: scartate due barre piene da 4 (quattro barre col bordo, poi simbolo 'pausa'). --quiet usa currentColor e non neutral-400: a 20 px il grigio 400 (~2,8:1) non regge. La tessera non porta il nome: con il nome accanto (rg-dept-label) e aria-hidden; sola (linguetta) ha role=img + aria-label 'Reparto: <nome>' + title. Sporge 2 px sopra e sotto con margine negativo (in rg-dept-label e rg-phase-switch__title) per non alzare righe da 12/14 px. Variabili --rg-dept-mark-* e non --rg-dept-*: le variabili si ereditano. Non e un badge, non e interattiva, non e la pastiglia della parte (tondo con numero).",
+      "snippet": "<span class=\"rg-dept-label\"><span class=\"rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet\" aria-hidden=\"true\"></span><span class=\"rg-dept-label__kind\">Reparto</span> Pressatura e soffiatura</span>",
+      "notes": "Nasce dalla prova a schermo della 1.19.0: la fascia rg-phase-panel__band subito sotto le linguette si leggeva come il bordo delle linguette, non come reparto. A schermo la fascia si toglie e il reparto passa nella tessera; su carta rg-dept-band resta. RIDUZIONE, NON SCALA: la trama della banda scalata a 20 px si impasta, ogni reparto ha una riduzione propria nella stessa famiglia di segno. Coppie da tenere d'occhio: pois/scacchiera (numero e disposizione), ricamo/incollature (una croce isolata contro diagonali parallele). Accoppiaggi: scartate due barre piene da 4 (quattro barre col bordo, poi simbolo 'pausa'). --quiet usa currentColor e non neutral-400: a 20 px il grigio 400 (~2,8:1) non regge. La tessera non porta il nome: con il nome accanto (rg-dept-label) e aria-hidden; sola (linguetta) ha role=img + aria-label 'Reparto: <nome>' + title. Sporge 2 px sopra e sotto con margine negativo (in rg-dept-label e rg-phase-switch__title) per non alzare righe da 12/14 px. Variabili --rg-dept-mark-* e non --rg-dept-*: le variabili si ereditano. Non e un badge, non e interattiva, non e la pastiglia della parte (tondo con numero). PROPOSTA 1.21.0: la parola 'Reparto' davanti al nome ovunque (rg-dept-label__kind, maiuscola 12px colore label, spazio vero dopo: 'Reparto Ricamo', 'Reparto da assegnare'). Nel blocco della fase il reparto sta in una riga sua (rg-phase-panel__department), non piu in __kind. SUPERATE le due forme 1.20.0: tessera sola nella linguetta (la linguetta non porta piu il reparto) e rg-dept-label primo elemento di __kind. PROPOSTA 1.21.0, TRAMA TAGLIATA NON GLIFO CENTRATO (giudizio: 'la x del ricamo messa li sembra una x per chiudere. non va bene usata cosi'). La tessera 1.20.0 aveva la forma di rg-icon-button (contorno 1, angoli 2, segno isolato al centro). Ricontrollate contro lo sprite: ricamo = chiudi, accoppiaggi = pausa, pressatura = tabella, strass = dado, stampa = registra/pausa; finissaggio e incollature nessun comando. Ora tutte: nessun contorno (--rg-dept-mark-edge: none), angoli vivi, fondo --rg-color-surface (--rg-dept-mark-fill), motivo ripetuto tagliato dal bordo, sempre piu di una ripetizione. Ricamo: crocette da 5 in tre file sfalsate a passo 8, posizionate una per una (--rg-dept-mark-cross, due strati; il gradiente non si accorcia dentro la tessera); tratto 3/4 del filetto per parte. Scartate per il ricamo: griglia 3x3 intera (fila di chiudi), 2x2 (glifo), punto filza (famiglia di stampa/pressatura), zigzag (fuori famiglia). Stampa: gocce e raggi staccati a passo 10. Pressatura: piastre 6x4 a passo 8. Strass: pois da 4 sfalsati. Accoppiaggi: coppie 2+1+2 a passo 10 da bordo a bordo. Da assegnare: vuota, tratteggiata. Regola per un ottavo reparto: trama tagliata, verificata accanto allo sprite (tavola in vetrina #dept-mark-sprite). TERZA STESURA 1.21.0, DISEGNATE SUI PIXEL (giudizio: 'meglio, ma non mi sembrano cosi precisi i loghi, vorrei qualcosa di piu pulito'; cause: gradienti CSS fuori dai pixel, elementi tagliati a meta, spessori diversi). Ogni tessera e un SVG 20x20 a coordinate intere usato come mask su ::after (colore --rg-dept-mark-color, quindi categoria o currentColor con --quiet); variabili --rg-dept-mark-color, -fill, -shape (tolte -pattern/-size/-position/-repeat/-edge/-cross, mai rilasciate). Griglia comune: margine 2 sui quattro lati, campo 16x16, tratto 2, elementi interi e ripetuti; tondi = quadrati 4x4 senza i pixel d'angolo. Ricamo quattro croci da 6; stampa goccia raggio goccia + due linee; pressatura tre piastre sopra e tre sotto + filo; strass otto pois 3-2-3; finissaggio scacchiera 4x4; incollature tre fasce diagonali; accoppiaggi due coppie di linee; da assegnare campo tratteggiato senza fondo. Densita 31% (ricamo) - 50%. Rendering SENZA crispEdges: a DPR 1 e 2 identico e netto (coordinate intere), a 1,25 e 1,5 filo di sfumatura uniforme; crispEdges a quelle scale deformava tondi e croci. Le coordinate SVG sono disegno, non layout: eccezione dichiarata regole 12. Non nello sprite: segni di reparto, non comandi.",
       "keywords": [
         "reparto",
         "segno del reparto",
@@ -2884,7 +2909,25 @@
         "senza fascia",
         "palette categoriale",
         "non solo colore",
-        "figura"
+        "figura",
+        "Reparto Ricamo",
+        "parola reparto",
+        "etichetta reparto",
+        "riga del reparto",
+        "ritaglio",
+        "campione di stoffa",
+        "trama tagliata",
+        "non icona",
+        "non bottone",
+        "crocette",
+        "pixel",
+        "griglia di pixel",
+        "svg",
+        "mask",
+        "maschera",
+        "nitido",
+        "pulito",
+        "crisp"
       ]
     },
     {

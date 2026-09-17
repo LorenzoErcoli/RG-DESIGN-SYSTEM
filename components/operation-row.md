@@ -150,6 +150,14 @@ Contenitore `<ol>` → riga → `[testa | campi | azioni]`. La frase che spiega 
 </ol>
 ```
 
+> **Proposta non rilasciata — sequenza di operazioni.** Per le fasi non-ricamo la lista, il tempo e
+> l'aggiunta stanno in `rg-operation-sequence` ([pattern](../patterns/operation-sequence.md)): aggiunta
+> in basso a destra con `rg-button--secondary` + icona («Aggiungi in fondo»), gesti a quattro posti fissi
+> a sola icona (su · giù · duplica | togli), «Nota» in coda ai campi, `rg-operation-row__slot` per il
+> gesto che la riga non ha, `rg-operation-row--off` per la facoltativa non inclusa, `is-new` per la riga
+> appena aggiunta, `rg-operation-sequence__total` per il tempo per pezzo. Il paragrafo che segue resta
+> valido per le liste che non sono una sequenza di fase.
+
 L'azione «aggiungi un'operazione» — quando è la *lista* a crescere, non la singola riga — sta in un
 `rg-cluster` sotto la lista e **sopra** il pulsante primario del form: si arriva prima
 all'aggiunta che al salvataggio, e il primario resta l'ultima cosa che si incontra.
@@ -187,17 +195,24 @@ colonna di parole uguali più larga dei campi.
   bianco». Il filetto del gruppo le separa da Ripeti/Rimuovi, che cambiano il **contenuto** della
   sequenza e non solo l'ordine.
 - **Prima riga: «sposta in su» disabilitato; ultima riga: «sposta in giù» disabilitato.** Il bottone
-  **resta al suo posto** (`disabled`), non si nasconde: le frecce restano in colonna su tutte le righe
+  **resta al suo posto**, non si nasconde: le frecce restano in colonna su tutte le righe
   e la mano trova sempre lo stesso bottone nello stesso punto. Il motivo è a vista (non c'è una riga
   sopra, o sotto), e il suggerimento lo dice: «Già la prima: 01 Preparazione materiale». Con una sola
-  riga, tutti e due disabilitati. Aspetto: `.rg-icon-button:disabled`, icona grigia, niente bordo in hover.
+  riga, tutti e due spenti. Aspetto: icona grigia, niente bordo in hover, cursore «non consentito».
+- **Spento con `aria-disabled="true"`, non con `disabled`** (dalla 1.22.0; nella 1.20.0 era `disabled`).
+  Un bottone `disabled` esce dalla sequenza di Tab, e con lui il suo suggerimento: da tastiera il
+  motivo non si leggeva mai. Con `aria-disabled` il bottone resta raggiungibile, il lettore di schermo
+  lo annuncia «non disponibile» e il suggerimento compare al fuoco. **Il gesto non parte**: chi serve la
+  pagina blocca il `submit` (il controller annulla il click su `[aria-disabled="true"]`) e il server
+  rifiuta comunque la mossa impossibile. Vale per le frecce e per «Togli» spento
+  ([sequenza di operazioni](../patterns/operation-sequence.md)).
 - **Dopo lo spostamento il fuoco segue la riga.** Con il `submit` la pagina si ricarica: il server
   rimette il fuoco sulla stessa freccia della riga spostata (`autofocus`, o un'ancora per riga), e
-  se quella freccia ora è disabilitata (la riga è diventata la prima o l'ultima) sull'altra. Senza
+  se quella freccia ora è spenta (la riga è diventata la prima o l'ultima) sull'altra. Senza
   questo, chi usa la tastiera ricomincia da capo a ogni mossa.
 - **Le ripetizioni** (`--repeat`) si muovono con la riga di cui sono ripetizione, o solo dentro il suo
   gruppo: è una regola del dominio e la decide la piattaforma. Il DS dà solo i bottoni; se una
-  ripetizione non può uscire dal suo gruppo, la freccia che la farebbe uscire è disabilitata con il
+  ripetizione non può uscire dal suo gruppo, la freccia che la farebbe uscire è spenta (`aria-disabled`) con il
   motivo nel suggerimento.
 - L'indice (`01`, `03·2`) si **rinumera** dopo la mossa: è la posizione nella sequenza, non un
   identificativo.
@@ -212,7 +227,7 @@ colonna di parole uguali più larga dei campi.
   <div class="rg-operation-row__actions">
     <div class="rg-action-group" role="group" aria-label="Ordine di 01 Preparazione materiale">
       <span class="rg-tooltip">
-        <button class="rg-icon-button rg-icon-button--full" type="submit" name="sposta_su" value="01" disabled aria-labelledby="tip-su-01"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-sposta-su"></use></svg></button>
+        <button class="rg-icon-button rg-icon-button--full" type="submit" name="sposta_su" value="01" aria-disabled="true" aria-labelledby="tip-su-01"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="/ds/icons/rg-icons.svg#rg-icon-sposta-su"></use></svg></button>
         <span class="rg-tooltip__text" role="tooltip" id="tip-su-01">Già la prima: 01 Preparazione materiale</span>
       </span>
       <span class="rg-tooltip">

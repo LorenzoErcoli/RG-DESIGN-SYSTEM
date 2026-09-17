@@ -1949,7 +1949,7 @@
       "variantsSince": {
         "rg-icon-button--full": "1.17.0"
       },
-      "notes": "Base 34x34: ammessa SOLO nelle liste dense (lists.md). Da 1.17.0 rg-icon-button--full e il target pieno 40x40 per testate, barre e righe di tabella; l'icona interna prende 20px. Nome accessibile obbligatorio: di norma aria-labelledby verso il suo rg-tooltip__text (nome visibile anche a chi vede), altrimenti aria-label. Icona dal set rg-icon, non caratteri Unicode. Su <a> la sottolineatura nativa e azzerata dal DS. --danger per l'eliminazione ripetuta in riga, in un rg-action-group suo e sempre con conferma."
+      "notes": "Base 34x34: ammessa SOLO nelle liste dense (lists.md). Da 1.17.0 rg-icon-button--full e il target pieno 40x40 per testate, barre e righe di tabella; l'icona interna prende 20px. Nome accessibile obbligatorio: di norma aria-labelledby verso il suo rg-tooltip__text (nome visibile anche a chi vede), altrimenti aria-label. Icona dal set rg-icon, non caratteri Unicode. Su <a> la sottolineatura nativa e azzerata dal DS. --danger per l'eliminazione ripetuta in riga, in un rg-action-group suo e sempre con conferma. Da 1.22.0 (proposta) rg-icon-button[aria-disabled=\"true\"] ha l'aspetto di :disabled e non reagisce all'hover (neanche --danger): per un gesto che non vale ORA ma deve restare raggiungibile col suo motivo nel suggerimento; chi lo serve blocca il click."
     },
     {
       "id": "appshell",
@@ -3100,7 +3100,8 @@
           "rg-icon-button",
           "rg-icon-button--full",
           "rg-tooltip",
-          "rg-action-group"
+          "rg-action-group",
+          "rg-operation-sequence"
         ]
       },
       "variants": [
@@ -3139,7 +3140,7 @@
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "operation-row",
       "snippet": "<ol class=\"rg-operation-list\">\n  <li class=\"rg-operation-row\">\n    <div class=\"rg-operation-row__head\">\n      <span class=\"rg-operation-row__index\">03</span>\n      <span class=\"rg-operation-row__name\">Stampa</span>\n    </div>\n    <div class=\"rg-form-row\">\n      <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Tempo <span class=\"rg-field__mark\" aria-hidden=\"true\">&#8364;</span></span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"decimal\" value=\"12\" aria-describedby=\"nota-costo\"></label>\n      <label class=\"rg-field rg-field--w4\"><span class=\"rg-field__label\">Passate</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"numeric\" value=\"2\"></label>\n      <label class=\"rg-field rg-field--grow\"><span class=\"rg-field__label\">File</span><input class=\"rg-input rg-mono\" value=\"RG-0481_p2_uv.prn\"></label>\n    </div>\n    <div class=\"rg-operation-row__actions\">\n      <button class=\"rg-button rg-button--ghost\" type=\"submit\" name=\"ripeti\" value=\"03\">+ Ripeti</button>\n    </div>\n  </li>\n  <li class=\"rg-operation-row rg-operation-row--repeat\">\n    <div class=\"rg-operation-row__head\"><span class=\"rg-operation-row__index\">03&#183;2</span><span class=\"rg-operation-row__name\">Stampa &#8212; colore</span></div>\n    <div class=\"rg-form-row\"></div>\n    <div class=\"rg-operation-row__actions\"></div>\n  </li>\n</ol>",
-      "notes": "PERCHE NON UNA TABELLA: le operazioni non hanno le stesse colonne (preparazione ha solo il tempo, stampa ha inchiostri/passate/file), quindi una rg-table dovrebbe portare l'UNIONE dei campi di tutte le operazioni - una matrice quasi vuota dove ogni riga usa due celle su sei e le altre quattro sono buchi che si leggono come dati mancanti. La tabella e la forma delle righe OMOGENEE: se un giorno tutte le operazioni avessero gli stessi campi, la tabella tornerebbe a essere la forma giusta. PERCHE NON UNA CARD PER OPERAZIONE: cinque riquadri sono cinque cornici, piu cromo e piu scroll per lo stesso contenuto (regole 2 e 6 - non trasformare ogni contenuto in una card, usare linee per mostrare struttura). QUINDI: righe su superficie aperta separate da un filetto, con la TESTA IN COLONNA (indice e nome incolonnati a sinistra, cosi l'occhio scorre la sequenza in verticale senza rileggerla) e la CODA CHE SCORRE (i campi prendono la larghezza del proprio contenuto con rg-field--w* e vanno a capo solo quando non entrano): un'operazione da tre campi occupa UNA riga invece delle due righe di una griglia 1fr 1fr, che e la ragione per cui queste schede chiedevano troppo scroll. ORDINE DI TABULAZIONE: nessun role=grid, nessun roving tabindex - i campi restano tutti nella tab sequence nativa. L'ARIA APG prescrive il pattern grid (una sola cella nella tab sequence, frecce per navigare) quando serve ACCORCIARE la sequenza per non intrappolare l'utente in una lista lunga; qui e il contrario: cinque righe per quattro campi sono venti stop, e sono esattamente i venti gesti del compilatore. Le azioni della riga stanno in fondo alla riga ANCHE NEL DOM: chi tabula trova 'Ripeti' dopo aver compilato, non prima - un controllo in mezzo ai campi rompe la sequenza attesa dal tasto Tab. La TESTA si allinea alle ETICHETTE dei campi, non ai controlli: il nome dell'operazione e una label di riga. La larghezza della colonna-testa e --rg-operation-head (default 28ch (indice + circa 24 caratteri di nome)) e la imposta il contenitore, non il componente. SUPERFICIE: l'hover chiaro presuppone il bianco sotto, quindi la lista va nel corpo di una rg-section-card e non sul fondo di pagina (regola 6). RIPETIZIONE = struttura + testo: il rientro con filetto verticale dice CHE e una ripetizione, l'indice scritto (01-2) dice DI CHI; il colore non e ammesso come unico segnale. LIMITE NOTO: sotto i 680px la testa passa a riga propria sopra i campi e la colonna dei nomi sparisce - compromesso accettato, perche sotto quella larghezza una colonna fissa da 28ch (indice + circa 24 caratteri di nome) lascerebbe ai campi meno dello spazio minimo. NON E LA LISTA DELLE FASI: le operazioni stanno DENTRO una fase; per l'elenco delle fasi di una parte si usa rg-list-row o rg-steps. La riga non ha uno stato di errore proprio: l'errore appartiene al CAMPO (rg-field.is-error), perche e il campo a essere sbagliato, non l'operazione. I bottoni della riga usano rg-button--ghost al target pieno (40px), non rg-button--small (32px): con align-self:end si appoggiano esattamente alla base degli input, e la riga non e cosi densa da giustificare un target ridotto. Da 1.17.0 la CODA della riga e rg-form-row (prima rg-cluster rg-cluster--end, che allinea al piede: un aiuto o un errore sotto un campo alzava il suo controllo e abbassava le azioni). rg-operation-row__actions si posa sulla linea dei controlli (salta l'altezza dell'etichetta, --rg-form-row-label) invece del piede della riga; con rg-cluster--end senza aiuti il risultato e identico, e se i campi vanno a capo le azioni restano sulla prima linea. DA 1.20.0 RIORDINARE (proposta): le righe si riordinano con sposta in su / sposta in giu, NON con il trascinamento (decisione 2026-09-16: il trascinamento non ha equivalente da tastiera, si confonde con la selezione del testo nei campi e con lo scorrimento a schermo tattile). Forma: rg-icon-button rg-icon-button--full + rg-tooltip (nome via aria-labelledby, nomina la riga: 'Sposta in su: 03 Stampa — bianco'), icone rg-icon-sposta-su / rg-icon-sposta-giu, in un rg-action-group proprio (role=group, aria-label 'Ordine di 03 ...') PRIMA di Ripeti/Rimuovi. Prima riga: su disabled; ultima: giu disabled; il bottone resta al suo posto (non si nasconde), suggerimento 'Gia la prima: ...'. Dopo la mossa il server rimette il fuoco sulla stessa freccia della riga spostata (o sull'altra se ora e disabilitata). Le ripetizioni: regola di dominio della piattaforma. L'indice si rinumera.",
+      "notes": "PERCHE NON UNA TABELLA: le operazioni non hanno le stesse colonne (preparazione ha solo il tempo, stampa ha inchiostri/passate/file), quindi una rg-table dovrebbe portare l'UNIONE dei campi di tutte le operazioni - una matrice quasi vuota dove ogni riga usa due celle su sei e le altre quattro sono buchi che si leggono come dati mancanti. La tabella e la forma delle righe OMOGENEE: se un giorno tutte le operazioni avessero gli stessi campi, la tabella tornerebbe a essere la forma giusta. PERCHE NON UNA CARD PER OPERAZIONE: cinque riquadri sono cinque cornici, piu cromo e piu scroll per lo stesso contenuto (regole 2 e 6 - non trasformare ogni contenuto in una card, usare linee per mostrare struttura). QUINDI: righe su superficie aperta separate da un filetto, con la TESTA IN COLONNA (indice e nome incolonnati a sinistra, cosi l'occhio scorre la sequenza in verticale senza rileggerla) e la CODA CHE SCORRE (i campi prendono la larghezza del proprio contenuto con rg-field--w* e vanno a capo solo quando non entrano): un'operazione da tre campi occupa UNA riga invece delle due righe di una griglia 1fr 1fr, che e la ragione per cui queste schede chiedevano troppo scroll. ORDINE DI TABULAZIONE: nessun role=grid, nessun roving tabindex - i campi restano tutti nella tab sequence nativa. L'ARIA APG prescrive il pattern grid (una sola cella nella tab sequence, frecce per navigare) quando serve ACCORCIARE la sequenza per non intrappolare l'utente in una lista lunga; qui e il contrario: cinque righe per quattro campi sono venti stop, e sono esattamente i venti gesti del compilatore. Le azioni della riga stanno in fondo alla riga ANCHE NEL DOM: chi tabula trova 'Ripeti' dopo aver compilato, non prima - un controllo in mezzo ai campi rompe la sequenza attesa dal tasto Tab. La TESTA si allinea alle ETICHETTE dei campi, non ai controlli: il nome dell'operazione e una label di riga. La larghezza della colonna-testa e --rg-operation-head (default 28ch (indice + circa 24 caratteri di nome)) e la imposta il contenitore, non il componente. SUPERFICIE: l'hover chiaro presuppone il bianco sotto, quindi la lista va nel corpo di una rg-section-card e non sul fondo di pagina (regola 6). RIPETIZIONE = struttura + testo: il rientro con filetto verticale dice CHE e una ripetizione, l'indice scritto (01-2) dice DI CHI; il colore non e ammesso come unico segnale. LIMITE NOTO: sotto i 680px la testa passa a riga propria sopra i campi e la colonna dei nomi sparisce - compromesso accettato, perche sotto quella larghezza una colonna fissa da 28ch (indice + circa 24 caratteri di nome) lascerebbe ai campi meno dello spazio minimo. NON E LA LISTA DELLE FASI: le operazioni stanno DENTRO una fase; per l'elenco delle fasi di una parte si usa rg-list-row o rg-steps. La riga non ha uno stato di errore proprio: l'errore appartiene al CAMPO (rg-field.is-error), perche e il campo a essere sbagliato, non l'operazione. I bottoni della riga usano rg-button--ghost al target pieno (40px), non rg-button--small (32px): con align-self:end si appoggiano esattamente alla base degli input, e la riga non e cosi densa da giustificare un target ridotto. Da 1.17.0 la CODA della riga e rg-form-row (prima rg-cluster rg-cluster--end, che allinea al piede: un aiuto o un errore sotto un campo alzava il suo controllo e abbassava le azioni). rg-operation-row__actions si posa sulla linea dei controlli (salta l'altezza dell'etichetta, --rg-form-row-label) invece del piede della riga; con rg-cluster--end senza aiuti il risultato e identico, e se i campi vanno a capo le azioni restano sulla prima linea. DA 1.20.0 RIORDINARE (proposta): le righe si riordinano con sposta in su / sposta in giu, NON con il trascinamento (decisione 2026-09-16: il trascinamento non ha equivalente da tastiera, si confonde con la selezione del testo nei campi e con lo scorrimento a schermo tattile). Forma: rg-icon-button rg-icon-button--full + rg-tooltip (nome via aria-labelledby, nomina la riga: 'Sposta in su: 03 Stampa — bianco'), icone rg-icon-sposta-su / rg-icon-sposta-giu, in un rg-action-group proprio (role=group, aria-label 'Ordine di 03 ...') PRIMA di Ripeti/Rimuovi. Prima riga: su disabled; ultima: giu disabled; il bottone resta al suo posto (non si nasconde), suggerimento 'Gia la prima: ...'. Dopo la mossa il server rimette il fuoco sulla stessa freccia della riga spostata (o sull'altra se ora e disabilitata). Le ripetizioni: regola di dominio della piattaforma. L'indice si rinumera. PROPOSTA NON RILASCIATA (2026-09-17): per le fasi non-ricamo la lista sta in rg-operation-sequence (voce operation-sequence, patterns/operation-sequence.md): aggiunta in basso a destra, gesti a posti fissi a sola icona, Nota in coda ai campi, riga spenta per la facoltativa, is-new, riga del totale. L'aggiunta in rg-cluster descritta sopra resta per le liste che non sono una sequenza di fase. DA 1.22.0 (proposta) le frecce spente usano aria-disabled=\"true\" invece di disabled: il bottone resta nella sequenza di Tab e il suggerimento col motivo ('Gia la prima: …') si legge anche da tastiera; aspetto identico; il gesto non parte (controller in cattura annulla il click su [aria-disabled=true], il server rifiuta la mossa).",
       "keywords": [
         "operazione",
         "operazioni",
@@ -3206,6 +3207,157 @@
         "senza trascinamento",
         "no drag and drop",
         "drag and drop"
+      ]
+    },
+    {
+      "id": "operation-sequence",
+      "title": "Sequenza di operazioni (proposta 1.22.0)",
+      "role": "Il contenitore della sequenza compilabile di una fase non-ricamo (pressatura, forno, stampa UV, MuchColours, sabbiatura): lista di rg-operation-row con gesti a posti fissi, riga del tempo per pezzo e comando di aggiunta in basso a destra. Estende operation-row, non la sostituisce.",
+      "status": "beta",
+      "since": "1.22.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-operation-sequence",
+        "elements": [
+          "rg-operation-sequence__total",
+          "rg-operation-sequence__total-label",
+          "rg-operation-sequence__total-formula",
+          "rg-operation-sequence__total-value",
+          "rg-operation-sequence__add",
+          "rg-operation-sequence__add-label",
+          "rg-operation-row__status",
+          "rg-operation-row__new",
+          "rg-operation-row__slot"
+        ],
+        "variants": [
+          "rg-operation-sequence__total--incomplete",
+          "rg-operation-row--off"
+        ],
+        "related": [
+          "rg-operation-list",
+          "rg-operation-row",
+          "rg-operation-row__actions",
+          "rg-form-row",
+          "rg-form-row__actions",
+          "rg-action-group",
+          "rg-action-menu",
+          "rg-icon-button",
+          "rg-icon-button--full",
+          "rg-icon-button--danger",
+          "rg-tooltip",
+          "rg-tooltip--end",
+          "rg-button--secondary",
+          "rg-button--ghost",
+          "rg-badge",
+          "rg-empty",
+          "rg-phase-panel"
+        ]
+      },
+      "variants": [
+        "base",
+        "off",
+        "total-incomplete"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "is-new",
+        "off",
+        "aria-disabled-with-reason",
+        "slot",
+        "total",
+        "total-incomplete",
+        "empty"
+      ],
+      "cssVars": [
+        "--rg-operation-head",
+        "--rg-operation-actions"
+      ],
+      "tokens": [
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-border-hairline",
+        "--rg-border-strong",
+        "--rg-border-style",
+        "--rg-color-black",
+        "--rg-color-border-strong",
+        "--rg-color-text-primary",
+        "--rg-color-text-secondary",
+        "--rg-font-identity",
+        "--rg-font-body",
+        "--rg-font-mono",
+        "--rg-font-size-sm",
+        "--rg-font-size-md",
+        "--rg-weight-medium",
+        "--rg-weight-regular"
+      ],
+      "doc": "patterns/operation-sequence.md",
+      "patternRef": "patterns/operation-sequence.md",
+      "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
+      "specimenAnchor": "operation-sequence",
+      "snippet": "<div class=\"rg-operation-sequence\">\n  <p class=\"rg-u-visually-hidden\" role=\"status\"></p>\n  <ol class=\"rg-operation-list\">\n    <li class=\"rg-operation-row rg-operation-row--off\">\n      <div class=\"rg-operation-row__head\"><span class=\"rg-operation-row__name\">Preparazione materiale</span><span class=\"rg-badge\">facoltativa</span></div>\n      <p class=\"rg-operation-row__status\">Non inclusa in questa scheda.</p>\n      <div class=\"rg-operation-row__actions\"><button class=\"rg-button rg-button--secondary\" type=\"submit\" aria-label=\"Includi la preparazione materiale\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-aggiungi\"></use></svg>Includi</button></div>\n    </li>\n    <li class=\"rg-operation-row is-new\">\n      <div class=\"rg-operation-row__head\"><span class=\"rg-operation-row__name\">Pressatura — controllo</span><span class=\"rg-badge rg-operation-row__new\">nuova</span></div>\n      <div class=\"rg-form-row\">\n        <label class=\"rg-field rg-field--w16\"><span class=\"rg-field__label\">Momento</span><select class=\"rg-select\" autofocus><option>controllo</option></select></label>\n        <label class=\"rg-field rg-field--w8\"><span class=\"rg-field__label\">Tempo (s)</span><input class=\"rg-input rg-input--numeric\" type=\"text\" inputmode=\"decimal\" value=\"10\"></label>\n        <label class=\"rg-field rg-field--w24\" data-nota hidden><span class=\"rg-field__label\">Nota</span><input class=\"rg-input\"></label>\n        <div class=\"rg-form-row__actions\"><button class=\"rg-button rg-button--ghost\" type=\"button\" data-apri-nota aria-label=\"Nota per Pressatura — controllo\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-aggiungi\"></use></svg>Nota</button></div>\n      </div>\n      <div class=\"rg-operation-row__actions\">\n        <div class=\"rg-action-group\" role=\"group\" aria-label=\"Riga Pressatura — controllo\">\n          <span class=\"rg-tooltip\"><button class=\"rg-icon-button rg-icon-button--full\" type=\"submit\" aria-labelledby=\"tip-su-3\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-sposta-su\"></use></svg></button><span class=\"rg-tooltip__text\" role=\"tooltip\" id=\"tip-su-3\">Sposta in su: Pressatura — controllo</span></span>\n          <span class=\"rg-tooltip\"><button class=\"rg-icon-button rg-icon-button--full\" type=\"submit\" aria-disabled=\"true\" aria-labelledby=\"tip-giu-3\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-sposta-giu\"></use></svg></button><span class=\"rg-tooltip__text\" role=\"tooltip\" id=\"tip-giu-3\">Già l'ultima: Pressatura — controllo</span></span>\n          <span class=\"rg-tooltip\"><button class=\"rg-icon-button rg-icon-button--full\" type=\"submit\" aria-labelledby=\"tip-dup-3\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-copia\"></use></svg></button><span class=\"rg-tooltip__text\" role=\"tooltip\" id=\"tip-dup-3\">Duplica sotto, con i valori: Pressatura — controllo</span></span>\n        </div>\n        <div class=\"rg-action-group\"><span class=\"rg-tooltip rg-tooltip--end\"><button class=\"rg-icon-button rg-icon-button--full rg-icon-button--danger\" type=\"submit\" data-conferma=\"Si toglie la riga.\" aria-labelledby=\"tip-togli-3\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-elimina\"></use></svg></button><span class=\"rg-tooltip__text\" role=\"tooltip\" id=\"tip-togli-3\">Togli: Pressatura — controllo</span></span></div>\n      </div>\n    </li>\n  </ol>\n  <p class=\"rg-operation-sequence__total\"><span class=\"rg-operation-sequence__total-label\">Tempo per pezzo</span><span class=\"rg-operation-sequence__total-formula\">piazzamento 1'20\" + pressature 45\" ÷ 1 pezzo per ciclo</span><span class=\"rg-operation-sequence__total-value\">= 2'05\"</span></p>\n  <div class=\"rg-operation-sequence__add\" role=\"group\" aria-labelledby=\"agg-1\"><span class=\"rg-operation-sequence__add-label\" id=\"agg-1\">Aggiungi in fondo</span><button class=\"rg-button rg-button--secondary\" type=\"submit\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-aggiungi\"></use></svg>Piazzamento</button><button class=\"rg-button rg-button--secondary\" type=\"submit\"><svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-aggiungi\"></use></svg>Pressatura</button></div>\n</div>",
+      "notes": "PROPOSTA 1.22.0 NON RILASCIATA (2026-09-17), direzione approvata da Lorenzo. Dal giudizio: '+ piazzamento + pressatura non sembra un bottone, lo metterei a destra in basso; le operazioni incrementali vanno studiate perche presenti in varie fasi'. Ricamo escluso. FUORI DAL PATTERN: le righe 'dalla macchina' (cambio piano, pulizia della stampa UV) restano nella loro tab con la forma di prima; nessun badge di cadenza ('per pezzo', 'per ciclo') sulle righe; nessun marcatore di costo (niente euro, niente frase sui campi di costo). ESTENSIONE di operation-row: la riga resta la stessa, il contenitore fissa la griglia (nome 24ch, campi, gesti 193 px = 4 x 40 + gap + filetto). (a) AGGIUNTA: ultima cosa della sequenza, a destra, rg-button--secondary con icona aggiungi + nome dell'operazione, preceduti da 'Aggiungi in fondo' (nome del gruppo e posizione della riga nuova). Un bottone per tipo fino a tre (sabbiatura: Sabbiatura automatica, Sabbiatura manuale, Soffiatura); da quattro un rg-action-menu 'Aggiungi'. Scartate: parole ghost a sinistra (oggi), menu unico sempre, riga-segnaposto. (b) GESTI: quattro posti fissi a sola icona con suggerimento che nomina la riga: sposta su, sposta giu, duplica (icona copia; copia SUBITO SOTTO con i valori, confermato) | togli (--danger, gruppo suo, conferma). 'Nota' e un campo: ghost con icona in rg-form-row__actions in coda ai campi, lati 8 px. Tab: campi, Nota, su, giu, duplica, togli (anche spenti). Scartate: frecce + tre parole (oggi), frecce + menu Altro, gesti solo in hover. (c) LA NATURA TOGLIE IL POSTO, LO STATO SPEGNE IL BOTTONE: non ripetibile -> rg-operation-row__slot al posto di Duplica; freccia al bordo e Togli sull'unica obbligatoria -> aria-disabled=true (NON disabled: resta nella sequenza di Tab, il suggerimento col motivo si legge al fuoco; aspetto di :disabled; il gesto non parte: controller in cattura annulla il click, il server rifiuta). Facoltativa non inclusa -> rg-operation-row--off al suo posto con badge 'facoltativa', __status 'Non inclusa in questa scheda.' e rg-button--secondary 'Includi'. Varianti della stessa lavorazione che convivono (sabbiatura automatica e manuale) sono DUE TIPI ripetibili, non un'alternativa. Titolo della riga = prima scelta ('Pressatura — controllo', 'Stampa — BIANCO'), niente numeri. (d) TOTALE: __total con la stessa griglia, subito sotto la lista e prima dell'aggiunta, filetto nero sopra; etichetta identity 14 medium, formula mono 14 grigia, risultato mono 16 medium a destra; --incomplete: icona avviso + 'Non calcolabile: manca …' + 'Vai al campo', risultato '—', mai 0. Il DS non calcola. (e) RIGA NUOVA: is-new (filetto nero 2 px a sinistra + badge __new 'nuova'), autofocus sul primo campo, frase in role=status nascosto; niente fondo, niente animazione a tempo; il controller toglie is-new quando il fuoco esce dalla riga. Sotto 680 px i gesti su una linea loro sotto i campi, a destra. Vetrina: Pressatura M1296, dopo '+ Pressatura', Stampa UV sezione tecnica, Sabbiatura automatica + manuale + soffiatura, alternative scartate.",
+      "keywords": [
+        "sequenza di operazioni",
+        "operazioni incrementali",
+        "operazioni ripetibili",
+        "aggiungi operazione",
+        "aggiungi in fondo",
+        "aggiungi riga",
+        "add row",
+        "add another",
+        "repeater",
+        "repeatable rows",
+        "duplica",
+        "duplica riga",
+        "duplicate row",
+        "copia riga",
+        "togli",
+        "rimuovi riga",
+        "remove row",
+        "sposta su",
+        "sposta giu",
+        "reorder",
+        "riordina",
+        "nota",
+        "nota di riga",
+        "facoltativa",
+        "optional operation",
+        "includi",
+        "obbligatoria",
+        "required",
+        "non ripetibile",
+        "tempo per pezzo",
+        "totale",
+        "somma tempi",
+        "time per piece",
+        "non calcolabile",
+        "riga nuova",
+        "new row highlight",
+        "focus riga aggiunta",
+        "pressatura",
+        "pressata",
+        "piazzamento",
+        "forno",
+        "infornata",
+        "stampa uv",
+        "passata",
+        "muchcolours",
+        "sabbiatura",
+        "soffiatura",
+        "fase generica",
+        "operation sequence",
+        "operation list",
+        "gesti di riga",
+        "row actions",
+        "aria-disabled",
+        "bottone spento raggiungibile",
+        "sabbiatura automatica",
+        "sabbiatura manuale",
+        "velocita rullo"
       ]
     },
     {

@@ -64,9 +64,22 @@
   .rg-worksheet-block--long:first-child { break-before: auto; page-break-before: auto; }
   .rg-worksheet-block--long .rg-table thead { display: table-header-group; }
   .rg-worksheet-block--long .rg-table tr { break-inside: avoid; page-break-inside: avoid; }
+  /* Fascicolo compatto (proposta 1.23.0).
+     TESTATA DI PARTE: apre una pagina nuova e non resta sola in fondo alla pagina; i blocchi sotto
+     scorrono sulla stessa pagina. Se e la prima cosa che si stampa non apre una pagina vuota prima.
+     Un --long subito dopo la testata NON apre un'altra pagina: la staccherebbe dalla sua parte. */
+  .rg-worksheet-part { break-before: page; page-break-before: always; break-after: avoid; page-break-after: avoid; }
+  .rg-worksheet-part:first-child { break-before: auto; page-break-before: auto; }
+  .rg-worksheet-part + .rg-worksheet-block--long { break-before: auto; page-break-before: auto; }
+  /* PAGINA BIANCA INTENZIONALE: una facciata intera. Due salti forzati adiacenti (il suo break-after e il
+     break-before della testata di parte che segue) valgono uno: nessuna pagina in piu. */
+  .rg-blank-page, .rg-blank-page--preview { display: block; min-height: 0; border: 0; break-before: page; page-break-before: always; break-after: page; page-break-after: always; }
+  /* RIQUADRO DA RITAGLIARE: mai diviso fra due pagine, sarebbe un pezzo che non si ritaglia. */
+  .rg-cutout { break-inside: avoid; page-break-inside: avoid; }
   /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda
-     di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome. */
-  .rg-dept-band, .rg-dept-mark, .rg-part-mark, .rg-part-edge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+     di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome.
+     rg-cutout__cue (1.23.0): il fondo bianco interrompe la linea di taglio sotto la parola. */
+  .rg-dept-band, .rg-dept-mark, .rg-part-mark, .rg-part-edge, .rg-cutout__cue { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   /* Su carta non c'e il puntatore: suggerimenti e menu non si stampano. */
   .rg-tooltip__text, .rg-action-menu__list { display: none !important; }
   /* Su carta non esiste il puntatore: l'evidenziazione di riga sporcherebbe e basta. */

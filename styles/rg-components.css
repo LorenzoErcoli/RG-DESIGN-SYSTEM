@@ -132,6 +132,10 @@
 .rg-table__row--selected, .rg-table tr.is-selected, .rg-table tr[aria-selected="true"] { background: color-mix(in srgb, var(--rg-color-accent-blue) 12%, var(--rg-color-white)); box-shadow: inset 3px 0 0 var(--rg-color-black); }
 .rg-table__row--selected:hover, .rg-table tr.is-selected:hover { background: color-mix(in srgb, var(--rg-color-accent-blue) 16%, var(--rg-color-white)); }
 .rg-table--compact th, .rg-table--compact td { padding-top: var(--rg-space-2); padding-bottom: var(--rg-space-2); font-size: var(--rg-font-size-xs); }
+/* Colonna che prende il resto (proposta 1.23.0): su <th> (e, se serve, sulle <td>) della colonna larga
+   — Note, Descrizione. Nel layout automatico della tabella width 100% la rende avida e le altre
+   scendono alla larghezza del proprio contenuto: un numero di stop o una velocita non chiedono 180 px. */
+.rg-table__grow { width: 100%; }
 /* Riga espandibile: la <tr> madre porta un <button> con aria-expanded che rivela una <tr>
    di dettaglio con <td colspan> su tutte le colonne — resta una tabella vera, le colonne
    restano allineate alla riga madre. Stato = aria-expanded sul toggle + [hidden] sulla riga
@@ -1013,6 +1017,13 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    default, e un'etichetta invertita uscirebbe bianca su bianco. Niente riquadro: e il segno di
    rg-dept-band__name, e il ruolo non deve leggersi come un reparto. */
 .rg-worksheet-block__role { flex: none; padding-left: var(--rg-space-2); border-left: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); }
+/* Testa con la FASE in primo piano (proposta 1.23.0). Richiesta dal reparto: la fase sempre chiara e
+   piu evidente del reparto. Gerarchia per misura, non per colore: FASE (__phase, 20, «Fase 2 di 3 ·
+   Pressatura») > PARTE (__part, 14, «Parte 1 di 4 · FONDO BORDATO») > REPARTO (nome sulla banda, 12
+   maiuscolo). Sostituiscono __index + __title nei blocchi che li usano; __title resta per chi non migra.
+   Livello contenitore: peso medium dichiarato (regole §3). */
+.rg-worksheet-block__phase { margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); }
+.rg-worksheet-block__part { display: inline-flex; align-items: center; gap: var(--rg-space-2); margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); }
 
 /* Dept band — banda di reparto sul bordo del blocco (v1.14.0). Il foglio viene quasi sempre
    FOTOCOPIATO IN BIANCO E NERO: il colore si perde, quindi non puo essere l'unico segnale.
@@ -1206,6 +1217,83 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    con td di proposito: .rg-table td pesa (0,1,1) e con la sola classe (0,1,0) il filetto della
    tabella vincerebbe su questo. */
 td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); background: var(--rg-color-white); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+/* Casella QUADRATA (proposta 1.23.0): ~10,6 mm di lato, per attaccare un pezzo di filo o segnare il
+   colore del cono. Contorno nero pieno su quattro lati: e un posto dove appoggiare qualcosa, non una
+   riga su cui scrivere. L'etichetta sta nella <th> («Cono») o accanto: la casella da sola non dice niente. */
+.rg-fill-field--swatch { display: inline-block; box-sizing: border-box; width: calc(var(--rg-space-8) + var(--rg-space-2)); height: calc(var(--rg-space-8) + var(--rg-space-2)); vertical-align: middle; background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+
+/* ── Fascicolo COMPATTO (proposta 1.23.0) ───────────────────────────────────────────────────────
+   Richiesta dal reparto: COCOTTE (4 parti, 12 fasi) stampava 17 pagine A4 quasi tutte piene a meta.
+   «Meno carta, la fase sempre chiara, spazi da scrivere piu piccoli.» OPT-IN: senza il modificatore
+   il blocco resta com'era. Il modificatore sta DOPO rg-fill-field perche ne abbassa le misure a pari
+   specificita. Le misure restano sulla scala del DS:
+   - riga da scrivere 24 px (~6,4 mm, era 32): una cifra, una sigla, un orario a mano ci stanno;
+   - riga alta 48 px (~12,7 mm) invariata: una nota di piu parole non si comprime;
+   - cella di tabella da compilare 24 px, con 2 px sopra e sotto (era 32 + 8 + 8);
+   - testa, corpo e piede a 8/12 invece di 12-16/16; griglia dei campi a colonne da 128 (~34 mm, ci sta
+     «TEMPERATURA °C») e auto-fill invece di auto-fit: tre campi non si allargano a tutta la pagina;
+   - banda di reparto da 26 px invece di 38: la striscia della trama resta 16, con 2 px di margine
+     bianco intorno a nome e nota invece di 4 (con 4 il margine coprirebbe il filetto del blocco).
+   Le basi delle righe restano NERE: e cio che sopravvive alla fotocopia in bianco e nero. */
+.rg-worksheet-block--compact { margin-bottom: var(--rg-space-2); }
+.rg-worksheet-block--compact > .rg-dept-band { min-height: 0; padding-block: calc(var(--rg-space-1) / 2); }
+.rg-worksheet-block--compact > .rg-dept-band > .rg-dept-band__name { padding-block: calc(var(--rg-space-1) / 2); }
+.rg-worksheet-block--compact > .rg-dept-band > :is(.rg-dept-band__name, .rg-dept-band__note) { outline-width: calc(var(--rg-space-1) / 2); }
+.rg-worksheet-block--compact .rg-worksheet-block__head { gap: var(--rg-space-1) var(--rg-space-3); padding: var(--rg-space-2) var(--rg-space-3); }
+.rg-worksheet-block--compact .rg-worksheet-block__body { padding: var(--rg-space-2) var(--rg-space-3); }
+.rg-worksheet-block--compact .rg-worksheet-block__fields { grid-template-columns: repeat(auto-fill, minmax(calc(var(--rg-space-24) + var(--rg-space-8)), 1fr)); gap: var(--rg-space-2) var(--rg-space-3); }
+/* Un'etichetta che va a capo non deve spostare la riga: le righe di una fila restano allineate sul fondo. */
+.rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field { display: flex; flex-direction: column; justify-content: flex-end; }
+/* La nota prende la fila intera: e l'unico campo che chiede larghezza. */
+.rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field--tall { grid-column: 1 / -1; }
+.rg-worksheet-block--compact .rg-fill-field__line { height: var(--rg-space-6); }
+.rg-worksheet-block--compact .rg-fill-field--tall > .rg-fill-field__line { height: var(--rg-space-12); }
+/* Tabelle nel blocco compatto (eccezioni per stop, legenda coni): righe da 24. */
+.rg-worksheet-block--compact .rg-table :is(th, td) { padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); line-height: var(--rg-line-height-technical); }
+.rg-worksheet-block--compact td.rg-fill-field--cell { height: var(--rg-space-6); }
+.rg-worksheet-block--compact .rg-table th { white-space: nowrap; }
+.rg-worksheet-block--compact .rg-table caption { padding-bottom: var(--rg-space-1); font-size: var(--rg-font-size-sm); }
+/* Piede su UNA riga dove ci sta: Tempo, Operatore, Data prendono il loro contenuto (etichetta + almeno
+   64 px di riga), la Nota prende il resto. Se non ci stanno vanno a capo, senza tagliare niente. */
+.rg-worksheet-block--compact .rg-worksheet-block__foot { align-items: flex-end; gap: var(--rg-space-2) var(--rg-space-4); padding: var(--rg-space-2) var(--rg-space-3); }
+.rg-worksheet-block--compact .rg-worksheet-block__foot > * { flex: 1 1 auto; }
+.rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--inline > .rg-fill-field__line { min-width: var(--rg-space-16); }
+.rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--tall { flex-grow: 3; }
+.rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--tall > .rg-fill-field__line { min-width: var(--rg-space-24); }
+
+/* Testata di PARTE in linea (proposta 1.23.0). Prima ogni parte apriva una pagina sua, quasi vuota, con
+   l'indice delle sue lavorazioni. Ora la parte e una testata di una o due righe che APRE una pagina
+   nuova (rg-utilities.css, @media print) e lascia scorrere i blocchi sotto sulla stessa pagina.
+   Livello SEZIONE: peso heading (regole §3); il filetto nero spesso in alto e cio che la separa dai
+   blocchi, che sono riquadrati. Identita prodotto su ogni testata: una pagina staccata si riassembla. */
+.rg-worksheet-part { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-4); margin: 0 0 var(--rg-space-2); padding: var(--rg-space-2) 0; border-top: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+.rg-worksheet-part__title { display: inline-flex; align-items: center; gap: var(--rg-space-2); margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-heading); line-height: var(--rg-line-height-heading); }
+/* Il percorso delle lavorazioni della parte, in ordine: lista vera, freccia generata e muta. */
+.rg-worksheet-part__route { display: flex; flex-wrap: wrap; gap: 0 var(--rg-space-2); margin: 0; padding: 0; list-style: none; color: var(--rg-color-text-primary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-sm); }
+.rg-worksheet-part__route > li + li::before { content: "\2192"; content: "\2192" / ""; padding-inline-end: var(--rg-space-2); color: var(--rg-color-text-secondary); }
+.rg-worksheet-part__product { margin: 0 0 0 auto; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+
+/* Riquadro DA RITAGLIARE (proposta 1.23.0). Nato per la legenda dei coni in fondo al foglio del ricamo:
+   si taglia e si attacca alla macchina. Contorno TRATTEGGIATO nero su quattro lati (la linea di taglio,
+   che regge la fotocopia) e l'indicazione «Ritaglia» scritta SULLA linea, in alto a sinistra. Il pezzo
+   staccato porta la propria testa (prodotto, parte, fase): da solo deve ancora dire da dove viene.
+   Non si spezza fra due pagine (rg-utilities.css). */
+.rg-cutout { position: relative; margin-top: var(--rg-space-4); padding: var(--rg-space-3); border: var(--rg-border-hairline) dashed var(--rg-color-black); }
+.rg-cutout__cue { position: absolute; top: 0; left: var(--rg-space-3); transform: translateY(-50%); padding-inline: var(--rg-space-1); background: var(--rg-color-white); color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* In fondo al blocco, dopo il piede: dentro il riquadro del blocco (resta con la sua fase), staccato dai bordi. */
+.rg-worksheet-block > .rg-cutout { margin: var(--rg-space-4) var(--rg-space-3) var(--rg-space-3); }
+.rg-cutout__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-3); margin-bottom: var(--rg-space-2); }
+.rg-cutout__title { margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); }
+.rg-cutout__meta { margin: 0 0 0 auto; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+
+/* Pagina lasciata BIANCA di proposito (proposta 1.23.0), per la stampa fronte/retro: l'app la mette
+   prima di una parte che cadrebbe sul retro, cosi ogni parte comincia su una facciata dispari. SOLO
+   STAMPA: a schermo non esiste (la geometria e in rg-utilities.css, @media print). --preview la mostra
+   a schermo come segnaposto tratteggiato, per la vetrina e per un'anteprima di stampa. La frase e in
+   piccolo: dice che il bianco e voluto, non che manca qualcosa. */
+.rg-blank-page { display: none; }
+.rg-blank-page--preview { display: flex; align-items: center; justify-content: center; min-height: calc(var(--rg-space-24) * 2); border: var(--rg-border-hairline) dashed var(--rg-color-border-medium); }
+.rg-blank-page__note { margin: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); text-align: center; }
 
 /* ── Larghezza dichiarata del campo (v1.15.0) ───────────────────────────────────────────────
    La larghezza di un campo e un'AFFERMAZIONE su quanto contenuto ci si aspetta, non una scelta

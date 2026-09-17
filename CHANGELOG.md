@@ -7,6 +7,52 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta 1.23.0 (ramo `ds/worksheet-compact`)
+
+**Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo.
+Nessun cambio di comportamento per chi non usa le classi nuove: `rg-worksheet-block` senza `--compact`
+resta identico.
+
+### Fascicolo compatto: meno carta, la fase in primo piano
+
+Richiesta dalla piattaforma (fascicolo stampato che va in reparto): COCOTTE (4 parti, 12 fasi) usciva in
+17 pagine A4 quasi tutte piene per metà. Lorenzo: *meno carta, la FASE sempre chiara e più evidente del
+reparto, spazi da scrivere più piccoli*. Stampa fronte/retro su A4.
+
+- **`rg-worksheet-block--compact`**: righe da scrivere a 24 px (~6,4 mm, erano 32), `--tall` invariata a 48,
+  celle `td.rg-fill-field--cell` a 24 px con 2 px sopra e sotto; testa, corpo e piede a 8/12; griglia
+  `__fields` a colonne ≥ 128 px in *auto-fill* (i campi non si allargano a tutta la pagina), allineati sul
+  fondo, `--tall` sulla fila intera; piede su una riga dove ci sta (Tempo, Operatore, Data `--inline` con
+  riga ≥ 64 px, Nota `--inline --tall` per ultima che prende il resto); banda di reparto a 30 px (erano 38:
+  trama 16 invariata, margine bianco del nome da 4 a 2); intestazioni di tabella su una riga.
+- **`rg-worksheet-block__phase`** e **`__part`**: la testa con la gerarchia fase (20 px, «Fase 2 di 3 ·
+  Pressatura») › parte (14 px, «Parte 1 di 4 · FONDO BORDATO») › reparto (12 px sulla banda). Prendono il
+  posto di `__index` + `__title`, che restano.
+- **`rg-worksheet-part`** (`__title`, `__route`, `__product`): testata di parte in linea che apre una pagina
+  nuova e lascia scorrere i blocchi sotto. Sostituisce la pagina-indice per parte. In stampa non apre una
+  pagina vuota se è la prima, e un `--long` subito dopo non la stacca dalla sua parte.
+- **`rg-cutout`** (`__cue`, `__head`, `__title`, `__meta`): riquadro da ritagliare, tratteggio nero su quattro
+  lati, «Ritaglia lungo il tratteggio» scritto sulla linea, mai spezzato fra due pagine. Per la legenda dei
+  coni, ultimo figlio del blocco del ricamo.
+- **`rg-fill-field--swatch`**: casella quadrata da 40 px (~10,6 mm), contorno nero, per attaccare o segnare
+  il colore del cono.
+- **`rg-table__grow`**: la colonna che prende il resto (Note, Colore); le altre scendono alla larghezza del
+  contenuto.
+- **`rg-blank-page`** (`__note`, `--preview`): pagina lasciata bianca per il fronte/retro, solo stampa.
+  Chrome non implementa `break-before: recto`: il conto delle facciate lo fa l'app.
+- **Eccezioni per stop**: nessun componente nuovo, `rg-table--compact` + `td.rg-fill-field--cell` dentro il
+  blocco compatto + `rg-table__grow` su Note. Documentato in `worksheet-block.md`.
+- Documenti: `worksheet-block.md` (sezione *Fascicolo compatto*, markup canonico), `worksheet-part.md`,
+  `cutout.md`, `blank-page.md` (nuovi), `fill-field.md`, `tables.md`; manifest (voci `worksheet-part`,
+  `cutout`, `blank-page` in beta; `worksheet-block`, `fill-field`, `table` estese); vetrina
+  `#worksheet-compact` con prima/dopo e fotocopia simulata.
+- Verificato con `--print-to-pdf` di Chrome headless su A4 con `rg-u-print-a4`, a colori e in scala di grigi a
+  contrasto spinto: la testata apre la pagina, i blocchi scorrono, la pagina bianca porta la parte 2 sul
+  recto, basi nere e trame leggibili. Misure a 703 px: riga 24, cella 24, casella 40, piede su una riga,
+  colonne Stop · Piedino · Velocità · Ago · PMI da 37–61 px, blocco di pressatura 247 px (~65 mm).
+- Limiti: la testa va a capo se fase, parte e prodotto non stanno su una riga; con un'etichetta lunga della
+  nota il piede va a capo.
+
 ## 1.22.0 — 2026-09-17
 
 **Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo.

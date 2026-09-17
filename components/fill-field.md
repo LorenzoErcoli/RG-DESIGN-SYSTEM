@@ -31,6 +31,11 @@ Tre scelte, e sono tutte a servizio di quella frase:
 | `rg-fill-field--tall` | Riga alta: nota, motivazione, descrizione di una difformità. |
 | `rg-fill-field--inline` | Etichetta e riga sulla stessa linea, per i campi brevi in fondo al blocco (operatore, ora). |
 | `rg-fill-field--cell` | **Forma tabella**: si mette su una `<td>` di `rg-table`, dove l'etichetta sta già nella `<th>`. Trenta righe da riempire sono una tabella, non trenta campi. |
+| `rg-fill-field--swatch` | **Casella quadrata** (proposta 1.23.0), ~10,6 mm di lato (40 px), contorno nero su quattro lati: il posto dove **attaccare un pezzo di filo** o segnare il colore del cono. Su uno `<span>` dentro una `<td>`, con l'etichetta nella `<th>` («Cono»). |
+
+**Densità compatta** (proposta 1.23.0). Dentro un [`rg-worksheet-block--compact`](worksheet-block.md#fascicolo-compatto-proposta-1230)
+la riga scende a **24 px** (~6,4 mm) e la cella `--cell` a 24 px; `--tall` resta 48. Nessuna classe da
+aggiungere sul campo: la densità la decide il blocco.
 
 ## Uso e limiti
 
@@ -54,6 +59,11 @@ colonne sono già stampate (filetto neutro della tabella) e quali aspettano la p
 modificatore ripristina `display: table-cell` (la base è `block`): non funziona su un `<div>`
 dentro la cella, va sulla `<td>` stessa. Il selettore è qualificato `td.rg-fill-field--cell` di
 proposito — `.rg-table td` pesa (0,1,1) e con la sola classe il filetto della tabella vincerebbe.
+
+**La casella non è una riga.** `--swatch` non si scrive: ci si appoggia qualcosa (un capo di filo con
+il nastro, un segno di pennarello). Per questo è chiusa su quattro lati, mentre la riga è una staffa
+aperta. Da sola non dice niente: l'etichetta sta nella colonna, e accanto restano **codice e nome del
+colore** stampati (regole §10: mai riconoscimento solo cromatico).
 
 **Quanti buchi.** Un blocco tutto buchi non è una scheda, è un modulo in bianco: quello che il
 sistema sa già va **stampato**, non lasciato all'operatore. La regola pratica è che il valore noto
@@ -108,6 +118,24 @@ Forma tabella — righe da riempire, intestazione già stampata:
       <td class="rg-fill-field rg-fill-field--cell"></td>
       <td class="rg-fill-field rg-fill-field--cell"></td>
       <td class="rg-fill-field rg-fill-field--cell"></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+Casella quadrata — il cono della legenda, con codice e colore stampati accanto:
+
+```html
+<table class="rg-table rg-table--compact">
+  <thead>
+    <tr><th class="rg-table__numeric" scope="col">Ago</th><th scope="col">Codice filo</th><th class="rg-table__grow" scope="col">Colore</th><th scope="col">Cono</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rg-table__numeric">1</td>
+      <td class="rg-table__code">MAD-1800</td>
+      <td>Bianco ottico</td>
+      <td><span class="rg-fill-field rg-fill-field--swatch"></span></td>
     </tr>
   </tbody>
 </table>

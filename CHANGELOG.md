@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## Non rilasciato — proposta 1.22.0 (ramo `ds/operation-sequence`)
+## 1.22.0 — 2026-09-17
 
 **Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo.
 Un cambio di markup consigliato ma non obbligatorio: le frecce spente passano da `disabled` ad

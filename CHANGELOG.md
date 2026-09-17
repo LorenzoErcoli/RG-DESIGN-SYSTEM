@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## Non rilasciato — proposta 1.21.1 (ramo `ds/dept-band-trame`)
+## 1.21.1 — 2026-09-17
 
 **Patch.** Nessuna classe o token aggiunto, rimosso o rinominato; markup e altezza della fascia invariati.
 Cambia il disegno della trama dentro le classi esistenti: sulla scheda stampata allinea la fascia a ciò

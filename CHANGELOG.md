@@ -7,6 +7,38 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta 1.21.0 (ramo `ds/phase-head-reparto`)
+
+**Minor**: due elementi nuovi (`rg-phase-panel__department`, `rg-dept-label__kind`) e una regola
+additiva sulla linguetta (`__title` figlio diretto). Niente di rimosso o rinominato, nessun token. Il
+markup 1.20.0 continua a funzionare con lo stesso aspetto; cambia la forma raccomandata.
+
+### Il reparto in una riga sua, e la linguetta essenziale
+
+Giudizio sulla 1.20.0 a schermo: *«così è tutto attaccato reparto e fase […] basta che non sia così
+attaccata una all'altra. anche le tab sono un po' confusionarie così. troppe info. per il ricamo
+scriviamo Reparto Ricamo. Forse lo metterei ovunque Reparto e quello che è»*.
+
+- **`rg-phase-panel__department`**: la riga del reparto, primo figlio del blocco della fase, prima di
+  `__head`. `rg-dept-label` con tessera `--quiet` e «Reparto …», in tondo a 14 px, chiusa da un
+  filetto neutro **rientrato** (24 px, 16 sotto i 680 px) che non tocca il contorno del blocco.
+  Nessun fondo. La tessera cade sul filo del numero della fase; 16 px fra il filetto e la riga
+  «Fase N di M». Scartate l'etichetta a destra (contende la riga ai gesti) e la fascia bassa grigia
+  (sotto la linguetta bianca torna a leggersi come la sua base).
+- **`rg-dept-label__kind`**: la parola «Reparto» davanti al nome, maiuscola a 12 nel colore
+  d'etichetta, con uno spazio vero dopo. «Reparto Ricamo», «Reparto da assegnare».
+- **Linguetta essenziale**: numero, titolo, conteggio. `__title` diretto nella linguetta (nuova regola:
+  si centra sul numero); ruolo nascosto alla vista in coda al titolo; conteggio come numero nudo in
+  `rg-badge--count` con «da compilare» nascosto (lo stesso segno delle tab di sezione); «completa» non
+  si scrive; «1 errore» resta a parole. Altezza invariata, graffa e dente fermi.
+- **Superati** (restano nel CSS): sulla linguetta `__text`, `__role` visibile, la tessera in `__title`;
+  nel blocco `rg-dept-label` come primo elemento di `__kind`.
+- Documenti: `phase-switch.md` (*Il reparto in una riga sua e la linguetta essenziale*, con markup e
+  migrazione), `dept-mark.md`; manifest; vetrina (gruppo Pressatura + Sabbiatura, tre fasi in
+  fotocopia, fase senza gruppo con reparto da assegnare, Ricamo da solo, tavola del segno del reparto).
+- Verificato in Chrome headless a 1400 e 600 px: geometria, e nomi accessibili dall'albero di
+  accessibilità («3 Sabbiatura e soffiatura finale, collegata 7 da compilare»).
+
 ## 1.20.0 — 2026-09-16
 
 **Minor**: una classe nuova con le sue varianti (`rg-dept-mark`), un elemento in linea

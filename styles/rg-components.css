@@ -602,6 +602,15 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-phase-switch__title { font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); overflow-wrap: anywhere; }
 /* Un conteggio, e solo quello: il reparto sta nella testa del pannello, non sulla linguetta. */
 .rg-phase-switch__aside { flex: none; align-self: center; margin-left: var(--rg-space-2); }
+/* LINGUETTA ESSENZIALE (proposta 1.21.0) — giudizio sulla 1.20.0: «anche le tab sono un po'
+   confusionarie cosi, troppe info». Sulla linguetta restano NUMERO, TITOLO e un CONTEGGIO: il ruolo
+   lo dice gia il dente della graffa (principale) e lo scrive la testa del pannello («Principale · con
+   la 3»); il reparto sta nella riga __department del pannello, e principale e collegate sono spesso
+   dello stesso reparto; il conteggio e un numero nudo in rg-badge--count, lo stesso segno delle tab
+   di sezione (la somma delle loro cifre). Il titolo e figlio diretto dell'item, senza __text: si
+   centra sul numero. Altezza invariata (12 + 32 + 12), dente e graffa non si spostano.
+   SUPERATI sulla linguetta, restano nel CSS: __text, __role visibile, la tessera in __title. */
+.rg-phase-switch__item > .rg-phase-switch__title { flex: 1 1 auto; min-width: 0; align-self: center; }
 /* Sotto la soglia mobile le linguette scorrono in orizzontale invece di impilarsi: una linguetta
    impilata non si attacca piu al pannello, e la metafora si rompe. */
 @media (max-width: 680px) { .rg-phase-switch { justify-items: stretch; } .rg-phase-switch__tabs { overflow-x: auto; } .rg-phase-switch__item { flex: 0 0 auto; max-width: calc(24ch + var(--rg-space-16)); } }
@@ -679,6 +688,18 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    primo figlio, col suo padding (16 sopra, 24 ai lati), com'era fino alla 1.18.0. La tessera sporge
    di 2 px sopra e sotto e non alza la riga: il numero della fase resta sul filo del titolo. */
 .rg-phase-panel__kind > .rg-dept-label { color: var(--rg-color-text-primary); }
+/* IL REPARTO IN UNA RIGA SUA (proposta 1.21.0) — giudizio sulla 1.20.0: «cosi e tutto attaccato
+   reparto e fase […] basta che non sia cosi attaccata una all'altra». In __kind il reparto era il
+   primo di quattro pezzi maiuscoli divisi da un punto: si leggeva come parte della fase. Ora il
+   reparto e una RIGA SUA, primo figlio del blocco, prima di __head:
+   «[tessera] REPARTO Pressatura e soffiatura», chiusa da un filetto neutro RIENTRATO (non tocca il
+   contorno del blocco: e una divisione interna, non il bordo delle linguette, dove la fascia della
+   1.19 sbagliava). Tre differenze dalla riga della fase: riga e filetto propri, il nome in tondo a 14
+   (la riga della fase e maiuscola a 12), la parola «Reparto» scritta davanti (rg-dept-label__kind).
+   Nessun fondo, nessuna trama: sotto la linguetta scelta, bianca, un fondo grigio si leggerebbe di
+   nuovo come la sua base. Respiro: 12 sopra; 12 + filetto + 16 (padding di __head) sotto. La tessera
+   prende il nero del testo. Da questa proposta __kind non porta piu il reparto. */
+.rg-phase-panel__department { margin: 0 var(--rg-space-6); padding: var(--rg-space-3) 0; border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); overflow-wrap: anywhere; }
 /* SUPERATO dalla 1.19.0 nella testa del blocco: il timbro del reparto e la fascia __band. */
 .rg-phase-panel__dept { flex: 0 1 auto; width: calc(24ch + var(--rg-space-12)); max-width: 100%; }
 .rg-phase-panel__body { padding: var(--rg-space-6); }
@@ -726,6 +747,7 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
   .rg-phase-panel__heading ~ .rg-phase-panel__meta { padding-inline-start: 0; }
   .rg-phase-panel__summary { padding-inline-start: 0; }
   .rg-dept-band.rg-phase-panel__band { padding-inline: var(--rg-space-4); }
+  .rg-phase-panel__department { margin-inline: var(--rg-space-4); }
   .rg-phase-panel__gestures { justify-content: flex-start; margin-inline-start: 0; }
 }
 
@@ -1133,6 +1155,10 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    alzare la riga: le righe da 12 e 14 px del DS sono alte ~17. */
 .rg-dept-label { display: inline; }
 .rg-dept-label > .rg-dept-mark, .rg-phase-switch__title > .rg-dept-mark { margin-block: calc(-1 * var(--rg-border-strong)); margin-inline-end: var(--rg-space-2); vertical-align: middle; }
+/* La parola «Reparto» davanti al nome (proposta 1.21.0): «forse lo metterei ovunque Reparto e quello
+   che e». Etichetta identitaria come le altre del DS (maiuscola a 12, colore label); il nome resta nel
+   tono della riga. Nel markup c'e uno spazio vero dopo la parola: si copia e si legge «Reparto Ricamo». */
+.rg-dept-label__kind { margin-inline-end: var(--rg-space-1); color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 
 /* Fill field — il campo che si compila A PENNA (v1.14.0). E il caso centrale della scheda di
    lavorazione: il foglio esce dalla stampante con dei buchi APPOSTA, e il buco deve invitare a

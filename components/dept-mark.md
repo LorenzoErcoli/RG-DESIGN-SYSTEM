@@ -16,6 +16,13 @@ linguette, non come «reparto»**, e il nome del reparto era già scritto sulla 
 - **sul foglio stampato** (`rg-worksheet-block`) la banda resta com'è: lì il colore e la trama a
   tutta larghezza servono a pescare il foglio dal mucchio.
 
+**Proposta 1.21.0.** Provata la 1.20.0, il reparto in testa a `__kind` era *«tutto attaccato reparto e
+fase»*, e le linguette avevano *«troppe info»*. Il reparto passa in **una riga sua** in cima al blocco
+della fase ([`rg-phase-panel__department`](phase-switch.md#il-reparto-in-una-riga-sua-e-la-linguetta-essenziale-proposta-1210)),
+sempre con la parola **«Reparto»** davanti; **la linguetta non porta più la tessera**. Le due forme
+1.20.0 (tessera sola sulla linguetta, `rg-dept-label` in `__kind`) sono superate; la tessera resta per
+la riga del reparto, gli elenchi e le legende.
+
 ## Varianti
 
 ### Le sette riduzioni
@@ -73,6 +80,12 @@ reggono la forma, non il tono.
 Mai tessera sola e muta. Il nome è quello del reparto («Pressatura e soffiatura»), non lo slug della
 variante.
 
+**La parola «Reparto» davanti al nome** (proposta 1.21.0): `rg-dept-label__kind`, etichetta maiuscola
+a 12&nbsp;px nel colore d'etichetta, seguita da uno spazio vero. Si legge «Reparto Ricamo», «Reparto
+Pressatura e soffiatura», «Reparto da assegnare», e si usa **ovunque** il reparto sia nominato in linea.
+Non va nel `aria-label` della tessera sola (che dice già «Reparto: …»). Sulla banda stampata il testo
+è quello che passa l'applicazione in `rg-dept-band__name`: per coerenza, lo stesso «Reparto …».
+
 **Non alza la riga.** La tessera è 20&nbsp;px e le righe da 12 e 14&nbsp;px del DS sono alte ~17: dentro
 `rg-dept-label` e dentro `rg-phase-switch__title` sporge di 2&nbsp;px sopra e sotto con un margine
 negativo. Il numero della fase resta sul filo del titolo.
@@ -97,26 +110,26 @@ prenderebbe la trama.
 
 ## Struttura
 
-Tessera + nome, ovunque serva nominare un reparto in linea:
+Tessera, «Reparto» e nome, ovunque serva nominare un reparto in linea (proposta 1.21.0):
 
 ```html
-<span class="rg-dept-label">
-  <span class="rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet" aria-hidden="true"></span>
-  Pressatura e soffiatura
-</span>
+<span class="rg-dept-label"><span class="rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet" aria-hidden="true"></span><span class="rg-dept-label__kind">Reparto</span> Pressatura e soffiatura</span>
 ```
 
 Reparto da assegnare:
 
 ```html
-<span class="rg-dept-label">
-  <span class="rg-dept-mark rg-dept-mark--quiet" aria-hidden="true"></span>
-  Reparto da assegnare
-</span>
+<span class="rg-dept-label"><span class="rg-dept-mark rg-dept-mark--quiet" aria-hidden="true"></span><span class="rg-dept-label__kind">Reparto</span> da assegnare</span>
 ```
 
-**Sulla linguetta di una fase**, davanti al titolo (tessera sola, col nome per le tecnologie
-assistive):
+**Nel blocco della fase**, la riga sua (proposta 1.21.0), primo figlio del blocco:
+
+```html
+<p class="rg-phase-panel__department"><span class="rg-dept-label"><span class="rg-dept-mark rg-dept-mark--ricamo rg-dept-mark--quiet" aria-hidden="true"></span><span class="rg-dept-label__kind">Reparto</span> Ricamo</span></p>
+```
+
+**Superato dalla proposta 1.21.0 — sulla linguetta di una fase**, davanti al titolo (tessera sola, col
+nome per le tecnologie assistive). La linguetta ora porta solo numero, titolo e conteggio:
 
 ```html
 <button class="rg-phase-switch__item rg-phase-switch__item--principal" type="button" role="tab" aria-selected="true" …>
@@ -129,7 +142,8 @@ assistive):
 </button>
 ```
 
-**In testa alla riga `__kind`** del blocco della fase, e il blocco **senza** `__band`: vedi
+**Superato dalla proposta 1.21.0 — in testa alla riga `__kind`** del blocco della fase: *«tutto
+attaccato reparto e fase»*. Il reparto va in `rg-phase-panel__department`, sopra. Vedi
 [phase-switch](phase-switch.md#il-reparto-senza-fascia-1200).
 
 ```html

@@ -121,6 +121,9 @@ non per massa.
 Se il CSS non arriva — mail, export, un PDF renderizzato male — la parola resta. La targhetta è
 bianca opaca con filetto nero perché il nome deve restare leggibile **sopra qualsiasi figura**. Si
 scrive «Reparto» e il **nome del reparto** («Reparto Pressatura e soffiatura»), mai lo slug della variante.
+**Sempre in maiuscolo** (proposta 1.21.1, *«REPARTO e NOME REPARTO sempre scritto in maiuscolo ovunque,
+schede che interfacce»*): `rg-dept-band__name` lo garantisce in CSS, «Reparto da assegnare» compreso. Nel
+markup il testo resta in tondo. La stessa regola a schermo è in [dept-mark](dept-mark.md#uso-e-limiti).
 
 **Il maiuscolo è ammesso qui** perché è una micro-label identitaria di due o tre parole, come
 `rg-label`. Le regole vietano il maiuscolo in *paragrafi e tabelle dense* (§2), non su un'etichetta.

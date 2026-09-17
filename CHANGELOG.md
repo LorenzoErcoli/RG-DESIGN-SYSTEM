@@ -15,6 +15,22 @@ che la 1.21.0 ha già rilasciato per la tessera. Chi aggiorna non tocca nulla. S
 considerasse la figura della fascia parte del contratto (la riconoscono gli operatori sui fogli): se
 Lorenzo la vuole annunciare come novità, il contenuto non cambia, cambia solo il numero.
 
+### Il reparto si scrive in maiuscolo
+
+Richiesta: *«REPARTO e NOME REPARTO sempre scritto in maiuscolo ovunque, schede che interfacce»*. Resta una
+patch: nessuna classe o token nuovo, il testo nel markup non cambia (la cassa la dà il CSS).
+
+- **`rg-dept-label`** tutta maiuscola, con spaziatura da etichetta e font identitario: «REPARTO PRESSATURA E
+  SOFFIATURA». «REPARTO» (`__kind`) resta a 12 px in grigio etichetta; il nome prende corpo e colore della
+  riga (14 nero nella riga del reparto). La riga del reparto resta distinta da «FASE N DI M» per nome a 14 in
+  nero, tessera, riga e filetto propri.
+- **`rg-dept-band__name`** era già maiuscolo: ora è dichiarato come regola, «Reparto da assegnare» compreso.
+- **Regola** in `dept-mark.md` e `dept-band.md`: il reparto si scrive sempre in maiuscolo, preceduto da
+  REPARTO dove sta da solo.
+- **Elenco fasi** (`steps.md`, vetrina): il reparto nella meta è `rg-dept-label` («REPARTO …»); lì il nome
+  sale al grigio etichetta e «REPARTO» scende al secondario, altrimenti la parola pesava più del nome. Vetrina: le
+  fasce dei blocchi stampabili scrivono «Reparto …».
+
 ### La trama della fascia è la striscia della tessera
 
 Richiesta: *«allinea però i nuovi loghi per essere pattern da usare sulle testate dei reparti nelle

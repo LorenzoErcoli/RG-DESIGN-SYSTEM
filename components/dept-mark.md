@@ -127,6 +127,22 @@ reggono la forma, non il tono.
 
 ## Uso e limiti
 
+**Il reparto si scrive sempre in maiuscolo, preceduto da REPARTO dove sta da solo** (proposta 1.21.1:
+*«REPARTO e NOME REPARTO sempre scritto in maiuscolo ovunque, schede che interfacce»*).
+- A schermo: `rg-dept-label` è tutta maiuscola (`text-transform`), con la spaziatura da etichetta e il
+  font identitario. «REPARTO» (`__kind`) a 12 px nel colore d'etichetta; il nome nel corpo e nel colore
+  della riga (14 nero nella riga del reparto, 12 nella meta dell'elenco fasi).
+- Sulla scheda: `rg-dept-band__name` è maiuscolo, «Reparto da assegnare» compreso.
+- Nel markup si scrive in tondo («Reparto Pressatura e soffiatura»): la cassa la dà il CSS, così il testo
+  copiato resta leggibile e i lettori di schermo non compitano le lettere.
+- «Da solo» vuol dire senza un'intestazione che dica già «reparto»: la riga del reparto, la meta dell'elenco
+  fasi, la fascia. In una colonna di tabella intitolata «Reparto» basta il nome, sempre maiuscolo.
+
+**Riga del reparto e riga della fase, a cassa uguale.** «REPARTO PRESSATURA E SOFFIATURA» sta sopra
+«FASE 2 DI 4 · PRINCIPALE», entrambe maiuscole. Restano due righe perché la riga del reparto ha il nome a
+14&nbsp;px in nero (la riga della fase è a 12 in grigio), la tessera davanti, una riga e un filetto propri e
+16&nbsp;px di distanza.
+
 **La tessera non porta il nome: lo porta il markup.** Due forme soltanto:
 
 - **tessera + nome scritto** (`rg-dept-label`): la tessera è `aria-hidden="true"`, il nome è testo;

@@ -694,11 +694,15 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    reparto e una RIGA SUA, primo figlio del blocco, prima di __head:
    «[tessera] REPARTO Pressatura e soffiatura», chiusa da un filetto neutro RIENTRATO (non tocca il
    contorno del blocco: e una divisione interna, non il bordo delle linguette, dove la fascia della
-   1.19 sbagliava). Tre differenze dalla riga della fase: riga e filetto propri, il nome in tondo a 14
+   1.19 sbagliava). Tre differenze dalla riga della fase: riga e filetto propri, il nome a 14 in nero
    (la riga della fase e maiuscola a 12), la parola «Reparto» scritta davanti (rg-dept-label__kind).
    Nessun fondo, nessuna trama: sotto la linguetta scelta, bianca, un fondo grigio si leggerebbe di
    nuovo come la sua base. Respiro: 12 sopra; 12 + filetto + 16 (padding di __head) sotto. La tessera
-   prende il nero del testo. Da questa proposta __kind non porta piu il reparto. */
+   prende il nero del testo. Da questa proposta __kind non porta piu il reparto.
+   MAIUSCOLO (proposta 1.21.1): «REPARTO PRESSATURA E SOFFIATURA». A cassa uguale, la riga resta distinta
+   da «FASE N DI M» (12, grigio label) per quattro segnali: il nome a 14 in NERO, la tessera davanti, la
+   riga e il filetto propri, e la distanza di 16 dalla riga della fase. Dentro la riga «REPARTO» resta a
+   12 in grigio label: si legge come l'etichetta del nome, non come un secondo nome. */
 .rg-phase-panel__department { margin: 0 var(--rg-space-6); padding: var(--rg-space-3) 0; border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); overflow-wrap: anywhere; }
 /* SUPERATO dalla 1.19.0 nella testa del blocco: il timbro del reparto e la fascia __band. */
 .rg-phase-panel__dept { flex: 0 1 auto; width: calc(24ch + var(--rg-space-12)); max-width: 100%; }
@@ -1026,6 +1030,8 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-dept-band::after { left: calc(var(--rg-dept-inset, var(--rg-space-2)) + var(--rg-dept-passo, var(--rg-border-hairline)) / 2); width: calc(100% - 2 * var(--rg-dept-inset, var(--rg-space-2)) - var(--rg-dept-passo, var(--rg-border-hairline))); width: round(down, calc(100% - 2 * var(--rg-dept-inset, var(--rg-space-2)) - var(--rg-dept-passo, var(--rg-border-hairline))), var(--rg-dept-passo, var(--rg-border-hairline))); background-image: var(--rg-dept-trama-mezzo, none); background-size: var(--rg-dept-trama-mezzo-size, auto); background-position: var(--rg-dept-trama-mezzo-pos, 0 0); }
 /* Nome e nota sopra la trama: la striscia e posizionata e verrebbe dopo nell'ordine di pittura. */
 .rg-dept-band > * { position: relative; z-index: 1; }
+/* Nome sulla fascia: MAIUSCOLO per regola, «Reparto …» compreso «Reparto da assegnare» (proposta 1.21.1:
+   il reparto si scrive sempre in maiuscolo, schede e interfacce). La cassa la da il CSS, non il testo. */
 .rg-dept-band__name { padding: var(--rg-space-1) var(--rg-space-2); background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 /* Nota accessoria della banda (macchina, turno): mono, secondaria, mai al posto del nome. */
 .rg-dept-band__note { margin-left: auto; padding: 0 var(--rg-space-1); background: var(--rg-color-white); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
@@ -1147,7 +1153,18 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    suo bordo basso) e il nome usciva piu alto del testo accanto. Cosi il nome sta sulla linea di base
    della riga e la tessera si centra sull'occhio della minuscola. Sporge di 2 px sopra e sotto senza
    alzare la riga: le righe da 12 e 14 px del DS sono alte ~17. */
-.rg-dept-label { display: inline; }
+/* IL REPARTO SI SCRIVE IN MAIUSCOLO (proposta 1.21.1): «REPARTO e NOME REPARTO sempre scritto in
+   maiuscolo ovunque, schede che interfacce». Tutta l'etichetta e maiuscola, con la spaziatura da label
+   e il font identitario; il nome prende il corpo della riga in cui sta (14 nella riga del reparto, 12
+   nella meta dell'elenco fasi). Nel markup si scrive in tondo («Reparto Pressatura e soffiatura»): la
+   cassa e del CSS, e i lettori di schermo non compitano. Gerarchia a cassa uguale: «REPARTO» e piu
+   piccolo e grigio (__kind, 12, colore label), il nome e nel colore della riga. */
+.rg-dept-label { display: inline; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* Nella meta dell'elenco fasi (grigio secondario, 12) la regola generale rovescerebbe la gerarchia:
+   «REPARTO» in grigio label e piu scuro del nome. Qui il nome sale al grigio label e «REPARTO» scende al
+   secondario: la parola resta l'etichetta, il nome il dato. */
+.rg-step__meta > .rg-dept-label { color: var(--rg-color-text-label); }
+.rg-step__meta > .rg-dept-label > .rg-dept-label__kind { color: var(--rg-color-text-secondary); }
 .rg-dept-label > .rg-dept-mark, .rg-phase-switch__title > .rg-dept-mark { margin-block: calc(-1 * var(--rg-border-strong)); margin-inline-end: var(--rg-space-2); vertical-align: middle; }
 /* La parola «Reparto» davanti al nome (proposta 1.21.0): «forse lo metterei ovunque Reparto e quello
    che e». Etichetta identitaria come le altre del DS (maiuscola a 12, colore label); il nome resta nel

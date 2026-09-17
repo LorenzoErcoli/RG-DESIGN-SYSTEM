@@ -81,6 +81,8 @@ toggle.
   opposti del toggle proprio per non leggersi come un unico blocco.
 - `rg-step__aside` è opzionale: contiene badge di sola lettura (conteggio operazioni, stato del
   dato). Mai controlli.
+- **Il reparto nella meta** è `rg-dept-label` («REPARTO PRESSATURA E SOFFIATURA», maiuscolo dal CSS; proposta
+  1.21.1): sta da solo, quindi con «Reparto» davanti. Vedi [dept-mark](dept-mark.md#uso-e-limiti).
 - I parametri tecnici stanno in `rg-step__meta`, in mono, **con l'unità accanto al valore**
   (`densità 4.2 pt/mm`, non `4.2`). I separatori `·` li mette il CSS: nel markup solo `<span>`.
 - Numero a 1–2 cifre: la casella è larga `--rg-space-8` e non cresce. Oltre le 99 fasi il
@@ -198,7 +200,7 @@ dopo la 2) · 4 stampa UV.
         <span class="rg-step__num">1</span>
         <span class="rg-step__headline">
           <span class="rg-step__title">Ricamo</span>
-          <span class="rg-step__meta"><span>Campionario Ricamo</span><span>4 operazioni</span></span>
+          <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Ricamo</span><span>4 operazioni</span></span>
         </span>
       </button>
       <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="…/fasi/1" aria-label="Apri fase 1: Ricamo">Apri</a></div>
@@ -213,7 +215,7 @@ dopo la 2) · 4 stampa UV.
         <span class="rg-step__headline">
           <span class="rg-step__role">Principale</span>
           <span class="rg-step__title">Pressatura</span>
-          <span class="rg-step__meta"><span>Pressatura e soffiatura</span><span>5 operazioni</span></span>
+          <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Pressatura e soffiatura</span><span>5 operazioni</span></span>
         </span>
         <span class="rg-step__aside"><span class="rg-badge rg-badge--count">6 da compilare</span></span>
       </button>
@@ -229,7 +231,7 @@ dopo la 2) · 4 stampa UV.
         <span class="rg-step__headline">
           <span class="rg-step__role">Collegata · dopo la 2</span>
           <span class="rg-step__title">Sabbiatura e soffiatura finale</span>
-          <span class="rg-step__meta"><span>Pressatura e soffiatura</span><span>2 operazioni</span></span>
+          <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Pressatura e soffiatura</span><span>2 operazioni</span></span>
         </span>
         <span class="rg-step__aside"><span class="rg-badge rg-badge--count">7 da compilare</span></span>
       </button>

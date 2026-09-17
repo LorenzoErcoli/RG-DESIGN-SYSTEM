@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## Non rilasciato — proposta 1.24.0 (ramo `ds/worksheet-compact`)
+## 1.24.0 — 2026-09-17
 
 **Minor.** Una variante nuova e additiva (`rg-table--grid`), nessuna classe o token rimosso o rinominato,
 nessun token nuovo, nessun cambio alle tabelle esistenti. Richiesta come patch 1.23.1: è una variante nuova,

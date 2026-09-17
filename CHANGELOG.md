@@ -7,6 +7,39 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta 1.21.1 (ramo `ds/dept-band-trame`)
+
+**Patch.** Nessuna classe o token aggiunto, rimosso o rinominato; markup e altezza della fascia invariati.
+Cambia il disegno della trama dentro le classi esistenti: sulla scheda stampata allinea la fascia a ciò
+che la 1.21.0 ha già rilasciato per la tessera. Chi aggiorna non tocca nulla. Sarebbe una 1.22.0 se si
+considerasse la figura della fascia parte del contratto (la riconoscono gli operatori sui fogli): se
+Lorenzo la vuole annunciare come novità, il contenuto non cambia, cambia solo il numero.
+
+### La trama della fascia è la striscia della tessera
+
+Richiesta: *«allinea però i nuovi loghi per essere pattern da usare sulle testate dei reparti nelle
+schede»*. Fino alla 1.21.0 la fascia (`rg-dept-band`) aveva figure sue, la tessera (`rg-dept-mark`) un
+disegno sui pixel diverso.
+
+- **Le sette trame** sono la striscia della tessera: croce da 6, tondo da 4, piastra 4×4, linea da 2,
+  tratto 2, stessa luce; alta 16 sulla mezzeria (y intera), ripetuta col passo del motivo: ricamo 10,
+  stampa 12, pressatura 6, strass 6 (fila di mezzo sfalsata di 3), finissaggio 8, incollature 8,
+  accoppiaggi 10. «Da assegnare»: nessuna trama.
+- **Estremità pulite**: la larghezza della striscia è arrotondata al passo con `round()`; la trama finisce
+  sempre con un elemento intero.
+- **Vettoriale in stampa**: una fila di pixel = uno strato `repeating-linear-gradient(90deg)` a stop netti.
+  Scartate, dopo la prova con `Page.printToPDF` e PDFium a 600 dpi, la maschera SVG e il gradiente a
+  tessere ripetute: nel PDF di Chrome diventano bitmap sfocati.
+- **Nome e nota** con 4 px di bianco intorno (`outline`): la trama passa sotto e si legge coperta.
+- Nuove variabili interne: `--rg-dept-passo`, `--rg-dept-trama` (con `-size`, `-pos`), `--rg-dept-trama-mezzo`
+  (con `-size`, `-pos`), `--rg-dept-inset`. `--rg-dept-pattern`/`-size`/`-position`/`-repeat` restano lette.
+- Documenti: `dept-band.md` (*La trama è la tessera*); manifest; vetrina (nomi «Reparto …», note
+  «Foglio N / M», tavola *La fascia accanto alla sua tessera*).
+- Verificato in Chrome headless: sette fasce e «da assegnare» a colori e in fotocopia simulata, DPR 1 e 2
+  con zoom nearest-neighbor, estremità su larghezza dispari senza nota, PDF di Chrome rasterizzato con
+  PDFium a 150 e 600 dpi. Limiti: la trama pesa meno (16 px su 38); accanto al margine bianco del nome può
+  restare visibile uno spicchio di un elemento; incollature e accoppiaggi restano i più chiari in fotocopia.
+
 ## 1.21.0 — 2026-09-17
 
 **Minor**: due elementi nuovi (`rg-phase-panel__department`, `rg-dept-label__kind`) e una regola

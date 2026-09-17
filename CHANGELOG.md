@@ -7,6 +7,32 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta 1.24.0 (ramo `ds/worksheet-compact`)
+
+**Minor.** Una variante nuova e additiva (`rg-table--grid`), nessuna classe o token rimosso o rinominato,
+nessun token nuovo, nessun cambio alle tabelle esistenti. Richiesta come patch 1.23.1: è una variante nuova,
+quindi per le regole di questo file è una minor.
+
+### La tabella da compilare a griglia
+
+Prima stampa del fascicolo compatto sulla piattaforma (COCOTTE da 25 a 18 facciate con le schede macchina
+dentro). La tabella delle eccezioni per stop, come la indicava la 1.23.0 (`rg-table--compact` +
+`td.rg-fill-field--cell`), su carta non funzionava: le righe vuote avevano solo il filo in basso, **nessun
+divisore verticale**, e si leggevano come righe da quaderno; le colonne vuote prendevano larghezze diverse
+(Stop e Piedino strette, Velocità larghissima) e con `rg-table__grow` sulla Note le altre collassavano a una
+parola.
+
+- **`rg-table--grid`**: filetto nero hairline su tutte le celle, testata compresa; `table-layout: fixed`,
+  colonne uguali; intestazioni che vanno a capo dentro la colonna. Celle `--cell` da 32 px, 24 (~6,4 mm)
+  dentro `rg-worksheet-block--compact`.
+- **`rg-table__grow` nella griglia vale il doppio** delle altre colonne; la tabella dichiara quante colonne ha
+  con `style="--rg-table-cols: N"` (se manca vale 6). Fuori dalla griglia non cambia.
+- Correzione dei documenti: la ricetta delle eccezioni per stop in `worksheet-block.md` passa a `--grid`;
+  `tables.md` ha la sezione della griglia e sconsiglia `__grow` da solo su una tabella tutta vuota; manifest
+  (`table`, note di `worksheet-block`); vetrina `#cutout` con la tabella a griglia.
+- Verificato con `--print-to-pdf` di Chrome in scala di grigi a contrasto spinto: 6 colonne a 703 px da
+  103 px e Note da 206, righe da 24 px nel blocco compatto e 33 fuori, divisori su tutte le celle.
+
 ## 1.23.0 — 2026-09-17
 
 **Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo.

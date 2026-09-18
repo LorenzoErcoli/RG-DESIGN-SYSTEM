@@ -1482,6 +1482,36 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
 .rg-form-row > .rg-field > .rg-field__help { width: 0; min-width: 100%; }
 .rg-form-row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); min-height: calc(var(--rg-form-row-label) + 40px); padding-top: var(--rg-form-row-label); }
 
+/* Riga di GRUPPI di campi (proposta 1.28.0) — rg-form-row--groups.
+   Il caso: la testa della Stampa UV aveva quattro campi in fila (larghezza, altezza, pezzi per ciclo,
+   tempo totale) che rispondono a due domande diverse: quanto e grande il pezzo, e quanto rende il
+   ciclo. Il gruppo lo dice con una ETICHETTA PICCOLA sopra (legenda maiuscola, grigia: e una
+   categoria, non un campo) e un FILETTO VERTICALE fra un gruppo e l'altro. Struttura, non cornice:
+   nessun riquadro per gruppo (regole §6), la riga resta una superficie aperta.
+   Ogni gruppo e un <fieldset> con <legend>: raggruppamento nativo, lo screen reader legge «Misura
+   del pezzo, Larghezza (cm)». Dentro, i campi sono una rg-form-row normale: aiuto ed errore sotto
+   il proprio controllo, controlli in fila alla stessa altezza in tutti i gruppi (le legende sono
+   tutte su una riga, alte uguali).
+   IL FILETTO CHE VA A CAPO. Ogni gruppo porta il filetto a SINISTRA; la riga si sposta a sinistra
+   di filetto + rientro e taglia in orizzontale cio che esce (overflow-x: clip, non hidden: non crea
+   uno scroll e lascia libero il verticale). Il primo gruppo di OGNI linea, anche dopo un a capo, ha
+   quindi il filetto fuori dal taglio: nessun filetto orfano sul bordo, senza JavaScript e senza
+   sapere dove cade l'a capo. Il fuoco dei controlli (4 px fuori dal campo) sta dentro il rientro
+   di 24 px e non viene tagliato.
+   Sotto i 680 px i gruppi vanno uno sotto l'altro e il filetto diventa orizzontale. */
+.rg-form-row--groups { align-items: stretch; gap: var(--rg-space-4) var(--rg-space-6); margin-left: calc(-1 * (var(--rg-space-6) + var(--rg-border-hairline))); overflow-x: clip; }
+.rg-form-row__group { flex: 0 1 auto; min-width: 0; margin: 0; padding: 0 0 0 var(--rg-space-6); border: 0; border-left: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+/* Legenda: float + larghezza piena e il modo portabile di dare aria sotto una <legend> (il margine
+   della legenda di un fieldset non e affidabile fra i browser). Vale anche su uno <span> in un
+   role="group" con aria-labelledby. */
+.rg-form-row__legend { float: left; width: 100%; margin: 0 0 var(--rg-space-3); padding: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-body); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-form-row__legend + * { clear: both; }
+@media (max-width: 680px) {
+  .rg-form-row--groups { flex-direction: column; margin-left: 0; overflow-x: visible; }
+  .rg-form-row__group { padding-left: 0; border-left: 0; }
+  .rg-form-row__group + .rg-form-row__group { padding-top: var(--rg-space-4); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+}
+
 /* Marcatore di campo (v1.15.0) — DICHIARA UNA VOLTA, MARCA MOLTE.
    Il problema: "questo campo entra nel costo" vale per cinque campi su dodici, e ripeterlo in un
    rg-field__help sotto ognuno e rumore, non informazione. Il W3C (WAI Forms Tutorial, Form
@@ -1619,6 +1649,54 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
   .rg-operation-sequence__total-label { grid-column: 1 / -1; }
   .rg-operation-sequence__add-label { flex-basis: 100%; margin-inline-end: 0; text-align: right; }
 }
+/* TESTA DELLA SEQUENZA (proposta 1.28.0): i campi che valgono per tutta la sezione (misura del pezzo,
+   resa del ciclo) sopra la lista, e a destra il disegno che li rende visibili (rg-bed-layout). Una
+   linea sola su desktop; quando non ci stanno il disegno va a capo sotto i campi, a sinistra. Il primo
+   figlio (di norma rg-form-row--groups, o una rg-form-row) non cresce: il disegno sta sul filo destro
+   perche la riga distribuisce lo spazio, non perche i campi si allargano. */
+.rg-operation-sequence__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--rg-space-6) var(--rg-space-8); margin-bottom: var(--rg-space-6); }
+.rg-operation-sequence__head > :first-child { flex: 0 1 auto; min-width: 0; }
+.rg-operation-sequence__head > .rg-bed-layout { flex: none; }
+
+/* ==========================================================================================
+   PEZZI SUL PIANO (proposta 1.28.0) — rg-bed-layout
+   Quanti pezzi stanno sul piano di una macchina (stampa UV 250 x 130, MuchColours 90 x 60) e quanti
+   ne ha scritti chi compila. Un disegno in PROPORZIONE REALE, piccolo, con una didascalia che dice in
+   parole cio che il disegno mostra. Il DS non calcola: il server passa i numeri e le coordinate.
+   PERCHE SVG E NON UNA GRIGLIA CSS. La proporzione e un dato (250 x 130 non e 90 x 60) e il margine e
+   una misura in cm: con viewBox in centimetri il server scrive le misure vere e il browser scala;
+   una griglia CSS vorrebbe percentuali ricalcolate e un aspect-ratio per piano. Gli elementi SVG si
+   colorano da CSS con i token (fill/stroke), quindi nessun colore sta nel markup.
+   LINEE A 1 PX A OGNI SCALA: vector-effect non-scaling-stroke. Un filetto in cm diventerebbe 1 px su
+   un piano da 250 e 3 px su uno da 90.
+   STATI DEI POSTI senza affidarsi al colore: occupato = PIENO (grigio scuro, bordo bianco che separa
+   i pezzi), libero = VUOTO (solo contorno). Pieno/vuoto regge in scala di grigi e in fotocopia; la
+   didascalia ripete la chiave con due quadratini disegnati a bordo (i bordi si stampano anche senza
+   «grafica di sfondo»). TROPPI (--over): il contorno del piano passa al colore di avviso e a 2 px, e
+   la riga di stato dice quanti sono in piu, con l'icona di avviso: parole, non solo colore. */
+.rg-bed-layout { --rg-bed-layout-width: calc(2 * var(--rg-space-24) + var(--rg-space-16)); --rg-bed-layout-max-height: calc(var(--rg-space-24) + var(--rg-space-16)); display: grid; gap: var(--rg-space-3); width: 100%; max-width: var(--rg-bed-layout-width); margin: 0; }
+/* height auto: l'altezza viene dal viewBox. Il tetto tiene basso un piano quasi quadrato (90 x 60) e
+   preserveAspectRatio="xMinYMin meet" (nel markup) lo tiene sul filo sinistro della didascalia. */
+.rg-bed-layout__plan { display: block; width: 100%; height: auto; max-height: var(--rg-bed-layout-max-height); overflow: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.rg-bed-layout__plan rect { vector-effect: non-scaling-stroke; stroke-width: var(--rg-border-hairline); }
+.rg-bed-layout__bed { fill: var(--rg-color-surface); stroke: var(--rg-color-border-strong); }
+/* Area utile: il bianco dentro il margine; la fascia fra le due linee resta campita (il margine). */
+.rg-bed-layout__area { fill: var(--rg-color-surface-raised); stroke: var(--rg-color-border-medium); stroke-dasharray: 3 2; }
+/* Il contorno del posto libero e grigio scuro, non border-medium: in fotocopia il grigio medio sparisce. */
+.rg-bed-layout__slot { fill: var(--rg-color-surface-raised); stroke: var(--rg-color-neutral-600); }
+.rg-bed-layout__slot--used { fill: var(--rg-color-neutral-600); stroke: var(--rg-color-surface-raised); }
+.rg-bed-layout--over .rg-bed-layout__bed { stroke: var(--rg-color-warning); stroke-width: var(--rg-border-strong); }
+/* Didascalia: il posto del «ne stanno al massimo», con aria. Titolo identity 20, dati mono 12 in
+   grigio, stato in corpo 14 sotto un filetto. */
+.rg-bed-layout__caption { display: grid; gap: var(--rg-space-1); min-width: 0; }
+.rg-bed-layout__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); font-variant-numeric: tabular-nums; }
+.rg-bed-layout__spec { margin: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); font-variant-numeric: tabular-nums; }
+.rg-bed-layout__status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-1) var(--rg-space-3); margin: var(--rg-space-2) 0 0; padding-top: var(--rg-space-2); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; }
+.rg-bed-layout__status > span { display: inline-flex; align-items: center; gap: var(--rg-space-2); }
+/* Chiave: stesso segno dei posti, fatto di bordi (si stampano sempre). */
+.rg-bed-layout__key { flex: none; box-sizing: border-box; width: var(--rg-space-3); height: var(--rg-space-3); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-neutral-600); }
+.rg-bed-layout__key--used { border: calc(var(--rg-space-3) / 2) var(--rg-border-style) var(--rg-color-neutral-600); }
+.rg-bed-layout--over .rg-bed-layout__status { color: var(--rg-color-warning); }
 
 /* ==========================================================================================
    AZIONI, ICONE, IDENTITA DELLE PARTI (v1.17.0, seconda tappa)

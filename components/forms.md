@@ -176,6 +176,50 @@ tutti sulla stessa linea; ciò che sta sotto un controllo allunga solo il propri
 </div>
 ```
 
+### Gruppi di campi in una riga (`.rg-form-row--groups`) — proposta 1.28.0
+
+Quando i campi di una riga rispondono a **domande diverse** (quanto è grande il pezzo; quanto rende il
+ciclo), la riga si divide in **gruppi**: ognuno ha un'**etichetta piccola** sopra, e fra un gruppo e l'altro
+c'è un **filetto verticale** sottile. Niente riquadri: la riga resta una superficie aperta.
+
+| Classe | Ruolo |
+| --- | --- |
+| `rg-form-row rg-form-row--groups` | la riga dei gruppi: vanno a capo quando non ci stanno |
+| `rg-form-row__group` | un gruppo: `<fieldset>` (o `role="group"` + `aria-labelledby`), filetto a sinistra |
+| `rg-form-row__legend` | l'etichetta del gruppo: `<legend>`, maiuscoletto piccolo grigio, come `rg-label` |
+| `rg-form-row` dentro il gruppo | i campi del gruppo, con tutte le regole della riga di campi (aiuto ed errore sotto) |
+
+- **Il filetto non resta mai orfano.** Ogni gruppo lo porta a sinistra; la riga si sposta a sinistra di
+  filetto + rientro e taglia in orizzontale ciò che esce. Il primo gruppo di ogni linea, anche dopo un a capo,
+  ha il filetto fuori dal taglio. Nessun JavaScript.
+- **Sotto i 680 px** i gruppi vanno uno sotto l'altro e il filetto diventa **orizzontale**.
+- **Un gruppo solo** funziona (niente filetto). Dentro un gruppo può stare qualunque `rg-field`, anche un
+  `rg-select`.
+- Le legende stanno su una riga: i controlli di tutti i gruppi restano sulla stessa linea.
+- Non è un `rg-parameter-group`: quello è un blocco incorniciato a griglia per un form di configurazione;
+  questo è una fila di campi con una suddivisione.
+
+```html
+<div class="rg-form-row rg-form-row--groups">
+  <fieldset class="rg-form-row__group">
+    <legend class="rg-form-row__legend">Misura del pezzo</legend>
+    <div class="rg-form-row">
+      <label class="rg-field rg-field--w8"><span class="rg-field__label">Larghezza (cm)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="46,9"></label>
+      <label class="rg-field rg-field--w8"><span class="rg-field__label">Altezza (cm)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="42,9"></label>
+    </div>
+  </fieldset>
+  <fieldset class="rg-form-row__group">
+    <legend class="rg-form-row__legend">Resa</legend>
+    <div class="rg-form-row">
+      <label class="rg-field rg-field--w8"><span class="rg-field__label">Pezzi per ciclo (n)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="8"></label>
+      <label class="rg-field rg-field--w8"><span class="rg-field__label">Tempo totale stampa (min)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="12"></label>
+    </div>
+  </fieldset>
+</div>
+```
+
+Accanto a un disegno dei pezzi sul piano, nella testa di una sequenza: vedi [bed-layout](bed-layout.md).
+
 ## Marcatore di campo (`.rg-field__mark`) — dichiara una volta, marca molte
 
 «Questo campo entra nel costo» vale per cinque campi su dodici. Ripeterlo in un `rg-field__help`

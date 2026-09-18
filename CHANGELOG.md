@@ -7,6 +7,35 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.28.0 — non rilasciata (proposta, ramo `ds/resa-piano`)
+
+**Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Chiesta come
+«1.23.0»: `main` era già a 1.27.0, quindi è la 1.28.0.
+
+### La testa della sequenza: gruppi di campi e pezzi sul piano
+
+Da Lorenzo, per la testa della fase di stampa: *«una piccola label sopra le misure altezza e larghezza e poi un
+separatore e affianco pezzi per ciclo e tempo totale. Con magari un visualizzatore pezzi su piano… e "ne stanno al
+massimo" gli diamo più spazio.»*
+
+- **`rg-form-row--groups`** (variante di `rg-form-row`): la riga di campi si divide in gruppi,
+  **`rg-form-row__group`** (`<fieldset>`) con **`rg-form-row__legend`** (maiuscoletto piccolo grigio) e un
+  filetto verticale fra l'uno e l'altro. Il filetto non resta orfano quando la riga va a capo (la riga taglia il
+  filetto del primo gruppo di ogni linea, senza JavaScript); sotto i 680 px i gruppi vanno in colonna e il filetto
+  diventa orizzontale. Funziona con un gruppo solo e con un select.
+- **`rg-bed-layout`** (nuovo): il piano della macchina in proporzione reale, SVG con `viewBox` in cm calcolato dal
+  server; margine campito, area utile tratteggiata, posti pieni (`__slot--used`, occupati) e vuoti (liberi); linee
+  a 1 px a ogni scala. Didascalia `__caption` con `__title` («10 al massimo»), `__spec` (griglia, pezzo, piano,
+  margine) e `__status` con la chiave `__key`. **`rg-bed-layout--over`**: troppi pezzi, contorno e stato nel colore
+  di avviso con icona e parole. Stati documentati anche per «non calcolabile» e «il pezzo non entra». Regge in
+  fotocopia; `role="img"` + `aria-label`. Larghezza massima 256 px, altezza del disegno al più 160 px
+  (`--rg-bed-layout-width`, `--rg-bed-layout-max-height`).
+- **`rg-operation-sequence__head`**: la testa della sequenza, campi a sinistra e disegno a destra; il disegno va a
+  capo sotto su schermi stretti.
+- Documenti: `bed-layout.md` (nuovo, con cosa calcola il server), `forms.md` (gruppi), `patterns/operation-sequence.md`
+  (anatomia); manifest (`bed-layout` in beta, `form-row`, `operation-sequence`); vetrina `#bed-layout` (Stampa UV
+  250 × 130 con 8 su 10, MuchColours 90 × 60 con 12 su 9, gruppo solo con select, non calcolabile, fotocopia).
+
 ## 1.27.0 — 2026-09-18
 
 **Minor.** Classi nuove e additive, nessun token nuovo. `rg-part-sheet__title` cambia forma (la 1.26.0 non è

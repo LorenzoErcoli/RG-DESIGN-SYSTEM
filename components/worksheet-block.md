@@ -25,6 +25,7 @@ riscrive il proprio.
 | --- | --- |
 | `rg-worksheet-block` | **Normale**: la fase ordinaria, alta quanto il suo contenuto, mai spezzata. |
 | `rg-worksheet-block--long` | **Lunga**: la fase con una tabella di trenta righe, che una pagina se la prende tutta. Apre una pagina nuova invece di lasciarsi dietro un buco; se è il primo blocco del documento non apre una pagina vuota prima. |
+| `rg-worksheet-block--continued` | **Continua il precedente** (1.27.0): la fase successiva di un gruppo di fasi collegate, nello stesso reparto, senza banda e senza piede. Si attacca al blocco sopra con un solo filetto. Vedi [Blocco che continua](#blocco-che-continua-il-precedente-1270). |
 | `rg-worksheet-block--compact` | **Compatta** (proposta 1.23.0): la densità del **fascicolo** che va in reparto. Righe da scrivere più basse, spaziature ridotte, colonne strette, piede su una riga, banda più bassa. Si combina con `--long`. Vedi [Fascicolo compatto](#fascicolo-compatto-proposta-1230). |
 
 `--long` non cambia nulla a schermo: è **solo** una regola di paginazione. Non usarla per "dare
@@ -203,6 +204,36 @@ posto di `rg-u-print-a4`) dà una pagina A4 con **margine superiore di 30 mm** (
 
 Helvetica e Courier sono i font base del PDF (niente font da incorporare) e sono i fallback dichiarati del DS
 per identità e mono. Il QR sul PDF va generato con la sua zona di rispetto dentro i 16 mm (vedi [qr](qr.md)).
+
+### Blocco che continua il precedente (1.27.0)
+
+Nel gruppo di fasi collegate dello stesso reparto l'app stampa **una banda sola** (sul primo blocco) e **un
+piede solo** (sull'ultimo). I blocchi dopo il primo portano `rg-worksheet-block--continued`:
+
+- **la testa regge senza banda**: `__step` («FASE 3 DI 3») e `__work` («SABBIATURA») bastano, con `__role`
+  («Collegata · dopo la 02») accanto al titolo. La banda sopra, sul primo blocco, dice il reparto per tutti;
+- **niente spazio e niente filetto doppio**: un margine negativo annulla lo spazio fra i blocchi e sovrappone i
+  filetti, resta una linea. Il bordo superiore resta dichiarato: se il blocco finisce in cima a una pagina, ce l'ha;
+- **in stampa** chiede di restare sulla pagina del blocco sopra (`break-before: avoid`). È un'indicazione: se non
+  ci sta, scende, e sulla pagina nuova non ha la banda. In quel caso l'app può rimetterla: una banda dopo
+  `__step` funziona anche in un `--continued`.
+
+```html
+<section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--continued">
+  <p class="rg-worksheet-block__step">Fase 3 di 3</p>
+  <header class="rg-worksheet-block__head">
+    <h3 class="rg-worksheet-block__work">Sabbiatura</h3>
+    <span class="rg-worksheet-block__role">Collegata · dopo la 02</span>
+  </header>
+  <div class="rg-worksheet-block__body">…</div>
+  <footer class="rg-worksheet-block__foot">…solo sull'ultimo blocco del gruppo…</footer>
+</section>
+```
+
+### Segni per il PDF
+
+Per i segni che l'app legge nel PDF c'è [`rg-print-anchor`](print-anchor.md): un collegamento senza testo, 4 × 4 px,
+trasparente, primo figlio del blocco.
 
 ### Limiti della seconda versione
 

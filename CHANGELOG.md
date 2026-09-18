@@ -7,6 +7,28 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta 1.27.0 (ramo `ds/worksheet-compact`)
+
+**Minor.** Classi nuove e additive, nessun token nuovo. `rg-part-sheet__title` cambia forma (la 1.26.0 non è
+pubblicata). Chiesta come 1.26.1 «o 1.27.0 se aggiungi classi»: aggiunge classi.
+
+### Il nome della parte, il blocco che continua, l'ancora di stampa
+
+- **Testata della pagina della parte con la gerarchia dei blocchi** (*«la testata faccia capire che è proprio
+  quel pezzo»*): `rg-part-sheet__ident` con **`rg-part-sheet__step`** («PARTE 1 DI 4», piccolo) e
+  `rg-part-sheet__title` col **nome della parte** a 28 px, grassetto, maiuscolo, pastiglia davanti. Il QR in
+  linea resta l'elemento più alto: la testata non cresce (70 px), 14 parti / 8 fasi restano 609 px (64%).
+- `rg-part-sheet__parts` a **quattro colonne fisse** (prima auto-fill: su una pagina larga ne faceva sette e
+  troncava il nome in grassetto).
+- **`rg-worksheet-block--continued`**: la fase successiva di un gruppo nello stesso reparto, senza banda e senza
+  piede. Margine negativo, un solo filetto fra i due blocchi, `break-before: avoid` in stampa. Verificato: la
+  testa `__step` + `__work` (+ `__role`) regge senza banda.
+- **`rg-print-anchor`**: collegamento senza testo, 4 × 4 px, trasparente, fuori dal flusso, primo figlio di
+  `rg-worksheet-block`, `rg-part-sheet` (o `__head`), `rg-cutout`, `rg-cutout-sheet`; il contenitore diventa
+  posizionato solo se lo contiene (`:has`). Verificato: Chrome `--print-to-pdf` emette `/URI` con `/Rect` 3 × 3 pt.
+- Documenti: `print-anchor.md` (nuovo), `part-sheet.md`, `worksheet-block.md`; manifest (`print-anchor` in beta,
+  `part-sheet`, `worksheet-block`); vetrina `#part-sheet`, `#print-anchor`.
+
 ## 1.26.0 — 2026-09-18
 
 **Minor.** Classi nuove e additive; `rg-part-sheet` e `rg-fill-field--check` cambiano forma, ma la 1.25.0 non è

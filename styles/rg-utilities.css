@@ -92,6 +92,8 @@
      passa alla pagina rg-a4 (margine 12 mm) e si riprende i 18 mm riservati all'intestazione. Il cambio di
      pagina nominata forza gia un salto: coerente con break-before/after qui sopra. */
   .rg-part-sheet--no-head { page: rg-a4; }
+  /* Blocco che continua il precedente (1.27.0): resta sulla stessa pagina del blocco sopra, se ci sta. */
+  .rg-worksheet-block--continued { break-before: avoid; page-break-before: avoid; }
   /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda
      di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome.
      rg-cutout__cue (1.23.0): il fondo bianco interrompe la linea di taglio sotto la parola. */

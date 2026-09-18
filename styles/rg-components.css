@@ -1236,6 +1236,13 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
      bianco intorno a nome e nota invece di 4 (con 4 il margine coprirebbe il filetto del blocco).
    Le basi delle righe restano NERE: e cio che sopravvive alla fotocopia in bianco e nero. */
 .rg-worksheet-block--compact { margin-bottom: var(--rg-space-2); }
+/* BLOCCO CHE CONTINUA IL PRECEDENTE (1.27.0): la fase successiva di un gruppo di fasi collegate, stesso reparto,
+   senza banda (la omette l'app) e senza piede (uno solo per il gruppo, sull'ultimo). Si attacca al blocco
+   sopra: il margine negativo annulla lo spazio fra i due e sovrappone i filetti, cosi resta UNA linea. Il bordo
+   superiore resta dichiarato: se il blocco finisce in cima a una pagina, la ha. In stampa chiede di non
+   staccarsi dal precedente (rg-utilities.css). La testa __step + __work regge da sola senza banda. */
+.rg-worksheet-block + .rg-worksheet-block--continued { margin-top: calc(-1 * (var(--rg-space-4) + var(--rg-border-hairline))); }
+.rg-worksheet-block--compact + .rg-worksheet-block--continued { margin-top: calc(-1 * (var(--rg-space-2) + var(--rg-border-hairline))); }
 .rg-worksheet-block--compact > .rg-dept-band { min-height: 0; padding-block: calc(var(--rg-space-1) / 2); }
 .rg-worksheet-block--compact > .rg-dept-band > .rg-dept-band__name { padding-block: calc(var(--rg-space-1) / 2); }
 .rg-worksheet-block--compact > .rg-dept-band > :is(.rg-dept-band__name, .rg-dept-band__note) { outline-width: calc(var(--rg-space-1) / 2); }
@@ -1373,7 +1380,13 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
    (peso heading) anche a 16: la misura e bassa per stare nel foglio, il peso dice il livello. */
 .rg-part-sheet { display: grid; gap: var(--rg-space-4); }
 .rg-part-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-4); padding-bottom: var(--rg-space-2); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
-.rg-part-sheet__title { display: flex; align-items: center; gap: var(--rg-space-2); margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-md); font-weight: var(--rg-weight-heading); line-height: var(--rg-line-height-heading); }
+/* Testata (1.27.0): «la testata faccia capire che e proprio quel pezzo». Stessa gerarchia dei blocchi: __step
+   piccolo sopra («PARTE 1 DI 4»), __title sotto con il NOME della parte a 28 px, grassetto e maiuscolo, la
+   pastiglia davanti. __ident li tiene insieme a sinistra, il QR in linea resta a destra. Il QR (60 px) resta
+   l'elemento piu alto: la testata non cresce (~70 px). */
+.rg-part-sheet__ident { display: grid; gap: calc(var(--rg-space-1) / 2); min-width: 0; }
+.rg-part-sheet__step { margin: 0; color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-part-sheet__title { display: flex; align-items: center; gap: var(--rg-space-2); margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-tight); letter-spacing: var(--rg-letter-label); text-transform: uppercase; overflow-wrap: anywhere; }
 .rg-part-sheet__section { display: grid; gap: var(--rg-space-1); }
 /* Anagrafica: tre colonne, etichetta piccola SOPRA il valore. <dl> con un <div> per coppia. */
 .rg-part-sheet__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--rg-space-2) var(--rg-space-4); margin: 0; }
@@ -1383,7 +1396,7 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 /* Tutte le parti del prodotto, quattro colonne da 20 px: pastiglia piccola, nome, codice. Questa parte ha
    il filetto nero spesso e il grassetto (mai il solo colore della pastiglia); «questa parte» scritto e
    facoltativo, dove la colonna lo lascia stare. */
-.rg-part-sheet__parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--rg-space-24) + var(--rg-space-16)), 1fr)); gap: var(--rg-space-1); margin: 0; padding: 0; list-style: none; }
+.rg-part-sheet__parts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--rg-space-1); margin: 0; padding: 0; list-style: none; }
 .rg-part-sheet__part { display: flex; align-items: center; gap: var(--rg-space-1); min-width: 0; min-height: calc(var(--rg-space-4) + var(--rg-space-1)); padding: 0 var(--rg-space-1); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); color: var(--rg-color-text-primary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); white-space: nowrap; }
 .rg-part-sheet__part--current { border: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); font-weight: var(--rg-weight-bold); }
 .rg-part-sheet__name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -1409,6 +1422,16 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
 /* Il margine sopra ogni tagliando fa stare «Ritaglia», che sporge sopra il tratteggio, DENTRO la sua cella
    della griglia: quando una fila passa alla pagina dopo, la scritta va con il suo riquadro. */
 .rg-cutout-sheet > .rg-cutout { margin: var(--rg-space-2) 0 0; }
+
+/* ANCORA DI STAMPA (1.27.0) — un collegamento SENZA testo e senza aspetto, che l'app legge nel PDF (Chrome ne
+   emette l'annotazione di collegamento sull'area del riquadro) per ricomporre il documento, e poi toglie.
+   Il testo nascosto Chrome non lo porta nel PDF, e un collegamento su un testo si sottolinea in stampa: qui
+   c'e solo un'area di 4 x 4 px (~1 mm), nell'angolo in alto a sinistra del contenitore, trasparente a
+   schermo e in stampa, fuori dal flusso (non sposta niente). Niente visibility/opacity/display: none, che
+   spegnerebbero l'annotazione. Non e un controllo: aria-hidden e tabindex="-1" nel markup, pointer-events: none.
+   Il contenitore diventa posizionato SOLO se contiene un'ancora (:has): chi non la usa non vede niente. */
+.rg-print-anchor { position: absolute; top: 0; left: 0; display: block; width: var(--rg-space-1); height: var(--rg-space-1); margin: 0; padding: 0; overflow: hidden; color: transparent; background: transparent; border: 0; text-decoration: none; pointer-events: none; }
+:where(.rg-worksheet-block, .rg-part-sheet, .rg-part-sheet__head, .rg-cutout-sheet):has(> .rg-print-anchor) { position: relative; }
 
 /* ── Larghezza dichiarata del campo (v1.15.0) ───────────────────────────────────────────────
    La larghezza di un campo e un'AFFERMAZIONE su quanto contenuto ci si aspetta, non una scelta

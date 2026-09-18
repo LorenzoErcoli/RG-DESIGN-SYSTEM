@@ -7,6 +7,39 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.28.0 — non rilasciata (proposta, ramo `ds/resa-piano`)
+
+**Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Chiesta come
+«1.23.0»: `main` era già a 1.27.0, quindi è la 1.28.0. Un solo cambio visivo a chi usa già `rg-form-row`: input
+e select nella riga sono alti 40 px esatti (l'input era 41).
+
+### La testa della sequenza: gruppi di campi e pezzi sul piano
+
+Da Lorenzo, per la testa della fase di stampa: *«una piccola label sopra le misure altezza e larghezza e poi un
+separatore e affianco pezzi per ciclo e tempo totale. Con magari un visualizzatore pezzi su piano… e "ne stanno al
+massimo" gli diamo più spazio.»*
+
+- **`rg-form-row--groups`** (variante di `rg-form-row`): la riga di campi si divide in gruppi,
+  **`rg-form-row__group`** (`<fieldset>`) con **`rg-form-row__legend`** (maiuscoletto piccolo grigio) e un
+  filetto verticale dal secondo gruppo in poi (`gruppo + gruppo`). Nessun margine negativo: la riga non tocca il
+  contenitore (una prima versione lasciava il filetto sul bordo di `rg-phase-panel`); dopo un a capo il gruppo
+  che apre la seconda linea porta il suo filetto. Sotto i 680 px i gruppi vanno in colonna e il filetto
+  diventa orizzontale. Funziona con un gruppo solo e con un select.
+- **Altezze omogenee** dei gruppi: un gruppo senza legenda ne riserva lo spazio, input e select alti 40 px, gruppi
+  stesi all'altezza del più alto (filetti uguali), un aiuto sotto un campo non sposta i controlli.
+- **`rg-bed-layout`** (nuovo): il **mini-disegno** dei pezzi sul piano, nello stile dei consumi del ricamo, dentro
+  la riga dei campi (`rg-field rg-bed-layout`, etichetta «Sul piano»), alto quanto i campi. SVG con `viewBox` in cm e
+  misura in px dal server (alto 40, largo al più 88); cornice 1 px col raggio 2, fondo chiaro, posti occupati a
+  tinta chiara con filetto (`__slot--used`), liberi tratteggiati. Accanto `__title` («10 al massimo») e `__status`
+  («8 inseriti · 2 liberi»). **`--over`**: cornice e stato nel colore di avviso, icona e «12: 3 di troppo». Le
+  misure stanno in `aria-label` e `<title>`. **Mai nero senza CSS**: il markup porta attributi di presentazione di
+  ripiego, che il CSS ridichiara tutti.
+- Una prima versione (disegno grande a destra in `rg-operation-sequence__head`, titolo da 20 px, righe di dati) è
+  stata scartata da Lorenzo e tolta prima del rilascio.
+- Documenti: `bed-layout.md` (nuovo, con ripiego e cosa calcola il server), `forms.md` (gruppi, altezze),
+  `patterns/operation-sequence.md` (anatomia); manifest (`bed-layout` in beta, `form-row`); vetrina `#bed-layout`
+  (Stampa UV 8 su 10, MuchColours 12 su 9, altezze omogenee, gruppo solo con select, fotocopia).
+
 ## 1.27.0 — 2026-09-18
 
 **Minor.** Classi nuove e additive, nessun token nuovo. `rg-part-sheet__title` cambia forma (la 1.26.0 non è

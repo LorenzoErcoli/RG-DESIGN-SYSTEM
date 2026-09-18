@@ -176,6 +176,57 @@ tutti sulla stessa linea; ciò che sta sotto un controllo allunga solo il propri
 </div>
 ```
 
+### Gruppi di campi in una riga (`.rg-form-row--groups`) — proposta 1.28.0
+
+Quando i campi di una riga rispondono a **domande diverse** (quanto è grande il pezzo; quanto rende il
+ciclo), la riga si divide in **gruppi**: ognuno ha un'**etichetta piccola** sopra, e fra un gruppo e l'altro
+c'è un **filetto verticale** sottile. Niente riquadri: la riga resta una superficie aperta.
+
+| Classe | Ruolo |
+| --- | --- |
+| `rg-form-row rg-form-row--groups` | la riga dei gruppi: vanno a capo quando non ci stanno |
+| `rg-form-row__group` | un gruppo: `<fieldset>` (o `role="group"` + `aria-labelledby`), filetto a sinistra |
+| `rg-form-row__legend` | l'etichetta del gruppo: `<legend>`, maiuscoletto piccolo grigio, come `rg-label` |
+| `rg-form-row` dentro il gruppo | i campi del gruppo, con tutte le regole della riga di campi (aiuto ed errore sotto) |
+
+- **Il filetto sta dal secondo gruppo in poi** (`gruppo + gruppo`), a sinistra, con 24 px di rientro. La riga
+  non usa margini negativi e non tocca il contenitore: dentro `rg-phase-panel` il primo gruppo sta sul filo
+  del contenuto, senza linee sul bordo del pannello. Compromesso: se la riga va a capo, il gruppo che apre la
+  seconda linea porta il suo filetto; di norma i gruppi sono due e stanno su una linea.
+- **Sotto i 680 px** i gruppi vanno uno sotto l'altro e il filetto diventa **orizzontale**.
+- **Un gruppo solo** funziona (niente filetto). Dentro un gruppo può stare qualunque `rg-field`, anche un
+  `rg-select`.
+- **Altezze omogenee.** Le legende stanno su una riga, e un gruppo **senza legenda** ne riserva lo spazio
+  (`:has`): i controlli di tutti i gruppi cadono sulla stessa linea. Meglio comunque dare una legenda a ogni
+  gruppo. In ogni `rg-form-row` input e select sono alti **40 px esatti**: prima l'input era alto 41 px, perché
+  somma interlinea e padding, e il select 40. I gruppi si stendono all'altezza del più alto (`stretch`),
+  quindi i filetti sono tutti alti uguali. Un aiuto sotto un campo («dal ricamo») allunga il suo gruppo senza
+  spostare i controlli, che restano in cima.
+- Non è un `rg-parameter-group`: quello è un blocco incorniciato a griglia per un form di configurazione;
+  questo è una fila di campi con una suddivisione.
+
+```html
+<div class="rg-form-row rg-form-row--groups">
+  <fieldset class="rg-form-row__group">
+    <legend class="rg-form-row__legend">Misura del pezzo</legend>
+    <div class="rg-form-row">
+      <label class="rg-field rg-field--w8"><span class="rg-field__label">Larghezza (cm)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="46,9"></label>
+      <label class="rg-field rg-field--w8"><span class="rg-field__label">Altezza (cm)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="42,9"></label>
+    </div>
+  </fieldset>
+  <fieldset class="rg-form-row__group">
+    <legend class="rg-form-row__legend">Resa</legend>
+    <div class="rg-form-row">
+      <label class="rg-field rg-field--w8"><span class="rg-field__label">Pezzi per ciclo (n)</span><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="8"></label>
+      <label class="rg-field rg-field--w8"><span class="rg-field__label">Tempo totale stampa (min)</span><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="12"></label>
+    </div>
+  </fieldset>
+</div>
+```
+
+Nel gruppo «Resa», dopo i campi, può stare il mini-disegno dei pezzi sul piano (`rg-field rg-bed-layout`), alto
+quanto i campi: vedi [bed-layout](bed-layout.md).
+
 ## Marcatore di campo (`.rg-field__mark`) — dichiara una volta, marca molte
 
 «Questo campo entra nel costo» vale per cinque campi su dodici. Ripeterlo in un `rg-field__help`

@@ -45,7 +45,7 @@ comportamento sotto i 680 px e regole di tabulazione già scritte e già in uso 
 | Classe | Ruolo |
 | --- | --- |
 | `rg-operation-sequence` | contenitore; fissa la griglia delle righe (nome 24ch · campi · gesti 193 px) |
-| `rg-form-row--groups` | campi della sezione in gruppi con legenda e filetto (proposta 1.28.0); nel gruppo «Resa» il mini-disegno `rg-bed-layout`. Vedi [bed-layout](../components/bed-layout.md) |
+| `rg-form-row--groups` | campi della sezione in gruppi con legenda e filetto (1.28.0); nel gruppo «Resa» il mini-disegno `rg-bed-layout`. Vedi [bed-layout](../components/bed-layout.md) |
 | `rg-operation-row__slot` | posto vuoto 40×40 nella colonna dei gesti, `aria-hidden` |
 | `rg-operation-row--off` | facoltativa non inclusa: riga bassa, nome in grigio, `__status` a parole, «Includi» |
 | `rg-operation-row__status` | la frase di stato della riga spenta («Non inclusa in questa scheda.») |

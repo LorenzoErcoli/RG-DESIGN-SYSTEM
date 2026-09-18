@@ -1482,7 +1482,7 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
 .rg-form-row > .rg-field > .rg-field__help { width: 0; min-width: 100%; }
 .rg-form-row__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); min-height: calc(var(--rg-form-row-label) + 40px); padding-top: var(--rg-form-row-label); }
 
-/* Riga di GRUPPI di campi (proposta 1.28.0) — rg-form-row--groups.
+/* Riga di GRUPPI di campi (1.28.0) — rg-form-row--groups.
    Il caso: la testa della Stampa UV aveva quattro campi in fila (larghezza, altezza, pezzi per ciclo,
    tempo totale) che rispondono a due domande diverse: quanto e grande il pezzo, e quanto rende il
    ciclo. Il gruppo lo dice con una ETICHETTA PICCOLA sopra (legenda maiuscola, grigia: e una
@@ -1664,7 +1664,7 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
   .rg-operation-sequence__add-label { flex-basis: 100%; margin-inline-end: 0; text-align: right; }
 }
 /* ==========================================================================================
-   PEZZI SUL PIANO (proposta 1.28.0, seconda versione) — rg-bed-layout
+   PEZZI SUL PIANO (1.28.0, seconda versione) — rg-bed-layout
    Un MINI-DISEGNO del piano di una macchina (stampa UV 250 x 130, MuchColours 90 x 60) con i pezzi a
    griglia, nello stile dei mini-disegni dei consumi del ricamo (pantografo, appoggio): cornice
    sottile col raggio piccolo, fondo chiaro caldo, pezzi a tinta chiara con un filetto piu scuro, e

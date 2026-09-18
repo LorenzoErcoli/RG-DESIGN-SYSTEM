@@ -176,7 +176,7 @@ tutti sulla stessa linea; ciò che sta sotto un controllo allunga solo il propri
 </div>
 ```
 
-### Gruppi di campi in una riga (`.rg-form-row--groups`) — proposta 1.28.0
+### Gruppi di campi in una riga (`.rg-form-row--groups`) — 1.28.0
 
 Quando i campi di una riga rispondono a **domande diverse** (quanto è grande il pezzo; quanto rende il
 ciclo), la riga si divide in **gruppi**: ognuno ha un'**etichetta piccola** sopra, e fra un gruppo e l'altro

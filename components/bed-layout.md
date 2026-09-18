@@ -1,4 +1,4 @@
-# Bed layout (pezzi sul piano) — proposta 1.28.0
+# Bed layout (pezzi sul piano) — 1.28.0
 
 ## Scopo
 

@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.28.0 — non rilasciata (proposta, ramo `ds/resa-piano`)
+## 1.28.0 — 2026-09-18
 
 **Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Chiesta come
 «1.23.0»: `main` era già a 1.27.0, quindi è la 1.28.0. Un solo cambio visivo a chi usa già `rg-form-row`: input

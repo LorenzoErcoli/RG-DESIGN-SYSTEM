@@ -1508,8 +1508,21 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
    role="group" con aria-labelledby. */
 .rg-form-row__legend { float: left; width: 100%; margin: 0 0 var(--rg-space-3); padding: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-body); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 .rg-form-row__legend + * { clear: both; }
+/* ALTEZZE OMOGENEE (seconda versione). Misurato nella piattaforma: un gruppo senza legenda (Scopo,
+   Tipo di pressa) aveva i controlli 22 px piu in alto dei gruppi con legenda; un select era alto 40
+   e un input 41 (l'input somma interlinea e padding, il select no).
+   1) Un gruppo SENZA legenda riserva l'altezza della legenda (riga xs x interlinea body + 12 px):
+      i controlli di tutti i gruppi cadono sulla stessa linea. Meglio ancora dare a ogni gruppo una
+      legenda; questo e il ripiego.
+   2) Nella riga di campi input e select sono alti 40 px esatti (il target minimo).
+   3) I gruppi si stendono all'altezza del piu alto (stretch): i filetti sono tutti alti uguali, e un
+      aiuto sotto un campo allunga il gruppo senza spostare i controlli, che restano in cima. */
+.rg-form-row__group:not(:has(> .rg-form-row__legend)) { padding-top: calc(var(--rg-font-size-xs) * var(--rg-line-height-body) + var(--rg-space-3)); }
+.rg-form-row__group > .rg-form-row { align-content: flex-start; }
+.rg-form-row :is(.rg-input, .rg-select) { height: 40px; min-height: 40px; }
 @media (max-width: 680px) {
   .rg-form-row--groups { flex-direction: column; }
+  .rg-form-row__group:not(:has(> .rg-form-row__legend)) { padding-top: 0; }
   .rg-form-row__group + .rg-form-row__group { padding-top: var(--rg-space-4); padding-left: 0; border-left: 0; border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 }
 
@@ -1650,53 +1663,44 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
   .rg-operation-sequence__total-label { grid-column: 1 / -1; }
   .rg-operation-sequence__add-label { flex-basis: 100%; margin-inline-end: 0; text-align: right; }
 }
-/* TESTA DELLA SEQUENZA (proposta 1.28.0): i campi che valgono per tutta la sezione (misura del pezzo,
-   resa del ciclo) sopra la lista, e a destra il disegno che li rende visibili (rg-bed-layout). Una
-   linea sola su desktop; quando non ci stanno il disegno va a capo sotto i campi, a sinistra. Il primo
-   figlio (di norma rg-form-row--groups, o una rg-form-row) non cresce: il disegno sta sul filo destro
-   perche la riga distribuisce lo spazio, non perche i campi si allargano. */
-.rg-operation-sequence__head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--rg-space-6) var(--rg-space-8); margin-bottom: var(--rg-space-6); }
-.rg-operation-sequence__head > :first-child { flex: 0 1 auto; min-width: 0; }
-.rg-operation-sequence__head > .rg-bed-layout { flex: none; }
-
 /* ==========================================================================================
-   PEZZI SUL PIANO (proposta 1.28.0) — rg-bed-layout
-   Quanti pezzi stanno sul piano di una macchina (stampa UV 250 x 130, MuchColours 90 x 60) e quanti
-   ne ha scritti chi compila. Un disegno in PROPORZIONE REALE, piccolo, con una didascalia che dice in
-   parole cio che il disegno mostra. Il DS non calcola: il server passa i numeri e le coordinate.
-   PERCHE SVG E NON UNA GRIGLIA CSS. La proporzione e un dato (250 x 130 non e 90 x 60) e il margine e
-   una misura in cm: con viewBox in centimetri il server scrive le misure vere e il browser scala;
-   una griglia CSS vorrebbe percentuali ricalcolate e un aspect-ratio per piano. Gli elementi SVG si
-   colorano da CSS con i token (fill/stroke), quindi nessun colore sta nel markup.
-   LINEE A 1 PX A OGNI SCALA: vector-effect non-scaling-stroke. Un filetto in cm diventerebbe 1 px su
-   un piano da 250 e 3 px su uno da 90.
-   STATI DEI POSTI senza affidarsi al colore: occupato = PIENO (grigio scuro, bordo bianco che separa
-   i pezzi), libero = VUOTO (solo contorno). Pieno/vuoto regge in scala di grigi e in fotocopia; la
-   didascalia ripete la chiave con due quadratini disegnati a bordo (i bordi si stampano anche senza
-   «grafica di sfondo»). TROPPI (--over): il contorno del piano passa al colore di avviso e a 2 px, e
-   la riga di stato dice quanti sono in piu, con l'icona di avviso: parole, non solo colore. */
-.rg-bed-layout { --rg-bed-layout-width: calc(2 * var(--rg-space-24) + var(--rg-space-16)); --rg-bed-layout-max-height: calc(var(--rg-space-24) + var(--rg-space-16)); display: grid; gap: var(--rg-space-3); width: 100%; max-width: var(--rg-bed-layout-width); margin: 0; }
-/* height auto: l'altezza viene dal viewBox. Il tetto tiene basso un piano quasi quadrato (90 x 60) e
-   preserveAspectRatio="xMinYMin meet" (nel markup) lo tiene sul filo sinistro della didascalia. */
-.rg-bed-layout__plan { display: block; width: 100%; height: auto; max-height: var(--rg-bed-layout-max-height); overflow: visible; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.rg-bed-layout__plan rect { vector-effect: non-scaling-stroke; stroke-width: var(--rg-border-hairline); }
-.rg-bed-layout__bed { fill: var(--rg-color-surface); stroke: var(--rg-color-border-strong); }
-/* Area utile: il bianco dentro il margine; la fascia fra le due linee resta campita (il margine). */
-.rg-bed-layout__area { fill: var(--rg-color-surface-raised); stroke: var(--rg-color-border-medium); stroke-dasharray: 3 2; }
-/* Il contorno del posto libero e grigio scuro, non border-medium: in fotocopia il grigio medio sparisce. */
-.rg-bed-layout__slot { fill: var(--rg-color-surface-raised); stroke: var(--rg-color-neutral-600); }
-.rg-bed-layout__slot--used { fill: var(--rg-color-neutral-600); stroke: var(--rg-color-surface-raised); }
-.rg-bed-layout--over .rg-bed-layout__bed { stroke: var(--rg-color-warning); stroke-width: var(--rg-border-strong); }
-/* Didascalia: il posto del «ne stanno al massimo», con aria. Titolo identity 20, dati mono 12 in
-   grigio, stato in corpo 14 sotto un filetto. */
-.rg-bed-layout__caption { display: grid; gap: var(--rg-space-1); min-width: 0; }
-.rg-bed-layout__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-lg); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); font-variant-numeric: tabular-nums; }
-.rg-bed-layout__spec { margin: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); font-variant-numeric: tabular-nums; }
-.rg-bed-layout__status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-1) var(--rg-space-3); margin: var(--rg-space-2) 0 0; padding-top: var(--rg-space-2); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; }
-.rg-bed-layout__status > span { display: inline-flex; align-items: center; gap: var(--rg-space-2); }
-/* Chiave: stesso segno dei posti, fatto di bordi (si stampano sempre). */
-.rg-bed-layout__key { flex: none; box-sizing: border-box; width: var(--rg-space-3); height: var(--rg-space-3); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-neutral-600); }
-.rg-bed-layout__key--used { border: calc(var(--rg-space-3) / 2) var(--rg-border-style) var(--rg-color-neutral-600); }
+   PEZZI SUL PIANO (proposta 1.28.0, seconda versione) — rg-bed-layout
+   Un MINI-DISEGNO del piano di una macchina (stampa UV 250 x 130, MuchColours 90 x 60) con i pezzi a
+   griglia, nello stile dei mini-disegni dei consumi del ricamo (pantografo, appoggio): cornice
+   sottile col raggio piccolo, fondo chiaro caldo, pezzi a tinta chiara con un filetto piu scuro, e
+   accanto due righe corte. Sta DENTRO la riga dei campi, come un campo: etichetta sopra, e sulla
+   linea dei controlli (40 px) il disegno e la didascalia. Alto quanto i campi: nessun ingombro.
+   La prima versione (disegno grande a destra, titolo 20 px, righe di dati) e stata scartata da
+   Lorenzo: «deve essere qualcosa di piccolo e non ingombrante».
+   SVG con viewBox in cm: il server scrive le misure vere (piano, posti) e la dimensione in px del
+   disegno (width/height), il browser scala. Il DS non calcola.
+   MAI NERO SENZA IL CSS. Un <rect> senza fill si riempie di nero: se il foglio di stile non c'e o
+   e vecchio (cache) il disegno diventa un blocco nero. Il markup porta quindi ATTRIBUTI DI
+   PRESENTAZIONE DI RIPIEGO (fill="none", stroke="currentColor", stroke-width, fill-opacity,
+   stroke-dasharray, vector-effect) e qui ogni proprieta che quegli attributi toccano e RIDICHIARATA:
+   una regola CSS vince sempre su un attributo di presentazione (specificita zero), quindi col CSS
+   giusto il ripiego sparisce, senza CSS resta un disegno a contorni.
+   STATI senza affidarsi al colore: occupato = PIENO (tinta chiara + filetto scuro), libero = VUOTO
+   con contorno TRATTEGGIATO grigio. TROPPI (--over): la cornice del piano nel colore di avviso e la
+   riga di stato con l'icona di avviso e le parole («di troppo»).
+   COLORI: il riempimento e l'accento blu stagionale schiarito col bianco, il filetto e --info. La
+   palette stagionale e ammessa nei grafici e negli highlight (regole §4) e qui non e l'unico segnale
+   (pieno/vuoto + parole). Nessun token globale nuovo: la tinta chiara e una variabile del componente
+   derivata dai token, sovrascrivibile dal contenitore. */
+.rg-bed-layout { --rg-bed-layout-fill: color-mix(in srgb, var(--rg-color-accent-blue) 40%, var(--rg-color-white)); --rg-bed-layout-ink: var(--rg-color-info); }
+.rg-bed-layout__body { display: flex; align-items: center; gap: var(--rg-space-2); min-height: 40px; }
+.rg-bed-layout__plan { display: block; flex: none; overflow: visible; background: var(--rg-color-neutral-50); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-sm); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.rg-bed-layout__plan rect { vector-effect: non-scaling-stroke; }
+.rg-bed-layout__bed { fill: var(--rg-color-neutral-50); fill-opacity: 1; stroke: none; }
+.rg-bed-layout__slot { fill: none; fill-opacity: 1; stroke: var(--rg-color-neutral-400); stroke-width: var(--rg-border-hairline); stroke-dasharray: 2 2; }
+.rg-bed-layout__slot--used { fill: var(--rg-bed-layout-fill); stroke: var(--rg-bed-layout-ink); stroke-dasharray: none; }
+.rg-bed-layout--over .rg-bed-layout__plan { border-color: var(--rg-color-warning); outline: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-warning); }
+/* Didascalia: due righe corte accanto al disegno. Le misure (piano, margine, pezzo) non si scrivono:
+   stanno nell'aria-label e nel <title> dell'SVG (suggerimento al passaggio). */
+.rg-bed-layout__caption { display: grid; gap: 0; min-width: 0; line-height: var(--rg-line-height-technical); }
+.rg-bed-layout__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rg-bed-layout__status { display: inline-flex; align-items: center; gap: var(--rg-space-1); margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rg-bed-layout__status > .rg-icon { --rg-icon-size: var(--rg-space-3); }
 .rg-bed-layout--over .rg-bed-layout__status { color: var(--rg-color-warning); }
 
 /* ==========================================================================================

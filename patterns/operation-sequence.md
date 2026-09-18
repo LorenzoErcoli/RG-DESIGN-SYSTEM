@@ -32,8 +32,8 @@ comportamento sotto i 680 px e regole di tabulazione già scritte e già in uso 
 
 ```
 [ campi della sezione: rg-form-row ]                          (Scopo · Tipo di pressa · Pezzi per ciclo)
-  oppure, dalla 1.28, la testa rg-operation-sequence__head:
-[ MISURA DEL PEZZO  Larg. Alt. │ RESA  Pezzi/ciclo Tempo ]              [ piano: pieni/vuoti ] 10 al massimo
+  oppure, dalla 1.28, gruppi di campi (rg-form-row--groups) col mini-disegno nel gruppo «Resa»:
+[ MISURA DEL PEZZO  Larg. Alt. │ RESA  Pezzi/ciclo Tempo  Sul piano [▦▦▦□□] 10 al massimo · 8 inseriti · 2 liberi ]
 ┌ rg-operation-list ───────────────────────────────────────────────────────────────────────────┐
 │ nome (24ch)          │ campi … «Nota»                         │ ↑ ↓ ⧉ │ 🗑 │  (193 px, fissi) │
 │ nome — scelta        │ scelta · Tempo · resto · «Nota»        │ ↑ ↓ ⧉ │ 🗑 │                  │
@@ -45,7 +45,7 @@ comportamento sotto i 680 px e regole di tabulazione già scritte e già in uso 
 | Classe | Ruolo |
 | --- | --- |
 | `rg-operation-sequence` | contenitore; fissa la griglia delle righe (nome 24ch · campi · gesti 193 px) |
-| `rg-operation-sequence__head` | testa (proposta 1.28.0): gruppi di campi della sezione (`rg-form-row--groups`) a sinistra, disegno dei pezzi sul piano (`rg-bed-layout`) a destra; a capo sotto su schermi stretti. Vedi [bed-layout](../components/bed-layout.md) |
+| `rg-form-row--groups` | campi della sezione in gruppi con legenda e filetto (proposta 1.28.0); nel gruppo «Resa» il mini-disegno `rg-bed-layout`. Vedi [bed-layout](../components/bed-layout.md) |
 | `rg-operation-row__slot` | posto vuoto 40×40 nella colonna dei gesti, `aria-hidden` |
 | `rg-operation-row--off` | facoltativa non inclusa: riga bassa, nome in grigio, `__status` a parole, «Includi» |
 | `rg-operation-row__status` | la frase di stato della riga spenta («Non inclusa in questa scheda.») |

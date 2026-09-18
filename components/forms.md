@@ -196,7 +196,12 @@ c'è un **filetto verticale** sottile. Niente riquadri: la riga resta una superf
 - **Sotto i 680 px** i gruppi vanno uno sotto l'altro e il filetto diventa **orizzontale**.
 - **Un gruppo solo** funziona (niente filetto). Dentro un gruppo può stare qualunque `rg-field`, anche un
   `rg-select`.
-- Le legende stanno su una riga: i controlli di tutti i gruppi restano sulla stessa linea.
+- **Altezze omogenee.** Le legende stanno su una riga, e un gruppo **senza legenda** ne riserva lo spazio
+  (`:has`): i controlli di tutti i gruppi cadono sulla stessa linea. Meglio comunque dare una legenda a ogni
+  gruppo. In ogni `rg-form-row` input e select sono alti **40 px esatti**: prima l'input era alto 41 px, perché
+  somma interlinea e padding, e il select 40. I gruppi si stendono all'altezza del più alto (`stretch`),
+  quindi i filetti sono tutti alti uguali. Un aiuto sotto un campo («dal ricamo») allunga il suo gruppo senza
+  spostare i controlli, che restano in cima.
 - Non è un `rg-parameter-group`: quello è un blocco incorniciato a griglia per un form di configurazione;
   questo è una fila di campi con una suddivisione.
 
@@ -219,7 +224,8 @@ c'è un **filetto verticale** sottile. Niente riquadri: la riga resta una superf
 </div>
 ```
 
-Accanto a un disegno dei pezzi sul piano, nella testa di una sequenza: vedi [bed-layout](bed-layout.md).
+Nel gruppo «Resa», dopo i campi, può stare il mini-disegno dei pezzi sul piano (`rg-field rg-bed-layout`), alto
+quanto i campi: vedi [bed-layout](bed-layout.md).
 
 ## Marcatore di campo (`.rg-field__mark`) — dichiara una volta, marca molte
 

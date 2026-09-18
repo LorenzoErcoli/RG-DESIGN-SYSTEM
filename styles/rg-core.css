@@ -1,6 +1,8 @@
 /* RG Core — load after tokens.css. */
 *, *::before, *::after { box-sizing: border-box; }
-html { color-scheme: light; }
+/* text-size-adjust (1.30.0): Safari su iOS non gonfia il testo quando il telefono ruota. NON blocca lo
+   zoom: il pizzico a due dita resta libero, il viewport non si tocca. */
+html { color-scheme: light; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 /* La pagina e FONDO, non superficie di lettura (v1.13.0): --rg-color-background e neutral-50,
    e i contenitori di contenuto salgono a --rg-color-surface-raised. Prima di questa riga il fondo
    era bianco letterale e --rg-color-background non lo governava: una card bianca su pagina bianca
@@ -23,6 +25,14 @@ body {
    font-size viene DOPO font: inherit e quindi lo sovrascrive; le classi che dichiarano una
    misura propria (rg-button--large, rg-button--small, rg-h*) vincono comunque per specificita. */
 button, input, select, textarea { font: inherit; color: inherit; font-size: var(--rg-font-size-sm); }
+/* SU TOUCH I CAMPI SONO A 16 (1.30.0). Safari su iOS e iPadOS INGRANDISCE la pagina quando si tocca un campo
+   con il testo sotto i 16 px, e non torna indietro da solo. Il rimedio non e bloccare lo zoom (il viewport
+   resta com'e: il pizzico a due dita serve a chi legge) ma dare ai campi 16 px dove si scrive col dito.
+   Due condizioni, stesso effetto: (pointer: coarse) = telefoni e tablet; @supports (-webkit-touch-callout)
+   = solo il WebKit di iOS/iPadOS, che ingrandisce anche quando all'iPad e collegato un trackpad (e allora il
+   puntatore si dichiara fine). Le classi rg-* ripetono la regola in rg-components.css (pesano di piu). */
+@media (pointer: coarse) { input, select, textarea { font-size: var(--rg-font-size-md); } }
+@supports (-webkit-touch-callout: none) { input, select, textarea { font-size: var(--rg-font-size-md); } }
 button, [role="button"], a, input, select, textarea { transition: color var(--rg-motion-fast) var(--rg-motion-easing), background-color var(--rg-motion-fast) var(--rg-motion-easing), border-color var(--rg-motion-fast) var(--rg-motion-easing); }
 a { color: inherit; }
 img, svg { max-width: 100%; }

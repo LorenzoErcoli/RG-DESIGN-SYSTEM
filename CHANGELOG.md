@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## Non rilasciato — proposta 1.26.0 (ramo `ds/worksheet-compact`)
+## 1.26.0 — 2026-09-18
 
 **Minor.** Classi nuove e additive; `rg-part-sheet` e `rg-fill-field--check` cambiano forma, ma la 1.25.0 non è
 mai stata pubblicata: nessun consumatore le usa. Nessun token nuovo.

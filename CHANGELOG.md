@@ -7,6 +7,34 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta 1.26.0 (ramo `ds/worksheet-compact`)
+
+**Minor.** Classi nuove e additive; `rg-part-sheet` e `rg-fill-field--check` cambiano forma, ma la 1.25.0 non è
+mai stata pubblicata: nessun consumatore le usa. Nessun token nuovo.
+
+### La pagina della parte compatta per costruzione
+
+Dalla seconda anteprima: *«la testata prende davvero troppo spazio: immagina un oggetto che ha 7 parti e la parte
+ha 6 fasi, deve comunque rientrare in un foglio»*. Con 4 parti e 3 fasi la 1.25 occupava il 91% dell'A4.
+
+- **Testata su una riga** (~70 px): titolo a 16 px (peso di pagina) e QR piccolo in linea.
+- **`rg-qr--inline`**: didascalia a sinistra del codice, allineata in basso.
+- **Anagrafica in tre colonne**: `rg-part-sheet__facts` / `__fact` (etichetta sopra, valore sotto) al posto
+  di `rg-key-value--ruled`.
+- **Parti in quattro colonne da 20 px**: pastiglia piccola, `__name` (con i puntini se non ci sta), `__code`; la
+  corrente con filetto nero spesso e grassetto; `__here` facoltativo.
+- **Fasi a griglia da 24 px, testo 12, larghezze dichiarate** sulle `<th>`: `__n` 32, `__dept` 256 (reparto
+  piccolo, maiuscolo, su una riga: ci sta «FINISSAGGIO E CONTROLLO QUALITÀ»), `__done` 48, `__date` 96, `__sign`
+  96; la Lavorazione prende il resto.
+- **`rg-fill-field--check`** a 20 px (~5,3 mm).
+- **`rg-part-sheet--no-head`**: in stampa la pagina della parte passa a `rg-a4` (margine 12 mm) e si riprende lo
+  spazio dell'intestazione, quando l'app non ce la stampa.
+- Misurate in Chrome a 703 px (larghezza utile A4): **4 parti / 3 fasi 412 px (109 mm, 43%)**, **14 parti / 8
+  fasi 609 px (161 mm, 64%)** della pagina con `rg-u-print-a4--head` (255 mm utili). PDF di prova: una pagina per
+  caso, `--no-head` a 12 mm.
+- Documenti: `part-sheet.md` riscritto, `qr.md`, `fill-field.md`; manifest (`part-sheet`, `qr`, `fill-field`);
+  vetrina `#part-sheet` e `#qr`.
+
 ## 1.25.0 — 2026-09-18
 
 **Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Un solo

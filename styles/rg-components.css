@@ -1343,34 +1343,62 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block--compact .rg-fill-field__line { display: flex; align-items: flex-end; padding: 0 0 calc(var(--rg-space-1) + var(--rg-space-1) / 2) var(--rg-space-2); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; line-height: 1; }
 .rg-worksheet-block--compact .rg-table td { padding-bottom: calc(var(--rg-space-1) + var(--rg-space-1) / 2); vertical-align: bottom; }
 
-/* CASELLA DA SPUNTARE («Fatta»): quadrata da 24 px (~6,4 mm), contorno nero. Piu piccola di --swatch
-   perche ci va un segno di penna, non un pezzo di filo. L'etichetta sta nella <th>. */
-.rg-fill-field--check { display: inline-block; box-sizing: border-box; width: var(--rg-space-6); height: var(--rg-space-6); vertical-align: middle; background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+/* CASELLA DA SPUNTARE («Fatta»): quadrata da 20 px (~5,3 mm; 24 nella 1.25, ridotta nella 1.26 per la pagina
+   della parte compatta), contorno nero. Piu piccola di --swatch perche ci va un segno di penna, non un pezzo
+   di filo. L'etichetta sta nella <th>. */
+.rg-fill-field--check { display: inline-block; box-sizing: border-box; width: calc(var(--rg-space-4) + var(--rg-space-1)); height: calc(var(--rg-space-4) + var(--rg-space-1)); vertical-align: middle; background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
 
 /* QR CODE — il contenitore; l'immagine la genera l'app (SVG inline). Quadrato, dimensionato dal DS:
    104 px (~27,5 mm) di base, 60 px (~15,9 mm) con --small per l'intestazione. shape-rendering: crispEdges
    tiene i moduli netti in stampa e a schermo. La zona di rispetto (4 moduli) sta NELL'SVG: il contenitore
-   non ha bordo, perche un bordo attaccato al codice ne disturba la lettura. */
+   non ha bordo, perche un bordo attaccato al codice ne disturba la lettura.
+   --inline (1.26.0): didascalia A SINISTRA del codice, allineata in basso, invece che sotto: il QR non
+   aggiunge altezza a una testata bassa. Nel markup la didascalia resta dopo l'immagine. */
 .rg-qr { display: inline-flex; flex-direction: column; align-items: center; gap: var(--rg-space-1); width: calc(var(--rg-space-24) + var(--rg-space-2)); margin: 0; }
 .rg-qr--small { width: calc(var(--rg-space-12) + var(--rg-space-3)); }
 .rg-qr__img { display: block; width: 100%; aspect-ratio: 1 / 1; background: var(--rg-color-white); }
 .rg-qr__img > svg, .rg-qr__img > img { display: block; width: 100%; height: 100%; shape-rendering: crispEdges; image-rendering: pixelated; }
 .rg-qr__caption { color: var(--rg-color-text-label); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); text-align: center; }
+.rg-qr--inline { flex-direction: row-reverse; align-items: flex-end; gap: var(--rg-space-2); width: auto; }
+.rg-qr--inline > .rg-qr__img { flex: none; width: calc(var(--rg-space-24) + var(--rg-space-2)); }
+.rg-qr--inline.rg-qr--small > .rg-qr__img { width: calc(var(--rg-space-12) + var(--rg-space-3)); }
+.rg-qr--inline > .rg-qr__caption { max-width: calc(var(--rg-space-24) + var(--rg-space-12)); text-align: right; }
 
-/* PAGINA DELLA PARTE — una pagina intera che apre il pezzo nel fascicolo: titolo con la pastiglia,
-   identita del prodotto, tutte le parti con questa segnata, le fasi da spuntare, il QR. In stampa sta da
-   sola (rg-utilities.css). Titolo a livello di pagina (peso heading). */
-.rg-part-sheet { display: grid; gap: var(--rg-space-6); }
-.rg-part-sheet__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--rg-space-6); padding-bottom: var(--rg-space-4); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
-.rg-part-sheet__title { display: flex; align-items: center; gap: var(--rg-space-3); margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-heading); line-height: var(--rg-line-height-heading); }
-.rg-part-sheet__section { display: grid; gap: var(--rg-space-2); }
-/* Tutte le parti del prodotto: questa ha il filetto nero spesso, il grassetto e la scritta «questa parte»
-   (mai il solo colore della pastiglia). */
-.rg-part-sheet__parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--rg-space-24) * 2 + var(--rg-space-12)), 1fr)); gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
-.rg-part-sheet__part { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); min-width: 0; padding: var(--rg-space-2) var(--rg-space-3); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); color: var(--rg-color-text-primary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-sm); }
+/* PAGINA DELLA PARTE — la pagina che apre il pezzo nel fascicolo: titolo con la pastiglia e QR, identita del
+   prodotto, tutte le parti con questa segnata, le fasi da spuntare. COMPATTA PER COSTRUZIONE (1.26.0): «un
+   oggetto con 7 parti e 6 fasi deve comunque rientrare in un foglio». Caso limite verificato: 14 parti e 8
+   fasi in una A4 con rg-u-print-a4--head. Testata su una riga bassa (titolo 16, QR piccolo in linea),
+   anagrafica in tre colonne (etichetta sopra, valore sotto), parti in quattro colonne da 20 px, fasi a griglia
+   da 24 px con larghezze dichiarate. In stampa sta da sola (rg-utilities.css). Titolo a livello di pagina
+   (peso heading) anche a 16: la misura e bassa per stare nel foglio, il peso dice il livello. */
+.rg-part-sheet { display: grid; gap: var(--rg-space-4); }
+.rg-part-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: var(--rg-space-4); padding-bottom: var(--rg-space-2); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
+.rg-part-sheet__title { display: flex; align-items: center; gap: var(--rg-space-2); margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-md); font-weight: var(--rg-weight-heading); line-height: var(--rg-line-height-heading); }
+.rg-part-sheet__section { display: grid; gap: var(--rg-space-1); }
+/* Anagrafica: tre colonne, etichetta piccola SOPRA il valore. <dl> con un <div> per coppia. */
+.rg-part-sheet__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--rg-space-2) var(--rg-space-4); margin: 0; }
+.rg-part-sheet__fact { min-width: 0; }
+.rg-part-sheet__fact > dt { color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-part-sheet__fact > dd { margin: 0; color: var(--rg-color-text-primary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); overflow-wrap: anywhere; }
+/* Tutte le parti del prodotto, quattro colonne da 20 px: pastiglia piccola, nome, codice. Questa parte ha
+   il filetto nero spesso e il grassetto (mai il solo colore della pastiglia); «questa parte» scritto e
+   facoltativo, dove la colonna lo lascia stare. */
+.rg-part-sheet__parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--rg-space-24) + var(--rg-space-16)), 1fr)); gap: var(--rg-space-1); margin: 0; padding: 0; list-style: none; }
+.rg-part-sheet__part { display: flex; align-items: center; gap: var(--rg-space-1); min-width: 0; min-height: calc(var(--rg-space-4) + var(--rg-space-1)); padding: 0 var(--rg-space-1); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); color: var(--rg-color-text-primary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); white-space: nowrap; }
 .rg-part-sheet__part--current { border: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); font-weight: var(--rg-weight-bold); }
+.rg-part-sheet__name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .rg-part-sheet__code { margin-left: auto; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-regular); white-space: nowrap; }
 .rg-part-sheet__here { color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; white-space: nowrap; }
+/* Fasi della parte: rg-table--grid, righe da 24, testo 12. Larghezze DICHIARATE sulle <th> (layout fisso):
+   N 32, Reparto 256, Fatta 48, Data 96, Firma 96 (una sigla); la Lavorazione prende il resto (~175 su A4). Il reparto
+   su una riga, piccolo e maiuscolo (__dept, anche sulle <td>): ci sta «FINISSAGGIO E CONTROLLO QUALITA». */
+.rg-part-sheet .rg-table--grid :is(th, td) { height: var(--rg-space-6); padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); vertical-align: middle; }
+.rg-part-sheet__n { width: var(--rg-space-8); }
+.rg-part-sheet__dept { width: calc(var(--rg-space-24) * 2 + var(--rg-space-16)); }
+td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: var(--rg-letter-label); text-transform: uppercase; white-space: nowrap; overflow-wrap: normal; }
+.rg-part-sheet__done { width: var(--rg-space-12); text-align: center; }
+.rg-part-sheet__date { width: var(--rg-space-24); }
+.rg-part-sheet__sign { width: var(--rg-space-24); }
 
 /* FOGLIO DEI TAGLIANDI — la pagina dei rg-cutout: la legenda si ritaglia, quindi sul retro non deve
    esserci niente e va su una pagina sua (che apre in stampa). Due colonne, una con --single; fra un

@@ -88,6 +88,10 @@
   .rg-part-sheet, .rg-cutout-sheet { break-before: page; page-break-before: always; break-after: page; page-break-after: always; }
   .rg-part-sheet:first-child, .rg-cutout-sheet:first-child { break-before: auto; page-break-before: auto; }
   .rg-part-sheet { break-inside: avoid; page-break-inside: avoid; }
+  /* Pagina della parte SENZA intestazione stampata (1.26.0): in un documento rg-u-print-a4--head la sezione
+     passa alla pagina rg-a4 (margine 12 mm) e si riprende i 18 mm riservati all'intestazione. Il cambio di
+     pagina nominata forza gia un salto: coerente con break-before/after qui sopra. */
+  .rg-part-sheet--no-head { page: rg-a4; }
   /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda
      di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome.
      rg-cutout__cue (1.23.0): il fondo bianco interrompe la linea di taglio sotto la parola. */

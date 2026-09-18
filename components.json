@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.28.0",
+  "dsVersion": "1.29.0",
   "generated": "2026-09-18",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
@@ -4397,6 +4397,7 @@
         "fascicolo",
         "etichetta",
         "costo",
+        "materiali",
         "collega",
         "scollega",
         "copia",
@@ -4435,7 +4436,7 @@
       "rulesRef": "design-rules.md#7-tono-visivo",
       "specimenAnchor": "icons",
       "snippet": "<svg class=\"rg-icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/ds/icons/rg-icons.svg#rg-icon-modifica\"></use></svg>",
-      "notes": "DISEGNO PROPRIO RG, nessun codice di terzi (nessuna licenza esterna). Griglia 24, area viva 3-21, tratto 1.5 a capi quadri e spigoli vivi, fill none, colore da currentColor. Misure: 16 default (dentro bottoni col testo a 14), 20 --md (e automatico dentro rg-icon-button--full e rg-button--large), 24 --lg. SERVIRE IN LOCALE: app.mount('/ds/icons', StaticFiles(directory=DS_DIR / 'icons')); <use> verso file esterno richiede stessa origine via http (non file://). NOMI = azione, non figura: aggiungi, chiudi, conferma, modifica, elimina, salva, apri, apri-esterno, indietro, avanti, scarica, carica, stampa, documento, fascicolo, etichetta, costo, collega, scollega, copia, nuova-versione, ruota, ricarica, ripristina, filtro, togli-filtri, ordina, cerca, avviso, errore, informazione, segnala, immagine, altro. Sostituzioni: ✎→modifica, 🔗→collega, ⟳→ruota, ↓→scarica, ←/→→indietro/avanti, ✕→chiudi, ✓→conferma, ⚑→segnala, ⚠→avviso, ⓘ→informazione, ×Reset→togli-filtri. MAI un'icona senza nome accessibile sul controllo; MAI un carattere o un'emoji come icona (restano i segni generati dal DS e rg-field__mark). Il lint fallisce se un doc/esempio/snippet cita un id assente nello sprite. Aggiungere un'icona: icons/README.md.",
+      "notes": "DISEGNO PROPRIO RG, nessun codice di terzi (nessuna licenza esterna). Griglia 24, area viva 3-21, tratto 1.5 a capi quadri e spigoli vivi, fill none, colore da currentColor. Misure: 16 default (dentro bottoni col testo a 14), 20 --md (e automatico dentro rg-icon-button--full e rg-button--large), 24 --lg. SERVIRE IN LOCALE: app.mount('/ds/icons', StaticFiles(directory=DS_DIR / 'icons')); <use> verso file esterno richiede stessa origine via http (non file://). NOMI = azione, non figura: aggiungi, chiudi, conferma, modifica, elimina, salva, apri, apri-esterno, indietro, avanti, scarica, carica, stampa, documento, fascicolo, etichetta, costo, materiali, collega, scollega, copia, nuova-versione, ruota, ricarica, ripristina, filtro, togli-filtri, ordina, cerca, avviso, errore, informazione, segnala, immagine, altro. Sostituzioni: ✎→modifica, 🔗→collega, ⟳→ruota, ↓→scarica, ←/→→indietro/avanti, ✕→chiudi, ✓→conferma, ⚑→segnala, ⚠→avviso, ⓘ→informazione, ×Reset→togli-filtri. MAI un'icona senza nome accessibile sul controllo; MAI un carattere o un'emoji come icona (restano i segni generati dal DS e rg-field__mark). Il lint fallisce se un doc/esempio/snippet cita un id assente nello sprite. Aggiungere un'icona: icons/README.md.",
       "keywords": [
         "icona",
         "icone",
@@ -4467,7 +4468,15 @@
         "arrow up",
         "arrow down",
         "move up",
-        "move down"
+        "move down",
+        "materiali",
+        "consumi materiali",
+        "rotolo",
+        "cono di filo",
+        "filati",
+        "materials",
+        "fabric roll",
+        "thread cone"
       ]
     },
     {

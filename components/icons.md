@@ -42,6 +42,7 @@ Il nome è l'**azione**, non la figura.
 | `fascicolo` | fogli sovrapposti | Schede di reparto | |
 | `etichetta` | cartellino | Etichette | |
 | `costo` | euro | Costi | |
+| `materiali` | rotolo che si svolge e cono di filo | Consumi materiali: filati, materiali consumati, esploso per ordinare rotoli e coni (1.29.0) | |
 | `collega` / `scollega` | catena / catena aperta | Parti collegate, Collega, Scollega | 🔗 |
 | `copia` | due riquadri | Copia parti | |
 | `nuova-versione` | due riquadri con più | Nuovo proto | |

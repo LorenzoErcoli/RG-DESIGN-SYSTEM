@@ -7,6 +7,24 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.29.0 — 2026-09-18
+
+**Minor.** Un'icona nuova e additiva, nessuna classe o token toccato, rimosso o rinominato.
+
+### Icona `rg-icon-materiali`
+
+Chiesta dalla piattaforma per il bottone secondario «Consumi materiali» nella testata della pagina prodotto,
+accanto a «Schede di reparto» (`fascicolo`): porta alla pagina di filati, materiali consumati ed esploso per
+ordinare i materiali (rotoli di tessuto, garza, termogarza; coni di filo per il ricamo). Nessuna icona del set
+diceva «materiali».
+
+- **`rg-icon-materiali`**: un rotolo visto di testa che si svolge (cerchio, anima, lembo in basso) e un cono di
+  filo in diagonale (tronco di cono col tubo in cima e una spira). Stessa griglia delle altre: 24×24, area viva
+  3–21, tratto 1,5 a capi quadri, nessun riempimento, `currentColor`. Provata a 16, 20 e 24 px.
+- Uso: icona + testo dentro `rg-button rg-button--secondary`, come «Schede di reparto».
+- Documenti: `components/icons.md` (tabella dei nomi), manifest (`icons`, note, parole chiave), vetrina `#icons`
+  (37 icone).
+
 ## 1.28.0 — 2026-09-18
 
 **Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Chiesta come

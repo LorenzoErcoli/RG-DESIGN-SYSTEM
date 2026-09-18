@@ -2561,7 +2561,8 @@
         ],
         "variants": [
           "rg-worksheet-block--long",
-          "rg-worksheet-block--compact"
+          "rg-worksheet-block--compact",
+          "rg-worksheet-block--continued"
         ],
         "related": [
           "rg-dept-band",
@@ -2581,13 +2582,15 @@
           "rg-qr",
           "rg-cutout-sheet",
           "rg-fill-field--check",
-          "rg-u-print-a4--head"
+          "rg-u-print-a4--head",
+          "rg-print-anchor"
         ]
       },
       "variants": [
         "normale",
         "long",
-        "compact"
+        "compact",
+        "continued"
       ],
       "states": [
         "print",
@@ -2628,7 +2631,7 @@
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "worksheet-block",
       "snippet": "<section class=\"rg-worksheet-block\">\n  <p class=\"rg-dept-band rg-dept-band--pressatura\"><span class=\"rg-dept-band__name\">Pressatura e soffiatura</span><span class=\"rg-dept-band__note\">Fase 03 / 07</span></p>\n  <header class=\"rg-worksheet-block__head\">\n    <span class=\"rg-worksheet-block__index\">03</span>\n    <h3 class=\"rg-worksheet-block__title\">Pressatura fondo</h3>\n    <p class=\"rg-worksheet-block__meta\">RG-2026-0481 &#183; parte 2 di 5 &#183; rev. 04</p>\n  </header>\n  <div class=\"rg-worksheet-block__body\">\n    <div class=\"rg-worksheet-block__fields\">\n      <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Temperatura <span class=\"rg-fill-field__unit\">&#176;C</span></span><span class=\"rg-fill-field__line\"></span></div>\n      <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Tempo <span class=\"rg-fill-field__unit\">s</span></span><span class=\"rg-fill-field__line\"></span></div>\n    </div>\n  </div>\n  <footer class=\"rg-worksheet-block__foot\">\n    <div class=\"rg-fill-field rg-fill-field--inline\"><span class=\"rg-fill-field__label\">Operatore</span><span class=\"rg-fill-field__line\"></span></div>\n  </footer>\n</section>",
-      "notes": "Oggetto di CARTA prima che superficie a schermo. Due decisioni portano tutto: (1) non occupa una pagina intera - la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e il blocco non dichiara nessuna altezza; (2) non si spezza MAI fra due pagine - in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca. La paginazione (break-inside: avoid piu page-break-inside per i motori PDF server-side) vive nell'UNICO @media print del DS, in rg-utilities.css: esteso, non duplicato, nessuna app riscrive il proprio. La variante --long e SOLO una regola di paginazione (apre una pagina nuova; se e il primo blocco non lascia una pagina vuota prima; la tabella si spezza fra righe con thead ripetuto) e non cambia nulla a schermo: non usarla per dare importanza a una fase. LIMITE DICHIARATO: se un --long sfora comunque il foglio, la banda di reparto NON si ripete sulla pagina di continuazione e quella pagina perde il suo segnale di reparto; in quel caso la fase va spezzata a monte in due blocchi con due bande. Il riquadro e un'eccezione dichiarata a regole 6 (non incorniciare tutto): su carta rende il blocco separabile, e non c'e hover a fare quel lavoro. La geometria del foglio NON e del componente ma del documento: opt-in rg-u-print-a4 sul contenitore che stampa. A schermo la stessa fase si legge con rg-section-card o rg-steps e si compila con rg-field. FASI COLLEGATE (1.16.0): rg-worksheet-block__role nella testa, dopo il titolo, con le parole di rg-step__role e i numeri come sul foglio ('Principale · con la 03', 'Collegata · dopo la 02'); filo nero spesso a sinistra = il pezzo di graffa che ogni blocco porta con se, perche i blocchi di un gruppo possono finire su due pagine. Niente fondo pieno (non si stampa), niente riquadro (e il segno del nome di reparto). FASCICOLO COMPATTO (1.23.0, opt-in): rg-worksheet-block--compact porta le righe da scrivere a 24 px (~6,4 mm; --tall resta 48), le celle td.rg-fill-field--cell a 24 px, testa/corpo/piede a 8/12, la griglia __fields a colonne >=128 px in auto-fill (i campi non si allargano a tutta la pagina, allineati sul fondo, --tall prende la fila), il piede su una riga dove ci sta (Tempo, Operatore, Data --inline con riga >=64 px; Note --inline --tall per ultima prende il resto), la banda a 30 px (trama 16 invariata, margine bianco del nome 2) e le th delle tabelle su una riga. Testa con la FASE in primo piano: __phase (20 px, «Fase 2 di 3 · Pressatura», N di M dentro la parte) > __part (14 px, «Parte 1 di 4 · FONDO BORDATO», rg-part-mark facoltativa davanti) > reparto sul nome della banda (12 px); sostituiscono __index + __title, il contatore dei fogli va in rg-dept-band__note. Eccezioni per stop = rg-table rg-table--compact + td.rg-fill-field--cell dentro il blocco compatto, rg-table__grow sulla th di Note. Legenda coni = rg-cutout ultimo figlio del blocco, dopo il piede. Pezzi del fascicolo: rg-worksheet-part (testata di parte che apre la pagina), rg-cutout, rg-blank-page. Dentro il compatto usare rg-u-mt-2, non rg-u-mt-4 (utility con !important). CORREZIONE 1.24.0: la tabella delle eccezioni per stop e rg-table rg-table--compact rg-table--grid (style=\"--rg-table-cols: 6\") con td.rg-fill-field--cell, rg-table__grow sulla Note al doppio; la sola --compact stampava righe senza divisori verticali. SECONDA VERSIONE (1.25.0, opt-in): testa __step («FASE 1 DI 3», piccolo, sopra la banda) + banda staccata dai bordi e alta 38 (si attiva col selettore __step + .rg-dept-band) + __work nella testa (lavorazione, 28 px, grassetto, maiuscolo: eccezione dichiarata al peso 500 dei contenitori). Parte e identita prodotto NON nel blocco: nell intestazione di pagina stampata dall app sul PDF, con rg-u-print-a4--head (@page rg-a4-head, margine sup. 30 mm; fascia 8-24 mm; riga 1 Helvetica-Bold 11 pt base y 14 mm; riga 2 Courier 8 pt base y 19,5 mm; filetto 0,5 pt a y 25 mm; QR 16x16 mm a x 182-198 y 8-24; misure in worksheet-block.md#intestazione-di-pagina). __op = sottotitolo di operazione (14, regolare, filetto sopra). Nel compatto il valore stampato in __line ha 8 px a sinistra e 6 sotto, mono 14; td delle tabelle 6 px sotto.",
+      "notes": "Oggetto di CARTA prima che superficie a schermo. Due decisioni portano tutto: (1) non occupa una pagina intera - la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e il blocco non dichiara nessuna altezza; (2) non si spezza MAI fra due pagine - in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca. La paginazione (break-inside: avoid piu page-break-inside per i motori PDF server-side) vive nell'UNICO @media print del DS, in rg-utilities.css: esteso, non duplicato, nessuna app riscrive il proprio. La variante --long e SOLO una regola di paginazione (apre una pagina nuova; se e il primo blocco non lascia una pagina vuota prima; la tabella si spezza fra righe con thead ripetuto) e non cambia nulla a schermo: non usarla per dare importanza a una fase. LIMITE DICHIARATO: se un --long sfora comunque il foglio, la banda di reparto NON si ripete sulla pagina di continuazione e quella pagina perde il suo segnale di reparto; in quel caso la fase va spezzata a monte in due blocchi con due bande. Il riquadro e un'eccezione dichiarata a regole 6 (non incorniciare tutto): su carta rende il blocco separabile, e non c'e hover a fare quel lavoro. La geometria del foglio NON e del componente ma del documento: opt-in rg-u-print-a4 sul contenitore che stampa. A schermo la stessa fase si legge con rg-section-card o rg-steps e si compila con rg-field. FASI COLLEGATE (1.16.0): rg-worksheet-block__role nella testa, dopo il titolo, con le parole di rg-step__role e i numeri come sul foglio ('Principale · con la 03', 'Collegata · dopo la 02'); filo nero spesso a sinistra = il pezzo di graffa che ogni blocco porta con se, perche i blocchi di un gruppo possono finire su due pagine. Niente fondo pieno (non si stampa), niente riquadro (e il segno del nome di reparto). FASCICOLO COMPATTO (1.23.0, opt-in): rg-worksheet-block--compact porta le righe da scrivere a 24 px (~6,4 mm; --tall resta 48), le celle td.rg-fill-field--cell a 24 px, testa/corpo/piede a 8/12, la griglia __fields a colonne >=128 px in auto-fill (i campi non si allargano a tutta la pagina, allineati sul fondo, --tall prende la fila), il piede su una riga dove ci sta (Tempo, Operatore, Data --inline con riga >=64 px; Note --inline --tall per ultima prende il resto), la banda a 30 px (trama 16 invariata, margine bianco del nome 2) e le th delle tabelle su una riga. Testa con la FASE in primo piano: __phase (20 px, «Fase 2 di 3 · Pressatura», N di M dentro la parte) > __part (14 px, «Parte 1 di 4 · FONDO BORDATO», rg-part-mark facoltativa davanti) > reparto sul nome della banda (12 px); sostituiscono __index + __title, il contatore dei fogli va in rg-dept-band__note. Eccezioni per stop = rg-table rg-table--compact + td.rg-fill-field--cell dentro il blocco compatto, rg-table__grow sulla th di Note. Legenda coni = rg-cutout ultimo figlio del blocco, dopo il piede. Pezzi del fascicolo: rg-worksheet-part (testata di parte che apre la pagina), rg-cutout, rg-blank-page. Dentro il compatto usare rg-u-mt-2, non rg-u-mt-4 (utility con !important). CORREZIONE 1.24.0: la tabella delle eccezioni per stop e rg-table rg-table--compact rg-table--grid (style=\"--rg-table-cols: 6\") con td.rg-fill-field--cell, rg-table__grow sulla Note al doppio; la sola --compact stampava righe senza divisori verticali. SECONDA VERSIONE (1.25.0, opt-in): testa __step («FASE 1 DI 3», piccolo, sopra la banda) + banda staccata dai bordi e alta 38 (si attiva col selettore __step + .rg-dept-band) + __work nella testa (lavorazione, 28 px, grassetto, maiuscolo: eccezione dichiarata al peso 500 dei contenitori). Parte e identita prodotto NON nel blocco: nell intestazione di pagina stampata dall app sul PDF, con rg-u-print-a4--head (@page rg-a4-head, margine sup. 30 mm; fascia 8-24 mm; riga 1 Helvetica-Bold 11 pt base y 14 mm; riga 2 Courier 8 pt base y 19,5 mm; filetto 0,5 pt a y 25 mm; QR 16x16 mm a x 182-198 y 8-24; misure in worksheet-block.md#intestazione-di-pagina). __op = sottotitolo di operazione (14, regolare, filetto sopra). Nel compatto il valore stampato in __line ha 8 px a sinistra e 6 sotto, mono 14; td delle tabelle 6 px sotto. 1.27.0: rg-worksheet-block--continued = fase successiva di un gruppo nello stesso reparto, senza banda (una sola, sul primo) e senza piede (uno solo, sull ultimo): margine negativo, un solo filetto fra i due blocchi, break-before: avoid in stampa. La testa __step + __work (+ __role) regge senza banda.",
       "keywords": [
         "scheda di lavorazione",
         "scheda tecnica",
@@ -2699,10 +2702,18 @@
         "page header",
         "pymupdf",
         "margine superiore",
-        "valore stampato"
+        "valore stampato",
+        "blocco che continua",
+        "continuazione",
+        "fasi del gruppo",
+        "stesso reparto",
+        "senza banda",
+        "senza piede",
+        "continued block"
       ],
       "variantsSince": {
-        "rg-worksheet-block--compact": "1.23.0"
+        "rg-worksheet-block--compact": "1.23.0",
+        "rg-worksheet-block--continued": "1.27.0"
       },
       "elementsSince": {
         "rg-worksheet-block__phase": "1.23.0",
@@ -2931,6 +2942,8 @@
         "base": "rg-part-sheet",
         "elements": [
           "rg-part-sheet__head",
+          "rg-part-sheet__ident",
+          "rg-part-sheet__step",
           "rg-part-sheet__title",
           "rg-part-sheet__facts",
           "rg-part-sheet__fact",
@@ -2992,8 +3005,8 @@
       ],
       "doc": "components/part-sheet.md",
       "specimenAnchor": "part-sheet",
-      "snippet": "<section class=\"rg-part-sheet\">\n  <header class=\"rg-part-sheet__head\">\n    <h2 class=\"rg-part-sheet__title\"><span class=\"rg-part-mark rg-part--1\" aria-hidden=\"true\"></span>Parte 1 di 4 · FONDO BORDATO</h2>\n    <figure class=\"rg-qr rg-qr--small rg-qr--inline\">\n      <div class=\"rg-qr__img\"><svg viewBox=\"0 0 29 29\" role=\"img\" aria-label=\"QR: apri la parte in RG\"><!-- moduli generati dall'app --></svg></div>\n      <figcaption class=\"rg-qr__caption\">Apri la parte in RG</figcaption>\n    </figure>\n  </header>\n  <dl class=\"rg-part-sheet__facts\">\n    <div class=\"rg-part-sheet__fact\"><dt>Cliente</dt><dd>DIOR</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Prodotto</dt><dd>M3641 COCOTTE</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Variante</dt><dd>Nero / oro</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Codice RG</dt><dd class=\"rg-mono\">RG-26-DIO-0441-P</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Codice prodotto</dt><dd class=\"rg-mono\">M3641UBWN</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Quantità nel prodotto</dt><dd class=\"rg-mono\">2 pz</dd></div>\n  </dl>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Le parti del prodotto</h3>\n    <ol class=\"rg-part-sheet__parts\">\n      <li class=\"rg-part-sheet__part rg-part-sheet__part--current\" aria-current=\"true\"><span class=\"rg-part-mark rg-part-mark--small rg-part--1\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">FONDO BORDATO</span><span class=\"rg-part-sheet__code\">P01</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--2\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">DAVANTI</span><span class=\"rg-part-sheet__code\">P02</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--3\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">DIETRO</span><span class=\"rg-part-sheet__code\">P03</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--4\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">MANICO</span><span class=\"rg-part-sheet__code\">P04</span></li>\n    </ol>\n  </section>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Fasi della parte</h3>\n    <table class=\"rg-table rg-table--compact rg-table--grid\">\n      <thead>\n        <tr><th class=\"rg-table__numeric rg-part-sheet__n\" scope=\"col\">N</th><th scope=\"col\">Lavorazione</th><th class=\"rg-part-sheet__dept\" scope=\"col\">Reparto</th><th class=\"rg-part-sheet__done\" scope=\"col\">Fatta</th><th class=\"rg-part-sheet__date\" scope=\"col\">Data</th><th class=\"rg-part-sheet__sign\" scope=\"col\">Firma</th></tr>\n      </thead>\n      <tbody>\n        <tr><td class=\"rg-table__numeric\">1</td><td>Ricamo</td><td class=\"rg-part-sheet__dept\">Ricamo</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">2</td><td>Pressatura</td><td class=\"rg-part-sheet__dept\">Pressatura e soffiatura</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">3</td><td>Sabbiatura</td><td class=\"rg-part-sheet__dept\">Pressatura e soffiatura</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n      </tbody>\n    </table>\n  </section>\n</section>",
-      "notes": "Solo carta. COMPATTA PER COSTRUZIONE dalla 1.26.0 (la 1.25, non pubblicata, occupava il 91% dell A4 con 4 parti e 3 fasi). Testata su una riga (~70 px): titolo 16 peso heading + rg-qr--small rg-qr--inline. Anagrafica __facts in 3 colonne, etichetta sopra. Parti __parts in 4 colonne da 20 px (rg-part-mark--small, __name con puntini, __code); corrente = filetto nero spesso + grassetto + aria-current, __here facoltativo. Fasi in rg-table--grid, righe 24, testo 12, larghezze dichiarate sulle th: __n 32, __dept 256 (anche td: maiuscolo piccolo su una riga), __done 48 (anche td, casella centrata), __date 96, __sign 96; Lavorazione il resto. Misurate: 4 parti/3 fasi 412 px (109 mm, 43% della pagina con rg-u-print-a4--head); 14 parti/8 fasi 609 px (161 mm, 64%). --no-head: in stampa page: rg-a4 (margine 12 mm) per la pagina senza intestazione stampata. Apre e chiude la pagina, non si spezza.",
+      "snippet": "<section class=\"rg-part-sheet\">\n  <header class=\"rg-part-sheet__head\">\n    <div class=\"rg-part-sheet__ident\">\n      <p class=\"rg-part-sheet__step\">Parte 1 di 4</p>\n      <h2 class=\"rg-part-sheet__title\"><span class=\"rg-part-mark rg-part--1\" aria-hidden=\"true\"></span>Fondo bordato</h2>\n    </div>\n    <figure class=\"rg-qr rg-qr--small rg-qr--inline\">\n      <div class=\"rg-qr__img\"><svg viewBox=\"0 0 29 29\" role=\"img\" aria-label=\"QR: apri la parte in RG\"><!-- moduli generati dall'app --></svg></div>\n      <figcaption class=\"rg-qr__caption\">Apri la parte in RG</figcaption>\n    </figure>\n  </header>\n  <dl class=\"rg-part-sheet__facts\">\n    <div class=\"rg-part-sheet__fact\"><dt>Cliente</dt><dd>DIOR</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Prodotto</dt><dd>M3641 COCOTTE</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Variante</dt><dd>Nero / oro</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Codice RG</dt><dd class=\"rg-mono\">RG-26-DIO-0441-P</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Codice prodotto</dt><dd class=\"rg-mono\">M3641UBWN</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Quantità nel prodotto</dt><dd class=\"rg-mono\">2 pz</dd></div>\n  </dl>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Le parti del prodotto</h3>\n    <ol class=\"rg-part-sheet__parts\">\n      <li class=\"rg-part-sheet__part rg-part-sheet__part--current\" aria-current=\"true\"><span class=\"rg-part-mark rg-part-mark--small rg-part--1\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">FONDO BORDATO</span><span class=\"rg-part-sheet__code\">P01</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--2\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">DAVANTI</span><span class=\"rg-part-sheet__code\">P02</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--3\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">DIETRO</span><span class=\"rg-part-sheet__code\">P03</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--4\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">MANICO</span><span class=\"rg-part-sheet__code\">P04</span></li>\n    </ol>\n  </section>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Fasi della parte</h3>\n    <table class=\"rg-table rg-table--compact rg-table--grid\">\n      <thead>\n        <tr><th class=\"rg-table__numeric rg-part-sheet__n\" scope=\"col\">N</th><th scope=\"col\">Lavorazione</th><th class=\"rg-part-sheet__dept\" scope=\"col\">Reparto</th><th class=\"rg-part-sheet__done\" scope=\"col\">Fatta</th><th class=\"rg-part-sheet__date\" scope=\"col\">Data</th><th class=\"rg-part-sheet__sign\" scope=\"col\">Firma</th></tr>\n      </thead>\n      <tbody>\n        <tr><td class=\"rg-table__numeric\">1</td><td>Ricamo</td><td class=\"rg-part-sheet__dept\">Ricamo</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">2</td><td>Pressatura</td><td class=\"rg-part-sheet__dept\">Pressatura e soffiatura</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">3</td><td>Sabbiatura</td><td class=\"rg-part-sheet__dept\">Pressatura e soffiatura</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n      </tbody>\n    </table>\n  </section>\n</section>",
+      "notes": "Solo carta. COMPATTA PER COSTRUZIONE dalla 1.26.0 (la 1.25, non pubblicata, occupava il 91% dell A4 con 4 parti e 3 fasi). Testata su una riga (~70 px): titolo 16 peso heading + rg-qr--small rg-qr--inline. Anagrafica __facts in 3 colonne, etichetta sopra. Parti __parts in 4 colonne da 20 px (rg-part-mark--small, __name con puntini, __code); corrente = filetto nero spesso + grassetto + aria-current, __here facoltativo. Fasi in rg-table--grid, righe 24, testo 12, larghezze dichiarate sulle th: __n 32, __dept 256 (anche td: maiuscolo piccolo su una riga), __done 48 (anche td, casella centrata), __date 96, __sign 96; Lavorazione il resto. Misurate: 4 parti/3 fasi 412 px (109 mm, 43% della pagina con rg-u-print-a4--head); 14 parti/8 fasi 609 px (161 mm, 64%). --no-head: in stampa page: rg-a4 (margine 12 mm) per la pagina senza intestazione stampata. Apre e chiude la pagina, non si spezza. 1.27.0: testata con la gerarchia dei blocchi, «la testata faccia capire che e proprio quel pezzo»: __ident con __step («PARTE 1 DI 4», piccolo) e __title col NOME della parte a 28 px, grassetto, maiuscolo, pastiglia davanti. Il QR resta l elemento piu alto: testata sempre ~70 px, 14 parti/8 fasi sempre 609 px (64%).",
       "keywords": [
         "pagina della parte",
         "copertina parte",
@@ -3018,10 +3031,16 @@
         "anagrafica",
         "tre colonne",
         "quattro colonne",
-        "senza intestazione"
+        "senza intestazione",
+        "nome della parte",
+        "parte 1 di 4"
       ],
       "variantsSince": {
         "rg-part-sheet--no-head": "1.26.0"
+      },
+      "elementsSince": {
+        "rg-part-sheet__ident": "1.27.0",
+        "rg-part-sheet__step": "1.27.0"
       }
     },
     {
@@ -3140,6 +3159,56 @@
         "forbici",
         "cut sheet",
         "tear-off sheet",
+        "stampa",
+        "print"
+      ]
+    },
+    {
+      "id": "print-anchor",
+      "title": "Ancora di stampa",
+      "status": "beta",
+      "since": "1.27.0",
+      "kind": "component",
+      "role": "Un collegamento senza testo e senza aspetto (4x4 px, trasparente, fuori dal flusso) che Chrome porta nel PDF come annotazione di collegamento: l app lo legge per ricomporre il fascicolo (dove comincia un blocco, una parte, un tagliando) e poi lo toglie.",
+      "classes": {
+        "base": "rg-print-anchor",
+        "related": [
+          "rg-worksheet-block",
+          "rg-part-sheet",
+          "rg-part-sheet__head",
+          "rg-cutout",
+          "rg-cutout-sheet"
+        ]
+      },
+      "variants": [
+        "base"
+      ],
+      "states": [
+        "print"
+      ],
+      "tokens": [
+        "--rg-space-1"
+      ],
+      "doc": "components/print-anchor.md",
+      "rulesRef": "design-rules.md#11-accessibilità-e-comportamento",
+      "specimenAnchor": "print-anchor",
+      "snippet": "<a class=\"rg-print-anchor\" href=\"https://rg.segno/blocco/7\" aria-hidden=\"true\" tabindex=\"-1\"></a>",
+      "notes": "Primo figlio di rg-worksheet-block, rg-part-sheet (o __head), rg-cutout, rg-cutout-sheet: il contenitore diventa position: relative solo se contiene l ancora (:has). Verificato: Chrome --print-to-pdf emette /URI con /Rect 3x3 pt nell angolo interno. Niente display none, visibility hidden, opacity 0 (spengono l annotazione). aria-hidden + tabindex -1 + pointer-events none: non e un controllo. L app rimuove le annotazioni rg.segno dal PDF finale.",
+      "keywords": [
+        "ancora",
+        "ancora di stampa",
+        "segno",
+        "segno pdf",
+        "marcatore",
+        "marker",
+        "link invisibile",
+        "collegamento invisibile",
+        "annotazione pdf",
+        "pdf link",
+        "pymupdf",
+        "ricomporre pdf",
+        "impaginazione",
+        "print anchor",
         "stampa",
         "print"
       ]

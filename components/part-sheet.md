@@ -22,8 +22,10 @@ lascia scorrere i blocchi; questa è una pagina che sta da sola. Un fascicolo us
 
 | Elemento | Cosa porta |
 | --- | --- |
-| `rg-part-sheet__head` | Una riga bassa: titolo a sinistra, QR piccolo in linea a destra, filetto nero spesso sotto. ~70 px (18,5 mm). |
-| `rg-part-sheet__title` | «Parte 1 di 4 · FONDO BORDATO» con la pastiglia [`rg-part-mark`](part-mark.md), 16 px, peso di pagina. |
+| `rg-part-sheet__head` | Testata bassa: identità a sinistra, QR piccolo in linea a destra, filetto nero spesso sotto. ~70 px (18,5 mm): il QR resta l'elemento più alto. |
+| `rg-part-sheet__ident` | Tiene insieme `__step` e `__title` (1.27.0). |
+| `rg-part-sheet__step` | «PARTE 1 DI 4», piccolo, sopra il nome: come `rg-worksheet-block__step` (1.27.0). |
+| `rg-part-sheet__title` | Il **nome della parte**, 28 px, grassetto, maiuscolo, con la pastiglia [`rg-part-mark`](part-mark.md) davanti (1.27.0: prima era «Parte 1 di 4 · NOME» a 16 px). Come `rg-worksheet-block__work`. |
 | `rg-part-sheet__facts` / `__fact` | L'anagrafica in **tre colonne**: `<dl>` con un `<div class="rg-part-sheet__fact">` per coppia, etichetta piccola sopra, valore sotto. |
 | `rg-part-sheet__section` | Un blocco della pagina con la sua etichetta (`rg-label`). |
 | `rg-part-sheet__parts` | Tutte le parti del prodotto, in ordine, in **quattro colonne** su A4: `<ol>`. |
@@ -38,7 +40,7 @@ lascia scorrere i blocchi; questa è una pagina che sta da sola. Un fascicolo us
 
 **Cosa contiene, in quest'ordine.**
 
-1. La **testata**: titolo e, a destra, il [QR](qr.md) `rg-qr--small rg-qr--inline` (16 mm, didascalia a sinistra).
+1. La **testata**: «PARTE 1 DI 4» piccolo, sotto il nome della parte grande (*«la testata faccia capire che è proprio quel pezzo»*, 1.27.0) e, a destra, il [QR](qr.md) `rg-qr--small rg-qr--inline` (16 mm, didascalia a sinistra).
 2. L'**anagrafica**: cliente, prodotto, variante, codice RG, codice prodotto, quantità della parte nel prodotto.
    I codici in `dd.rg-mono`.
 3. **Le parti del prodotto**, tutte, con questa segnata: dice quante sono e dove sta questa.
@@ -69,7 +71,10 @@ Ogni fila di quattro parti in più aggiunge ~24 px, ogni fase ~25. Oltre le 14 p
 ```html
 <section class="rg-part-sheet">
   <header class="rg-part-sheet__head">
-    <h2 class="rg-part-sheet__title"><span class="rg-part-mark rg-part--1" aria-hidden="true"></span>Parte 1 di 4 · FONDO BORDATO</h2>
+    <div class="rg-part-sheet__ident">
+      <p class="rg-part-sheet__step">Parte 1 di 4</p>
+      <h2 class="rg-part-sheet__title"><span class="rg-part-mark rg-part--1" aria-hidden="true"></span>Fondo bordato</h2>
+    </div>
     <figure class="rg-qr rg-qr--small rg-qr--inline">
       <div class="rg-qr__img"><svg viewBox="0 0 29 29" role="img" aria-label="QR: apri la parte in RG"><!-- moduli generati dall'app --></svg></div>
       <figcaption class="rg-qr__caption">Apri la parte in RG</figcaption>

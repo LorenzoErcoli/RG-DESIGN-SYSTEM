@@ -48,6 +48,13 @@
      descrive un foglio di carta. Eccezione dichiarata, regole §12. */
   @page rg-a4 { size: A4; margin: 12mm; }
   .rg-u-print-a4 { page: rg-a4; }
+  /* A4 CON INTESTAZIONE DI PAGINA (proposta 1.25.0). Chrome non ripete un elemento su ogni pagina: la
+     riga «Parte 1 di 4 · FONDO BORDATO — codice · cliente · prodotto» (+ QR piccolo) la stampa l'app sul
+     PDF dopo l'impaginazione (PyMuPDF). Qui si riserva lo spazio: margine superiore 30 mm invece di 12,
+     cosi il contenuto HTML comincia sotto la fascia 8–24 mm dove va l'intestazione. Misure esatte in
+     components/worksheet-block.md (Intestazione di pagina). */
+  @page rg-a4-head { size: A4; margin: 30mm 12mm 12mm; }
+  .rg-u-print-a4--head { page: rg-a4-head; }
 
   /* Schede di lavorazione — paginazione dei blocchi (v1.14.0).
      REGOLA FORTE: un blocco non si spezza mai fra due pagine. In reparto il retro del foglio non
@@ -76,6 +83,11 @@
   .rg-blank-page, .rg-blank-page--preview { display: block; min-height: 0; border: 0; break-before: page; page-break-before: always; break-after: page; page-break-after: always; }
   /* RIQUADRO DA RITAGLIARE: mai diviso fra due pagine, sarebbe un pezzo che non si ritaglia. */
   .rg-cutout { break-inside: avoid; page-break-inside: avoid; }
+  /* PAGINA DELLA PARTE e FOGLIO DEI TAGLIANDI (proposta 1.25.0): stanno da soli. Aprono una pagina (non se
+     sono la prima cosa stampata) e la chiudono: dietro un foglio di tagliandi non comincia un blocco. */
+  .rg-part-sheet, .rg-cutout-sheet { break-before: page; page-break-before: always; break-after: page; page-break-after: always; }
+  .rg-part-sheet:first-child, .rg-cutout-sheet:first-child { break-before: auto; page-break-before: auto; }
+  .rg-part-sheet { break-inside: avoid; page-break-inside: avoid; }
   /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda
      di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome.
      rg-cutout__cue (1.23.0): il fondo bianco interrompe la linea di taglio sotto la parola. */

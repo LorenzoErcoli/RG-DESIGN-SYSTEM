@@ -1259,13 +1259,14 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
    Su carta: TUTTE le celle, testata compresa, con filetto nero hairline sui quattro lati (regge la
    fotocopia), e table-layout: fixed, cioe colonne UGUALI che non dipendono dal contenuto. Una colonna
    larga si dichiara con rg-table__grow, che qui vale IL DOPPIO delle altre: la tabella dice quante
-   colonne ha con --rg-table-cols sulla <table> (se manca vale 6). Le intestazioni vanno a capo invece di
+   colonne ha con --rg-table-cols sulla <table> (se manca vale 6) e, se le colonne larghe sono piu
+   di una, quante con --rg-table-wide (1.25.0, se manca vale 1). Le intestazioni vanno a capo invece di
    uscire dalla colonna. Righe: 32 px, 24 dentro rg-worksheet-block--compact. Opt-in: le altre tabelle
    non cambiano. */
 .rg-table--grid { table-layout: fixed; border-collapse: collapse; }
 .rg-table--grid :is(th, td), .rg-table--grid td.rg-fill-field--cell { border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); overflow-wrap: anywhere; }
 .rg-table--grid th { color: var(--rg-color-text-label); vertical-align: bottom; }
-.rg-table--grid .rg-table__grow { width: calc(200% / (var(--rg-table-cols, 6) + 1)); }
+.rg-table--grid .rg-table__grow { width: calc(200% / (var(--rg-table-cols, 6) + var(--rg-table-wide, 1))); }
 .rg-worksheet-block--compact .rg-table--grid th { white-space: normal; }
 .rg-worksheet-block--compact .rg-table caption { padding-bottom: var(--rg-space-1); font-size: var(--rg-font-size-sm); }
 /* Piede su UNA riga dove ci sta: Tempo, Operatore, Data prendono il loro contenuto (etichetta + almeno
@@ -1309,6 +1310,77 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-blank-page { display: none; }
 .rg-blank-page--preview { display: flex; align-items: center; justify-content: center; min-height: calc(var(--rg-space-24) * 2); border: var(--rg-border-hairline) dashed var(--rg-color-border-medium); }
 .rg-blank-page__note { margin: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); text-align: center; }
+
+/* ── Fascicolo, seconda versione (proposta 1.25.0) ──────────────────────────────────────────────
+   Dall'anteprima di Lorenzo. Tutto opt-in: si attiva usando gli elementi nuovi, niente cambia per chi
+   resta sulla testa 1.23.0 (__phase / __part / __meta).
+
+   TESTA CON IL REPARTO IN EVIDENZA. Dentro la scheda riquadrata, dall'alto:
+   1) __step, piccolo: «FASE 1 DI 3»;
+   2) la banda del reparto, STACCATA dai bordi (margine bianco intorno) e piu alta della compatta 1.23:
+      targhetta e margine bianco del nome tornano a 4, trama e nome come sempre;
+   3) nella testa, __work: il nome della LAVORAZIONE, grande, in grassetto e maiuscolo («RICAMO»). E il
+      titolo del blocco. Grassetto a livello di contenitore: eccezione chiesta dal reparto e dichiarata
+      (regole §3 vorrebbero 500), perche sulla carta la lavorazione e cio che si cerca da un metro.
+   La parte e l'identita del prodotto NON stanno nel blocco: stanno nell'intestazione di pagina, fuori
+   dalla scheda (rg-u-print-a4--head). La banda si stacca dai bordi solo se preceduta da __step: il
+   selettore e l'opt-in. */
+.rg-worksheet-block__step { margin: 0; padding: var(--rg-space-2) var(--rg-space-3) 0; color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-worksheet-block__step + .rg-dept-band { margin: var(--rg-space-2) var(--rg-space-3) var(--rg-space-1); padding-block: var(--rg-space-1); }
+.rg-worksheet-block__step + .rg-dept-band > .rg-dept-band__name { padding-block: var(--rg-space-1); }
+.rg-worksheet-block__step + .rg-dept-band > :is(.rg-dept-band__name, .rg-dept-band__note) { outline-width: var(--rg-space-1); }
+.rg-worksheet-block__work { margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-tight); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* SOTTOTITOLO DI OPERAZIONE dentro il corpo («Piazzamento», «Pressatura», «Sabbiatura automatica»):
+   leggibile ma leggero — 14, peso regolare, un filetto neutro sopra che separa un'operazione dalla
+   precedente. Non e un'etichetta maiuscola ripetuta: quella la si toglie quando la sezione e una sola. */
+.rg-worksheet-block__op { margin: var(--rg-space-3) 0 var(--rg-space-1); padding-top: var(--rg-space-2); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-regular); line-height: var(--rg-line-height-technical); }
+.rg-worksheet-block__op:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* IL VALORE STAMPATO NON TOCCA LA RIGA. Nel blocco compatto il valore gia noto scritto dentro
+   rg-fill-field__line stava attaccato alla base e al filo sinistro. Aria: 8 px (~2 mm) a sinistra,
+   6 px (~1,6 mm) sotto; il valore e un dato, quindi mono e tabulare a 14. L'altezza resta 24: con
+   line-height 1 il valore ci sta (14 + 6 + filetto). Nelle celle di tabella lo stesso respiro sotto. */
+.rg-worksheet-block--compact .rg-fill-field__line { display: flex; align-items: flex-end; padding: 0 0 calc(var(--rg-space-1) + var(--rg-space-1) / 2) var(--rg-space-2); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; line-height: 1; }
+.rg-worksheet-block--compact .rg-table td { padding-bottom: calc(var(--rg-space-1) + var(--rg-space-1) / 2); vertical-align: bottom; }
+
+/* CASELLA DA SPUNTARE («Fatta»): quadrata da 24 px (~6,4 mm), contorno nero. Piu piccola di --swatch
+   perche ci va un segno di penna, non un pezzo di filo. L'etichetta sta nella <th>. */
+.rg-fill-field--check { display: inline-block; box-sizing: border-box; width: var(--rg-space-6); height: var(--rg-space-6); vertical-align: middle; background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+
+/* QR CODE — il contenitore; l'immagine la genera l'app (SVG inline). Quadrato, dimensionato dal DS:
+   104 px (~27,5 mm) di base, 60 px (~15,9 mm) con --small per l'intestazione. shape-rendering: crispEdges
+   tiene i moduli netti in stampa e a schermo. La zona di rispetto (4 moduli) sta NELL'SVG: il contenitore
+   non ha bordo, perche un bordo attaccato al codice ne disturba la lettura. */
+.rg-qr { display: inline-flex; flex-direction: column; align-items: center; gap: var(--rg-space-1); width: calc(var(--rg-space-24) + var(--rg-space-2)); margin: 0; }
+.rg-qr--small { width: calc(var(--rg-space-12) + var(--rg-space-3)); }
+.rg-qr__img { display: block; width: 100%; aspect-ratio: 1 / 1; background: var(--rg-color-white); }
+.rg-qr__img > svg, .rg-qr__img > img { display: block; width: 100%; height: 100%; shape-rendering: crispEdges; image-rendering: pixelated; }
+.rg-qr__caption { color: var(--rg-color-text-label); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); text-align: center; }
+
+/* PAGINA DELLA PARTE — una pagina intera che apre il pezzo nel fascicolo: titolo con la pastiglia,
+   identita del prodotto, tutte le parti con questa segnata, le fasi da spuntare, il QR. In stampa sta da
+   sola (rg-utilities.css). Titolo a livello di pagina (peso heading). */
+.rg-part-sheet { display: grid; gap: var(--rg-space-6); }
+.rg-part-sheet__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--rg-space-6); padding-bottom: var(--rg-space-4); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
+.rg-part-sheet__title { display: flex; align-items: center; gap: var(--rg-space-3); margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-heading); line-height: var(--rg-line-height-heading); }
+.rg-part-sheet__section { display: grid; gap: var(--rg-space-2); }
+/* Tutte le parti del prodotto: questa ha il filetto nero spesso, il grassetto e la scritta «questa parte»
+   (mai il solo colore della pastiglia). */
+.rg-part-sheet__parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--rg-space-24) * 2 + var(--rg-space-12)), 1fr)); gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
+.rg-part-sheet__part { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); min-width: 0; padding: var(--rg-space-2) var(--rg-space-3); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); color: var(--rg-color-text-primary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-sm); }
+.rg-part-sheet__part--current { border: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); font-weight: var(--rg-weight-bold); }
+.rg-part-sheet__code { margin-left: auto; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-regular); white-space: nowrap; }
+.rg-part-sheet__here { color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; white-space: nowrap; }
+
+/* FOGLIO DEI TAGLIANDI — la pagina dei rg-cutout: la legenda si ritaglia, quindi sul retro non deve
+   esserci niente e va su una pagina sua (che apre in stampa). Due colonne, una con --single; fra un
+   tagliando e l'altro 32 px (~8,5 mm) in verticale (24 di griglia + 8 di margine) e 24 in orizzontale: lo spazio per le forbici. */
+.rg-cutout-sheet { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: var(--rg-space-6); }
+.rg-cutout-sheet--single { grid-template-columns: minmax(0, 1fr); }
+.rg-cutout-sheet__title { grid-column: 1 / -1; margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); }
+/* Il margine sopra ogni tagliando fa stare «Ritaglia», che sporge sopra il tratteggio, DENTRO la sua cella
+   della griglia: quando una fila passa alla pagina dopo, la scritta va con il suo riquadro. */
+.rg-cutout-sheet > .rg-cutout { margin: var(--rg-space-2) 0 0; }
 
 /* ── Larghezza dichiarata del campo (v1.15.0) ───────────────────────────────────────────────
    La larghezza di un campo e un'AFFERMAZIONE su quanto contenuto ci si aspetta, non una scelta

@@ -7,6 +7,45 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.30.0 — 2026-09-18
+
+**Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Un cambio di
+comportamento **solo su dispositivi touch**: campi a 16 px e bersagli a 44 px (desktop e stampa invariati).
+Chiesta come 1.29.0: il numero era già preso dalla release «icona materiali» (su `origin/main`).
+
+### Telefono e iPad: il campo non ingrandisce più la pagina, le proposte di modifica
+
+Dall'uso su telefono e iPad della piattaforma prodotti: il campionario apre dal QR del fascicolo la scheda di una
+fase, preme «Fatta» e **propone** modifiche ai valori; l'ufficio, da PC o iPad, le **accetta** o le **rifiuta**.
+
+- **Bug iOS: toccando un campo la pagina si ingrandiva.** Safari su iOS/iPadOS ingrandisce quando il testo del
+  campo è sotto i 16 px, e i controlli RG sono a 14. Su touch (`@media (pointer: coarse)`) e sempre su iOS/iPadOS
+  (`@supports (-webkit-touch-callout: none)`, che copre l'iPad con trackpad) `rg-input`, `rg-select`,
+  `rg-textarea`, `rg-search` e i campi nativi salgono a **16 px**. Il viewport non si tocca, lo zoom a due dita
+  resta libero. `html` con `text-size-adjust: 100%`.
+- **Bersagli da 44 px su touch** (`pointer: coarse`): campi, bottoni anche `--small`, bottoni a icona, chip,
+  pagine, schede, voci di menu, caselle di scelta, disclosure; la colonna dei gesti di `rg-operation-sequence` si
+  allarga. Regole §11 aggiornate: 40 col mouse, 44 col dito.
+- **`rg-proposal`** (`--pending`, `--accepted`, `--rejected`; `__head`, `__context`, `__field`, `__change`,
+  `__from`, `__arrow`, `__to`, `__why`, `__label`, `__meta`, `__outcome`, `__flag`, `__actions`, `__reject`,
+  `__reason`): la card di una proposta, mobile-first. Il cambio attuale barrato e grigio → proposto a 28 px;
+  «—» se l'attuale manca; la rifiutata inverte. Stato con filetto e parola (badge). «Da riportare a mano» per
+  l'accettata che non si applica da sola. Accetta (primaria) e Rifiuta in due tempi col motivo facoltativo,
+  senza JavaScript, bottoni da 48.
+- **`rg-proposal-list`** (`__group`, `__title`, `__items`): le proposte a gruppi per stop, una colonna sul telefono,
+  colonne da 320 px su iPad e PC. L'ordine (prima le da decidere) lo decide l'app.
+- **`rg-proposal-notice`** (`__head`, `__count`, `__title`, `__lead`, `__list`, `__row`, `__part`, `__phase`,
+  `__go`): l'avviso nella pagina del prodotto, numero grande e una riga-link da almeno 56 px per fase (parte con
+  la pastiglia, fase, reparto col segno, conteggio, freccia). Sostituisce `rg-alert` con un elenco puntato.
+- **Segnalino «N proposte»**: `rg-badge rg-badge--review rg-badge--count` («2 proposte»). Nessuna classe nuova.
+- Documenti: `proposal.md`, `proposal-notice.md` (nuovi), `forms.md` (touch), `badges.md` (segnalino),
+  `design-rules.md` §11; manifest (`proposal`, `proposal-notice` in beta; note su badge e campi); vetrina
+  `#proposal`.
+- Verificato in Chrome headless: a 375 px (contenitore) nessuno sforamento, bottoni 48, righe dell'avviso 89 px
+  (su due righe); a 1024 px elenco su due colonne, righe 56 px; con il puntatore coarse simulato
+  (`--blink-settings=primaryPointerType=2`) campi a 16 px, `rg-input` e `rg-button--small` alti 44. Non provato su
+  un iPhone vero: da confermare sul dispositivo.
+
 ## 1.29.0 — 2026-09-18
 
 **Minor.** Un'icona nuova e additiva, nessuna classe o token toccato, rimosso o rinominato.

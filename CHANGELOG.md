@@ -20,8 +20,9 @@ massimo" gli diamo più spazio.»*
 
 - **`rg-form-row--groups`** (variante di `rg-form-row`): la riga di campi si divide in gruppi,
   **`rg-form-row__group`** (`<fieldset>`) con **`rg-form-row__legend`** (maiuscoletto piccolo grigio) e un
-  filetto verticale fra l'uno e l'altro. Il filetto non resta orfano quando la riga va a capo (la riga taglia il
-  filetto del primo gruppo di ogni linea, senza JavaScript); sotto i 680 px i gruppi vanno in colonna e il filetto
+  filetto verticale dal secondo gruppo in poi (`gruppo + gruppo`). Nessun margine negativo: la riga non tocca il
+  contenitore (una prima versione lasciava il filetto sul bordo di `rg-phase-panel`); dopo un a capo il gruppo
+  che apre la seconda linea porta il suo filetto. Sotto i 680 px i gruppi vanno in colonna e il filetto
   diventa orizzontale. Funziona con un gruppo solo e con un select.
 - **`rg-bed-layout`** (nuovo): il piano della macchina in proporzione reale, SVG con `viewBox` in cm calcolato dal
   server; margine campito, area utile tratteggiata, posti pieni (`__slot--used`, occupati) e vuoti (liberi); linee

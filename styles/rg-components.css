@@ -1492,24 +1492,25 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
    del pezzo, Larghezza (cm)». Dentro, i campi sono una rg-form-row normale: aiuto ed errore sotto
    il proprio controllo, controlli in fila alla stessa altezza in tutti i gruppi (le legende sono
    tutte su una riga, alte uguali).
-   IL FILETTO CHE VA A CAPO. Ogni gruppo porta il filetto a SINISTRA; la riga si sposta a sinistra
-   di filetto + rientro e taglia in orizzontale cio che esce (overflow-x: clip, non hidden: non crea
-   uno scroll e lascia libero il verticale). Il primo gruppo di OGNI linea, anche dopo un a capo, ha
-   quindi il filetto fuori dal taglio: nessun filetto orfano sul bordo, senza JavaScript e senza
-   sapere dove cade l'a capo. Il fuoco dei controlli (4 px fuori dal campo) sta dentro il rientro
-   di 24 px e non viene tagliato.
+   IL FILETTO sta a sinistra di ogni gruppo DAL SECONDO IN POI (gruppo + gruppo): il primo gruppo
+   sta sul filo sinistro della riga, senza filetto. La riga non tocca mai gli antenati (niente
+   margini negativi, niente taglio): una prima versione spostava la riga a sinistra di filetto +
+   rientro e la tagliava, ma il taglio sta sul box della riga stessa, quindi il filetto del primo
+   gruppo restava visibile e dentro rg-phase-panel si sovrapponeva al bordo del pannello.
+   Compromesso accettato: se la riga va a capo, il gruppo che apre la seconda linea porta il suo
+   filetto (e il rientro di 24 px). Di norma i gruppi sono due e stanno su una linea.
    Sotto i 680 px i gruppi vanno uno sotto l'altro e il filetto diventa orizzontale. */
-.rg-form-row--groups { align-items: stretch; gap: var(--rg-space-4) var(--rg-space-6); margin-left: calc(-1 * (var(--rg-space-6) + var(--rg-border-hairline))); overflow-x: clip; }
-.rg-form-row__group { flex: 0 1 auto; min-width: 0; margin: 0; padding: 0 0 0 var(--rg-space-6); border: 0; border-left: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-form-row--groups { align-items: stretch; gap: var(--rg-space-4) var(--rg-space-6); }
+.rg-form-row__group { flex: 0 1 auto; min-width: 0; margin: 0; padding: 0; border: 0; }
+.rg-form-row__group + .rg-form-row__group { padding-left: var(--rg-space-6); border-left: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 /* Legenda: float + larghezza piena e il modo portabile di dare aria sotto una <legend> (il margine
    della legenda di un fieldset non e affidabile fra i browser). Vale anche su uno <span> in un
    role="group" con aria-labelledby. */
 .rg-form-row__legend { float: left; width: 100%; margin: 0 0 var(--rg-space-3); padding: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-body); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 .rg-form-row__legend + * { clear: both; }
 @media (max-width: 680px) {
-  .rg-form-row--groups { flex-direction: column; margin-left: 0; overflow-x: visible; }
-  .rg-form-row__group { padding-left: 0; border-left: 0; }
-  .rg-form-row__group + .rg-form-row__group { padding-top: var(--rg-space-4); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+  .rg-form-row--groups { flex-direction: column; }
+  .rg-form-row__group + .rg-form-row__group { padding-top: var(--rg-space-4); padding-left: 0; border-left: 0; border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 }
 
 /* Marcatore di campo (v1.15.0) — DICHIARA UNA VOLTA, MARCA MOLTE.

@@ -189,9 +189,10 @@ c'è un **filetto verticale** sottile. Niente riquadri: la riga resta una superf
 | `rg-form-row__legend` | l'etichetta del gruppo: `<legend>`, maiuscoletto piccolo grigio, come `rg-label` |
 | `rg-form-row` dentro il gruppo | i campi del gruppo, con tutte le regole della riga di campi (aiuto ed errore sotto) |
 
-- **Il filetto non resta mai orfano.** Ogni gruppo lo porta a sinistra; la riga si sposta a sinistra di
-  filetto + rientro e taglia in orizzontale ciò che esce. Il primo gruppo di ogni linea, anche dopo un a capo,
-  ha il filetto fuori dal taglio. Nessun JavaScript.
+- **Il filetto sta dal secondo gruppo in poi** (`gruppo + gruppo`), a sinistra, con 24 px di rientro. La riga
+  non usa margini negativi e non tocca il contenitore: dentro `rg-phase-panel` il primo gruppo sta sul filo
+  del contenuto, senza linee sul bordo del pannello. Compromesso: se la riga va a capo, il gruppo che apre la
+  seconda linea porta il suo filetto; di norma i gruppi sono due e stanno su una linea.
 - **Sotto i 680 px** i gruppi vanno uno sotto l'altro e il filetto diventa **orizzontale**.
 - **Un gruppo solo** funziona (niente filetto). Dentro un gruppo può stare qualunque `rg-field`, anche un
   `rg-select`.

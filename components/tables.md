@@ -172,7 +172,8 @@ colonne vuote prendevano larghezze a caso.
 - **Colonne uguali**: `table-layout: fixed`, la larghezza non dipende dal contenuto. Le intestazioni lunghe
   vanno a capo dentro la colonna.
 - **Una colonna larga**, facoltativa: `rg-table__grow` sulla `<th>` vale **il doppio** delle altre. La
-  tabella dichiara quante colonne ha con `style="--rg-table-cols: N"` (se manca vale 6).
+  tabella dichiara quante colonne ha con `style="--rg-table-cols: N"` (se manca vale 6); se le colonne larghe
+  sono più di una, lo dice `--rg-table-wide` (1.25.0, se manca vale 1): `style="--rg-table-cols: 6; --rg-table-wide: 2"`.
 - **Altezza**: le celle `--cell` sono da 32 px; dentro `rg-worksheet-block--compact` da 24 (~6,4 mm).
 - Si combina con `rg-table--compact`. Non cambia nulla alle tabelle senza la variante.
 - **Non è a schermo**: a schermo i dati si confrontano con `rg-table` e si inseriscono con `rg-field`.

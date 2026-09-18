@@ -31,6 +31,7 @@ Tre scelte, e sono tutte a servizio di quella frase:
 | `rg-fill-field--tall` | Riga alta: nota, motivazione, descrizione di una difformità. |
 | `rg-fill-field--inline` | Etichetta e riga sulla stessa linea, per i campi brevi in fondo al blocco (operatore, ora). |
 | `rg-fill-field--cell` | **Forma tabella**: si mette su una `<td>` di `rg-table`, dove l'etichetta sta già nella `<th>`. Trenta righe da riempire sono una tabella, non trenta campi. |
+| `rg-fill-field--check` | **Casella da spuntare** (proposta 1.25.0), 24 px (~6,4 mm), contorno nero: «Fatta» nella tabella delle fasi della [pagina della parte](part-sheet.md). Ci va un segno di penna. Su uno `<span>` dentro una `<td>`, etichetta nella `<th>`. |
 | `rg-fill-field--swatch` | **Casella quadrata** (proposta 1.23.0), ~10,6 mm di lato (40 px), contorno nero su quattro lati: il posto dove **attaccare un pezzo di filo** o segnare il colore del cono. Su uno `<span>` dentro una `<td>`, con l'etichetta nella `<th>` («Cono»). |
 
 **Densità compatta** (proposta 1.23.0). Dentro un [`rg-worksheet-block--compact`](worksheet-block.md#fascicolo-compatto-proposta-1230)
@@ -64,6 +65,10 @@ proposito — `.rg-table td` pesa (0,1,1) e con la sola classe il filetto della 
 il nastro, un segno di pennarello). Per questo è chiusa su quattro lati, mentre la riga è una staffa
 aperta. Da sola non dice niente: l'etichetta sta nella colonna, e accanto restano **codice e nome del
 colore** stampati (regole §10: mai riconoscimento solo cromatico).
+
+**Il valore stampato ha aria** (proposta 1.25.0). Dentro un blocco compatto, il valore già noto scritto nella
+riga («150», «ZSK 12 teste») sta a 8 px (~2 mm) dal filo sinistro e 6 px (~1,6 mm) sopra la base, mono a 14,
+senza alzare la riga.
 
 **Quanti buchi.** Un blocco tutto buchi non è una scheda, è un modulo in bianco: quello che il
 sistema sa già va **stampato**, non lasciato all'operatore. La regola pratica è che il valore noto

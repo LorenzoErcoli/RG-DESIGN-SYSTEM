@@ -35,6 +35,9 @@ importanza" a una fase — l'importanza non è una proprietà della carta.
 | `rg-worksheet-block__role` | **Fase di un gruppo di fasi collegate** (v1.16.0). Nella testa, dopo il titolo: «Principale · con la 03», «Collegata · dopo la 02». |
 | `rg-worksheet-block__phase` | **La fase in primo piano** (proposta 1.23.0): «Fase 2 di 3 · Pressatura», 20 px. Il titolo del blocco. Prende il posto di `__index` + `__title`. |
 | `rg-worksheet-block__part` | **La parte**, sotto la fase per misura (14 px): «Parte 1 di 4 · FONDO BORDATO», con la pastiglia [`rg-part-mark`](part-mark.md) davanti se c'è. |
+| `rg-worksheet-block__step` | **Testa 1.25.0**: «FASE 1 DI 3» piccolo, in cima, **sopra** la banda, che così si stacca dai bordi e cresce. |
+| `rg-worksheet-block__work` | **Testa 1.25.0**: la lavorazione, 28 px, grassetto, maiuscolo («RICAMO»). Titolo del blocco. |
+| `rg-worksheet-block__op` | Sottotitolo di un'**operazione** nel corpo («Piazzamento»): 14 px, regolare, filetto sopra. |
 
 ### Ruolo nel gruppo (`__role`)
 
@@ -136,6 +139,77 @@ rg-table--compact` Ago · Codice filo · Colore · Metri · Cono, con la casella
   per blocco, non rompe niente.
 - **Il recto non lo sa il CSS.** Chrome non implementa `break-before: recto`: l'allineamento delle parti alla
   facciata dispari lo fa l'app, contando le pagine, con [`rg-blank-page`](blank-page.md).
+
+## Fascicolo, seconda versione (proposta 1.25.0)
+
+Dall'anteprima di Lorenzo sulla 1.24. Tutto **opt-in**: la testa 1.23.0 (`__phase`, `__part`, `__meta`)
+continua a funzionare; la nuova si attiva usando `__step`.
+
+| Pezzo | Classe | Doc |
+| --- | --- | --- |
+| Testa con il reparto in evidenza e la lavorazione come titolo | `rg-worksheet-block__step`, `__work` | qui |
+| Sottotitolo di operazione nel corpo | `rg-worksheet-block__op` | qui |
+| Pagina della parte (apre il pezzo, con QR) | `rg-part-sheet` | [part-sheet](part-sheet.md) |
+| QR code | `rg-qr`, `rg-qr--small` | [qr](qr.md) |
+| Foglio dei tagliandi | `rg-cutout-sheet` | [cutout-sheet](cutout-sheet.md) |
+| Casella da spuntare «Fatta» | `rg-fill-field--check` | [fill-field](fill-field.md) |
+| A4 con intestazione di pagina | `rg-u-print-a4--head` | qui, sotto |
+
+### La testa: fase, reparto, lavorazione
+
+Dentro la scheda riquadrata, dall'alto:
+
+1. **`__step`**, piccolo: «FASE 1 DI 3» (maiuscolo dal CSS, nel markup in tondo);
+2. **la banda del reparto**, subito dopo: staccata dai bordi con un margine bianco intorno, alta 38 px
+   (30 nel compatto 1.23), targhetta e margine bianco del nome di nuovo a 4. Trama e nome come sempre. La
+   banda si stacca solo se è preceduta da `__step`: è il selettore, non una classe in più;
+3. nella testa, **`__work`**: il nome della **lavorazione**, 28 px, **grassetto e maiuscolo** («RICAMO»,
+   «PRESSATURA»). È il titolo del blocco.
+
+**Niente parte e niente identità prodotto nel blocco**: stanno nell'intestazione di pagina, fuori dalla
+scheda (sotto). Quindi `__part` e `__meta` non si usano nella testa nuova; `__role` sì, dopo `__work`.
+
+**Grassetto a livello di contenitore**: le regole (§3) vorrebbero 500 per il titolo di un contenitore. Qui è
+700 per richiesta del reparto: la lavorazione è ciò che si cerca sul foglio da un metro. Eccezione dichiarata,
+ambito: il blocco stampato.
+
+### Il corpo: operazioni e valori
+
+- **`__op`** è il sottotitolo di un'operazione dentro il blocco («Piazzamento», «Pressatura», «Sabbiatura
+  automatica»): 14 px, peso regolare, un filetto neutro sopra che la separa dalla precedente (non sul primo).
+  Leggibile ma leggero: non è un'etichetta maiuscola.
+- **L'etichetta di sezione** («PARAMETRI TECNICI») si stampa solo se le sezioni sono più di una. È una
+  scelta del template: il DS non ha niente da togliere.
+- **Il valore stampato non tocca la riga.** Nel blocco compatto il valore già noto dentro
+  `rg-fill-field__line` ha 8 px (~2 mm) d'aria a sinistra e 6 px (~1,6 mm) sotto, in mono tabulare a 14. La
+  riga resta alta 24. Nelle celle di tabella lo stesso respiro sotto (righe da 26 px, ~6,9 mm).
+
+### Intestazione di pagina
+
+Chrome non ripete un elemento su ogni pagina: l'intestazione la stampa l'app **sul PDF**, dopo
+l'impaginazione (PyMuPDF). Il DS riserva lo spazio: **`rg-u-print-a4--head`** sul contenitore che stampa (al
+posto di `rg-u-print-a4`) dà una pagina A4 con **margine superiore di 30 mm** (12 ai lati e in basso).
+
+| Cosa | Misura (dal bordo del foglio) | In punti PDF (1 mm = 2,835 pt) |
+| --- | --- | --- |
+| Pagina | A4, 210 × 297 mm | 595,3 × 841,9 |
+| Fascia dell'intestazione | y da 8 a 24 mm, x da 12 a 198 mm | y 22,7–68,0 · x 34,0–561,3 |
+| Riga 1: «Parte 1 di 4 · FONDO BORDATO» | Helvetica-Bold (`hebo`) **11 pt**, nero, linea di base a y = 14 mm, x = 12 mm | base y 39,7 · x 34,0 |
+| Riga 2: «RG-26-DIO-0441-P · DIOR · M3641 COCOTTE» | Courier (`cour`) **8 pt**, nero, linea di base a y = 19,5 mm, x = 12 mm | base y 55,3 · x 34,0 |
+| Filetto sotto l'intestazione | 0,5 pt nero, a y = 25 mm, da x 12 a 198 mm | y 70,9 |
+| QR piccolo (facoltativo) | 16 × 16 mm, allineato a destra: x 182–198, y 8–24 mm | rect (515,9, 22,7, 561,3, 68,0) |
+| Testo, larghezza massima | fino a x = 178 mm se c'è il QR, altrimenti 198 | 504,6 / 561,3 |
+| Inizio del contenuto HTML | y = 30 mm | 85,0 |
+
+Helvetica e Courier sono i font base del PDF (niente font da incorporare) e sono i fallback dichiarati del DS
+per identità e mono. Il QR sul PDF va generato con la sua zona di rispetto dentro i 16 mm (vedi [qr](qr.md)).
+
+### Limiti della seconda versione
+
+- La **pagina della parte** e il **foglio dei tagliandi** aprono e chiudono la pagina; il retro bianco del foglio
+  dei tagliandi lo garantisce l'app (una [`rg-blank-page`](blank-page.md), o il PDF).
+- Le named pages (`rg-a4-head`) richiedono un Chrome recente; dove non sono supportate restano i margini di
+  default e l'intestazione stampata può sovrapporsi al contenuto: verificare sul motore che produce il PDF.
 
 ## Uso e limiti
 
@@ -403,4 +477,105 @@ Pagina bianca per il fronte/retro, messa dall'app prima di una testata di parte 
 <div class="rg-blank-page">
   <p class="rg-blank-page__note">Pagina lasciata bianca per la stampa fronte/retro</p>
 </div>
+```
+
+
+### Markup della seconda versione (proposta 1.25.0)
+
+Ricamo — testa nuova, valori stampati con aria, eccezioni per stop a griglia:
+
+```html
+<section class="rg-worksheet-block rg-worksheet-block--compact">
+  <p class="rg-worksheet-block__step">Fase 1 di 3</p>
+  <p class="rg-dept-band rg-dept-band--ricamo">
+    <span class="rg-dept-band__name">Reparto Ricamo</span>
+    <span class="rg-dept-band__note">Foglio 1 / 12</span>
+  </p>
+  <header class="rg-worksheet-block__head">
+    <h3 class="rg-worksheet-block__work">Ricamo</h3>
+  </header>
+  <div class="rg-worksheet-block__body">
+    <div class="rg-worksheet-block__fields">
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Macchina</span><span class="rg-fill-field__line">ZSK 12 teste</span></div>
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Telaio</span><span class="rg-fill-field__line">T-40</span></div>
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Velocità <span class="rg-fill-field__unit">punti/min</span></span><span class="rg-fill-field__line"></span></div>
+    </div>
+    <table class="rg-table rg-table--compact rg-table--grid rg-u-mt-2" style="--rg-table-cols: 6">
+      <caption>Eccezioni per stop</caption>
+      <thead>
+        <tr>
+          <th class="rg-table__numeric" scope="col">Stop</th>
+          <th scope="col">Piedino</th>
+          <th scope="col">Velocità</th>
+          <th scope="col">Ago</th>
+          <th scope="col">PMI</th>
+          <th class="rg-table__grow" scope="col">Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rg-table__numeric">4</td>
+          <td class="rg-table__numeric">1,5</td>
+          <td class="rg-table__numeric">650</td>
+          <td class="rg-table__numeric">3</td>
+          <td class="rg-fill-field rg-fill-field--cell"></td>
+          <td>Rallentare sulla curva</td>
+        </tr>
+        <tr>
+          <td class="rg-fill-field rg-fill-field--cell"></td>
+          <td class="rg-fill-field rg-fill-field--cell"></td>
+          <td class="rg-fill-field rg-fill-field--cell"></td>
+          <td class="rg-fill-field rg-fill-field--cell"></td>
+          <td class="rg-fill-field rg-fill-field--cell"></td>
+          <td class="rg-fill-field rg-fill-field--cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <footer class="rg-worksheet-block__foot">
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">min</span></span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+  </footer>
+</section>
+```
+
+Pressatura — testa nuova e sottotitoli di operazione:
+
+```html
+<section class="rg-worksheet-block rg-worksheet-block--compact">
+  <p class="rg-worksheet-block__step">Fase 2 di 3</p>
+  <p class="rg-dept-band rg-dept-band--pressatura">
+    <span class="rg-dept-band__name">Reparto Pressatura e soffiatura</span>
+    <span class="rg-dept-band__note">Foglio 2 / 12</span>
+  </p>
+  <header class="rg-worksheet-block__head">
+    <h3 class="rg-worksheet-block__work">Pressatura</h3>
+  </header>
+  <div class="rg-worksheet-block__body">
+    <p class="rg-worksheet-block__op">Piazzamento</p>
+    <div class="rg-worksheet-block__fields">
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">80</span></div>
+    </div>
+    <p class="rg-worksheet-block__op">Pressatura</p>
+    <div class="rg-worksheet-block__fields">
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line">150</span></div>
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">10</span></div>
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line"></span></div>
+    </div>
+  </div>
+  <footer class="rg-worksheet-block__foot">
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">min</span></span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+  </footer>
+</section>
+```
+
+Documento con intestazione di pagina stampata dall'app:
+
+```html
+<body class="rg-u-print-a4--head">
 ```

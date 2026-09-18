@@ -42,6 +42,11 @@ spezza mai fra due pagine.
 filo · Colore · Metri · Cono, con la casella quadrata [`rg-fill-field--swatch`](fill-field.md) nella colonna
 Cono e [`rg-table__grow`](tables.md) sulla colonna Colore.
 
+**Su una pagina sua** (proposta 1.25.0). Tagliare il fondo di un foglio taglia anche il retro: i tagliandi di
+un prodotto vanno insieme nel [foglio dei tagliandi](cutout-sheet.md), col retro bianco. Dentro un blocco resta
+solo per un foglio stampato su una facciata. La legenda dei coni ha ora anche la spolina: Codice filo · Tipo
+(sopra/sotto) · Aghi · Metri · Colore.
+
 **Non è a schermo.** A schermo non si ritaglia niente: la stessa legenda è una tabella normale.
 
 ## Struttura

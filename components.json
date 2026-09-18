@@ -789,7 +789,7 @@
       "doc": "components/tables.md",
       "specimenAnchor": "tables",
       "snippet": "<div class=\"rg-table-wrap\"><table class=\"rg-table\"><thead><tr><th>Codice</th><th class=\"rg-table__numeric\">Consumo (m)</th></tr></thead><tbody><tr><td class=\"rg-table__code\">FIL-0281</td><td class=\"rg-table__numeric\">18.42</td></tr></tbody></table></div>",
-      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase. Da 1.23.0 rg-table__grow sulla <th> della colonna larga (Note, Descrizione, Colore): width 100% nel layout automatico, le altre colonne scendono alla larghezza del proprio contenuto. Una per tabella. Da 1.24.0 rg-table--grid e la tabella DI CARTA da compilare a penna: filetto nero hairline su tutte le celle (testata compresa) e table-layout fixed, colonne uguali che non dipendono dal contenuto; rg-table__grow sulla th vale il DOPPIO delle altre, con style=\"--rg-table-cols: N\" sulla table (se manca vale 6). Celle --cell 32 px, 24 dentro rg-worksheet-block--compact. Nata perche --compact + td.rg-fill-field--cell con righe tutte vuote stampava righe da quaderno senza divisori e colonne di larghezza casuale. Non usare rg-table__grow senza --grid su una tabella tutta vuota: le altre colonne collassano.",
+      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase. Da 1.23.0 rg-table__grow sulla <th> della colonna larga (Note, Descrizione, Colore): width 100% nel layout automatico, le altre colonne scendono alla larghezza del proprio contenuto. Una per tabella. Da 1.24.0 rg-table--grid e la tabella DI CARTA da compilare a penna: filetto nero hairline su tutte le celle (testata compresa) e table-layout fixed, colonne uguali che non dipendono dal contenuto; rg-table__grow sulla th vale il DOPPIO delle altre, con style=\"--rg-table-cols: N\" sulla table (se manca vale 6). Celle --cell 32 px, 24 dentro rg-worksheet-block--compact. Nata perche --compact + td.rg-fill-field--cell con righe tutte vuote stampava righe da quaderno senza divisori e colonne di larghezza casuale. Non usare rg-table__grow senza --grid su una tabella tutta vuota: le altre colonne collassano. 1.25.0: con piu colonne larghe nella griglia, --rg-table-wide: K (se manca vale 1); ogni __grow vale 2/(cols+K).",
       "keywords": [
         "tabella",
         "table",
@@ -2554,7 +2554,10 @@
           "rg-worksheet-block__foot",
           "rg-worksheet-block__role",
           "rg-worksheet-block__phase",
-          "rg-worksheet-block__part"
+          "rg-worksheet-block__part",
+          "rg-worksheet-block__step",
+          "rg-worksheet-block__work",
+          "rg-worksheet-block__op"
         ],
         "variants": [
           "rg-worksheet-block--long",
@@ -2573,7 +2576,12 @@
           "rg-fill-field--swatch",
           "rg-table__grow",
           "rg-part-mark",
-          "rg-table--grid"
+          "rg-table--grid",
+          "rg-part-sheet",
+          "rg-qr",
+          "rg-cutout-sheet",
+          "rg-fill-field--check",
+          "rg-u-print-a4--head"
         ]
       },
       "variants": [
@@ -2610,13 +2618,17 @@
         "--rg-space-16",
         "--rg-space-24",
         "--rg-font-size-sm",
-        "--rg-line-height-technical"
+        "--rg-line-height-technical",
+        "--rg-font-size-xl",
+        "--rg-weight-bold",
+        "--rg-line-height-tight",
+        "--rg-letter-label"
       ],
       "doc": "components/worksheet-block.md",
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "specimenAnchor": "worksheet-block",
       "snippet": "<section class=\"rg-worksheet-block\">\n  <p class=\"rg-dept-band rg-dept-band--pressatura\"><span class=\"rg-dept-band__name\">Pressatura e soffiatura</span><span class=\"rg-dept-band__note\">Fase 03 / 07</span></p>\n  <header class=\"rg-worksheet-block__head\">\n    <span class=\"rg-worksheet-block__index\">03</span>\n    <h3 class=\"rg-worksheet-block__title\">Pressatura fondo</h3>\n    <p class=\"rg-worksheet-block__meta\">RG-2026-0481 &#183; parte 2 di 5 &#183; rev. 04</p>\n  </header>\n  <div class=\"rg-worksheet-block__body\">\n    <div class=\"rg-worksheet-block__fields\">\n      <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Temperatura <span class=\"rg-fill-field__unit\">&#176;C</span></span><span class=\"rg-fill-field__line\"></span></div>\n      <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Tempo <span class=\"rg-fill-field__unit\">s</span></span><span class=\"rg-fill-field__line\"></span></div>\n    </div>\n  </div>\n  <footer class=\"rg-worksheet-block__foot\">\n    <div class=\"rg-fill-field rg-fill-field--inline\"><span class=\"rg-fill-field__label\">Operatore</span><span class=\"rg-fill-field__line\"></span></div>\n  </footer>\n</section>",
-      "notes": "Oggetto di CARTA prima che superficie a schermo. Due decisioni portano tutto: (1) non occupa una pagina intera - la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e il blocco non dichiara nessuna altezza; (2) non si spezza MAI fra due pagine - in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca. La paginazione (break-inside: avoid piu page-break-inside per i motori PDF server-side) vive nell'UNICO @media print del DS, in rg-utilities.css: esteso, non duplicato, nessuna app riscrive il proprio. La variante --long e SOLO una regola di paginazione (apre una pagina nuova; se e il primo blocco non lascia una pagina vuota prima; la tabella si spezza fra righe con thead ripetuto) e non cambia nulla a schermo: non usarla per dare importanza a una fase. LIMITE DICHIARATO: se un --long sfora comunque il foglio, la banda di reparto NON si ripete sulla pagina di continuazione e quella pagina perde il suo segnale di reparto; in quel caso la fase va spezzata a monte in due blocchi con due bande. Il riquadro e un'eccezione dichiarata a regole 6 (non incorniciare tutto): su carta rende il blocco separabile, e non c'e hover a fare quel lavoro. La geometria del foglio NON e del componente ma del documento: opt-in rg-u-print-a4 sul contenitore che stampa. A schermo la stessa fase si legge con rg-section-card o rg-steps e si compila con rg-field. FASI COLLEGATE (1.16.0): rg-worksheet-block__role nella testa, dopo il titolo, con le parole di rg-step__role e i numeri come sul foglio ('Principale · con la 03', 'Collegata · dopo la 02'); filo nero spesso a sinistra = il pezzo di graffa che ogni blocco porta con se, perche i blocchi di un gruppo possono finire su due pagine. Niente fondo pieno (non si stampa), niente riquadro (e il segno del nome di reparto). FASCICOLO COMPATTO (1.23.0, opt-in): rg-worksheet-block--compact porta le righe da scrivere a 24 px (~6,4 mm; --tall resta 48), le celle td.rg-fill-field--cell a 24 px, testa/corpo/piede a 8/12, la griglia __fields a colonne >=128 px in auto-fill (i campi non si allargano a tutta la pagina, allineati sul fondo, --tall prende la fila), il piede su una riga dove ci sta (Tempo, Operatore, Data --inline con riga >=64 px; Note --inline --tall per ultima prende il resto), la banda a 30 px (trama 16 invariata, margine bianco del nome 2) e le th delle tabelle su una riga. Testa con la FASE in primo piano: __phase (20 px, «Fase 2 di 3 · Pressatura», N di M dentro la parte) > __part (14 px, «Parte 1 di 4 · FONDO BORDATO», rg-part-mark facoltativa davanti) > reparto sul nome della banda (12 px); sostituiscono __index + __title, il contatore dei fogli va in rg-dept-band__note. Eccezioni per stop = rg-table rg-table--compact + td.rg-fill-field--cell dentro il blocco compatto, rg-table__grow sulla th di Note. Legenda coni = rg-cutout ultimo figlio del blocco, dopo il piede. Pezzi del fascicolo: rg-worksheet-part (testata di parte che apre la pagina), rg-cutout, rg-blank-page. Dentro il compatto usare rg-u-mt-2, non rg-u-mt-4 (utility con !important). CORREZIONE 1.24.0: la tabella delle eccezioni per stop e rg-table rg-table--compact rg-table--grid (style=\"--rg-table-cols: 6\") con td.rg-fill-field--cell, rg-table__grow sulla Note al doppio; la sola --compact stampava righe senza divisori verticali.",
+      "notes": "Oggetto di CARTA prima che superficie a schermo. Due decisioni portano tutto: (1) non occupa una pagina intera - la maggior parte delle fasi ha poco da dire, quindi i blocchi si impaginano uno dopo l'altro e il blocco non dichiara nessuna altezza; (2) non si spezza MAI fra due pagine - in reparto il retro non lo gira nessuno e mezzo blocco e peggio di mezza pagina bianca. La paginazione (break-inside: avoid piu page-break-inside per i motori PDF server-side) vive nell'UNICO @media print del DS, in rg-utilities.css: esteso, non duplicato, nessuna app riscrive il proprio. La variante --long e SOLO una regola di paginazione (apre una pagina nuova; se e il primo blocco non lascia una pagina vuota prima; la tabella si spezza fra righe con thead ripetuto) e non cambia nulla a schermo: non usarla per dare importanza a una fase. LIMITE DICHIARATO: se un --long sfora comunque il foglio, la banda di reparto NON si ripete sulla pagina di continuazione e quella pagina perde il suo segnale di reparto; in quel caso la fase va spezzata a monte in due blocchi con due bande. Il riquadro e un'eccezione dichiarata a regole 6 (non incorniciare tutto): su carta rende il blocco separabile, e non c'e hover a fare quel lavoro. La geometria del foglio NON e del componente ma del documento: opt-in rg-u-print-a4 sul contenitore che stampa. A schermo la stessa fase si legge con rg-section-card o rg-steps e si compila con rg-field. FASI COLLEGATE (1.16.0): rg-worksheet-block__role nella testa, dopo il titolo, con le parole di rg-step__role e i numeri come sul foglio ('Principale · con la 03', 'Collegata · dopo la 02'); filo nero spesso a sinistra = il pezzo di graffa che ogni blocco porta con se, perche i blocchi di un gruppo possono finire su due pagine. Niente fondo pieno (non si stampa), niente riquadro (e il segno del nome di reparto). FASCICOLO COMPATTO (1.23.0, opt-in): rg-worksheet-block--compact porta le righe da scrivere a 24 px (~6,4 mm; --tall resta 48), le celle td.rg-fill-field--cell a 24 px, testa/corpo/piede a 8/12, la griglia __fields a colonne >=128 px in auto-fill (i campi non si allargano a tutta la pagina, allineati sul fondo, --tall prende la fila), il piede su una riga dove ci sta (Tempo, Operatore, Data --inline con riga >=64 px; Note --inline --tall per ultima prende il resto), la banda a 30 px (trama 16 invariata, margine bianco del nome 2) e le th delle tabelle su una riga. Testa con la FASE in primo piano: __phase (20 px, «Fase 2 di 3 · Pressatura», N di M dentro la parte) > __part (14 px, «Parte 1 di 4 · FONDO BORDATO», rg-part-mark facoltativa davanti) > reparto sul nome della banda (12 px); sostituiscono __index + __title, il contatore dei fogli va in rg-dept-band__note. Eccezioni per stop = rg-table rg-table--compact + td.rg-fill-field--cell dentro il blocco compatto, rg-table__grow sulla th di Note. Legenda coni = rg-cutout ultimo figlio del blocco, dopo il piede. Pezzi del fascicolo: rg-worksheet-part (testata di parte che apre la pagina), rg-cutout, rg-blank-page. Dentro il compatto usare rg-u-mt-2, non rg-u-mt-4 (utility con !important). CORREZIONE 1.24.0: la tabella delle eccezioni per stop e rg-table rg-table--compact rg-table--grid (style=\"--rg-table-cols: 6\") con td.rg-fill-field--cell, rg-table__grow sulla Note al doppio; la sola --compact stampava righe senza divisori verticali. SECONDA VERSIONE (1.25.0, opt-in): testa __step («FASE 1 DI 3», piccolo, sopra la banda) + banda staccata dai bordi e alta 38 (si attiva col selettore __step + .rg-dept-band) + __work nella testa (lavorazione, 28 px, grassetto, maiuscolo: eccezione dichiarata al peso 500 dei contenitori). Parte e identita prodotto NON nel blocco: nell intestazione di pagina stampata dall app sul PDF, con rg-u-print-a4--head (@page rg-a4-head, margine sup. 30 mm; fascia 8-24 mm; riga 1 Helvetica-Bold 11 pt base y 14 mm; riga 2 Courier 8 pt base y 19,5 mm; filetto 0,5 pt a y 25 mm; QR 16x16 mm a x 182-198 y 8-24; misure in worksheet-block.md#intestazione-di-pagina). __op = sottotitolo di operazione (14, regolare, filetto sopra). Nel compatto il valore stampato in __line ha 8 px a sinistra e 6 sotto, mono 14; td delle tabelle 6 px sotto.",
       "keywords": [
         "scheda di lavorazione",
         "scheda tecnica",
@@ -2676,14 +2688,28 @@
         "eccezioni per stop",
         "tabella stop",
         "dense print",
-        "compact worksheet"
+        "compact worksheet",
+        "fase 1 di 3",
+        "lavorazione in grassetto",
+        "titolo lavorazione",
+        "operazione",
+        "sottotitolo operazione",
+        "piazzamento",
+        "intestazione di pagina",
+        "page header",
+        "pymupdf",
+        "margine superiore",
+        "valore stampato"
       ],
       "variantsSince": {
         "rg-worksheet-block--compact": "1.23.0"
       },
       "elementsSince": {
         "rg-worksheet-block__phase": "1.23.0",
-        "rg-worksheet-block__part": "1.23.0"
+        "rg-worksheet-block__part": "1.23.0",
+        "rg-worksheet-block__step": "1.25.0",
+        "rg-worksheet-block__work": "1.25.0",
+        "rg-worksheet-block__op": "1.25.0"
       }
     },
     {
@@ -2889,6 +2915,203 @@
         "intentionally left blank",
         "blank page",
         "filler page",
+        "stampa",
+        "print"
+      ]
+    },
+    {
+      "status": "beta",
+      "since": "1.25.0",
+      "kind": "component",
+      "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
+      "id": "part-sheet",
+      "title": "Pagina della parte",
+      "role": "Pagina intera che apre un pezzo nel fascicolo stampato: titolo «Parte 1 di 4 · NOME» con la pastiglia, identita del prodotto per esteso, tutte le parti del prodotto con questa segnata, le fasi della parte da spuntare (Fatta · Data · Firma) e il QR per riaprire la parte nel sistema.",
+      "classes": {
+        "base": "rg-part-sheet",
+        "elements": [
+          "rg-part-sheet__head",
+          "rg-part-sheet__title",
+          "rg-part-sheet__section",
+          "rg-part-sheet__parts",
+          "rg-part-sheet__part",
+          "rg-part-sheet__part--current",
+          "rg-part-sheet__here",
+          "rg-part-sheet__code"
+        ],
+        "related": [
+          "rg-qr",
+          "rg-part-mark",
+          "rg-key-value--ruled",
+          "rg-table--grid",
+          "rg-fill-field--check",
+          "rg-worksheet-part",
+          "rg-u-print-a4--head"
+        ]
+      },
+      "variants": [
+        "base"
+      ],
+      "states": [
+        "print",
+        "current-part"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-border-medium",
+        "--rg-color-text-primary",
+        "--rg-color-text-label",
+        "--rg-font-identity",
+        "--rg-font-body",
+        "--rg-font-mono",
+        "--rg-font-size-xl",
+        "--rg-font-size-sm",
+        "--rg-font-size-xs",
+        "--rg-weight-heading",
+        "--rg-weight-bold",
+        "--rg-border-strong",
+        "--rg-border-hairline",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-space-6"
+      ],
+      "doc": "components/part-sheet.md",
+      "specimenAnchor": "part-sheet",
+      "snippet": "<section class=\"rg-part-sheet\">\n  <header class=\"rg-part-sheet__head\">\n    <h2 class=\"rg-part-sheet__title\"><span class=\"rg-part-mark rg-part--1\" aria-hidden=\"true\"></span>Parte 1 di 4 · FONDO BORDATO</h2>\n    <figure class=\"rg-qr\">\n      <div class=\"rg-qr__img\"><svg viewBox=\"0 0 29 29\" role=\"img\" aria-label=\"QR: apri la parte in RG\"><rect width=\"29\" height=\"29\" fill=\"white\"/><path d=\"M4 4h7v7h-7zM18 4h7v7h-7zM4 18h7v7h-7z\" fill=\"none\" stroke=\"black\"/><path d=\"M6 6h3v3h-3zM20 6h3v3h-3zM6 20h3v3h-3zM13 4h2v2h-2zM13 8h1v3h-1zM15 13h3v1h-3zM13 13h1v4h-1zM19 15h2v2h-2zM22 19h2v3h-2zM16 20h3v1h-3zM13 22h2v3h-2zM18 23h1v2h-1z\"/></svg></div>\n      <figcaption class=\"rg-qr__caption\">Apri la parte in RG</figcaption>\n    </figure>\n  </header>\n  <dl class=\"rg-key-value rg-key-value--ruled\">\n    <dt>Cliente</dt><dd>DIOR</dd>\n    <dt>Prodotto</dt><dd>M3641 COCOTTE</dd>\n    <dt>Codice RG</dt><dd class=\"rg-mono\">RG-26-DIO-0441-P</dd>\n    <dt>Codice prodotto</dt><dd class=\"rg-mono\">M3641UBWN</dd>\n    <dt>Variante</dt><dd>Nero / oro</dd>\n    <dt>Quantità nel prodotto</dt><dd class=\"rg-mono\">2 pz</dd>\n  </dl>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Le parti del prodotto</h3>\n    <ol class=\"rg-part-sheet__parts\">\n      <li class=\"rg-part-sheet__part rg-part-sheet__part--current\" aria-current=\"true\"><span class=\"rg-part-mark rg-part--1\" aria-hidden=\"true\"></span>FONDO BORDATO <span class=\"rg-part-sheet__here\">questa parte</span><span class=\"rg-part-sheet__code\">P01</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part--2\" aria-hidden=\"true\"></span>DAVANTI<span class=\"rg-part-sheet__code\">P02</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part--3\" aria-hidden=\"true\"></span>DIETRO<span class=\"rg-part-sheet__code\">P03</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part--4\" aria-hidden=\"true\"></span>MANICO<span class=\"rg-part-sheet__code\">P04</span></li>\n    </ol>\n  </section>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Fasi della parte</h3>\n    <table class=\"rg-table rg-table--compact rg-table--grid\" style=\"--rg-table-cols: 6; --rg-table-wide: 2\">\n      <thead>\n        <tr>\n          <th class=\"rg-table__numeric\" scope=\"col\">N</th>\n          <th class=\"rg-table__grow\" scope=\"col\">Lavorazione</th>\n          <th class=\"rg-table__grow\" scope=\"col\">Reparto</th>\n          <th scope=\"col\">Fatta</th>\n          <th scope=\"col\">Data</th>\n          <th scope=\"col\">Firma</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr><td class=\"rg-table__numeric\">1</td><td>Ricamo</td><td>Ricamo</td><td><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">2</td><td>Pressatura</td><td>Pressatura e soffiatura</td><td><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">3</td><td>Sabbiatura</td><td>Pressatura e soffiatura</td><td><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n      </tbody>\n    </table>\n  </section>\n</section>",
+      "notes": "Solo carta. In stampa apre e chiude la pagina, non si spezza. Parte corrente: filetto nero spesso + grassetto + scritta __here + aria-current, mai il solo colore. Fasi in rg-table--grid con --rg-table-cols: 6; --rg-table-wide: 2 (Lavorazione e Reparto larghe). Alternativa alla testata in linea rg-worksheet-part: un fascicolo usa l una o l altra.",
+      "keywords": [
+        "pagina della parte",
+        "copertina parte",
+        "frontespizio parte",
+        "scheda parte",
+        "indice parte",
+        "parti del prodotto",
+        "elenco parti",
+        "fasi della parte",
+        "fatta",
+        "firma",
+        "avanzamento",
+        "checklist fasi",
+        "part cover",
+        "part sheet",
+        "qr",
+        "fascicolo",
+        "stampa",
+        "print"
+      ]
+    },
+    {
+      "status": "beta",
+      "since": "1.25.0",
+      "kind": "component",
+      "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
+      "id": "qr",
+      "title": "QR code",
+      "role": "Il contenitore di un codice QR su un documento stampato: lo tiene quadrato e nitido, a 27,5 mm (o 16 mm con --small), con una didascalia sotto che dice dove porta. L immagine (SVG inline) la genera l app.",
+      "classes": {
+        "base": "rg-qr",
+        "elements": [
+          "rg-qr__img",
+          "rg-qr__caption"
+        ],
+        "variants": [
+          "rg-qr--small"
+        ],
+        "related": [
+          "rg-part-sheet"
+        ]
+      },
+      "variants": [
+        "base",
+        "small"
+      ],
+      "states": [
+        "print"
+      ],
+      "tokens": [
+        "--rg-color-white",
+        "--rg-color-text-label",
+        "--rg-font-body",
+        "--rg-font-size-xs",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-12",
+        "--rg-space-24"
+      ],
+      "doc": "components/qr.md",
+      "specimenAnchor": "qr",
+      "snippet": "<figure class=\"rg-qr\">\n  <div class=\"rg-qr__img\"><svg viewBox=\"0 0 29 29\" role=\"img\" aria-label=\"QR: apri la parte in RG\"><!-- moduli --></svg></div>\n  <figcaption class=\"rg-qr__caption\">Apri la parte in RG</figcaption>\n</figure>",
+      "notes": "shape-rendering crispEdges sull SVG, image-rendering pixelated su img. Zona di rispetto (4 moduli) dentro l SVG, il contenitore non ha bordo. Nero su bianco, niente logo. SVG con role=img e aria-label. Nell intestazione di pagina il QR lo mette l app sul PDF (16 mm).",
+      "keywords": [
+        "qr",
+        "qr code",
+        "codice qr",
+        "qrcode",
+        "link alla parte",
+        "apri in RG",
+        "scansiona",
+        "barcode",
+        "codice a barre",
+        "scan",
+        "stampa",
+        "print"
+      ]
+    },
+    {
+      "status": "beta",
+      "since": "1.25.0",
+      "kind": "component",
+      "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
+      "id": "cutout-sheet",
+      "title": "Foglio dei tagliandi",
+      "role": "La pagina che raccoglie i riquadri da ritagliare di un prodotto (una legenda coni per fase di ricamo, 4-9), in due colonne o una, con spazio per le forbici: sta su una pagina sua perche tagliando non si deve tagliare il retro.",
+      "classes": {
+        "base": "rg-cutout-sheet",
+        "elements": [
+          "rg-cutout-sheet__title"
+        ],
+        "variants": [
+          "rg-cutout-sheet--single"
+        ],
+        "related": [
+          "rg-cutout",
+          "rg-fill-field--swatch",
+          "rg-blank-page"
+        ]
+      },
+      "variants": [
+        "base",
+        "single"
+      ],
+      "states": [
+        "print"
+      ],
+      "tokens": [
+        "--rg-color-text-primary",
+        "--rg-font-identity",
+        "--rg-font-size-sm",
+        "--rg-weight-medium",
+        "--rg-space-2",
+        "--rg-space-6"
+      ],
+      "doc": "components/cutout-sheet.md",
+      "specimenAnchor": "cutout-sheet",
+      "snippet": "<section class=\"rg-cutout-sheet\">\n  <h2 class=\"rg-cutout-sheet__title\">Tagliandi coni · M3641 COCOTTE · RG-26-DIO-0441-P</h2>\n  <div class=\"rg-cutout\">\n    <span class=\"rg-cutout__cue\">Ritaglia lungo il tratteggio</span>\n    <div class=\"rg-cutout__head\">\n      <p class=\"rg-cutout__title\">Legenda coni · Parte 1 · FONDO BORDATO · Fase 1 Ricamo</p>\n    </div>\n    <table class=\"rg-table rg-table--compact\">\n      <thead>\n        <tr>\n          <th scope=\"col\">Codice filo</th>\n          <th scope=\"col\">Tipo</th>\n          <th class=\"rg-table__grow\" scope=\"col\">Aghi</th>\n          <th class=\"rg-table__numeric\" scope=\"col\">Metri</th>\n          <th scope=\"col\">Colore</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr><td class=\"rg-table__code\">MAD-1800</td><td>sopra</td><td class=\"rg-table__numeric\">1, 4</td><td class=\"rg-table__numeric\">42,5</td><td><span class=\"rg-fill-field rg-fill-field--swatch\"></span></td></tr>\n        <tr><td class=\"rg-table__code\">MAD-1747</td><td>sopra</td><td class=\"rg-table__numeric\">3</td><td class=\"rg-table__numeric\">18,0</td><td><span class=\"rg-fill-field rg-fill-field--swatch\"></span></td></tr>\n        <tr><td class=\"rg-table__code\">BOB-120</td><td>sotto</td><td class=\"rg-table__numeric\">tutti</td><td class=\"rg-table__numeric\">30,0</td><td><span class=\"rg-fill-field rg-fill-field--swatch\"></span></td></tr>\n      </tbody>\n    </table>\n  </div>\n  <div class=\"rg-cutout\">\n    <span class=\"rg-cutout__cue\">Ritaglia lungo il tratteggio</span>\n    <div class=\"rg-cutout__head\">\n      <p class=\"rg-cutout__title\">Legenda coni · Parte 2 · DAVANTI · Fase 1 Ricamo</p>\n    </div>\n    <table class=\"rg-table rg-table--compact\">\n      <thead>\n        <tr>\n          <th scope=\"col\">Codice filo</th>\n          <th scope=\"col\">Tipo</th>\n          <th class=\"rg-table__grow\" scope=\"col\">Aghi</th>\n          <th class=\"rg-table__numeric\" scope=\"col\">Metri</th>\n          <th scope=\"col\">Colore</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr><td class=\"rg-table__code\">MAD-1000</td><td>sopra</td><td class=\"rg-table__numeric\">2</td><td class=\"rg-table__numeric\">55,0</td><td><span class=\"rg-fill-field rg-fill-field--swatch\"></span></td></tr>\n        <tr><td class=\"rg-table__code\">BOB-120</td><td>sotto</td><td class=\"rg-table__numeric\">tutti</td><td class=\"rg-table__numeric\">41,0</td><td><span class=\"rg-fill-field rg-fill-field--swatch\"></span></td></tr>\n      </tbody>\n    </table>\n  </div>\n</section>",
+      "notes": "In stampa apre e chiude la pagina; la griglia continua sulla pagina dopo, un tagliando non si spezza. Fra i tagliandi 32 px in verticale (24 + 8 di margine, che tiene «Ritaglia» nella sua cella) e 24 in orizzontale. Retro bianco a cura dell app. Legenda: Codice filo · Tipo (sopra/sotto) · Aghi · Metri · Colore (swatch).",
+      "keywords": [
+        "tagliandi",
+        "foglio dei tagliandi",
+        "pagina da ritagliare",
+        "legenda coni",
+        "legende",
+        "spolina",
+        "filo sotto",
+        "ritagliare",
+        "forbici",
+        "cut sheet",
+        "tear-off sheet",
         "stampa",
         "print"
       ]
@@ -3263,7 +3486,8 @@
           "rg-fill-field--tall",
           "rg-fill-field--inline",
           "rg-fill-field--cell",
-          "rg-fill-field--swatch"
+          "rg-fill-field--swatch",
+          "rg-fill-field--check"
         ],
         "related": [
           "rg-worksheet-block",
@@ -3280,7 +3504,8 @@
         "tall",
         "inline",
         "cell",
-        "swatch"
+        "swatch",
+        "check"
       ],
       "states": [
         "print"
@@ -3309,7 +3534,7 @@
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "fill-field",
       "snippet": "<div class=\"rg-fill-field\">\n  <span class=\"rg-fill-field__label\">Temperatura <span class=\"rg-fill-field__unit\">&#176;C</span></span>\n  <span class=\"rg-fill-field__line\"></span>\n</div>\n<table class=\"rg-table rg-table--compact\">\n  <thead><tr><th scope=\"col\">#</th><th scope=\"col\">Tensione (cN)</th><th scope=\"col\">Esito</th></tr></thead>\n  <tbody>\n    <tr><td class=\"rg-table__code\">01</td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n  </tbody>\n</table>",
-      "notes": "Il caso centrale della scheda di lavorazione: il foglio esce con dei buchi APPOSTA e il buco deve INVITARE A SCRIVERE, non sembrare un errore di rendering o un dato non caricato. Tre scelte al servizio di quella frase: (1) la riga e una STAFFA A L: dichiara dove inizia e dove appoggia la scrittura, cosa che uno spazio vuoto non fa e che un rettangolo pieno direbbe male (sembrerebbe un campo disabilitato). La BASE e nera perche e la riga su cui si scrive: deve sopravvivere alla fotocopia (i grigi chiari li perde) e come oggetto grafico essenziale vuole almeno 3:1, mentre --rg-color-border-medium su bianco si ferma a ~2,8:1; il tratto verticale sinistro resta intermedio, dice solo dove comincia; (2) l'altezza e quella della MANO, non del testo: --rg-space-8 (32px, circa 8,5mm) per una grafia adulta, --rg-space-12 (48px, circa 12,7mm) con --tall per una nota di piu parole; (3) l'etichetta c'e sempre - un vuoto senza etichetta non e un campo. NON E UN CONTROLLO, e carta: niente input, niente focus, niente stato di errore o sola lettura, e non deve averne. Conseguenza sull'accessibilita, dichiarata: in lettura assistita porta la sola etichetta perche non c'e nessun campo da annunciare - ed e la ragione per cui la versione A SCHERMO della stessa scheda deve usare rg-field, che ha input, focus, errore e read-only per davvero. L'unita (rg-fill-field__unit) sta dentro l'etichetta, mono e minuscola: chi scrive 180 deve vedere accanto i gradi senza risalire all'intestazione (regole 8). La variante --cell si mette sulla td stessa (ripristina display: table-cell, la base e block; non funziona su un div dentro la cella; il selettore e qualificato td.rg-fill-field--cell perche .rg-table td pesa 0,1,1 e con la sola classe il filetto della tabella vincerebbe) e distingue con la stessa base nera la cella DA RIEMPIRE da quella che porta gia un dato stampato: trenta righe da riempire sono una tabella, non trenta campi. Regola d'uso: il valore che il sistema conosce si STAMPA come dato (rg-key-value, rg-table) e solo il valore rilevabile in reparto diventa un rg-fill-field - un blocco tutto buchi non e una scheda, e un modulo in bianco. 1.23.0: rg-fill-field--swatch e una CASELLA QUADRATA da 40 px (~10,6 mm) con contorno nero su quattro lati, su uno <span> dentro una <td>, etichetta nella <th> («Cono»): il posto dove attaccare un capo di filo o segnare il colore del cono; codice e nome del colore restano stampati accanto. Dentro rg-worksheet-block--compact la riga scende a 24 px e la cella --cell a 24 px senza classi in piu sul campo.",
+      "notes": "Il caso centrale della scheda di lavorazione: il foglio esce con dei buchi APPOSTA e il buco deve INVITARE A SCRIVERE, non sembrare un errore di rendering o un dato non caricato. Tre scelte al servizio di quella frase: (1) la riga e una STAFFA A L: dichiara dove inizia e dove appoggia la scrittura, cosa che uno spazio vuoto non fa e che un rettangolo pieno direbbe male (sembrerebbe un campo disabilitato). La BASE e nera perche e la riga su cui si scrive: deve sopravvivere alla fotocopia (i grigi chiari li perde) e come oggetto grafico essenziale vuole almeno 3:1, mentre --rg-color-border-medium su bianco si ferma a ~2,8:1; il tratto verticale sinistro resta intermedio, dice solo dove comincia; (2) l'altezza e quella della MANO, non del testo: --rg-space-8 (32px, circa 8,5mm) per una grafia adulta, --rg-space-12 (48px, circa 12,7mm) con --tall per una nota di piu parole; (3) l'etichetta c'e sempre - un vuoto senza etichetta non e un campo. NON E UN CONTROLLO, e carta: niente input, niente focus, niente stato di errore o sola lettura, e non deve averne. Conseguenza sull'accessibilita, dichiarata: in lettura assistita porta la sola etichetta perche non c'e nessun campo da annunciare - ed e la ragione per cui la versione A SCHERMO della stessa scheda deve usare rg-field, che ha input, focus, errore e read-only per davvero. L'unita (rg-fill-field__unit) sta dentro l'etichetta, mono e minuscola: chi scrive 180 deve vedere accanto i gradi senza risalire all'intestazione (regole 8). La variante --cell si mette sulla td stessa (ripristina display: table-cell, la base e block; non funziona su un div dentro la cella; il selettore e qualificato td.rg-fill-field--cell perche .rg-table td pesa 0,1,1 e con la sola classe il filetto della tabella vincerebbe) e distingue con la stessa base nera la cella DA RIEMPIRE da quella che porta gia un dato stampato: trenta righe da riempire sono una tabella, non trenta campi. Regola d'uso: il valore che il sistema conosce si STAMPA come dato (rg-key-value, rg-table) e solo il valore rilevabile in reparto diventa un rg-fill-field - un blocco tutto buchi non e una scheda, e un modulo in bianco. 1.23.0: rg-fill-field--swatch e una CASELLA QUADRATA da 40 px (~10,6 mm) con contorno nero su quattro lati, su uno <span> dentro una <td>, etichetta nella <th> («Cono»): il posto dove attaccare un capo di filo o segnare il colore del cono; codice e nome del colore restano stampati accanto. Dentro rg-worksheet-block--compact la riga scende a 24 px e la cella --cell a 24 px senza classi in piu sul campo. 1.25.0: rg-fill-field--check e la casella da spuntare da 24 px (~6,4 mm), contorno nero, per «Fatta» nella pagina della parte. Nel blocco compatto il valore stampato in __line ha aria (8 px a sinistra, 6 sotto).",
       "keywords": [
         "campo da compilare",
         "compilare a penna",
@@ -3357,10 +3582,17 @@
         "colore cono",
         "swatch box",
         "sticker box",
-        "riga 6 mm"
+        "riga 6 mm",
+        "casella da spuntare",
+        "spunta",
+        "checkbox di carta",
+        "fatta",
+        "tick box",
+        "check box print"
       ],
       "variantsSince": {
-        "rg-fill-field--swatch": "1.23.0"
+        "rg-fill-field--swatch": "1.23.0",
+        "rg-fill-field--check": "1.25.0"
       }
     },
     {

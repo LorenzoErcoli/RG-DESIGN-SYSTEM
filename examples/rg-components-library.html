@@ -84,7 +84,7 @@
   <header class="specimen-header"><div class="specimen-brand">RG</div><div class="specimen-title">Design System / Components Library</div><div class="specimen-version">SPECIMEN 0.1 · 2026</div></header>
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
-      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li>
+      <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li>
     </ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
@@ -1964,6 +1964,201 @@ status         VALID</pre></div>
           </div></div>
         </div>
         <p class="specimen-note">Su carta: la testata di parte apre sempre una facciata nuova (mai una pagina vuota se è la prima), un blocco non si spezza, il riquadro da ritagliare nemmeno. La pagina bianca la mette l’app prima di una parte che cadrebbe sul retro: Chrome non implementa break-before: recto, e il conto delle facciate non lo sa il CSS.</p>
+      </section>
+
+      <section class="specimen-section" id="worksheet-compact-v2">
+        <div class="specimen-section__head"><span class="specimen-section__index">39</span><h2>Fascicolo, seconda versione (proposta 1.25.0)</h2><p>Dall’anteprima di Lorenzo. Nel blocco: <strong>«FASE 1 DI 3»</strong> piccolo in cima (<code class="rg-mono">__step</code>), la <strong>banda del reparto</strong> staccata dai bordi e più alta, la <strong>lavorazione</strong> grande, in grassetto e maiuscolo (<code class="rg-mono">__work</code>); niente parte né prodotto, che vanno nell’intestazione di pagina stampata dall’app (<code class="rg-mono">rg-u-print-a4--head</code>, margine superiore 30 mm). Le operazioni sono sottotitoli leggeri (<code class="rg-mono">__op</code>) e il valore stampato non tocca la riga. Fuori dai blocchi: la <strong>pagina della parte</strong> (<code class="rg-mono">rg-part-sheet</code>) con il <strong>QR</strong> (<code class="rg-mono">rg-qr</code>) e le fasi da spuntare (<code class="rg-mono">rg-fill-field--check</code>), e il <strong>foglio dei tagliandi</strong> (<code class="rg-mono">rg-cutout-sheet</code>). Vedi components/worksheet-block.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Ricamo — fase, banda, lavorazione; valori stampati con aria; eccezioni per stop a griglia</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <p class="rg-worksheet-block__step">Fase 1 di 3</p>
+              <p class="rg-dept-band rg-dept-band--ricamo">
+                <span class="rg-dept-band__name">Reparto Ricamo</span>
+                <span class="rg-dept-band__note">Foglio 1 / 12</span>
+              </p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Ricamo</h3>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Macchina</span><span class="rg-fill-field__line">ZSK 12 teste</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Telaio</span><span class="rg-fill-field__line">T-40</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Velocità <span class="rg-fill-field__unit">punti/min</span></span><span class="rg-fill-field__line"></span></div>
+                </div>
+                <table class="rg-table rg-table--compact rg-table--grid rg-u-mt-2" style="--rg-table-cols: 6">
+                  <caption>Eccezioni per stop</caption>
+                  <thead>
+                    <tr>
+                      <th class="rg-table__numeric" scope="col">Stop</th>
+                      <th scope="col">Piedino</th>
+                      <th scope="col">Velocità</th>
+                      <th scope="col">Ago</th>
+                      <th scope="col">PMI</th>
+                      <th class="rg-table__grow" scope="col">Note</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="rg-table__numeric">4</td>
+                      <td class="rg-table__numeric">1,5</td>
+                      <td class="rg-table__numeric">650</td>
+                      <td class="rg-table__numeric">3</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td>Rallentare sulla curva</td>
+                    </tr>
+                    <tr>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <footer class="rg-worksheet-block__foot">
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">min</span></span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+              </footer>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Pressatura — operazioni come sottotitoli leggeri</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <p class="rg-worksheet-block__step">Fase 2 di 3</p>
+              <p class="rg-dept-band rg-dept-band--pressatura">
+                <span class="rg-dept-band__name">Reparto Pressatura e soffiatura</span>
+                <span class="rg-dept-band__note">Foglio 2 / 12</span>
+              </p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Pressatura</h3>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Piazzamento</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">80</span></div>
+                </div>
+                <p class="rg-worksheet-block__op">Pressatura</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line">150</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">10</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </div>
+              <footer class="rg-worksheet-block__foot">
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">min</span></span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+              </footer>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide" id="part-sheet"><span class="specimen-label">Pagina della parte — identità, tutte le parti con questa segnata, fasi da spuntare, QR</span><div class="specimen-stage">
+            <section class="rg-part-sheet">
+              <header class="rg-part-sheet__head">
+                <h2 class="rg-part-sheet__title"><span class="rg-part-mark rg-part--1" aria-hidden="true"></span>Parte 1 di 4 · FONDO BORDATO</h2>
+                <figure class="rg-qr">
+                  <div class="rg-qr__img"><svg viewBox="0 0 29 29" role="img" aria-label="QR: apri la parte in RG"><rect width="29" height="29" fill="white"/><path d="M4 4h7v7h-7zM18 4h7v7h-7zM4 18h7v7h-7z" fill="none" stroke="black"/><path d="M6 6h3v3h-3zM20 6h3v3h-3zM6 20h3v3h-3zM13 4h2v2h-2zM13 8h1v3h-1zM15 13h3v1h-3zM13 13h1v4h-1zM19 15h2v2h-2zM22 19h2v3h-2zM16 20h3v1h-3zM13 22h2v3h-2zM18 23h1v2h-1z"/></svg></div>
+                  <figcaption class="rg-qr__caption">Apri la parte in RG</figcaption>
+                </figure>
+              </header>
+              <dl class="rg-key-value rg-key-value--ruled">
+                <dt>Cliente</dt><dd>DIOR</dd>
+                <dt>Prodotto</dt><dd>M3641 COCOTTE</dd>
+                <dt>Codice RG</dt><dd class="rg-mono">RG-26-DIO-0441-P</dd>
+                <dt>Codice prodotto</dt><dd class="rg-mono">M3641UBWN</dd>
+                <dt>Variante</dt><dd>Nero / oro</dd>
+                <dt>Quantità nel prodotto</dt><dd class="rg-mono">2 pz</dd>
+              </dl>
+              <section class="rg-part-sheet__section">
+                <h3 class="rg-label">Le parti del prodotto</h3>
+                <ol class="rg-part-sheet__parts">
+                  <li class="rg-part-sheet__part rg-part-sheet__part--current" aria-current="true"><span class="rg-part-mark rg-part--1" aria-hidden="true"></span>FONDO BORDATO <span class="rg-part-sheet__here">questa parte</span><span class="rg-part-sheet__code">P01</span></li>
+                  <li class="rg-part-sheet__part"><span class="rg-part-mark rg-part--2" aria-hidden="true"></span>DAVANTI<span class="rg-part-sheet__code">P02</span></li>
+                  <li class="rg-part-sheet__part"><span class="rg-part-mark rg-part--3" aria-hidden="true"></span>DIETRO<span class="rg-part-sheet__code">P03</span></li>
+                  <li class="rg-part-sheet__part"><span class="rg-part-mark rg-part--4" aria-hidden="true"></span>MANICO<span class="rg-part-sheet__code">P04</span></li>
+                </ol>
+              </section>
+              <section class="rg-part-sheet__section">
+                <h3 class="rg-label">Fasi della parte</h3>
+                <table class="rg-table rg-table--compact rg-table--grid" style="--rg-table-cols: 6; --rg-table-wide: 2">
+                  <thead>
+                    <tr>
+                      <th class="rg-table__numeric" scope="col">N</th>
+                      <th class="rg-table__grow" scope="col">Lavorazione</th>
+                      <th class="rg-table__grow" scope="col">Reparto</th>
+                      <th scope="col">Fatta</th>
+                      <th scope="col">Data</th>
+                      <th scope="col">Firma</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="rg-table__numeric">1</td><td>Ricamo</td><td>Ricamo</td><td><span class="rg-fill-field rg-fill-field--check"></span></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                    <tr><td class="rg-table__numeric">2</td><td>Pressatura</td><td>Pressatura e soffiatura</td><td><span class="rg-fill-field rg-fill-field--check"></span></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                    <tr><td class="rg-table__numeric">3</td><td>Sabbiatura</td><td>Pressatura e soffiatura</td><td><span class="rg-fill-field rg-fill-field--check"></span></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                  </tbody>
+                </table>
+              </section>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half" id="qr"><span class="specimen-label">QR — 27,5 mm e --small 16 mm; l’SVG lo genera l’app</span><div class="specimen-stage">
+            <figure class="rg-qr rg-qr--small">
+              <div class="rg-qr__img"><svg viewBox="0 0 29 29" role="img" aria-label="QR: apri la parte in RG"><rect width="29" height="29" fill="white"/><path d="M4 4h7v7h-7zM18 4h7v7h-7zM4 18h7v7h-7z" fill="none" stroke="black"/><path d="M6 6h3v3h-3zM20 6h3v3h-3zM6 20h3v3h-3zM13 4h2v2h-2zM13 8h1v3h-1zM15 13h3v1h-3zM13 13h1v4h-1zM19 15h2v2h-2zM22 19h2v3h-2zM16 20h3v1h-3zM13 22h2v3h-2zM18 23h1v2h-1z"/></svg></div>
+              <figcaption class="rg-qr__caption">Apri in RG</figcaption>
+            </figure>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide" id="cutout-sheet"><span class="specimen-label">Foglio dei tagliandi — una legenda per fase di ricamo, due colonne, spazio per le forbici; la spolina è una riga «sotto»</span><div class="specimen-stage">
+            <section class="rg-cutout-sheet">
+              <h2 class="rg-cutout-sheet__title">Tagliandi coni · M3641 COCOTTE · RG-26-DIO-0441-P</h2>
+              <div class="rg-cutout">
+                <span class="rg-cutout__cue">Ritaglia lungo il tratteggio</span>
+                <div class="rg-cutout__head">
+                  <p class="rg-cutout__title">Legenda coni · Parte 1 · FONDO BORDATO · Fase 1 Ricamo</p>
+                </div>
+                <table class="rg-table rg-table--compact">
+                  <thead>
+                    <tr>
+                      <th scope="col">Codice filo</th>
+                      <th scope="col">Tipo</th>
+                      <th class="rg-table__grow" scope="col">Aghi</th>
+                      <th class="rg-table__numeric" scope="col">Metri</th>
+                      <th scope="col">Colore</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="rg-table__code">MAD-1800</td><td>sopra</td><td class="rg-table__numeric">1, 4</td><td class="rg-table__numeric">42,5</td><td><span class="rg-fill-field rg-fill-field--swatch"></span></td></tr>
+                    <tr><td class="rg-table__code">MAD-1747</td><td>sopra</td><td class="rg-table__numeric">3</td><td class="rg-table__numeric">18,0</td><td><span class="rg-fill-field rg-fill-field--swatch"></span></td></tr>
+                    <tr><td class="rg-table__code">BOB-120</td><td>sotto</td><td class="rg-table__numeric">tutti</td><td class="rg-table__numeric">30,0</td><td><span class="rg-fill-field rg-fill-field--swatch"></span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="rg-cutout">
+                <span class="rg-cutout__cue">Ritaglia lungo il tratteggio</span>
+                <div class="rg-cutout__head">
+                  <p class="rg-cutout__title">Legenda coni · Parte 2 · DAVANTI · Fase 1 Ricamo</p>
+                </div>
+                <table class="rg-table rg-table--compact">
+                  <thead>
+                    <tr>
+                      <th scope="col">Codice filo</th>
+                      <th scope="col">Tipo</th>
+                      <th class="rg-table__grow" scope="col">Aghi</th>
+                      <th class="rg-table__numeric" scope="col">Metri</th>
+                      <th scope="col">Colore</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="rg-table__code">MAD-1000</td><td>sopra</td><td class="rg-table__numeric">2</td><td class="rg-table__numeric">55,0</td><td><span class="rg-fill-field rg-fill-field--swatch"></span></td></tr>
+                    <tr><td class="rg-table__code">BOB-120</td><td>sotto</td><td class="rg-table__numeric">tutti</td><td class="rg-table__numeric">41,0</td><td><span class="rg-fill-field rg-fill-field--swatch"></span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div></div>
+        </div>
+        <p class="specimen-note">Intestazione di pagina: la stampa l’app sul PDF (Chrome non ripete elementi per pagina). Fascia da 8 a 24 mm dall’alto, Helvetica-Bold 11 pt e Courier 8 pt, filetto 0,5 pt a 25 mm, QR 16 mm a destra; il contenuto HTML comincia a 30 mm. Misure complete in components/worksheet-block.md.</p>
       </section>
 
     </main>

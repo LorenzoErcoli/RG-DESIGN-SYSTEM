@@ -7,6 +7,44 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## Non rilasciato — proposta 1.25.0 (ramo `ds/worksheet-compact`)
+
+**Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Un solo
+cambio visivo a chi usa già `rg-worksheet-block--compact` (1.23–1.24, non ancora pubblicate): il valore
+stampato dentro la riga ha aria.
+
+### Il fascicolo, seconda versione
+
+Dall'anteprima di Lorenzo sulla 1.24 (COCOTTE era sceso da 25 a 18 facciate).
+
+- **Testa nuova del blocco**, opt-in con `__step`: **`rg-worksheet-block__step`** («FASE 1 DI 3», piccolo, sopra
+  la banda); la banda che segue si stacca dai bordi e sale a 38 px (targhetta e margine bianco del nome a 4);
+  **`rg-worksheet-block__work`** nella testa, la lavorazione a 28 px in grassetto maiuscolo («RICAMO»),
+  eccezione dichiarata al peso 500 dei contenitori. Niente parte e prodotto nel blocco.
+- **`rg-worksheet-block__op`**: sottotitolo di operazione nel corpo («Piazzamento»), 14 regolare con filetto sopra.
+- **Il valore stampato non tocca la riga**: nel compatto 8 px a sinistra e 6 sotto, mono 14, riga sempre 24;
+  nelle celle di tabella 6 px sotto.
+- **`rg-part-sheet`** (`__head`, `__title`, `__section`, `__parts`, `__part`, `__part--current`, `__here`,
+  `__code`): la pagina della parte, con identità del prodotto, tutte le parti con questa segnata, fasi da
+  spuntare a griglia e QR. Apre e chiude la pagina.
+- **`rg-qr`** (`__img`, `__caption`, `--small`): contenitore del QR generato dall'app, 104 px (~27,5 mm) o 60
+  (~15,9 mm), moduli netti.
+- **`rg-fill-field--check`**: casella da spuntare da 24 px (~6,4 mm).
+- **`rg-cutout-sheet`** (`__title`, `--single`): il foglio dei tagliandi, due colonne, 32/24 px fra i
+  tagliandi; apre e chiude la pagina. La legenda dei coni comprende la spolina: Codice filo · Tipo · Aghi ·
+  Metri · Colore.
+- **`rg-u-print-a4--head`** (`@page rg-a4-head`, margine superiore 30 mm): lo spazio per l'intestazione di
+  pagina stampata dall'app sul PDF; misure in `worksheet-block.md` (fascia 8–24 mm, Helvetica-Bold 11 pt,
+  Courier 8 pt, filetto 0,5 pt a 25 mm, QR 16 mm a destra).
+- **`--rg-table-wide`** nella griglia: più colonne larghe (`__grow`), se manca vale 1.
+- Documenti: `part-sheet.md`, `qr.md`, `cutout-sheet.md` (nuovi); `worksheet-block.md` (sezione *Fascicolo,
+  seconda versione* e markup), `fill-field.md`, `cutout.md`, `tables.md`; manifest (tre voci nuove in beta,
+  `worksheet-block`, `fill-field`, `table` estese); vetrina `#worksheet-compact-v2`.
+- Verificato con `--print-to-pdf` di Chrome in scala di grigi a contrasto spinto su `rg-u-print-a4--head`:
+  contenuto a 30 mm, pagina della parte da sola, blocchi con la testa nuova, foglio dei tagliandi su due pagine
+  con ogni «Ritaglia» insieme al suo riquadro (primo tentativo: la scritta restava sulla pagina precedente,
+  corretto col margine sopra ogni tagliando). Valore a 6 px dalla base e 9 dal filo.
+
 ## 1.24.0 — 2026-09-17
 
 **Minor.** Una variante nuova e additiva (`rg-table--grid`), nessuna classe o token rimosso o rinominato,

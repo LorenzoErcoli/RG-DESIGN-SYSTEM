@@ -170,7 +170,7 @@ Il tono è editoriale-tecnico: titoli netti, descrizioni concise, dettagli mater
 
 ## 11. Accessibilità e comportamento
 
-Target interattivi minimi 40×40 px. Focus visibile nero/bianco ad alto contrasto. Contrasto testo conforme almeno a WCAG AA. Ordine di tabulazione coerente con l'ordine visivo. Animazioni brevi e funzionali, disattivabili con `prefers-reduced-motion`.
+Target interattivi minimi 40×40 px; **44×44 su dispositivi touch** (`pointer: coarse`), dove anche i campi di testo salgono a 16 px perché iOS non ingrandisca la pagina al tocco (1.30.0, [forms](components/forms.md#touch-campi-a-16-px-e-bersagli-da-44-130)). Focus visibile nero/bianco ad alto contrasto. Contrasto testo conforme almeno a WCAG AA. Ordine di tabulazione coerente con l'ordine visivo. Animazioni brevi e funzionali, disattivabili con `prefers-reduced-motion`.
 
 ## 12. Eccezioni
 

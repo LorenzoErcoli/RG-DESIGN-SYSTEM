@@ -27,6 +27,21 @@ Label → controllo → unità/azione accessoria → help → errore. I campi nu
 
 Stati richiesti: default, hover, focus, filled, read-only, disabled, warning, error, success e loading dipendente.
 
+## Touch: campi a 16 px e bersagli da 44 (1.30)
+
+Su **iOS e iPadOS** Safari ingrandisce la pagina quando si tocca un campo con il testo **sotto i 16 px**, e non
+torna indietro da solo. I controlli RG sono a 14 px per scelta (sono chrome, non testo corrente): su un
+dispositivo touch salgono a **16 px**. Il viewport **non si tocca** e lo zoom a due dita resta libero.
+
+- Vale per `rg-input`, `rg-select`, `rg-textarea`, `rg-search` (anche dentro `rg-field-with-unit`,
+  `rg-form-row`, `rg-operation-row`) e per i campi nativi senza classe (`rg-core.css`).
+- Due condizioni, stesso effetto: `@media (pointer: coarse)` (telefoni e tablet) e `@supports
+  (-webkit-touch-callout: none)` (solo iOS/iPadOS, che ingrandisce anche con un trackpad collegato).
+- Con `pointer: coarse` i **bersagli** salgono a **44 px** (le linee guida Apple): campi, bottoni anche
+  `--small`, bottoni a icona, chip, pagine, schede, voci di menu, caselle di scelta con la loro etichetta. La
+  colonna dei gesti di `rg-operation-sequence` si allarga di conseguenza.
+- Desktop e stampa non cambiano. `rg-fill-field` è carta e non ha un campo: non c'entra.
+
 ## Campo con unità (`.rg-field-with-unit`) — larghezza minima
 
 Il campo è `[input | unità]`: il suffisso unità è incomprimibile (min 42px), quindi tutto ciò che

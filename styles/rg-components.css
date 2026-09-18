@@ -1825,3 +1825,118 @@ a.rg-icon-button { text-decoration: none; }
 .rg-key-value--inline dd + dd::before { content: "·"; content: "·" / ""; padding-inline-end: var(--rg-space-2); color: var(--rg-color-neutral-400); }
 .rg-key-value__pair--distinct { padding: 0 var(--rg-space-2); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); }
 .rg-key-value__pair--distinct dd { font-weight: var(--rg-weight-medium); }
+
+/* ── PROPOSTA DI MODIFICA (1.30.0) ───────────────────────────────────────────────────────────────
+   Il campionario apre col telefono (dal QR del fascicolo) la scheda di una fase e PROPONE di cambiare un
+   valore — una regolazione di tutta la fase o di uno stop, un filo, una temperatura — con una nota «perche».
+   L'ufficio, da PC o iPad, ACCETTA o RIFIUTA. Mobile-first: una colonna, bottoni da 48, niente hover
+   necessario. Tre pezzi:
+   - rg-proposal: la card di UNA proposta (contesto, campo, cambio attuale → proposto, perche, chi e quando,
+     stato, azioni per chi decide);
+   - rg-proposal-list: l'elenco, a gruppi (per stop), una colonna su telefono, due o piu su iPad;
+   - rg-proposal-notice: l'avviso nella pagina del prodotto, col numero grande e una riga toccabile per fase.
+   Lo stato non e mai il solo colore: il filetto sinistro ha il colore dello stato E la card porta il badge
+   con la parola («Da decidere», «Accettata», «Rifiutata»). Il segnalino «N proposte» e rg-badge--review
+   rg-badge--count: nessuna classe nuova. */
+.rg-proposal { display: grid; align-content: start; gap: var(--rg-space-3); min-width: 0; margin: 0; padding: var(--rg-space-4); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-left: var(--rg-space-1) var(--rg-border-style) var(--rg-proposal-color, var(--rg-color-border-medium)); border-radius: var(--rg-radius-md); }
+.rg-proposal--pending { --rg-proposal-color: var(--rg-color-info); }
+.rg-proposal--accepted { --rg-proposal-color: var(--rg-color-success); }
+.rg-proposal--rejected { --rg-proposal-color: var(--rg-color-neutral-400); }
+.rg-proposal__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--rg-space-2); }
+/* Dove vale la proposta: «Stop 9», «Tutta la fase». Micro-label identitaria. */
+.rg-proposal__context { margin: 0; color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* Il campo: «Altezza piedino». Livello contenitore, peso medio. */
+.rg-proposal__field { margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-md); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); }
+/* IL CAMBIO, a colpo d'occhio: attuale piccolo, grigio, barrato (<del>) → proposto grande e nero (<ins>).
+   Mono e tabulare: sono valori. Se l'attuale manca si scrive «—» senza <del>: niente da barrare.
+   Rifiutata: si inverte — l'attuale resta (testo semplice, niente <del>), il proposto va in <del>. Il senso resta scritto per chi non vede
+   la barra: «Attuale» e «Proposto» in testo nascosto (rg-u-visually-hidden). */
+.rg-proposal__change { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-3); margin: 0; font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.rg-proposal__from { color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-md); }
+.rg-proposal__from del { text-decoration-thickness: var(--rg-border-hairline); }
+.rg-proposal__arrow::before { content: "\2192"; content: "\2192" / ""; color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-md); }
+.rg-proposal__to { color: var(--rg-color-text-primary); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-tight); }
+.rg-proposal__to ins { text-decoration: none; }
+.rg-proposal--rejected .rg-proposal__from { color: var(--rg-color-text-primary); }
+.rg-proposal--rejected .rg-proposal__to { color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-md); font-weight: var(--rg-weight-regular); }
+.rg-proposal__to del { text-decoration-thickness: var(--rg-border-hairline); }
+/* Etichetta piccola dentro un paragrafo: «Perche», «Motivo». */
+.rg-proposal__label { display: block; color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* Il «perche» di chi propone: una citazione, filetto a sinistra. Facoltativo. */
+.rg-proposal__why { margin: 0; padding-left: var(--rg-space-3); border-left: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); color: var(--rg-color-text-primary); font-size: var(--rg-font-size-sm); overflow-wrap: anywhere; }
+/* Chi e quando: mono, piccolo. */
+.rg-proposal__meta { margin: 0; color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+/* L'esito di una proposta decisa: chi, quando, il motivo, «prima era X». Superficie rientrante. */
+.rg-proposal__outcome { margin: 0; padding: var(--rg-space-2) var(--rg-space-3); background: var(--rg-color-surface); color: var(--rg-color-text-primary); font-size: var(--rg-font-size-sm); overflow-wrap: anywhere; }
+/* «Da riportare a mano»: accettata, ma il valore non si applica da solo (va rifatto sulla macchina, nel
+   programma di ricamo). Filetto nero spesso e icona: e un compito aperto, deve vedersi anche in B/N. */
+.rg-proposal__flag { display: flex; align-items: flex-start; gap: var(--rg-space-2); margin: 0; padding: var(--rg-space-2) var(--rg-space-3); border: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); }
+.rg-proposal__flag > .rg-icon { margin-top: calc(var(--rg-space-1) / 2); }
+/* LE AZIONI per chi decide: barra in fondo, Accetta (primaria) e Rifiuta, bottoni grandi a tutta cella.
+   Rifiuta apre, senza JavaScript, il campo del motivo facoltativo e la conferma (details/summary): il
+   rifiuto e un gesto in due tempi, l'accettazione no. Aperto, il rifiuto prende la riga intera. */
+.rg-proposal__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: var(--rg-space-2); padding-top: var(--rg-space-3); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-proposal__actions form { margin: 0; }
+.rg-proposal__actions .rg-button { width: 100%; }
+.rg-proposal__actions:has(> .rg-proposal__reject[open]) { grid-template-columns: minmax(0, 1fr); }
+.rg-proposal__reject[open] { grid-column: 1 / -1; }
+.rg-proposal__reject > summary { list-style: none; cursor: pointer; }
+.rg-proposal__reject > summary::-webkit-details-marker { display: none; }
+.rg-proposal__reason { display: grid; gap: var(--rg-space-2); margin-top: var(--rg-space-2); }
+
+/* ELENCO DI PROPOSTE — a gruppi (uno per stop, uno per «Tutta la fase»), le card in una colonna sul telefono
+   e in piu colonne da 320 px dove c'e posto (iPad, PC). L'ORDINE lo decide l'app: prima i gruppi e le proposte
+   da decidere, poi le decise (anche chiuse in un rg-disclosure). Il DS non riordina: l'ordine visivo resta
+   quello di tabulazione. */
+.rg-proposal-list { display: grid; gap: var(--rg-space-6); }
+.rg-proposal-list__group { display: grid; gap: var(--rg-space-3); min-width: 0; margin: 0; }
+.rg-proposal-list__title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); margin: 0; padding-bottom: var(--rg-space-2); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); }
+.rg-proposal-list__items { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(var(--rg-space-24) * 3 + var(--rg-space-8))), 1fr)); gap: var(--rg-space-3); margin: 0; padding: 0; list-style: none; }
+.rg-proposal-list__items > li { display: grid; min-width: 0; }
+
+/* AVVISO «CI SONO PROPOSTE DA DECIDERE» — in cima alla pagina del prodotto. Il NUMERO grande (36, grassetto)
+   e la frase, poi una RIGA-LINK per ogni fase con proposte: parte con la sua pastiglia, fase e reparto col
+   suo segno, il conteggio, la freccia. Righe alte almeno 56: si toccano col pollice. Sul telefono parte sopra
+   e fase sotto; da 681 px in su una riga sola. Filetto sinistro info, come la proposta da decidere. */
+.rg-proposal-notice { display: grid; gap: var(--rg-space-3); padding: var(--rg-space-4); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-left: var(--rg-space-1) var(--rg-border-style) var(--rg-color-info); border-radius: var(--rg-radius-md); }
+.rg-proposal-notice__head { display: flex; align-items: center; gap: var(--rg-space-4); }
+.rg-proposal-notice__count { flex: none; min-width: var(--rg-space-8); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-2xl); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-tight); font-variant-numeric: tabular-nums; text-align: center; }
+.rg-proposal-notice__title { margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-md); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); }
+.rg-proposal-notice__lead { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+.rg-proposal-notice__list { display: grid; gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
+.rg-proposal-notice__row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: "part count go" "phase count go"; align-items: center; gap: var(--rg-space-1) var(--rg-space-3); min-height: calc(var(--rg-space-12) + var(--rg-space-2)); padding: var(--rg-space-2) var(--rg-space-3); color: inherit; text-decoration: none; background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); }
+.rg-proposal-notice__row:hover { background: var(--rg-color-surface); border-color: var(--rg-color-black); }
+.rg-proposal-notice__row:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: 2px; }
+.rg-proposal-notice__part { grid-area: part; display: inline-flex; align-items: center; gap: var(--rg-space-2); min-width: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); overflow-wrap: anywhere; }
+.rg-proposal-notice__phase { grid-area: phase; display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-1) var(--rg-space-3); min-width: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+.rg-proposal-notice__row > .rg-badge { grid-area: count; }
+.rg-proposal-notice__go { grid-area: go; color: var(--rg-color-text-secondary); }
+.rg-proposal-notice__row:hover .rg-proposal-notice__go { color: var(--rg-color-black); }
+@media (min-width: 681px) {
+  .rg-proposal-notice__row { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) auto auto; grid-template-areas: "part phase count go"; }
+}
+
+/* ── TOUCH: campi a 16 px e bersagli da 44 (1.30.0) ─────────────────────────────────────────────────
+   Dall'uso su telefono e iPad della piattaforma prodotti (la scheda di fase aperta dal QR del fascicolo).
+   DUE problemi, due regole:
+   1) iOS INGRANDISCE la pagina toccando un campo con il testo sotto i 16 px. I controlli rg-* sono a 14
+      per scelta (regole §3: un controllo e chrome, non testo corrente): su touch salgono a 16. Il viewport
+      NON si tocca e lo zoom a due dita resta libero. Stesse due condizioni di rg-core.css.
+   2) Il DITO non e il puntatore. Le regole (§11) dicono 40 px, 34 nelle liste dense: e la misura del mouse.
+      Su pointer: coarse ogni bersaglio sale a 44 (le linee guida Apple dicono 44 pt): bottoni anche piccoli,
+      bottoni a icona, chip, pagine, schede, voci di menu, caselle di scelta con la loro etichetta.
+   La colonna dei gesti di rg-operation-sequence, che conta i bottoni, ricalcola la larghezza con 44.
+   Desktop e stampa non cambiano. */
+@media (pointer: coarse) {
+  .rg-input, .rg-select, .rg-textarea, .rg-search { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); font-size: var(--rg-font-size-md); }
+  .rg-form-row :is(.rg-input, .rg-select) { height: calc(var(--rg-space-12) - var(--rg-space-1)); min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
+  .rg-button, .rg-button--small { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
+  .rg-icon-button, .rg-icon-button--full, .rg-page { min-width: calc(var(--rg-space-12) - var(--rg-space-1)); min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
+  .rg-segmented__item, .rg-chip, .rg-tab, .rg-topbar__back, .rg-breadcrumb a, .rg-table__toggle, .rg-list-row--link, .rg-action-menu__item, .rg-choice { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
+  .rg-disclosure--boxed > .rg-disclosure__trigger { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
+  .rg-operation-row__slot { width: calc(var(--rg-space-12) - var(--rg-space-1)); height: calc(var(--rg-space-12) - var(--rg-space-1)); }
+  .rg-operation-sequence { --rg-operation-actions: calc(4 * (var(--rg-space-12) - var(--rg-space-1)) + 3 * var(--rg-space-1) + var(--rg-space-2) + var(--rg-space-3) + var(--rg-border-hairline)); }
+}
+@supports (-webkit-touch-callout: none) {
+  .rg-input, .rg-select, .rg-textarea, .rg-search { font-size: var(--rg-font-size-md); }
+}

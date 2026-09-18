@@ -24,6 +24,17 @@ Non esistono `--in-review` né `--success`: il ciclo di vita ha un solo nome per
 `--draft`, `--archived` e `--pending` sono neutri di proposito — sono assenze di giudizio,
 non giudizi, e non devono competere con validato/errore nella stessa riga.
 
+### Segnalino «N proposte» (1.30.0)
+
+Accanto al nome di una parte in una tabella, o accanto a una fase nel percorso, il numero di
+[proposte di modifica](proposal.md) da decidere è `rg-badge rg-badge--review rg-badge--count`: `--review` vuol
+dire proprio «in attesa di giudizio», `--count` è la forma breve di una quantità. Nessuna classe nuova. Con la
+parola, non il solo numero: «2 proposte».
+
+```html
+<span class="rg-badge rg-badge--review rg-badge--count">2 proposte</span>
+```
+
 ## Uso e limiti
 
 Usare solo per metadati brevi, non per azioni o frasi. Il testo resta sempre presente: il colore

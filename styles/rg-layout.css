@@ -86,6 +86,8 @@
 .rg-param-section.rg-disclosure { border-top: 0; }
 .rg-param-section__header.rg-disclosure__trigger { justify-content: flex-start; min-height: 40px; /* target minimo, regola 11 */ padding-block: var(--rg-space-1); }
 .rg-param-section__header.rg-disclosure__trigger::after { margin-left: auto; }
+/* Touch (1.30.0): bersaglio da 44 come gli altri controlli (rg-components.css, in fondo). */
+@media (pointer: coarse) { .rg-param-section__header.rg-disclosure__trigger { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); } }
 .rg-param-section__header.rg-disclosure__trigger:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: 2px; }
 details.rg-param-section:not([open]) > .rg-param-section__header { margin-bottom: 0; }
 .rg-param-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rg-space-4) var(--rg-space-3); }

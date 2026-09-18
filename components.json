@@ -265,7 +265,7 @@
       "doc": "components/forms.md",
       "specimenAnchor": "inputs",
       "snippet": "<label class=\"rg-field\"><span class=\"rg-field__label\">Tariffa macchina</span><span class=\"rg-field-with-unit\"><input class=\"rg-input rg-input--numeric\" type=\"number\" step=\"0.01\" min=\"0\" value=\"80\"> <span>&#8364;/h</span></span></label>",
-      "notes": "rg-field-with-unit ha una larghezza minima d'uso: --rg-layout-param-col-min (132px). Il suffisso unita e incomprimibile (42px), quindi sotto quella misura si comprime il valore misurato. Nessuna variante compatta: sotto la soglia si passa a una colonna sola. L'input ha min-width: 0 dal DS e non sborda mai il contenitore. Da 1.6.0: rg-input--numeric e la forma del valore misurato (mono, cifre tabulari, allineato a destra, largo --rg-input-numeric-width, default 12ch) e sostituisce la composizione rg-input rg-mono nei campi numerici; rg-input rg-mono resta valida per il testo tecnico non allineato a destra (codici, ID). Lo stato di sola lettura e l'attributo nativo [readonly] (per <select>, aria-readonly=true): NON usare disabled al suo posto, sono due fatti diversi — disabled = non attivo ora e non inviato, readonly = valido ma non modificabile da te, a pieno contrasto e selezionabile. Il motivo del divieto va scritto accanto al form con rg-alert e l'azione primaria non piu eseguibile si omette invece di disabilitarla. Da 1.7.0: rg-field-with-unit--compact e la forma stretta del campo con unita per una RIGA DENSA (una voce di rg-color-map, una cella di lista) dove il numero e un accessorio e non il soggetto di un form a colonna; riduce larghezza del valore e pastiglia dell'unita riusando --rg-input-numeric-width, resta mono/tabulare/allineato a destra con rg-input--numeric, e porta l'etichetta in aria-label sull'input invece che in un rg-field__label visibile. Sotto la soglia di 132px la rg-field-with-unit piena non va: si usa questa. Da 1.15.0 tre aggiunte per il FORM LUNGO DA COMPILARE. (a) LARGHEZZA DICHIARATA: rg-field--w4/w8/w16/w24 (il numero e il numero di caratteri attesi; misura = Nch + --rg-space-8 di cromo del controllo) e rg-field--grow (lunghezza variabile senza tetto: prende lo spazio che avanza sulla riga, per un percorso file o una nota). La larghezza di un campo e un'affermazione su quanto contenuto ci si aspetta, non una scelta estetica (Baymard: lunghezza nota -> larghezza esatta a prescindere dagli altri campi; variabile con media standard -> un default per quel tipo; media molto diversa dal default -> larghezza propria. GOV.UK fa la stessa cosa con govuk-input--width-N). Senza modificatore il campo resta FLUIDO e riempie la colonna: e il default giusto per un form a una colonna con campi di contenuto simile. Il valore misurato aveva gia la sua larghezza (--rg-input-numeric-width su rg-input--numeric): questi modificatori servono al TESTO. LIMITE DICHIARATO: il modificatore stringe anche l'etichetta, che va a capo; se non entra, o l'etichetta e troppo lunga per una riga di campi o il campo e della misura sbagliata - non si allarga il campo per far stare la label. (b) MARCATORE rg-field__mark: dichiara una volta, marca molte. 'Questo campo entra nel costo' vale per cinque campi su dodici e ripeterlo in un rg-field__help sotto ognuno e rumore, non informazione (e in lettura assistita e la stessa frase riletta a ogni campo). Il W3C, WAI Forms Tutorial - Form Instructions, prescrive la forma opposta: l'istruzione che vale per il gruppo si da UNA VOLTA in testa al gruppo e si lega ai controlli con aria-describedby; GOV.UK aggiunge che un hint per campo deve restare una frase breve. Il marcatore e quindi un CARATTERE mono e secondario, non un colore (regola 11 - nessuno stato affidato al solo colore), va sempre con aria-hidden=true sul segno e aria-describedby sull'input, e si mette sulle ECCEZIONI: se i campi marcati sono piu di quelli non marcati, si inverte il marcatore e si cambia la frase. Un solo asse per gruppo: il secondo asse usa un rg-badge, che ha il testo dentro. (c) INPUT NUMERICI: la doc prescrive ora type=text + inputmode=decimal|numeric al posto di type=number, e lo snippet e stato aggiornato di conseguenza. Motivo, dalla ricerca del team GOV.UK Design System: type=number non e dettabile ne selezionabile con Dragon NaturallySpeaking, NVDA lo annuncia come spin button con due bottoni senza etichetta, i browser arrotondano e convertono in notazione esponenziale i valori grandi premendo su/giu senza possibilita di annullare, Chrome scarta le lettere in silenzio, e - il punto che pesa in reparto - la rotellina del mouse CAMBIA IL VALORE di un campo che ha il focus, mentre una scheda si compila scorrendo. type=number resta ammesso solo per un valore davvero incrementabile con uno stepper, fuori da una pagina lunga. Larghezza dichiarata (1.16.0): la misura rg-field--w4/w8/w16/w24 e del CONTROLLO (input, select, rg-field-with-unit); il campo e largo quanto la sua etichetta, mai meno della misura, e l'etichetta non va a capo sopra i 680px. Fino alla 1.15 l'etichetta andava a capo e la riga perdeva l'allineamento.",
+      "notes": "rg-field-with-unit ha una larghezza minima d'uso: --rg-layout-param-col-min (132px). Il suffisso unita e incomprimibile (42px), quindi sotto quella misura si comprime il valore misurato. Nessuna variante compatta: sotto la soglia si passa a una colonna sola. L'input ha min-width: 0 dal DS e non sborda mai il contenitore. Da 1.6.0: rg-input--numeric e la forma del valore misurato (mono, cifre tabulari, allineato a destra, largo --rg-input-numeric-width, default 12ch) e sostituisce la composizione rg-input rg-mono nei campi numerici; rg-input rg-mono resta valida per il testo tecnico non allineato a destra (codici, ID). Lo stato di sola lettura e l'attributo nativo [readonly] (per <select>, aria-readonly=true): NON usare disabled al suo posto, sono due fatti diversi — disabled = non attivo ora e non inviato, readonly = valido ma non modificabile da te, a pieno contrasto e selezionabile. Il motivo del divieto va scritto accanto al form con rg-alert e l'azione primaria non piu eseguibile si omette invece di disabilitarla. Da 1.7.0: rg-field-with-unit--compact e la forma stretta del campo con unita per una RIGA DENSA (una voce di rg-color-map, una cella di lista) dove il numero e un accessorio e non il soggetto di un form a colonna; riduce larghezza del valore e pastiglia dell'unita riusando --rg-input-numeric-width, resta mono/tabulare/allineato a destra con rg-input--numeric, e porta l'etichetta in aria-label sull'input invece che in un rg-field__label visibile. Sotto la soglia di 132px la rg-field-with-unit piena non va: si usa questa. Da 1.15.0 tre aggiunte per il FORM LUNGO DA COMPILARE. (a) LARGHEZZA DICHIARATA: rg-field--w4/w8/w16/w24 (il numero e il numero di caratteri attesi; misura = Nch + --rg-space-8 di cromo del controllo) e rg-field--grow (lunghezza variabile senza tetto: prende lo spazio che avanza sulla riga, per un percorso file o una nota). La larghezza di un campo e un'affermazione su quanto contenuto ci si aspetta, non una scelta estetica (Baymard: lunghezza nota -> larghezza esatta a prescindere dagli altri campi; variabile con media standard -> un default per quel tipo; media molto diversa dal default -> larghezza propria. GOV.UK fa la stessa cosa con govuk-input--width-N). Senza modificatore il campo resta FLUIDO e riempie la colonna: e il default giusto per un form a una colonna con campi di contenuto simile. Il valore misurato aveva gia la sua larghezza (--rg-input-numeric-width su rg-input--numeric): questi modificatori servono al TESTO. LIMITE DICHIARATO: il modificatore stringe anche l'etichetta, che va a capo; se non entra, o l'etichetta e troppo lunga per una riga di campi o il campo e della misura sbagliata - non si allarga il campo per far stare la label. (b) MARCATORE rg-field__mark: dichiara una volta, marca molte. 'Questo campo entra nel costo' vale per cinque campi su dodici e ripeterlo in un rg-field__help sotto ognuno e rumore, non informazione (e in lettura assistita e la stessa frase riletta a ogni campo). Il W3C, WAI Forms Tutorial - Form Instructions, prescrive la forma opposta: l'istruzione che vale per il gruppo si da UNA VOLTA in testa al gruppo e si lega ai controlli con aria-describedby; GOV.UK aggiunge che un hint per campo deve restare una frase breve. Il marcatore e quindi un CARATTERE mono e secondario, non un colore (regola 11 - nessuno stato affidato al solo colore), va sempre con aria-hidden=true sul segno e aria-describedby sull'input, e si mette sulle ECCEZIONI: se i campi marcati sono piu di quelli non marcati, si inverte il marcatore e si cambia la frase. Un solo asse per gruppo: il secondo asse usa un rg-badge, che ha il testo dentro. (c) INPUT NUMERICI: la doc prescrive ora type=text + inputmode=decimal|numeric al posto di type=number, e lo snippet e stato aggiornato di conseguenza. Motivo, dalla ricerca del team GOV.UK Design System: type=number non e dettabile ne selezionabile con Dragon NaturallySpeaking, NVDA lo annuncia come spin button con due bottoni senza etichetta, i browser arrotondano e convertono in notazione esponenziale i valori grandi premendo su/giu senza possibilita di annullare, Chrome scarta le lettere in silenzio, e - il punto che pesa in reparto - la rotellina del mouse CAMBIA IL VALORE di un campo che ha il focus, mentre una scheda si compila scorrendo. type=number resta ammesso solo per un valore davvero incrementabile con uno stepper, fuori da una pagina lunga. Larghezza dichiarata (1.16.0): la misura rg-field--w4/w8/w16/w24 e del CONTROLLO (input, select, rg-field-with-unit); il campo e largo quanto la sua etichetta, mai meno della misura, e l'etichetta non va a capo sopra i 680px. Fino alla 1.15 l'etichetta andava a capo e la riga perdeva l'allineamento. 1.30.0 TOUCH: con pointer: coarse, e su iOS/iPadOS (@supports -webkit-touch-callout), rg-input/select/textarea/search e i campi nativi salgono a 16 px: Safari non ingrandisce la pagina al tocco. Viewport non toccato, zoom a due dita libero. Con pointer: coarse bersagli a 44 px (campi, bottoni anche --small, bottoni a icona, chip, pagine, schede, voci di menu, caselle di scelta). html con text-size-adjust: 100%.",
       "keywords": [
         "campo",
         "input",
@@ -313,7 +313,16 @@
         "rotellina",
         "ordine di tabulazione",
         "tab order",
-        "form lungo"
+        "form lungo",
+        "ios zoom",
+        "zoom al tocco",
+        "ingrandisce",
+        "16px",
+        "touch",
+        "pointer coarse",
+        "ipad",
+        "iphone",
+        "bersaglio 44"
       ]
     },
     {
@@ -1149,7 +1158,7 @@
       "doc": "components/badges.md",
       "specimenAnchor": "badges",
       "snippet": "<span class=\"rg-badge rg-badge--validated\">Validato</span>\n<span class=\"rg-badge rg-badge--draft\">Bozza</span>\n<span class=\"rg-badge rg-badge--count rg-badge--estimated\">3 anomalie</span>",
-      "notes": "Ciclo di vita: --draft, --review (in revisione), --validated, --archived. Pipeline di ingestione: --pending, --parsed. Non esiste --in-review: usare --review. Le varianti si distinguono anche in scala di grigi (pallino vuoto, bordo tratteggiato). Mai riempimenti pastello.",
+      "notes": "Ciclo di vita: --draft, --review (in revisione), --validated, --archived. Pipeline di ingestione: --pending, --parsed. Non esiste --in-review: usare --review. Le varianti si distinguono anche in scala di grigi (pallino vuoto, bordo tratteggiato). Mai riempimenti pastello. 1.30.0: il segnalino «N proposte» (proposte di modifica da decidere) accanto a una parte in tabella o a una fase nel percorso e rg-badge rg-badge--review rg-badge--count con la parola («2 proposte»): nessuna classe nuova.",
       "keywords": [
         "badge",
         "stato",
@@ -1172,7 +1181,10 @@
         "lifecycle",
         "conteggio",
         "count",
-        "anomalie"
+        "anomalie",
+        "n proposte",
+        "proposte da decidere",
+        "segnalino proposte"
       ]
     },
     {
@@ -3211,6 +3223,226 @@
         "print anchor",
         "stampa",
         "print"
+      ]
+    },
+    {
+      "id": "proposal",
+      "title": "Proposta di modifica",
+      "status": "beta",
+      "since": "1.30.0",
+      "kind": "component",
+      "role": "La proposta di cambiare un valore di una fase (regolazione di uno stop o di tutta la fase, un filo, una temperatura), fatta dal campionario col telefono, e la sua decisione in ufficio: contesto, campo, cambio attuale barrato → proposto grande, perche, chi e quando, stato (da decidere / accettata / rifiutata), esito, «da riportare a mano», azioni Accetta e Rifiuta col motivo. Con l elenco a gruppi per stop.",
+      "classes": {
+        "base": "rg-proposal",
+        "variants": [
+          "rg-proposal--pending",
+          "rg-proposal--accepted",
+          "rg-proposal--rejected"
+        ],
+        "elements": [
+          "rg-proposal__head",
+          "rg-proposal__context",
+          "rg-proposal__field",
+          "rg-proposal__change",
+          "rg-proposal__from",
+          "rg-proposal__arrow",
+          "rg-proposal__to",
+          "rg-proposal__why",
+          "rg-proposal__label",
+          "rg-proposal__meta",
+          "rg-proposal__outcome",
+          "rg-proposal__flag",
+          "rg-proposal__actions",
+          "rg-proposal__reject",
+          "rg-proposal__reason"
+        ],
+        "subcomponents": {
+          "rg-proposal-list": [
+            "rg-proposal-list__group",
+            "rg-proposal-list__title",
+            "rg-proposal-list__items"
+          ]
+        },
+        "related": [
+          "rg-proposal-notice",
+          "rg-badge--review",
+          "rg-badge--validated",
+          "rg-badge--archived",
+          "rg-badge--count",
+          "rg-button--primary",
+          "rg-button--secondary",
+          "rg-button--large",
+          "rg-textarea",
+          "rg-disclosure",
+          "rg-u-visually-hidden"
+        ]
+      },
+      "variants": [
+        "pending",
+        "accepted",
+        "rejected",
+        "manual (flag)",
+        "list"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "reject-open",
+        "pending",
+        "accepted",
+        "rejected",
+        "no-current-value"
+      ],
+      "tokens": [
+        "--rg-color-info",
+        "--rg-color-success",
+        "--rg-color-neutral-400",
+        "--rg-color-border-medium",
+        "--rg-color-surface",
+        "--rg-color-surface-raised",
+        "--rg-color-text-primary",
+        "--rg-color-text-secondary",
+        "--rg-color-text-label",
+        "--rg-font-identity",
+        "--rg-font-mono",
+        "--rg-font-size-xl",
+        "--rg-font-size-md",
+        "--rg-font-size-sm",
+        "--rg-font-size-xs",
+        "--rg-border-strong",
+        "--rg-border-hairline",
+        "--rg-radius-md",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-space-6",
+        "--rg-space-8",
+        "--rg-space-24"
+      ],
+      "doc": "components/proposal.md",
+      "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
+      "specimenAnchor": "proposal",
+      "snippet": "<article class=\"rg-proposal rg-proposal--pending\" aria-labelledby=\"pr-12-campo\">\n  <header class=\"rg-proposal__head\">\n    <p class=\"rg-proposal__context\">Stop 9</p>\n    <span class=\"rg-badge rg-badge--review\">Da decidere</span>\n  </header>\n  <h3 class=\"rg-proposal__field\" id=\"pr-12-campo\">Altezza piedino</h3>\n  <p class=\"rg-proposal__change\">\n    <span class=\"rg-proposal__from\"><span class=\"rg-u-visually-hidden\">Attuale: </span><del>1,5 mm</del></span>\n    <span class=\"rg-proposal__arrow\"></span>\n    <span class=\"rg-proposal__to\"><span class=\"rg-u-visually-hidden\">Proposto: </span><ins>2,0 mm</ins></span>\n  </p>\n  <p class=\"rg-proposal__why\"><span class=\"rg-proposal__label\">Perché</span>Sulla curva il piedino schiaccia il bordo e il filo si spezza.</p>\n  <p class=\"rg-proposal__meta\">Campionario · M. Rossi · 18/09/2026 10:42</p>\n  <div class=\"rg-proposal__actions\">\n    <form method=\"post\" action=\"/proposte/12/accetta\">\n      <button class=\"rg-button rg-button--primary rg-button--large\" type=\"submit\">Accetta</button>\n    </form>\n    <details class=\"rg-proposal__reject\">\n      <summary class=\"rg-button rg-button--secondary rg-button--large\">Rifiuta…</summary>\n      <form class=\"rg-proposal__reason\" method=\"post\" action=\"/proposte/12/rifiuta\">\n        <label class=\"rg-field\">\n          <span class=\"rg-field__label\">Motivo (facoltativo)</span>\n          <textarea class=\"rg-textarea\" name=\"motivo\" rows=\"2\"></textarea>\n        </label>\n        <button class=\"rg-button rg-button--secondary rg-button--large\" type=\"submit\">Conferma il rifiuto</button>\n      </form>\n    </details>\n  </div>\n</article>",
+      "notes": "Mobile-first (1.30.0). Stato mai solo colore: filetto sinistro (info/success/grigio) + badge con la parola (review «Da decidere» / validated «Accettata» / archived «Rifiutata»). Cambio: __from in <del> (piccolo, grigio, barrato) → __to in <ins> (28 px, nero), mono; attuale mancante = «—» senza del; rifiutata = attuale in testo semplice nero, proposto in <del>. «Attuale:»/«Proposto:» in rg-u-visually-hidden. __outcome per l esito («prima era X», motivo). __flag «Da riportare a mano» (filetto nero spesso + rg-icon-avviso) quando il valore accettato non si applica da solo. Azioni: form Accetta (rg-button--primary --large) + details.rg-proposal__reject con summary rg-button --secondary --large «Rifiuta…» e form __reason (textarea motivo facoltativo + Conferma il rifiuto), senza JS; aperto, la barra passa a una colonna. Elenco rg-proposal-list: __group per stop/«Tutta la fase»/«Decise», __title col conteggio rg-badge--review --count, __items una colonna fino a ~660 px poi colonne da 320. L ordine (prima le da decidere) lo decide l app. Verificato a 375 px (nessuno sforamento, bottoni 48) e 1024 px (due colonne).",
+      "keywords": [
+        "proposta",
+        "proposte",
+        "proposta di modifica",
+        "modifica proposta",
+        "richiesta di modifica",
+        "suggerimento",
+        "decidere",
+        "da decidere",
+        "accetta",
+        "rifiuta",
+        "accettata",
+        "rifiutata",
+        "approvazione",
+        "approva",
+        "revisione",
+        "motivo",
+        "perche",
+        "valore attuale",
+        "valore proposto",
+        "prima era",
+        "da riportare a mano",
+        "campionario",
+        "telefono",
+        "mobile",
+        "ipad",
+        "touch",
+        "change request",
+        "proposal",
+        "suggestion",
+        "approve",
+        "reject",
+        "diff",
+        "before after",
+        "stop",
+        "regolazione"
+      ]
+    },
+    {
+      "id": "proposal-notice",
+      "title": "Avviso: proposte da decidere",
+      "status": "beta",
+      "since": "1.30.0",
+      "kind": "component",
+      "role": "In cima alla pagina del prodotto: il numero grande delle proposte del campionario da decidere e, per ogni fase con proposte, una riga-link grande e toccabile (parte con la pastiglia, fase, reparto col segno, conteggio, freccia) che porta alla fase.",
+      "classes": {
+        "base": "rg-proposal-notice",
+        "elements": [
+          "rg-proposal-notice__head",
+          "rg-proposal-notice__count",
+          "rg-proposal-notice__title",
+          "rg-proposal-notice__lead",
+          "rg-proposal-notice__list",
+          "rg-proposal-notice__row",
+          "rg-proposal-notice__part",
+          "rg-proposal-notice__phase",
+          "rg-proposal-notice__go"
+        ],
+        "related": [
+          "rg-proposal",
+          "rg-part-mark",
+          "rg-dept-label",
+          "rg-dept-mark--quiet",
+          "rg-badge--review",
+          "rg-badge--count",
+          "rg-icon"
+        ]
+      },
+      "variants": [
+        "base"
+      ],
+      "states": [
+        "default",
+        "hover",
+        "focus"
+      ],
+      "tokens": [
+        "--rg-color-info",
+        "--rg-color-border",
+        "--rg-color-border-medium",
+        "--rg-color-surface",
+        "--rg-color-surface-raised",
+        "--rg-font-identity",
+        "--rg-font-size-2xl",
+        "--rg-font-size-md",
+        "--rg-font-size-sm",
+        "--rg-weight-bold",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-space-12",
+        "--rg-radius-md"
+      ],
+      "doc": "components/proposal-notice.md",
+      "rulesRef": "design-rules.md#11-accessibilità-e-comportamento",
+      "specimenAnchor": "proposal-notice",
+      "snippet": "<section class=\"rg-proposal-notice\" aria-labelledby=\"proposte-titolo\">\n  <header class=\"rg-proposal-notice__head\">\n    <span class=\"rg-proposal-notice__count\" aria-hidden=\"true\">3</span>\n    <div>\n      <h2 class=\"rg-proposal-notice__title\" id=\"proposte-titolo\"><span class=\"rg-u-visually-hidden\">3 </span>proposte del campionario da decidere</h2>\n      <p class=\"rg-proposal-notice__lead\">In 2 fasi di 2 parti. Tocca una fase per decidere.</p>\n    </div>\n  </header>\n  <ul class=\"rg-proposal-notice__list\">\n    <li>\n      <a class=\"rg-proposal-notice__row\" href=\"/prodotti/441/parti/1/fasi/1#proposte\">\n        <span class=\"rg-proposal-notice__part\"><span class=\"rg-part-mark rg-part--1\" aria-hidden=\"true\"></span>TOMAIA-TG37</span>\n        <span class=\"rg-proposal-notice__phase\">Fase 1 · Ricamo <span class=\"rg-dept-label\"><span class=\"rg-dept-mark rg-dept-mark--ricamo rg-dept-mark--quiet\" aria-hidden=\"true\"></span>Ricamo</span></span>\n        <span class=\"rg-badge rg-badge--review rg-badge--count\">2 proposte</span>\n        <svg class=\"rg-icon rg-proposal-notice__go\" aria-hidden=\"true\" focusable=\"false\"><use href=\"../icons/rg-icons.svg#rg-icon-avanti\"></use></svg>\n      </a>\n    </li>\n    <li>\n      <a class=\"rg-proposal-notice__row\" href=\"/prodotti/441/parti/2/fasi/2#proposte\">\n        <span class=\"rg-proposal-notice__part\"><span class=\"rg-part-mark rg-part--2\" aria-hidden=\"true\"></span>DAVANTI</span>\n        <span class=\"rg-proposal-notice__phase\">Fase 2 · Pressatura <span class=\"rg-dept-label\"><span class=\"rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet\" aria-hidden=\"true\"></span>Pressatura e soffiatura</span></span>\n        <span class=\"rg-badge rg-badge--review rg-badge--count\">1 proposta</span>\n        <svg class=\"rg-icon rg-proposal-notice__go\" aria-hidden=\"true\" focusable=\"false\"><use href=\"../icons/rg-icons.svg#rg-icon-avanti\"></use></svg>\n      </a>\n    </li>\n  </ul>\n</section>",
+      "notes": "Solo se ci sono proposte da decidere. Numero 36 px grassetto (aria-hidden, ripetuto nel titolo in testo nascosto). Righe-link alte almeno 56 px: su telefono due righe (parte sopra, fase e reparto sotto, conteggio e freccia a destra), da 681 px una riga. Filetto sinistro info come rg-badge--review. Reparto con rg-dept-mark--quiet (convive con stati). Sostituisce rg-alert con elenco puntato di link.",
+      "keywords": [
+        "avviso proposte",
+        "proposte da decidere",
+        "ci sono proposte",
+        "notifica",
+        "richiamo",
+        "da fare",
+        "pagina prodotto",
+        "riepilogo proposte",
+        "fasi con proposte",
+        "numero grande",
+        "riga toccabile",
+        "link grande",
+        "pending proposals",
+        "notice",
+        "callout",
+        "ipad",
+        "telefono",
+        "touch"
       ]
     },
     {

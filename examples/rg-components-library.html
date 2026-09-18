@@ -85,7 +85,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    </ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -2399,6 +2399,191 @@ status         VALID</pre></div>
             </div>
           </div></div>
         </div>
+      </section>
+
+      <section class="specimen-section" id="proposal">
+        <div class="specimen-section__head"><span class="specimen-section__index">41</span><h2>Proposte di modifica (proposta 1.30.0)</h2><p>Il campionario, dal telefono, <strong>propone</strong> di cambiare un valore di una fase; l’ufficio, da PC o iPad, <strong>accetta</strong> o <strong>rifiuta</strong>. La card <code class="rg-mono">rg-proposal</code> si legge a colpo d’occhio: dove (stop 9), cosa (altezza piedino), il <strong>cambio</strong> attuale barrato → proposto grande, perché, chi e quando, lo stato (filetto e parola), e per chi decide <strong>Accetta</strong> e <strong>Rifiuta…</strong> col motivo facoltativo, senza JavaScript. <code class="rg-mono">rg-proposal-list</code> le raggruppa per stop. <code class="rg-mono">rg-proposal-notice</code> è l’avviso nella pagina del prodotto: il numero grande e una riga toccabile per fase. Il segnalino «N proposte» è <code class="rg-mono">rg-badge--review rg-badge--count</code>. Mobile-first: una colonna sul telefono, bottoni da 48; su touch i campi sono a 16 px e i bersagli a 44 (iOS non ingrandisce più la pagina al tocco). Vedi components/proposal.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide" id="proposal-notice"><span class="specimen-label">Avviso nella pagina del prodotto — il numero, e una riga toccabile per fase con proposte</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-proposal-notice" aria-labelledby="proposte-titolo">
+              <header class="rg-proposal-notice__head">
+                <span class="rg-proposal-notice__count" aria-hidden="true">3</span>
+                <div>
+                  <h2 class="rg-proposal-notice__title" id="proposte-titolo"><span class="rg-u-visually-hidden">3 </span>proposte del campionario da decidere</h2>
+                  <p class="rg-proposal-notice__lead">In 2 fasi di 2 parti. Tocca una fase per decidere.</p>
+                </div>
+              </header>
+              <ul class="rg-proposal-notice__list">
+                <li>
+                  <a class="rg-proposal-notice__row" href="/prodotti/441/parti/1/fasi/1#proposte">
+                    <span class="rg-proposal-notice__part"><span class="rg-part-mark rg-part--1" aria-hidden="true"></span>TOMAIA-TG37</span>
+                    <span class="rg-proposal-notice__phase">Fase 1 · Ricamo <span class="rg-dept-label"><span class="rg-dept-mark rg-dept-mark--ricamo rg-dept-mark--quiet" aria-hidden="true"></span>Ricamo</span></span>
+                    <span class="rg-badge rg-badge--review rg-badge--count">2 proposte</span>
+                    <svg class="rg-icon rg-proposal-notice__go" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-avanti"></use></svg>
+                  </a>
+                </li>
+                <li>
+                  <a class="rg-proposal-notice__row" href="/prodotti/441/parti/2/fasi/2#proposte">
+                    <span class="rg-proposal-notice__part"><span class="rg-part-mark rg-part--2" aria-hidden="true"></span>DAVANTI</span>
+                    <span class="rg-proposal-notice__phase">Fase 2 · Pressatura <span class="rg-dept-label"><span class="rg-dept-mark rg-dept-mark--pressatura rg-dept-mark--quiet" aria-hidden="true"></span>Pressatura e soffiatura</span></span>
+                    <span class="rg-badge rg-badge--review rg-badge--count">1 proposta</span>
+                    <svg class="rg-icon rg-proposal-notice__go" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-avanti"></use></svg>
+                  </a>
+                </li>
+              </ul>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide" id="proposal-list"><span class="specimen-label">Elenco nella fase — gruppo «Stop 9» con due proposte da decidere (una senza valore attuale), poi le decise: accettata da riportare a mano, rifiutata col motivo</span><div class="specimen-stage specimen-stage--page">
+            <div class="rg-proposal-list">
+              <section class="rg-proposal-list__group" aria-labelledby="gr-stop-9">
+                <h3 class="rg-proposal-list__title" id="gr-stop-9">Stop 9 <span class="rg-badge rg-badge--review rg-badge--count">2 da decidere</span></h3>
+                <ul class="rg-proposal-list__items">
+                  <li>
+                    <article class="rg-proposal rg-proposal--pending" aria-labelledby="pr-12-campo">
+                      <header class="rg-proposal__head">
+                        <p class="rg-proposal__context">Stop 9</p>
+                        <span class="rg-badge rg-badge--review">Da decidere</span>
+                      </header>
+                      <h3 class="rg-proposal__field" id="pr-12-campo">Altezza piedino</h3>
+                      <p class="rg-proposal__change">
+                        <span class="rg-proposal__from"><span class="rg-u-visually-hidden">Attuale: </span><del>1,5 mm</del></span>
+                        <span class="rg-proposal__arrow"></span>
+                        <span class="rg-proposal__to"><span class="rg-u-visually-hidden">Proposto: </span><ins>2,0 mm</ins></span>
+                      </p>
+                      <p class="rg-proposal__why"><span class="rg-proposal__label">Perché</span>Sulla curva il piedino schiaccia il bordo e il filo si spezza.</p>
+                      <p class="rg-proposal__meta">Campionario · M. Rossi · 18/09/2026 10:42</p>
+                      <div class="rg-proposal__actions">
+                        <form method="post" action="/proposte/12/accetta">
+                          <button class="rg-button rg-button--primary rg-button--large" type="submit">Accetta</button>
+                        </form>
+                        <details class="rg-proposal__reject">
+                          <summary class="rg-button rg-button--secondary rg-button--large">Rifiuta…</summary>
+                          <form class="rg-proposal__reason" method="post" action="/proposte/12/rifiuta">
+                            <label class="rg-field">
+                              <span class="rg-field__label">Motivo (facoltativo)</span>
+                              <textarea class="rg-textarea" name="motivo" rows="2"></textarea>
+                            </label>
+                            <button class="rg-button rg-button--secondary rg-button--large" type="submit">Conferma il rifiuto</button>
+                          </form>
+                        </details>
+                      </div>
+                    </article>
+                  </li>
+                  <li>
+                    <article class="rg-proposal rg-proposal--pending" aria-labelledby="pr-13-campo">
+                      <header class="rg-proposal__head">
+                        <p class="rg-proposal__context">Stop 9</p>
+                        <span class="rg-badge rg-badge--review">Da decidere</span>
+                      </header>
+                      <h3 class="rg-proposal__field" id="pr-13-campo">Filo sotto</h3>
+                      <p class="rg-proposal__change">
+                        <span class="rg-proposal__from"><span class="rg-u-visually-hidden">Attuale: nessun valore</span><span aria-hidden="true">—</span></span>
+                        <span class="rg-proposal__arrow"></span>
+                        <span class="rg-proposal__to"><span class="rg-u-visually-hidden">Proposto: </span><ins>BOB-120</ins></span>
+                      </p>
+                      <p class="rg-proposal__meta">Campionario · M. Rossi · 18/09/2026 10:44</p>
+                      <div class="rg-proposal__actions">
+                        <form method="post" action="/proposte/13/accetta">
+                          <button class="rg-button rg-button--primary rg-button--large" type="submit">Accetta</button>
+                        </form>
+                        <details class="rg-proposal__reject">
+                          <summary class="rg-button rg-button--secondary rg-button--large">Rifiuta…</summary>
+                          <form class="rg-proposal__reason" method="post" action="/proposte/13/rifiuta">
+                            <label class="rg-field">
+                              <span class="rg-field__label">Motivo (facoltativo)</span>
+                              <textarea class="rg-textarea" name="motivo" rows="2"></textarea>
+                            </label>
+                            <button class="rg-button rg-button--secondary rg-button--large" type="submit">Conferma il rifiuto</button>
+                          </form>
+                        </details>
+                      </div>
+                    </article>
+                  </li>
+                </ul>
+              </section>
+              <section class="rg-proposal-list__group" aria-labelledby="gr-decise">
+                <h3 class="rg-proposal-list__title" id="gr-decise">Decise</h3>
+                <ul class="rg-proposal-list__items">
+                  <li>
+                    <article class="rg-proposal rg-proposal--accepted" aria-labelledby="pr-9-campo">
+                      <header class="rg-proposal__head">
+                        <p class="rg-proposal__context">Tutta la fase</p>
+                        <span class="rg-badge rg-badge--validated">Accettata</span>
+                      </header>
+                      <h3 class="rg-proposal__field" id="pr-9-campo">Velocità</h3>
+                      <p class="rg-proposal__change">
+                        <span class="rg-proposal__from"><span class="rg-u-visually-hidden">Attuale: </span><del>650 punti/min</del></span>
+                        <span class="rg-proposal__arrow"></span>
+                        <span class="rg-proposal__to"><span class="rg-u-visually-hidden">Proposto: </span><ins>550 punti/min</ins></span>
+                      </p>
+                      <p class="rg-proposal__meta">Campionario · M. Rossi · 17/09/2026 16:05</p>
+                      <p class="rg-proposal__outcome">Accettata da L. Ercoli il 18/09/2026 · prima era 650 punti/min</p>
+                      <p class="rg-proposal__flag"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-avviso"></use></svg>Da riportare a mano nel programma della macchina: non si applica da solo.</p>
+                    </article>
+                  </li>
+                  <li>
+                    <article class="rg-proposal rg-proposal--rejected" aria-labelledby="pr-8-campo">
+                      <header class="rg-proposal__head">
+                        <p class="rg-proposal__context">Stop 4</p>
+                        <span class="rg-badge rg-badge--archived">Rifiutata</span>
+                      </header>
+                      <h3 class="rg-proposal__field" id="pr-8-campo">Tensione filo sopra</h3>
+                      <p class="rg-proposal__change">
+                        <span class="rg-proposal__from"><span class="rg-u-visually-hidden">Attuale, resta: </span>120 cN</span>
+                        <span class="rg-proposal__arrow"></span>
+                        <span class="rg-proposal__to"><span class="rg-u-visually-hidden">Proposto, rifiutato: </span><del>90 cN</del></span>
+                      </p>
+                      <p class="rg-proposal__meta">Campionario · M. Rossi · 17/09/2026 15:40</p>
+                      <p class="rg-proposal__outcome"><span class="rg-proposal__label">Motivo</span>Con 90 cN il punto pieno si allenta: si prova prima col piedino.</p>
+                    </article>
+                  </li>
+                </ul>
+              </section>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Sul telefono — una proposta, larga 360 px</span><div class="specimen-stage specimen-stage--page"><div style="max-width: 360px">
+            <article class="rg-proposal rg-proposal--pending" aria-labelledby="pr-12m-campo">
+              <header class="rg-proposal__head">
+                <p class="rg-proposal__context">Stop 9</p>
+                <span class="rg-badge rg-badge--review">Da decidere</span>
+              </header>
+              <h3 class="rg-proposal__field" id="pr-12m-campo">Altezza piedino</h3>
+              <p class="rg-proposal__change">
+                <span class="rg-proposal__from"><span class="rg-u-visually-hidden">Attuale: </span><del>1,5 mm</del></span>
+                <span class="rg-proposal__arrow"></span>
+                <span class="rg-proposal__to"><span class="rg-u-visually-hidden">Proposto: </span><ins>2,0 mm</ins></span>
+              </p>
+              <p class="rg-proposal__why"><span class="rg-proposal__label">Perché</span>Sulla curva il piedino schiaccia il bordo e il filo si spezza.</p>
+              <p class="rg-proposal__meta">Campionario · M. Rossi · 18/09/2026 10:42</p>
+              <div class="rg-proposal__actions">
+                <form method="post" action="/proposte/12/accetta">
+                  <button class="rg-button rg-button--primary rg-button--large" type="submit">Accetta</button>
+                </form>
+                <details class="rg-proposal__reject">
+                  <summary class="rg-button rg-button--secondary rg-button--large">Rifiuta…</summary>
+                  <form class="rg-proposal__reason" method="post" action="/proposte/12/rifiuta">
+                    <label class="rg-field">
+                      <span class="rg-field__label">Motivo (facoltativo)</span>
+                      <textarea class="rg-textarea" name="motivo" rows="2"></textarea>
+                    </label>
+                    <button class="rg-button rg-button--secondary rg-button--large" type="submit">Conferma il rifiuto</button>
+                  </form>
+                </details>
+              </div>
+            </article>
+          </div></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">Il segnalino «N proposte» — accanto a una parte in tabella</span><div class="specimen-stage">
+            <table class="rg-table rg-table--compact">
+              <thead><tr><th scope="col">Parte</th><th scope="col">Fasi</th></tr></thead>
+              <tbody>
+                <tr><td><span class="rg-part-label"><span class="rg-part-mark rg-part--1" aria-hidden="true"></span>TOMAIA-TG37</span> <span class="rg-badge rg-badge--review rg-badge--count">2 proposte</span></td><td class="rg-table__numeric">3</td></tr>
+                <tr><td><span class="rg-part-label"><span class="rg-part-mark rg-part--2" aria-hidden="true"></span>DAVANTI</span> <span class="rg-badge rg-badge--review rg-badge--count">1 proposta</span></td><td class="rg-table__numeric">2</td></tr>
+                <tr><td><span class="rg-part-label"><span class="rg-part-mark rg-part--3" aria-hidden="true"></span>DIETRO</span></td><td class="rg-table__numeric">2</td></tr>
+              </tbody>
+            </table>
+          </div></div>
+        </div>
+        <p class="specimen-note">Su un dispositivo touch (pointer: coarse, e sempre su iOS/iPadOS) campi di testo a 16 px e bersagli a 44: prova il campo del motivo da un iPhone, la pagina non si ingrandisce. Il viewport non è toccato, lo zoom a due dita resta.</p>
       </section>
 
     </main>

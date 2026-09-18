@@ -2926,23 +2926,36 @@
       "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
       "id": "part-sheet",
       "title": "Pagina della parte",
-      "role": "Pagina intera che apre un pezzo nel fascicolo stampato: titolo «Parte 1 di 4 · NOME» con la pastiglia, identita del prodotto per esteso, tutte le parti del prodotto con questa segnata, le fasi della parte da spuntare (Fatta · Data · Firma) e il QR per riaprire la parte nel sistema.",
+      "role": "Pagina che apre un pezzo nel fascicolo stampato, compatta per costruzione (14 parti e 8 fasi in una A4): testata bassa con titolo «Parte 1 di 4 · NOME» e QR piccolo in linea, anagrafica del prodotto in tre colonne, tutte le parti in quattro colonne con questa segnata, fasi della parte a griglia da spuntare (Fatta · Data · Firma).",
       "classes": {
         "base": "rg-part-sheet",
         "elements": [
           "rg-part-sheet__head",
           "rg-part-sheet__title",
+          "rg-part-sheet__facts",
+          "rg-part-sheet__fact",
           "rg-part-sheet__section",
           "rg-part-sheet__parts",
           "rg-part-sheet__part",
           "rg-part-sheet__part--current",
+          "rg-part-sheet__name",
+          "rg-part-sheet__code",
           "rg-part-sheet__here",
-          "rg-part-sheet__code"
+          "rg-part-sheet__n",
+          "rg-part-sheet__dept",
+          "rg-part-sheet__done",
+          "rg-part-sheet__date",
+          "rg-part-sheet__sign"
+        ],
+        "variants": [
+          "rg-part-sheet--no-head"
         ],
         "related": [
           "rg-qr",
+          "rg-qr--small",
+          "rg-qr--inline",
           "rg-part-mark",
-          "rg-key-value--ruled",
+          "rg-part-mark--small",
           "rg-table--grid",
           "rg-fill-field--check",
           "rg-worksheet-part",
@@ -2950,7 +2963,8 @@
         ]
       },
       "variants": [
-        "base"
+        "base",
+        "no-head"
       ],
       "states": [
         "print",
@@ -2978,8 +2992,8 @@
       ],
       "doc": "components/part-sheet.md",
       "specimenAnchor": "part-sheet",
-      "snippet": "<section class=\"rg-part-sheet\">\n  <header class=\"rg-part-sheet__head\">\n    <h2 class=\"rg-part-sheet__title\"><span class=\"rg-part-mark rg-part--1\" aria-hidden=\"true\"></span>Parte 1 di 4 · FONDO BORDATO</h2>\n    <figure class=\"rg-qr\">\n      <div class=\"rg-qr__img\"><svg viewBox=\"0 0 29 29\" role=\"img\" aria-label=\"QR: apri la parte in RG\"><rect width=\"29\" height=\"29\" fill=\"white\"/><path d=\"M4 4h7v7h-7zM18 4h7v7h-7zM4 18h7v7h-7z\" fill=\"none\" stroke=\"black\"/><path d=\"M6 6h3v3h-3zM20 6h3v3h-3zM6 20h3v3h-3zM13 4h2v2h-2zM13 8h1v3h-1zM15 13h3v1h-3zM13 13h1v4h-1zM19 15h2v2h-2zM22 19h2v3h-2zM16 20h3v1h-3zM13 22h2v3h-2zM18 23h1v2h-1z\"/></svg></div>\n      <figcaption class=\"rg-qr__caption\">Apri la parte in RG</figcaption>\n    </figure>\n  </header>\n  <dl class=\"rg-key-value rg-key-value--ruled\">\n    <dt>Cliente</dt><dd>DIOR</dd>\n    <dt>Prodotto</dt><dd>M3641 COCOTTE</dd>\n    <dt>Codice RG</dt><dd class=\"rg-mono\">RG-26-DIO-0441-P</dd>\n    <dt>Codice prodotto</dt><dd class=\"rg-mono\">M3641UBWN</dd>\n    <dt>Variante</dt><dd>Nero / oro</dd>\n    <dt>Quantità nel prodotto</dt><dd class=\"rg-mono\">2 pz</dd>\n  </dl>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Le parti del prodotto</h3>\n    <ol class=\"rg-part-sheet__parts\">\n      <li class=\"rg-part-sheet__part rg-part-sheet__part--current\" aria-current=\"true\"><span class=\"rg-part-mark rg-part--1\" aria-hidden=\"true\"></span>FONDO BORDATO <span class=\"rg-part-sheet__here\">questa parte</span><span class=\"rg-part-sheet__code\">P01</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part--2\" aria-hidden=\"true\"></span>DAVANTI<span class=\"rg-part-sheet__code\">P02</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part--3\" aria-hidden=\"true\"></span>DIETRO<span class=\"rg-part-sheet__code\">P03</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part--4\" aria-hidden=\"true\"></span>MANICO<span class=\"rg-part-sheet__code\">P04</span></li>\n    </ol>\n  </section>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Fasi della parte</h3>\n    <table class=\"rg-table rg-table--compact rg-table--grid\" style=\"--rg-table-cols: 6; --rg-table-wide: 2\">\n      <thead>\n        <tr>\n          <th class=\"rg-table__numeric\" scope=\"col\">N</th>\n          <th class=\"rg-table__grow\" scope=\"col\">Lavorazione</th>\n          <th class=\"rg-table__grow\" scope=\"col\">Reparto</th>\n          <th scope=\"col\">Fatta</th>\n          <th scope=\"col\">Data</th>\n          <th scope=\"col\">Firma</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr><td class=\"rg-table__numeric\">1</td><td>Ricamo</td><td>Ricamo</td><td><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">2</td><td>Pressatura</td><td>Pressatura e soffiatura</td><td><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">3</td><td>Sabbiatura</td><td>Pressatura e soffiatura</td><td><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n      </tbody>\n    </table>\n  </section>\n</section>",
-      "notes": "Solo carta. In stampa apre e chiude la pagina, non si spezza. Parte corrente: filetto nero spesso + grassetto + scritta __here + aria-current, mai il solo colore. Fasi in rg-table--grid con --rg-table-cols: 6; --rg-table-wide: 2 (Lavorazione e Reparto larghe). Alternativa alla testata in linea rg-worksheet-part: un fascicolo usa l una o l altra.",
+      "snippet": "<section class=\"rg-part-sheet\">\n  <header class=\"rg-part-sheet__head\">\n    <h2 class=\"rg-part-sheet__title\"><span class=\"rg-part-mark rg-part--1\" aria-hidden=\"true\"></span>Parte 1 di 4 · FONDO BORDATO</h2>\n    <figure class=\"rg-qr rg-qr--small rg-qr--inline\">\n      <div class=\"rg-qr__img\"><svg viewBox=\"0 0 29 29\" role=\"img\" aria-label=\"QR: apri la parte in RG\"><!-- moduli generati dall'app --></svg></div>\n      <figcaption class=\"rg-qr__caption\">Apri la parte in RG</figcaption>\n    </figure>\n  </header>\n  <dl class=\"rg-part-sheet__facts\">\n    <div class=\"rg-part-sheet__fact\"><dt>Cliente</dt><dd>DIOR</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Prodotto</dt><dd>M3641 COCOTTE</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Variante</dt><dd>Nero / oro</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Codice RG</dt><dd class=\"rg-mono\">RG-26-DIO-0441-P</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Codice prodotto</dt><dd class=\"rg-mono\">M3641UBWN</dd></div>\n    <div class=\"rg-part-sheet__fact\"><dt>Quantità nel prodotto</dt><dd class=\"rg-mono\">2 pz</dd></div>\n  </dl>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Le parti del prodotto</h3>\n    <ol class=\"rg-part-sheet__parts\">\n      <li class=\"rg-part-sheet__part rg-part-sheet__part--current\" aria-current=\"true\"><span class=\"rg-part-mark rg-part-mark--small rg-part--1\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">FONDO BORDATO</span><span class=\"rg-part-sheet__code\">P01</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--2\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">DAVANTI</span><span class=\"rg-part-sheet__code\">P02</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--3\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">DIETRO</span><span class=\"rg-part-sheet__code\">P03</span></li>\n      <li class=\"rg-part-sheet__part\"><span class=\"rg-part-mark rg-part-mark--small rg-part--4\" aria-hidden=\"true\"></span><span class=\"rg-part-sheet__name\">MANICO</span><span class=\"rg-part-sheet__code\">P04</span></li>\n    </ol>\n  </section>\n  <section class=\"rg-part-sheet__section\">\n    <h3 class=\"rg-label\">Fasi della parte</h3>\n    <table class=\"rg-table rg-table--compact rg-table--grid\">\n      <thead>\n        <tr><th class=\"rg-table__numeric rg-part-sheet__n\" scope=\"col\">N</th><th scope=\"col\">Lavorazione</th><th class=\"rg-part-sheet__dept\" scope=\"col\">Reparto</th><th class=\"rg-part-sheet__done\" scope=\"col\">Fatta</th><th class=\"rg-part-sheet__date\" scope=\"col\">Data</th><th class=\"rg-part-sheet__sign\" scope=\"col\">Firma</th></tr>\n      </thead>\n      <tbody>\n        <tr><td class=\"rg-table__numeric\">1</td><td>Ricamo</td><td class=\"rg-part-sheet__dept\">Ricamo</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">2</td><td>Pressatura</td><td class=\"rg-part-sheet__dept\">Pressatura e soffiatura</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n        <tr><td class=\"rg-table__numeric\">3</td><td>Sabbiatura</td><td class=\"rg-part-sheet__dept\">Pressatura e soffiatura</td><td class=\"rg-part-sheet__done\"><span class=\"rg-fill-field rg-fill-field--check\"></span></td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n      </tbody>\n    </table>\n  </section>\n</section>",
+      "notes": "Solo carta. COMPATTA PER COSTRUZIONE dalla 1.26.0 (la 1.25, non pubblicata, occupava il 91% dell A4 con 4 parti e 3 fasi). Testata su una riga (~70 px): titolo 16 peso heading + rg-qr--small rg-qr--inline. Anagrafica __facts in 3 colonne, etichetta sopra. Parti __parts in 4 colonne da 20 px (rg-part-mark--small, __name con puntini, __code); corrente = filetto nero spesso + grassetto + aria-current, __here facoltativo. Fasi in rg-table--grid, righe 24, testo 12, larghezze dichiarate sulle th: __n 32, __dept 256 (anche td: maiuscolo piccolo su una riga), __done 48 (anche td, casella centrata), __date 96, __sign 96; Lavorazione il resto. Misurate: 4 parti/3 fasi 412 px (109 mm, 43% della pagina con rg-u-print-a4--head); 14 parti/8 fasi 609 px (161 mm, 64%). --no-head: in stampa page: rg-a4 (margine 12 mm) per la pagina senza intestazione stampata. Apre e chiude la pagina, non si spezza.",
       "keywords": [
         "pagina della parte",
         "copertina parte",
@@ -2998,8 +3012,17 @@
         "qr",
         "fascicolo",
         "stampa",
-        "print"
-      ]
+        "print",
+        "compatta",
+        "una pagina",
+        "anagrafica",
+        "tre colonne",
+        "quattro colonne",
+        "senza intestazione"
+      ],
+      "variantsSince": {
+        "rg-part-sheet--no-head": "1.26.0"
+      }
     },
     {
       "status": "beta",
@@ -3016,7 +3039,8 @@
           "rg-qr__caption"
         ],
         "variants": [
-          "rg-qr--small"
+          "rg-qr--small",
+          "rg-qr--inline"
         ],
         "related": [
           "rg-part-sheet"
@@ -3024,7 +3048,8 @@
       },
       "variants": [
         "base",
-        "small"
+        "small",
+        "inline"
       ],
       "states": [
         "print"
@@ -3043,7 +3068,7 @@
       "doc": "components/qr.md",
       "specimenAnchor": "qr",
       "snippet": "<figure class=\"rg-qr\">\n  <div class=\"rg-qr__img\"><svg viewBox=\"0 0 29 29\" role=\"img\" aria-label=\"QR: apri la parte in RG\"><!-- moduli --></svg></div>\n  <figcaption class=\"rg-qr__caption\">Apri la parte in RG</figcaption>\n</figure>",
-      "notes": "shape-rendering crispEdges sull SVG, image-rendering pixelated su img. Zona di rispetto (4 moduli) dentro l SVG, il contenitore non ha bordo. Nero su bianco, niente logo. SVG con role=img e aria-label. Nell intestazione di pagina il QR lo mette l app sul PDF (16 mm).",
+      "notes": "shape-rendering crispEdges sull SVG, image-rendering pixelated su img. Zona di rispetto (4 moduli) dentro l SVG, il contenitore non ha bordo. Nero su bianco, niente logo. SVG con role=img e aria-label. Nell intestazione di pagina il QR lo mette l app sul PDF (16 mm). 1.26.0: rg-qr--inline mette la didascalia a sinistra del codice, allineata in basso: il QR non aggiunge altezza a una testata bassa.",
       "keywords": [
         "qr",
         "qr code",
@@ -3057,7 +3082,10 @@
         "scan",
         "stampa",
         "print"
-      ]
+      ],
+      "variantsSince": {
+        "rg-qr--inline": "1.26.0"
+      }
     },
     {
       "status": "beta",
@@ -3534,7 +3562,7 @@
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "fill-field",
       "snippet": "<div class=\"rg-fill-field\">\n  <span class=\"rg-fill-field__label\">Temperatura <span class=\"rg-fill-field__unit\">&#176;C</span></span>\n  <span class=\"rg-fill-field__line\"></span>\n</div>\n<table class=\"rg-table rg-table--compact\">\n  <thead><tr><th scope=\"col\">#</th><th scope=\"col\">Tensione (cN)</th><th scope=\"col\">Esito</th></tr></thead>\n  <tbody>\n    <tr><td class=\"rg-table__code\">01</td><td class=\"rg-fill-field rg-fill-field--cell\"></td><td class=\"rg-fill-field rg-fill-field--cell\"></td></tr>\n  </tbody>\n</table>",
-      "notes": "Il caso centrale della scheda di lavorazione: il foglio esce con dei buchi APPOSTA e il buco deve INVITARE A SCRIVERE, non sembrare un errore di rendering o un dato non caricato. Tre scelte al servizio di quella frase: (1) la riga e una STAFFA A L: dichiara dove inizia e dove appoggia la scrittura, cosa che uno spazio vuoto non fa e che un rettangolo pieno direbbe male (sembrerebbe un campo disabilitato). La BASE e nera perche e la riga su cui si scrive: deve sopravvivere alla fotocopia (i grigi chiari li perde) e come oggetto grafico essenziale vuole almeno 3:1, mentre --rg-color-border-medium su bianco si ferma a ~2,8:1; il tratto verticale sinistro resta intermedio, dice solo dove comincia; (2) l'altezza e quella della MANO, non del testo: --rg-space-8 (32px, circa 8,5mm) per una grafia adulta, --rg-space-12 (48px, circa 12,7mm) con --tall per una nota di piu parole; (3) l'etichetta c'e sempre - un vuoto senza etichetta non e un campo. NON E UN CONTROLLO, e carta: niente input, niente focus, niente stato di errore o sola lettura, e non deve averne. Conseguenza sull'accessibilita, dichiarata: in lettura assistita porta la sola etichetta perche non c'e nessun campo da annunciare - ed e la ragione per cui la versione A SCHERMO della stessa scheda deve usare rg-field, che ha input, focus, errore e read-only per davvero. L'unita (rg-fill-field__unit) sta dentro l'etichetta, mono e minuscola: chi scrive 180 deve vedere accanto i gradi senza risalire all'intestazione (regole 8). La variante --cell si mette sulla td stessa (ripristina display: table-cell, la base e block; non funziona su un div dentro la cella; il selettore e qualificato td.rg-fill-field--cell perche .rg-table td pesa 0,1,1 e con la sola classe il filetto della tabella vincerebbe) e distingue con la stessa base nera la cella DA RIEMPIRE da quella che porta gia un dato stampato: trenta righe da riempire sono una tabella, non trenta campi. Regola d'uso: il valore che il sistema conosce si STAMPA come dato (rg-key-value, rg-table) e solo il valore rilevabile in reparto diventa un rg-fill-field - un blocco tutto buchi non e una scheda, e un modulo in bianco. 1.23.0: rg-fill-field--swatch e una CASELLA QUADRATA da 40 px (~10,6 mm) con contorno nero su quattro lati, su uno <span> dentro una <td>, etichetta nella <th> («Cono»): il posto dove attaccare un capo di filo o segnare il colore del cono; codice e nome del colore restano stampati accanto. Dentro rg-worksheet-block--compact la riga scende a 24 px e la cella --cell a 24 px senza classi in piu sul campo. 1.25.0: rg-fill-field--check e la casella da spuntare da 24 px (~6,4 mm), contorno nero, per «Fatta» nella pagina della parte. Nel blocco compatto il valore stampato in __line ha aria (8 px a sinistra, 6 sotto).",
+      "notes": "Il caso centrale della scheda di lavorazione: il foglio esce con dei buchi APPOSTA e il buco deve INVITARE A SCRIVERE, non sembrare un errore di rendering o un dato non caricato. Tre scelte al servizio di quella frase: (1) la riga e una STAFFA A L: dichiara dove inizia e dove appoggia la scrittura, cosa che uno spazio vuoto non fa e che un rettangolo pieno direbbe male (sembrerebbe un campo disabilitato). La BASE e nera perche e la riga su cui si scrive: deve sopravvivere alla fotocopia (i grigi chiari li perde) e come oggetto grafico essenziale vuole almeno 3:1, mentre --rg-color-border-medium su bianco si ferma a ~2,8:1; il tratto verticale sinistro resta intermedio, dice solo dove comincia; (2) l'altezza e quella della MANO, non del testo: --rg-space-8 (32px, circa 8,5mm) per una grafia adulta, --rg-space-12 (48px, circa 12,7mm) con --tall per una nota di piu parole; (3) l'etichetta c'e sempre - un vuoto senza etichetta non e un campo. NON E UN CONTROLLO, e carta: niente input, niente focus, niente stato di errore o sola lettura, e non deve averne. Conseguenza sull'accessibilita, dichiarata: in lettura assistita porta la sola etichetta perche non c'e nessun campo da annunciare - ed e la ragione per cui la versione A SCHERMO della stessa scheda deve usare rg-field, che ha input, focus, errore e read-only per davvero. L'unita (rg-fill-field__unit) sta dentro l'etichetta, mono e minuscola: chi scrive 180 deve vedere accanto i gradi senza risalire all'intestazione (regole 8). La variante --cell si mette sulla td stessa (ripristina display: table-cell, la base e block; non funziona su un div dentro la cella; il selettore e qualificato td.rg-fill-field--cell perche .rg-table td pesa 0,1,1 e con la sola classe il filetto della tabella vincerebbe) e distingue con la stessa base nera la cella DA RIEMPIRE da quella che porta gia un dato stampato: trenta righe da riempire sono una tabella, non trenta campi. Regola d'uso: il valore che il sistema conosce si STAMPA come dato (rg-key-value, rg-table) e solo il valore rilevabile in reparto diventa un rg-fill-field - un blocco tutto buchi non e una scheda, e un modulo in bianco. 1.23.0: rg-fill-field--swatch e una CASELLA QUADRATA da 40 px (~10,6 mm) con contorno nero su quattro lati, su uno <span> dentro una <td>, etichetta nella <th> («Cono»): il posto dove attaccare un capo di filo o segnare il colore del cono; codice e nome del colore restano stampati accanto. Dentro rg-worksheet-block--compact la riga scende a 24 px e la cella --cell a 24 px senza classi in piu sul campo. 1.25.0: rg-fill-field--check e la casella da spuntare da 24 px (~6,4 mm), contorno nero, per «Fatta» nella pagina della parte. Nel blocco compatto il valore stampato in __line ha aria (8 px a sinistra, 6 sotto). 1.26.0: rg-fill-field--check scende a 20 px (~5,3 mm).",
       "keywords": [
         "campo da compilare",
         "compilare a penna",

@@ -12,7 +12,8 @@ sistema dal foglio in reparto.
 | Classe | Misura | Quando |
 | --- | --- | --- |
 | `rg-qr` | 104 px (~27,5 mm) di lato | Pagina della parte: si legge da un telefono a braccio teso. |
-| `rg-qr--small` | 60 px (~15,9 mm) di lato | Intestazione di altre pagine, un angolo di un blocco. |
+| `rg-qr--small` | 60 px (~15,9 mm) di lato | Intestazione di altre pagine, la testata della [pagina della parte](part-sheet.md). |
+| `rg-qr--inline` | (si combina) | Didascalia **a sinistra** del codice, allineata in basso, invece che sotto: il QR non aggiunge altezza a una testata bassa (1.26.0). Nel markup la didascalia resta dopo l'immagine. |
 
 | Elemento | Cosa porta |
 | --- | --- |
@@ -47,6 +48,15 @@ la carta. In `--small` la didascalia si può omettere se accanto c'è già scrit
   <div class="rg-qr__img">
     <svg viewBox="0 0 29 29" role="img" aria-label="QR: apri la parte in RG"><!-- moduli --></svg>
   </div>
+  <figcaption class="rg-qr__caption">Apri la parte in RG</figcaption>
+</figure>
+```
+
+Piccolo, in linea (la testata della pagina della parte):
+
+```html
+<figure class="rg-qr rg-qr--small rg-qr--inline">
+  <div class="rg-qr__img"><svg viewBox="0 0 29 29" role="img" aria-label="QR: apri la parte in RG"><!-- moduli --></svg></div>
   <figcaption class="rg-qr__caption">Apri la parte in RG</figcaption>
 </figure>
 ```

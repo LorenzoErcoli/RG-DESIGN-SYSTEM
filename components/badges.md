@@ -60,3 +60,11 @@ Testo compatto, bordo 1 px, radius pill (radius compatto per category e count).
 
 Il badge `--count` porta sempre l'unità o il sostantivo accanto al numero: `3 anomalie`, non `3`.
 
+
+### Quando il badge non basta: il timbro d'ambito (1.31.0)
+
+Dire che una fase vale per **tutto il prodotto** e non per una parte non è classificare un record fra
+i suoi pari: è dire che quella fase **non è come le altre** della pagina. Un `rg-badge` lì è troppo
+timido — 20 px con filetto grigio, in una testa che ha già un numero nero da 32 e un titolo da 28 —
+e soprattutto è ciò che il badge per contratto non può fare: riempirsi. Il segno è
+[`rg-scope-mark` / `rg-scope-band`](scope.md): nero pieno, parola in bianco, quadro.

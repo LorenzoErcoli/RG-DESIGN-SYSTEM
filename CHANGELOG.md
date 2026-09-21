@@ -7,6 +7,58 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.31.0 — non rilasciata
+
+**Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Un solo
+cambio su una classe esistente: le fasi di tutto il prodotto interrompono il filo della sequenza in
+`rg-steps`, e solo quando l'app usa le classi nuove.
+
+### La fase che vale per tutto il prodotto, non per una parte
+
+Dalla piattaforma prodotti: una fase appartiene di norma a una **parte** (tomaia, spoiler, linguetta); da oggi
+può valere per **tutto il prodotto** — il controllo qualità finale. Si compila una volta sola, si vede dalla
+pagina di ogni parte, conta una volta nel costo e sul fascicolo esce una volta sola, in fondo a tutti i fogli
+delle parti. Lorenzo: *«è importante identificare se è al paio o se è al pezzo […] a livello di interfaccia e
+anche di scheda è una cosa che va evidenziata parecchio»*. Sbagliarlo vuol dire fare tre volte un controllo che
+va fatto una.
+
+**Un segno solo, in due misure**, nei tre posti dove la cosa si decide. Nero pieno con la parola in bianco
+maiuscolo: l'unico segno del DS che inverte una superficie per dire un'appartenenza, e l'unico che regge la
+fotocopia senza condizioni (una campitura piena resta piena a qualunque contrasto).
+
+- **`rg-scope-band`** (`__text`, `__note`): la **fascia**, da bordo a bordo. A schermo è il primo figlio di
+  `rg-phase-panel`, **sopra** la riga del reparto (`__department`): prima di chi la esegue viene di chi è. Sul
+  foglio stampato è il primo figlio di `rg-worksheet-block`, a filo dei bordi, **prima** di `__step` e della
+  banda del reparto. La nota dice la conseguenza («si compila una volta sola», «nel costo conta una volta»),
+  non ripete la dichiarazione.
+- **`rg-scope-mark`** (`--part`): il **timbro** in linea, misura da etichetta, per una riga di elenco. Forte
+  (nero pieno) per l'eccezione, quieto per «solo questa parte» — e il quieto si usa **solo** dove i due ambiti
+  convivono nella stessa vista: marcare tutte le righe equivale a non marcarne nessuna.
+- **`rg-worksheet-block--product`**: contorno forte sul foglio della fase di prodotto, il secondo segnale per
+  chi lo cerca nel mucchio.
+- **`rg-steps__break`** (`-title`, `-note`) e **`rg-step--product`**: nell'elenco di una parte le fasi di
+  prodotto stanno **in coda**, dopo uno stacco con filetto forte che dice «Di tutto il prodotto»; la riga porta
+  il timbro sopra il titolo e **il filo della sequenza non la tocca**, né in entrata né in uscita (il filo è la
+  sequenza della parte). Tre segnali, nessuno di colore.
+- `print-color-adjust: exact` esteso a fascia e timbro in `rg-utilities.css`: senza, il browser butterebbe via
+  la campitura e resterebbe testo bianco su bianco.
+- Doc nuovo: `components/scope.md`. Sezioni aggiunte a `steps.md`, `worksheet-block.md`, `phase-switch.md`,
+  `badges.md`. Vetrina: `#scope` (testa del blocco, elenco della parte, foglio stampato anche in fotocopia
+  accanto al foglio di una parte).
+
+**Non è un badge, ed è il punto.** `rg-badge` per contratto sta su superficie bianca con filetto: classifica un
+record fra i suoi pari. Qui non si classifica una fase, si dice che quella fase **non è come le altre**. Il
+badge era la prima ipotesi ed è stato scartato come troppo timido.
+
+**Non compete con il reparto.** `rg-dept-band` ha trama, colore categoriale e targhetta bianca; la fascia
+d'ambito non ha né trama né colore, sta più in alto ed è **più bassa** — il nero pieno pesa più del colore a
+parità di altezza.
+
+**L'intestazione di gruppo, qui, si può fare.** La 1.16.0 l'aveva esclusa: in una `<ol>` sarebbe stata una fase
+finta con un numero di posizione in più. Restava vero finché il gruppo era di fasi della stessa parte. Lo
+stacco 1.31.0 non intesta un gruppo: dice che da quel punto in giù l'elenco parla di un altro oggetto, non ha
+numero e sta in coda, mai in mezzo.
+
 ## 1.30.0 — 2026-09-18
 
 **Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Un cambio di

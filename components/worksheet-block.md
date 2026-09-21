@@ -610,3 +610,78 @@ Documento con intestazione di pagina stampata dall'app:
 ```html
 <body class="rg-u-print-a4--head">
 ```
+
+## Il foglio della fase di tutto il prodotto (1.31.0)
+
+Una fase può valere per **tutto il prodotto** invece che per una parte — il controllo qualità finale.
+Il suo foglio esce **una volta sola** nel fascicolo, in fondo a tutti i fogli delle parti, e in
+reparto **non va seguito su una parte sola**: sbagliarlo vuol dire farlo tre volte invece di una.
+
+| Classe | Cosa fa |
+| --- | --- |
+| `rg-scope-band` | La **fascia d'ambito**: primo figlio del blocco, a filo dei bordi, nero pieno con la parola in bianco. Vedi [scope](scope.md). |
+| `rg-worksheet-block--product` | Contorno **forte**: il secondo segnale, per trovare il foglio nel mucchio. |
+
+### Dove sta, e perché non copre il reparto
+
+Dall'alto: **fascia d'ambito** (a filo dei bordi) → `__step` → **banda del reparto** (staccata dai
+bordi) → `__work`. Due fasce in fila, e si leggono come due risposte diverse: *di chi è questa fase*
+e *chi la esegue*.
+
+- La fascia d'ambito non ha **né trama né colore**: è l'unica campitura piena del foglio. La banda
+  del reparto tiene la sua trama e il suo colore di categoria.
+- È **più bassa** della banda: il nero pieno pesa più del colore a parità di altezza. Se fossero alte
+  uguali, la prima coprirebbe la seconda.
+- In **fotocopia** una campitura piena resta piena a qualunque contrasto, mentre una trama può
+  impastarsi: è il segnale più robusto che il foglio abbia, e per questo porta la frase che conta.
+- `print-color-adjust: exact` è già in `rg-utilities.css`: senza, il browser non stamperebbe il nero
+  e resterebbe testo bianco su bianco.
+
+### Cosa cambia nella testa
+
+- **Niente parte, niente pastiglia.** `rg-worksheet-block__part` può restare per dire *a cosa* si
+  applica («Tutte e 3 le parti · oggetto finito»), ma senza [`rg-part-mark`](part-mark.md): una
+  pastiglia di parte direbbe il contrario di quello che dice la fascia.
+- **`__step` dice la posizione nel fascicolo**, non nella parte: «Fase unica · dopo tutte le parti».
+  «Fase 2 di 3» lì sarebbe falso, perché il 3 è il conto di una parte.
+- Il contatore dei fogli resta nella nota della banda di reparto: «Foglio 12 / 12».
+
+### Struttura
+
+```html
+<section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--product">
+  <p class="rg-scope-band">
+    <span class="rg-scope-band__text">Fase di tutto il prodotto</span>
+    <span class="rg-scope-band__note">Non di una parte sola: si fa una volta, sull'oggetto finito e montato.</span>
+  </p>
+  <p class="rg-worksheet-block__step">Fase unica · dopo tutte le parti</p>
+  <p class="rg-dept-band rg-dept-band--finissaggio">
+    <span class="rg-dept-band__name">Reparto Finissaggio e Controllo Qualità</span>
+    <span class="rg-dept-band__note">Foglio 12 / 12</span>
+  </p>
+  <header class="rg-worksheet-block__head">
+    <h3 class="rg-worksheet-block__work">Controllo qualità</h3>
+    <p class="rg-worksheet-block__part">Tutte e 3 le parti · oggetto finito</p>
+  </header>
+  <div class="rg-worksheet-block__body">
+    <div class="rg-worksheet-block__fields">
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Pezzi controllati</span><span class="rg-fill-field__line"></span></div>
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Scarti</span><span class="rg-fill-field__line"></span></div>
+      <div class="rg-fill-field"><span class="rg-fill-field__label">Esito</span><span class="rg-fill-field__line"></span></div>
+    </div>
+  </div>
+  <footer class="rg-worksheet-block__foot">
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+  </footer>
+</section>
+```
+
+### Limiti
+
+- **Il posto nel fascicolo lo decide l'app**: il DS non sa cosa viene prima. La regola è in fondo,
+  dopo l'ultima parte, e mai dentro la sequenza di una parte.
+- Se la fase di prodotto ha una tabella lunga, vale `--long` come per le altre, con lo stesso limite
+  noto: sulla pagina di continuazione **né la banda né la fascia si ripetono**. Una fase che produce
+  più di una pagina va spezzata in due blocchi, ciascuno con le sue fasce.

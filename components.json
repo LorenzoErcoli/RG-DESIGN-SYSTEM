@@ -2129,7 +2129,10 @@
           "rg-step__aside",
           "rg-step__actions",
           "rg-step__body",
-          "rg-step__role"
+          "rg-step__role",
+          "rg-steps__break",
+          "rg-steps__break-title",
+          "rg-steps__break-note"
         ],
         "variants": [
           "rg-step--danger",
@@ -2137,20 +2140,24 @@
           "rg-step--group",
           "rg-step--group-start",
           "rg-step--group-end",
-          "rg-step--principal"
+          "rg-step--principal",
+          "rg-step--product"
         ],
         "related": [
           "rg-phase-switch",
           "rg-phase-panel",
           "rg-worksheet-block__role",
           "rg-dept-label",
-          "rg-dept-label__kind"
+          "rg-dept-label__kind",
+          "rg-scope-mark",
+          "rg-scope-band"
         ]
       },
       "variants": [
         "standard",
         "danger",
-        "grouped (dalla 1.16.0)"
+        "grouped (dalla 1.16.0)",
+        "fasi di tutto il prodotto in coda (dalla 1.31.0)"
       ],
       "states": [
         "collapsed",
@@ -2291,7 +2298,8 @@
           "rg-document",
           "rg-dept-mark--quiet",
           "rg-dept-label",
-          "rg-dept-label__kind"
+          "rg-dept-label__kind",
+          "rg-scope-band"
         ]
       },
       "variants": [
@@ -2299,7 +2307,8 @@
         "fase singola (solo pannello)",
         "reparto in riga sua (rg-phase-panel__department, proposta 1.21.0)",
         "linguetta essenziale: numero, titolo, conteggio (proposta 1.21.0)",
-        "reparto da assegnare"
+        "reparto da assegnare",
+        "fase di tutto il prodotto: fascia d'ambito in testa (1.31.0)"
       ],
       "states": [
         "default",
@@ -2574,7 +2583,8 @@
         "variants": [
           "rg-worksheet-block--long",
           "rg-worksheet-block--compact",
-          "rg-worksheet-block--continued"
+          "rg-worksheet-block--continued",
+          "rg-worksheet-block--product"
         ],
         "related": [
           "rg-dept-band",
@@ -2595,14 +2605,16 @@
           "rg-cutout-sheet",
           "rg-fill-field--check",
           "rg-u-print-a4--head",
-          "rg-print-anchor"
+          "rg-print-anchor",
+          "rg-scope-band"
         ]
       },
       "variants": [
         "normale",
         "long",
         "compact",
-        "continued"
+        "continued",
+        "product (fase di tutto il prodotto, 1.31.0)"
       ],
       "states": [
         "print",
@@ -5036,6 +5048,156 @@
         "attachment",
         "riga del documento"
       ]
+    },
+    {
+      "id": "scope-band",
+      "title": "Fascia d'ambito: fase di tutto il prodotto",
+      "status": "beta",
+      "since": "1.31.0",
+      "kind": "component",
+      "role": "Dichiara che una fase vale per TUTTO IL PRODOTTO e non per una parte: fascia nera piena, da bordo a bordo, in testa al blocco della fase a schermo (sopra la riga del reparto) e in testa al foglio stampato (sopra la banda del reparto). Nero pieno e parole in bianco: regge la fotocopia e non compete con la trama del reparto.",
+      "classes": {
+        "base": "rg-scope-band",
+        "elements": [
+          "rg-scope-band__text",
+          "rg-scope-band__note"
+        ],
+        "related": [
+          "rg-scope-mark",
+          "rg-phase-panel",
+          "rg-worksheet-block",
+          "rg-worksheet-block--product",
+          "rg-dept-band",
+          "rg-worksheet-block__step",
+          "rg-worksheet-block__work",
+          "rg-worksheet-block__part"
+        ]
+      },
+      "variants": [
+        "base"
+      ],
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-white",
+        "--rg-color-neutral-200",
+        "--rg-font-identity",
+        "--rg-font-size-sm",
+        "--rg-font-size-xs",
+        "--rg-weight-bold",
+        "--rg-letter-label",
+        "--rg-line-height-technical",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-space-6",
+        "--rg-border-strong",
+        "--rg-radius-md"
+      ],
+      "doc": "components/scope.md",
+      "rulesRef": "design-rules.md#4-colore",
+      "specimenAnchor": "scope",
+      "keywords": [
+        "ambito",
+        "scope",
+        "tutto il prodotto",
+        "al paio",
+        "al pezzo",
+        "fase di prodotto",
+        "controllo qualita",
+        "controllo qualità",
+        "fascia",
+        "banda",
+        "timbro",
+        "stamp",
+        "product-wide",
+        "whole product",
+        "pair",
+        "piece",
+        "fase unica",
+        "una volta sola",
+        "fotocopia",
+        "stampa",
+        "foglio",
+        "reparto",
+        "phase scope",
+        "product phase"
+      ],
+      "snippet": "<p class=\"rg-scope-band\">\n  <span class=\"rg-scope-band__text\">Fase di tutto il prodotto</span>\n  <span class=\"rg-scope-band__note\">Si compila una volta sola e vale per tutte e 3 le parti · nel costo conta una volta</span>\n</p>"
+    },
+    {
+      "id": "scope-mark",
+      "title": "Timbro d'ambito in linea",
+      "status": "beta",
+      "since": "1.31.0",
+      "kind": "component",
+      "role": "Il segno della fascia d'ambito in misura da etichetta, per una riga di elenco, una linguetta o una cella: nero pieno con la parola in bianco per la fase di tutto il prodotto, quieto (--part) per «solo questa parte» dove i due ambiti convivono. Non e' un badge: il badge non si riempie.",
+      "classes": {
+        "base": "rg-scope-mark",
+        "variants": [
+          "rg-scope-mark--part"
+        ],
+        "related": [
+          "rg-scope-band",
+          "rg-step--product",
+          "rg-steps__break",
+          "rg-steps__break-title",
+          "rg-steps__break-note",
+          "rg-step__headline",
+          "rg-badge",
+          "rg-part-mark"
+        ]
+      },
+      "variants": [
+        "prodotto (forte)",
+        "parte (--part, quieto)"
+      ],
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-black",
+        "--rg-color-white",
+        "--rg-color-text-primary",
+        "--rg-color-surface-raised",
+        "--rg-color-border-medium",
+        "--rg-font-identity",
+        "--rg-font-size-xs",
+        "--rg-weight-medium",
+        "--rg-letter-label",
+        "--rg-line-height-technical",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-border-hairline",
+        "--rg-radius-sm"
+      ],
+      "doc": "components/scope.md",
+      "patternRef": "components/steps.md",
+      "specimenAnchor": "scope-mark",
+      "keywords": [
+        "ambito",
+        "scope",
+        "timbro",
+        "stamp",
+        "tutto il prodotto",
+        "al paio",
+        "al pezzo",
+        "solo questa parte",
+        "fase di prodotto",
+        "elenco fasi",
+        "steps",
+        "stacco",
+        "separatore",
+        "intestazione di gruppo",
+        "break",
+        "product-wide",
+        "badge pieno",
+        "controllo qualita"
+      ],
+      "snippet": "<li class=\"rg-steps__break\">\n  <h3 class=\"rg-steps__break-title\">Di tutto il prodotto</h3>\n  <p class=\"rg-steps__break-note\">Non sono fasi di questa parte: si compilano una volta sola e si vedono da ogni parte.</p>\n</li>\n<li class=\"rg-step rg-step--product\">\n  <div class=\"rg-step__head\">\n    <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-p1-toggle\" aria-controls=\"fase-p1\" aria-expanded=\"false\">\n      <span class=\"rg-step__num\">1</span>\n      <span class=\"rg-step__headline\">\n        <span class=\"rg-scope-mark\">Tutto il prodotto</span>\n        <span class=\"rg-step__title\">Controllo qualità</span>\n      </span>\n    </button>\n  </div>\n  <div class=\"rg-step__body\" id=\"fase-p1\" role=\"region\" aria-labelledby=\"fase-p1-toggle\" hidden></div>\n</li>"
     }
   ]
 }

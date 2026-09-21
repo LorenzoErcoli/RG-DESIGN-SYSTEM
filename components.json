@@ -2157,7 +2157,7 @@
         "standard",
         "danger",
         "grouped (dalla 1.16.0)",
-        "fasi di tutto il prodotto in coda (dalla 1.31.0)"
+        "fase di tutto il prodotto dentro la sequenza: rg-step--product + rg-scope-mark (dalla 1.31.0)"
       ],
       "states": [
         "collapsed",
@@ -5055,7 +5055,7 @@
       "status": "beta",
       "since": "1.31.0",
       "kind": "component",
-      "role": "Dichiara che una fase vale per TUTTO IL PRODOTTO e non per una parte: fascia nera piena, da bordo a bordo, in testa al blocco della fase a schermo (sopra la riga del reparto) e in testa al foglio stampato (sopra la banda del reparto). Nero pieno e parole in bianco: regge la fotocopia e non compete con la trama del reparto.",
+      "role": "Dichiara che una fase vale per TUTTO IL PRODOTTO e non per una parte: fascia a campitura piena nel rosso d'ambito (--rg-color-scope, che NON e --rg-color-danger), da bordo a bordo, in testa al blocco della fase a schermo (sopra la riga del reparto) e in testa al foglio stampato (sopra la banda del reparto). Tre segnali e uno solo e il colore: campitura piena, filetto nero forte, maiuscoletto bianco. In fotocopia il rosso va al nero e resta l'unico blocco pieno del foglio; le trame dei reparti restano chiare.",
       "classes": {
         "base": "rg-scope-band",
         "elements": [
@@ -5080,9 +5080,9 @@
         "default"
       ],
       "tokens": [
+        "--rg-color-scope",
+        "--rg-color-scope-text",
         "--rg-color-black",
-        "--rg-color-white",
-        "--rg-color-neutral-200",
         "--rg-font-identity",
         "--rg-font-size-sm",
         "--rg-font-size-xs",
@@ -5134,7 +5134,7 @@
       "status": "beta",
       "since": "1.31.0",
       "kind": "component",
-      "role": "Il segno della fascia d'ambito in misura da etichetta, per una riga di elenco, una linguetta o una cella: nero pieno con la parola in bianco per la fase di tutto il prodotto, quieto (--part) per «solo questa parte» dove i due ambiti convivono. Non e' un badge: il badge non si riempie.",
+      "role": "Il segno della fascia d'ambito in misura da etichetta, per una riga di elenco, una linguetta o una cella: campitura piena nel rosso d'ambito con la parola in bianco e contorno nero per la fase di tutto il prodotto, quieto (--part) per «solo questa parte» dove i due ambiti convivono. Non e' un badge: il badge non si riempie. Nell'elenco della parte la riga --product sta AL SUO POSTO NELLA SEQUENZA (non in coda, senza stacco) e porta filetti forti sopra e sotto; rg-steps__break resta opzionale.",
       "classes": {
         "base": "rg-scope-mark",
         "variants": [
@@ -5159,8 +5159,9 @@
         "default"
       ],
       "tokens": [
+        "--rg-color-scope",
+        "--rg-color-scope-text",
         "--rg-color-black",
-        "--rg-color-white",
         "--rg-color-text-primary",
         "--rg-color-surface-raised",
         "--rg-color-border-medium",
@@ -5197,7 +5198,7 @@
         "badge pieno",
         "controllo qualita"
       ],
-      "snippet": "<li class=\"rg-steps__break\">\n  <h3 class=\"rg-steps__break-title\">Di tutto il prodotto</h3>\n  <p class=\"rg-steps__break-note\">Non sono fasi di questa parte: si compilano una volta sola e si vedono da ogni parte.</p>\n</li>\n<li class=\"rg-step rg-step--product\">\n  <div class=\"rg-step__head\">\n    <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-p1-toggle\" aria-controls=\"fase-p1\" aria-expanded=\"false\">\n      <span class=\"rg-step__num\">1</span>\n      <span class=\"rg-step__headline\">\n        <span class=\"rg-scope-mark\">Tutto il prodotto</span>\n        <span class=\"rg-step__title\">Controllo qualità</span>\n      </span>\n    </button>\n  </div>\n  <div class=\"rg-step__body\" id=\"fase-p1\" role=\"region\" aria-labelledby=\"fase-p1-toggle\" hidden></div>\n</li>"
+      "snippet": "<li class=\"rg-step rg-step--product\">\n  <div class=\"rg-step__head\">\n    <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-3-toggle\" aria-controls=\"fase-3\" aria-expanded=\"false\">\n      <span class=\"rg-step__num\">3</span>\n      <span class=\"rg-step__headline\">\n        <span class=\"rg-scope-mark\">Tutto il prodotto</span>\n        <span class=\"rg-step__title\">Controllo qualità</span>\n      </span>\n    </button>\n  </div>\n  <div class=\"rg-step__body\" id=\"fase-3\" role=\"region\" aria-labelledby=\"fase-3-toggle\" hidden></div>\n</li>"
     }
   ]
 }

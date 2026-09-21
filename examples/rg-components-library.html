@@ -2587,7 +2587,7 @@ status         VALID</pre></div>
       </section>
 
       <section class="specimen-section" id="scope">
-        <div class="specimen-section__head"><span class="specimen-section__index">42</span><h2>Ambito della fase: di una parte o di tutto il prodotto (proposta 1.31.0)</h2><p>Una fase appartiene di norma a <strong>una parte</strong>. Da qui in avanti può valere per <strong>tutto il prodotto</strong> — il controllo qualità finale: si compila una volta sola, si vede dalla pagina di ogni parte, conta una volta nel costo e sul fascicolo esce una volta sola, in fondo a tutti i fogli delle parti. «È importante identificare se è al paio o se è al pezzo». Un segno solo, in due misure: <code class="rg-mono">rg-scope-band</code>, la fascia nera piena da bordo a bordo, e <code class="rg-mono">rg-scope-mark</code>, il timbro in linea. Non è un badge — il badge per contratto non si riempie — e non compete con la banda del reparto: niente trama, niente colore, più in alto e più bassa. Nell'elenco della parte le fasi di prodotto stanno in coda, dopo lo stacco <code class="rg-mono">rg-steps__break</code>, e il filo della sequenza non le raggiunge. Vedi components/scope.md.</p></div>
+        <div class="specimen-section__head"><span class="specimen-section__index">42</span><h2>Ambito della fase: di una parte o di tutto il prodotto (proposta 1.31.0)</h2><p>Una fase appartiene di norma a <strong>una parte</strong>. Da qui in avanti può valere per <strong>tutto il prodotto</strong> — il controllo qualità finale: si compila una volta sola, si vede dalla pagina di ogni parte, conta una volta nel costo e sul fascicolo esce una volta sola. «È importante identificare se è al paio o se è al pezzo». Un segno solo, in due misure: <code class="rg-mono">rg-scope-band</code>, la fascia da bordo a bordo, e <code class="rg-mono">rg-scope-mark</code>, il timbro in linea. Il colore è <code class="rg-mono">--rg-color-scope</code>, un rosso che vale per <strong>un ruolo solo</strong> e non è <code class="rg-mono">--rg-color-danger</code>: quello, nella stessa pagina, è già l’errore dei moduli <em>e</em> <code class="rg-mono">--rg-color-category-3</code>, cioè il reparto Pressatura. Tre segnali e uno solo è il colore: <strong>campitura piena</strong> (nessuno stato del DS riempie una superficie), <strong>filetto nero forte</strong>, <strong>maiuscoletto bianco</strong>. Nell’elenco della parte la fase di prodotto sta <strong>al suo posto nella sequenza</strong>, riconoscibile dal timbro e dai filetti forti sopra e sotto: niente stacco, niente frase ripetuta riga per riga. Vedi components/scope.md.</p></div>
         <div class="specimen-grid">
           <div class="specimen-cell specimen-cell--wide" id="scope-panel"><span class="specimen-label">1 · Testa del blocco della fase — la fascia d'ambito sopra la riga del reparto: di chi è la fase, poi chi la esegue</span><div class="specimen-stage specimen-stage--page">
             <article class="rg-phase-panel">
@@ -2597,13 +2597,13 @@ status         VALID</pre></div>
               </p>
               <p class="rg-phase-panel__department"><span class="rg-dept-label"><span class="rg-dept-mark rg-dept-mark--finissaggio rg-dept-mark--quiet" aria-hidden="true"></span><span class="rg-dept-label__kind">Reparto</span> Finissaggio e Controllo Qualità</span></p>
               <header class="rg-phase-panel__head">
-                <div class="rg-phase-panel__heading"><span class="rg-phase-panel__num" aria-hidden="true">4</span><div class="rg-phase-panel__name"><p class="rg-phase-panel__kind"><span>Fase 4 di 4</span></p><h3 class="rg-phase-panel__title"><span class="rg-u-visually-hidden">Fase 4: </span>Controllo qualità</h3></div></div>
+                <div class="rg-phase-panel__heading"><span class="rg-phase-panel__num" aria-hidden="true">3</span><div class="rg-phase-panel__name"><p class="rg-phase-panel__kind"><span>Fase 3 di 4</span></p><h3 class="rg-phase-panel__title"><span class="rg-u-visually-hidden">Fase 3: </span>Controllo qualità</h3></div></div>
                 <div class="rg-phase-panel__summary"><p class="rg-phase-panel__meta"><span>6 controlli</span><span>3 parti coinvolte</span><span>oggetto finito e montato</span></p><div class="rg-phase-panel__status"><span class="rg-badge rg-badge--pending">costo non calcolato</span></div></div>
               </header>
-              <div class="rg-phase-panel__body"><p class="rg-small">Sezioni del controllo qualità. La fase è una sola: aprendola dalla TOMAIA o dallo SPOILER si compila lo stesso foglio.</p></div>
+              <div class="rg-phase-panel__body"><p class="rg-small">La fase è una sola: aprendola dalla TOMAIA o dallo SPOILER si compila lo stesso foglio. La frase lunga si legge qui, una volta: nell'elenco basta il timbro.</p></div>
             </article>
           </div></div>
-          <div class="specimen-cell specimen-cell--wide" id="scope-steps"><span class="specimen-label">2 · Elenco delle fasi della parte TOMAIA — due fasi sue, poi lo stacco e la fase di tutto il prodotto in coda</span>
+          <div class="specimen-cell specimen-cell--wide" id="scope-steps"><span class="specimen-label">2 · Elenco delle fasi della parte TOMAIA — la fase di tutto il prodotto è la terza, in mezzo alle altre: timbro rosso e filetti forti sopra e sotto, il filo della sequenza la attraversa</span>
             <ol class="rg-steps">
               <li class="rg-step">
                 <div class="rg-step__head">
@@ -2631,14 +2631,10 @@ status         VALID</pre></div>
                 </div>
                 <div class="rg-step__body" id="spec-scope-2" role="region" aria-labelledby="spec-scope-2-toggle" hidden></div>
               </li>
-              <li class="rg-steps__break">
-                <h3 class="rg-steps__break-title">Di tutto il prodotto</h3>
-                <p class="rg-steps__break-note">Non sono fasi di questa parte: si compilano una volta sola, si vedono da ogni parte e nel costo contano una volta.</p>
-              </li>
               <li class="rg-step rg-step--product">
                 <div class="rg-step__head">
                   <button class="rg-step__toggle" type="button" id="spec-scope-3-toggle" aria-controls="spec-scope-3" aria-expanded="false">
-                    <span class="rg-step__num">1</span>
+                    <span class="rg-step__num">3</span>
                     <span class="rg-step__headline">
                       <span class="rg-scope-mark">Tutto il prodotto</span>
                       <span class="rg-step__title">Controllo qualità</span>
@@ -2646,22 +2642,37 @@ status         VALID</pre></div>
                     </span>
                     <span class="rg-step__aside"><span class="rg-badge rg-badge--count">6 da compilare</span></span>
                   </button>
-                  <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#scope" aria-label="Apri la fase di prodotto 1: Controllo qualità">Apri</a></div>
+                  <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#scope" aria-label="Apri fase 3: Controllo qualità, di tutto il prodotto">Apri</a></div>
                 </div>
                 <div class="rg-step__body" id="spec-scope-3" role="region" aria-labelledby="spec-scope-3-toggle" hidden></div>
+              </li>
+              <li class="rg-step">
+                <div class="rg-step__head">
+                  <button class="rg-step__toggle" type="button" id="spec-scope-4-toggle" aria-controls="spec-scope-4" aria-expanded="false">
+                    <span class="rg-step__num">4</span>
+                    <span class="rg-step__headline">
+                      <span class="rg-step__title">Incollature finali</span>
+                      <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Incollature</span><span>2 operazioni</span></span>
+                    </span>
+                  </button>
+                  <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#scope" aria-label="Apri fase 4: Incollature finali">Apri</a></div>
+                </div>
+                <div class="rg-step__body" id="spec-scope-4" role="region" aria-labelledby="spec-scope-4-toggle" hidden></div>
               </li>
             </ol>
           </div>
           <div class="specimen-cell specimen-cell--half" id="scope-mark"><span class="specimen-label">Il timbro in linea — forte (l'eccezione) e quieto (il caso normale), da usare solo dove i due ambiti convivono</span><div class="specimen-stage specimen-column">
             <p class="rg-small"><span class="rg-scope-mark">Tutto il prodotto</span> <span class="rg-scope-mark">Tutto il prodotto · al paio</span></p>
             <p class="rg-small"><span class="rg-scope-mark rg-scope-mark--part">Solo questa parte</span> <span class="rg-scope-mark rg-scope-mark--part">Solo questa parte · al pezzo</span></p>
-            <p class="rg-small">Accanto alla pastiglia di una parte non si confonde: quella è tonda e colorata <span class="rg-part-mark rg-part-mark--small rg-part--1" aria-hidden="true"></span>, il timbro è un rettangolo nero.</p>
+            <p class="rg-small">Accanto alla pastiglia di una parte non si confonde: quella è tonda e colorata per categoria <span class="rg-part-mark rg-part-mark--small rg-part--1" aria-hidden="true"></span>, il timbro è un rettangolo rosso col contorno nero.</p>
           </div></div>
-          <div class="specimen-cell specimen-cell--half" id="scope-vs-dept"><span class="specimen-label">Le due fasce a confronto — l'ambito non ha trama né colore, sta più in alto ed è più bassa</span><div class="specimen-stage specimen-column">
+          <div class="specimen-cell specimen-cell--half" id="scope-vs-dept"><span class="specimen-label">Le due fasce a confronto — l'ambito è pieno e senza trama, sta più in alto ed è più basso; sotto, il rosso dell'errore, che è un altro rosso e un'altra forma</span><div class="specimen-stage specimen-column">
             <p class="rg-scope-band"><span class="rg-scope-band__text">Fase di tutto il prodotto</span></p>
             <p class="rg-dept-band rg-dept-band--finissaggio"><span class="rg-dept-band__name">Reparto Finissaggio e Controllo Qualità</span></p>
+            <p class="rg-dept-band rg-dept-band--pressatura"><span class="rg-dept-band__name">Reparto Pressatura e soffiatura</span></p>
+            <div class="rg-alert rg-alert--error"><div><p class="rg-alert__title">Importazione incompleta</p><p class="rg-alert__message">Il blocco colore 07 non contiene un codice filo.</p></div></div>
           </div></div>
-          <div class="specimen-cell specimen-cell--wide" id="scope-sheet"><span class="specimen-label">3 · Il foglio stampato — fascia d'ambito a filo dei bordi, poi la posizione, poi la banda del reparto staccata; contorno forte</span><div class="specimen-stage specimen-stage--page">
+          <div class="specimen-cell specimen-cell--wide" id="scope-sheet"><span class="specimen-label">3 · Il foglio stampato — fascia d'ambito a filo dei bordi, poi la posizione, poi la banda del reparto staccata; contorno forte del blocco</span><div class="specimen-stage specimen-stage--page">
             <section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--product">
               <p class="rg-scope-band">
                 <span class="rg-scope-band__text">Fase di tutto il prodotto</span>
@@ -2690,7 +2701,7 @@ status         VALID</pre></div>
               </footer>
             </section>
           </div></div>
-          <div class="specimen-cell specimen-cell--wide" id="scope-sheet-photocopy"><span class="specimen-label">Lo stesso foglio in fotocopia (grigio, contrasto spinto) accanto al foglio di una parte — la campitura piena resta piena</span><div class="specimen-stage specimen-stage--page specimen-stage--photocopy specimen-column">
+          <div class="specimen-cell specimen-cell--wide" id="scope-sheet-photocopy"><span class="specimen-label">In fotocopia (grigio, contrasto spinto) — sopra il foglio di tutto il prodotto, sotto quello di una parte del reparto Pressatura, che a colori usa lo stesso rosso dell'errore: il blocco pieno resta scuro, la trama resta chiara</span><div class="specimen-stage specimen-stage--page specimen-stage--photocopy specimen-column">
             <section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--product">
               <p class="rg-scope-band"><span class="rg-scope-band__text">Fase di tutto il prodotto</span><span class="rg-scope-band__note">Non di una parte sola: si fa una volta, sull'oggetto finito.</span></p>
               <p class="rg-worksheet-block__step">Fase unica · dopo tutte le parti</p>
@@ -2699,16 +2710,32 @@ status         VALID</pre></div>
               <div class="rg-worksheet-block__body"><div class="rg-worksheet-block__fields"><div class="rg-fill-field"><span class="rg-fill-field__label">Pezzi controllati</span><span class="rg-fill-field__line"></span></div><div class="rg-fill-field"><span class="rg-fill-field__label">Scarti</span><span class="rg-fill-field__line"></span></div></div></div>
             </section>
             <section class="rg-worksheet-block rg-worksheet-block--compact">
-              <p class="rg-worksheet-block__step">Fase 2 di 3</p>
+              <p class="rg-worksheet-block__step">Fase 2 di 4</p>
               <p class="rg-dept-band rg-dept-band--pressatura"><span class="rg-dept-band__name">Reparto Pressatura e soffiatura</span><span class="rg-dept-band__note">Foglio 5 / 12</span></p>
               <header class="rg-worksheet-block__head"><h3 class="rg-worksheet-block__work">Pressatura</h3><p class="rg-worksheet-block__part"><span class="rg-part-mark rg-part-mark--small rg-part--1" aria-hidden="true"></span>Parte 1 di 3 · TOMAIA</p></header>
               <div class="rg-worksheet-block__body"><div class="rg-worksheet-block__fields"><div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line"></span></div><div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line"></span></div></div></div>
             </section>
           </div></div>
+          <div class="specimen-cell specimen-cell--half" id="scope-steps-photocopy"><span class="specimen-label">L'elenco in fotocopia — senza colore restano il timbro pieno, il maiuscoletto e i due filetti forti</span><div class="specimen-stage specimen-stage--photocopy">
+            <ol class="rg-steps">
+              <li class="rg-step"><div class="rg-step__head"><button class="rg-step__toggle" type="button" id="spec-scope-fc-1" aria-expanded="false"><span class="rg-step__num">2</span><span class="rg-step__headline"><span class="rg-step__title">Pressatura</span></span></button></div></li>
+              <li class="rg-step rg-step--product"><div class="rg-step__head"><button class="rg-step__toggle" type="button" id="spec-scope-fc-2" aria-expanded="false"><span class="rg-step__num">3</span><span class="rg-step__headline"><span class="rg-scope-mark">Tutto il prodotto</span><span class="rg-step__title">Controllo qualità</span></span></button></div></li>
+              <li class="rg-step"><div class="rg-step__head"><button class="rg-step__toggle" type="button" id="spec-scope-fc-3" aria-expanded="false"><span class="rg-step__num">4</span><span class="rg-step__headline"><span class="rg-step__title">Incollature finali</span></span></button></div></li>
+            </ol>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half" id="scope-break"><span class="specimen-label">Lo stacco intitolato (rg-steps__break) — opzionale, per l'elenco che raggruppa le fasi di prodotto in coda invece di tenerle in sequenza. La piattaforma non lo usa</span><div class="specimen-stage">
+            <ol class="rg-steps">
+              <li class="rg-step"><div class="rg-step__head"><button class="rg-step__toggle" type="button" id="spec-scope-br-1" aria-expanded="false"><span class="rg-step__num">2</span><span class="rg-step__headline"><span class="rg-step__title">Pressatura</span></span></button></div></li>
+              <li class="rg-steps__break">
+                <h3 class="rg-steps__break-title">Di tutto il prodotto</h3>
+                <p class="rg-steps__break-note">Non sono fasi di questa parte: si compilano una volta sola e si vedono da ogni parte.</p>
+              </li>
+              <li class="rg-step rg-step--product"><div class="rg-step__head"><button class="rg-step__toggle" type="button" id="spec-scope-br-2" aria-expanded="false"><span class="rg-step__num">1</span><span class="rg-step__headline"><span class="rg-scope-mark">Tutto il prodotto</span><span class="rg-step__title">Controllo qualità</span></span></button></div></li>
+            </ol>
+          </div></div>
         </div>
-        <p class="specimen-note">I due fogli si distinguono a un metro: il primo ha una campitura piena in testa e il contorno doppio, il secondo no. Le parole restano anche se il CSS non arriva — sono contenuto del markup, non <code class="rg-mono">content:</code> — e il nero si stampa davvero perché <code class="rg-mono">print-color-adjust: exact</code> è già nelle utility.</p>
+        <p class="specimen-note">In fotocopia il rosso d'ambito scende a ~26% di luminanza e col contrasto spinto va al nero: sul foglio resta l'unico blocco pieno scuro, mentre le trame dei reparti — righe sottili su bianco — restano chiare. Restano comunque tre segnali, e uno solo è il colore: campitura piena, filetto nero forte, maiuscoletto bianco. Le parole sono contenuto del markup, non <code class="rg-mono">content:</code>, e il colore si stampa davvero perché <code class="rg-mono">print-color-adjust: exact</code> è già nelle utility.</p>
       </section>
-
     </main>
   </div>
 

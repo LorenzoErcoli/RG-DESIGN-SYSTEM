@@ -1948,37 +1948,58 @@ a.rg-icon-button { text-decoration: none; }
    a tutti i fogli delle parti. Richiesta: «e' importante identificare se e' al paio o se e' al pezzo
    […] a livello di interfaccia e anche di scheda e' una cosa che va evidenziata parecchio».
 
-   UN SEGNO SOLO, IN DUE MISURE. Nero pieno con la parola in bianco maiuscolo: e' l'unico segno del DS
-   che INVERTE una superficie per dire un'appartenenza, quindi non si confonde con nient'altro e regge
-   la fotocopia (una campitura piena resta piena a qualunque contrasto).
+   UN SEGNO SOLO, IN DUE MISURE:
    - rg-scope-band — la FASCIA, da bordo a bordo: in testa al blocco della fase a schermo, in testa al
      foglio stampato. E' la misura «da un metro».
    - rg-scope-mark — il TIMBRO in linea, per una riga di elenco. Stessa figura, stessa cassa.
 
+   IL COLORE (seconda stesura). La prima era nera. Giudizio dal campo: «rendila piu' evidente, magari
+   in rosso? o comunque un colore bello evidente». Quindi campitura piena in --rg-color-scope, un
+   rosso che nel DS non esisteva e che vale per un ruolo solo. NON riusa --rg-color-danger perche'
+   quel rosso, nella stessa pagina, e' gia' due cose: l'errore dei moduli e --rg-color-category-3,
+   cioe' il reparto Pressatura. Un terzo significato sullo stesso valore e' esattamente cio' che le
+   regole §4 vietano. Il rosso d'ambito e' piu' acceso del mattone dell'errore: a colpo d'occhio si
+   vede che non e' lo stesso rosso, e non dice «qualcosa non va» ma «questa non e' come le altre».
+
+   TRE SEGNALI, E UNO SOLO E' IL COLORE (regole §4: nessuno stato — qui nessuna appartenenza — dipende
+   dal solo colore):
+   (a) CAMPITURA PIENA. Nessuno stato del DS riempie una superficie: alert, badge e campi in errore
+       sono filetti e parole su bianco. La campitura e' il segno dell'ambito, e solo suo.
+   (b) FILETTO NERO FORTE sotto la fascia (e contorno nero del timbro): non e' colore, resta in
+       fotocopia e in stampa monocromatica, e tiene la fascia separata dalla banda del reparto.
+   (c) MAIUSCOLETTO BIANCO: la parola, che e' contenuto del markup e resta anche senza CSS.
+
+   FOTOCOPIA. In scala di grigi #b3261e cade a ~26% di luminanza (grigio scuro pieno) e con il
+   contrasto spinto di una fotocopia va al nero: sul foglio resta l'unico blocco pieno scuro. Le
+   trame dei reparti sono righe sottili su bianco, quindi restano CHIARE: nessuna delle due si
+   confonde con l'altra, nemmeno quella del reparto Pressatura, che usa lo stesso rosso dell'errore.
+   Vedi la vetrina, #scope-sheet-photocopy.
+
    PERCHE' NON UN BADGE. rg-badge sta sempre su superficie bianca con filetto, per contratto («niente
    riempimenti»): e' un metadato di un record fra gli altri. Qui non si classifica una fase, si dice
    che quella fase NON e' come le altre della pagina. Il timbro e' esattamente cio' che il badge non
-   puo' essere: pieno, quadro (radius compatto), invertito.
+   puo' essere: pieno, colorato, quadro (radius compatto).
 
    PERCHE' NON COMPETE CON IL REPARTO. rg-dept-band ha trama, colore di categoria e targhetta bianca;
-   la fascia d'ambito non ha ne' trama ne' colore, sta piu' in alto, ed e' piu' bassa. Due figure
-   diverse a due altezze diverse: sul foglio si leggono in fila, non l'una contro l'altra.
+   la fascia d'ambito e' piena, senza trama, sta piu' in alto ed e' piu' bassa. Due figure diverse a
+   due altezze diverse: sul foglio si leggono in fila, non l'una contro l'altra.
 
    LE PAROLE SONO CONTENUTO, non `content:` generato: se il CSS non arriva la frase resta. La cassa la
    mette il CSS (micro-label identitaria, ammessa dalle regole §2 come rg-label). Chi scrive decide se
    aggiungere il gergo del prodotto: «Tutto il prodotto · al paio». */
-.rg-scope-band { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-3); margin: 0; padding: var(--rg-space-2) var(--rg-space-4); color: var(--rg-color-white); background: var(--rg-color-black); }
-.rg-scope-band__text { flex: none; color: var(--rg-color-white); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
-/* La nota resta leggibile sul nero (neutral-200 su nero: ben oltre AA) e non compete col testo. */
-.rg-scope-band__note { min-width: 0; color: var(--rg-color-neutral-200); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); }
+.rg-scope-band { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-3); margin: 0; padding: var(--rg-space-2) var(--rg-space-4); color: var(--rg-color-scope-text); background: var(--rg-color-scope); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
+.rg-scope-band__text { flex: none; color: var(--rg-color-scope-text); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* La nota e' bianca come il testo (bianco su scope = 5,98:1, AA anche a 12 px): un grigio chiaro
+   scenderebbe sotto la soglia. Si distingue per misura e peso, non per colore. */
+.rg-scope-band__note { min-width: 0; color: var(--rg-color-scope-text); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); }
 /* IN TESTA AL BLOCCO DELLA FASE (a schermo): PRIMO figlio di rg-phase-panel, sopra la riga del reparto
    (__department), con lo stesso margine laterale della testa e gli angoli alti del blocco. Sopra c'e'
    l'ambito (di chi e' questa fase), sotto il reparto (chi la esegue): due domande diverse, due righe. */
 .rg-phase-panel > .rg-scope-band { padding-inline: var(--rg-space-6); border-start-start-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); border-start-end-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); }
 .rg-phase-switch ~ .rg-phase-panel > .rg-scope-band { border-start-start-radius: 0; }
 /* IN TESTA AL FOGLIO STAMPATO: primo figlio del blocco, a filo dei bordi, PRIMA di __step e della
-   banda del reparto. Piu' bassa della banda (il nero pieno pesa piu' del colore: se fosse alta uguale
-   la coprirebbe) e senza margini: la banda del reparto, staccata dai bordi, resta la seconda fascia. */
+   banda del reparto. Piu' bassa della banda (la campitura piena pesa piu' di una trama: se fosse alta
+   uguale la coprirebbe) e senza margini: la banda del reparto, staccata dai bordi, resta la seconda. */
 .rg-worksheet-block > .rg-scope-band { padding: var(--rg-space-1) var(--rg-space-3); }
 .rg-worksheet-block--compact > .rg-scope-band { padding-block: calc(var(--rg-space-1) / 2); }
 .rg-worksheet-block > .rg-scope-band + .rg-dept-band { margin-top: var(--rg-space-2); }
@@ -1986,33 +2007,39 @@ a.rg-icon-button { text-decoration: none; }
    non e' una figura nuova, e in fotocopia il filo raddoppiato si vede anche a foglio girato. */
 .rg-worksheet-block--product { border-width: var(--rg-border-strong); }
 
-/* IL TIMBRO IN LINEA — su una riga di elenco, su una linguetta, in una cella. Stesso nero pieno della
-   fascia, misura da etichetta. --part e' il caso normale (solo questa parte) e va QUIETO: si usa solo
-   dove i due ambiti convivono nella stessa vista e la differenza va dichiarata; altrove marcare ogni
-   riga vorrebbe dire non marcarne nessuna. */
-.rg-scope-mark { display: inline-flex; align-items: center; gap: var(--rg-space-1); padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); color: var(--rg-color-white); background: var(--rg-color-black); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* IL TIMBRO IN LINEA — su una riga di elenco, su una linguetta, in una cella. Stessa campitura della
+   fascia, misura da etichetta, contorno nero (il segnale non cromatico). --part e' il caso normale
+   (solo questa parte) e va QUIETO: si usa solo dove i due ambiti convivono nella stessa vista e la
+   differenza va dichiarata; altrove marcare ogni riga vorrebbe dire non marcarne nessuna. */
+.rg-scope-mark { display: inline-flex; align-items: center; gap: var(--rg-space-1); padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); color: var(--rg-color-scope-text); background: var(--rg-color-scope); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 .rg-scope-mark--part { color: var(--rg-color-text-primary); background: var(--rg-color-surface-raised); border-color: var(--rg-color-border-medium); }
 /* Dentro la griglia dell'intestazione di riga il timbro sta alla sua larghezza, non a quella della colonna. */
 .rg-step__headline > .rg-scope-mark, .rg-phase-panel__name > .rg-scope-mark { justify-self: start; }
 
-/* ── LE FASI DI TUTTO IL PRODOTTO IN CODA ALL'ELENCO DELLA PARTE (1.31.0) ──────────────────────────
-   Le fasi di prodotto si vedono dalla pagina di OGNI parte, in fondo. Servono due segni, perche' uno
-   solo si perde: lo STACCO che dice dove finisce la parte e comincia il prodotto, e il TIMBRO sulla
-   riga, che regge anche se la riga viene letta da sola (ricerca, stampa, screen reader).
-   1) rg-steps__break — <li> di stacco: filetto FORTE nero (le fasi fra loro hanno il filetto neutro:
-      qui cambia il soggetto, non la voce), aria sopra, titolo e nota. E' un <li> e resta una voce
-      della lista: la 1.16.0 aveva escluso l'intestazione di gruppo perche' sarebbe stata una FASE
-      FINTA in mezzo alle fasi della stessa parte; qui non intesta un gruppo di fasi della parte, dice
-      che da quel punto in giu' l'elenco parla di un altro oggetto, e le parole sono l'unica cosa che
-      lo dice. In coda, mai in mezzo.
-   2) rg-step--product — la riga: porta rg-scope-mark sopra il titolo, nello stesso posto del ruolo di
-      gruppo (__role), e il FILO DELLA SEQUENZA NON LA TOCCA — non entra e non esce. Il filo e' la
-      sequenza DELLA PARTE: si ferma sull'ultima fase della parte (anche senza lo stacco, se l'app lo
-      omette) e non riprende. Nella pagina del prodotto, dove quelle fasi sono la sequenza vera, sono
-      rg-step normali e il filo c'e'. Il numero non cambia figura: la casella col bordo forte e' gia'
-      rg-step--danger, e il nero pieno e' gia' la fase aperta. */
+/* ── LA FASE DI PRODOTTO DENTRO L'ELENCO DELLA PARTE (1.31.0) ──────────────────────────────────────
+   Seconda stesura. La prima metteva le fasi di prodotto IN CODA, dopo uno stacco intitolato.
+   Giudizio dal campo: «qui mi scrivi troppe volte "di tutto il prodotto"; in piu' non va bene che sia
+   separato: la fase e' dentro le altre ma e' visibilmente diversa dalle altre». Quindi la riga sta
+   AL SUO POSTO NELLA SEQUENZA, il filo della sequenza la attraversa come tutte, e il segno deve
+   reggere DA SOLO — non c'e' nessuna intestazione che lo spieghi.
+   rg-step--product porta due cose, nessuna delle due di solo colore:
+   1) il TIMBRO rosso sopra il titolo, nello stesso posto del ruolo di gruppo (rg-step__role): e' la
+      cosa che si vede per prima, ed e' anche l'unica che entra nel nome accessibile del toggle;
+   2) i FILETTI FORTI sopra e sotto la riga, al posto del filetto neutro che divide le fasi fra loro:
+      la riga si stacca dalle vicine restando in fila, come una riga di totale in una tabella. Se e'
+      la prima della lista non ne aggiunge uno: il blocco ha gia' il suo filetto in testa.
+   NIENTE FONDO sulla riga: si perderebbe in fotocopia e l'hover chiaro della fase ci sparirebbe
+   sopra (e' la stessa ragione per cui il gruppo di fasi collegate non ha un fondo).
+   IL NUMERO NON CAMBIA FIGURA: la casella col bordo forte e' gia' rg-step--danger, il nero pieno e'
+   gia' la fase aperta. Un terzo trattamento del numero si leggerebbe come uno stato.
+   rg-steps__break resta nel CSS ed e' OPZIONALE: intesta un gruppo di fasi di prodotto messe in coda,
+   dove la sequenza della parte e quella del prodotto non si mescolano. La piattaforma non lo usa. */
+.rg-steps > .rg-step--product { border-top: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
+.rg-steps > .rg-step--product + .rg-step { border-top: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
+.rg-steps > .rg-step--product:first-child { border-top: 0; }
 .rg-steps__break { padding: var(--rg-space-4) var(--rg-space-2) var(--rg-space-3); border-top: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
 .rg-steps--grouped > .rg-steps__break { padding-inline-start: calc(var(--rg-space-6) + var(--rg-space-2)); }
 .rg-steps__break-title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); }
 .rg-steps__break-note { margin: var(--rg-space-1) 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); }
-.rg-step--product::before, .rg-step:has(+ .rg-step--product)::before, .rg-step:has(+ .rg-steps__break)::before { content: none; }
+/* Con lo stacco (uso opzionale) il filo della sequenza si ferma: li' la sequenza della parte finisce. */
+.rg-step:has(+ .rg-steps__break)::before { content: none; }

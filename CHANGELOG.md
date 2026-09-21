@@ -9,9 +9,9 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 
 ## 1.31.0 — non rilasciata
 
-**Minor.** Classi nuove e additive, nessuna classe o token rimosso o rinominato, nessun token nuovo. Un solo
-cambio su una classe esistente: le fasi di tutto il prodotto interrompono il filo della sequenza in
-`rg-steps`, e solo quando l'app usa le classi nuove.
+**Minor.** Classi nuove e additive e **due token nuovi** (`--rg-color-scope`, `--rg-color-scope-text`): nessuna
+classe o token rimosso o rinominato. Un solo cambio su una classe esistente, e solo per chi usa le classi nuove:
+in `rg-steps` la riga `--product` porta filetti forti al posto del filetto neutro.
 
 ### La fase che vale per tutto il prodotto, non per una parte
 
@@ -22,9 +22,7 @@ delle parti. Lorenzo: *«è importante identificare se è al paio o se è al pez
 anche di scheda è una cosa che va evidenziata parecchio»*. Sbagliarlo vuol dire fare tre volte un controllo che
 va fatto una.
 
-**Un segno solo, in due misure**, nei tre posti dove la cosa si decide. Nero pieno con la parola in bianco
-maiuscolo: l'unico segno del DS che inverte una superficie per dire un'appartenenza, e l'unico che regge la
-fotocopia senza condizioni (una campitura piena resta piena a qualunque contrasto).
+**Un segno solo, in due misure**, nei posti dove la cosa si decide.
 
 - **`rg-scope-band`** (`__text`, `__note`): la **fascia**, da bordo a bordo. A schermo è il primo figlio di
   `rg-phase-panel`, **sopra** la riga del reparto (`__department`): prima di chi la esegue viene di chi è. Sul
@@ -32,32 +30,58 @@ fotocopia senza condizioni (una campitura piena resta piena a qualunque contrast
   banda del reparto. La nota dice la conseguenza («si compila una volta sola», «nel costo conta una volta»),
   non ripete la dichiarazione.
 - **`rg-scope-mark`** (`--part`): il **timbro** in linea, misura da etichetta, per una riga di elenco. Forte
-  (nero pieno) per l'eccezione, quieto per «solo questa parte» — e il quieto si usa **solo** dove i due ambiti
-  convivono nella stessa vista: marcare tutte le righe equivale a non marcarne nessuna.
+  per l'eccezione, quieto per «solo questa parte» — e il quieto si usa **solo** dove i due ambiti convivono
+  nella stessa vista: marcare tutte le righe equivale a non marcarne nessuna.
 - **`rg-worksheet-block--product`**: contorno forte sul foglio della fase di prodotto, il secondo segnale per
   chi lo cerca nel mucchio.
-- **`rg-steps__break`** (`-title`, `-note`) e **`rg-step--product`**: nell'elenco di una parte le fasi di
-  prodotto stanno **in coda**, dopo uno stacco con filetto forte che dice «Di tutto il prodotto»; la riga porta
-  il timbro sopra il titolo e **il filo della sequenza non la tocca**, né in entrata né in uscita (il filo è la
-  sequenza della parte). Tre segnali, nessuno di colore.
+- **`rg-step--product`**: nell'elenco della parte la fase di prodotto sta **al suo posto nella sequenza**, in
+  mezzo alle altre, e si riconosce da due segni: il timbro sopra il titolo e i **filetti forti** sopra e sotto
+  la riga, al posto del filetto neutro. Il filo della sequenza la attraversa come tutte.
+- **`rg-steps__break`** (`-title`, `-note`): lo stacco intitolato, **opzionale**, per l'elenco che raggruppa le
+  fasi di prodotto in coda. La piattaforma non lo usa.
 - `print-color-adjust: exact` esteso a fascia e timbro in `rg-utilities.css`: senza, il browser butterebbe via
   la campitura e resterebbe testo bianco su bianco.
 - Doc nuovo: `components/scope.md`. Sezioni aggiunte a `steps.md`, `worksheet-block.md`, `phase-switch.md`,
-  `badges.md`. Vetrina: `#scope` (testa del blocco, elenco della parte, foglio stampato anche in fotocopia
-  accanto al foglio di una parte).
+  `badges.md`; regole §4 aggiornate. Vetrina: `#scope` (testa del blocco, elenco della parte, foglio stampato,
+  e tutti e due in simulazione fotocopia).
+
+### Il colore dell'ambito: `--rg-color-scope`
+
+La prima stesura era **nera**. Dal campo: *«rendila più evidente, magari in rosso? o comunque un colore bello
+evidente»*. Quindi campitura piena in un rosso che nel DS non esisteva, `#b3261e`, con `--rg-color-scope-text`
+(bianco) come coppia dichiarata.
+
+**Perché non `--rg-color-danger`.** Quel rosso, nella stessa pagina, è già due cose: l'errore dei moduli **e**
+`--rg-color-category-3`, cioè il reparto **Pressatura**. Un terzo significato sullo stesso valore è ciò che le
+regole §4 vietano — e sarebbe il significato sbagliato: qui non c'è nessun errore, c'è un'appartenenza. Il
+rosso d'ambito è più acceso del mattone dell'errore: a colpo d'occhio non sono lo stesso rosso. Le regole §4
+hanno ora un capitolo che lo dichiara: un ruolo solo, mai azione, navigazione, focus, testo o stato, mai da
+solo.
+
+**Tre segnali, e uno solo è il colore.** (a) **Campitura piena**: nessuno stato del DS riempie una superficie —
+alert, badge e campi in errore sono filetti e parole su bianco. (b) **Filetto nero forte** sotto la fascia e
+contorno nero attorno al timbro. (c) **Maiuscoletto bianco**, che è contenuto del markup.
+
+**In fotocopia.** Il rosso d'ambito in scala di grigi cade a ~26% di luminanza e col contrasto spinto va al
+nero: sul foglio resta l'unico blocco pieno scuro, mentre le trame dei reparti — righe sottili su bianco —
+restano chiare. Vale anche contro la trama della Pressatura, che a colori usa lo stesso rosso dell'errore. Il
+confronto affiancato è in vetrina (`#scope-sheet-photocopy`, `#scope-steps-photocopy`). Contrasto del testo:
+bianco su scope = 5,98:1, AA anche a 12 px.
 
 **Non è un badge, ed è il punto.** `rg-badge` per contratto sta su superficie bianca con filetto: classifica un
 record fra i suoi pari. Qui non si classifica una fase, si dice che quella fase **non è come le altre**. Il
 badge era la prima ipotesi ed è stato scartato come troppo timido.
 
 **Non compete con il reparto.** `rg-dept-band` ha trama, colore categoriale e targhetta bianca; la fascia
-d'ambito non ha né trama né colore, sta più in alto ed è **più bassa** — il nero pieno pesa più del colore a
+d'ambito è piena, senza trama, sta più in alto ed è **più bassa** — una campitura piena pesa più di una trama a
 parità di altezza.
 
-**L'intestazione di gruppo, qui, si può fare.** La 1.16.0 l'aveva esclusa: in una `<ol>` sarebbe stata una fase
-finta con un numero di posizione in più. Restava vero finché il gruppo era di fasi della stessa parte. Lo
-stacco 1.31.0 non intesta un gruppo: dice che da quel punto in giù l'elenco parla di un altro oggetto, non ha
-numero e sta in coda, mai in mezzo.
+### Seconda stesura dell'elenco: dentro, non in coda
+
+La prima versione metteva le fasi di prodotto **in coda**, dopo uno stacco intitolato. Dal campo: *«qui mi
+scrivi troppe volte "di tutto il prodotto"; in più non va bene che sia separato: la fase è dentro le altre ma è
+visibilmente diversa dalle altre»*. Ora la riga sta al suo posto nella sequenza, il filo la attraversa e il
+segno regge da solo. Lo stacco resta documentato come opzionale.
 
 ## 1.30.0 — 2026-09-18
 

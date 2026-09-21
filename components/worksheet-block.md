@@ -619,7 +619,7 @@ reparto **non va seguito su una parte sola**: sbagliarlo vuol dire farlo tre vol
 
 | Classe | Cosa fa |
 | --- | --- |
-| `rg-scope-band` | La **fascia d'ambito**: primo figlio del blocco, a filo dei bordi, nero pieno con la parola in bianco. Vedi [scope](scope.md). |
+| `rg-scope-band` | La **fascia d'ambito**: primo figlio del blocco, a filo dei bordi, campitura piena nel rosso d'ambito con la parola in bianco e un filetto nero forte sotto. Vedi [scope](scope.md). |
 | `rg-worksheet-block--product` | Contorno **forte**: il secondo segnale, per trovare il foglio nel mucchio. |
 
 ### Dove sta, e perché non copre il reparto
@@ -628,12 +628,14 @@ Dall'alto: **fascia d'ambito** (a filo dei bordi) → `__step` → **banda del r
 bordi) → `__work`. Due fasce in fila, e si leggono come due risposte diverse: *di chi è questa fase*
 e *chi la esegue*.
 
-- La fascia d'ambito non ha **né trama né colore**: è l'unica campitura piena del foglio. La banda
-  del reparto tiene la sua trama e il suo colore di categoria.
-- È **più bassa** della banda: il nero pieno pesa più del colore a parità di altezza. Se fossero alte
-  uguali, la prima coprirebbe la seconda.
-- In **fotocopia** una campitura piena resta piena a qualunque contrasto, mentre una trama può
-  impastarsi: è il segnale più robusto che il foglio abbia, e per questo porta la frase che conta.
+- La fascia d'ambito è **piena e senza trama**: è l'unica campitura piena del foglio. La banda del
+  reparto tiene la sua trama e il suo colore di categoria, su targhetta bianca.
+- È **più bassa** della banda: una campitura piena pesa più di una trama a parità di altezza. Se
+  fossero alte uguali, la prima coprirebbe la seconda.
+- In **fotocopia** il rosso d'ambito diventa un blocco scuro pieno (in scala di grigi ~26% di
+  luminanza, e col contrasto spinto va al nero), mentre le trame dei reparti — righe sottili su
+  bianco — restano chiare. Il foglio della fase di prodotto è l'unico con un blocco scuro in testa,
+  anche fotocopiato e anche stampato in bianco e nero.
 - `print-color-adjust: exact` è già in `rg-utilities.css`: senza, il browser non stamperebbe il nero
   e resterebbe testo bianco su bianco.
 

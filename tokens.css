@@ -49,6 +49,19 @@
   --rg-color-action-primary: var(--rg-color-black); --rg-color-action-primary-text: var(--rg-color-white);
   --rg-color-action-secondary: var(--rg-color-white); --rg-color-focus: var(--rg-color-black);
   --rg-color-success: #365c45; --rg-color-warning: #7a5a16; --rg-color-danger: #8a2e2e; --rg-color-info: #36596b;
+  /* AMBITO (proposta 1.31.0) — il rosso che dice «questa cosa non e come le altre». NON e uno stato:
+     non segnala che qualcosa non va, dice un'APPARTENENZA (la fase vale per tutto il prodotto, non
+     per una parte). Serviva un colore proprio perche --rg-color-danger e gia preso tre volte nella
+     stessa pagina: e l'errore dei moduli, ed e --rg-color-category-3, cioe il reparto Pressatura.
+     Lo stesso rosso con tre significati a due metri di distanza e esattamente cio che le regole §4
+     vietano. Questo e piu chiaro e piu acceso del rosso d'errore (che resta un mattone spento): a
+     colpo d'occhio i due non si confondono.
+     E il colore piu forte del sistema, e vale per UN RUOLO SOLO: mai azione, mai navigazione, mai
+     focus, mai testo, mai uno stato. Eccezione dichiarata alle regole §2 («colori vivaci come
+     scorciatoia gerarchica»), ambito: la dichiarazione di ambito, richiesta dal reparto.
+     Contrasto: bianco su questo rosso = 5,98:1 (AA per il testo normale). In scala di grigi cade a
+     ~26% di luminanza — un blocco scuro pieno, che in fotocopia va al nero: vedi components/scope.md. */
+  --rg-color-scope: #b3261e; --rg-color-scope-text: var(--rg-color-white);
   --rg-color-accent-sage: var(--rg-color-perugino-sage); --rg-color-accent-blue: var(--rg-color-perugino-powder-blue);
   --rg-color-accent-sand: var(--rg-color-perugino-sand-ochre);
 

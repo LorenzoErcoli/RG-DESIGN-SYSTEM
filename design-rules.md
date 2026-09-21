@@ -68,6 +68,23 @@ Conseguenza da conoscere prima di usarla: `category-3`, `-4` e `-5` **sono** `da
 
 La palette si ferma a sette, e non è una svista: una categoria in più chiede **un segno in più** — una trama, una figura — non un colore in più. Oltre il settimo colore la distinzione non regge né in scala di grigi né in fotocopia, ed è lì che queste cose vengono lette davvero.
 
+### Il rosso d'ambito (dalla 1.31.0)
+
+`--rg-color-scope` è il colore più forte del sistema e vale per **un ruolo solo**: dire che una cosa
+**non è come le altre della vista** perché appartiene a un altro oggetto — oggi, la fase che vale per
+tutto il prodotto e non per una parte ([scope](components/scope.md)).
+
+- **Non è uno stato.** Non dice «errore», non dice «attenzione, qualcosa non va»: dice
+  un'appartenenza. Per questo non riusa `--rg-color-danger`, che nella stessa pagina è già l'errore
+  dei moduli **e** `--rg-color-category-3`, cioè il reparto Pressatura: lo stesso valore con tre
+  significati a due metri di distanza è ciò che questo capitolo vieta.
+- **Mai** azione primaria, navigazione, focus, testo corrente, bordo di un campo, badge di stato.
+- **Mai da solo**: va sempre con la parola scritta, la campitura piena e un segno nero non cromatico.
+  È l'unico colore del DS che riempie una superficie, e quella campitura è metà del messaggio.
+- È un'eccezione dichiarata al §2 («colori vivaci come scorciatoia gerarchica»), chiesta dal reparto
+  e limitata a un componente: se servisse per una seconda cosa, la domanda da farsi è se quella
+  seconda cosa sia davvero un ambito.
+
 ### Identità delle parti (dalla 1.17.0)
 
 Le parti di un prodotto (DAVANTI, DIETRO, LATO, FONDO, MANICO…) sono oggetti pari-ordinati: la

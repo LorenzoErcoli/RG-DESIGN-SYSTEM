@@ -98,8 +98,10 @@
      di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome.
      rg-cutout__cue (1.23.0): il fondo bianco interrompe la linea di taglio sotto la parola.
      rg-scope-band / rg-scope-mark (1.31.0): la campitura piena E' il segnale, e il foglio della fase di
-     tutto il prodotto, senza, torna a sembrare il foglio di una parte. Su stampante in bianco e nero il
-     rosso d'ambito esce come un blocco scuro pieno: resta l'unico del foglio. */
+     tutto il prodotto, senza, torna a sembrare il foglio di una parte. Su stampante in bianco e nero
+     l'ambra d'ambito (1.32.0) esce come un blocco CHIARO ma UNIFORME: non e' piu' il piu' scuro del
+     foglio, e resta l'unica campitura piena (le trame dei reparti sono righe su bianco). Il filetto
+     nero sotto la fascia e il contorno forte del blocco non dipendono da questa regola. */
   .rg-dept-band, .rg-dept-mark, .rg-part-mark, .rg-part-edge, .rg-cutout__cue, .rg-scope-band, .rg-scope-mark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   /* La fascia d'ambito non si stacca dal suo foglio: da sola in fondo a una pagina direbbe «tutto il
      prodotto» sopra il blocco sbagliato. Il blocco gia' non si spezza; questo vale se l'app la usa fuori. */

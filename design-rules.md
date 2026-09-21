@@ -68,19 +68,38 @@ Conseguenza da conoscere prima di usarla: `category-3`, `-4` e `-5` **sono** `da
 
 La palette si ferma a sette, e non è una svista: una categoria in più chiede **un segno in più** — una trama, una figura — non un colore in più. Oltre il settimo colore la distinzione non regge né in scala di grigi né in fotocopia, ed è lì che queste cose vengono lette davvero.
 
-### Il rosso d'ambito (dalla 1.31.0)
+### Il colore d'ambito (dalla 1.31.0)
 
 `--rg-color-scope` è il colore più forte del sistema e vale per **un ruolo solo**: dire che una cosa
 **non è come le altre della vista** perché appartiene a un altro oggetto — oggi, la fase che vale per
 tutto il prodotto e non per una parte ([scope](components/scope.md)).
 
+Dalla 1.32.0 il valore è **ambra** (`#f59e0b`) con il testo **nero**; nella 1.31.0 era un rosso
+proprio (`#b3261e`) con il testo bianco. Il nome del token non è cambiato e non cambierà per un
+colore: dice il **ruolo**, non la tinta. Chi consuma il DS non ha toccato una classe.
+
 - **Non è uno stato.** Non dice «errore», non dice «attenzione, qualcosa non va»: dice
-  un'appartenenza. Per questo non riusa `--rg-color-danger`, che nella stessa pagina è già l'errore
-  dei moduli **e** `--rg-color-category-3`, cioè il reparto Pressatura: lo stesso valore con tre
-  significati a due metri di distanza è ciò che questo capitolo vieta.
+  un'appartenenza. Per questo non riusa `--rg-color-warning`, che nella stessa pagina è già l'avviso
+  dei moduli **e** `--rg-color-category-4`, cioè il reparto Strass; e per la stessa ragione non
+  riusava `--rg-color-danger` quando era rosso. Lo stesso valore con tre significati a due metri di
+  distanza è ciò che questo capitolo vieta. La richiesta che ha portato all'ambra diceva «un colore
+  di allerta»: la parola è quella, la cosa no, e il token resta fuori dagli stati.
 - **Mai** azione primaria, navigazione, focus, testo corrente, bordo di un campo, badge di stato.
 - **Mai da solo**: va sempre con la parola scritta, la campitura piena e un segno nero non cromatico.
   È l'unico colore del DS che riempie una superficie, e quella campitura è metà del messaggio.
+- **Il testo sopra è nero, e non è una scelta di gusto.** Nero su ambra = 9,78:1; bianco su ambra =
+  2,15:1, sotto qualunque soglia. Chi cambiasse il valore di `--rg-color-scope` deve ricalcolare
+  `--rg-color-scope-text` insieme: i due token sono una coppia, non due decisioni.
+- **Su carta il colore non è il segnale portante, ed è dichiarato.** In scala di grigi l'ambra sta al
+  ~65% di luminanza: un blocco chiaro, dove il rosso stava al ~26%. La fascia resta riconoscibile
+  perché è l'unica **campitura uniforme** del foglio — tutte e sette le trame dei reparti sono righe
+  su bianco — e perché il filetto nero forte e il maiuscoletto nero non dipendono dal colore. È il
+  caso esemplare della regola: quando il colore si indebolisce, il messaggio deve reggere lo stesso.
+- **Vicinanze da verificare prima di aggiungere un caldo.** `--rg-color-accent-sand` (cioè
+  `--rg-color-category-6`) è a 2° di tinta dall'ambra e allo stesso grigio (61% contro 65%): in
+  fotocopia i due toni non si distinguono. Oggi non si confondono perché la sabbia compare come
+  trama o come pastiglia tonda e l'ambra come rettangolo pieno col contorno nero — la distanza la
+  fa la **figura**. Un terzo caldo pieno nella stessa vista romperebbe questo equilibrio.
 - È un'eccezione dichiarata al §2 («colori vivaci come scorciatoia gerarchica»), chiesta dal reparto
   e limitata a un componente: se servisse per una seconda cosa, la domanda da farsi è se quella
   seconda cosa sia davvero un ambito.

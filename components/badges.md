@@ -67,5 +67,7 @@ Dire che una fase vale per **tutto il prodotto** e non per una parte non è clas
 i suoi pari: è dire che quella fase **non è come le altre** della pagina. Un `rg-badge` lì è troppo
 timido — 20 px con filetto grigio, in una testa che ha già un numero nero da 32 e un titolo da 28 —
 e soprattutto è ciò che il badge per contratto non può fare: riempirsi. Il segno è
-[`rg-scope-mark` / `rg-scope-band`](scope.md): campitura piena nel rosso d'ambito
-(`--rg-color-scope`, che non è il rosso d'errore), parola in bianco, contorno nero, quadro.
+[`rg-scope-mark` / `rg-scope-band`](scope.md): campitura piena nel colore d'ambito
+(`--rg-color-scope`, ambra dalla 1.32.0, che non è il colore d'avviso), parola in **nero**, contorno
+nero, quadro. Il timbro d'ambito e un `rg-badge--warning` non si confondono, ed è la ragione per cui
+il badge non si riempie: il primo è una campitura, il secondo un filetto con le parole su bianco.

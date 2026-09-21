@@ -124,7 +124,7 @@ Variabile: `--rg-phase-switch-ground`, il fondo dietro la didascalia (default
 | `rg-phase-panel__heading` | (1.17.0) Numero, etichetta e nome. |
 | `rg-phase-panel__num` | (1.17.0) Il numero della fase, invertito come `rg-step__num` a fase aperta. `aria-hidden`: il numero lo dice il titolo. |
 | `rg-phase-panel__name` | (1.17.0) Colonna di etichetta e nome. |
-| `rg-scope-band` | **1.31.0.** La **fascia d'ambito**: primo figlio del blocco, **sopra** `__department`, quando la fase vale per tutto il prodotto e non per una parte. Campitura piena nel rosso d'ambito, da bordo a bordo, filetto nero forte sotto. Vedi [scope](scope.md). |
+| `rg-scope-band` | **1.31.0.** La **fascia d'ambito**: primo figlio del blocco, **sopra** `__department`, quando la fase vale per tutto il prodotto e non per una parte. Campitura piena nel colore d'ambito (ambra dalla 1.32.0, parola in nero), da bordo a bordo, filetto nero forte sotto. Vedi [scope](scope.md). |
 | `rg-phase-panel__department` | **Proposta 1.21.0.** La **riga del reparto**: primo figlio del blocco, prima di `__head`. `rg-dept-label` con tessera e la parola «Reparto» (`rg-dept-label__kind`): «Reparto Ricamo», «Reparto da assegnare». Chiusa da un filetto neutro rientrato. Vedi *Il reparto in una riga sua*. |
 | `rg-phase-panel__kind` | (1.17.0) «Fase 2 di 4», poi lo scopo e la relazione: «Principale · con la 3», «Collegata · dopo la 2». Sempre, anche con una fase sola. Nella 1.20.0 il primo elemento era il reparto (`rg-dept-label`): **superato dalla proposta 1.21.0**, il reparto va in `__department`. |
 | `rg-phase-panel__title` | (1.17.0) Il nome della fase: `<h1>` se la pagina mostra una fase, `<h2>` in un gruppo. |
@@ -534,6 +534,9 @@ stesso padding. Eliminare usa icona come in dash del prodotto»*.
   mostra badge di stato («costo non calcolato», «2 non risolti»), e `category-3/4/5` sono
   `danger`, `warning` e `success`. Una fascia rossa a tutta larghezza sopra un badge d'errore
   direbbe due cose con lo stesso rosso. Il colore pieno resta per la carta (`rg-worksheet-block`).
+  Nota che questo **non** vale per `rg-scope-band`, che a schermo resta piena e colorata: non è un
+  colore di categoria assegnato a uno dei sette reparti, è un valore che ha un ruolo solo in tutto il
+  DS, e la fascia è una riga sola in testa al blocco invece che l'intestazione di ogni fase.
 - **Reparto non assegnato**: la fascia c'è lo stesso, senza variante di reparto (filetto grigio,
   nessuna trama) e con l'etichetta «Reparto da assegnare». La testa del blocco ha la stessa altezza in
   ogni caso, e il dato mancante si legge come tale.

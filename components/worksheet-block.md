@@ -619,7 +619,7 @@ reparto **non va seguito su una parte sola**: sbagliarlo vuol dire farlo tre vol
 
 | Classe | Cosa fa |
 | --- | --- |
-| `rg-scope-band` | La **fascia d'ambito**: primo figlio del blocco, a filo dei bordi, campitura piena nel rosso d'ambito con la parola in bianco e un filetto nero forte sotto. Vedi [scope](scope.md). |
+| `rg-scope-band` | La **fascia d'ambito**: primo figlio del blocco, a filo dei bordi, campitura piena nel colore d'ambito (ambra dalla 1.32.0) con la parola in **nero** e un filetto nero forte sotto. Vedi [scope](scope.md). |
 | `rg-worksheet-block--product` | Contorno **forte**: il secondo segnale, per trovare il foglio nel mucchio. |
 
 ### Dove sta, e perché non copre il reparto
@@ -632,12 +632,19 @@ e *chi la esegue*.
   reparto tiene la sua trama e il suo colore di categoria, su targhetta bianca.
 - È **più bassa** della banda: una campitura piena pesa più di una trama a parità di altezza. Se
   fossero alte uguali, la prima coprirebbe la seconda.
-- In **fotocopia** il rosso d'ambito diventa un blocco scuro pieno (in scala di grigi ~26% di
-  luminanza, e col contrasto spinto va al nero), mentre le trame dei reparti — righe sottili su
-  bianco — restano chiare. Il foglio della fase di prodotto è l'unico con un blocco scuro in testa,
-  anche fotocopiato e anche stampato in bianco e nero.
-- `print-color-adjust: exact` è già in `rg-utilities.css`: senza, il browser non stamperebbe il nero
-  e resterebbe testo bianco su bianco.
+- In **fotocopia** (dalla 1.32.0, con l'ambra) la fascia diventa un blocco **chiaro** — ~65% di
+  luminanza in scala di grigi, dove il rosso della 1.31.0 stava al ~26% e andava al nero. Sul foglio
+  non è più il blocco più scuro, ma resta **l'unica campitura uniforme**: le trame dei reparti sono
+  righe sottili su bianco, nessuna è una tinta piatta. Quello che regge la lettura sulla carta sono
+  il **filetto nero forte** sotto la fascia e il **maiuscoletto nero**, che su fondo chiaro tiene la
+  fotocopia meglio di quanto tenesse il bianco in negativo.
+- Per trovare il foglio **nel mucchio** il segnale è `rg-worksheet-block--product`, il contorno
+  raddoppiato: corre per l'altezza del blocco, non in una striscia in testa, e non dipende dal
+  colore. Dalla 1.32.0 è lui a portare il colpo d'occhio da lontano, e per questo **non** è stato
+  aggiunto un secondo filetto sopra la fascia: cadrebbe a filo del bordo del blocco e si leggerebbe
+  come una sbavatura di stampa.
+- `print-color-adjust: exact` è già in `rg-utilities.css`: senza, il browser butterebbe via la
+  campitura e il foglio perderebbe il segno dell'ambito.
 
 ### Cosa cambia nella testa
 

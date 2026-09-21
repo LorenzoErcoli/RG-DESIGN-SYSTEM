@@ -49,19 +49,36 @@
   --rg-color-action-primary: var(--rg-color-black); --rg-color-action-primary-text: var(--rg-color-white);
   --rg-color-action-secondary: var(--rg-color-white); --rg-color-focus: var(--rg-color-black);
   --rg-color-success: #365c45; --rg-color-warning: #7a5a16; --rg-color-danger: #8a2e2e; --rg-color-info: #36596b;
-  /* AMBITO (1.31.0) — il rosso che dice «questa cosa non e come le altre». NON e uno stato:
-     non segnala che qualcosa non va, dice un'APPARTENENZA (la fase vale per tutto il prodotto, non
-     per una parte). Serviva un colore proprio perche --rg-color-danger e gia preso tre volte nella
-     stessa pagina: e l'errore dei moduli, ed e --rg-color-category-3, cioe il reparto Pressatura.
-     Lo stesso rosso con tre significati a due metri di distanza e esattamente cio che le regole §4
-     vietano. Questo e piu chiaro e piu acceso del rosso d'errore (che resta un mattone spento): a
-     colpo d'occhio i due non si confondono.
+  /* AMBITO (1.31.0; ambra dalla 1.32.0) — il colore che dice «questa cosa non e come le altre».
+     NON e uno stato: non segnala che qualcosa non va, dice un'APPARTENENZA (la fase vale per tutto
+     il prodotto, non per una parte). Serviva un colore proprio perche --rg-color-warning, il vicino
+     piu prossimo in tinta, e gia preso due volte nella stessa pagina: e lo stato d'avviso dei moduli
+     ed e --rg-color-category-4, cioe il reparto Strass. Lo stesso valore con tre significati a due
+     metri di distanza e esattamente cio che le regole §4 vietano — e il terzo significato sarebbe
+     quello sbagliato: questa non e un'allerta, e un'appartenenza. (Vale identico per il rosso della
+     prima stesura e --rg-color-danger: e il motivo non e cambiato, si e spostato di tinta.)
+     DUE STESURE. La prima era nera; la seconda rossa (#b3261e, 1.31.0), su «rendila piu evidente,
+     magari in rosso»; la terza e AMBRA, su «proviamo un giallo/arancione di allerta», scelta fra
+     quattro candidati con il testo NERO. Il testo nero non e gusto: bianco su ambra fa 2,15:1 e non
+     sarebbe leggibile, nero fa 9,78:1 e la nota a 12 px resta AA con margine (col rosso il testo
+     bianco faceva 5,98:1, quindi cambiando colore il contrasto SALE).
      E il colore piu forte del sistema, e vale per UN RUOLO SOLO: mai azione, mai navigazione, mai
      focus, mai testo, mai uno stato. Eccezione dichiarata alle regole §2 («colori vivaci come
      scorciatoia gerarchica»), ambito: la dichiarazione di ambito, richiesta dal reparto.
-     Contrasto: bianco su questo rosso = 5,98:1 (AA per il testo normale). In scala di grigi cade a
-     ~26% di luminanza — un blocco scuro pieno, che in fotocopia va al nero: vedi components/scope.md. */
-  --rg-color-scope: #b3261e; --rg-color-scope-text: var(--rg-color-white);
+     FOTOCOPIA, LO SCARTO DA CONOSCERE. In scala di grigi l'ambra sta al ~65% di luminanza (grigio
+     chiaro) dove il rosso stava al ~26% (blocco scuro pieno). Sul foglio la fascia non e piu l'unico
+     blocco SCURO: resta l'unico blocco UNIFORME, perche nessuna trama di reparto e una campitura
+     piena (sono tutte righe su bianco). In stampa il peso passa al filetto nero forte, e il
+     maiuscoletto nero su fondo chiaro regge la fotocopia MEGLIO di quanto reggesse il bianco in
+     negativo, che alla seconda copia si chiude. Vedi components/scope.md.
+     VICINI CALDI, verificati: --rg-color-warning (#7a5a16 = category-4) sta a 3° di tinta ma a meta
+     della luce (L 28% contro 50%) e in grigio al 36% contro 65%; --rg-color-accent-sand (#b79a62 =
+     category-6, reparto Accoppiaggi) sta a 2° di tinta e quasi allo STESSO grigio (61% contro 65%):
+     in fotocopia i due toni non si distinguono. Non si confondono lo stesso perche l'ambra e una
+     CAMPITURA piena col contorno nero, mentre la sabbia compare come trama di righe o come pastiglia
+     tonda: la distanza la fanno figura e misura, non la tinta. Chi mette i due accanto non aggiunga
+     colore, aggiunga forma. */
+  --rg-color-scope: #f59e0b; --rg-color-scope-text: var(--rg-color-black);
   --rg-color-accent-sage: var(--rg-color-perugino-sage); --rg-color-accent-blue: var(--rg-color-perugino-powder-blue);
   --rg-color-accent-sand: var(--rg-color-perugino-sand-ochre);
 

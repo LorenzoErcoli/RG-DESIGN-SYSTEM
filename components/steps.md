@@ -286,13 +286,15 @@ solo**, sulla riga, senza niente che lo spieghi intorno.
 | Classe | Cosa fa |
 | --- | --- |
 | `rg-step--product` | La riga della fase di tutto il prodotto: **filetti forti** sopra e sotto, al posto del filetto neutro che divide le fasi fra loro. |
-| `rg-scope-mark` | Il **timbro** rosso sopra il titolo, dentro `rg-step__headline`: la prima cosa che si vede e l'unica che entra nel nome accessibile del toggle. |
+| `rg-scope-mark` | Il **timbro** d'ambito sopra il titolo, dentro `rg-step__headline`: la prima cosa che si vede e l'unica che entra nel nome accessibile del toggle. |
 | `rg-steps__break` (+ `-title`, `-note`) | **Opzionale, non usato dalla piattaforma**: lo stacco intitolato, per un'app che voglia raggruppare le fasi di prodotto tutte in coda. |
 
 ### Due segni sulla riga, nessuno di solo colore
 
 1. **Il timbro** (`rg-scope-mark`), sopra il titolo, nello stesso posto del ruolo di gruppo
-   (`rg-step__role`). Campitura piena nel rosso d'ambito, parola in bianco maiuscolo, contorno nero.
+   (`rg-step__role`). Campitura piena nel colore d'ambito (ambra dalla 1.32.0), parola in **nero**
+   maiuscolo, contorno nero. In un elenco il timbro è piccolo e il contorno nero conta il doppio:
+   è lui a dare al rettangolo un bordo definito quando la campitura è chiara.
 2. **I filetti forti** sopra e sotto la riga. Fra due fasi il filetto è neutro; qui è nero e doppio,
    e la riga si stacca dalle vicine **restando in fila**, come la riga di totale di una tabella. Se
    la fase di prodotto è la prima della lista non aggiunge niente in cima: il blocco ha già il suo

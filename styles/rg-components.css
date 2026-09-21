@@ -1941,7 +1941,7 @@ a.rg-icon-button { text-decoration: none; }
   .rg-input, .rg-select, .rg-textarea, .rg-search { font-size: var(--rg-font-size-md); }
 }
 
-/* ── AMBITO DELLA FASE: DI UNA PARTE O DI TUTTO IL PRODOTTO (1.31.0) ───────────────────────────────
+/* ── AMBITO DELLA FASE: DI UNA PARTE O DI TUTTO IL PRODOTTO (1.31.0; colore ambra dalla 1.32.0) ───────────────────────────────
    Una fase di lavorazione appartiene di norma a UNA PARTE (tomaia, spoiler, linguetta). Dalla 1.31.0
    puo' valere per TUTTO IL PRODOTTO — il controllo qualita' finale: si compila una volta sola, si vede
    dalla pagina di ogni parte, conta una volta nel costo, e sul fascicolo esce una volta sola in fondo
@@ -1953,27 +1953,52 @@ a.rg-icon-button { text-decoration: none; }
      foglio stampato. E' la misura «da un metro».
    - rg-scope-mark — il TIMBRO in linea, per una riga di elenco. Stessa figura, stessa cassa.
 
-   IL COLORE (seconda stesura). La prima era nera. Giudizio dal campo: «rendila piu' evidente, magari
-   in rosso? o comunque un colore bello evidente». Quindi campitura piena in --rg-color-scope, un
-   rosso che nel DS non esisteva e che vale per un ruolo solo. NON riusa --rg-color-danger perche'
-   quel rosso, nella stessa pagina, e' gia' due cose: l'errore dei moduli e --rg-color-category-3,
-   cioe' il reparto Pressatura. Un terzo significato sullo stesso valore e' esattamente cio' che le
-   regole §4 vietano. Il rosso d'ambito e' piu' acceso del mattone dell'errore: a colpo d'occhio si
-   vede che non e' lo stesso rosso, e non dice «qualcosa non va» ma «questa non e' come le altre».
+   IL COLORE (terza stesura, 1.32.0). La prima era nera. Giudizio dal campo: «rendila piu' evidente,
+   magari in rosso? o comunque un colore bello evidente», e per la 1.31.0 fu un rosso proprio,
+   #b3261e. Vista montata, la richiesta e' cambiata: «proviamo un giallo/arancione di allerta».
+   Fra quattro candidati messi a confronto ha vinto l'AMBRA #f59e0b, con il testo NERO.
+   Il testo nero non e' una preferenza: bianco su ambra fa 2,15:1 e non si leggerebbe, nero fa
+   9,78:1. Cambiando colore il contrasto SALE (il bianco sul rosso stava a 5,98:1).
+   NON riusa --rg-color-warning, che e' il vicino piu' prossimo in tinta (3°) e che nella stessa
+   pagina e' gia' due cose: lo stato d'avviso dei moduli e --rg-color-category-4, cioe' il reparto
+   Strass. Un terzo significato sullo stesso valore e' esattamente cio' che le regole §4 vietano — e
+   sarebbe il significato sbagliato, perche' questa NON E' UN'ALLERTA: non dice «qualcosa non va»,
+   dice «questa non e' come le altre», cioe' un'appartenenza. (Lo stesso ragionamento che nella
+   1.31.0 escludeva --rg-color-danger: si e' spostato di tinta, non e' cambiato. Anzi e' piu' forte,
+   perche' warning e' gia' uno stato E una categoria.)
 
    TRE SEGNALI, E UNO SOLO E' IL COLORE (regole §4: nessuno stato — qui nessuna appartenenza — dipende
-   dal solo colore):
+   dal solo colore). Con l'ambra i tre reggono tutti, ma cambia quale porta il peso sulla carta:
    (a) CAMPITURA PIENA. Nessuno stato del DS riempie una superficie: alert, badge e campi in errore
-       sono filetti e parole su bianco. La campitura e' il segno dell'ambito, e solo suo.
+       sono filetti e parole su bianco. La campitura e' il segno dell'ambito, e solo suo. Identica
+       a prima, e con l'ambra diventa il discrimine anche in grigio (vedi FOTOCOPIA).
    (b) FILETTO NERO FORTE sotto la fascia (e contorno nero del timbro): non e' colore, resta in
        fotocopia e in stampa monocromatica, e tiene la fascia separata dalla banda del reparto.
-   (c) MAIUSCOLETTO BIANCO: la parola, che e' contenuto del markup e resta anche senza CSS.
+       Identico a prima, ma ora PESA DI PIU': sul foglio e' il segnale che resta.
+   (c) MAIUSCOLETTO NERO (era bianco): la parola, che e' contenuto del markup e resta anche senza
+       CSS. Su fondo chiaro il nero e' piu' solido del bianco in negativo — e alla fotocopia il
+       negativo e' proprio cio' che si chiude per primo.
 
-   FOTOCOPIA. In scala di grigi #b3261e cade a ~26% di luminanza (grigio scuro pieno) e con il
-   contrasto spinto di una fotocopia va al nero: sul foglio resta l'unico blocco pieno scuro. Le
-   trame dei reparti sono righe sottili su bianco, quindi restano CHIARE: nessuna delle due si
-   confonde con l'altra, nemmeno quella del reparto Pressatura, che usa lo stesso rosso dell'errore.
-   Vedi la vetrina, #scope-sheet-photocopy.
+   FOTOCOPIA, LO SCARTO DA CONOSCERE E DICHIARATO. In scala di grigi #f59e0b sta al ~65% di
+   luminanza: un grigio CHIARO, dove il rosso stava al ~26% e con il contrasto spinto andava al nero.
+   Sul foglio la fascia NON E' PIU' L'UNICO BLOCCO SCURO. Resta pero' l'unico blocco UNIFORME, ed e'
+   una proprieta' strutturale, non un caso: tutte e sette le trame dei reparti sono
+   repeating-linear-gradient, cioe' righe su bianco, nessuna e' una campitura. Una tinta piatta e un
+   reticolo di righe non si leggono uguali a nessuna distanza, qualunque sia il tono. Il confronto e'
+   in vetrina, #scope-sheet-photocopy.
+   NESSUN RINFORZO AGGIUNTO IN STAMPA, e la ragione e' che il posto giusto e' gia' occupato: cio' che
+   si perde passando all'ambra non e' la lettura della fascia (che migliora: nero su chiaro) ma il
+   colpo d'occhio da un metro sul mucchio dei fogli, e quello lo fa gia'
+   rg-worksheet-block--product col contorno raddoppiato su tutti e quattro i lati, che corre per
+   l'altezza del blocco invece che in una striscia alta 20 px. Un secondo filetto forte SOPRA la
+   fascia cadrebbe a zero distanza dal bordo del blocco (la fascia e' il primo figlio, a filo) e si
+   leggerebbe come una sbavatura di stampa, non come struttura.
+   VICINI CALDI, verificati e non solo stimati: --rg-color-accent-sand (#b79a62 = category-6, reparto
+   Accoppiaggi) e' a 2° di tinta dall'ambra e quasi allo stesso grigio (61% contro 65%): IN FOTOCOPIA
+   I DUE TONI NON SI DISTINGUONO. Non e' un problema qui perche' la sabbia sul foglio compare come
+   trama di righe (la banda degli Accoppiaggi) o come pastiglia tonda numerata (rg-part-mark), mai
+   come campitura rettangolare: si separano per figura. E' pero' la coppia da tenere d'occhio, come
+   pressatura/finissaggio lo e' fra le trame. --rg-color-warning sta piu' lontano (meta' luce).
 
    PERCHE' NON UN BADGE. rg-badge sta sempre su superficie bianca con filetto, per contratto («niente
    riempimenti»): e' un metadato di un record fra gli altri. Qui non si classifica una fase, si dice
@@ -1989,8 +2014,8 @@ a.rg-icon-button { text-decoration: none; }
    aggiungere il gergo del prodotto: «Tutto il prodotto · al paio». */
 .rg-scope-band { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-3); margin: 0; padding: var(--rg-space-2) var(--rg-space-4); color: var(--rg-color-scope-text); background: var(--rg-color-scope); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); }
 .rg-scope-band__text { flex: none; color: var(--rg-color-scope-text); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
-/* La nota e' bianca come il testo (bianco su scope = 5,98:1, AA anche a 12 px): un grigio chiaro
-   scenderebbe sotto la soglia. Si distingue per misura e peso, non per colore. */
+/* La nota e' nera come il testo (nero su scope = 9,78:1, AA con margine anche a 12 px): un grigio
+   scenderebbe verso la soglia senza guadagnare niente. Si distingue per misura e peso, non colore. */
 .rg-scope-band__note { min-width: 0; color: var(--rg-color-scope-text); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); }
 /* IN TESTA AL BLOCCO DELLA FASE (a schermo): PRIMO figlio di rg-phase-panel, sopra la riga del reparto
    (__department), con lo stesso margine laterale della testa e gli angoli alti del blocco. Sopra c'e'
@@ -2023,8 +2048,8 @@ a.rg-icon-button { text-decoration: none; }
    AL SUO POSTO NELLA SEQUENZA, il filo della sequenza la attraversa come tutte, e il segno deve
    reggere DA SOLO — non c'e' nessuna intestazione che lo spieghi.
    rg-step--product porta due cose, nessuna delle due di solo colore:
-   1) il TIMBRO rosso sopra il titolo, nello stesso posto del ruolo di gruppo (rg-step__role): e' la
-      cosa che si vede per prima, ed e' anche l'unica che entra nel nome accessibile del toggle;
+   1) il TIMBRO d'ambito sopra il titolo, nello stesso posto del ruolo di gruppo (rg-step__role): e'
+      la cosa che si vede per prima, ed e' anche l'unica che entra nel nome accessibile del toggle;
    2) i FILETTI FORTI sopra e sotto la riga, al posto del filetto neutro che divide le fasi fra loro:
       la riga si stacca dalle vicine restando in fila, come una riga di totale in una tabella. Se e'
       la prima della lista non ne aggiunge uno: il blocco ha gia' il suo filetto in testa.

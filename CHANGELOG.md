@@ -7,6 +7,72 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.32.0 — 2026-09-21
+
+**Minor.** Nessuna classe e nessun token aggiunto, rimosso o rinominato, nessun markup da toccare: cambia il
+**valore** di due token esistenti, `--rg-color-scope` e `--rg-color-scope-text`. È una minor e non una patch
+perché cambia l'aspetto di un componente già in produzione, e chi si aggancia al tag deve poterlo vedere nel
+numero: un prodotto che aggiorna si ritrova la fascia d'ambito di un altro colore.
+
+### Il colore d'ambito diventa ambra
+
+La 1.31.0 aveva introdotto un rosso proprio, `#b3261e`, con il testo bianco. Visto montato in pagina, il
+giudizio è cambiato: *«proviamo un giallo/arancione di allerta»*. Fra quattro candidati messi a confronto con
+il contrasto e la resa in fotocopia di ciascuno (il rosso di partenza, un giallo, un'ambra, un arancione) la
+scelta è caduta sull'**ambra `#f59e0b` con il testo nero**.
+
+    --rg-color-scope: #f59e0b;
+    --rg-color-scope-text: var(--rg-color-black);
+
+Il **nome del token non cambia**: `--rg-color-scope` è semantico, dice il ruolo e non la tinta. Cambiano le
+parole del DS che lo chiamavano «il rosso d'ambito».
+
+**Il testo nero non è una scelta di gusto.** Nero su ambra = **9,78:1**; bianco su ambra = **2,15:1**, cioè
+illeggibile. Rispetto al bianco sul rosso (5,98:1) il contrasto **sale**, quindi la nota a 12 px resta AA con
+margine. I due token sono una coppia: chi cambia il primo ricalcola il secondo.
+
+**Perché non `--rg-color-warning`** (nella 1.31.0 la domanda era su `--rg-color-danger`). Il vicino più
+prossimo in tinta, a 3°, è `warning`, che nella stessa pagina è già due cose: lo stato d'avviso dei moduli
+**e** `--rg-color-category-4`, cioè il reparto **Strass**. Un terzo significato sullo stesso valore è ciò che
+le regole §4 vietano, e qui l'argomento è **più forte** che con `danger`, perché `warning` è già uno stato *e*
+una categoria. In più il significato sarebbe sbagliato: la parola usata per chiedere il colore è stata
+«allerta», ma questa **non è un'allerta**, è un'**appartenenza** — ed è la ragione per cui la parola scritta
+sulla fascia non è mai facoltativa.
+
+**Lo scarto della scelta, dichiarato prima e accettato.** In fotocopia l'ambra sta al **~65% di luminanza**
+(grigio chiaro) dove il rosso stava al ~26% (blocco scuro che col contrasto spinto andava al nero). Sul foglio
+la fascia **non è più l'unico blocco pieno scuro**. Regge lo stesso per due ragioni:
+
+- resta l'unica campitura **uniforme** del foglio, e non per caso: tutte e sette le trame dei reparti sono
+  `repeating-linear-gradient`, righe su bianco, nessuna è una tinta piatta (l'unica che lo era, gli
+  Accoppiaggi, fu scartata nella 1.14.0). Una tinta piatta e un reticolo di righe non si leggono uguali a
+  nessuna distanza, qualunque sia il tono;
+- dei tre segnali cambia **quale porta il peso**: (a) la campitura regge identica, (b) il filetto nero forte
+  regge identico e ora pesa di più, (c) il maiuscoletto diventa **nero** e su fondo chiaro è più solido del
+  bianco in negativo — il negativo è la prima cosa che una fotocopia chiude. Il segnale che porta il
+  significato è diventato il più robusto dei tre.
+
+**Nessun rinforzo aggiunto in stampa**, e la ragione è che il posto è già occupato. Ciò che l'ambra indebolisce
+non è la lettura della fascia ma il colpo d'occhio da un metro sul mucchio dei fogli, e quel compito lo fa già
+`rg-worksheet-block--product`, che raddoppia il contorno sui quattro lati e corre per l'altezza del blocco
+invece che in una striscia alta 20 px. Un secondo filetto forte **sopra** la fascia cadrebbe a distanza zero
+dal bordo del blocco (la fascia è il primo figlio, a filo) e si leggerebbe come una sbavatura di stampa.
+
+**Vicini caldi, verificati.** `--rg-color-warning` (`#7a5a16`, `category-4`) sta a 3° di tinta ma a metà della
+luce (L 28% contro 50%, grigio 36% contro 65%): non si confonde. `--rg-color-accent-sand` (`#b79a62`,
+`category-6`, reparto **Accoppiaggi**, e colore della terza parte in `rg-part-mark`) sta a **2° di tinta e allo
+stesso grigio**, 61% contro 65%: **in fotocopia i due toni non si distinguono**. Non si confondono lo stesso
+perché la sabbia compare come trama di righe o come pastiglia tonda numerata e l'ambra come rettangolo pieno
+col contorno nero — la distanza la fanno figura e misura, non la tinta. È un limite dichiarato, ed è la coppia
+da tenere d'occhio prima di introdurre un terzo caldo pieno nella stessa vista. Nuova tavola in vetrina:
+`#scope-vs-sand`.
+
+Aggiornati con il ragionamento nuovo: `tokens.css`, `tokens.json`, il blocco di commento sopra `.rg-scope-band`
+in `styles/rg-components.css`, la nota di stampa in `styles/rg-utilities.css`, `components/scope.md`, i rimandi
+in `badges.md`, `phase-switch.md`, `worksheet-block.md` e `steps.md`, le regole §4 (il capitolo si chiama ora
+*Il colore d'ambito*), `components.json` e la vetrina, dove `#scope-sheet-photocopy` mostra la resa vera
+dell'ambra.
+
 ## 1.31.0 — 2026-09-21
 
 **Minor.** Classi nuove e additive e **due token nuovi** (`--rg-color-scope`, `--rg-color-scope-text`): nessuna

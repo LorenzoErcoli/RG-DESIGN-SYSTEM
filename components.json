@@ -2,8 +2,8 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.31.0",
-  "generated": "2026-09-18",
+  "dsVersion": "1.32.0",
+  "generated": "2026-09-21",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
   "appLocalExceptions": [],
@@ -5055,7 +5055,7 @@
       "status": "beta",
       "since": "1.31.0",
       "kind": "component",
-      "role": "Dichiara che una fase vale per TUTTO IL PRODOTTO e non per una parte: fascia a campitura piena nel rosso d'ambito (--rg-color-scope, che NON e --rg-color-danger), da bordo a bordo, in testa al blocco della fase a schermo (sopra la riga del reparto) e in testa al foglio stampato (sopra la banda del reparto). Tre segnali e uno solo e il colore: campitura piena, filetto nero forte, maiuscoletto bianco. In fotocopia il rosso va al nero e resta l'unico blocco pieno del foglio; le trame dei reparti restano chiare.",
+      "role": "Dichiara che una fase vale per TUTTO IL PRODOTTO e non per una parte: fascia a campitura piena nel colore d'ambito (--rg-color-scope, AMBRA #f59e0b dalla 1.32.0, che NON e --rg-color-warning ne --rg-color-danger), da bordo a bordo, in testa al blocco della fase a schermo (sopra la riga del reparto) e in testa al foglio stampato (sopra la banda del reparto). Tre segnali e uno solo e il colore: campitura piena, filetto nero forte, maiuscoletto NERO (--rg-color-scope-text e nero: bianco su ambra farebbe 2,15:1, nero fa 9,78:1). In fotocopia l'ambra resta CHIARA (~65% di luminanza, il rosso stava al ~26%): sul foglio non e piu il blocco piu scuro ma resta l'unica campitura UNIFORME, perche tutte le trame dei reparti sono righe su bianco.",
       "classes": {
         "base": "rg-scope-band",
         "elements": [
@@ -5124,9 +5124,18 @@
         "foglio",
         "reparto",
         "phase scope",
-        "product phase"
+        "product phase",
+        "ambra",
+        "amber",
+        "giallo",
+        "arancione",
+        "allerta",
+        "alert colour",
+        "f59e0b",
+        "colore d'ambito"
       ],
-      "snippet": "<p class=\"rg-scope-band\">\n  <span class=\"rg-scope-band__text\">Fase di tutto il prodotto</span>\n  <span class=\"rg-scope-band__note\">Si compila una volta sola e vale per tutte e 3 le parti · nel costo conta una volta</span>\n</p>"
+      "snippet": "<p class=\"rg-scope-band\">\n  <span class=\"rg-scope-band__text\">Fase di tutto il prodotto</span>\n  <span class=\"rg-scope-band__note\">Si compila una volta sola e vale per tutte e 3 le parti · nel costo conta una volta</span>\n</p>",
+      "notes": "STORIA DEL COLORE, tre stesure. (1) NERA, scartata dal campo: 'rendila piu evidente, magari in rosso? o comunque un colore bello evidente'. (2) ROSSA #b3261e con testo bianco, 1.31.0. (3) AMBRA #f59e0b con testo NERO, 1.32.0, su 'proviamo un giallo/arancione di allerta': scelta fra quattro candidati (rosso di partenza, giallo #ffc400, ambra #f59e0b, arancione #e8590c) messi a confronto con contrasto e resa in fotocopia. Il NOME del token non cambia mai per un colore: dice il ruolo. Nessuna classe rinominata, nessun markup toccato. TESTO NERO OBBLIGATORIO, non una scelta di gusto: nero su ambra 9,78:1 (sale rispetto al 5,98:1 del bianco sul rosso, quindi la nota a 12 px resta AA con margine), bianco su ambra 2,15:1. --rg-color-scope e --rg-color-scope-text sono una COPPIA: chi cambia il primo ricalcola il secondo. PERCHE NON --rg-color-warning (prima: perche non --rg-color-danger): warning e a 3 gradi di tinta dall'ambra ed e gia DUE cose nella stessa pagina, lo stato d'avviso dei moduli E --rg-color-category-4 cioe il reparto Strass; un terzo significato sullo stesso valore e cio che le regole §4 vietano, e qui l'argomento e piu forte che con danger perche warning e gia uno stato E una categoria. In piu il significato sarebbe sbagliato: la parola usata per chiedere il colore e stata 'allerta' ma questa NON E un'allerta, e un'APPARTENENZA - ed e la ragione per cui la parola scritta non e mai facoltativa. LO SCARTO DELLA SCELTA, DICHIARATO PRIMA E ACCETTATO: in fotocopia l'ambra sta al ~65% di luminanza (grigio chiaro) contro il ~26% del rosso, quindi la fascia non e piu l'unico blocco pieno SCURO del foglio. Regge lo stesso perche resta l'unica campitura UNIFORME (tutte e sette le trame dei reparti sono repeating-linear-gradient, righe su bianco: l'unica tinta piatta, accoppiaggi, fu scartata nella 1.14.0) e perche cambia quale dei tre segnali porta il peso sulla carta: il filetto nero forte e il maiuscoletto nero, che su fondo chiaro tiene la fotocopia MEGLIO del bianco in negativo (il negativo si chiude alla seconda copia). NESSUN RINFORZO AGGIUNTO IN STAMPA, e la ragione e che il posto e gia occupato: cio che si indebolisce non e la lettura della fascia ma il colpo d'occhio da un metro sul mucchio dei fogli, e quello lo fa gia rg-worksheet-block--product col contorno raddoppiato sui quattro lati, che corre per l'altezza del blocco invece che in una striscia alta 20 px. Un secondo filetto forte SOPRA la fascia cadrebbe a distanza zero dal bordo del blocco (la fascia e il primo figlio, a filo) e si leggerebbe come una sbavatura di stampa. VICINI CALDI VERIFICATI: --rg-color-accent-sand #b79a62 (= category-6, reparto Accoppiaggi, e il colore della terza parte in rg-part-mark) sta a 2 gradi di tinta dall'ambra e quasi allo stesso grigio (61% contro 65%): IN FOTOCOPIA I DUE TONI NON SI DISTINGUONO. Non si confondono lo stesso perche la sabbia compare come trama di righe o come pastiglia TONDA numerata e l'ambra come rettangolo PIENO col contorno nero: la distanza la fanno figura e misura, non la tinta. E la coppia da tenere d'occhio, come pressatura/finissaggio fra le trame. --rg-color-warning sta piu lontano: 3 gradi di tinta ma meta della luce (L 28% contro 50%, grigio 36% contro 65%). Da non fare: un terzo caldo pieno nella stessa vista."
     },
     {
       "id": "scope-mark",
@@ -5134,7 +5143,7 @@
       "status": "beta",
       "since": "1.31.0",
       "kind": "component",
-      "role": "Il segno della fascia d'ambito in misura da etichetta, per una riga di elenco, una linguetta o una cella: campitura piena nel rosso d'ambito con la parola in bianco e contorno nero per la fase di tutto il prodotto, quieto (--part) per «solo questa parte» dove i due ambiti convivono. Non e' un badge: il badge non si riempie. Nell'elenco della parte la riga --product sta AL SUO POSTO NELLA SEQUENZA (non in coda, senza stacco) e porta filetti forti sopra e sotto; rg-steps__break resta opzionale.",
+      "role": "Il segno della fascia d'ambito in misura da etichetta, per una riga di elenco, una linguetta o una cella: campitura piena nel colore d'ambito (ambra dalla 1.32.0) con la parola in NERO e contorno nero per la fase di tutto il prodotto, quieto (--part) per «solo questa parte» dove i due ambiti convivono. Non e' un badge: il badge non si riempie. Nell'elenco della parte la riga --product sta AL SUO POSTO NELLA SEQUENZA (non in coda, senza stacco) e porta filetti forti sopra e sotto; rg-steps__break resta opzionale.",
       "classes": {
         "base": "rg-scope-mark",
         "variants": [
@@ -5196,7 +5205,11 @@
         "break",
         "product-wide",
         "badge pieno",
-        "controllo qualita"
+        "controllo qualita",
+        "ambra",
+        "amber",
+        "colore d'ambito",
+        "timbro ambra"
       ],
       "snippet": "<li class=\"rg-step rg-step--product\">\n  <div class=\"rg-step__head\">\n    <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-3-toggle\" aria-controls=\"fase-3\" aria-expanded=\"false\">\n      <span class=\"rg-step__num\">3</span>\n      <span class=\"rg-step__headline\">\n        <span class=\"rg-scope-mark\">Tutto il prodotto</span>\n        <span class=\"rg-step__title\">Controllo qualità</span>\n      </span>\n    </button>\n  </div>\n  <div class=\"rg-step__body\" id=\"fase-3\" role=\"region\" aria-labelledby=\"fase-3-toggle\" hidden></div>\n</li>"
     }

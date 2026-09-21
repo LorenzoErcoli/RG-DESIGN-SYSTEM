@@ -20,7 +20,7 @@ Tre scelte, e sono tutte a servizio di quella frase:
   sembra un campo disabilitato.
 - **L'altezza è la mano, non il testo.** 32 px (~8,5 mm) è la misura di una grafia adulta; la
   variante alta porta a 48 px (~12,7 mm) per una nota di più parole. Non è l'altezza di una riga
-  di testo, ed è giusto che non lo sia.
+  di testo, ed è giusto che non lo sia. Ed è un **minimo**, non una misura fissa: vedi sotto.
 - **L'etichetta c'è sempre.** Un vuoto senza etichetta non è un campo: è un vuoto.
 
 ## Varianti
@@ -36,7 +36,13 @@ Tre scelte, e sono tutte a servizio di quella frase:
 
 **Densità compatta** (proposta 1.23.0). Dentro un [`rg-worksheet-block--compact`](worksheet-block.md#fascicolo-compatto-proposta-1230)
 la riga scende a **24 px** (~6,4 mm) e la cella `--cell` a 24 px; `--tall` resta 48. Nessuna classe da
-aggiungere sul campo: la densità la decide il blocco.
+aggiungere sul campo: la densità la decide il blocco. In **stampa** (1.33.0) lo stesso blocco stringe
+l'**etichetta** — 10 px, senza stacco sotto — ma non tocca le righe: vedi
+[Compattazione di stampa](worksheet-block.md#compattazione-di-stampa-133).
+
+**Nel piede del gruppo il campo non si compatta.** Sotto il blocco, dentro
+[`rg-worksheet-foot`](worksheet-foot.md), le righe restano quelle della base e la nota sale a 64 px:
+è l'unico posto in cui si scrive davvero a mano.
 
 ## Uso e limiti
 
@@ -65,6 +71,20 @@ proposito — `.rg-table td` pesa (0,1,1) e con la sola classe il filetto della 
 il nastro, un segno di pennarello). Per questo è chiusa su quattro lati, mentre la riga è una staffa
 aperta. Da sola non dice niente: l'etichetta sta nella colonna, e accanto restano **codice e nome del
 colore** stampati (regole §10: mai riconoscimento solo cromatico).
+
+**Il valore lungo va a capo, e non finisce sopra l'etichetta** (1.33.0). La riga porta spesso un
+valore **già stampato dall'app**, e un valore lungo — «SABBIATRICE MANUALE · BANCO SOFFIATURA» — va a
+capo dentro il riquadro. Con un'altezza *fissa* la seconda riga di testo usciva **da sopra** il
+riquadro e finiva stampata addosso all'etichetta: due scritte sovrapposte, illeggibili sulla carta.
+L'altezza è quindi un `min-height` e non un `height`. La misura dichiarata resta un **minimo** —
+l'altezza della scrittura a mano, che è la ragione per cui il componente esiste — e il campo
+**cresce** quando il testo chiede una riga in più: costa qualche millimetro di pagina solo dove
+serve, e solo per non perdere un'informazione. Vale per la base, per `--tall` e per la densità
+compatta. Completano la cosa `overflow-wrap: anywhere`, per il codice lungo che non ha spazi dove
+andare a capo, e — nel blocco compatto, dove il valore è allineato in basso — l'interlinea stretta
+invece di 1, altrimenti le due righe di testo si toccano. Nella stessa fila i campi restano
+allineati **sul fondo**: le basi nere su cui si scrive cadono tutte sulla stessa linea anche quando
+un valore ne occupa tre.
 
 **Il valore stampato ha aria** (proposta 1.25.0). Dentro un blocco compatto, il valore già noto scritto nella
 riga («150», «ZSK 12 teste») sta a 8 px (~2 mm) dal filo sinistro e 6 px (~1,6 mm) sopra la base, mono a 14,

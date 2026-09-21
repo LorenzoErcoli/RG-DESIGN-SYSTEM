@@ -94,6 +94,88 @@
   .rg-part-sheet--no-head { page: rg-a4; }
   /* Blocco che continua il precedente (1.27.0): resta sulla stessa pagina del blocco sopra, se ci sta. */
   .rg-worksheet-block--continued { break-before: avoid; page-break-before: avoid; }
+  /* PIEDE AUTONOMO DEL GRUPPO (1.33.0): NON SI SPEZZA. Operatore, Data e la nota sono un'unica cosa da
+     compilare, e mezza nota in fondo a una pagina e meta in cima a quella dopo non e uno spazio dove si
+     scrive: e uno spazio che si salta.
+     LIMITE DICHIARATO, misurato. Il piede vorrebbe anche non STACCARSI dal blocco che lo precede
+     (break-before: avoid), ma in Chrome — il motore che impagina il fascicolo — le due richieste si
+     escludono: con break-before: avoid il fragmentatore tiene il piede attaccato al blocco e, quando
+     l'insieme non entra, taglia DENTRO il piede; il riquadro della nota esce diviso fra due fogli. Provato
+     a riempimenti crescenti (860→980 px): con break-before: avoid si spezza sempre, senza resta sempre
+     intero. Fra «il piede scende intero alla pagina dopo» e «la nota esce tagliata a meta» il reparto
+     perde poco nel primo caso e tutto nel secondo, quindi break-before NON si dichiara.
+     E cio che rende il caso raro e la compattazione qui sotto: e per questo che l'obiettivo e misurato
+     sul gruppo (due fasi collegate + il loro piede in una pagina), non sul singolo blocco.
+     break-inside anche sui campi: se un motore ignora la regola sul contenitore, almeno il singolo
+     riquadro da riempire non esce diviso. */
+  .rg-worksheet-foot { break-inside: avoid; page-break-inside: avoid; }
+  .rg-worksheet-foot > .rg-fill-field { break-inside: avoid; page-break-inside: avoid; }
+
+  /* COMPATTAZIONE DI STAMPA DEL FASCICOLO (1.33.0) — obiettivo misurabile, non estetico: DUE FASI
+     COLLEGATE DEVONO ENTRARE IN UNA SOLA PAGINA A4. Un gruppo di fasi collegate e una cosa sola per
+     chi lavora (la 03 si fa subito dopo la 02, stesso reparto, stesso banco): spaccarlo su due fogli
+     significa girare pagina a meta lavoro, ed e esattamente cio che il reparto non fa. Mancava circa
+     un quarto di altezza, e il quarto si toglie DOVE NON SI SCRIVE.
+     Il criterio, in ordine: prima l'aria attorno al testo gia stampato (interlinee delle etichette,
+     distacchi fra le file di campi, testate), poi la testata del blocco che CONTINUA il precedente —
+     e il secondo di una coppia, il suo titolo non deve gridare come il primo perche chi legge e gia
+     dentro al gruppo. Mai, in nessun caso, lo spazio da riempire a penna: le righe da scrivere
+     restano quelle che erano e la nota del piede e anzi piu alta di prima. Su carta un campo troppo
+     corto non e un difetto di stile, e un dato che non viene scritto.
+     Solo @media print e solo dentro --compact: a schermo il fascicolo si legge, non si stampa. */
+  /* Etichetta del campo: sta su una riga sola e sopra la riga da scrivere. Non serve ne l'interlinea
+     del testo corrente ne 4 px di stacco: il campo e la sua etichetta sono gia un blocco unico, e la
+     riga nera sotto li separa dal campo seguente meglio di qualunque margine.
+     E scende a 10 px (~2,6 mm) invece di 12. Il DS non ha un gradino sotto --rg-font-size-xs perche a
+     SCHERMO 12 px e il minimo leggibile; su CARTA la misura e fisica e 2,6 mm di maiuscoletto spaziato
+     si legge senza sforzo — e un'etichetta di due parole, non un testo. La misura non e inventata: e il
+     gradino piu piccolo della scala meno mezzo passo di spazio, come il mezzo passo gia usato qui per le
+     densita di stampa. Eccezione dichiarata, regole §12, e vale SOLO in @media print dentro --compact.
+     ~7 px per fila di campi. */
+  .rg-worksheet-block--compact .rg-fill-field__label { margin-bottom: 0; font-size: calc(var(--rg-font-size-xs) - var(--rg-space-1) / 2); line-height: var(--rg-line-height-tight); }
+  .rg-worksheet-block--compact .rg-fill-field__unit { font-size: inherit; }
+  /* Fra una fila di campi e l'altra: 4 invece di 8 in verticale. In orizzontale non si tocca, le
+     colonne devono restare distinte a colpo d'occhio. */
+  .rg-worksheet-block--compact .rg-worksheet-block__fields { gap: var(--rg-space-1) var(--rg-space-3); }
+  /* Sottotitolo di operazione: il filetto sopra fa gia il lavoro di separare, l'aria attorno era
+     tripla (12 sopra, 8 di filetto, 4 sotto) per una riga di 14 px. Diventa 4+4+0 con l'interlinea
+     stretta: ~16 px per operazione, e in un blocco le operazioni sono tre o quattro. */
+  .rg-worksheet-block--compact .rg-worksheet-block__op { margin-block: var(--rg-space-1) 0; padding-top: var(--rg-space-1); line-height: var(--rg-line-height-tight); }
+  /* La riga di chiusura del corpo (il calcolo del tempo per pezzo) e testo tecnico di una riga, non
+     prosa: interlinea tecnica invece di quella del testo corrente. */
+  .rg-worksheet-block--compact .rg-worksheet-block__body .rg-small { line-height: var(--rg-line-height-technical); }
+  /* Testata, riga «Fase n di N» e banda di reparto: meno respiro sopra e sotto, il contenuto non
+     cambia. Sulla banda si scende al mezzo passo gia in uso per le densita di stampa — la striscia
+     della trama e la targhetta col nome restano le misure che erano, cala solo l'aria attorno. */
+  .rg-worksheet-block--compact .rg-worksheet-block__head { padding-block: var(--rg-space-1); }
+  .rg-worksheet-block--compact .rg-worksheet-block__step { padding-top: calc(var(--rg-space-1) / 2); line-height: var(--rg-line-height-tight); }
+  .rg-worksheet-block--compact .rg-worksheet-block__step + .rg-dept-band { margin-block: calc(var(--rg-space-1) / 2); padding-block: calc(var(--rg-space-1) / 2); }
+  .rg-worksheet-block--compact .rg-worksheet-block__step + .rg-dept-band > .rg-dept-band__name { padding-block: calc(var(--rg-space-1) / 2); }
+  /* LA TESTATA STA SU UNA RIGA SOLA. Era la perdita piu grossa e la meno visibile: con un titolo lungo
+     («SABBIATURA E SOFFIATURA FINALE» piu il ruolo) la riga di flex si riempiva e il QR andava a capo
+     DA SOLO, prendendosi una seconda riga alta quanto lui — ~48 px di pagina per dire una cosa che
+     stava gia li accanto. Con nowrap il QR resta al suo posto e, se lo spazio non basta, a cedere e il
+     TITOLO, che va a capo fra le sue parole: due righe di titolo costano meno di una riga di QR, e il
+     titolo resta intero. min-width: 0 perche altrimenti un titolo non si stringe sotto il suo
+     contenuto minimo e il nowrap non servirebbe a niente. */
+  .rg-worksheet-block--compact .rg-worksheet-block__head { flex-wrap: nowrap; }
+  .rg-worksheet-block--compact .rg-worksheet-block__work { min-width: 0; }
+  /* Il QR della fase scende da 60 a 48 px di lato. E l'elemento che DETTA l'altezza della testata, piu
+     del titolo: 12 px di pagina per blocco. A 12,7 mm per 41 moduli il modulo resta a ~0,31 mm, cioe
+     leggibile da un telefono a distanza di lettura; sotto questa misura non si va. */
+  .rg-worksheet-block--compact .rg-qr--small > .rg-qr__img { width: var(--rg-space-12); }
+  /* IL BLOCCO CHE CONTINUA: e il secondo di una coppia e non apre niente. Non ha la banda di reparto
+     (il reparto e lo stesso, l'ha gia detto il primo) e qui rinuncia anche alla testata in grande:
+     titolo a 20 invece di 28, come un titolo di contenitore invece che di pagina. Chi legge e gia
+     dentro al gruppo e non ha bisogno che il secondo titolo gridi quanto il primo. */
+  .rg-worksheet-block--compact.rg-worksheet-block--continued .rg-worksheet-block__work { font-size: var(--rg-font-size-lg); }
+  /* Corpo del blocco: 4 px sopra e sotto invece di 8. I campi hanno gia la loro griglia. */
+  .rg-worksheet-block--compact .rg-worksheet-block__body { padding-block: var(--rg-space-1); }
+  /* IL PIEDE AUTONOMO NON SI COMPATTA COME IL BLOCCO — li si scrive a mano. Si tolgono solo le due
+     cose che non sono spazio da scrivere: l'interlinea delle etichette e meta del distacco fra le
+     file. Le righe restano quelle che sono, e la nota resta a 64. */
+  .rg-worksheet-foot { gap: var(--rg-space-1) var(--rg-space-4); }
+  .rg-worksheet-foot .rg-fill-field__label { margin-bottom: 0; line-height: var(--rg-line-height-tight); }
   /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda
      di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome.
      rg-cutout__cue (1.23.0): il fondo bianco interrompe la linea di taglio sotto la parola.

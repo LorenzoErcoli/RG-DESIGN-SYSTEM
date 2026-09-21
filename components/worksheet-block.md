@@ -26,7 +26,7 @@ riscrive il proprio.
 | `rg-worksheet-block` | **Normale**: la fase ordinaria, alta quanto il suo contenuto, mai spezzata. |
 | `rg-worksheet-block--long` | **Lunga**: la fase con una tabella di trenta righe, che una pagina se la prende tutta. Apre una pagina nuova invece di lasciarsi dietro un buco; se è il primo blocco del documento non apre una pagina vuota prima. |
 | `rg-worksheet-block--continued` | **Continua il precedente** (1.27.0): la fase successiva di un gruppo di fasi collegate, nello stesso reparto, senza banda e senza piede. Si attacca al blocco sopra con un solo filetto. Vedi [Blocco che continua](#blocco-che-continua-il-precedente-1270). |
-| `rg-worksheet-block--compact` | **Compatta** (proposta 1.23.0): la densità del **fascicolo** che va in reparto. Righe da scrivere più basse, spaziature ridotte, colonne strette, piede su una riga, banda più bassa. Si combina con `--long`. Vedi [Fascicolo compatto](#fascicolo-compatto-proposta-1230). |
+| `rg-worksheet-block--compact` | **Compatta** (proposta 1.23.0): la densità del **fascicolo** che va in reparto. Righe da scrivere più basse, spaziature ridotte, colonne strette, piede su una riga, banda più bassa. Si combina con `--long`. Vedi [Fascicolo compatto](#fascicolo-compatto-proposta-1230) e [Compattazione di stampa](#compattazione-di-stampa-133). |
 
 `--long` non cambia nulla a schermo: è **solo** una regola di paginazione. Non usarla per "dare
 importanza" a una fase — l'importanza non è una proprietà della carta.
@@ -208,7 +208,8 @@ per identità e mono. Il QR sul PDF va generato con la sua zona di rispetto dent
 ### Blocco che continua il precedente (1.27.0)
 
 Nel gruppo di fasi collegate dello stesso reparto l'app stampa **una banda sola** (sul primo blocco) e **un
-piede solo** (sull'ultimo). I blocchi dopo il primo portano `rg-worksheet-block--continued`:
+piede solo** (sull'ultimo). Dalla 1.33.0 quel piede è un oggetto suo, fuori dal riquadro:
+[`rg-worksheet-foot`](worksheet-foot.md). I blocchi dopo il primo portano `rg-worksheet-block--continued`:
 
 - **la testa regge senza banda**: `__step` («FASE 3 DI 3») e `__work` («SABBIATURA») bastano, con `__role`
   («Collegata · dopo la 02») accanto al titolo. La banda sopra, sul primo blocco, dice il reparto per tutti;
@@ -226,8 +227,9 @@ piede solo** (sull'ultimo). I blocchi dopo il primo portano `rg-worksheet-block-
     <span class="rg-worksheet-block__role">Collegata · dopo la 02</span>
   </header>
   <div class="rg-worksheet-block__body">…</div>
-  <footer class="rg-worksheet-block__foot">…solo sull'ultimo blocco del gruppo…</footer>
 </section>
+<!-- il piede del gruppo, fuori dal riquadro, solo dopo l'ultimo blocco (1.33.0) -->
+<div class="rg-worksheet-foot">…</div>
 ```
 
 ### Segni per il PDF
@@ -241,6 +243,44 @@ trasparente, primo figlio del blocco.
   dei tagliandi lo garantisce l'app (una [`rg-blank-page`](blank-page.md), o il PDF).
 - Le named pages (`rg-a4-head`) richiedono un Chrome recente; dove non sono supportate restano i margini di
   default e l'intestazione stampata può sovrapporsi al contenuto: verificare sul motore che produce il PDF.
+
+## Compattazione di stampa (1.33)
+
+**Obiettivo misurabile, non estetico: due fasi collegate e il loro piede devono entrare in una sola
+pagina A4.** Un gruppo di fasi collegate è una cosa sola per chi lavora — la 03 si fa subito dopo la
+02, stesso reparto, stesso banco — e spaccarlo su due fogli significa girare pagina a metà lavoro,
+che è esattamente ciò che il reparto non fa. Mancava circa un quarto di altezza.
+
+Il criterio è **togliere dove non si scrive**, in quest'ordine:
+
+1. **l'aria attorno al testo già stampato** — etichetta del campo a 10 px senza stacco sotto (era 12
+   px più 4 px), metà del distacco fra le file di campi, interlinea stretta sui sottotitoli di
+   operazione, respiro dimezzato su testata, riga «Fase n di N» e banda del reparto;
+2. **la testata su una riga sola** — era la perdita più grossa e la meno visibile: con un titolo
+   lungo la riga di flex si riempiva e il **QR andava a capo da solo**, prendendosi una seconda riga
+   alta quanto lui, ~48 px di pagina per dire una cosa che stava già lì accanto. Con `nowrap` il QR
+   resta al suo posto e a cedere è il titolo, che va a capo fra le sue parole: due righe di titolo
+   costano meno di una riga di QR. Il QR scende da 60 a 48 px — a 12,7 mm per 41 moduli il modulo
+   resta a ~0,31 mm, leggibile da un telefono a distanza di lettura; **sotto questa misura non si va**;
+3. **il titolo del blocco che continua** — 20 px invece di 28. È il secondo di una coppia: chi legge
+   è già dentro al gruppo e non ha bisogno che il secondo titolo gridi quanto il primo.
+
+**Mai le note.** La riga da scrivere resta 24 px, la `--tall` resta 48 e la nota del
+[piede](worksheet-foot.md) è anzi salita a 64. Su carta un campo troppo corto non è un difetto di
+stile: è un dato che non viene scritto.
+
+**L'etichetta a 10 px è un'eccezione dichiarata** (regole §12). Il DS non ha un gradino sotto
+`--rg-font-size-xs` perché **a schermo** 12 px è il minimo leggibile; su **carta** la misura è
+fisica, e 2,6 mm di maiuscoletto spaziato di due parole si leggono senza sforzo. La misura non è
+inventata: è il gradino più piccolo della scala meno mezzo passo di spazio, lo stesso mezzo passo
+già in uso per le densità di stampa. Vale **solo** in `@media print` e **solo** dentro `--compact`.
+
+Tutte queste regole stanno in `styles/rg-utilities.css`, dentro `@media print`: a schermo il
+fascicolo si legge, non si stampa, e le misure restano quelle della 1.23.0.
+
+**Misura sul fascicolo di prova** (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli): da **23 pagine a
+20**, e da **3 gruppi spezzati su due pagine a nessuno**.
+
 
 ## Uso e limiti
 

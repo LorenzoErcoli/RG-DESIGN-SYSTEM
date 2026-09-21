@@ -7,6 +7,90 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.33.0 — 2026-09-21
+
+**Minor.** Una classe nuova (`rg-worksheet-foot`), nessuna rimossa o rinominata, nessun token toccato. Chi
+aggiorna il tag e non usa il fascicolo non vede niente cambiare a schermo; chi **stampa** un
+`rg-worksheet-block--compact` vede il foglio farsi più denso, ed è il punto.
+
+### Il piede esce dal riquadro della fase
+
+Chi firma e chi scrive le note **non sta dentro il riquadro della fase**. Il riquadro del blocco dice
+*«questa è la fase, questi sono i suoi dati»*: cose che il sistema sa e che ha stampato. Firma e nota dicono
+un'altra cosa — *«questo è ciò che è successo quando l'ho fatta»* — e sono di chi lavora, non della scheda.
+Finché vivevano in `rg-worksheet-block__foot` l'operatore scriveva **dentro la cornice dei dati stampati**, e
+la nota, l'unico spazio davvero da riempire, era una riga schiacciata in fondo a una fila di campi.
+
+    <div class="rg-worksheet-foot">
+      <div class="rg-fill-field">…Operatore…</div>
+      <div class="rg-fill-field">…Data…</div>
+      <div class="rg-fill-field rg-fill-field--tall rg-worksheet-foot__note">…Note…</div>
+    </div>
+
+Due colonne: **Operatore e Data affiancati**, la **nota a tutta la fila** e alta **64 px (~17 mm)**, più di
+una `rg-fill-field--tall`. Il piede **non si compatta**: la densità compatta serve ai dati già stampati, non
+allo spazio bianco che deve accogliere una grafia. `rg-worksheet-block__foot` resta valido e non cambia: chi
+non migra non vede differenza.
+
+**Limite dichiarato, e misurato.** Il piede vorrebbe due cose insieme: non spezzarsi e non staccarsi dal
+blocco che lo precede. In Chrome — il motore che impagina il fascicolo — le due si escludono: con
+`break-before: avoid` il fragmentatore tiene il piede attaccato al blocco e, quando l'insieme non entra,
+taglia **dentro** il piede, e il riquadro della nota esce diviso fra due fogli. Provato a riempimenti
+crescenti, da 860 a 980 px: con `break-before` si spezza **sempre**, senza resta **sempre** intero. Fra «il
+piede scende intero alla pagina dopo» e «la nota esce tagliata a metà» il reparto perde poco nel primo caso e
+tutto nel secondo: resta solo `break-inside: avoid`, ripetuto anche sui singoli campi.
+
+### Due fasi collegate in una sola pagina A4
+
+L'obiettivo della compattazione di stampa di `rg-worksheet-block--compact` **è misurabile e non estetico**.
+Un gruppo di fasi collegate è una cosa sola per chi lavora — la 03 si fa subito dopo la 02, stesso reparto,
+stesso banco — e spaccarlo su due fogli vuol dire girare pagina a metà lavoro, che è esattamente ciò che il
+reparto non fa. Mancava circa **un quarto** di altezza, e il quarto si toglie **dove non si scrive**:
+
+- **l'aria attorno al testo già stampato**: etichetta del campo a **10 px senza stacco sotto** (era 12 più 4),
+  metà del distacco fra le file, interlinea stretta sui sottotitoli di operazione, respiro dimezzato su
+  testata, riga «Fase n di N» e banda del reparto;
+- **la testata su una riga sola**: era la perdita più grossa e la meno visibile. Con un titolo lungo la riga
+  di flex si riempiva e il **QR andava a capo da solo**, prendendosi una seconda riga alta quanto lui — ~48 px
+  di pagina per dire una cosa che stava già lì accanto. Con `nowrap` il QR resta al suo posto e a cedere è il
+  titolo, che va a capo fra le sue parole: due righe di titolo costano meno di una riga di QR. Il QR scende da
+  60 a **48 px**; a 12,7 mm per 41 moduli il modulo resta a ~0,31 mm, e **sotto questa misura non si va**;
+- **il titolo del blocco che continua**: 20 invece di 28. È il secondo di una coppia, chi legge è già dentro
+  al gruppo e non ha bisogno che il secondo titolo gridi quanto il primo.
+
+**Mai le note.** La riga da scrivere resta 24 px, la `--tall` resta 48, la nota del piede **sale** a 64. Su
+carta un campo troppo corto non è un difetto di stile: è un dato che non viene scritto.
+
+**L'etichetta a 10 px è un'eccezione dichiarata** (regole §12), `calc(var(--rg-font-size-xs) - var(--rg-space-1) / 2)`.
+Il DS non ha un gradino sotto `--rg-font-size-xs` perché **a schermo** 12 px è il minimo leggibile; su
+**carta** la misura è fisica e 2,6 mm di maiuscoletto spaziato di due parole si leggono senza sforzo. Vale
+**solo** in `@media print` e **solo** dentro `--compact`: a schermo non cambia nulla.
+
+**Misura sul fascicolo di prova** (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli), stampato con Chrome headless:
+
+| | pagine totali | gruppi spezzati su due pagine |
+| --- | --- | --- |
+| prima | 23 | 3 su 3 |
+| dopo | **20** | **0** |
+
+### Un valore lungo non si stampa più sopra l'etichetta
+
+`rg-fill-field__line` porta spesso un valore **già stampato dall'app**, e un valore lungo — «SABBIATRICE
+MANUALE · BANCO SOFFIATURA» — va a capo dentro il riquadro. Con `height` fissa la seconda riga di testo usciva
+**da sopra** il riquadro e finiva addosso all'etichetta: due scritte sovrapposte, illeggibili sulla carta.
+
+L'altezza diventa `min-height`. La misura dichiarata resta un **minimo** — l'altezza della scrittura a mano,
+che è la ragione per cui il componente esiste — e il campo **cresce** quando il testo chiede una riga in più:
+costa qualche millimetro di pagina solo dove serve. Vale per la base, per `--tall`, per la densità compatta.
+Con `overflow-wrap: anywhere` per il codice lungo senza spazi, e — nel blocco compatto, dove il valore è
+allineato in basso — interlinea `tight` invece di `1`, altrimenti le due righe di testo si toccano. Nella
+stessa fila i campi restano allineati **sul fondo**: le basi nere cadono tutte sulla stessa linea anche quando
+un valore ne occupa tre.
+
+**Effetto collaterale, voluto:** una tabella o un pannello che usava `rg-fill-field` con valori lunghi e li
+vedeva sbordare ora si allunga invece di sovrapporre. È il comportamento corretto; chi contava sull'altezza
+fissa per allineare qualcosa **fuori** dal campo deve verificarlo.
+
 ## 1.32.0 — 2026-09-21
 
 **Minor.** Nessuna classe e nessun token aggiunto, rimosso o rinominato, nessun markup da toccare: cambia il

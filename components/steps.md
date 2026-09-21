@@ -271,3 +271,109 @@ In un gruppo di tre o quattro fasi, quelle **in mezzo** hanno solo `rg-step--gro
 - Riordino drag & drop: fuori contratto in 1.3.0. Se serve, si aggiunge come variante con
   controlli espliciti "sposta su / sposta giù", non come solo trascinamento.
 - Sequenza vuota: `rg-empty` con testo esplicito, mai un `<ol>` senza fasi.
+
+## La fase di tutto il prodotto dentro l'elenco della parte (1.31.0)
+
+Una fase può valere per **tutto il prodotto** invece che per una parte — il controllo qualità finale,
+il montaggio. Quelle fasi si vedono dalla pagina di **ogni** parte, e ci stanno **al loro posto nella
+sequenza**: non in fondo, non separate. Il segno e le parole sono in [scope](scope.md).
+
+La prima stesura le metteva in coda, dopo uno stacco intitolato «Di tutto il prodotto». Giudizio dal
+campo: *«qui mi scrivi troppe volte "di tutto il prodotto"; in più non va bene che sia separato: la
+fase è dentro le altre ma è visibilmente diversa dalle altre»*. Quindi il segno deve reggere **da
+solo**, sulla riga, senza niente che lo spieghi intorno.
+
+| Classe | Cosa fa |
+| --- | --- |
+| `rg-step--product` | La riga della fase di tutto il prodotto: **filetti forti** sopra e sotto, al posto del filetto neutro che divide le fasi fra loro. |
+| `rg-scope-mark` | Il **timbro** rosso sopra il titolo, dentro `rg-step__headline`: la prima cosa che si vede e l'unica che entra nel nome accessibile del toggle. |
+| `rg-steps__break` (+ `-title`, `-note`) | **Opzionale, non usato dalla piattaforma**: lo stacco intitolato, per un'app che voglia raggruppare le fasi di prodotto tutte in coda. |
+
+### Due segni sulla riga, nessuno di solo colore
+
+1. **Il timbro** (`rg-scope-mark`), sopra il titolo, nello stesso posto del ruolo di gruppo
+   (`rg-step__role`). Campitura piena nel rosso d'ambito, parola in bianco maiuscolo, contorno nero.
+2. **I filetti forti** sopra e sotto la riga. Fra due fasi il filetto è neutro; qui è nero e doppio,
+   e la riga si stacca dalle vicine **restando in fila**, come la riga di totale di una tabella. Se
+   la fase di prodotto è la prima della lista non aggiunge niente in cima: il blocco ha già il suo
+   filetto forte.
+
+**Il filo della sequenza la attraversa come tutte le altre**: la fase è dentro il percorso, non
+accanto. (Nella prima stesura il filo si interrompeva — aveva senso finché quelle righe erano
+un'appendice in coda.)
+
+**Niente fondo sulla riga.** Si perderebbe in fotocopia e l'hover chiaro della fase ci sparirebbe
+sopra: è la stessa ragione per cui il gruppo di fasi collegate non ha un fondo.
+
+**Il numero non cambia figura.** La casella col bordo forte è già `rg-step--danger`, il nero pieno è
+già la fase aperta: un terzo trattamento del numero si leggerebbe come uno stato.
+
+**Le parole si scrivono una volta.** Sulla riga basta «Tutto il prodotto»: niente nota sotto il
+titolo, niente ripetizione nella meta. La frase lunga — cosa comporta — sta nella fascia in testa
+alla **pagina della fase**, dove si legge una volta sola.
+
+### Struttura
+
+Parte TOMAIA: 1 ricamo · 2 pressatura · **3 controllo qualità, di tutto il prodotto** · 4 incollature
+finali. La terza riga sta in mezzo alle altre e si riconosce da sola.
+
+```html
+<ol class="rg-steps">
+  <li class="rg-step">
+    <div class="rg-step__head">
+      <button class="rg-step__toggle" type="button" id="fase-1-toggle" aria-controls="fase-1" aria-expanded="false">
+        <span class="rg-step__num">1</span>
+        <span class="rg-step__headline">
+          <span class="rg-step__title">Ricamo</span>
+          <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Ricamo</span><span>4 operazioni</span></span>
+        </span>
+      </button>
+      <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="…/fasi/1" aria-label="Apri fase 1: Ricamo">Apri</a></div>
+    </div>
+    <div class="rg-step__body" id="fase-1" role="region" aria-labelledby="fase-1-toggle" hidden>…</div>
+  </li>
+
+  <li class="rg-step"><!-- 2 Pressatura, fase della parte --></li>
+
+  <li class="rg-step rg-step--product">
+    <div class="rg-step__head">
+      <button class="rg-step__toggle" type="button" id="fase-3-toggle" aria-controls="fase-3" aria-expanded="false">
+        <span class="rg-step__num">3</span>
+        <span class="rg-step__headline">
+          <span class="rg-scope-mark">Tutto il prodotto</span>
+          <span class="rg-step__title">Controllo qualità</span>
+          <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Finissaggio e Controllo Qualità</span><span>6 controlli</span></span>
+        </span>
+        <span class="rg-step__aside"><span class="rg-badge rg-badge--count">6 da compilare</span></span>
+      </button>
+      <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="…/prodotto/fasi/3" aria-label="Apri fase 3: Controllo qualità, di tutto il prodotto">Apri</a></div>
+    </div>
+    <div class="rg-step__body" id="fase-3" role="region" aria-labelledby="fase-3-toggle" hidden>…</div>
+  </li>
+
+  <li class="rg-step"><!-- 4 Incollature finali, fase della parte --></li>
+</ol>
+```
+
+- Il timbro sta **dentro `rg-step__headline`**: entra nel nome accessibile del toggle («3 TUTTO IL
+  PRODOTTO Controllo qualità Reparto Finissaggio…»). Non metterlo in `__aside`, che è per i
+  conteggi, né in `__meta`, che è mono e grigia.
+- **Niente `aria-hidden`** sul timbro: è informazione.
+- L'azione porta alla **pagina della fase di prodotto**, non a una copia dentro la parte: la fase è
+  una sola, e si compila una volta. Il nome accessibile lo dice.
+- Due fasi di prodotto **consecutive** condividono il filetto forte che le separa: si leggono come
+  due righe marcate in fila, non come un gruppo.
+- Nella pagina **del prodotto**, dove quelle fasi sono la sequenza vera e non l'eccezione, sono
+  `rg-step` normali: niente `--product`, niente timbro.
+
+### Lo stacco intitolato (`rg-steps__break`), opzionale
+
+Resta nel DS per l'elenco che **raggruppa** le fasi di prodotto in coda invece di tenerle in
+sequenza: `<li class="rg-steps__break">` con `rg-steps__break-title` («Di tutto il prodotto») e
+`rg-steps__break-note`. Filetto forte in cima, nessun numero, e il filo della sequenza si ferma sulla
+riga precedente.
+
+La 1.16.0 aveva escluso l'intestazione di gruppo come riga a sé — in una `<ol>` ogni figlio è una
+voce, e una riga-intestazione sarebbe stata **una fase finta** con un numero di posizione in più. Lo
+stacco resta ammesso solo perché non intesta fasi della parte: dice che da quel punto in giù
+l'elenco parla di un altro oggetto. Usarlo per qualunque altro raggruppamento è fuori contratto.

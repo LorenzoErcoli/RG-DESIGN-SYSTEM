@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.31.0 — non rilasciata
+## 1.31.0 — 2026-09-21
 
 **Minor.** Classi nuove e additive e **due token nuovi** (`--rg-color-scope`, `--rg-color-scope-text`): nessuna
 classe o token rimosso o rinominato. Un solo cambio su una classe esistente, e solo per chi usa le classi nuove:

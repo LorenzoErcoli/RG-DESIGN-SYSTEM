@@ -1,4 +1,4 @@
-/* RG Design System v1.30.0 — keep synchronized with tokens.json. */
+/* RG Design System v1.31.0 — keep synchronized with tokens.json. */
 :root {
   --rg-font-identity: AGNext, Arial, sans-serif;
   --rg-font-body: GT-America-Standard, Helvetica, Arial, sans-serif;
@@ -49,7 +49,7 @@
   --rg-color-action-primary: var(--rg-color-black); --rg-color-action-primary-text: var(--rg-color-white);
   --rg-color-action-secondary: var(--rg-color-white); --rg-color-focus: var(--rg-color-black);
   --rg-color-success: #365c45; --rg-color-warning: #7a5a16; --rg-color-danger: #8a2e2e; --rg-color-info: #36596b;
-  /* AMBITO (proposta 1.31.0) — il rosso che dice «questa cosa non e come le altre». NON e uno stato:
+  /* AMBITO (1.31.0) — il rosso che dice «questa cosa non e come le altre». NON e uno stato:
      non segnala che qualcosa non va, dice un'APPARTENENZA (la fase vale per tutto il prodotto, non
      per una parte). Serviva un colore proprio perche --rg-color-danger e gia preso tre volte nella
      stessa pagina: e l'errore dei moduli, ed e --rg-color-category-3, cioe il reparto Pressatura.

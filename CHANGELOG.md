@@ -7,6 +7,81 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.39.0 — 2026-09-22
+
+**Minor.** Due classi **nuove** e additive, `rg-topbar__menu` e `rg-topbar__menu-toggle`; nessuna
+rimossa o rinominata, nessun token toccato. A differenza della 1.38.0, qui **salire il pin fa già
+metà del lavoro**: la barra smette di far slittare la pagina anche senza toccare il markup. L'altra
+metà, la forma giusta sotto i 680 px, chiede tre righe di HTML (vedi
+[UPGRADING](UPGRADING.md#1390--la-topbar-non-fa-più-slittare-la-pagina-sul-telefono)).
+
+### Il difetto, misurato
+
+`rg-product-platform` su un telefono, viewport 375×812, barra completa — marchio, sette voci di
+navigazione, azione secondaria, nome utente, esci:
+
+| | fino alla 1.38.0 | dalla 1.39.0 |
+| --- | --- | --- |
+| `documentElement.scrollWidth` a 375 px | **597** | **375** |
+| `.rg-topbar` clientWidth / scrollWidth | 375 / 597 | 375 / 375 |
+| `.rg-appshell__main` | 375 / 375, già a posto | invariato |
+
+La pagina slittava di **222 px sotto il dito**, in ogni vista dell'applicazione, e il contenuto non
+c'entrava: stava dentro i 375 esatti. Sbordava **solo la barra** e, stando nel flusso, si portava
+dietro il documento intero. La causa sta in due righe di CSS: `.rg-topbar` è un flex a riga unica e
+un figlio flex ha `min-width: auto`, quindi `.rg-topbar__nav` — 428 px di sole voci — non si
+comprimeva e non andava a capo. Fino a ieri il DS scriveva «su mobile preservare nome prodotto,
+azione primaria contestuale e accesso al menu» senza dare il pezzo per farlo.
+
+### Due risposte, una dentro l'altra
+
+**1. Senza toccare il markup — la rete di sicurezza.** La nav scorre dentro il proprio riquadro a
+qualunque larghezza, e sotto i 680 px lo fanno anche le azioni: la barra torna larga quanto lo
+schermo. Vale per ogni app già in campo, solo salendo il tag. **A qualunque larghezza** perché
+questa barra, tutta intera, chiede 737 px: fermarsi ai 680 avrebbe lasciato la pagina che slitta fra
+681 e 737, cioè su un tablet in verticale o su una finestra stretta — misurato. Non è la forma
+giusta — a 375 px la nav si riduce a una striscia da ~170 px — ed è esattamente quello che deve
+essere: una rete.
+
+**2. Con `rg-topbar__menu` — la forma giusta.** Nav e azioni entrano in un pannello che si apre con
+`rg-topbar__menu-toggle`. La barra resta alta `--rg-layout-header` e il pannello **si posa sopra il
+contenuto**: `rg-appshell__main` comincia a 64 px anche a menu aperto. Su uno schermo basso non era
+un dettaglio ma la condizione. Le righe sono da 44 px, come ogni bersaglio da dito dalla 1.30.0.
+
+**Sopra i 680 px il markup in più non cambia niente**: il controllo sparisce, il pannello torna una
+riga della barra. Verificato a 1280 px — nav e azioni cadono allo stesso pixel di prima.
+
+### `<details>` senza JavaScript, e il pannello che gli sta accanto
+
+Il controllo è un `<details>`/`<summary>` nativo: nessuna app deve scrivere JavaScript, lo stato
+aperto/chiuso lo annuncia il browser, Invio e Spazio funzionano già. La navigazione resta
+raggiungibile da tastiera anche a menu chiuso: si tabula sul controllo, si apre, si tabula nelle
+voci. È la stessa scelta di `rg-action-menu` (1.17.0).
+
+**Il pannello è fratello del `<details>`, non suo figlio**, e la ragione è la scrivania, non il
+telefono: un figlio di `<details>` chiuso lo nasconde lo user-agent, e per rimostrarlo su desktop
+servirebbe `::details-content`, che è recente — misurato in Chrome, `display: contents` sul
+`<details>` **non** lo rimostra. Il chrome di ogni scrivania RG non può dipendere da una
+pseudo-classe nuova: da fratello, il pannello è un elemento come un altro e su desktop lo mostra una
+media query normale. Il prezzo è dichiarato: il legame lo fa il selettore `[open] ~`, quindi **il
+pannello deve stare dopo il controllo**.
+
+**Limite dichiarato**: senza JavaScript il pannello non si chiude toccando fuori né con Esc. Si
+chiude ritoccando il controllo o, nella pratica, navigando — ogni voce porta a un'altra pagina. Chi
+vuole quei due comportamenti aggiunge il proprio JavaScript sull'attributo `open`, senza cambiare
+classi.
+
+### Cosa entra nel pannello
+
+Ciò che può aspettare: le sezioni e le azioni di servizio. Ciò che deve restare a portata di
+pollice — il marchio, il titolo, un'azione primaria contestuale — resta **fuori**, sulla barra. La
+voce corrente si dichiara con `aria-current="page"` come prima e prende la barretta nera a sinistra
+di `rg-sidebar-item`, in `currentColor`, così la stessa riga vale su barra chiara e su barra nera.
+
+Vetrina: `examples/rg-components-library.html#topbar-mobile`, con due riquadri da 375 px veri (la
+soglia dipende dal viewport e dentro una tavola larga non si vedrebbe) e la pagina
+`examples/rg-topbar-mobile.html` da aprire stretta.
+
 ## 1.38.0 — 2026-09-22
 
 **Minor.** Una classe **nuova** e additiva, `rg-table--hand`; nessuna rimossa o rinominata, nessun

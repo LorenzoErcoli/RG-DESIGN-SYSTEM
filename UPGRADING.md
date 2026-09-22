@@ -61,6 +61,32 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.35.0 — la trama della banda comincia dopo il nome
+
+Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. Cambiano due
+cose che si vedono e una che non si vede.
+
+**Si vede.** Sulla banda di reparto la striscia della figura non passa più dietro la targhetta col
+nome: comincia dove il nome finisce. Sparisce anche il margine bianco (`outline`) attorno a nome e
+nota, che serviva solo a coprire la trama sottostante. Chi stampa il fascicolo lo nota subito; chi usa
+la banda a schermo (`rg-phase-panel__band`, testate di avanzamento) pure.
+
+**Non si vede, ma va controllato.** La variabile CSS `--rg-dept-inset` **non viene più letta**. Serviva
+a ridare alla striscia il margine laterale che la banda ha già come `padding`, e valeva sempre quanto
+quel `padding`. Se un prodotto la imposta nel proprio CSS, la riga è morta e va tolta:
+
+```bash
+grep -rn "rg-dept-inset" --include=*.css --include=*.html .
+```
+
+Per cambiare oggi il margine laterale della striscia si cambia il `padding` della banda, che è la
+stessa cosa scritta una volta sola.
+
+**Se il prodotto stampa un fascicolo compatto:** sul fascicolo di prova RG il conto delle pagine non
+cambia (20 prima, 20 dopo) e i gruppi di due fasi restano in una pagina sola — l'altezza della banda la
+detta il nome, non la striscia. Vale comunque la regola della 1.34.0: ristampare e contare le pagine
+prima di mandare in reparto.
+
 ### 1.34.0 — il foglio di lavorazione esce in maiuscolo
 
 Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. Ma **il foglio

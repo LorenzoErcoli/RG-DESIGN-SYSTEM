@@ -7,6 +7,78 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.35.0 — 2026-09-22
+
+**Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si
+legge** la banda di reparto: chi aggiorna il tag e stampa il fascicolo vede il foglio diverso, e va saputo
+prima. Sparisce una variabile CSS interna, `--rg-dept-inset`: nessuna variante la dichiarava e nessun
+prodotto la imposta, ma chi l'avesse scritta nel proprio CSS non la vedrà più avere effetto.
+
+### Il reparto non è più attaccato alla trama
+
+Dal foglio stampato: «sistemiamo anche il reparto attaccato alla trama» (Lorenzo, 2026-09-22). Il riquadro
+col nome — «REPARTO PRESSATURA E SOFFIATURA» — e la striscia della figura si leggevano **come una macchia
+sola**. Era il limite dichiarato nella 1.34.0.
+
+**La causa non era la distanza, era la sovrapposizione.** La striscia era in posizione **assoluta**, larga
+quanto tutta la banda, e passava **dietro** la targhetta: a tenerle separate restavano il fondo bianco del
+nome e 4 px di `outline` bianco, 2 sul foglio compatto — ~0,5 mm sulla carta, cioè niente. Allargare
+l'`outline` non era la strada: cresce verso l'esterno, e avrebbe mangiato il filetto sotto la banda e la
+riga della fase sopra, cioè proprio l'aria che la 1.34.0 aveva appena rimesso fra le tre zone della
+testata.
+
+**La striscia diventa un elemento di flusso.** Uno pseudo-elemento può essere un **flex item**: `::after`
+non è più posizionato, è un figlio della banda con `flex: 1 1 0`. Parte da solo dove finisce il nome,
+staccato dal `gap` della banda — **8 px, un passo intero** — e arriva al margine destro del contenuto. Non
+c'è più niente che passa sotto niente:
+
+    ┌──────────────────────┐
+    │ REPARTO PRESSATURA   │ ▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭   Foglio 2 / 15
+    └──────────────────────┘
+
+E quindi **l'`outline` bianco sparisce**, con il limite che la 1.21.1 dichiarava («accanto al margine
+bianco può restare visibile uno spicchio dell'elemento coperto»): non c'è più niente da coprire.
+
+**Una striscia sola, due file.** Le due file sfalsate degli strass stavano su `::before` e `::after`: ora
+stanno sullo stesso elemento, in due gruppi di strati (`--rg-dept-trama` e, sotto, `--rg-dept-trama-mezzo`),
+e lo scarto di mezzo passo lo porta il `-pos` della seconda invece della posizione dello pseudo-elemento.
+
+**La fine della striscia resta un elemento intero.** La larghezza di un flex item non si può arrotondare
+con `round()`, che vuole una lunghezza; il taglio lo fa `clip-path: inset(…)` con dentro lo stesso
+`round(down, 100%, passo)`. Dove `round()` non c'è la dichiarazione cade e la striscia resta piena: stesso
+disegno, ultimo elemento tagliato — esattamente il ripiego di prima.
+
+**Il pavimento di 32 px.** La figura è uno dei tre segnali ridondanti e **non può sparire perché il posto è
+poco**: con un nome lungo e una nota lunga la striscia arriverebbe a zero, e la banda resterebbe con due
+segnali su tre. `min-width` la tiene larga almeno tre o quattro elementi; a cedere è il nome, che va a
+capo. In vetrina c'è la tavola *Quando il posto è poco*.
+
+**`--rg-dept-inset` non c'è più.** Serviva a ridare alla striscia assoluta il margine laterale che la banda
+aveva già come `padding`, e valeva **sempre** quanto quel `padding` (8 sul foglio, 24 nella fascia da 48
+px, 16 sotto i 680). Una striscia in flusso sta dentro il padding da sé: la variabile era una ripetizione —
+e una ripetizione che qualcuno può cambiare per metà.
+
+### Dove la banda si usa, e cosa non cambia
+
+La banda non sta solo sul foglio: è anche l'intestazione del pannello della fase (`rg-phase-panel__band`,
+48 px, sempre `--quiet`) e la testata della pagina di avanzamento, dove `rg-dept-band__note` porta il
+numero della fase. La nota **resta a destra**: prima ce la portava `margin-left: auto`, ora è la striscia
+che cresce e la spinge là (`order: 1`, perché uno `::after` è l'ultimo dei figli). Altezza della banda
+invariata in tutti e tre i posti: la detta il nome (28 px), non la striscia (16), e l'`outline` non
+occupava spazio.
+
+### Misura
+
+Stesso fascicolo di prova della 1.33.0 e della 1.34.0 (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli), stesso
+motore (Chrome): **20 pagine prima, 20 dopo**; **0 gruppi di fasi collegate spezzati prima, 0 dopo**. Il
+vincolo della 1.33.0 — due fasi collegate e il loro piede in una pagina A4 — non è stato toccato.
+
+**Limite dichiarato.** La striscia comincia dove finisce il nome, e il nome è largo quanto il testo che
+contiene: il suo bordo sinistro non cade più su una coordinata dichiarata dal CSS. In stampa non cambia
+niente (il PDF di Chrome resta vettoriale) e a schermo, provato a DPR 1, Chrome aggancia comunque la
+figura ai pixel; su un motore che non lo facesse, i bordi della figura potrebbero uscire sfumati di mezzo
+pixel.
+
 ## 1.34.0 — 2026-09-22
 
 **Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato: cambia **come si

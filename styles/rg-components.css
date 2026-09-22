@@ -678,13 +678,15 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    figlio del blocco, da bordo a bordo, dentro il contorno arrotondato (angoli alti come il blocco,
    meno il filetto). Altezza fissa 48 px, filetto del reparto compreso: le sette figure la reggono
    se riempiono la banda (pois, scacchiera, diagonale, coppie) o stanno sulla mezzeria (croci,
-   registri della stampa, piastre). Mai una figura ancorata ai bordi: a 48 px, col contorno del
-   blocco, un segno sul bordo si legge come cornice (1.19.x, pressatura e stampa). Etichetta centrata in verticale
+   registri della stampa, piastre). La trama comincia dopo l'etichetta e finisce sul padding della
+   testa (1.35.0): il margine laterale lo da il padding della banda, non piu una variabile sua.
+   Mai una figura ancorata ai bordi: a 48 px, col contorno del blocco, un segno sul bordo si legge
+   come cornice (1.19.x, pressatura e stampa). Etichetta centrata in verticale
    (lo fa gia la banda) e allineata a sinistra, con lo stesso padding orizzontale della testa: cade
    sul filo del numero della fase. A schermo sempre --quiet (nella pagina convivono badge di stato, e
    category-3/4/5 sono danger/warning/success). Senza variante di reparto e il caso «Reparto da
    assegnare»: filetto grigio, nessuna trama. Sostituisce __dept nella testa, che resta qui sotto. */
-.rg-dept-band.rg-phase-panel__band { --rg-dept-inset: var(--rg-space-6); box-sizing: border-box; height: var(--rg-space-12); min-height: 0; padding: 0 var(--rg-space-6); border-start-start-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); border-start-end-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); }
+.rg-dept-band.rg-phase-panel__band { box-sizing: border-box; height: var(--rg-space-12); min-height: 0; padding: 0 var(--rg-space-6); border-start-start-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); border-start-end-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); }
 .rg-phase-switch ~ .rg-phase-panel > .rg-phase-panel__band { border-start-start-radius: 0; }
 .rg-phase-panel__band > .rg-dept-band__name { flex: none; }
 /* IL REPARTO SENZA FASCIA (v1.20.0) — a schermo la fascia __band, subito sotto le linguette, «si
@@ -757,7 +759,7 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
   .rg-phase-panel__sections { margin: calc(-1 * var(--rg-space-4)) calc(-1 * var(--rg-space-4)) var(--rg-space-4); padding-inline: var(--rg-space-4); overflow-x: auto; }
   .rg-phase-panel__heading ~ .rg-phase-panel__meta { padding-inline-start: 0; }
   .rg-phase-panel__summary { padding-inline-start: 0; }
-  .rg-dept-band.rg-phase-panel__band { --rg-dept-inset: var(--rg-space-4); padding-inline: var(--rg-space-4); }
+  .rg-dept-band.rg-phase-panel__band { padding-inline: var(--rg-space-4); }
   .rg-phase-panel__department { margin-inline: var(--rg-space-4); }
   .rg-phase-panel__gestures { justify-content: flex-start; margin-inline-start: 0; }
 }
@@ -1059,22 +1061,29 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    La campitura e un gradiente a stop netti: non e decorazione (vietata dalle regole §2) ma
    informazione — eccezione dichiarata, regole §12. In stampa arriva sulla carta solo con
    print-color-adjust: exact (rg-utilities.css). */
-.rg-dept-band { position: relative; display: flex; margin: 0; align-items: center; gap: var(--rg-space-2); min-height: var(--rg-space-8); padding: var(--rg-space-1) var(--rg-space-2); background-image: var(--rg-dept-pattern, none); background-size: var(--rg-dept-size, auto); background-position: var(--rg-dept-position, 0 0); background-repeat: var(--rg-dept-repeat, repeat); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-dept-color, var(--rg-color-black)); }
-/* La striscia della trama: sulla mezzeria, larga un numero intero di passi. */
-.rg-dept-band::before, .rg-dept-band::after { content: ""; position: absolute; top: calc(50% - var(--rg-space-2)); top: round(down, calc(50% - var(--rg-space-2)), var(--rg-border-hairline)); left: var(--rg-dept-inset, var(--rg-space-2)); width: calc(100% - 2 * var(--rg-dept-inset, var(--rg-space-2))); width: round(down, calc(100% - 2 * var(--rg-dept-inset, var(--rg-space-2))), var(--rg-dept-passo, var(--rg-border-hairline))); height: var(--rg-space-4); background-image: var(--rg-dept-trama, none); background-size: var(--rg-dept-trama-size, auto); background-position: var(--rg-dept-trama-pos, 0 0); background-repeat: no-repeat; pointer-events: none; }
-/* Fila di mezzo sfalsata di mezzo passo (strass): un passo in meno, cosi finisce intera anche lei. */
-.rg-dept-band::after { left: calc(var(--rg-dept-inset, var(--rg-space-2)) + var(--rg-dept-passo, var(--rg-border-hairline)) / 2); width: calc(100% - 2 * var(--rg-dept-inset, var(--rg-space-2)) - var(--rg-dept-passo, var(--rg-border-hairline))); width: round(down, calc(100% - 2 * var(--rg-dept-inset, var(--rg-space-2)) - var(--rg-dept-passo, var(--rg-border-hairline))), var(--rg-dept-passo, var(--rg-border-hairline))); background-image: var(--rg-dept-trama-mezzo, none); background-size: var(--rg-dept-trama-mezzo-size, auto); background-position: var(--rg-dept-trama-mezzo-pos, 0 0); }
-/* Nome e nota sopra la trama: la striscia e posizionata e verrebbe dopo nell'ordine di pittura. */
-.rg-dept-band > * { position: relative; z-index: 1; }
+.rg-dept-band { display: flex; margin: 0; align-items: center; gap: var(--rg-space-2); min-height: var(--rg-space-8); padding: var(--rg-space-1) var(--rg-space-2); background-image: var(--rg-dept-pattern, none); background-size: var(--rg-dept-size, auto); background-position: var(--rg-dept-position, 0 0); background-repeat: var(--rg-dept-repeat, repeat); border-bottom: var(--rg-border-strong) var(--rg-border-style) var(--rg-dept-color, var(--rg-color-black)); }
+/* LA TRAMA COMINCIA DOVE FINISCE IL NOME (1.35.0). Fino alla 1.34.0 la striscia era in posizione
+   ASSOLUTA da un capo all'altro della banda e passava DIETRO la targhetta: a tenerle separate
+   restava il solo fondo bianco del nome piu 4 px di outline, 2 in stampa — sulla carta «il reparto
+   attaccato alla trama» (Lorenzo, 2026-09-22), che si leggeva come una macchia sola. Ora la
+   striscia e un FLEX ITEM: parte dopo il nome, staccata dal gap della banda (8 px, un passo
+   intero), e arriva al margine destro del contenuto. Niente si sovrappone piu a niente, quindi via
+   l'outline bianco — che per allargarsi avrebbe dovuto mangiare il filetto sotto la banda.
+   Una striscia sola e due gruppi di strati: --rg-dept-trama e, sotto, --rg-dept-trama-mezzo per la
+   fila sfalsata di mezzo passo (strass), che lo scarto se lo porta nel proprio -pos. Le due liste
+   si concatenano e restano allineate anche quando la seconda e vuota (un solo strato «none»).
+   clip-path taglia la striscia all'ultimo PASSO INTERO, come faceva round() sulla larghezza: la
+   figura finisce sempre con un elemento intero. Dove round() non c'e', la dichiarazione cade e la
+   striscia resta piena — stesso disegno, ultimo elemento tagliato.
+   PAVIMENTO DI 32 PX: la trama e uno dei tre segnali ridondanti e non puo sparire perche il posto e
+   poco. Con una nota lunga accanto a un nome lungo la striscia arriverebbe a zero: il min-width la
+   tiene larga almeno tre o quattro elementi, e a cedere e il nome, che va a capo. */
+.rg-dept-band::after { content: ""; flex: 1 1 0; min-width: var(--rg-space-8); height: var(--rg-space-4); background-image: var(--rg-dept-trama, none), var(--rg-dept-trama-mezzo, none); background-size: var(--rg-dept-trama-size, auto), var(--rg-dept-trama-mezzo-size, auto); background-position: var(--rg-dept-trama-pos, 0 0), var(--rg-dept-trama-mezzo-pos, 0 0); background-repeat: no-repeat; clip-path: inset(0 calc(100% - round(down, 100%, var(--rg-dept-passo, 100%))) 0 0); pointer-events: none; }
 /* Nome sulla fascia: MAIUSCOLO per regola, «Reparto …» compreso «Reparto da assegnare» (proposta 1.21.1:
    il reparto si scrive sempre in maiuscolo, schede e interfacce). La cassa la da il CSS, non il testo. */
 .rg-dept-band__name { padding: var(--rg-space-1) var(--rg-space-2); background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 /* Nota accessoria della banda (macchina, turno): mono, secondaria, mai al posto del nome. */
-.rg-dept-band__note { margin-left: auto; padding: 0 var(--rg-space-1); background: var(--rg-color-white); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
-/* Margine bianco da 4 intorno a nome e nota (proposta 1.21.1): la trama passa SOTTO l'etichetta, e senza
-   luce l'elemento coperto a meta si legge come un disegno tagliato male contro il filetto nero. Outline e
-   non padding: non cambia l'altezza della fascia. */
-.rg-dept-band__name, .rg-dept-band__note { outline: var(--rg-space-1) var(--rg-border-style) var(--rg-color-white); }
+.rg-dept-band__note { order: 1; padding: 0 var(--rg-space-1); background: var(--rg-color-white); color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
 /* Sette reparti, sette FIGURE. Il criterio non e "distinguibili" ma RICONOSCIBILI: una trama che evoca il
    lavoro del reparto si riconosce al primo colpo (criterio arrivato dal reparto). Due reparti non stanno
    mai nella stessa FAMIGLIA DI SEGNO: croci (ricamo), gocce-raggi e linee (stampa), piastre col filo
@@ -1086,19 +1095,19 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    (croce da 6, tondo da 4, piastra 4x4, linea da 2), lo stesso tratto 2, la stessa luce, alta 16 come il
    campo della tessera, ripetuta in orizzontale col passo del motivo. Non la tessera intera ripetuta: fra
    due tessere ci sarebbero 4 px di luce in piu, e la fascia si leggerebbe come una fila di francobolli.
-   COME: su ::before (e ::after per la fila di mezzo degli strass), una fila di pixel del disegno = uno
+   COME: su ::after, la striscia in flusso dopo il nome, una fila di pixel del disegno = uno
    strato: un REPEATING-LINEAR-GRADIENT orizzontale a stop netti, periodo = passo, largo quanto la striscia. Non la
    maschera SVG delle tessere e non un gradiente ripetuto a tessere: nel PDF di Chrome diventano bitmap
    ripetuti (trama a blocchi, passi a intensita alterne); il repeating-linear-gradient resta una sfumatura
    vettoriale, come le figure fino alla 1.21.0, e a schermo cade sui pixel lo stesso. Stop in
    forma esplicita (colore-inizio, colore-fine), come le figure precedenti. Colore da --rg-dept-color
-   (categoria; neutral-400 con --quiet). La striscia sta sulla mezzeria (y arrotondata al pixel) e la
-   sua LARGHEZZA E ARROTONDATA AL PASSO con round(): la trama finisce sempre con un elemento intero. Senza
-   round() resta larga quanto la fascia e l'ultimo elemento puo uscire tagliato. La scheda si stampa dal
+   (categoria; neutral-400 con --quiet). La striscia sta sulla mezzeria (ce la mette align-items) e il
+   suo LATO DESTRO E TAGLIATO AL PASSO con clip-path e round(): la trama finisce sempre con un elemento
+   intero. Senza round() resta piena e l'ultimo elemento puo uscire tagliato. La scheda si stampa dal
    browser (window.print); gli sfondi arrivano con print-color-adjust (rg-utilities.css).
    Le coordinate in px sono il disegno, non misure di layout: eccezione dichiarata, regole §12.
    Variabili: --rg-dept-trama, -trama-size, -trama-pos (gli strati), --rg-dept-passo, --rg-dept-trama-mezzo
-   (e -size, -pos: solo strass), --rg-dept-inset (margine laterale, 24 nella fascia __band).
+   (e -size, -pos: solo strass, e il -pos porta lo scarto di mezzo passo in orizzontale).
    --rg-dept-pattern/-size/-position/-repeat restano lette dalla regola base per compatibilita. */
 /* RICAMO — croci da 6 in due file, luce 4: passo 10. */
 .rg-dept-band--ricamo { --rg-dept-color: var(--rg-color-category-1); --rg-dept-passo: calc(var(--rg-space-2) + var(--rg-border-strong)); --rg-dept-trama: repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px, var(--rg-dept-color) 6px, var(--rg-dept-color) 8px, transparent 8px, transparent 10px), repeating-linear-gradient(90deg, transparent 0px, transparent 4px, var(--rg-dept-color) 4px, var(--rg-dept-color) 6px, transparent 6px, transparent 10px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px, var(--rg-dept-color) 6px, var(--rg-dept-color) 8px, transparent 8px, transparent 10px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px, var(--rg-dept-color) 6px, var(--rg-dept-color) 8px, transparent 8px, transparent 10px), repeating-linear-gradient(90deg, transparent 0px, transparent 4px, var(--rg-dept-color) 4px, var(--rg-dept-color) 6px, transparent 6px, transparent 10px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px, var(--rg-dept-color) 6px, var(--rg-dept-color) 8px, transparent 8px, transparent 10px); --rg-dept-trama-size: 100% 2px, 100% 2px, 100% 2px, 100% 2px, 100% 2px, 100% 2px; --rg-dept-trama-pos: 0 0px, 0 2px, 0 4px, 0 10px, 0 12px, 0 14px; }
@@ -1107,7 +1116,7 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* PRESSATURA — piastre 4x4 sopra e sotto, luce 2: passo 6; filo continuo in mezzo. */
 .rg-dept-band--pressatura { --rg-dept-color: var(--rg-color-category-3); --rg-dept-passo: calc(var(--rg-space-1) + var(--rg-border-strong)); --rg-dept-trama: repeating-linear-gradient(90deg, transparent 0px, transparent 1px, var(--rg-dept-color) 1px, var(--rg-dept-color) 5px, transparent 5px, transparent 6px), repeating-linear-gradient(90deg, var(--rg-dept-color) 0px, var(--rg-dept-color) 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 1px, var(--rg-dept-color) 1px, var(--rg-dept-color) 5px, transparent 5px, transparent 6px); --rg-dept-trama-size: 100% 4px, 100% 2px, 100% 4px; --rg-dept-trama-pos: 0 0px, 0 7px, 0 12px; }
 /* STRASS — pois da 4 in tre file, luce 2: passo 6; la fila di mezzo sfalsata di 3 (::after). */
-.rg-dept-band--strass { --rg-dept-color: var(--rg-color-category-4); --rg-dept-passo: calc(var(--rg-space-1) + var(--rg-border-strong)); --rg-dept-trama: repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 1px, var(--rg-dept-color) 1px, var(--rg-dept-color) 5px, transparent 5px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 1px, var(--rg-dept-color) 1px, var(--rg-dept-color) 5px, transparent 5px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px); --rg-dept-trama-size: 100% 1px, 100% 2px, 100% 1px, 100% 1px, 100% 2px, 100% 1px; --rg-dept-trama-pos: 0 0px, 0 1px, 0 3px, 0 12px, 0 13px, 0 15px; --rg-dept-trama-mezzo: repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 1px, var(--rg-dept-color) 1px, var(--rg-dept-color) 5px, transparent 5px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px); --rg-dept-trama-mezzo-size: 100% 1px, 100% 2px, 100% 1px; --rg-dept-trama-mezzo-pos: 0 6px, 0 7px, 0 9px; }
+.rg-dept-band--strass { --rg-dept-color: var(--rg-color-category-4); --rg-dept-passo: calc(var(--rg-space-1) + var(--rg-border-strong)); --rg-dept-trama: repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 1px, var(--rg-dept-color) 1px, var(--rg-dept-color) 5px, transparent 5px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 1px, var(--rg-dept-color) 1px, var(--rg-dept-color) 5px, transparent 5px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px); --rg-dept-trama-size: 100% 1px, 100% 2px, 100% 1px, 100% 1px, 100% 2px, 100% 1px; --rg-dept-trama-pos: 0 0px, 0 1px, 0 3px, 0 12px, 0 13px, 0 15px; --rg-dept-trama-mezzo: repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 1px, var(--rg-dept-color) 1px, var(--rg-dept-color) 5px, transparent 5px, transparent 6px), repeating-linear-gradient(90deg, transparent 0px, transparent 2px, var(--rg-dept-color) 2px, var(--rg-dept-color) 4px, transparent 4px, transparent 6px); --rg-dept-trama-mezzo-size: 100% 1px, 100% 2px, 100% 1px; --rg-dept-trama-mezzo-pos: calc(var(--rg-dept-passo) / 2) 6px, calc(var(--rg-dept-passo) / 2) 7px, calc(var(--rg-dept-passo) / 2) 9px; }
 /* FINISSAGGIO — scacchiera da 4: passo 8. */
 .rg-dept-band--finissaggio { --rg-dept-color: var(--rg-color-category-5); --rg-dept-passo: var(--rg-space-2); --rg-dept-trama: repeating-linear-gradient(90deg, var(--rg-dept-color) 0px, var(--rg-dept-color) 4px, transparent 4px, transparent 8px), repeating-linear-gradient(90deg, transparent 0px, transparent 4px, var(--rg-dept-color) 4px, var(--rg-dept-color) 8px), repeating-linear-gradient(90deg, var(--rg-dept-color) 0px, var(--rg-dept-color) 4px, transparent 4px, transparent 8px), repeating-linear-gradient(90deg, transparent 0px, transparent 4px, var(--rg-dept-color) 4px, var(--rg-dept-color) 8px); --rg-dept-trama-size: 100% 4px, 100% 4px, 100% 4px, 100% 4px; --rg-dept-trama-pos: 0 0px, 0 4px, 0 8px, 0 12px; }
 /* INCOLLATURE — fasce diagonali a gradini di 2: passo 8. */
@@ -1274,7 +1283,6 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block--compact + .rg-worksheet-block--continued { margin-top: calc(-1 * (var(--rg-space-2) + var(--rg-border-hairline))); }
 .rg-worksheet-block--compact > .rg-dept-band { min-height: 0; padding-block: calc(var(--rg-space-1) / 2); }
 .rg-worksheet-block--compact > .rg-dept-band > .rg-dept-band__name { padding-block: calc(var(--rg-space-1) / 2); }
-.rg-worksheet-block--compact > .rg-dept-band > :is(.rg-dept-band__name, .rg-dept-band__note) { outline-width: calc(var(--rg-space-1) / 2); }
 .rg-worksheet-block--compact .rg-worksheet-block__head { gap: var(--rg-space-1) var(--rg-space-3); padding: var(--rg-space-2) var(--rg-space-3); }
 .rg-worksheet-block--compact .rg-worksheet-block__body { padding: var(--rg-space-2) var(--rg-space-3); }
 .rg-worksheet-block--compact .rg-worksheet-block__fields { grid-template-columns: repeat(auto-fill, minmax(calc(var(--rg-space-24) + var(--rg-space-8)), 1fr)); gap: var(--rg-space-2) var(--rg-space-3); }
@@ -1384,7 +1392,6 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block__step { margin: 0; padding: var(--rg-space-2) var(--rg-space-3) 0; color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 .rg-worksheet-block__step + .rg-dept-band { margin: var(--rg-space-2) var(--rg-space-3) var(--rg-space-1); padding-block: var(--rg-space-1); }
 .rg-worksheet-block__step + .rg-dept-band > .rg-dept-band__name { padding-block: var(--rg-space-1); }
-.rg-worksheet-block__step + .rg-dept-band > :is(.rg-dept-band__name, .rg-dept-band__note) { outline-width: var(--rg-space-1); }
 .rg-worksheet-block__work { margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-tight); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 /* LA TESTATA E FATTA DI TRE COSE, E SI DEVONO LEGGERE COME TRE (1.34.0). Dal foglio stampato:
    «nelle testate ci sono un sacco di scritte vicine che creano confusione, le scritte sono forse un

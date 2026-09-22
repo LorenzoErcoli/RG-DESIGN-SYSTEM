@@ -7,6 +7,61 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.37.0 — 2026-09-22
+
+**Minor.** Una variante nuova, `rg-table--hand`, **opt-in**: nessuna tabella esistente cambia finché
+non gliela si mette. Nessun token nuovo, nessuna classe rimossa o rinominata.
+
+### La tabella su cui si scrive non è la tabella che si legge
+
+La tabella degli **stop** del foglio di lavorazione stampato: undici o tredici colonne, quasi tutte
+da tre o quattro cifre (`STOP`, `AGO`, `AP`, `PMI`, `VEL`) e due o tre di parole (`OPERAZIONE`,
+`MATERIALE`, `NOTE`), **diciotto righe su un A4**. Fin qui la vestiva `rg-table--compact` +
+`rg-table--grid`, cioè una tabella **da leggere**: righe da 24 px, testo tutto della stessa misura.
+Ma su quel foglio l'operatrice ci **scrive sopra a penna** tempi e note, e per la penna 24 px non
+sono una riga.
+
+`rg-table--hand` si mette **sopra** `rg-table--grid` e cambia tre cose:
+
+- **la riga vale l'altezza della mano**, 32 px (~8,5 mm) — la stessa misura con cui
+  `rg-fill-field` dichiara da 1.22.0 quanto è alto uno spazio da riempire a penna;
+- **il corpo è a 14 px**, la misura di quello che si legge mentre si scrive;
+- **l'intestazione è un gradino sotto il corpo**, 12 px.
+
+### Perché l'intestazione più piccola, e perché proprio 12 px
+
+> «Le intestazioni sono parole su colonne di quattro caratteri: col font del corpo o vanno a capo o
+> allargano colonne che devono restare strette. Il testo che si legge e si scrive è nel corpo,
+> l'intestazione si legge una volta sola.» (Lorenzo, 2026-09-22)
+
+In testata non c'è un dato, c'è un **nome di colonna**: si legge una volta e poi non lo si guarda
+più. Sotto, invece, ci sono tre cifre o una frase scritta a mano. Con la stessa misura per tutti e
+due, «OPERAZIONE» sopra una colonna da quattro caratteri o va **a capo** — e un a capo in testata,
+su una pagina da diciotto righe, costa **l'altezza di una riga di stop** — o **allarga** la colonna,
+prendendo lo spazio a quelle che portano le parole.
+
+12 px è `--rg-font-size-xs`, **l'ultimo gradino della scala**: sotto non c'è niente, e non si inventa
+un valore per un caso locale. Se una parola non ci sta nemmeno a 12 px, **si accorcia la parola**.
+
+### Aria fra la parola e il filetto
+
+Con `rg-table--grid` ogni cella ha il suo filetto nero, testata compresa, e «STOP» finiva
+**attaccato alla linea verticale**: due segni neri a contatto, e la parola si legge peggio di
+quanto sia scritta. La testata prende ora `--rg-space-1` per lato (4 px, 8 in tutto). Gli 8 px per
+lato del corpo sarebbero 16: **metà** di una colonna da quattro cifre. Il corpo i suoi 8 li tiene,
+perché lì è la penna che non deve toccare il filetto.
+
+### Il `nowrap` torna a casa
+
+`white-space: nowrap` sulle intestazioni di questa tabella stava **inline su ogni `<th>`** del
+template che stampa il foglio. Adesso sta nel design system, dentro `rg-table--hand thead th`: chi
+compone la tabella può togliere l'attributo dal template. Limite dichiarato: con
+`table-layout: fixed` una testata che non ci sta **sborda** invece di andare a capo — è la scelta,
+perché sul foglio lo spazio verticale è finito e in fondo alla pagina si vede.
+
+Documentazione: [`components/tables.md`](components/tables.md#tabella-su-cui-si-scrive-a-penna-rg-table--hand-proposta-1370).
+Vetrina: `examples/rg-components-library.html#table-hand`, con il confronto «prima» senza la variante.
+
 ## 1.36.0 — 2026-09-22
 
 **Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si

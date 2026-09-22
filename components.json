@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.36.0",
+  "dsVersion": "1.37.0",
   "generated": "2026-09-22",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
@@ -766,7 +766,8 @@
         ],
         "variants": [
           "rg-table--compact",
-          "rg-table--grid"
+          "rg-table--grid",
+          "rg-table--hand"
         ],
         "related": [
           "rg-fill-field--cell",
@@ -779,7 +780,8 @@
         "review",
         "matrix",
         "expandable",
-        "grid"
+        "grid",
+        "hand"
       ],
       "states": [
         "default",
@@ -793,12 +795,15 @@
         "--rg-color-border",
         "--rg-color-surface",
         "--rg-color-focus",
-        "--rg-space-*"
+        "--rg-space-*",
+        "--rg-font-size-sm",
+        "--rg-font-size-xs",
+        "--rg-line-height-technical"
       ],
       "doc": "components/tables.md",
       "specimenAnchor": "tables",
       "snippet": "<div class=\"rg-table-wrap\"><table class=\"rg-table\"><thead><tr><th>Codice</th><th class=\"rg-table__numeric\">Consumo (m)</th></tr></thead><tbody><tr><td class=\"rg-table__code\">FIL-0281</td><td class=\"rg-table__numeric\">18.42</td></tr></tbody></table></div>",
-      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase. Da 1.23.0 rg-table__grow sulla <th> della colonna larga (Note, Descrizione, Colore): width 100% nel layout automatico, le altre colonne scendono alla larghezza del proprio contenuto. Una per tabella. Da 1.24.0 rg-table--grid e la tabella DI CARTA da compilare a penna: filetto nero hairline su tutte le celle (testata compresa) e table-layout fixed, colonne uguali che non dipendono dal contenuto; rg-table__grow sulla th vale il DOPPIO delle altre, con style=\"--rg-table-cols: N\" sulla table (se manca vale 6). Celle --cell 32 px, 24 dentro rg-worksheet-block--compact. Nata perche --compact + td.rg-fill-field--cell con righe tutte vuote stampava righe da quaderno senza divisori e colonne di larghezza casuale. Non usare rg-table__grow senza --grid su una tabella tutta vuota: le altre colonne collassano. 1.25.0: con piu colonne larghe nella griglia, --rg-table-wide: K (se manca vale 1); ogni __grow vale 2/(cols+K).",
+      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase. Da 1.23.0 rg-table__grow sulla <th> della colonna larga (Note, Descrizione, Colore): width 100% nel layout automatico, le altre colonne scendono alla larghezza del proprio contenuto. Una per tabella. Da 1.24.0 rg-table--grid e la tabella DI CARTA da compilare a penna: filetto nero hairline su tutte le celle (testata compresa) e table-layout fixed, colonne uguali che non dipendono dal contenuto; rg-table__grow sulla th vale il DOPPIO delle altre, con style=\"--rg-table-cols: N\" sulla table (se manca vale 6). Celle --cell 32 px, 24 dentro rg-worksheet-block--compact. Nata perche --compact + td.rg-fill-field--cell con righe tutte vuote stampava righe da quaderno senza divisori e colonne di larghezza casuale. Non usare rg-table__grow senza --grid su una tabella tutta vuota: le altre colonne collassano. 1.25.0: con piu colonne larghe nella griglia, --rg-table-wide: K (se manca vale 1); ogni __grow vale 2/(cols+K). 1.37.0: rg-table--hand e la tabella SU CUI SI SCRIVE (stop del foglio di lavorazione stampato, undici-tredici colonne quasi tutte da 3-4 cifre - STOP, AGO, AP, PMI, VEL - e due o tre di parole - OPERAZIONE, MATERIALE, NOTE - diciotto righe su un A4). Si mette SOPRA --grid e vince sulle righe da 24 del blocco compatto: riga 32 px (~8,5 mm, l'altezza della MANO, la stessa di rg-fill-field), corpo 14 px (--rg-font-size-sm: e la misura di quello che si legge mentre si scrive), TESTATA 12 px (--rg-font-size-xs, un gradino sotto il corpo e ultimo gradino della scala: in testata c'e una parola che si legge una volta sola sopra una colonna larga quattro caratteri; col corpo del testo OPERAZIONE va a capo - e un a capo in testata costa una riga su diciotto - o allarga una colonna che deve restare stretta). Testata staccata dai filetti con --rg-space-1 per lato (4 px; gli 8 del corpo sarebbero meta di una colonna da quattro cifre) e white-space: nowrap DENTRO IL DS, cosi il template non lo mette inline su ogni th. Limite dichiarato: con table-layout fixed una testata che non ci sta sborda invece di andare a capo - si accorcia la parola, due righe di testata costano una riga di stop. Opt-in: le altre tabelle non cambiano.",
       "keywords": [
         "tabella",
         "table",
@@ -848,13 +853,29 @@
         "fill-in table",
         "grid table",
         "ruled table",
-        "eccezioni per stop"
+        "eccezioni per stop",
+        "tabella da scrivere a penna",
+        "scrivere a penna",
+        "riga alta",
+        "altezza della riga",
+        "intestazione piu piccola",
+        "testata tabella",
+        "header tabella",
+        "stop macchina",
+        "tabella stop",
+        "foglio di lavorazione",
+        "colonne strette testata",
+        "nowrap intestazione",
+        "handwriting table",
+        "pen table",
+        "tall rows"
       ],
       "elementsSince": {
         "rg-table__grow": "1.23.0"
       },
       "variantsSince": {
-        "rg-table--grid": "1.24.0"
+        "rg-table--grid": "1.24.0",
+        "rg-table--hand": "1.37.0"
       }
     },
     {

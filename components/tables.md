@@ -13,6 +13,9 @@ Confrontare record strutturati: materiali, fili, operazioni, consumi, revisioni 
 - **Espandibile** (`rg-table__row--expandable` + `rg-table__detail`): una riga-record che
   rivela in loco la propria scomposizione (i sotto-record che la compongono) senza lasciare
   la tabella. Variante, non componente a sé: preserva la semantica tabellare.
+- **Griglia** (`rg-table--grid`): la tabella **di carta**, filetto nero su tutte le celle.
+- **Da scrivere a penna** (`rg-table--hand`): sopra la griglia, per la tabella degli stop del foglio
+  stampato — riga alta come la mano, intestazione un gradino più piccola del corpo.
 
 ## Uso e limiti
 
@@ -202,6 +205,74 @@ colonne vuote prendevano larghezze a caso.
     </tr>
     <tr>
       <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+## Tabella su cui si scrive a penna (`rg-table--hand`, proposta 1.37.0)
+
+La tabella **degli stop** del foglio di lavorazione stampato: undici o tredici colonne, quasi tutte da
+tre o quattro cifre (`STOP`, `AGO`, `AP`, `PMI`, `VEL`) e due o tre di parole (`OPERAZIONE`,
+`MATERIALE`, `NOTE`), **diciotto righe su un A4**. Non è una tabella da leggere: è una tabella su cui
+l'operatrice **scrive** tempi e note a penna, sopra la riga stampata.
+
+Si mette **sopra** `rg-table--grid`, che resta quella che dice *in che colonna* si scrive.
+
+- **La riga vale l'altezza della mano**, non del testo: 32 px (~8,5 mm), la stessa misura di
+  `rg-fill-field`. Vince sulle righe da 24 di `rg-worksheet-block--compact`: lì la tabella si legge,
+  qui ci si scrive sopra.
+- **Corpo a 14 px** (`--rg-font-size-sm`): è la misura di quello che si legge mentre si scrive.
+- **Intestazione a 12 px** (`--rg-font-size-xs`), un gradino sotto il corpo. In testata c'è una
+  *parola* che si legge una volta sola, sopra una colonna larga quattro caratteri: col corpo del testo
+  «OPERAZIONE» o va a capo — e un a capo in testata costa l'altezza di una riga su diciotto — o
+  allarga una colonna che deve restare stretta. 12 px è **l'ultimo gradino della scala**: sotto non
+  c'è niente e non si inventa un valore per un caso locale.
+- **Aria fra la parola e il filetto**: `--rg-space-1` per lato in testata (4 px, 8 in tutto). Con la
+  griglia «STOP» toccava la linea verticale e si leggeva male; gli 8 px per lato del corpo sarebbero
+  16, metà di una colonna da quattro cifre. Il corpo tiene i suoi 8: la penna non deve toccare il
+  filetto.
+- **L'intestazione non va a capo**: `white-space: nowrap` è nel design system, non inline su ogni
+  `<th>` del template. Se una parola non ci sta nemmeno a 12 px, **si accorcia la parola**: due righe
+  di testata costano una riga di stop.
+- **Limite**: con `table-layout: fixed` una testata che non ci sta *sborda* invece di andare a capo.
+  È una scelta: sul foglio lo spazio verticale è finito e si vede in fondo alla pagina. Chi compone la
+  tabella dichiara le larghezze (`--rg-table-cols`, `rg-table__grow`) e accorcia le parole.
+- **Non è a schermo**: a schermo lo stesso dato si inserisce con `rg-field`, che ha focus, errore e
+  sola lettura per davvero.
+
+```html
+<table class="rg-table rg-table--compact rg-table--grid rg-table--hand" style="--rg-table-cols: 7; --rg-table-wide: 2">
+  <caption>Stop della macchina — tempi e note si scrivono a penna</caption>
+  <thead>
+    <tr>
+      <th class="rg-table__numeric" scope="col">Stop</th>
+      <th class="rg-table__grow" scope="col">Operazione</th>
+      <th class="rg-table__numeric" scope="col">Ago</th>
+      <th class="rg-table__numeric" scope="col">AP</th>
+      <th class="rg-table__numeric" scope="col">PMI</th>
+      <th class="rg-table__numeric" scope="col">Vel</th>
+      <th class="rg-table__grow" scope="col">Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rg-table__numeric">1</td>
+      <td>Fermatura iniziale</td>
+      <td class="rg-table__numeric">3</td>
+      <td class="rg-table__numeric">1,5</td>
+      <td class="rg-table__numeric">180</td>
+      <td class="rg-table__numeric">650</td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+    </tr>
+    <tr>
+      <td class="rg-table__numeric">2</td>
+      <td>Cambio filo</td>
       <td class="rg-fill-field rg-fill-field--cell"></td>
       <td class="rg-fill-field rg-fill-field--cell"></td>
       <td class="rg-fill-field rg-fill-field--cell"></td>

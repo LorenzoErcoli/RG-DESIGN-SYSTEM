@@ -1343,6 +1343,30 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-table--grid .rg-table__grow { width: calc(200% / (var(--rg-table-cols, 6) + var(--rg-table-wide, 1))); }
 .rg-worksheet-block--compact .rg-table--grid th { white-space: normal; }
 .rg-worksheet-block--compact .rg-table caption { padding-bottom: var(--rg-space-1); font-size: var(--rg-font-size-sm); }
+/* TABELLA SU CUI SI SCRIVE A PENNA (proposta 1.37.0). Gli stop del foglio di lavorazione stampato:
+   undici o tredici colonne, quasi tutte da tre o quattro cifre (STOP, AGO, AP, PMI, VEL) e due o tre
+   di parole (OPERAZIONE, MATERIALE, NOTE), diciotto righe su un A4. Non e una tabella da leggere: e
+   una tabella su cui l'operatrice SCRIVE tempi e note, quindi la riga vale l'altezza della MANO —
+   32 px (~8,5 mm), la stessa di rg-fill-field — e non l'altezza del testo. Si mette sopra
+   rg-table--grid (i filetti neri dicono in che colonna si scrive) e vince sulle righe da 24 del
+   blocco compatto. Opt-in: le altre tabelle non cambiano.
+   IL CORPO E LA MISURA DELLA SCRITTURA, non della densita: 14 px, perche li si legge il dato
+   stampato e accanto ci si scrive sopra.
+   L'INTESTAZIONE E UN GRADINO PIU PICCOLA DEL CORPO (Lorenzo, 2026-09-22): in testata c'e una
+   PAROLA che si legge una volta sola e sta sopra una colonna larga quattro caratteri. Col corpo del
+   testo «OPERAZIONE» o va a capo — e un a capo in testata costa l'altezza di una riga su diciotto —
+   o allarga una colonna che deve restare stretta. Un gradino sotto, --rg-font-size-xs (12 px), che e
+   l'ULTIMO della scala: sotto non c'e niente e non si inventa un valore per un caso locale.
+   ARIA FRA LA PAROLA E IL FILETTO: con la griglia la testata tocca le linee verticali e «STOP»
+   attaccato al bordo si legge male. --rg-space-1 per lato (4 px, 8 in tutto) stacca la parola dalla
+   linea senza mangiare la colonna stretta — gli 8 px per lato del corpo sarebbero 16, meta di una
+   colonna da quattro cifre. Il corpo tiene i suoi 8, dove la penna non deve toccare il filetto.
+   LA TESTATA NON VA A CAPO: white-space nowrap sta QUI, non inline su ogni <th> del template. Se una
+   parola non ci sta nemmeno a 12 px si accorcia la parola: due righe di testata costano una riga di
+   stop. Lo spazio verticale e finito, e in fondo alla pagina si vede. */
+.rg-table.rg-table--hand :is(th, td) { height: var(--rg-space-8); padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); vertical-align: middle; }
+.rg-table.rg-table--hand td.rg-fill-field--cell { height: var(--rg-space-8); }
+.rg-table.rg-table--hand thead th { height: auto; padding-inline: var(--rg-space-1); font-size: var(--rg-font-size-xs); white-space: nowrap; overflow-wrap: normal; }
 /* Piede su UNA riga dove ci sta: Tempo, Operatore, Data prendono il loro contenuto (etichetta + almeno
    64 px di riga), la Nota prende il resto. Se non ci stanno vanno a capo, senza tagliare niente. */
 .rg-worksheet-block--compact .rg-worksheet-block__foot { align-items: flex-end; gap: var(--rg-space-2) var(--rg-space-4); padding: var(--rg-space-2) var(--rg-space-3); }

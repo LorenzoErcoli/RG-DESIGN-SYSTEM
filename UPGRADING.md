@@ -61,6 +61,27 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.37.0 — la nota porta l'etichetta dentro il riquadro
+
+Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. **Ma il foglio
+stampato cambia aspetto**, e due riquadri cambiano misura.
+
+**Si vede.** Nei campi `rg-fill-field--tall` dentro `rg-worksheet-block--compact .rg-worksheet-block__fields`
+e nella nota del piede (`rg-worksheet-foot__note`) l'etichetta non sta più *sopra* il riquadro ma
+**dentro, in alto a sinistra**. Il riquadro del blocco resta 48 px; quello del piede **cresce da 64 a
+80 px**. In stampa l'aria fra le sotto-operazioni passa da 8 a **12 px**. Tutto il resto dei campi —
+righe da 24 px, celle di tabella, `rg-field` a schermo — non cambia.
+
+**Va controllato solo in un caso.** Se un prodotto stampa dentro un `--tall` del foglio un valore
+**già noto e lungo**, tanto da riempire tutto il riquadro: il testo scorre sotto l'etichetta grazie a
+un `padding-top`, ma il riquadro cresce di quei ~20 px. Sul fascicolo RG non succede, perché i `--tall`
+del foglio sono le note e le note escono vuote. Regola generale invariata: il valore che il sistema
+conosce si **stampa come dato**, non dentro un campo da riempire.
+
+**Se il prodotto stampa un fascicolo compatto:** sul fascicolo di prova RG le pagine non cambiano, i
+gruppi di fasi collegate restano interi e il margine sulle pagine critiche sale da ~8 a ~33 px. Vale
+comunque la regola della 1.34.0: ristampare e contare le pagine prima di mandare in reparto.
+
 ### 1.36.0 — i campi del foglio in quattro colonne
 
 Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. **Ma il foglio

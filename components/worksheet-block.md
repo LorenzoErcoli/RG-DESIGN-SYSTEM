@@ -275,8 +275,8 @@ Il criterio è **togliere dove non si scrive**, in quest'ordine:
    è già dentro al gruppo e non ha bisogno che il secondo titolo gridi quanto il primo.
 
 **Mai le note.** La riga da scrivere resta 24 px, la `--tall` resta 48 e la nota del
-[piede](worksheet-foot.md) è anzi salita a 64. Su carta un campo troppo corto non è un difetto di
-stile: è un dato che non viene scritto.
+[piede](worksheet-foot.md) è anzi salita a 64 (80 dalla 1.37.0). Su carta un campo troppo corto non
+è un difetto di stile: è un dato che non viene scritto.
 
 **L'etichetta a 10 px è un'eccezione dichiarata** (regole §12). Il DS non ha un gradino sotto
 `--rg-font-size-xs` perché **a schermo** 12 px è il minimo leggibile; su **carta** la misura è
@@ -451,6 +451,9 @@ e si spezzano **tutti e tre** i gruppi. Gli 8 px si pagano dove non si scrive: l
 riga di chiusura del corpo («tempo per pezzo…»), che è un conto già fatto, passa da tecnica a stretta
 (~7 px per gruppo). **Alle note non si tocca niente.**
 
+> **Dalla 1.37.0 sono 12**, cioè quelli che servivano: li paga l'etichetta della nota, entrata dentro
+> il riquadro. Vedi [La nota con l'etichetta dentro il riquadro](#la-nota-con-letichetta-dentro-il-riquadro-1370).
+
 ### 6 · Fra due fasi collegate la linea è doppia
 
 Sullo stesso foglio stanno due fasi e «si fa fatica a vedere dove finisce la prima». La linea di
@@ -466,6 +469,60 @@ Stesso fascicolo di prova (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli), stesso 
 con due fasi collegate e il loro piede — il contenuto finisce a 1069 px invece di 1072, con il fondo
 utile a 1077: **8 px di margine invece di 5**. Chi tocca ancora le spaziature del blocco compatto
 **misuri** prima di proporre.
+
+
+## La nota con l'etichetta dentro il riquadro (1.37.0)
+
+Nella 1.36.0 restava dichiarato un ultimo serbatoio di spazio: la parola **NOTE** sopra il riquadro,
+~12 px per campo e quattro campi per pagina. *«Si potrebbe portare dentro il riquadro, in alto a
+sinistra.»* Fatto.
+
+### Perché proprio la nota, e proprio in alto a sinistra
+
+Una fascia sopra il riquadro **non è spazio da scrivere**: è spazio speso per dire di scrivere. Il
+riquadro alto è l'unico che può ospitare la propria etichetta senza perdere niente, e la ragione è di
+forma, non di misura: in `rg-fill-field` la scrittura **appoggia sulla base nera** — è la riga su cui
+si scrive — quindi l'angolo **in alto a sinistra** è la zona morta del campo. L'etichetta ci si mette
+dentro e il riquadro resta quello che era.
+
+| | fino alla 1.36.0 | dalla 1.37.0 |
+| --- | --- | --- |
+| nota del blocco (`--tall` in `__fields`) | ~12 px di fascia + riquadro 48 | riquadro **48**, etichetta dentro |
+| spazio libero sotto l'etichetta | 48 | **35** (una grafia adulta ne chiede 32) |
+| nota del piede (`rg-worksheet-foot__note`) | ~17 px di fascia + riquadro 64 | riquadro **80**, etichetta dentro |
+| spazio libero sotto l'etichetta | 64 | **~65** (due righe scritte a mano) |
+
+Il riquadro **non si stringe mai**: nel blocco resta 48 e nel piede **cresce**, perché lì la promessa
+non è una riga ma due, e l'etichetta dentro non può mangiarne mezza. Nei campi da 24 px l'etichetta
+**resta sopra**: lì dentro mangerebbe la scrittura.
+
+### Si legge ancora come etichetta
+
+È la sola cosa che poteva andare storta: una scritta dentro un riquadro vuoto può sembrare *qualcosa
+di già scritto a penna*. Non succede, perché i due segni non si somigliano in niente — l'etichetta è
+**grigia** (`--rg-color-text-secondary`), **piccola** (10 px in stampa nel blocco, 12 nel piede),
+**maiuscola e spaziata**, ferma nell'angolo; la mano scrive nero, grande, corsivo, e appoggia sulla
+base. Il **filetto sinistro** del riquadro le passa accanto e dice che sta dentro. Il rientro è lo
+stesso dei valori già stampati (8 px): etichetta e valore partono dalla stessa colonna.
+
+Sulla riga c'è anche un `padding-top`, perché un valore lungo che andasse a capo fino a riempire il
+campo non finisca stampato addosso all'etichetta. Finché il campo è vuoto — cioè sempre, sul foglio —
+non costa un pixel: la riga allinea il contenuto in basso.
+
+### Dove sono finiti i pixel
+
+~49 px per pagina critica. **16** vanno all'aria fra le sotto-operazioni, che passa da 8 a **12 px**,
+cioè quelli che servivano e che nella 1.36.0 la pagina non poteva pagare. **8** al riquadro della nota
+del piede, che cresce da 64 a 80. I restanti **~25 px per pagina restano di margine**, non di aria: un
+titolo di fase più lungo o un valore che va a capo se li prendono tutti, e il vincolo del gruppo su
+una pagina sola non si rimette in gioco per quattro pixel.
+
+### Misura
+
+Stesso fascicolo di prova, stesso motore (Chrome): **pagine invariate, 0 gruppi spezzati prima e
+dopo**. Sulle tre pagine con due fasi collegate e il loro piede il contenuto finisce a **1044 px**
+invece di 1069, con il fondo utile a 1077: **33 px di margine invece di 8**. Chi tocca ancora le
+spaziature del blocco compatto **misuri** prima di proporre.
 
 
 ## Uso e limiti

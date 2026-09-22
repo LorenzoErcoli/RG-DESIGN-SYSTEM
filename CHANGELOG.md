@@ -7,6 +7,71 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.37.0 — 2026-09-22
+
+**Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si
+compila** il foglio di lavorazione: chi aggiorna il tag e ristampa il fascicolo vede il foglio diverso,
+e va saputo prima (vedi [UPGRADING](UPGRADING.md#1370--la-nota-porta-letichetta-dentro-il-riquadro)).
+
+Nella 1.36.0 restava dichiarato, nero su bianco, l'ultimo serbatoio di spazio del foglio: la parola
+**NOTE** sopra il riquadro, *«si potrebbe portare dentro il riquadro, in alto a sinistra»*, ~11 px per
+campo e quattro campi per pagina. Lorenzo, sullo stesso foglio: **fallo**.
+
+### L'etichetta della nota entra nel riquadro
+
+Una fascia sopra il riquadro **non è spazio da scrivere**: è spazio speso per *dire* di scrivere. Il
+riquadro alto (`rg-fill-field--tall`) è l'unico che può ospitare la propria etichetta senza perdere
+niente, e la ragione è di forma, non di misura: in `rg-fill-field` la scrittura **appoggia sulla base
+nera** — è la riga su cui si scrive — quindi l'angolo **in alto a sinistra** è la zona morta del campo.
+
+| | fino alla 1.36.0 | 1.37.0 |
+| --- | --- | --- |
+| nota del blocco (`--tall` dentro `__fields`) | ~12 px di fascia + riquadro 48 | riquadro **48**, etichetta dentro |
+| libero sotto l'etichetta | 48 | **35** — una grafia adulta ne chiede 32 |
+| nota del piede (`rg-worksheet-foot__note`) | ~17 px di fascia + riquadro 64 | riquadro **80**, etichetta dentro |
+| libero sotto l'etichetta | 64 | **~65** — le due righe a mano restano due |
+
+**Il riquadro non si stringe mai.** Nel blocco resta 48 e nel piede **cresce**, perché lì la promessa
+non è una riga ma due e l'etichetta dentro non può mangiarne mezza; sulla pagina il conto del piede
+resta in pari (80 contro 64 + 17). Nei campi da 24 px l'etichetta **resta sopra**: lì dentro
+mangerebbe la scrittura. Fuori dal foglio, nei moduli a schermo, non cambia niente.
+
+**Continua a leggersi come un'etichetta**, e non come qualcosa di già scritto a penna. Era l'unica cosa
+che poteva andare storta, e non succede perché i due segni non si somigliano in niente: l'etichetta è
+grigia (`--rg-color-text-secondary`), piccola (10 px in stampa nel blocco, 12 nel piede, che non si
+compatta), maiuscola e spaziata, ferma nell'angolo; la mano scrive nero, grande, corsivo, e appoggia
+sulla base. Il **filetto sinistro** del riquadro le passa accanto e dice che sta dentro, e il rientro è
+lo stesso dei valori già stampati (8 px): etichetta e valore partono dalla stessa colonna.
+
+**Limite dichiarato.** Un valore già stampato tanto lungo da riempire tutto il riquadro finirebbe sotto
+l'etichetta: un `padding-top` sulla riga lo tiene distante e, finché il campo è vuoto — cioè sempre,
+sul foglio — non costa un pixel, perché la riga allinea il contenuto in basso.
+
+### E l'aria fra le sotto-operazioni diventa 12 px
+
+Quella che serviva. Nella 1.36.0 si erano dovuti tenere **8 px** invece di 12 perché a 12 il fascicolo
+di prova andava da 20 a **23 pagine** e si spezzavano **tutti e tre** i gruppi di fasi collegate: su una
+pagina ci sono quattro sotto-operazioni e ogni passo in più si moltiplica per quattro. Adesso li paga
+l'etichetta entrata nel riquadro.
+
+**Dove sono finiti i ~49 px per pagina critica:** **16** all'aria fra le sotto-operazioni (8 → 12), **8**
+al riquadro della nota del piede (64 → 80), **~25 restano di margine**. Di margine, non di aria: un
+titolo di fase più lungo o un valore che va a capo se li prendono tutti, e il vincolo del gruppo su una
+pagina sola non si rimette in gioco per quattro pixel.
+
+### Misura
+
+Stesso fascicolo di prova (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli), stesso motore (Chrome),
+stesso identico documento prima e dopo: **pagine invariate, 0 gruppi di fasi collegate spezzati prima e
+dopo**. Sulle tre pagine critiche — due fasi collegate più il loro piede — il contenuto finisce a
+**1044 px** invece di 1069, con il fondo utile a 1077: **33 px di margine invece di 8**. Tavola nuova in
+vetrina (*La nota con l'etichetta dentro il riquadro*).
+
+*Nota sul numero di pagine:* nel checkout di prova di oggi il fascicolo esce in **17** pagine e non
+nelle 20 citate dalla 1.36.0. A cambiare è stata l'applicazione che compone il documento, non il DS: il
+confronto qui è prima/dopo sullo **stesso** documento, e il vincolo verificato è quello che conta —
+nessun gruppo di due fasi collegate si spezza, e le pagine non aumentano.
+
 ## 1.36.0 — 2026-09-22
 
 **Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si

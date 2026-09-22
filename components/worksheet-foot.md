@@ -17,15 +17,15 @@ scavalca la fila intera, perché l'unica cosa che si scrive a mano per davvero, 
 
 **Il piede non si compatta.** La densità compatta serve ai dati **già stampati**, non allo spazio
 bianco che deve accogliere una grafia. Le righe restano quelle della base (32 px, ~8,5 mm) e la nota
-è anzi **più alta** di una `rg-fill-field--tall` normale: 64 px, ~17 mm, cioè due righe scritte a
-mano invece di una.
+è anzi **più alta** di una `rg-fill-field--tall` normale: 80 px, ~21 mm, cioè due righe scritte a
+mano invece di una, più la fascia dell'etichetta che dalla **1.37.0** le sta dentro (vedi sotto).
 
 ## Varianti
 
 | Classe | Cosa fa |
 | --- | --- |
 | `rg-worksheet-foot` | **Base**: contenitore a due colonne, subito sotto il blocco. |
-| `rg-worksheet-foot__note` | La nota che prende la fila intera e la riga alta 64 px. Si mette **insieme** a `rg-fill-field--tall`. |
+| `rg-worksheet-foot__note` | La nota che prende la fila intera e la riga alta 80 px, con l'etichetta **dentro** il riquadro. Si mette **insieme** a `rg-fill-field--tall`. |
 
 Non ha varianti di densità: vedi sopra.
 
@@ -43,6 +43,22 @@ firma il lavoro, non ogni riga del lavoro. Per una fase singola il piede sta sot
 **Non sostituisce `rg-worksheet-block__foot`, lo affianca.** Il piede *dentro* il blocco resta
 valido e non cambia: chi non migra non vede differenza. La scelta fra i due è di contenuto — dentro
 se è un dato della fase (un'ora di ciclo rilevata), fuori se è la firma di chi l'ha fatta.
+
+**L'etichetta della nota sta dentro il riquadro (1.37.0).** In alto a sinistra, non sopra. La fascia
+sopra il riquadro non è spazio da scrivere: è spazio speso per dire di scrivere, e sul foglio era
+l'ultimo serbatoio rimasto. Qui il riquadro **cresce** invece di restare com'era — 64 → 80 px —
+perché la nota del piede non promette una riga, ne promette **due**: l'etichetta dentro occupa ~15 px
+e sotto di lei restano i 64 di prima, cioè le due righe intere. Sulla pagina il conto è in pari (80
+contro i 64 + 17 di riquadro più fascia che c'erano).
+
+Si legge ancora come etichetta, e non come qualcosa di già scritto a penna, perché i due segni non si
+somigliano in niente: l'etichetta è grigia, piccola, maiuscola e spaziata, nell'angolo morto del
+campo; la mano scrive nero, grande, corsivo, e **appoggia sulla base nera**. Il filetto sinistro del
+riquadro le passa accanto e dice che sta dentro.
+
+**Operatore e Data tengono l'etichetta sopra.** Sono riquadri da 32 px, una firma e una data: lì
+l'etichetta dentro mangerebbe la riga. Sulla stessa fila due campi brevi etichettati sopra e una nota
+grande etichettata dentro non si confondono — l'una è una riga, l'altra è un foglietto.
 
 **In stampa non si spezza.** `break-inside: avoid`: Operatore, Data e la nota sono un'unica cosa da
 compilare, e mezza nota in fondo a una pagina e metà in cima a quella dopo non è uno spazio dove si

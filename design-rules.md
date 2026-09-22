@@ -125,6 +125,26 @@ seconda applicazione della palette categoriale, dopo i reparti. Vedi [part-mark]
 
 Usare la scala 4–8–12–16–24–32–48–64–96. Il ritmo ordinario è 8 px; 24–32 px separano gruppi, 48–96 px separano sezioni editoriali. Layout desktop su 12 colonne, tablet 8, mobile 4. Il contenuto tecnico può essere denso, ma non compresso sotto la soglia di scansione.
 
+### Lo spazio in cui si scrive a mano (dalla 1.38.0)
+
+C'è una misura che **non segue la densità della vista**: quella di uno spazio che verrà riempito a
+penna. La densità si decide guardando il contenuto; questa si decide guardando **la mano**.
+
+| Cosa | Misura minima | Dove |
+| --- | --- | --- |
+| riga su cui si scrive una parola o un numero | **32 px** (~8,5 mm) | `rg-fill-field` |
+| nota di più parole | **48 px** (~12,7 mm) | `rg-fill-field--tall` |
+| riga di una tabella da compilare, chiusa su quattro lati | **40 px** (~10,6 mm) | `rg-table--hand` |
+
+- **Un campo troppo corto non è un difetto di stile: è un dato che non viene scritto.** In reparto,
+  una riga in cui la grafia non entra resta vuota — e l'informazione si perde alla fonte.
+- **La compattazione non arriva qui.** Quando una pagina non basta, lo spazio si toglie dove *non* si
+  scrive: interlinee, distacchi, testate. Mai dalle righe da riempire.
+- **Dentro una griglia chiusa serve un passo in più** rispetto alla riga aperta: sulla riga aperta la
+  mano può sbordare, dentro una cella no.
+- La misura resta un **minimo**, non un'altezza fissa: un valore già stampato che va a capo fa
+  crescere il campo invece di uscirne.
+
 ### Distanza delle azioni dal bordo
 
 Un'azione non tocca mai il bordo del contenitore che la ospita. Vale per un bottone, un link-bottone,

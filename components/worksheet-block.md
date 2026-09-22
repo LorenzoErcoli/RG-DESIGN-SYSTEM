@@ -129,6 +129,9 @@ che colonna scrivere, e le colonne vuote prendevano larghezze a caso. Regole:
 - **Righe già scritte e righe vuote nella stessa tabella.** Il valore noto è una `<td>` normale
   (`rg-table__numeric` per i numeri); il valore da rilevare è una `td.rg-fill-field--cell`, anche dentro una
   riga scritta. Le righe vuote in fondo sono tutte `--cell`: nessun trattino, nessuno zero finto.
+- **Se su quelle righe si scrive a mano, si aggiunge `rg-table--hand`** (1.38.0): le porta a 40 px
+  (~10,6 mm), l'altezza di una grafia, e ne fa entrare **18 in una pagina**. Vedi
+  [La tabella degli stop, riga per riga](#la-tabella-degli-stop-riga-per-riga-1380).
 
 ### Legenda dei coni
 
@@ -523,6 +526,64 @@ Stesso fascicolo di prova, stesso motore (Chrome): **pagine invariate, 0 gruppi 
 dopo**. Sulle tre pagine con due fasi collegate e il loro piede il contenuto finisce a **1044 px**
 invece di 1069, con il fondo utile a 1077: **33 px di margine invece di 8**. Chi tocca ancora le
 spaziature del blocco compatto **misuri** prima di proporre.
+
+
+## La tabella degli stop, riga per riga (1.38.0)
+
+> «Righe più alte, 18 per pagina. Serve spazio per scrivere le note. E deve essere abbastanza per
+> stop.» — Lorenzo, 2026-09-22
+
+Sul foglio del ricamo c'è **una riga per stop**: numero, ago, filo sopra e sotto, le sigle delle
+regolazioni, l'operazione, il materiale, il tempo e le note. È l'unica tabella del fascicolo su cui
+si **scrive mentre la macchina lavora**: tempi e note si annotano stop per stop, a biro, in piedi.
+
+Le righe erano quelle di un dato denso — ~26 px, ~7 mm — cioè **la misura del testo stampato**. Ma
+qui vale la frase di [fill-field](fill-field.md): *l'altezza è la mano, non il testo*. Sette
+millimetri sono la misura di una riga **letta**: la punta della biro ci entra, la grafia no. E una
+riga in cui non si riesce a scrivere, in reparto, resta vuota — cioè il dato si perde.
+
+### Il gancio, e perché serve un gancio
+
+La tabella degli stop diventa
+**`rg-table rg-table--compact rg-table--grid rg-table--hand`**. La classe in più la mette l'app,
+e **solo su quella tabella**: nello stesso fascicolo ci sono tabelle che si *leggono* soltanto — la
+legenda dei coni, le fasi della [pagina della parte](part-sheet.md) — e alzarle tutte vorrebbe dire
+pagare in carta uno spazio che nessuno usa. `--grid` dice *dove* si scrive, `--hand` dice *quanto
+spazio c'è per farlo*: sono due decisioni diverse e stanno in due classi diverse.
+
+| | fino alla 1.37.0 | dalla 1.38.0 con `--hand` |
+| --- | --- | --- |
+| riga della tabella degli stop | ~26 px (~7 mm) | **40 px (~10,6 mm)** |
+| righe per pagina A4 | ~28 | **18** |
+| dato stampato nella cella | a metà altezza | **appoggiato in basso**, dove appoggia la scrittura |
+| testata della tabella | invariata | invariata: su di lei non si scrive |
+| altre tabelle del fascicolo | — | **invariate** |
+
+I 40 px sono i 32 della grafia adulta dichiarati da `rg-fill-field` più un passo, perché qui la mano
+scrive **dentro una griglia chiusa sui quattro lati** e non sopra una riga aperta: non può sbordare.
+Stanno sulla scala (32 + 8) e sono un **minimo**, non un'altezza fissa: una cella con un valore lungo
+che va a capo cresce.
+
+### Diciotto, e da dove viene il numero
+
+È **misurato**, non imposto: il CSS non sa contare le righe. Su A4 con intestazione di pagina
+(`rg-u-print-a4--head`, margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo,
+per il corpo della tabella restano **~194 mm**. Diciotto righe da 10,6 mm ne occupano 190; la
+diciannovesima chiederebbe 201 e non entra.
+
+Il diciannovesimo stop va alla pagina dopo, con l'intestazione della tabella ripetuta — è la regola
+di `--long`, che non cambia. **Il foglio si stampa fronte-retro**, quindi il seguito sta dietro e non
+in un altro punto del fascicolo.
+
+**Limite dichiarato.** Quel 18 dipende da quanto c'è **sopra** la tabella, e il margine è sottile:
+~3 mm. Una fase con una fila di campi in meno ne fa entrare una in più; un titolo su due righe una in
+meno. Chi ha bisogno di un numero **esatto** di righe per pagina non lo ottiene dal CSS: lo ottiene
+spezzando la tabella a monte, in due blocchi.
+
+**Costo in carta, dichiarato.** Un ricamo con più di 18 stop prende una facciata in più di prima. È
+il prezzo esplicito della richiesta: prima le righe c'erano tutte e non ci si poteva scrivere, il che
+vuol dire che non c'erano. Sul fascicolo di prova (3 parti, 11 fasi, 15 fogli — ricami da 3 stop) le
+pagine restano **18** e i gruppi di due fasi collegate spezzati restano **0**.
 
 
 ## Uso e limiti

@@ -7,6 +7,100 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.38.0 — 2026-09-22
+
+**Minor.** Una classe **nuova** e additiva, `rg-table--hand`; nessuna rimossa o rinominata, nessun
+token toccato. È opt-in: **finché l'app non la mette sul markup non cambia niente**, e questa volta
+la richiesta si soddisfa solo se qualcuno la mette (vedi
+[UPGRADING](UPGRADING.md#1380--la-tabella-degli-stop-si-scrive-a-mano)).
+
+Sul foglio del ricamo c'è una riga per stop, e su quella tabella si **scrive mentre la macchina
+lavora**: tempi e note, stop per stop, a biro. Lorenzo, sullo stesso foglio: *«Righe più alte, 18 per
+pagina. Serve spazio per scrivere le note. E deve essere abbastanza per stop.»*
+
+### `rg-table--hand`: l'altezza è la mano, non il testo
+
+Le righe erano ~26 px (~7 mm), cioè **la misura del testo stampato**. Sette millimetri sono la misura
+di una riga *letta*: la punta della biro ci entra, la grafia no — e una riga in cui non si riesce a
+scrivere, in reparto, resta vuota, cioè il dato si perde. È la stessa frase su cui è costruito
+`rg-fill-field`, applicata dove non era ancora arrivata.
+
+| | prima | con `rg-table--hand` |
+| --- | --- | --- |
+| riga della tabella degli stop | ~26 px (~7 mm) | **40 px (~10,6 mm)** |
+| righe per pagina A4 | ~28 | **18** |
+| dato già stampato nella cella | a metà altezza | **appoggiato in basso**, dove appoggia la scrittura |
+| testata della tabella | — | invariata: su di lei non si scrive |
+
+I 40 px sono i 32 px della grafia adulta dichiarati da `rg-fill-field` più un passo, perché qui la
+mano scrive **dentro una griglia chiusa sui quattro lati** e non sopra una riga aperta: non può
+sbordare. Stanno sulla scala (32 + 8) e sono un **minimo**, non un'altezza fissa.
+
+**`--grid` dice *dove* si scrive, `--hand` dice *quanto spazio c'è per farlo*.** Sono due decisioni
+diverse e stanno in due classi diverse: si usano insieme.
+
+### Perché opt-in e non per tutte le tabelle
+
+Nello stesso fascicolo ci sono tabelle che si **leggono** soltanto — la legenda dei coni, le fasi
+della pagina della parte — e alzarle tutte vorrebbe dire pagare in carta uno spazio che nessuno usa.
+La classe la mette l'app sulla tabella che si compila, e solo lì.
+
+### Diciotto, e da dove viene il numero
+
+È **misurato**, non imposto: il CSS non sa contare le righe. Su A4 con intestazione di pagina
+(`rg-u-print-a4--head`, margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo,
+per il corpo della tabella restano ~194 mm: 18 righe da 10,6 mm ne occupano 190, la diciannovesima ne
+chiederebbe 201. Il seguito va alla pagina dopo con l'intestazione ripetuta — regola di `--long`, che
+non cambia — e il foglio si stampa fronte-retro.
+
+**Limiti dichiarati.** Quel 18 dipende da quanto c'è *sopra* la tabella, e il margine è ~3 mm: una
+fase con una fila di campi in meno ne fa entrare una in più, un titolo su due righe una in meno. Chi
+ha bisogno di un numero *esatto* di righe per pagina non lo ottiene dal CSS: spezza la tabella a
+monte. E un ricamo con più di 18 stop **prende una facciata in più di prima**: è il prezzo esplicito
+della richiesta, perché prima le righe c'erano tutte e non ci si poteva scrivere — il che vuol dire
+che non c'erano.
+
+**Misura** sul fascicolo di prova (3 parti, 11 fasi, 15 fogli, Chrome): **18 pagine prima e dopo**,
+**0 gruppi di fasi collegate spezzati prima e dopo**. Sullo stress test del solo foglio del ricamo:
+con 18 stop la tabella finisce dentro la pagina, con 19 e con 20 il seguito passa alla pagina dopo.
+
+### La testata prende aria, e non va più a capo
+
+Stessa tabella, seconda osservazione dallo stesso foglio (Lorenzo, 2026-09-22): quelle intestazioni
+sono **parole** — `OPERAZIONE`, `MATERIALE`, `TEMPO` — sopra colonne larghe **quattro caratteri**.
+
+**Aria fra la parola e il filetto.** Con `rg-table--grid` ogni cella ha il suo filetto nero, testata
+compresa, e «STOP» finiva **attaccato alla linea verticale**: due segni neri a contatto, e la parola
+si legge peggio di quanto sia scritta. La testata prende `--rg-space-1` per lato (4 px, 8 in tutto).
+Gli 8 px per lato del corpo sarebbero 16, **metà** di una colonna da quattro cifre; nel corpo restano,
+perché lì è la penna a non dover toccare il filetto.
+
+**Il `nowrap` torna a casa.** `white-space: nowrap` sulle intestazioni di questa tabella stava
+*inline su ogni `<th>`* del template che stampa il foglio; adesso è in `rg-table--hand thead th` e
+l'attributo si può togliere (vedi UPGRADING). Limite dichiarato: con `table-layout: fixed` una testata
+che non ci sta **sborda** invece di andare a capo. È la scelta: un a capo in testata costa l'altezza
+di una riga di stop, mentre una parola che sborda **si accorcia** — «Tempo» è diventato «Tem».
+
+**Il corpo non si tocca, e la testata non scende.** Era la richiesta gemella — *«possiamo anche farle
+con un font un po' più piccolo»* — ed è stata **provata e scartata sulla misura**. `.rg-table th` è
+già a `--rg-font-size-xs`, l'ultimo gradino della scala: per fare un gradino bisognava **alzare il
+corpo** a `--rg-font-size-sm`. Ma su quei 12 px è tarato tutto il foglio — larghezze delle colonne in
+`ch`, nomi dei materiali accorciati a 18 caratteri, i due codici filo uno sotto l'altro dentro la
+riga — e in Chrome su A4, sulla pagina vera del ricamo, il passo di riga passava da **10,58 a
+10,85 mm**: **diciassette stop invece di diciotto**, col diciottesimo da solo sul retro. Uno stop per
+pagina vale più di un gradino tipografico. Un token più piccolo di `xs` non si inventa per un caso
+locale, e la richiesta era una possibilità; i diciotto stop erano una richiesta fatta due volte.
+
+**L'altezza di riga finale resta 10,58 mm** (40 px): nessuna delle due regole della testata la tocca.
+
+### Due stesure, una variante
+
+`rg-table--hand` è stata scritta **due volte**, in parallelo e in due cloni diversi che non si
+vedevano: una prima stesura con l'altezza e l'allineamento (la ragione del componente, misurata su
+carta) e una seconda con le regole della testata, il confronto in vetrina e il manifest. Questa
+versione è la riconciliazione delle due, e **entrambi i commit restano nella storia** del ramo
+`ds/righe-stop-da-scrivere`.
+
 ## 1.37.0 — 2026-09-22
 
 **Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si

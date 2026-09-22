@@ -1365,6 +1365,55 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-table--grid .rg-table__grow { width: calc(200% / (var(--rg-table-cols, 6) + var(--rg-table-wide, 1))); }
 .rg-worksheet-block--compact .rg-table--grid th { white-space: normal; }
 .rg-worksheet-block--compact .rg-table caption { padding-bottom: var(--rg-space-1); font-size: var(--rg-font-size-sm); }
+/* Tabella SU CUI SI SCRIVE A PENNA, riga per riga (proposta 1.38.0). Dal foglio del ricamo: la tabella
+   degli stop non e un elenco da leggere, e un modulo che l'operatore compila MENTRE la macchina lavora —
+   il tempo e la nota di quello stop, li, a biro. «Righe piu alte, 18 per pagina. Serve spazio per
+   scrivere le note. E deve essere abbastanza per stop» (Lorenzo, 2026-09-22).
+   Le righe erano quelle di un dato denso: ~26 px (~7 mm), cioe la misura del TESTO STAMPATO. Ma qui vale
+   la stessa frase di rg-fill-field: L'ALTEZZA E LA MANO, NON IL TESTO. Sette millimetri sono la misura
+   di una riga letta, non di una scritta: la punta della biro ci entra, la grafia no, e in reparto una
+   riga in cui non si riesce a scrivere resta vuota — cioe il dato si perde.
+   40 px (~10,6 mm) e la misura: 32 px e la grafia adulta dichiarata dalla base di rg-fill-field, piu un
+   passo perche qui la mano scrive DENTRO una griglia chiusa sui quattro lati e non sopra una riga aperta,
+   quindi non puo sbordare. Sta sulla scala (32 + 8), e non e un'altezza fissa ma un minimo: una cella con
+   un valore lungo che va a capo cresce, come gia fa rg-fill-field__line.
+   QUANTE PER PAGINA. Su A4 con intestazione (rg-u-print-a4--head, margine 30/12 mm) e la testata del
+   foglio del ricamo sopra, restano ~194 mm per il corpo della tabella: 18 righe da 10,6 ne occupano 190
+   e la diciannovesima non entra. E il numero chiesto, ed e ottenuto per MISURA della riga, non per una
+   regola che conti le righe — il CSS non sa contare, e una tabella piu corta in testa al blocco ne
+   farebbe entrare qualcuna in piu. Il resto va alla pagina dopo, con l'intestazione ripetuta
+   (rg-utilities.css, --long): il foglio si stampa fronte-retro e il diciannovesimo stop sta dietro.
+   IL DATO STAMPATO APPOGGIA DOVE APPOGGIA LA SCRITTURA: vertical-align in basso, cosi il numero dello
+   stop gia stampato e il tempo scritto a mano cadono sulla stessa linea invece di galleggiare uno a
+   meta cella e l'altro sul filetto. Sopra resta il bianco, che e lo spazio della mano.
+   OPT-IN, e per una ragione precisa: nello stesso fascicolo ci sono tabelle che si LEGGONO soltanto —
+   la legenda dei coni, le fasi della pagina della parte — e alzarle tutte vorrebbe dire pagare in carta
+   uno spazio che nessuno usa. La classe la mette l'app sulla tabella che si compila, e solo li.
+   Vale a schermo come in stampa: l'altezza e una misura fisica della mano, non un fatto della carta. */
+.rg-table--hand tbody :is(th, td),
+.rg-table--hand tbody td.rg-fill-field--cell { height: calc(var(--rg-space-8) + var(--rg-space-2)); vertical-align: bottom; }
+/* LA TESTATA: ARIA AI LATI E NIENTE A CAPO. Due problemi che si vedono sulla stampa, tutti e due nella
+   sola thead — il corpo non lo tocchiamo, ci scrive la penna e le sue misure sono tarate altrove.
+   ARIA FRA LA PAROLA E IL FILETTO: con --grid ogni cella ha il suo filetto nero, testata compresa, e
+   «STOP» finiva attaccato alla linea verticale — due segni neri a contatto, e la parola si legge peggio
+   di quanto sia scritta. --rg-space-1 per lato (4 px, 8 in tutto) la stacca senza mangiare la colonna
+   stretta; gli 8 px per lato del corpo sarebbero 16, meta di una colonna da quattro cifre, e nel corpo
+   restano perche li e la penna a non dover toccare il filetto. Serve anche a 12 px, anzi soprattutto.
+   LA TESTATA NON VA A CAPO: white-space nowrap sta QUI e non inline su ogni <th> del template che
+   stampa il foglio. Va scritto con .rg-table davanti perche .rg-worksheet-block--compact
+   .rg-table--grid th rimette white-space: normal e pesa (0,2,1). Limite dichiarato: con table-layout
+   fixed una testata che non ci sta SBORDA invece di andare a capo. E la scelta: un a capo in testata,
+   su una pagina da diciotto righe, costa l'altezza di una riga di stop, mentre una parola che sborda si
+   accorcia (e infatti «Tempo» e diventato «Tem»).
+   LA TESTATA PIU PICCOLA DEL CORPO NON SI FA, ed e una decisione misurata e non una dimenticanza.
+   .rg-table th e gia a --rg-font-size-xs, l'ULTIMO gradino della scala: per fare un gradino bisognava
+   ALZARE il corpo a --rg-font-size-sm, e su quei 12 px e tarato tutto il foglio (larghezze in ch, nomi
+   dei materiali a 18 caratteri, i due codici filo uno sotto l'altro dentro la riga). Misurato in Chrome
+   su A4, la pagina vera del ricamo: il passo di riga passava da 10,58 a 10,85 mm e i diciotto stop
+   diventavano diciassette, col diciottesimo da solo sul retro. Uno stop per pagina vale piu di un
+   gradino tipografico, e un token piu piccolo di xs non si inventa per un caso locale. Il corpo resta
+   quello che gli da rg-table--compact. */
+.rg-table.rg-table--hand thead th { padding-inline: var(--rg-space-1); white-space: nowrap; overflow-wrap: normal; }
 /* Piede su UNA riga dove ci sta: Tempo, Operatore, Data prendono il loro contenuto (etichetta + almeno
    64 px di riga), la Nota prende il resto. Se non ci stanno vanno a capo, senza tagliare niente. */
 .rg-worksheet-block--compact .rg-worksheet-block__foot { align-items: flex-end; gap: var(--rg-space-2) var(--rg-space-4); padding: var(--rg-space-2) var(--rg-space-3); }

@@ -10,6 +10,10 @@ Confrontare record strutturati: materiali, fili, operazioni, consumi, revisioni 
 - **Compact**: grandi dataset, altezza riga minima 36 px.
 - **Review**: colonna stato, differenze e azioni contestuali.
 - **Matrix**: parametri incrociati; prima colonna e header bloccabili.
+- **A griglia** (`rg-table--grid`): la tabella **di carta** da compilare a penna; filetto nero su
+  tutte le celle e colonne uguali.
+- **Da scrivere a mano** (`rg-table--hand`, 1.38.0): si aggiunge a `--grid` quando su quelle righe
+  si scrive *davvero*; le porta a 40 px (~10,6 mm), l'altezza di una grafia.
 - **Espandibile** (`rg-table__row--expandable` + `rg-table__detail`): una riga-record che
   rivela in loco la propria scomposizione (i sotto-record che la compongono) senza lasciare
   la tabella. Variante, non componente a sé: preserva la semantica tabellare.
@@ -175,6 +179,8 @@ colonne vuote prendevano larghezze a caso.
   tabella dichiara quante colonne ha con `style="--rg-table-cols: N"` (se manca vale 6); se le colonne larghe
   sono più di una, lo dice `--rg-table-wide` (1.25.0, se manca vale 1): `style="--rg-table-cols: 6; --rg-table-wide: 2"`.
 - **Altezza**: le celle `--cell` sono da 32 px; dentro `rg-worksheet-block--compact` da 24 (~6,4 mm).
+  Se su quelle righe si scrive a mano, la griglia non basta e serve
+  [`rg-table--hand`](#tabella-su-cui-si-scrive-a-penna-rg-table--hand-proposta-1380).
 - Si combina con `rg-table--compact`. Non cambia nulla alle tabelle senza la variante.
 - **Non è a schermo**: a schermo i dati si confrontano con `rg-table` e si inseriscono con `rg-field`.
 
@@ -205,6 +211,102 @@ colonne vuote prendevano larghezze a caso.
       <td class="rg-fill-field rg-fill-field--cell"></td>
       <td class="rg-fill-field rg-fill-field--cell"></td>
       <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+## Tabella su cui si scrive a penna (`rg-table--hand`, proposta 1.38.0)
+
+`--grid` dice **dove** si scrive; `--hand` dice **quanto spazio c'è per farlo**. Si aggiunge alla
+griglia quando la tabella non è un elenco da leggere ma un **modulo che qualcuno compila riga per
+riga, mentre lavora**: la tabella degli stop del foglio del ricamo, dove il tempo e la nota di
+quello stop si annotano a biro con la macchina in moto.
+
+> «Righe più alte, 18 per pagina. Serve spazio per scrivere le note. E deve essere abbastanza per
+> stop.» — Lorenzo, 2026-09-22
+
+- **L'altezza è la mano, non il testo.** È la stessa frase di [fill-field](fill-field.md), e qui è la
+  ragione dell'intera variante. Le righe di una tabella densa sono ~26 px (~7 mm): la misura di una
+  riga **letta**. La punta della biro ci entra, la grafia no — e in reparto una riga in cui non si
+  riesce a scrivere resta vuota, cioè il dato si perde.
+- **La misura è 40 px (~10,6 mm).** I 32 px della grafia adulta dichiarati da `rg-fill-field`, più un
+  passo: qui la mano scrive **dentro una griglia chiusa sui quattro lati**, non sopra una riga aperta,
+  quindi non può sbordare. Sta sulla scala (32 + 8) ed è un **minimo**: una cella con un valore lungo
+  che va a capo cresce, come già fa `rg-fill-field__line`.
+- **Il dato stampato appoggia dove appoggia la scrittura**: le celle sono allineate **in basso**, così
+  il numero dello stop già stampato e il tempo scritto a mano cadono sulla stessa linea invece di
+  galleggiare uno a metà cella e l'altro sul filetto. Sopra resta il bianco, che è lo spazio della mano.
+- **La testata non si alza**: su di lei non si scrive.
+- **Il corpo non si tocca**: resta la misura che gli dà `rg-table--compact` (12 px). Su quei 12 px è
+  tarato tutto il foglio — larghezze delle colonne in `ch`, nomi dei materiali accorciati, i due codici
+  filo uno sotto l'altro dentro l'altezza di riga.
+- **Aria fra la parola e il filetto**: `--rg-space-1` per lato nella **sola testata** (4 px, 8 in
+  tutto). Con la griglia «STOP» finiva attaccato alla linea verticale — due segni neri a contatto, e la
+  parola si legge peggio di quanto sia scritta. Gli 8 px per lato del corpo sarebbero 16, **metà** di
+  una colonna da quattro cifre; nel corpo restano, perché lì è la penna a non dover toccare il filetto.
+- **La testata non va a capo**: `white-space: nowrap` è qui, non inline su ogni `<th>` del template che
+  stampa il foglio. **Limite dichiarato**: con `table-layout: fixed` una testata che non ci sta
+  *sborda* invece di andare a capo. È la scelta: un a capo in testata costa l'altezza di **una riga di
+  stop**, mentre una parola che sborda **si accorcia** («Tempo» → «Tem»).
+- **Opt-in, e per una ragione precisa.** Nello stesso fascicolo ci sono tabelle che si *leggono*
+  soltanto — la legenda dei coni, le fasi della [pagina della parte](part-sheet.md) — e alzarle tutte
+  vorrebbe dire pagare in carta uno spazio che nessuno usa. La classe la mette l'app **sulla tabella
+  che si compila, e solo lì**.
+- Vale a schermo come in stampa: l'altezza è una misura fisica della mano, non un fatto della carta.
+
+### Perché la testata non è più piccola del corpo
+
+Era la richiesta gemella («possiamo anche farle con un font un po' più piccolo»), ed è stata
+**provata e scartata sulla misura**. `.rg-table th` è già a `--rg-font-size-xs`, l'ultimo gradino
+della scala: per ottenere un gradino bisognava **alzare il corpo** a `--rg-font-size-sm`. Misurato in
+Chrome su A4, sulla pagina vera del ricamo, il passo di riga passava da **10,58 a 10,85 mm** e i
+diciotto stop diventavano **diciassette**, col diciottesimo da solo sul retro — esattamente quello che
+la variante esiste per evitare. Uno stop per pagina vale più di un gradino tipografico; e un token più
+piccolo di `xs` non si inventa per un caso locale.
+
+Il problema che quella richiesta voleva risolvere — le parole lunghe sopra colonne da quattro
+caratteri — è risolto dalle altre due regole: l'aria laterale e il `nowrap`, più l'abbreviazione
+dell'intestazione dove serve.
+
+### Quante righe per pagina
+
+Diciotto, ed è un numero **misurato**, non una regola: il CSS non sa contare le righe. Su A4 con
+intestazione di pagina (`rg-u-print-a4--head`, margini 30/12 mm) e la testata del foglio del ricamo
+sopra la tabella, per il corpo restano ~194 mm: **18 righe da 10,6 mm ne occupano 190 e la
+diciannovesima non entra**. Il resto passa alla pagina dopo con l'intestazione ripetuta (la regola è
+di `rg-worksheet-block--long`, in `rg-utilities.css`) — il foglio si stampa fronte-retro e il
+diciannovesimo stop sta dietro.
+
+**Limite dichiarato**: quel 18 dipende da quanto c'è **sopra** la tabella. Una fase con una riga di
+campi in meno ne fa entrare una in più, una con un titolo su due righe una in meno. Chi ha bisogno di
+un numero esatto di righe per pagina non lo ottiene dal CSS: lo ottiene spezzando la tabella a monte.
+
+```html
+<table class="rg-table rg-table--compact rg-table--grid rg-table--hand" style="--rg-table-cols: 8">
+  <caption>Stop — tempi e note si scrivono su qualunque riga</caption>
+  <thead>
+    <tr>
+      <th class="rg-table__numeric" scope="col">Stop</th>
+      <th class="rg-table__numeric" scope="col">Ago</th>
+      <th class="rg-table__code" scope="col">Sopra</th>
+      <th class="rg-table__code" scope="col">Sotto</th>
+      <th scope="col">Operazione</th>
+      <th class="rg-table__grow" scope="col">Materiale</th>
+      <th class="rg-table__numeric" scope="col">Tempo</th>
+      <th class="rg-table__grow" scope="col">Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rg-table__numeric">1</td>
+      <td class="rg-table__numeric">2</td>
+      <td class="rg-table__code">850/70</td>
+      <td class="rg-table__code">850/120</td>
+      <td>Appoggio</td>
+      <td>1 Tulle TML01012</td>
       <td class="rg-fill-field rg-fill-field--cell"></td>
       <td class="rg-fill-field rg-fill-field--cell"></td>
     </tr>

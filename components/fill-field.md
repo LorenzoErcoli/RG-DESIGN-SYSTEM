@@ -30,7 +30,7 @@ Tre scelte, e sono tutte a servizio di quella frase:
 | `rg-fill-field` | **Base**: etichetta sopra, riga sotto. Il caso ordinario dentro `rg-worksheet-block__fields`. |
 | `rg-fill-field--tall` | Riga alta: nota, motivazione, descrizione di una difformità. |
 | `rg-fill-field--inline` | Etichetta e riga sulla stessa linea, per i campi brevi in fondo al blocco (operatore, ora). |
-| `rg-fill-field--cell` | **Forma tabella**: si mette su una `<td>` di `rg-table`, dove l'etichetta sta già nella `<th>`. Trenta righe da riempire sono una tabella, non trenta campi. |
+| `rg-fill-field--cell` | **Forma tabella**: si mette su una `<td>` di `rg-table`, dove l'etichetta sta già nella `<th>`. Trenta righe da riempire sono una tabella, non trenta campi. L'altezza la decide la tabella: se su quelle righe si scrive davvero, è [`rg-table--hand`](tables.md#tabella-su-cui-si-scrive-a-penna-rg-table--hand-proposta-1380). |
 | `rg-fill-field--check` | **Casella da spuntare** (proposta 1.25.0), 20 px (~5,3 mm; 24 nella 1.25), contorno nero: «Fatta» nella tabella delle fasi della [pagina della parte](part-sheet.md). Ci va un segno di penna. Su uno `<span>` dentro una `<td>`, etichetta nella `<th>`. |
 | `rg-fill-field--swatch` | **Casella quadrata** (proposta 1.23.0), ~10,6 mm di lato (40 px), contorno nero su quattro lati: il posto dove **attaccare un pezzo di filo** o segnare il colore del cono. Su uno `<span>` dentro una `<td>`, con l'etichetta nella `<th>` («Cono»). |
 
@@ -85,6 +85,15 @@ colonne sono già stampate (filetto neutro della tabella) e quali aspettano la p
 modificatore ripristina `display: table-cell` (la base è `block`): non funziona su un `<div>`
 dentro la cella, va sulla `<td>` stessa. Il selettore è qualificato `td.rg-fill-field--cell` di
 proposito — `.rg-table td` pesa (0,1,1) e con la sola classe il filetto della tabella vincerebbe.
+
+**Ma l'altezza di una cella non la decide il campo: la decide la tabella** (1.38.0). Dentro un blocco
+compatto `--cell` vale 24 px, che è la misura del *dato denso* e non della mano: bastano per una
+sigla, non per una nota scritta mentre la macchina lavora. Quando la tabella è un **modulo da
+compilare riga per riga** — la tabella degli stop del foglio del ricamo — le righe salgono a 40 px
+(~10,6 mm) e a dirlo è [`rg-table--hand`](tables.md#tabella-su-cui-si-scrive-a-penna-rg-table--hand-proposta-1380)
+sulla `<table>`, non una classe in più su ogni cella. È lo stesso principio della densità compatta,
+al contrario: **lo decide il contenitore**, e per una ragione pratica — in una riga da riempire
+metà celle sono `--cell` e metà portano un dato stampato, e devono essere alte uguale.
 
 **La casella non è una riga.** `--swatch` non si scrive: ci si appoggia qualcosa (un capo di filo con
 il nastro, un segno di pennarello). Per questo è chiusa su quattro lati, mentre la riga è una staffa

@@ -61,6 +61,35 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.38.0 — la tabella degli stop si scrive a mano
+
+Nessuna classe rimossa o rinominata, nessun token toccato. **Ma è l'unico rilascio recente in cui
+salire il pin non basta: c'è una classe da aggiungere al markup**, altrimenti non cambia niente.
+
+**Cosa fare.** Sulla tabella che il reparto **compila a penna riga per riga** — nel fascicolo RG è la
+tabella degli stop del foglio del ricamo — aggiungere `rg-table--hand`:
+
+```diff
+- <table class="rg-table rg-table--compact rg-table--grid rg-u-mt-2" style="--rg-table-cols: 12">
++ <table class="rg-table rg-table--compact rg-table--grid rg-table--hand rg-u-mt-2" style="--rg-table-cols: 12">
+```
+
+**Dove non metterla.** Su nessun'altra tabella del fascicolo. La legenda dei coni e la tabella delle
+fasi della pagina della parte si **leggono**: alzarne le righe è carta spesa per uno spazio che
+nessuno usa. La regola per decidere è una domanda sola: *su questa tabella qualcuno scrive?*
+
+**Cosa cambia dove la classe c'è.** Le righe del `tbody` passano da ~26 px (~7 mm) a **40 px
+(~10,6 mm)**, la testata resta com'era, e i valori già stampati si allineano **in basso** invece che a
+metà cella. Ne entrano **18 per pagina A4**; dalla diciannovesima si va alla pagina dopo con
+l'intestazione della tabella ripetuta.
+
+**Da contare prima di mandare in reparto.** Un foglio con più di 18 stop prende **una facciata in
+più** di prima. Sul fascicolo di prova RG (ricami da 3 stop) le pagine non cambiano — 18 prima e
+dopo, 0 gruppi di fasi collegate spezzati — ma un prodotto con ricami lunghi va ristampato e contato.
+Vale la regola della 1.34.0.
+
+**Se il prodotto non ha tabelle da compilare a penna**, non c'è niente da fare: si sale e basta.
+
 ### 1.37.0 — la nota porta l'etichetta dentro il riquadro
 
 Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. **Ma il foglio

@@ -88,7 +88,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -2982,6 +2982,169 @@ status         VALID</pre></div>
           </div></div>
         </div>
         <p class="specimen-note"><strong>Perché non sembra già scritta a penna.</strong> Era l’unica cosa che poteva andare storta, e non succede perché i due segni non si somigliano in niente: l’etichetta è <strong>grigia</strong> (<code class="rg-mono">--rg-color-text-secondary</code>), <strong>piccola</strong> (10 px in stampa dentro il blocco, 12 nel piede, che non si compatta), <strong>maiuscola e spaziata</strong>, ferma nell’angolo; la mano scrive nero, grande, corsivo, e appoggia sulla base. Il <strong>filetto sinistro</strong> del riquadro le passa accanto e dice che sta dentro, e il rientro è lo stesso dei valori già stampati: etichetta e valore partono dalla stessa colonna. <strong>Limite dichiarato:</strong> se un valore già stampato fosse così lungo da riempire tutto il riquadro andrebbe a finire sotto l’etichetta — un <code class="rg-mono">padding-top</code> sulla riga lo tiene distante, e finché il campo è vuoto (cioè sempre, sul foglio) non costa un pixel. Nel piede <strong>Operatore e Data tengono l’etichetta sopra</strong>: sono riquadri da 32 px, lì dentro l’etichetta mangerebbe la riga.</p>
+      </section>
+
+      <section class="specimen-section" id="table-hand">
+        <div class="specimen-section__head"><span class="specimen-section__index">47</span><h2>La tabella su cui si scrive a penna (1.38.0)</h2><p>Sul foglio del ricamo c’è <strong>una riga per stop</strong>, ed è l’unica tabella del fascicolo su cui si scrive <em>mentre la macchina lavora</em>: tempi e note si annotano stop per stop, a biro, in piedi. Le righe erano quelle di un dato denso — ~26 px, ~7 mm — cioè la misura del <strong>testo stampato</strong>; ma qui vale la frase di <code class="rg-mono">rg-fill-field</code>: <strong>l’altezza è la mano, non il testo</strong>. Sette millimetri sono la misura di una riga <em>letta</em>: la punta della biro ci entra, la grafia no, e una riga in cui non si riesce a scrivere resta vuota — cioè il dato si perde. <code class="rg-mono">rg-table--hand</code> porta le righe a <strong>40 px (~10,6 mm)</strong>: i 32 della grafia adulta più un passo, perché qui la mano scrive <strong>dentro una griglia chiusa sui quattro lati</strong> e non sopra una riga aperta. Il dato già stampato <strong>appoggia in basso</strong>, dove appoggia la scrittura, invece di galleggiare a metà cella. Su A4 ne entrano <strong>18 per pagina</strong>, e il diciannovesimo stop va dietro. <code class="rg-mono">--grid</code> dice <em>dove</em> si scrive, <code class="rg-mono">--hand</code> dice <em>quanto spazio c’è per farlo</em>: due decisioni, due classi. Vedi components/tables.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 · Con <code class="rg-mono">rg-table--hand</code> — riga da 40 px, il tempo e la nota si scrivono</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <p class="rg-worksheet-block__step">Fase 1 di 5</p>
+              <p class="rg-dept-band rg-dept-band--ricamo">
+                <span class="rg-dept-band__name">Reparto Ricamo</span>
+              </p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Ricamo</h3>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <table class="rg-table rg-table--compact rg-table--grid rg-table--hand rg-u-mt-2" style="--rg-table-cols: 8; --rg-table-wide: 2">
+                  <caption>Stop — tempi e note si scrivono su qualunque riga</caption>
+                  <thead>
+                    <tr>
+                      <th class="rg-table__numeric" scope="col">Stop</th>
+                      <th class="rg-table__numeric" scope="col">Ago</th>
+                      <th class="rg-table__code" scope="col">Sopra</th>
+                      <th class="rg-table__code" scope="col">Sotto</th>
+                      <th class="rg-table__numeric" scope="col">AP</th>
+                      <th scope="col">Operazione</th>
+                      <th class="rg-table__grow" scope="col">Materiale</th>
+                      <th class="rg-table__numeric" scope="col">Tempo</th>
+                      <th class="rg-table__grow" scope="col">Note</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="rg-table__numeric">1</td>
+                      <td class="rg-table__numeric">1</td>
+                      <td class="rg-table__code">850/70</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr>
+                      <td class="rg-table__numeric">2</td>
+                      <td class="rg-table__numeric">2</td>
+                      <td class="rg-table__code">850/70</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td>Appoggio</td>
+                      <td>1 Tulle TML01012</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr>
+                      <td class="rg-table__numeric">3</td>
+                      <td class="rg-table__numeric">3</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-table__numeric">2</td>
+                      <td>Appoggio</td>
+                      <td>2 Termogarza TG-220</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr>
+                      <td class="rg-table__numeric">4</td>
+                      <td class="rg-table__numeric">4</td>
+                      <td class="rg-table__code">850/70</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">2 · La stessa tabella senza <code class="rg-mono">--hand</code> — riga da ~26 px: si legge, non ci si scrive</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <div class="rg-worksheet-block__body">
+                <table class="rg-table rg-table--compact rg-table--grid" style="--rg-table-cols: 8; --rg-table-wide: 2">
+                  <caption>Stop — la densità del dato letto</caption>
+                  <thead>
+                    <tr>
+                      <th class="rg-table__numeric" scope="col">Stop</th>
+                      <th class="rg-table__numeric" scope="col">Ago</th>
+                      <th class="rg-table__code" scope="col">Sopra</th>
+                      <th class="rg-table__code" scope="col">Sotto</th>
+                      <th class="rg-table__numeric" scope="col">AP</th>
+                      <th scope="col">Operazione</th>
+                      <th class="rg-table__grow" scope="col">Materiale</th>
+                      <th class="rg-table__numeric" scope="col">Tempo</th>
+                      <th class="rg-table__grow" scope="col">Note</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="rg-table__numeric">1</td>
+                      <td class="rg-table__numeric">1</td>
+                      <td class="rg-table__code">850/70</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr>
+                      <td class="rg-table__numeric">2</td>
+                      <td class="rg-table__numeric">2</td>
+                      <td class="rg-table__code">850/70</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td>Appoggio</td>
+                      <td>1 Tulle TML01012</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr>
+                      <td class="rg-table__numeric">3</td>
+                      <td class="rg-table__numeric">3</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-table__numeric">2</td>
+                      <td>Appoggio</td>
+                      <td>2 Termogarza TG-220</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr>
+                      <td class="rg-table__numeric">4</td>
+                      <td class="rg-table__numeric">4</td>
+                      <td class="rg-table__code">850/70</td>
+                      <td class="rg-table__code">850/120</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">3 · Chi si legge e basta non cambia: le fasi della pagina della parte restano com'erano</span><div class="specimen-stage specimen-stage--page">
+            <table class="rg-table rg-table--compact rg-table--grid" style="--rg-table-cols: 6">
+              <caption>Fasi della parte — il reparto spunta quella fatta</caption>
+              <thead>
+                <tr><th class="rg-table__numeric" scope="col">N</th><th class="rg-table__grow" scope="col">Lavorazione</th><th scope="col">Reparto</th><th scope="col">Fatta</th><th scope="col">Data</th><th scope="col">Firma</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="rg-table__numeric">1</td><td>Ricamo</td><td>Ricamo</td><td><span class="rg-fill-field rg-fill-field--check"></span></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                <tr><td class="rg-table__numeric">2</td><td>Pressatura</td><td>Strass</td><td><span class="rg-fill-field rg-fill-field--check"></span></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+                <tr><td class="rg-table__numeric">3</td><td>Controllo qualità</td><td>Finissaggio</td><td><span class="rg-fill-field rg-fill-field--check"></span></td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr>
+              </tbody>
+            </table>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Diciotto, e da dove viene il numero.</strong> È <strong>misurato</strong>, non imposto: il CSS non sa contare le righe. Su A4 con intestazione di pagina (<code class="rg-mono">rg-u-print-a4--head</code>, margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo, per il corpo della tabella restano <strong>~194 mm</strong>: diciotto righe da 10,6 mm ne occupano 190, la diciannovesima ne chiederebbe 201 e non entra. Il seguito va alla pagina dopo con l’intestazione della tabella ripetuta (regola di <code class="rg-mono">rg-worksheet-block--long</code>), e il foglio si stampa fronte-retro: il diciannovesimo stop sta <em>dietro</em>. <strong>Limite dichiarato:</strong> quel 18 dipende da quanto c’è <em>sopra</em> la tabella, e il margine è sottile — ~3 mm. Una fase con una fila di campi in meno ne fa entrare una in più; un titolo su due righe, una in meno. Chi ha bisogno di un numero <em>esatto</em> di righe per pagina non lo ottiene dal CSS: lo ottiene spezzando la tabella a monte. <strong>Costo in carta, dichiarato:</strong> un ricamo con più di 18 stop prende una facciata in più di prima — è il prezzo esplicito della richiesta, perché prima le righe c’erano tutte e non ci si poteva scrivere, il che vuol dire che non c’erano.</p>
       </section>
     </main>
   </div>

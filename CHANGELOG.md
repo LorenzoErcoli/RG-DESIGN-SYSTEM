@@ -7,6 +7,63 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.38.0 — 2026-09-22
+
+**Minor.** Una classe **nuova** e additiva, `rg-table--hand`; nessuna rimossa o rinominata, nessun
+token toccato. È opt-in: **finché l'app non la mette sul markup non cambia niente**, e questa volta
+la richiesta si soddisfa solo se qualcuno la mette (vedi
+[UPGRADING](UPGRADING.md#1380--la-tabella-degli-stop-si-scrive-a-mano)).
+
+Sul foglio del ricamo c'è una riga per stop, e su quella tabella si **scrive mentre la macchina
+lavora**: tempi e note, stop per stop, a biro. Lorenzo, sullo stesso foglio: *«Righe più alte, 18 per
+pagina. Serve spazio per scrivere le note. E deve essere abbastanza per stop.»*
+
+### `rg-table--hand`: l'altezza è la mano, non il testo
+
+Le righe erano ~26 px (~7 mm), cioè **la misura del testo stampato**. Sette millimetri sono la misura
+di una riga *letta*: la punta della biro ci entra, la grafia no — e una riga in cui non si riesce a
+scrivere, in reparto, resta vuota, cioè il dato si perde. È la stessa frase su cui è costruito
+`rg-fill-field`, applicata dove non era ancora arrivata.
+
+| | prima | con `rg-table--hand` |
+| --- | --- | --- |
+| riga della tabella degli stop | ~26 px (~7 mm) | **40 px (~10,6 mm)** |
+| righe per pagina A4 | ~28 | **18** |
+| dato già stampato nella cella | a metà altezza | **appoggiato in basso**, dove appoggia la scrittura |
+| testata della tabella | — | invariata: su di lei non si scrive |
+
+I 40 px sono i 32 px della grafia adulta dichiarati da `rg-fill-field` più un passo, perché qui la
+mano scrive **dentro una griglia chiusa sui quattro lati** e non sopra una riga aperta: non può
+sbordare. Stanno sulla scala (32 + 8) e sono un **minimo**, non un'altezza fissa.
+
+**`--grid` dice *dove* si scrive, `--hand` dice *quanto spazio c'è per farlo*.** Sono due decisioni
+diverse e stanno in due classi diverse: si usano insieme.
+
+### Perché opt-in e non per tutte le tabelle
+
+Nello stesso fascicolo ci sono tabelle che si **leggono** soltanto — la legenda dei coni, le fasi
+della pagina della parte — e alzarle tutte vorrebbe dire pagare in carta uno spazio che nessuno usa.
+La classe la mette l'app sulla tabella che si compila, e solo lì.
+
+### Diciotto, e da dove viene il numero
+
+È **misurato**, non imposto: il CSS non sa contare le righe. Su A4 con intestazione di pagina
+(`rg-u-print-a4--head`, margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo,
+per il corpo della tabella restano ~194 mm: 18 righe da 10,6 mm ne occupano 190, la diciannovesima ne
+chiederebbe 201. Il seguito va alla pagina dopo con l'intestazione ripetuta — regola di `--long`, che
+non cambia — e il foglio si stampa fronte-retro.
+
+**Limiti dichiarati.** Quel 18 dipende da quanto c'è *sopra* la tabella, e il margine è ~3 mm: una
+fase con una fila di campi in meno ne fa entrare una in più, un titolo su due righe una in meno. Chi
+ha bisogno di un numero *esatto* di righe per pagina non lo ottiene dal CSS: spezza la tabella a
+monte. E un ricamo con più di 18 stop **prende una facciata in più di prima**: è il prezzo esplicito
+della richiesta, perché prima le righe c'erano tutte e non ci si poteva scrivere — il che vuol dire
+che non c'erano.
+
+**Misura** sul fascicolo di prova (3 parti, 11 fasi, 15 fogli, Chrome): **18 pagine prima e dopo**,
+**0 gruppi di fasi collegate spezzati prima e dopo**. Sullo stress test del solo foglio del ricamo:
+con 18 stop la tabella finisce dentro la pagina, con 19 e con 20 il seguito passa alla pagina dopo.
+
 ## 1.37.0 — 2026-09-22
 
 **Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si

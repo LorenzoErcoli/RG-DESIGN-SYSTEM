@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.32.0",
+  "dsVersion": "1.33.0",
   "generated": "2026-09-21",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
@@ -2606,7 +2606,9 @@
           "rg-fill-field--check",
           "rg-u-print-a4--head",
           "rg-print-anchor",
-          "rg-scope-band"
+          "rg-scope-band",
+          "rg-worksheet-foot",
+          "rg-worksheet-foot__note"
         ]
       },
       "variants": [
@@ -2619,7 +2621,8 @@
       "states": [
         "print",
         "print-long",
-        "print-compact"
+        "print-compact",
+        "print-compact-1330"
       ],
       "tokens": [
         "--rg-color-surface-raised",
@@ -2767,7 +2770,8 @@
           "rg-worksheet-block--compact",
           "rg-part-mark",
           "rg-blank-page",
-          "rg-page-header"
+          "rg-page-header",
+          "rg-worksheet-foot"
         ]
       },
       "variants": [
@@ -2815,6 +2819,77 @@
         "part header",
         "section header print",
         "stampa",
+        "print"
+      ]
+    },
+    {
+      "id": "worksheet-foot",
+      "title": "Piede del gruppo di fasi",
+      "role": "Il piede che si compila ALLA FINE del lavoro - Operatore, Data, una nota - fuori dal riquadro della fase, subito sotto. Il riquadro del blocco dice «questa è la fase e questi sono i suoi dati», cose che il sistema ha stampato; la firma e la nota dicono «questo è ciò che è successo quando l'ho fatta» e sono di chi lavora. Operatore e Data affiancati, la nota a tutta larghezza e alta 64 px (~17 mm), più di una rg-fill-field--tall: è l'unico campo in cui si scrive davvero a mano. Uno per GRUPPO di fasi collegate, non uno per fase.",
+      "status": "beta",
+      "since": "1.33.0",
+      "kind": "component",
+      "rulesRef": "design-rules.md#10-dati-di-ricamo-e-materiali",
+      "classes": {
+        "base": "rg-worksheet-foot",
+        "elements": [
+          "rg-worksheet-foot__note"
+        ],
+        "related": [
+          "rg-fill-field",
+          "rg-fill-field--tall",
+          "rg-worksheet-block",
+          "rg-worksheet-block--compact",
+          "rg-worksheet-block--continued",
+          "rg-worksheet-block__foot",
+          "rg-field"
+        ]
+      },
+      "variants": [
+        "base"
+      ],
+      "states": [
+        "print"
+      ],
+      "tokens": [
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-4",
+        "--rg-space-16",
+        "--rg-line-height-tight"
+      ],
+      "doc": "components/worksheet-foot.md",
+      "specimenAnchor": "worksheet-foot",
+      "snippet": "<div class=\"rg-worksheet-foot\">\n  <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Operatore</span><span class=\"rg-fill-field__line\"></span></div>\n  <div class=\"rg-fill-field\"><span class=\"rg-fill-field__label\">Data</span><span class=\"rg-fill-field__line\"></span></div>\n  <div class=\"rg-fill-field rg-fill-field--tall rg-worksheet-foot__note\"><span class=\"rg-fill-field__label\">Note</span><span class=\"rg-fill-field__line\"></span></div>\n</div>",
+      "notes": "Solo carta. Non sostituisce rg-worksheet-block__foot, lo affianca: dentro se è un dato della fase, fuori se è la firma di chi l'ha fatta. Il piede NON si compatta: la densità compatta serve ai dati già stampati, non allo spazio bianco che deve accogliere una grafia. In stampa break-inside: avoid, e ripetuto sui singoli campi. LIMITE DICHIARATO E MISURATO: break-before: avoid NON si dichiara, perché in Chrome le due richieste si escludono - con break-before il fragmentatore tiene il piede attaccato al blocco e taglia DENTRO il piede, e il riquadro della nota esce diviso fra due fogli (provato a riempimenti da 860 a 980 px: con break-before si spezza sempre, senza resta sempre intero). A rendere raro il caso ci pensa la compattazione di stampa del blocco, il cui obiettivo è misurato sul gruppo: due fasi collegate E il loro piede in una pagina A4.",
+      "keywords": [
+        "piede",
+        "piede del gruppo",
+        "piede della fase",
+        "firma",
+        "firma operatore",
+        "operatore",
+        "data",
+        "note",
+        "nota a mano",
+        "chi ha fatto la fase",
+        "compilare a penna",
+        "fascicolo",
+        "fascicolo compatto",
+        "fascicolo di lavorazione",
+        "scheda di lavorazione",
+        "stampa",
+        "carta",
+        "gruppo di fasi",
+        "fasi collegate",
+        "foot",
+        "worksheet foot",
+        "signature",
+        "operator",
+        "date",
+        "notes",
+        "sign-off",
+        "printed sheet",
         "print"
       ]
     },
@@ -3837,7 +3912,9 @@
           "rg-field",
           "rg-cutout",
           "rg-worksheet-block--compact",
-          "rg-table--grid"
+          "rg-table--grid",
+          "rg-worksheet-foot",
+          "rg-worksheet-foot__note"
         ]
       },
       "variants": [

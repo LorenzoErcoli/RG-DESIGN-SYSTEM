@@ -1203,9 +1203,16 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 /* L'unita accompagna l'etichetta e resta mono e minuscola: "°C" non e una label identitaria
    (regole §8 — l'unita sta accanto al valore che verra scritto, non solo nell'intestazione). */
 .rg-fill-field__unit { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-regular); letter-spacing: var(--rg-letter-normal); text-transform: none; }
-.rg-fill-field__line { display: block; height: var(--rg-space-8); background: var(--rg-color-white); border-left: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+/* min-height e non height (1.33.0). La riga porta spesso un valore GIA STAMPATO dall'app, e un
+   valore lungo («SABBIATRICE MANUALE · BANCO SOFFIATURA») va a capo: con un'altezza FISSA la
+   seconda riga di testo usciva DA SOPRA il riquadro e finiva stampata addosso all'etichetta, cioe
+   due scritte sovrapposte e illeggibili sulla carta. Con min-height la misura dichiarata resta un
+   MINIMO — l'altezza della scrittura a mano, che e la ragione per cui esiste — e il campo cresce
+   quando il testo chiede una riga in piu. Costa qualche millimetro di pagina solo dove serve.
+   overflow-wrap: anywhere per il codice unico lungo, che non ha spazi dove andare a capo. */
+.rg-fill-field__line { display: block; min-height: var(--rg-space-8); background: var(--rg-color-white); border-left: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); overflow-wrap: anywhere; }
 /* Riga alta: nota, motivazione, descrizione di una difformita. */
-.rg-fill-field--tall > .rg-fill-field__line { height: var(--rg-space-12); }
+.rg-fill-field--tall > .rg-fill-field__line { min-height: var(--rg-space-12); }
 /* Etichetta e riga sulla stessa linea, per i campi brevi in fondo al blocco (sigla, ora). */
 .rg-fill-field--inline { display: flex; align-items: baseline; gap: var(--rg-space-3); }
 .rg-fill-field--inline > .rg-fill-field__label { margin-bottom: 0; white-space: nowrap; }
@@ -1253,8 +1260,8 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field { display: flex; flex-direction: column; justify-content: flex-end; }
 /* La nota prende la fila intera: e l'unico campo che chiede larghezza. */
 .rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field--tall { grid-column: 1 / -1; }
-.rg-worksheet-block--compact .rg-fill-field__line { height: var(--rg-space-6); }
-.rg-worksheet-block--compact .rg-fill-field--tall > .rg-fill-field__line { height: var(--rg-space-12); }
+.rg-worksheet-block--compact .rg-fill-field__line { min-height: var(--rg-space-6); }
+.rg-worksheet-block--compact .rg-fill-field--tall > .rg-fill-field__line { min-height: var(--rg-space-12); }
 /* Tabelle nel blocco compatto (eccezioni per stop, legenda coni): righe da 24. */
 .rg-worksheet-block--compact .rg-table :is(th, td) { padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); line-height: var(--rg-line-height-technical); }
 .rg-worksheet-block--compact td.rg-fill-field--cell { height: var(--rg-space-6); }
@@ -1283,6 +1290,26 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--inline > .rg-fill-field__line { min-width: var(--rg-space-16); }
 .rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--tall { flex-grow: 3; }
 .rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--tall > .rg-fill-field__line { min-width: var(--rg-space-24); }
+
+/* ── Piede AUTONOMO del gruppo di fasi (1.33.0) ──────────────────────────────────────────────────
+   Chi firma e chi scrive le note NON sta dentro il riquadro della fase. Il riquadro dice «questa e
+   la fase, questi sono i suoi dati»; la firma e la nota dicono «questo e cio che e successo quando
+   l'ho fatta», e sono di chi lavora, non della scheda. Finche vivevano in rg-worksheet-block__foot
+   l'operatore scriveva DENTRO la cornice dei dati stampati, e la nota — l'unico spazio davvero da
+   riempire — era una riga schiacciata in fondo a una fila di campi. Qui il piede esce dal riquadro
+   e si mette subito sotto, a filo: la cornice resta chiusa sui dati, la nota prende tutta la
+   larghezza del foglio. rg-worksheet-block__foot resta valido e non cambia: chi non migra non
+   vede differenza.
+   FORMA: due colonne. Operatore e Data sono due dati brevi e stanno affiancati; la nota scavalca
+   la fila intera perche l'unica cosa che si scrive a mano per davvero, in frasi, e quella.
+   Il piede NON e compatto: la compattazione serve ai dati gia stampati, non allo spazio bianco che
+   deve accogliere una grafia. La nota anzi e piu alta della --tall normale (64 invece di 48, ~17 mm):
+   sono due righe scritte a mano, non una.
+   In stampa non si stacca mai dal blocco che lo precede (rg-utilities.css, @media print): un piede
+   in cima alla pagina dopo e la firma di una fase che non si vede. */
+.rg-worksheet-foot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rg-space-2) var(--rg-space-4); margin: 0 0 var(--rg-space-4); }
+.rg-worksheet-foot__note { grid-column: 1 / -1; }
+.rg-worksheet-foot__note > .rg-fill-field__line { min-height: var(--rg-space-16); }
 
 /* Testata di PARTE in linea (proposta 1.23.0). Prima ogni parte apriva una pagina sua, quasi vuota, con
    l'indice delle sue lavorazioni. Ora la parte e una testata di una o due righe che APRE una pagina
@@ -1345,9 +1372,12 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 
 /* IL VALORE STAMPATO NON TOCCA LA RIGA. Nel blocco compatto il valore gia noto scritto dentro
    rg-fill-field__line stava attaccato alla base e al filo sinistro. Aria: 8 px (~2 mm) a sinistra,
-   6 px (~1,6 mm) sotto; il valore e un dato, quindi mono e tabulare a 14. L'altezza resta 24: con
-   line-height 1 il valore ci sta (14 + 6 + filetto). Nelle celle di tabella lo stesso respiro sotto. */
-.rg-worksheet-block--compact .rg-fill-field__line { display: flex; align-items: flex-end; padding: 0 0 calc(var(--rg-space-1) + var(--rg-space-1) / 2) var(--rg-space-2); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; line-height: 1; }
+   6 px (~1,6 mm) sotto; il valore e un dato, quindi mono e tabulare a 14. L'altezza minima resta 24: con
+   line-height stretta il valore ci sta (14 + 6 + filetto). Nelle celle di tabella lo stesso respiro sotto.
+   Interlinea TIGHT e non 1 (1.33.0): un valore lungo va a capo dentro la riga (vedi min-height sopra) e
+   con line-height 1 le due righe di testo si toccavano. 1,1 le separa e sposta il valore di una riga
+   sola di 0,7 px, cioe di niente. */
+.rg-worksheet-block--compact .rg-fill-field__line { display: flex; align-items: flex-end; padding: 0 0 calc(var(--rg-space-1) + var(--rg-space-1) / 2) var(--rg-space-2); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; line-height: var(--rg-line-height-tight); }
 .rg-worksheet-block--compact .rg-table td { padding-bottom: calc(var(--rg-space-1) + var(--rg-space-1) / 2); vertical-align: bottom; }
 
 /* CASELLA DA SPUNTARE («Fatta»): quadrata da 20 px (~5,3 mm; 24 nella 1.25, ridotta nella 1.26 per la pagina

@@ -61,6 +61,34 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.33.0 — il campo a penna cresce invece di sovrapporsi
+
+Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. Un solo punto
+da **guardare**: `rg-fill-field__line` passa da `height` a `min-height`.
+
+Prima l'altezza era fissa e un valore stampato troppo lungo usciva **da sopra** il riquadro,
+finendo addosso all'etichetta. Ora il campo **si allunga** di una riga di testo. È il comportamento
+corretto — su carta due scritte sovrapposte sono un dato perso — ma chi contava sull'altezza fissa
+per allineare qualcosa **fuori** dal campo (una colonna accanto, un'altezza calcolata a mano) lo
+vede cambiare.
+
+```bash
+# dalla radice del prodotto: dove il campo a penna porta un valore già stampato
+grep -rn "rg-fill-field__line" --include=*.html --include=*.py . | grep -v <path>/
+```
+
+Per ogni occorrenza che **non** è vuota, la domanda è una sola: *se questo valore va a capo, qualcosa
+si sposta dove non deve?* Dentro `rg-worksheet-block__fields` la risposta è no — i campi di una fila
+restano allineati sul fondo e le basi nere cadono sulla stessa linea.
+
+**Se il prodotto stampa un fascicolo compatto**, `rg-worksheet-block--compact` in `@media print`
+diventa più denso (etichette a 10 px, testata su una riga sola, QR a 48 px, titolo più piccolo nel
+blocco che continua). **Vale solo in stampa**: a schermo non cambia niente. Da ristampare e guardare:
+il numero di pagine cala, e le fasi possono cambiare foglio. Le righe da scrivere **non** cambiano.
+
+**Aggiunte:** `rg-worksheet-foot`, `rg-worksheet-foot__note` — il piede Operatore/Data/Note fuori dal
+riquadro della fase. `rg-worksheet-block__foot` resta valido: è un'aggiunta, non una sostituzione.
+
 ### 1.13.0 — gerarchia visiva
 
 Revisione di fondazioni: il DS produceva interfacce in cui contenitori e titoli si leggevano

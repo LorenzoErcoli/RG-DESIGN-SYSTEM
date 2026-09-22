@@ -61,6 +61,29 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.36.0 — i campi del foglio in quattro colonne
+
+Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. **Ma il foglio
+stampato cambia aspetto**, e in un punto cambia anche il comportamento del layout.
+
+**Va controllato.** Dentro `rg-worksheet-block--compact` la griglia `__fields` non ha più colonne
+automatiche: sono **quattro, fisse**. Prima il numero dipendeva dalla larghezza disponibile, quindi un
+prodotto che stampa su un formato diverso dall'A4 con margini da 12 mm — o che mette il blocco dentro
+un contenitore più stretto — vedeva tre o cinque colonne e adesso ne vede sempre quattro. Se il
+contenitore è stretto, le quattro colonne sono strette: sotto i **680 px** di viewport le colonne
+tornano automatiche, ma è un `@media` sul viewport, non sul contenitore. Chi impagina un blocco
+compatto in una colonna stretta su schermo largo lo verifichi.
+
+**Si vede.** Sul foglio: i sottotitoli di operazione (`__op`) sono in **grassetto** e non hanno più il
+filetto grigio sopra (solo dentro `--compact`; il blocco normale lo tiene); le **etichette** dei campi
+sono un gradino più grigie (`--rg-color-text-secondary` invece di `--rg-color-text-label`) dentro
+`rg-worksheet-block--compact` e `rg-worksheet-foot`; fra due fasi collegate
+(`rg-worksheet-block--continued`) la linea di giunzione è **doppia** (2 px).
+
+**Se il prodotto stampa un fascicolo compatto:** sul fascicolo di prova RG il conto non cambia (20
+pagine prima e dopo, 0 gruppi spezzati) e il margine sulle pagine critiche migliora da ~5 a ~8 px.
+Vale comunque la regola della 1.34.0: ristampare e contare le pagine prima di mandare in reparto.
+
 ### 1.35.0 — la trama della banda comincia dopo il nome
 
 Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. Cambiano due

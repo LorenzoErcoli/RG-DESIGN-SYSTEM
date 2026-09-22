@@ -88,7 +88,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -1974,7 +1974,7 @@ status         VALID</pre></div>
       </section>
 
       <section class="specimen-section" id="worksheet-compact-v2">
-        <div class="specimen-section__head"><span class="specimen-section__index">39</span><h2>Fascicolo, seconda versione (proposta 1.25.0)</h2><p>Dall’anteprima di Lorenzo. Nel blocco: <strong>«FASE 1 DI 3»</strong> piccolo in cima (<code class="rg-mono">__step</code>), la <strong>banda del reparto</strong> staccata dai bordi e più alta, la <strong>lavorazione</strong> grande, in grassetto e maiuscolo (<code class="rg-mono">__work</code>); niente parte né prodotto, che vanno nell’intestazione di pagina stampata dall’app (<code class="rg-mono">rg-u-print-a4--head</code>, margine superiore 30 mm). Le operazioni sono sottotitoli leggeri (<code class="rg-mono">__op</code>) e il valore stampato non tocca la riga. Fuori dai blocchi: la <strong>pagina della parte</strong> (<code class="rg-mono">rg-part-sheet</code>) con il <strong>QR</strong> (<code class="rg-mono">rg-qr</code>) e le fasi da spuntare (<code class="rg-mono">rg-fill-field--check</code>), e il <strong>foglio dei tagliandi</strong> (<code class="rg-mono">rg-cutout-sheet</code>). Vedi components/worksheet-block.md.</p></div>
+        <div class="specimen-section__head"><span class="specimen-section__index">39</span><h2>Fascicolo, seconda versione (proposta 1.25.0)</h2><p>Dall’anteprima di Lorenzo. Nel blocco: <strong>«FASE 1 DI 3»</strong> piccolo in cima (<code class="rg-mono">__step</code>), la <strong>banda del reparto</strong> staccata dai bordi e più alta, la <strong>lavorazione</strong> grande, in grassetto e maiuscolo (<code class="rg-mono">__work</code>); niente parte né prodotto, che vanno nell’intestazione di pagina stampata dall’app (<code class="rg-mono">rg-u-print-a4--head</code>, margine superiore 30 mm). Le operazioni sono sottotitoli (<code class="rg-mono">__op</code>, in grassetto dalla 1.36.0) e il valore stampato non tocca la riga. Fuori dai blocchi: la <strong>pagina della parte</strong> (<code class="rg-mono">rg-part-sheet</code>) con il <strong>QR</strong> (<code class="rg-mono">rg-qr</code>) e le fasi da spuntare (<code class="rg-mono">rg-fill-field--check</code>), e il <strong>foglio dei tagliandi</strong> (<code class="rg-mono">rg-cutout-sheet</code>). Vedi components/worksheet-block.md.</p></div>
         <div class="specimen-grid">
           <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Ricamo — fase, banda, lavorazione; valori stampati con aria; eccezioni per stop a griglia</span><div class="specimen-stage specimen-stage--page">
             <section class="rg-worksheet-block rg-worksheet-block--compact">
@@ -2032,7 +2032,7 @@ status         VALID</pre></div>
               </footer>
             </section>
           </div></div>
-          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Pressatura — operazioni come sottotitoli leggeri</span><div class="specimen-stage specimen-stage--page">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Pressatura — le operazioni come sottotitoli</span><div class="specimen-stage specimen-stage--page">
             <section class="rg-worksheet-block rg-worksheet-block--compact">
               <p class="rg-worksheet-block__step">Fase 2 di 3</p>
               <p class="rg-dept-band rg-dept-band--pressatura">
@@ -2861,6 +2861,87 @@ status         VALID</pre></div>
           </div></div>
         </div>
         <p class="specimen-note"><strong>Il maiuscolo è presentazione, non dato.</strong> Nel sorgente di questa tavola c’è scritto «davanti e dietro», «medio», «Sabbiatura manuale»: il maiuscolo lo fa il CSS, dentro il foglio e solo lì. Chi copia il testo dal PDF ritrova le parole com’erano, e la pagina della fase a schermo — che usa altri componenti — non cambia. <strong>Limite dichiarato:</strong> un’unità scritta <em>dentro</em> il valore («4 (26,1 × 29,3 cm)») il CSS non sa distinguerla dal testo ed esce in maiuscolo; dove il simbolo conta, va messo in <code class="rg-mono">rg-fill-field__unit</code>, che resta minuscolo per definizione.</p>
+      </section>
+
+      <section class="specimen-section" id="worksheet-fields">
+        <div class="specimen-section__head"><span class="specimen-section__index">45</span><h2>I campi del foglio: quattro colonne, e la sotto-operazione che si vede (1.36.0)</h2><p>Dal foglio stampato: «farei una divisione della larghezza per 4, così le label vanno su una riga e non su due e lo stesso per il testo dentro. Eviterei questo continuo alto-basso dei box perché l’altezza è diversa». Dentro <code class="rg-mono">rg-worksheet-block--compact</code> le colonne di <code class="rg-mono">__fields</code> erano <strong>automatiche</strong> e cambiavano numero e larghezza da un foglio all’altro; adesso sono <strong>quattro, fisse e uguali</strong> — il quarto di A4, ~42 mm, tiene su una riga sola l’etichetta più lunga del reparto. I campi di una fila sono <strong>alti uguale</strong>: l’etichetta sta in alto e la riga da scrivere prende tutto il resto, così un valore che va a capo alza la fila intera invece di sfalsarla. Le <strong>note restano a tutta riga</strong>. La <strong>sotto-operazione</strong> (<code class="rg-mono">__op</code>) è in <strong>grassetto</strong> e il filetto grigio che aveva sopra sparisce: sul foglio ogni sezione finisce già con la riga nera della nota, e due linee attaccate facevano rumore. Le <strong>etichette</strong> scendono a <code class="rg-mono">--rg-color-text-secondary</code>, un gradino più grigie del valore: l’etichetta dice cosa scrivere, il nero è del dato. Fra <strong>due fasi collegate</strong> la linea passa a 2 px: è l’unica linea doppia del foglio. Vedi components/worksheet-block.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 · Quattro colonne fisse — otto campi, due file, stesse larghezze e stesse altezze</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Regolazioni della macchina</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Altezza piedino</span><span class="rg-fill-field__line">5</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Punto morto inferiore</span><span class="rg-fill-field__line">2</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Velocità</span><span class="rg-fill-field__line">500</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tipologia ago</span><span class="rg-fill-field__line">70</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Timing</span><span class="rg-fill-field__line">-10</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Movimento</span><span class="rg-fill-field__line">5</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tensione superiore</span><span class="rg-fill-field__line">110</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tensione inferiore</span><span class="rg-fill-field__line">45</span></div>
+                </div>
+              </div>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">2 · Un valore che va a capo alza tutta la fila: i quattro riquadri chiudono sulla stessa riga</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Pressatura <span class="rg-small rg-u-muted">— due passate, il tempo scritto conta doppio</span></p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Lato del pezzo</span><span class="rg-fill-field__line">davanti e dietro</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo</span><span class="rg-fill-field__line">1'30"</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pezzi per ciclo <span class="rg-fill-field__unit">n</span></span><span class="rg-fill-field__line">4 (26,1 × 29,3 cm)</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line">0,6</span></div>
+                  <div class="rg-fill-field rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </div>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">3 · Due fasi collegate sullo stesso foglio: la linea di giunzione è doppia, e si vede dove finisce la prima</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <p class="rg-worksheet-block__step">Fase 2 di 5</p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Pressatura</h3>
+                <span class="rg-worksheet-block__role">Principale · con la 03</span>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Piazzamento</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo</span><span class="rg-fill-field__line">5"</span></div>
+                  <div class="rg-fill-field rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+                </div>
+                <p class="rg-worksheet-block__op">Pressatura</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line">155</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo</span><span class="rg-fill-field__line">1'30"</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line">0,6</span></div>
+                </div>
+              </div>
+            </section>
+            <section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--continued">
+              <p class="rg-worksheet-block__step">Fase 3 di 5</p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Sabbiatura e soffiatura finale</h3>
+                <span class="rg-worksheet-block__role">Collegata · dopo la 02</span>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Sabbiatura manuale</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Vetro</span><span class="rg-fill-field__line">medio</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Lato del pezzo</span><span class="rg-fill-field__line">davanti e dietro</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo</span><span class="rg-fill-field__line">15"</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line">6</span></div>
+                </div>
+              </div>
+            </section>
+            <footer class="rg-worksheet-foot">
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+              <div class="rg-fill-field rg-worksheet-foot__note"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+            </footer>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Quanta aria, e perché non di più.</strong> Fra due sotto-operazioni ci sono 8 px di bianco invece di 4 più un filetto più altri 4: la misura non è di gusto, è quello che la pagina può pagare. Il vincolo — misurato sul fascicolo di prova, 3 parti, 11 fasi, 15 fogli — è <strong>20 pagine</strong> e <strong>ogni gruppo di due fasi collegate su una pagina sola</strong>. A 12 px invece di 8 il fascicolo va a 23 pagine e si spezzano tutti e tre i gruppi, perché su una pagina ci sono quattro sotto-operazioni e ogni passo si moltiplica per quattro. L’aria si paga dove non si scrive: l’interlinea della riga di chiusura del corpo («tempo per pezzo…»), che è un conto già fatto. <strong>Limite dichiarato:</strong> se un’etichetta non ci sta in un quarto di foglio va a capo lo stesso, e in quella fila il suo riquadro comincia una riga più in basso degli altri — chiudono comunque tutti insieme, che è dove si scrive. Sotto i 680 px, cioè a schermo su un telefono, le colonne tornano automatiche.</p>
       </section>
     </main>
   </div>

@@ -7,6 +7,102 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.36.0 — 2026-09-22
+
+**Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si
+compila** il foglio di lavorazione: chi aggiorna il tag e ristampa il fascicolo vede il foglio diverso,
+e va saputo prima. Cambia anche un comportamento di layout: dentro `rg-worksheet-block--compact` le
+colonne dei campi non sono più automatiche (vedi [UPGRADING](UPGRADING.md#1360--i-campi-del-foglio-in-quattro-colonne)).
+
+Cinque osservazioni dallo stesso foglio stampato (Lorenzo, 2026-09-22), tutte sugli **spazi da
+compilare a penna** e sulla loro gerarchia.
+
+### Quattro colonne fisse, e i campi di una fila alti uguale
+
+> «Farei una divisione della larghezza per 4, così le label vanno su una riga e non su due e lo stesso
+> per il testo dentro che non va su due righe. Eviterei questo continuo alto-basso dei box perché
+> l'altezza è diversa.»
+
+`rg-worksheet-block__fields`, dentro `--compact`, aveva colonne **automatiche** (`auto-fill`, minimo
+128 px): numero e larghezza li decideva lo spazio disponibile. Su un A4 con margini da 12 mm cadeva su
+quattro colonne, **ma per un pelo**: dieci pixel di larghezza in più e sarebbero diventate cinque,
+strette, con ogni etichetta a capo. Una griglia che cambia da un documento all'altro non è una griglia.
+
+Adesso sono **quattro, fisse, uguali**. Il quarto di foglio è ~160 px (~42 mm) e tiene su una riga sola
+l'etichetta più lunga del reparto («PUNTO MORTO INFERIORE») e un valore di diciotto caratteri. La nota
+(`rg-fill-field--tall`) continua a prendere **la fila intera**. Sotto i 680 px — a schermo, su un
+telefono — le colonne tornano automatiche: un quarto di quella larghezza non è un campo, è un taglio.
+
+E il campo diventa una colonna vera: **etichetta in alto, riga da scrivere che si prende tutto quello
+che resta**. Se un valore già stampato va a capo e alza il suo riquadro, si alzano **insieme** anche i
+riquadri accanto. Prima le righe erano allineate sul solo *fondo*, e una che cresceva sfalsava la fila:
+era l'«alto-basso dei box».
+
+**Limite dichiarato:** un'etichetta che non ci sta in un quarto di foglio va a capo lo stesso, e in
+quella fila il suo riquadro comincia una riga più in basso degli altri — chiudono comunque tutti sulla
+stessa linea, che è dove si scrive. Allineare anche l'alto vorrebbe `subgrid`, che porterebbe il
+proprio `row-gap` fra etichetta e riga: ~4 px per fila, ~40 px per pagina, cioè più di quanto un gruppo
+di due fasi ha da spendere. Misurato, scartato.
+
+### La sotto-operazione si vede, l'etichetta si fa da parte
+
+> «Renderei più differente la sotto operazione, magari facendola in bold.»
+> «Le label le farei un po' più grigie del testo, che va bene così.»
+
+`rg-worksheet-block__op` era a peso regolare, e sotto ci sono le etichette dei campi — maiuscole e
+spaziate: a 14 px contro 10 la differenza di corpo non bastava, e il titolo si leggeva come la prima di
+quelle etichette invece che come la cosa che le apre. Passa al **grassetto**, la stessa eccezione già
+dichiarata per `__work` (regole §3 vorrebbero 500): su carta il titolo di una sezione si cerca da
+lontano. Una chiosa in `rg-small` dentro `__op` resta a peso regolare.
+
+E `rg-fill-field__label`, **dentro `rg-worksheet-block--compact` e `rg-worksheet-foot`**, scende da
+`--rg-color-text-label` (neutral-800, 14,8:1) a **`--rg-color-text-secondary`** (neutral-600, **6,1:1**
+su bianco, AA superato). Su un foglio da compilare le cose stampate sono due: l'etichetta *dice* cosa
+scrivere, il valore *è* quello che c'è scritto, e pesavano uguale. Il nero resta del dato — stampato o
+a penna che sia. Fuori dal foglio, nei moduli a schermo, l'etichetta non cambia: lì è l'unica cosa che
+c'è. *Nota:* `rg-fill-field__unit` era già `--rg-color-text-secondary`, quindi sul foglio unità ed
+etichetta hanno ora lo stesso grigio; a distinguerle restano il mono e la spaziatura.
+
+### Più aria fra le sotto-operazioni — e quanta ce n'era
+
+> «Lasciamo se possibile poco più spazio tra le varie sotto operazioni.»
+
+Lo spazio da dare non c'era: il fascicolo sta in **20 pagine** e ogni gruppo di due fasi collegate in
+**una pagina**, e la 1.34.0 aveva già speso l'ultimo margine. Allora lo si compra dove era sprecato.
+Sul foglio ogni sezione finisce con la **riga nera** di un campo — la nota, che prende la fila intera —
+e 4 px più sotto arrivava un **secondo filetto**, grigio, sopra la sotto-operazione. Due linee quasi
+attaccate non separano meglio di una: fanno rumore e spezzano in due lo stacco.
+
+Il filetto sparisce (solo dentro `--compact`; il blocco normale lo tiene, perché lì le sezioni non
+finiscono per forza con una riga nera) e il suo posto lo prende il bianco:
+
+| | 1.35.0 | 1.36.0 |
+| --- | --- | --- |
+| sopra la sotto-operazione | 4 px + filetto + 4 px | **8 px di bianco** |
+| sotto il titolo | 0 | **2 px** |
+| costo per operazione | — | **+1 px**, e un filetto in meno |
+
+**Perché non di più, con il numero.** Su una pagina ci sono quattro sotto-operazioni e ogni passo in
+più si moltiplica per quattro: a **12 px** sopra invece di 8 il fascicolo di prova va a **23 pagine** e
+si spezzano **tutti e tre** i gruppi. Gli 8 px si pagano dove non si scrive: l'interlinea della riga di
+chiusura del corpo («tempo per pezzo: piazzamento 5" + pressatura 3' ÷ 4 pezzi per ciclo = 50"»), che è
+un conto già fatto, passa da tecnica a stretta — ~7 px per gruppo. **Alle note non si tocca niente.**
+
+### Fra due fasi collegate, una linea doppia
+
+Sullo stesso foglio stanno due fasi e si faceva fatica a vedere dove finisce la prima. La linea di
+giunzione era un filetto come tutti gli altri: stesso peso del contorno del blocco e dei filetti
+interni, cioè nessuna gerarchia. `rg-worksheet-block--continued` porta il bordo superiore a
+**`--rg-border-strong`** (2 px) e diventa **l'unica linea doppia del foglio**. Costa 1 px: il margine
+negativo sovrappone già il filetto inferiore del blocco sopra alla metà alta di questo.
+
+### Misura
+
+Stesso fascicolo di prova (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli), stesso motore (Chrome):
+**20 pagine prima, 20 dopo; 0 gruppi spezzati prima, 0 dopo.** Sulle tre pagine critiche — due fasi
+collegate più il loro piede — il contenuto finisce a **1069 px** invece di 1072, con il fondo utile a
+1077: **8 px di margine invece di 5**. Tavola nuova in vetrina (*I campi del foglio*).
+
 ## 1.35.0 — 2026-09-22
 
 **Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si

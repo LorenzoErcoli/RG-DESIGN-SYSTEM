@@ -144,11 +144,18 @@
      sezione finisce gia con la riga nera della nota) e il suo posto lo prende il bianco: 8 px sopra —
      un passo intero, il doppio di quelli che c'erano — e 2 px sotto il titolo, che prima toccava le
      etichette. Il conto: 8+2 contro 4+1+4, cioe 1 px in piu per operazione e un filetto in meno.
-     PERCHE NON DI PIU. Il vincolo e misurato, non estetico: il fascicolo di prova sta in 20 pagine e
-     i gruppi di due fasi collegate in una pagina ciascuno. A 12 px sopra invece di 8 il fascicolo va
-     a 23 pagine e si spezzano tutti e tre i gruppi: su una pagina ci sono quattro sotto-operazioni e
-     ogni passo in piu si moltiplica per quattro. 8 px e cio che la pagina puo pagare. */
-  .rg-worksheet-block--compact .rg-worksheet-block__op { margin-block: var(--rg-space-2) calc(var(--rg-space-1) / 2); line-height: var(--rg-line-height-tight); }
+     Ma 8 non erano quelli che servivano: erano quelli che la pagina poteva pagare. A 12 px sopra il
+     fascicolo di prova andava da 20 a 23 pagine e si spezzavano tutti e tre i gruppi di fasi collegate,
+     perche su una pagina ci sono quattro sotto-operazioni e ogni passo in piu si moltiplica per quattro.
+     E ORA SONO 12 (1.37.0). Li paga l'etichetta della nota, che e entrata DENTRO il riquadro
+     (rg-components.css): ~12 px per riquadro, quattro riquadri per pagina, ~49 px recuperati per
+     pagina di cui 16 spesi qui. Misurato sullo stesso fascicolo: stesse pagine, gruppi ancora interi.
+     PERCHE NON DI PIU. Dei ~49 ne avanzano ~25 per pagina e restano di margine, non di aria: un titolo
+     di fase piu lungo o un valore che va a capo se li prendono tutti, e il vincolo del gruppo su una
+     pagina sola non si rimette in gioco per quattro pixel. La misura ora coincide con quella a schermo,
+     e resta dichiarata qui lo stesso: e un numero MISURATO sulla carta, e non deve seguire lo schermo
+     se domani lo schermo cambia. */
+  .rg-worksheet-block--compact .rg-worksheet-block__op { margin-block: var(--rg-space-3) calc(var(--rg-space-1) / 2); line-height: var(--rg-line-height-tight); }
   /* La riga di chiusura del corpo (il calcolo del tempo per pezzo) e testo tecnico di una riga, non
      prosa. Interlinea STRETTA dalla 1.36.0, era tecnica: sono i ~7 px per gruppo con cui si paga
      l'aria fra le sotto-operazioni qui sopra, e si prendono dove non si scrive — questa riga e un
@@ -196,7 +203,8 @@
   .rg-worksheet-block--compact .rg-worksheet-block__body { padding-block: var(--rg-space-1); }
   /* IL PIEDE AUTONOMO NON SI COMPATTA COME IL BLOCCO — li si scrive a mano. Si tolgono solo le due
      cose che non sono spazio da scrivere: l'interlinea delle etichette e meta del distacco fra le
-     file. Le righe restano quelle che sono, e la nota resta a 64. */
+     file. Le righe restano quelle che sono, e la nota dalla 1.37.0 e anzi piu alta di prima: 80 px,
+     perche la sua etichetta e entrata dentro il riquadro e sotto le restano le due righe intere. */
   .rg-worksheet-foot { gap: var(--rg-space-1) var(--rg-space-4); }
   .rg-worksheet-foot .rg-fill-field__label { margin-bottom: 0; line-height: var(--rg-line-height-tight); }
   /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda

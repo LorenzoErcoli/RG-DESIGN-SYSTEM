@@ -1312,6 +1312,28 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field > .rg-fill-field__line { flex: 1 1 auto; }
 /* La nota prende la fila intera: e l'unico campo che chiede larghezza. */
 .rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field--tall { grid-column: 1 / -1; }
+/* L'ETICHETTA DELLA NOTA STA DENTRO IL RIQUADRO, IN ALTO A SINISTRA (1.37.0). Era l'ultimo serbatoio di
+   spazio rimasto sul foglio, dichiarato nella 1.36.0 e approvato («fallo», Lorenzo, 2026-09-22): la
+   parola «NOTE» si prendeva una fascia SOPRA il riquadro — ~12 px per campo, quattro campi per pagina —
+   e quella fascia non e spazio da scrivere, e spazio speso per dire di scrivere.
+   Il riquadro alto e l'unico che puo ospitare la propria etichetta senza perdere niente, e per una
+   ragione di forma, non di misura: la scrittura APPOGGIA sulla base nera (e la riga su cui si scrive,
+   vedi rg-fill-field), quindi l'angolo IN ALTO A SINISTRA e la zona morta del campo. L'etichetta ci si
+   mette dentro e il riquadro resta quello che era, 48 px: sotto i ~13 px dell'etichetta restano 35 px,
+   cioe piu dei 32 (~8,5 mm) di una grafia adulta — la riga che il campo prometteva la mantiene intera.
+   Vale solo per --tall dentro __fields, cioe le note del foglio: in un campo da 24 px l'etichetta
+   dentro mangerebbe la scrittura, e li resta sopra.
+   CONTINUA A LEGGERSI COME ETICHETTA e non come qualcosa di gia scritto a penna, perche i due segni
+   non si somigliano in niente: l'etichetta e grigia (secondary), piccola (10 px in stampa), maiuscola
+   e spaziata, nell'angolo; la mano scrive nero, grande, corsivo, sulla base. Il filetto sinistro del
+   riquadro passa alla sua sinistra e dice che sta dentro.
+   Il rientro e lo stesso dei valori gia stampati (8 px): etichetta e valore partono dalla stessa
+   colonna. padding-top sulla riga perche un valore lungo che andasse a capo fino a riempire il campo
+   non finisca stampato addosso all'etichetta: finche il campo e vuoto — cioe sempre, sul foglio — non
+   costa un pixel, perche la riga allinea il contenuto in basso. */
+.rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field--tall { position: relative; }
+.rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field--tall > .rg-fill-field__label { position: absolute; top: calc(var(--rg-space-1) / 2); left: var(--rg-space-2); margin-bottom: 0; }
+.rg-worksheet-block--compact .rg-worksheet-block__fields > .rg-fill-field--tall > .rg-fill-field__line { padding-top: calc(var(--rg-space-4) + var(--rg-space-1)); }
 @media (max-width: 680px) { .rg-worksheet-block--compact .rg-worksheet-block__fields { grid-template-columns: repeat(auto-fill, minmax(calc(var(--rg-space-24) + var(--rg-space-8)), 1fr)); } }
 /* L'ETICHETTA E PIU GRIGIA DEL TESTO (1.36.0): «le label le farei un po' piu grigie del testo, che va
    bene cosi» (Lorenzo, 2026-09-22). Su un foglio da compilare le cose stampate sono due, non una:
@@ -1363,13 +1385,25 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
    FORMA: due colonne. Operatore e Data sono due dati brevi e stanno affiancati; la nota scavalca
    la fila intera perche l'unica cosa che si scrive a mano per davvero, in frasi, e quella.
    Il piede NON e compatto: la compattazione serve ai dati gia stampati, non allo spazio bianco che
-   deve accogliere una grafia. La nota anzi e piu alta della --tall normale (64 invece di 48, ~17 mm):
+   deve accogliere una grafia. La nota anzi e piu alta della --tall normale (80 invece di 48, ~21 mm):
    sono due righe scritte a mano, non una.
    In stampa non si stacca mai dal blocco che lo precede (rg-utilities.css, @media print): un piede
    in cima alla pagina dopo e la firma di una fase che non si vede. */
 .rg-worksheet-foot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rg-space-2) var(--rg-space-4); margin: 0 0 var(--rg-space-4); }
 .rg-worksheet-foot__note { grid-column: 1 / -1; }
-.rg-worksheet-foot__note > .rg-fill-field__line { min-height: var(--rg-space-16); }
+/* ANCHE QUI L'ETICHETTA STA DENTRO IL RIQUADRO (1.37.0), come nelle note del blocco compatto, e per
+   la stessa ragione: la fascia sopra il riquadro non e spazio da scrivere. Qui pero il riquadro CRESCE,
+   64 → 80 (~21 mm). La nota del piede non promette una riga: ne promette DUE, ed e l'unico campo del
+   foglio in cui si scrive in frasi. L'etichetta dentro occupa ~15 px (12 px, non i 10 del blocco
+   compatto: il piede non si compatta), e il riquadro cresce di un passo intero perche sotto di essa
+   restino i 64 px di prima, cioe le due righe intere. Il conto sulla pagina resta in pari: 80 px di
+   riquadro contro i 64 + 17 di riquadro piu fascia che c'erano.
+   Operatore e Data tengono l'etichetta SOPRA: sono riquadri da 32 px, una firma e una data, e li
+   l'etichetta dentro mangerebbe la riga. Sulla stessa fila due campi brevi etichettati sopra e sotto
+   una nota grande etichettata dentro non si confondono: l'una e una riga, l'altra e un foglietto. */
+.rg-worksheet-foot__note { position: relative; }
+.rg-worksheet-foot__note > .rg-fill-field__label { position: absolute; top: calc(var(--rg-space-1) / 2); left: var(--rg-space-2); margin-bottom: 0; }
+.rg-worksheet-foot__note > .rg-fill-field__line { min-height: calc(var(--rg-space-16) + var(--rg-space-4)); padding: calc(var(--rg-space-4) + var(--rg-space-1)) 0 0 var(--rg-space-2); }
 
 /* Testata di PARTE in linea (proposta 1.23.0). Prima ogni parte apriva una pagina sua, quasi vuota, con
    l'indice delle sue lavorazioni. Ora la parte e una testata di una o due righe che APRE una pagina

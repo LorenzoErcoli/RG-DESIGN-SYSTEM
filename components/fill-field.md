@@ -47,9 +47,21 @@ valore. E nella griglia dei campi la riga si prende tutta l'altezza che avanza, 
 una fila anche quando un valore va a capo. Sempre deciso dal blocco, mai dal campo: vedi
 [I campi in quattro colonne](worksheet-block.md#i-campi-in-quattro-colonne-e-la-sotto-operazione-che-si-vede-1360).
 
+**Sul foglio la nota porta l'etichetta dentro il riquadro** (1.37.0). Solo `--tall`, e solo dentro
+`rg-worksheet-block__fields` o come `rg-worksheet-foot__note`: l'etichetta va in **alto a sinistra**,
+dentro. La fascia sopra il riquadro non è spazio da scrivere e sul foglio era l'ultimo serbatoio
+rimasto (~12 px per riquadro, quattro riquadri per pagina). Il riquadro alto è l'unico che può
+ospitare la propria etichetta senza perdere niente, e per una ragione di forma: **la scrittura
+appoggia sulla base nera**, quindi l'angolo in alto a sinistra è la zona morta del campo. Il riquadro
+resta 48 px e sotto l'etichetta ne restano 35, cioè più dei 32 di una grafia adulta — la riga che il
+campo prometteva resta intera. In un campo da 24 px l'etichetta dentro mangerebbe la scrittura, e lì
+**resta sopra**. Lo decide sempre il contenitore, mai il campo: nei moduli a schermo non cambia
+niente. Vedi [worksheet-block.md § La nota con l'etichetta dentro](worksheet-block.md#la-nota-con-letichetta-dentro-il-riquadro-1370).
+
 **Nel piede del gruppo il campo non si compatta.** Sotto il blocco, dentro
-[`rg-worksheet-foot`](worksheet-foot.md), le righe restano quelle della base e la nota sale a 64 px:
-è l'unico posto in cui si scrive davvero a mano.
+[`rg-worksheet-foot`](worksheet-foot.md), le righe restano quelle della base e la nota sale a 80 px
+(64 fino alla 1.36.0, più la fascia dell'etichetta che ora le sta dentro): è l'unico posto in cui si
+scrive davvero a mano, e le due righe che promette restano due.
 
 ## Uso e limiti
 

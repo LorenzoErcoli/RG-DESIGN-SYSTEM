@@ -996,6 +996,28 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
    E riquadrato di proposito — eccezione dichiarata a "non incorniciare tutto" (regole §6): su
    carta il riquadro e cio che rende il blocco separabile, e non c'e hover a fare quel lavoro. */
 .rg-worksheet-block { margin: 0 0 var(--rg-space-4); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+/* IL FOGLIO E TUTTO IN MAIUSCOLO (1.34.0). «Mi raccomando tutte le scritte devono essere in
+   maiuscolo, anche il lato (davanti e dietro)» (Lorenzo, 2026-09-22). Non e un vezzo grafico: il
+   foglio si legge in reparto, spesso fotocopiato, a un metro dal banco, e il maiuscolo e la forma
+   che regge quella distanza. Le etichette lo erano gia; i VALORI («davanti e dietro», «medio»), i
+   sottotitoli di operazione e la riga del tempo no — e un foglio meta maiuscolo e meta minuscolo
+   si legge come due fogli diversi.
+   QUI E NON NEL DATABASE. I dati arrivano dal gestionale in minuscolo perche li ci stanno bene:
+   urlarli alla fonte vorrebbe dire perdere l'originale e portarsi il maiuscolo dentro ogni altra
+   schermata. text-transform e presentazione — cambia come si stampa, non cosa e scritto.
+   VALE SOLO DENTRO IL FOGLIO: il blocco della fase e il suo piede (che e parte del foglio anche se
+   sta fuori dal riquadro). Fuori — pagina della fase a schermo, anagrafica, liste — i componenti
+   sono altri e restano come sono.
+   ECCEZIONE DICHIARATA alle regole §2 («testi tutti maiuscoli in paragrafi o tabelle dense»), forma
+   §12 — problema: i valori in minuscolo si perdevano in una pagina di etichette maiuscole; ambito:
+   solo la carta, nessuna schermata; durata: finche il foglio resta di carta; responsabile: prodotto
+   RG. Il costo e reale: le due frasi lunghe del foglio si leggono piu lentamente in maiuscolo. Si
+   paga perche sono due, e non e un motivo per portarlo dove le frasi sono molte.
+   UNICA ECCEZIONE ALL'ECCEZIONE, gia dichiarata qui sotto: rg-fill-field__unit. «s», «bar», «°C»,
+   «min» sono simboli di unita e il maiuscolo li cambierebbe di significato (regole §8). LIMITE:
+   un'unita scritta DENTRO il valore («4 (26,1 × 29,3 cm)») il CSS non la distingue dal testo ed
+   esce in maiuscolo; dove conta, l'unita va messa nel suo elemento. */
+.rg-worksheet-block, .rg-worksheet-foot { text-transform: uppercase; }
 .rg-worksheet-block__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-2) var(--rg-space-3); padding: var(--rg-space-3) var(--rg-space-4); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
 .rg-worksheet-block__index { flex: none; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
 /* Livello CONTENITORE: peso medium dichiarato, come rg-card__title (regole §3). */
@@ -1364,6 +1386,28 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block__step + .rg-dept-band > .rg-dept-band__name { padding-block: var(--rg-space-1); }
 .rg-worksheet-block__step + .rg-dept-band > :is(.rg-dept-band__name, .rg-dept-band__note) { outline-width: var(--rg-space-1); }
 .rg-worksheet-block__work { margin: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-tight); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* LA TESTATA E FATTA DI TRE COSE, E SI DEVONO LEGGERE COME TRE (1.34.0). Dal foglio stampato:
+   «nelle testate ci sono un sacco di scritte vicine che creano confusione, le scritte sono forse un
+   po' troppo attaccate» (Lorenzo, 2026-09-22). In testa stanno, dall'alto, il NUMERO DELLA FASE
+   (__step), l'IDENTITA DEL FOGLIO (banda di reparto + «Foglio n / N») e il TITOLO CON IL SUO RUOLO
+   (__work + __role + QR): tre domande diverse — «a che punto sono», «che foglio ho in mano», «cosa
+   devo fare». Erano appiccicate, e il ruolo stava di fianco al titolo separato da una sola barretta:
+   con un titolo lungo andava a capo e finiva addosso al QR.
+   LA TESTATA DIVENTA UNA GRIGLIA a due colonne e due righe: titolo sopra, ruolo sotto, QR a destra
+   su tutte e due le righe. Il ruolo cosi si legge come sottotitolo del titolo — che e cio che e —
+   e non come un'altra voce in fila; e il titolo si prende tutta la larghezza che gli resta, quindi
+   smette di spezzarsi. La barretta a sinistra del ruolo sparisce: serviva a staccarlo dal titolo su
+   una riga, sotto sarebbe un segno che non separa niente.
+   E COSTA ZERO ALTEZZA, che e la ragione per cui si poteva fare: l'altezza della testata la detta
+   il QR (48 px), non il testo, e titolo + ruolo impilati stanno dentro quella misura. Verificato sul
+   fascicolo vero: stesse 20 pagine, stessi 0 gruppi spezzati.
+   L'aggancio e :has(> __work), cioe la testa 1.25: la testa 1.23 (__phase / __part / __meta) resta
+   la fila di flex che era. Un motore che non conosce :has() scarta le quattro regole insieme e la
+   testa torna alla fila di flex della 1.33.0 — piu stretta, non rotta. */
+.rg-worksheet-block__head:has(> .rg-worksheet-block__work) { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; align-items: center; column-gap: var(--rg-space-6); row-gap: 0; }
+.rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-worksheet-block__work { grid-column: 1; grid-row: 1; }
+.rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-worksheet-block__role { grid-column: 1; grid-row: 2; padding-left: 0; border-left: 0; }
+.rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-qr { grid-column: 2; grid-row: 1 / -1; }
 /* SOTTOTITOLO DI OPERAZIONE dentro il corpo («Piazzamento», «Pressatura», «Sabbiatura automatica»):
    leggibile ma leggero — 14, peso regolare, un filetto neutro sopra che separa un'operazione dalla
    precedente. Non e un'etichetta maiuscola ripetuta: quella la si toglie quando la sezione e una sola. */
@@ -1399,7 +1443,10 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-qr--inline { flex-direction: row-reverse; align-items: flex-end; gap: var(--rg-space-2); width: auto; }
 .rg-qr--inline > .rg-qr__img { flex: none; width: calc(var(--rg-space-24) + var(--rg-space-2)); }
 .rg-qr--inline.rg-qr--small > .rg-qr__img { width: calc(var(--rg-space-12) + var(--rg-space-3)); }
-.rg-qr--inline > .rg-qr__caption { max-width: calc(var(--rg-space-24) + var(--rg-space-12)); text-align: right; }
+/* La didascalia di --inline sta su UNA RIGA (1.34.0): --inline esiste per non aggiungere altezza a
+   una testata bassa, e una didascalia di due parole che va a capo perche il posto e stretto quella
+   altezza se la riprende. Se non ci sta, a cedere e l'elemento accanto, non il QR. */
+.rg-qr--inline > .rg-qr__caption { max-width: calc(var(--rg-space-24) + var(--rg-space-12)); text-align: right; white-space: nowrap; }
 
 /* PAGINA DELLA PARTE — la pagina che apre il pezzo nel fascicolo: titolo con la pastiglia e QR, identita del
    prodotto, tutte le parti con questa segnata, le fasi da spuntare. COMPATTA PER COSTRUZIONE (1.26.0): «un

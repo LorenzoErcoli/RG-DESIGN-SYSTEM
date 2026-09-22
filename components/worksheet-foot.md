@@ -29,6 +29,11 @@ mano invece di una.
 
 Non ha varianti di densità: vedi sopra.
 
+**Il piede è parte del foglio**, anche se sta fuori dal riquadro: dalla **1.34.0** dichiara
+`text-transform: uppercase` come il blocco, così un testo stampato qui esce in maiuscolo come tutto
+il resto del foglio. Vedi
+[worksheet-block.md § Tutto in maiuscolo](worksheet-block.md#tutto-in-maiuscolo).
+
 ## Uso e limiti
 
 **Uno per gruppo, non uno per fase.** Nel fascicolo compatto un gruppo di fasi collegate (stesso

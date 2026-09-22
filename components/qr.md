@@ -13,7 +13,7 @@ sistema dal foglio in reparto.
 | --- | --- | --- |
 | `rg-qr` | 104 px (~27,5 mm) di lato | Pagina della parte: si legge da un telefono a braccio teso. |
 | `rg-qr--small` | 60 px (~15,9 mm) di lato | Intestazione di altre pagine, la testata della [pagina della parte](part-sheet.md). |
-| `rg-qr--inline` | (si combina) | Didascalia **a sinistra** del codice, allineata in basso, invece che sotto: il QR non aggiunge altezza a una testata bassa (1.26.0). Nel markup la didascalia resta dopo l'immagine. |
+| `rg-qr--inline` | (si combina) | Didascalia **a sinistra** del codice, allineata in basso, invece che sotto: il QR non aggiunge altezza a una testata bassa (1.26.0). Nel markup la didascalia resta dopo l'immagine. Dalla **1.34.0** la didascalia sta su **una riga sola**: una didascalia di due parole che va a capo perché il posto è stretto si riprende l'altezza che `--inline` esiste per risparmiare. Se non ci sta, a cedere è l'elemento accanto. |
 
 | Elemento | Cosa porta |
 | --- | --- |

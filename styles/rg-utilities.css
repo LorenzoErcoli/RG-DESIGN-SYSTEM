@@ -146,10 +146,18 @@
   .rg-worksheet-block--compact .rg-worksheet-block__body .rg-small { line-height: var(--rg-line-height-technical); }
   /* Testata, riga «Fase n di N» e banda di reparto: meno respiro sopra e sotto, il contenuto non
      cambia. Sulla banda si scende al mezzo passo gia in uso per le densita di stampa — la striscia
-     della trama e la targhetta col nome restano le misure che erano, cala solo l'aria attorno. */
+     della trama e la targhetta col nome restano le misure che erano, cala solo l'aria attorno.
+     RIVISTO NELLA 1.34.0, dopo il foglio stampato: a mezzo passo (2 px, ~0,5 mm) «Fase n di N», la
+     banda e il titolo si toccavano e la testata si leggeva come un blocco unico di scritte. Le tre
+     zone tornano a un passo intero (4 px sopra la riga della fase, 6 px — passo e mezzo — sopra e
+     sotto la banda): ~1,6 mm di bianco fra una zona e l'altra, che e poco per l'occhio e molto per
+     la carta. Costa ~12 px per gruppo di due fasi, ed e tutto quello che il gruppo aveva ancora da
+     spendere: misurato, restano 20 pagine e 0 gruppi spezzati. Lo spazio si aggiunge SOLO qui, fra
+     le zone; dentro le zone e nel corpo la densita della 1.33.0 non si tocca, e alle note non si
+     tocca niente per principio. */
   .rg-worksheet-block--compact .rg-worksheet-block__head { padding-block: var(--rg-space-1); }
-  .rg-worksheet-block--compact .rg-worksheet-block__step { padding-top: calc(var(--rg-space-1) / 2); line-height: var(--rg-line-height-tight); }
-  .rg-worksheet-block--compact .rg-worksheet-block__step + .rg-dept-band { margin-block: calc(var(--rg-space-1) / 2); padding-block: calc(var(--rg-space-1) / 2); }
+  .rg-worksheet-block--compact .rg-worksheet-block__step { padding-top: var(--rg-space-1); line-height: var(--rg-line-height-tight); }
+  .rg-worksheet-block--compact .rg-worksheet-block__step + .rg-dept-band { margin-block: calc(var(--rg-space-1) + var(--rg-space-1) / 2); padding-block: calc(var(--rg-space-1) / 2); }
   .rg-worksheet-block--compact .rg-worksheet-block__step + .rg-dept-band > .rg-dept-band__name { padding-block: calc(var(--rg-space-1) / 2); }
   /* LA TESTATA STA SU UNA RIGA SOLA. Era la perdita piu grossa e la meno visibile: con un titolo lungo
      («SABBIATURA E SOFFIATURA FINALE» piu il ruolo) la riga di flex si riempiva e il QR andava a capo
@@ -157,7 +165,11 @@
      stava gia li accanto. Con nowrap il QR resta al suo posto e, se lo spazio non basta, a cedere e il
      TITOLO, che va a capo fra le sue parole: due righe di titolo costano meno di una riga di QR, e il
      titolo resta intero. min-width: 0 perche altrimenti un titolo non si stringe sotto il suo
-     contenuto minimo e il nowrap non servirebbe a niente. */
+     contenuto minimo e il nowrap non servirebbe a niente.
+     DALLA 1.34.0 la testa 1.25 non e piu una fila di flex ma una griglia (rg-components.css): il QR
+     ha una colonna sua e non puo andare a capo per costruzione, quindi li nowrap non serve piu. La
+     regola resta per la testa 1.23 (__phase / __part / __meta), che flex lo e ancora; min-width: 0
+     serve a tutte e due, perche anche in griglia un titolo lungo si deve poter stringere. */
   .rg-worksheet-block--compact .rg-worksheet-block__head { flex-wrap: nowrap; }
   .rg-worksheet-block--compact .rg-worksheet-block__work { min-width: 0; }
   /* Il QR della fase scende da 60 a 48 px di lato. E l'elemento che DETTA l'altezza della testata, piu

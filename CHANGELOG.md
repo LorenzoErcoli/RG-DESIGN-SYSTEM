@@ -7,6 +7,83 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.34.0 — 2026-09-22
+
+**Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato: cambia **come si
+stampa** un componente che c'era già. Non è una patch perché chi aggiorna il tag e stampa il fascicolo
+**vede il foglio diverso** — in maiuscolo — e questo va saputo prima, non scoperto dopo. Tutto quello
+che sta fuori dal foglio resta identico.
+
+### Le testate si leggono come tre cose, perché tre cose sono
+
+Dal foglio stampato: «nelle testate ci sono un sacco di scritte vicine che creano confusione, le
+scritte sono forse un po' troppo attaccate» (Lorenzo, 2026-09-22). In testa a un blocco ci sono tre
+informazioni che rispondono a tre domande diverse — **a che punto sono** (`__step`, «FASE 2 DI 5»),
+**che foglio ho in mano** (banda di reparto e «Foglio 2 / 15»), **cosa devo fare** (`__work` col suo
+`__role`, e il QR). Stavano a mezzo passo l'una dall'altra, 2 px, ~0,5 mm: sulla carta è *niente*, e
+le tre zone si leggevano come un blocco unico di scritte. Il ruolo, poi, stava **di fianco** al
+titolo staccato da una sola barretta, e con un titolo lungo («SABBIATURA E SOFFIATURA FINALE») il
+titolo andava a capo e finiva addosso al ruolo e al QR.
+
+**La testata diventa una griglia.** Due colonne — testo e QR — e due righe:
+
+    ┌─────────────────────────────┬──────┐
+    │ PRESSATURA                  │      │
+    ├─────────────────────────────┤  QR  │
+    │ PRINCIPALE · CON LA 03      │      │
+    └─────────────────────────────┴──────┘
+
+Il **ruolo scende sotto il titolo** e si legge come sottotitolo, che è quello che è; la **barretta
+sparisce**, perché serviva a staccarlo dal titolo su una riga sola e fra due righe non separerebbe
+niente. Il **titolo si prende tutta la larghezza** che gli resta e smette di spezzarsi. Il **QR ha
+una colonna sua**, alta quanto le due righe: non può andare a capo per costruzione, e la regola
+`nowrap` della 1.33.0 che gli faceva da guardia qui non serve più (resta per la testa 1.23). Si
+aggancia con `:has(> __work)`, cioè alla testa 1.25: chi usa `__phase` / `__part` / `__meta` non vede
+niente cambiare.
+
+**E non costa un millimetro**, che è la ragione per cui si poteva fare senza disfare la 1.33.0:
+l'altezza della testata **la detta il QR** (48 px), non il testo, e titolo più ruolo impilati ci
+stanno dentro. A pagare è solo il bianco fra le zone, che torna a un passo intero: **4 px** sopra la
+riga della fase, **6 px** sopra e sotto la banda. Fanno ~12 px per gruppo di due fasi, ed è
+**esattamente quello che il gruppo aveva libero** dopo la 1.33.0. Chi tocca ancora le spaziature del
+blocco compatto misuri prima di proporre.
+
+### Il foglio è tutto in maiuscolo
+
+«Mi raccomando tutte le scritte devono essere in maiuscolo, anche il lato (davanti e dietro)». Le
+etichette lo erano già; i **valori** no («davanti e dietro», «medio»), e nemmeno i sottotitoli di
+operazione, la riga del tempo per pezzo, le didascalie, le intestazioni di tabella. Un foglio metà
+maiuscolo e metà minuscolo si legge come due fogli diversi.
+
+`rg-worksheet-block` e `rg-worksheet-foot` dichiarano `text-transform: uppercase`, quindi vale per
+**qualunque testo ci finisca**, oggi e domani, senza che chi scrive il markup se ne debba ricordare.
+
+**Nel CSS e non nel database.** I dati arrivano dal gestionale in minuscolo perché lì ci stanno bene:
+urlarli alla fonte vorrebbe dire perdere l'originale e portarsi il maiuscolo dentro ogni altra
+schermata. `text-transform` è presentazione — cambia come si stampa, non cosa è scritto, e chi copia
+il testo dal PDF ritrova le parole com'erano.
+
+**Vale solo dentro il foglio**: il blocco della fase e il suo piede (che è parte del foglio anche se
+sta fuori dal riquadro). La pagina della fase a schermo usa altri componenti e non cambia.
+
+**Unica eccezione, i simboli di unità** (`rg-fill-field__unit`), che dichiaravano già
+`text-transform: none`: «s», «bar», «°C», «min» sono simboli e il maiuscolo li cambierebbe di
+significato (regole §8). **Limite dichiarato:** un'unità scritta *dentro* il valore («4 (26,1 × 29,3
+cm)») il CSS non sa distinguerla dal testo, ed esce in maiuscolo. Dove il simbolo conta, va messo nel
+suo elemento.
+
+### Didascalia del QR in linea su una riga sola
+
+`rg-qr--inline` esiste per non aggiungere altezza a una testata bassa. Con il posto stretto la sua
+didascalia di due parole andava a capo — «Questa» / «fase» — e si riprendeva l'altezza che la
+variante serve a risparmiare. Ora sta su una riga: se non ci sta, a cedere è l'elemento accanto.
+
+### Misura
+
+Stesso fascicolo di prova della 1.33.0 (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli), stesso motore
+(Chrome): **20 pagine prima, 20 dopo**; **0 gruppi spezzati prima, 0 dopo**. Il vincolo della 1.33.0
+— due fasi collegate e il loro piede in una pagina A4, e le note alte — non è stato toccato.
+
 ## 1.33.0 — 2026-09-21
 
 **Minor.** Una classe nuova (`rg-worksheet-foot`), nessuna rimossa o rinominata, nessun token toccato. Chi

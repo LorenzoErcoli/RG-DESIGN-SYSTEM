@@ -50,7 +50,9 @@ un'altra.
   con i numeri scritti come sul foglio (`02`).
 - **Il blocco porta il suo pezzo di graffa**: un filo nero spesso a sinistra dell'etichetta. Nell'elenco
   la graffa unisce le righe; sul foglio i blocchi di un gruppo possono finire su due pagine, quindi
-  ogni blocco dice il gruppo per conto suo.
+  ogni blocco dice il gruppo per conto suo. **Dalla 1.34.0** questo vale per il ruolo *in fila*
+  (testa 1.23): nella testa 1.25 il ruolo sta **sotto** il titolo e la graffa sparisce, perché fra
+  due righe non separerebbe niente — vedi [Testata a tre zone](#testata-a-tre-zone-e-il-foglio-in-maiuscolo-1340).
 - **Niente fondo pieno**: il browser non stampa gli sfondi per default, e un'etichetta invertita
   uscirebbe bianca su bianco. **Niente riquadro**: il riquadro è il segno di `rg-dept-band__name`, e il
   ruolo non deve leggersi come un reparto.
@@ -170,6 +172,10 @@ Dentro la scheda riquadrata, dall'alto:
 **Niente parte e niente identità prodotto nel blocco**: stanno nell'intestazione di pagina, fuori dalla
 scheda (sotto). Quindi `__part` e `__meta` non si usano nella testa nuova; `__role` sì, dopo `__work`.
 
+Dalla **1.34.0** queste tre voci sono **tre zone staccate**, e `__role` si impagina **sotto**
+`__work` invece che di fianco (il markup non cambia): vedi
+[Testata a tre zone](#testata-a-tre-zone-e-il-foglio-in-maiuscolo-1340).
+
 **Grassetto a livello di contenitore**: le regole (§3) vorrebbero 500 per il titolo di un contenitore. Qui è
 700 per richiesta del reparto: la lavorazione è ciò che si cerca sul foglio da un metro. Eccezione dichiarata,
 ambito: il blocco stampato.
@@ -280,6 +286,83 @@ fascicolo si legge, non si stampa, e le misure restano quelle della 1.23.0.
 
 **Misura sul fascicolo di prova** (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli): da **23 pagine a
 20**, e da **3 gruppi spezzati su due pagine a nessuno**.
+
+
+## Testata a tre zone, e il foglio in maiuscolo (1.34.0)
+
+Dal foglio stampato: «nelle testate ci sono un sacco di scritte vicine che creano confusione, le
+scritte sono forse un po' troppo attaccate» e «mi raccomando tutte le scritte devono essere in
+maiuscolo, anche il lato (davanti e dietro)» (Lorenzo, 2026-09-22).
+
+### Le tre zone
+
+In testa a un blocco ci sono **tre informazioni diverse**, e rispondono a tre domande diverse:
+
+| Zona | Cosa dice | Chi la porta |
+| --- | --- | --- |
+| 1 · **numero della fase** | a che punto del percorso sono | `__step` |
+| 2 · **identità del foglio** | che foglio ho in mano | `rg-dept-band` + `__note` («Foglio 2 / 15») |
+| 3 · **titolo e ruolo** | cosa devo fare, e come si lega alle altre | `__work` + `__role` + QR |
+
+Erano una sopra l'altra a mezzo passo di distanza (2 px, ~0,5 mm), e il ruolo stava **di fianco** al
+titolo staccato da una sola barretta: con un titolo lungo il titolo andava a capo e finiva addosso
+al ruolo e al QR. Due cambi:
+
+1. **La testata è una griglia**, non più una fila: due colonne (testo | QR) e due righe (titolo |
+   ruolo). Il **ruolo scende sotto il titolo** e si legge come sottotitolo — che è quello che è — e
+   il titolo si prende tutta la larghezza che gli resta, quindi smette di spezzarsi. Il **QR sta
+   nella sua colonna** e occupa tutte e due le righe: non può andare a capo per costruzione.
+   La barretta a sinistra del ruolo **sparisce**: serviva a staccarlo dal titolo su una riga sola,
+   sotto sarebbe un segno che non separa niente. L'aggancio è `:has(> __work)`, cioè la testa 1.25:
+   la testa 1.23 (`__phase` / `__part` / `__meta`) resta la fila di flex che era.
+2. **Fra una zona e l'altra torna un passo intero di bianco**: 4 px sopra la riga della fase, 6 px
+   (passo e mezzo) sopra e sotto la banda. Sono ~1,6 mm: poco per l'occhio, molto per la carta.
+
+**La griglia non costa altezza**, ed è la ragione per cui si poteva fare senza toccare la
+compattazione: l'altezza della testata **la detta il QR** (48 px), non il testo, e titolo più ruolo
+impilati ci stanno dentro. A pagare è solo il bianco fra le zone, ~12 px per gruppo di due fasi: è
+quanto il gruppo aveva ancora da spendere, e il vincolo della 1.33.0 regge (vedi *Misura*, sotto).
+
+### Tutto in maiuscolo
+
+`rg-worksheet-block` e `rg-worksheet-foot` dichiarano `text-transform: uppercase`. Vale per
+**qualunque testo ci finisca**: i valori già stampati («davanti e dietro», «medio»), i sottotitoli
+di operazione, la riga del tempo per pezzo, le didascalie, le intestazioni di tabella. Le etichette
+lo erano già, e un foglio metà maiuscolo e metà minuscolo si legge come due fogli diversi.
+
+**Nel CSS e non nel database.** I dati arrivano dal gestionale in minuscolo perché lì ci stanno bene:
+urlarli alla fonte vorrebbe dire perdere l'originale e portarsi il maiuscolo dentro ogni altra
+schermata. `text-transform` è presentazione — cambia come si stampa, non cosa è scritto, e chi copia
+il testo dal PDF ritrova le parole com'erano.
+
+**Vale solo dentro il foglio**: il blocco della fase e il suo piede (che è parte del foglio anche se
+sta fuori dal riquadro). Fuori — pagina della fase a schermo, anagrafica, liste — i componenti sono
+altri e non cambiano.
+
+**Unica eccezione: i simboli di unità** (`rg-fill-field__unit`), che dichiarano già
+`text-transform: none`. «s», «bar», «°C», «min» sono simboli, e il maiuscolo li cambierebbe di
+significato (regole §8).
+
+**È un'eccezione dichiarata alle regole** (§2: «testi tutti maiuscoli in paragrafi o tabelle
+dense»; §12 per la forma). *Problema*: il foglio si legge in reparto, in piedi, spesso fotocopiato,
+e i valori in minuscolo dentro una pagina di etichette maiuscole si perdevano — chiesto da Lorenzo,
+2026-09-22, guardando il foglio stampato. *Ambito*: **solo** `rg-worksheet-block` e
+`rg-worksheet-foot`, cioè la carta; nessuna schermata. *Durata*: finché il foglio resta di carta.
+*Responsabile*: prodotto RG. Il costo è reale e va conosciuto: le frasi lunghe del foglio — la riga
+del tempo per pezzo, la nota della fascia d'ambito — in maiuscolo si leggono più lentamente. Sul
+foglio è un prezzo che si paga volentieri perché quelle frasi sono due; **non** è un motivo per
+portare il maiuscolo dove le frasi sono molte.
+
+**Limite dichiarato:** un'unità scritta *dentro* il valore («4 (26,1 × 29,3 cm)») il CSS non sa
+distinguerla dal testo, ed esce in maiuscolo. Dove il simbolo conta, l'unità va messa nel suo
+elemento.
+
+### Misura
+
+Stesso fascicolo di prova (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli), stesso motore (Chrome):
+**20 pagine prima, 20 dopo; 0 gruppi spezzati prima, 0 dopo**. Il margine è però **sottile**: dalla
+1.33.0 il gruppo aveva ~12 px di pagina liberi e la testata li ha presi tutti. Chi tocca ancora le
+spaziature del blocco compatto **misuri** prima di proporre.
 
 
 ## Uso e limiti

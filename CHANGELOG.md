@@ -64,6 +64,43 @@ che non c'erano.
 **0 gruppi di fasi collegate spezzati prima e dopo**. Sullo stress test del solo foglio del ricamo:
 con 18 stop la tabella finisce dentro la pagina, con 19 e con 20 il seguito passa alla pagina dopo.
 
+### La testata prende aria, e non va più a capo
+
+Stessa tabella, seconda osservazione dallo stesso foglio (Lorenzo, 2026-09-22): quelle intestazioni
+sono **parole** — `OPERAZIONE`, `MATERIALE`, `TEMPO` — sopra colonne larghe **quattro caratteri**.
+
+**Aria fra la parola e il filetto.** Con `rg-table--grid` ogni cella ha il suo filetto nero, testata
+compresa, e «STOP» finiva **attaccato alla linea verticale**: due segni neri a contatto, e la parola
+si legge peggio di quanto sia scritta. La testata prende `--rg-space-1` per lato (4 px, 8 in tutto).
+Gli 8 px per lato del corpo sarebbero 16, **metà** di una colonna da quattro cifre; nel corpo restano,
+perché lì è la penna a non dover toccare il filetto.
+
+**Il `nowrap` torna a casa.** `white-space: nowrap` sulle intestazioni di questa tabella stava
+*inline su ogni `<th>`* del template che stampa il foglio; adesso è in `rg-table--hand thead th` e
+l'attributo si può togliere (vedi UPGRADING). Limite dichiarato: con `table-layout: fixed` una testata
+che non ci sta **sborda** invece di andare a capo. È la scelta: un a capo in testata costa l'altezza
+di una riga di stop, mentre una parola che sborda **si accorcia** — «Tempo» è diventato «Tem».
+
+**Il corpo non si tocca, e la testata non scende.** Era la richiesta gemella — *«possiamo anche farle
+con un font un po' più piccolo»* — ed è stata **provata e scartata sulla misura**. `.rg-table th` è
+già a `--rg-font-size-xs`, l'ultimo gradino della scala: per fare un gradino bisognava **alzare il
+corpo** a `--rg-font-size-sm`. Ma su quei 12 px è tarato tutto il foglio — larghezze delle colonne in
+`ch`, nomi dei materiali accorciati a 18 caratteri, i due codici filo uno sotto l'altro dentro la
+riga — e in Chrome su A4, sulla pagina vera del ricamo, il passo di riga passava da **10,58 a
+10,85 mm**: **diciassette stop invece di diciotto**, col diciottesimo da solo sul retro. Uno stop per
+pagina vale più di un gradino tipografico. Un token più piccolo di `xs` non si inventa per un caso
+locale, e la richiesta era una possibilità; i diciotto stop erano una richiesta fatta due volte.
+
+**L'altezza di riga finale resta 10,58 mm** (40 px): nessuna delle due regole della testata la tocca.
+
+### Due stesure, una variante
+
+`rg-table--hand` è stata scritta **due volte**, in parallelo e in due cloni diversi che non si
+vedevano: una prima stesura con l'altezza e l'allineamento (la ragione del componente, misurata su
+carta) e una seconda con le regole della testata, il confronto in vetrina e il manifest. Questa
+versione è la riconciliazione delle due, e **entrambi i commit restano nella storia** del ramo
+`ds/righe-stop-da-scrivere`.
+
 ## 1.37.0 — 2026-09-22
 
 **Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Cambia **come si

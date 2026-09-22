@@ -79,9 +79,21 @@ fasi della pagina della parte si **leggono**: alzarne le righe è carta spesa pe
 nessuno usa. La regola per decidere è una domanda sola: *su questa tabella qualcuno scrive?*
 
 **Cosa cambia dove la classe c'è.** Le righe del `tbody` passano da ~26 px (~7 mm) a **40 px
-(~10,6 mm)**, la testata resta com'era, e i valori già stampati si allineano **in basso** invece che a
-metà cella. Ne entrano **18 per pagina A4**; dalla diciannovesima si va alla pagina dopo con
-l'intestazione della tabella ripetuta.
+(~10,58 mm)** e i valori già stampati si allineano **in basso** invece che a metà cella. La **testata**
+prende 4 px di aria per lato, che la staccano dai filetti verticali, e non va più a capo. Il **corpo
+non cambia misura**: resta quella di `rg-table--compact`, e con essa restano valide le larghezze di
+colonna e le abbreviazioni tarate su di lei. Ne entrano **18 per pagina A4**; dalla diciannovesima si
+va alla pagina dopo con l'intestazione della tabella ripetuta.
+
+**Una parola di testata che sborda si accorcia.** Con `table-layout: fixed` e il `nowrap` non c'è a
+capo: se un'intestazione esce dalla sua colonna, il rimedio è l'abbreviazione nel template («Tempo» →
+«Tem»), non una riga in più di testata — che costerebbe uno stop.
+
+**C'è anche una cosa da togliere.** Se il template metteva `style="white-space: nowrap"` sui `<th>` di
+quella tabella — serviva a non far andare a capo `OPERAZIONE` e `MATERIALE` — adesso lo fa il DS in
+`rg-table--hand thead th`: l'attributo inline si può rimuovere, **dopo** aver salito il pin.
+Nell'ordine: tag, pin del submodule, classe sul markup, poi via l'inline. Toglierlo prima significa
+una testata che va a capo sul prossimo fascicolo stampato.
 
 **Da contare prima di mandare in reparto.** Un foglio con più di 18 stop prende **una facciata in
 più** di prima. Sul fascicolo di prova RG (ricami da 3 stop) le pagine non cambiano — 18 prima e

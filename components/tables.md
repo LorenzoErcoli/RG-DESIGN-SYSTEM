@@ -240,11 +240,36 @@ quello stop si annotano a biro con la macchina in moto.
   il numero dello stop già stampato e il tempo scritto a mano cadono sulla stessa linea invece di
   galleggiare uno a metà cella e l'altro sul filetto. Sopra resta il bianco, che è lo spazio della mano.
 - **La testata non si alza**: su di lei non si scrive.
+- **Il corpo non si tocca**: resta la misura che gli dà `rg-table--compact` (12 px). Su quei 12 px è
+  tarato tutto il foglio — larghezze delle colonne in `ch`, nomi dei materiali accorciati, i due codici
+  filo uno sotto l'altro dentro l'altezza di riga.
+- **Aria fra la parola e il filetto**: `--rg-space-1` per lato nella **sola testata** (4 px, 8 in
+  tutto). Con la griglia «STOP» finiva attaccato alla linea verticale — due segni neri a contatto, e la
+  parola si legge peggio di quanto sia scritta. Gli 8 px per lato del corpo sarebbero 16, **metà** di
+  una colonna da quattro cifre; nel corpo restano, perché lì è la penna a non dover toccare il filetto.
+- **La testata non va a capo**: `white-space: nowrap` è qui, non inline su ogni `<th>` del template che
+  stampa il foglio. **Limite dichiarato**: con `table-layout: fixed` una testata che non ci sta
+  *sborda* invece di andare a capo. È la scelta: un a capo in testata costa l'altezza di **una riga di
+  stop**, mentre una parola che sborda **si accorcia** («Tempo» → «Tem»).
 - **Opt-in, e per una ragione precisa.** Nello stesso fascicolo ci sono tabelle che si *leggono*
   soltanto — la legenda dei coni, le fasi della [pagina della parte](part-sheet.md) — e alzarle tutte
   vorrebbe dire pagare in carta uno spazio che nessuno usa. La classe la mette l'app **sulla tabella
   che si compila, e solo lì**.
 - Vale a schermo come in stampa: l'altezza è una misura fisica della mano, non un fatto della carta.
+
+### Perché la testata non è più piccola del corpo
+
+Era la richiesta gemella («possiamo anche farle con un font un po' più piccolo»), ed è stata
+**provata e scartata sulla misura**. `.rg-table th` è già a `--rg-font-size-xs`, l'ultimo gradino
+della scala: per ottenere un gradino bisognava **alzare il corpo** a `--rg-font-size-sm`. Misurato in
+Chrome su A4, sulla pagina vera del ricamo, il passo di riga passava da **10,58 a 10,85 mm** e i
+diciotto stop diventavano **diciassette**, col diciottesimo da solo sul retro — esattamente quello che
+la variante esiste per evitare. Uno stop per pagina vale più di un gradino tipografico; e un token più
+piccolo di `xs` non si inventa per un caso locale.
+
+Il problema che quella richiesta voleva risolvere — le parole lunghe sopra colonne da quattro
+caratteri — è risolto dalle altre due regole: l'aria laterale e il `nowrap`, più l'abbreviazione
+dell'intestazione dove serve.
 
 ### Quante righe per pagina
 

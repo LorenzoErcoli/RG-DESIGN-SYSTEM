@@ -85,7 +85,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -2799,6 +2799,61 @@ status         VALID</pre></div>
           </div></div>
         </div>
         <p class="specimen-note"><strong>Limite dichiarato, e misurato.</strong> Il piede vorrebbe due cose insieme: non spezzarsi e non staccarsi dal blocco che lo precede. In Chrome — il motore che impagina il fascicolo — le due si escludono: con <code class="rg-mono">break-before: avoid</code> il fragmentatore tiene il piede attaccato al blocco e taglia <em>dentro</em> il piede, e il riquadro della nota esce diviso fra due fogli. Provato a riempimenti crescenti, da 860 a 980 px: con <code class="rg-mono">break-before</code> si spezza sempre, senza resta sempre intero. Fra «il piede scende intero alla pagina dopo» e «la nota esce tagliata a metà» il reparto perde poco nel primo caso e tutto nel secondo: <code class="rg-mono">break-before</code> non si dichiara, e a rendere raro il caso ci pensa la compattazione.</p>
+      </section>
+
+      <section class="specimen-section" id="worksheet-head">
+        <div class="specimen-section__head"><span class="specimen-section__index">44</span><h2>Testata a tre zone, e il foglio tutto in maiuscolo (1.34.0)</h2><p>Dal foglio stampato: «nelle testate ci sono un sacco di scritte vicine che creano confusione». In testa a un blocco ci sono <strong>tre informazioni diverse</strong> — il <strong>numero della fase</strong> (<code class="rg-mono">__step</code>), l’<strong>identità del foglio</strong> (banda di reparto e «Foglio n / N») e il <strong>titolo col suo ruolo</strong> (<code class="rg-mono">__work</code>, <code class="rg-mono">__role</code>, QR) — e si devono leggere come tre. La testata diventa una <strong>griglia</strong>: titolo sopra, <strong>ruolo sotto come sottotitolo</strong> (via la barretta, che sotto non separerebbe niente), QR a destra su tutte e due le righe. Non costa un millimetro: l’altezza della testata la detta il QR, non il testo. Fra le tre zone torna un passo intero di bianco al posto del mezzo passo della 1.33.0. E tutto quello che finisce nel foglio — <code class="rg-mono">rg-worksheet-block</code> e <code class="rg-mono">rg-worksheet-foot</code> — esce <strong>in maiuscolo</strong>: i valori arrivano dal gestionale in minuscolo e non ha senso urlarli alla fonte. Unica eccezione, i <strong>simboli di unità</strong> (<code class="rg-mono">rg-fill-field__unit</code>). Vedi components/worksheet-block.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 · Tre zone: fase, foglio, lavorazione — e i valori in maiuscolo anche se nel dato sono minuscoli</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <p class="rg-worksheet-block__step">Fase 2 di 5</p>
+              <p class="rg-dept-band rg-dept-band--pressatura">
+                <span class="rg-dept-band__name">Reparto Pressatura e soffiatura</span>
+                <span class="rg-dept-band__note">Foglio 2 / 15</span>
+              </p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Pressatura</h3>
+                <span class="rg-worksheet-block__role">Principale · con la 03</span>
+                <figure class="rg-qr rg-qr--small rg-qr--inline">
+                  <div class="rg-qr__img"><svg viewBox="0 0 29 29" role="img" aria-label="QR: apri questa fase in RG"><rect width="29" height="29" fill="white"/><path d="M4 4h7v7h-7zM18 4h7v7h-7zM4 18h7v7h-7z" fill="none" stroke="black"/><path d="M6 6h3v3h-3zM20 6h3v3h-3zM6 20h3v3h-3zM13 4h2v2h-2zM13 8h1v3h-1zM15 13h3v1h-3zM13 13h1v4h-1zM19 15h2v2h-2zM22 19h2v3h-2zM16 20h3v1h-3zM13 22h2v3h-2zM18 23h1v2h-1z"/></svg></div>
+                  <figcaption class="rg-qr__caption">Questa fase</figcaption>
+                </figure>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Pressatura <span class="rg-small rg-u-muted">— due passate, il tempo scritto conta doppio</span></p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Lato del pezzo</span><span class="rg-fill-field__line">davanti e dietro</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">90</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">°C</span></span><span class="rg-fill-field__line">155</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line">0,6</span></div>
+                </div>
+              </div>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">2 · Il blocco che continua, con un titolo lungo: il titolo si prende la riga, il ruolo sta sotto, il QR non viene toccato</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--continued">
+              <p class="rg-worksheet-block__step">Fase 3 di 5</p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Sabbiatura e soffiatura finale</h3>
+                <span class="rg-worksheet-block__role">Collegata · dopo la 02</span>
+                <figure class="rg-qr rg-qr--small rg-qr--inline">
+                  <div class="rg-qr__img"><svg viewBox="0 0 29 29" role="img" aria-label="QR: apri questa fase in RG"><rect width="29" height="29" fill="white"/><path d="M4 4h7v7h-7zM18 4h7v7h-7zM4 18h7v7h-7z" fill="none" stroke="black"/><path d="M6 6h3v3h-3zM20 6h3v3h-3zM6 20h3v3h-3zM13 4h2v2h-2zM13 8h1v3h-1zM15 13h3v1h-3zM13 13h1v4h-1zM19 15h2v2h-2zM22 19h2v3h-2zM16 20h3v1h-3zM13 22h2v3h-2zM18 23h1v2h-1z"/></svg></div>
+                  <figcaption class="rg-qr__caption">Questa fase</figcaption>
+                </figure>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Sabbiatura manuale</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Vetro</span><span class="rg-fill-field__line">medio</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Lato del pezzo</span><span class="rg-fill-field__line">davanti e dietro</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">15</span></div>
+                </div>
+                <p class="rg-small rg-u-mt-2">Tempo per pezzo: sabbiatura manuale 30" + soffiatura 5" = <strong>35"</strong></p>
+              </div>
+            </section>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Il maiuscolo è presentazione, non dato.</strong> Nel sorgente di questa tavola c’è scritto «davanti e dietro», «medio», «Sabbiatura manuale»: il maiuscolo lo fa il CSS, dentro il foglio e solo lì. Chi copia il testo dal PDF ritrova le parole com’erano, e la pagina della fase a schermo — che usa altri componenti — non cambia. <strong>Limite dichiarato:</strong> un’unità scritta <em>dentro</em> il valore («4 (26,1 × 29,3 cm)») il CSS non sa distinguerla dal testo ed esce in maiuscolo; dove il simbolo conta, va messo in <code class="rg-mono">rg-fill-field__unit</code>, che resta minuscolo per definizione.</p>
       </section>
     </main>
   </div>

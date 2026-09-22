@@ -61,6 +61,42 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.34.0 — il foglio di lavorazione esce in maiuscolo
+
+Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. Ma **il foglio
+stampato cambia aspetto**, e per una volta il consumatore se ne accorge subito.
+
+`rg-worksheet-block` e `rg-worksheet-foot` dichiarano `text-transform: uppercase`. Tutto quello che
+sta **dentro** il foglio esce in maiuscolo — i valori già stampati, i sottotitoli di operazione, le
+righe di calcolo, le didascalie, le intestazioni di tabella. Non è un'opzione: è la forma del foglio.
+
+Due cose da controllare nel prodotto:
+
+```bash
+# 1. C'è testo che dentro il foglio DEVE restare minuscolo?
+grep -rn "rg-worksheet-block\|rg-worksheet-foot" --include=*.html .
+```
+
+Il candidato tipico è un **simbolo di unità** («s», «bar», «°C», «min», «cm»). Se sta in
+`rg-fill-field__unit` è già al sicuro — quell'elemento dichiara `text-transform: none`. Se invece è
+scritto *dentro* il valore («4 (26,1 × 29,3 cm)»), il CSS non sa distinguerlo dal testo ed esce in
+maiuscolo: spostarlo nel suo elemento, oppure accettarlo.
+
+```bash
+# 2. Il prodotto forzava già il maiuscolo a monte (filtri |upper, .upper(), dati salvati in caps)?
+grep -rn "|upper\||upper\b\|\.upper()" --include=*.html --include=*.py .
+```
+
+Non è un errore — il risultato è lo stesso — ma diventa **una regola scritta in due posti**. Meglio
+toglierla da monte e lasciare che sia il foglio a decidere come si stampa: il dato resta com'è nel
+database, che è dove serve com'è.
+
+**Se il prodotto stampa un fascicolo compatto:** la testata del blocco si riorganizza (il ruolo
+scende sotto il titolo, il QR ha una colonna sua) e fra le tre zone della testata torna un po' di
+bianco. Il markup non cambia. Sul fascicolo di prova RG il conto delle pagine **non** cambia e i
+gruppi di due fasi restano in una pagina sola, ma il margine è sottile: **ristampare e contare le
+pagine** prima di mandare in reparto.
+
 ### 1.33.0 — il campo a penna cresce invece di sovrapporsi
 
 Nessuna classe rimossa o rinominata, nessun token toccato, nessun markup da cambiare. Un solo punto

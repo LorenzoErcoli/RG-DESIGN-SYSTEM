@@ -40,6 +40,13 @@ aggiungere sul campo: la densità la decide il blocco. In **stampa** (1.33.0) lo
 l'**etichetta** — 10 px, senza stacco sotto — ma non tocca le righe: vedi
 [Compattazione di stampa](worksheet-block.md#compattazione-di-stampa-133).
 
+**Sul foglio l'etichetta è grigia, e i campi di una fila sono alti uguale** (1.36.0). Dentro
+`rg-worksheet-block--compact` e `rg-worksheet-foot`, `rg-fill-field__label` passa a
+`--rg-color-text-secondary` (6,1:1 su bianco): l'etichetta *dice* cosa scrivere, il nero è del
+valore. E nella griglia dei campi la riga si prende tutta l'altezza che avanza, così una fila resta
+una fila anche quando un valore va a capo. Sempre deciso dal blocco, mai dal campo: vedi
+[I campi in quattro colonne](worksheet-block.md#i-campi-in-quattro-colonne-e-la-sotto-operazione-che-si-vede-1360).
+
 **Nel piede del gruppo il campo non si compatta.** Sotto il blocco, dentro
 [`rg-worksheet-foot`](worksheet-foot.md), le righe restano quelle della base e la nota sale a 64 px:
 è l'unico posto in cui si scrive davvero a mano.

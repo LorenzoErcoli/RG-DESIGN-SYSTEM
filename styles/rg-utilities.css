@@ -137,13 +137,24 @@
   /* Fra una fila di campi e l'altra: 4 invece di 8 in verticale. In orizzontale non si tocca, le
      colonne devono restare distinte a colpo d'occhio. */
   .rg-worksheet-block--compact .rg-worksheet-block__fields { gap: var(--rg-space-1) var(--rg-space-3); }
-  /* Sottotitolo di operazione: il filetto sopra fa gia il lavoro di separare, l'aria attorno era
-     tripla (12 sopra, 8 di filetto, 4 sotto) per una riga di 14 px. Diventa 4+4+0 con l'interlinea
-     stretta: ~16 px per operazione, e in un blocco le operazioni sono tre o quattro. */
-  .rg-worksheet-block--compact .rg-worksheet-block__op { margin-block: var(--rg-space-1) 0; padding-top: var(--rg-space-1); line-height: var(--rg-line-height-tight); }
+  /* Sottotitolo di operazione. Fino alla 1.35.0: 4 px di margine, un filetto grigio, 4 px di padding,
+     il titolo, niente sotto — 9 px di stacco spezzati in due da una linea.
+     PIU ARIA FRA LE SOTTO-OPERAZIONI (1.36.0): «lasciamo se possibile poco piu spazio tra le varie
+     sotto operazioni» (Lorenzo, 2026-09-22). Il filetto sparisce (rg-components.css: sul foglio ogni
+     sezione finisce gia con la riga nera della nota) e il suo posto lo prende il bianco: 8 px sopra —
+     un passo intero, il doppio di quelli che c'erano — e 2 px sotto il titolo, che prima toccava le
+     etichette. Il conto: 8+2 contro 4+1+4, cioe 1 px in piu per operazione e un filetto in meno.
+     PERCHE NON DI PIU. Il vincolo e misurato, non estetico: il fascicolo di prova sta in 20 pagine e
+     i gruppi di due fasi collegate in una pagina ciascuno. A 12 px sopra invece di 8 il fascicolo va
+     a 23 pagine e si spezzano tutti e tre i gruppi: su una pagina ci sono quattro sotto-operazioni e
+     ogni passo in piu si moltiplica per quattro. 8 px e cio che la pagina puo pagare. */
+  .rg-worksheet-block--compact .rg-worksheet-block__op { margin-block: var(--rg-space-2) calc(var(--rg-space-1) / 2); line-height: var(--rg-line-height-tight); }
   /* La riga di chiusura del corpo (il calcolo del tempo per pezzo) e testo tecnico di una riga, non
-     prosa: interlinea tecnica invece di quella del testo corrente. */
-  .rg-worksheet-block--compact .rg-worksheet-block__body .rg-small { line-height: var(--rg-line-height-technical); }
+     prosa. Interlinea STRETTA dalla 1.36.0, era tecnica: sono i ~7 px per gruppo con cui si paga
+     l'aria fra le sotto-operazioni qui sopra, e si prendono dove non si scrive — questa riga e un
+     conto gia fatto, non uno spazio da riempire. Se il conto e lungo e va a capo, 1,1 tiene separate
+     le due righe come gia fa per i valori dentro rg-fill-field__line. */
+  .rg-worksheet-block--compact .rg-worksheet-block__body .rg-small { line-height: var(--rg-line-height-tight); }
   /* Testata, riga «Fase n di N» e banda di reparto: meno respiro sopra e sotto, il contenuto non
      cambia. Sulla banda si scende al mezzo passo gia in uso per le densita di stampa — la striscia
      della trama e la targhetta col nome restano le misure che erano, cala solo l'aria attorno.

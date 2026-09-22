@@ -83,7 +83,7 @@ Il fascicolo compatto è fatto di quattro pezzi, che si usano insieme:
 | Cella da compilare `td.rg-fill-field--cell` | 32 px + 8 sopra e sotto | **24 px**, 2 sopra e sotto |
 | Testa · corpo · piede | 12/16 · 16 · 12/16 | **8/12** tutti e tre |
 | Griglia `__fields` | colonne ≥ 132 px, *auto-fit* (tre campi riempiono la pagina) | colonne ≥ **128 px** (~34 mm), *auto-fill*: tre campi restano stretti a sinistra |
-| Banda di reparto | 38 px | **30 px**: la striscia della trama resta 16 px, il margine bianco del nome scende da 4 a 2 |
+| Banda di reparto | 38 px | **30 px**: la striscia della trama resta 16 px e comincia dopo il nome (1.35.0) |
 | Distanza fra blocchi | 16 | 8 |
 
 Le basi delle righe restano **nere** e la trama resta intera: il fascicolo si fotocopia in bianco e nero,
@@ -164,8 +164,8 @@ Dentro la scheda riquadrata, dall'alto:
 
 1. **`__step`**, piccolo: «FASE 1 DI 3» (maiuscolo dal CSS, nel markup in tondo);
 2. **la banda del reparto**, subito dopo: staccata dai bordi con un margine bianco intorno, alta 38 px
-   (30 nel compatto 1.23), targhetta e margine bianco del nome di nuovo a 4. Trama e nome come sempre. La
-   banda si stacca solo se è preceduta da `__step`: è il selettore, non una classe in più;
+   (30 nel compatto 1.23). Trama e nome come sempre, con la trama che **comincia dove finisce il nome**
+   (1.35.0). La banda si stacca solo se è preceduta da `__step`: è il selettore, non una classe in più;
 3. nella testa, **`__work`**: il nome della **lavorazione**, 28 px, **grassetto e maiuscolo** («RICAMO»,
    «PRESSATURA»). È il titolo del blocco.
 

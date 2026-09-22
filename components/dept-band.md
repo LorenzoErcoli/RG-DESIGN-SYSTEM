@@ -59,7 +59,7 @@ assegnare», e si legge come tale.
 
 **Fascia del blocco della fase** (`rg-phase-panel__band`, 1.19.0; **a schermo superata dalla
 1.20.0**: subito sotto le linguette si leggeva come il loro bordo). Resta nel CSS: la trama vi sta sulla
-mezzeria con il margine laterale della testa (`--rg-dept-inset` a 24, 16 sotto i 680 px). **Sul foglio
+mezzeria, comincia dopo l'etichetta e finisce sul padding della testa. **Sul foglio
 stampato la banda resta**, ed è lì che si usa.
 
 Il nome della variante apre con il **lavoro prevalente** del reparto, non con la macchina più
@@ -83,15 +83,9 @@ Non la tessera intera ripetuta: fra due tessere ci sarebbero 4 px di luce in pi�
 leggerebbe come una fila di francobolli invece che come una trama. Accanto, tessera e fascia si
 riconoscono come lo stesso segno (vetrina: *La fascia accanto alla sua tessera*).
 
-**Le estremità.** La larghezza della striscia è **arrotondata al passo** (`round()`): la trama finisce
-sempre con un elemento intero, qualunque sia la larghezza del foglio. La fila di mezzo degli strass ha un
-passo in meno, così finisce intera anche lei. Senza `round()` (browser precedenti) la striscia resta larga
-quanto la fascia: stesso disegno, ultimo elemento tagliato.
-
-**Nome e nota restano sopra**, su targhetta bianca, con **4 px di bianco intorno** (`outline`, che non
-cambia l'altezza): la trama passa sotto l'etichetta e si legge coperta, non tagliata. Limite: accanto al
-margine bianco può restare visibile uno spicchio dell'elemento coperto, perché dove cade dipende dalla
-larghezza del nome.
+**Le estremità.** La striscia è **tagliata all'ultimo passo intero** (`clip-path` con `round()`): la trama
+finisce sempre con un elemento intero, qualunque sia la larghezza del foglio. Senza `round()` (browser
+precedenti) la dichiarazione cade e la striscia resta piena: stesso disegno, ultimo elemento tagliato.
 
 **Perché `repeating-linear-gradient` e non la maschera SVG della tessera.** La scheda si stampa dal
 browser (`window.print`). Provato con `Page.printToPDF` di Chrome e rasterizzato con PDFium (il motore di
@@ -114,6 +108,45 @@ palette: come con le figure precedenti, sono le prime da guardare su una macchin
 **La trama pesa meno di prima.** Le figure 1.21.0 occupavano 24–32 px della fascia; la striscia ne occupa
 16, con 10 px d'aria sopra e sotto. Il nome e il filetto non cambiano; la trama si riconosce per figura,
 non per massa.
+
+## La trama comincia dove finisce il nome (1.35.0)
+
+Dal foglio stampato: *«sistemiamo anche il reparto attaccato alla trama»* (Lorenzo, 2026-09-22). Sulla
+carta il riquadro del nome e la striscia si leggevano **come una macchia sola**.
+
+**La causa non era la distanza, era la sovrapposizione.** Fino alla 1.34.0 la striscia era in posizione
+**assoluta** da un capo all'altro della banda e passava **dietro** la targhetta: a tenerle separate
+restavano il fondo bianco del nome e 4 px di `outline` bianco (2 sul foglio compatto). Due segni che si
+sovrappongono non si separano allargando la luce — e allargarla non si poteva: l'`outline` cresce verso
+l'esterno e avrebbe mangiato il filetto sotto la banda e la riga della fase sopra.
+
+**La striscia diventa un elemento di flusso.** `::after` non è più posizionato: è un **flex item** della
+banda, `flex: 1 1 0`. Parte da solo dove finisce il nome, staccato dal `gap` della banda — **8 px, un
+passo intero** — e arriva al margine destro del contenuto. Niente si sovrappone più a niente, quindi
+**l'`outline` bianco sparisce** e con lui il limite dichiarato nella 1.21.1 (lo spicchio di figura
+visibile accanto al margine bianco).
+
+    ┌──────────────────────┐
+    │ REPARTO PRESSATURA   │ ▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭▭   Foglio 2 / 15
+    └──────────────────────┘
+
+**Una striscia sola, due file.** Le due file sfalsate degli strass stavano su `::before` e `::after`;
+ora stanno sullo stesso elemento, in **due gruppi di strati** (`--rg-dept-trama` e, sotto,
+`--rg-dept-trama-mezzo`), e lo scarto di mezzo passo lo porta il `-pos` della seconda. Le liste di
+`background-size` e `-position` si concatenano e restano allineate anche quando la seconda è vuota.
+
+**Il pavimento di 32 px.** La figura è uno dei tre segnali ridondanti e **non può sparire perché il posto
+è poco**: con un nome lungo e una nota lunga la striscia arriverebbe a zero. `min-width` la tiene larga
+almeno tre o quattro elementi; a cedere è il nome, che va a capo (vetrina: *Quando il posto è poco*).
+
+**`--rg-dept-inset` non c'è più.** Serviva a rimettere alla striscia assoluta il margine laterale che la
+banda aveva già come `padding`, e valeva sempre quanto quel `padding` (8 sul foglio, 24 nella fascia da
+48, 16 sotto i 680 px). Una striscia in flusso sta dentro il padding da sé: la variabile era una
+ripetizione, e una ripetizione che qualcuno può cambiare per metà. Nessuna variante la dichiarava.
+
+**Misurato sul fascicolo di prova** (SNEACKERS NICLA, 3 parti, 11 fasi, 15 fogli, Chrome): **20 pagine
+prima, 20 dopo**; **0 gruppi di fasi collegate spezzati prima, 0 dopo**. L'altezza della banda non cambia
+— la detta il nome (28 px), non la striscia (16) — e l'`outline` non occupava spazio.
 
 ## Uso e limiti
 
@@ -150,7 +183,8 @@ tocca né il bordo alto né il filetto.
 tessera e il suo passo. La variante dichiara `--rg-dept-color` (il filetto e la trama), `--rg-dept-passo`,
 e gli strati `--rg-dept-trama`, `--rg-dept-trama-size`, `--rg-dept-trama-pos` (una fila di pixel = uno
 strato `repeating-linear-gradient(90deg, …)` alto quanto la fila); `--rg-dept-trama-mezzo` (con `-size` e
-`-pos`) solo se una fila è sfalsata di mezzo passo. Il generatore usato per le sette è descritto nel
+`-pos`) solo se una fila è sfalsata di mezzo passo — e lo scarto sta nel `-pos`, che vale
+`calc(var(--rg-dept-passo) / 2)` in orizzontale. Il generatore usato per le sette è descritto nel
 CHANGELOG 1.21.1. `--rg-dept-pattern`, `-size`, `-position` e `-repeat` restano lette dalla regola base per
 compatibilità, ma nessuna variante le usa più.
 

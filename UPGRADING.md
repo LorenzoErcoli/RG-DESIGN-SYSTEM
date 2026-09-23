@@ -61,7 +61,7 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
-### 1.39.0 — il QR si legge
+### 1.40.0 — il QR si legge
 
 Nessuna classe rimossa o rinominata, nessun token toccato, **niente da cambiare nel markup**. Ma due
 cose cambiano da sole appena sale il pin, e vanno **verificate su una stampa vera**.
@@ -80,6 +80,53 @@ testate strette o QR affiancati ad altro, **ricontare le pagine** come da regola
 **La regola da portarsi dietro**: la misura di un QR non è il lato del riquadro, è il **modulo**, e sotto
 ~0,4 mm in stampa il codice smette di farsi leggere. Una URL più lunga ha più moduli e vuole **più
 spazio**: se si allunga l'indirizzo, si allarga il riquadro, non si stringe il modulo.
+### 1.39.0 — la topbar non fa più slittare la pagina sul telefono
+
+Nessuna classe rimossa o rinominata, nessun token toccato. **Salire il pin basta a togliere il
+difetto**: sotto i 680 px nav e azioni scorrono dentro il proprio riquadro e la barra smette di
+portarsi dietro la pagina. Ma quella è una rete di sicurezza, non una forma — a 375 px la nav
+diventa una striscia da ~170 px. **La forma giusta chiede tre righe di HTML**, una volta sola, nel
+template della shell.
+
+**Cosa fare.** Avvolgere `rg-topbar__nav` e `rg-topbar__actions` in `rg-topbar__menu`, e mettere
+**prima** del pannello il controllo che lo apre:
+
+```html
+<header class="rg-topbar rg-topbar--app rg-topbar--sticky">
+  <a class="rg-topbar__brand" href="/">RG</a>
+
+  <details class="rg-topbar__menu-toggle">
+    <summary>Menu</summary>
+  </details>
+
+  <div class="rg-topbar__menu">
+    <nav class="rg-topbar__nav" aria-label="Navigazione principale">…</nav>
+    <div class="rg-topbar__actions">…</div>
+  </div>
+</header>
+```
+
+- **L'ordine non è libero.** Il legame fra controllo e pannello lo fa il selettore `[open] ~`: un
+  pannello messo prima del `<details>`, o annidato dentro di lui, non si apre.
+- **Il `<details>` è vuoto**, e va bene così: il suo `<summary>` è il controllo, il pannello gli sta
+  accanto. Il perché sta in [navigation](components/navigation.md#la-barra-sul-telefono-1390).
+- **L'etichetta la scrive l'app** (`Menu`, `Sezioni`…). Il segno `+`/`−` lo genera il DS.
+- **Non mettere nel pannello quello che deve restare a portata di pollice**: marchio, titolo e
+  un'eventuale azione primaria contestuale restano fuori, sulla barra.
+- Niente JavaScript da aggiungere.
+
+**Cosa verificare dopo.** Con il browser stretto a 375 px, in console:
+
+```js
+document.documentElement.scrollWidth === document.documentElement.clientWidth   // true
+```
+
+Se è `false`, l'elemento che sborda non è più la topbar: cercarlo con
+`[...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth)`.
+
+**Sopra i 680 px non deve cambiare nulla.** Il controllo è `display: none` e il pannello torna una
+riga della barra: nav a sinistra, azioni allineate a destra, barra alta 64 px. Se a schermo largo
+qualcosa si è spostato, il markup non è quello qui sopra.
 
 ### 1.38.0 — la tabella degli stop si scrive a mano
 

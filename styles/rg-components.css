@@ -275,6 +275,91 @@ a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: va
    della topbar sono opache, quindi non serve altro sfondo. Sopra il contenuto, sotto i dialog. */
 .rg-topbar--sticky { position: sticky; top: 0; z-index: var(--rg-z-sticky); }
 @media (max-width: 680px) { .rg-topbar--app { gap: var(--rg-space-4); padding: 0 var(--rg-space-4); } .rg-topbar--app .rg-topbar__back + .rg-topbar__title, .rg-topbar--app .rg-topbar__brand + .rg-topbar__title { padding-inline-start: var(--rg-space-4); } }
+/* ── LA BARRA SUL TELEFONO (1.39.0) ──────────────────────────────────────────────────────────────
+   Difetto MISURATO su rg-product-platform, viewport 375x812, barra completa (marchio, sette voci
+   di nav, azione secondaria, nome utente, esci): documentElement.scrollWidth 597 contro
+   clientWidth 375. Il contenuto (.rg-appshell__main) stava dentro i 375 esatti: sbordava SOLO la
+   barra e, stando nel flusso, si portava dietro TUTTA la pagina — ogni vista dell'applicazione
+   ballava lateralmente sotto il dito. La causa e' in due righe: .rg-topbar e' un flex a riga
+   unica e un figlio flex ha min-width: auto, quindi .rg-topbar__nav (428 px di sole voci) non si
+   comprime e non si spezza. Fino alla 1.38.0 il DS scriveva «su mobile preservare nome prodotto,
+   azione primaria contestuale e accesso al menu» senza dare il pezzo per farlo: qui c'e'.
+
+   DUE RISPOSTE, UNA DENTRO L'ALTRA.
+   1) SENZA TOCCARE IL MARKUP — la rete di sicurezza, vale per ogni app gia' in campo solo salendo
+      il tag. La nav puo' restringersi (min-width: 0) e scorre dentro il proprio riquadro a
+      QUALUNQUE larghezza; sotto i 680 px lo fanno anche le azioni. La barra torna larga quanto lo
+      schermo e la pagina non slitta piu'. Niente sparisce, ma la nav diventa una striscia
+      stretta: e' una rete, non la forma giusta.
+   2) QUANDO IL MARKUP LO PREVEDE — la forma giusta. Nav e azioni stanno dentro .rg-topbar__menu e
+      sotto i 680 px scendono in un pannello che si apre con .rg-topbar__menu-toggle. La barra
+      resta alta --rg-layout-header e il pannello si posa SOPRA il contenuto (position: absolute):
+      non ruba un pixel di altezza, che e' la condizione su uno schermo basso.
+
+   PERCHE' <details>/<summary> E NON UN BOTTONE: nessun JavaScript da scrivere in ogni app, stato
+   aperto/chiuso annunciato dal browser, Invio e Spazio gia' funzionanti, focus nativo — quindi la
+   navigazione resta raggiungibile da tastiera anche a menu chiuso (si tabula sul controllo, si
+   apre, si tabula nelle voci). Stessa scelta di rg-action-menu (1.17.0) e di rg-proposal.
+   PERCHE' IL PANNELLO E' UN FRATELLO DEL <details> E NON UN SUO FIGLIO: un figlio di <details>
+   chiuso e' nascosto dallo user-agent e per rimostrarlo su desktop servirebbe ::details-content,
+   che e' recente; misurato in Chrome, display: contents sul <details> NON lo rimostra. Da fratello
+   il pannello e' un elemento come un altro: su desktop lo mostra una media query normale, e il
+   chrome di ogni scrivania non dipende da una pseudo-classe nuova. Il prezzo e' che il legame fra
+   controllo e pannello lo fa il selettore [open] ~ e non il DOM: il pannello deve stare DOPO il
+   <details>, ed e' scritto nel doc.
+   LIMITE DICHIARATO: senza JavaScript il pannello non si chiude toccando fuori ne' con Esc. Si
+   chiude ritoccando il controllo o, nella pratica, navigando — ogni voce porta a un'altra pagina. */
+.rg-topbar__menu { display: flex; flex: 1 1 auto; min-width: 0; align-items: center; gap: var(--rg-space-6); }
+.rg-topbar__menu-toggle { display: none; }
+/* 1. Rete di sicurezza, PRIMA PARTE: a QUALUNQUE larghezza la nav puo' restringersi e scorre nel
+   proprio riquadro, invece di spingere la barra e con lei la pagina. Non e' solo un fatto di
+   telefoni: con sette voci e tre azioni questa barra chiede 737 px, quindi fra i 681 (dove finisce
+   la forma da telefono) e i 737 la pagina slitterebbe ancora, su un tablet in verticale o su una
+   finestra stretta. Vale per la nav figlia DIRETTA della barra e per quella dentro il pannello a
+   barra larga; sotto i 680 px il pannello la rimette in colonna e le toglie la striscia. Il
+   padding verticale non e' decorativo: un riquadro che scorre
+   ritaglia cio' che esce, e senza quei 4 px si perderebbero la sottolineatura della voce corrente
+   (8 px sotto il testo) e l'anello di focus (3 px fuori dal bordo). Le AZIONI non diventano un
+   riquadro che scorre qui: dentro c'e' spesso un menu a discesa, che verrebbe tagliato. */
+.rg-topbar > .rg-topbar__nav, .rg-topbar__menu > .rg-topbar__nav { min-width: 0; padding-block: var(--rg-space-1); overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+/* E cio' che sta nelle azioni non si accorcia mandando a capo la propria etichetta: «Compilatore
+   schede» su due righe dentro una barra alta 64 non e' un adattamento, e' un difetto. Restando
+   intere, sono le voci a cedere spazio - e loro sanno scorrere. Stessa idea dell'ellissi di
+   __title: la barra non va a capo. */
+.rg-topbar__actions > * { flex: none; white-space: nowrap; }
+@media (max-width: 680px) {
+  /* 1. Rete di sicurezza, SECONDA PARTE: sotto la soglia del telefono non basta la nav - marchio
+     e azioni da soli superano gia' i 375 px - quindi anche le azioni scorrono nel proprio
+     riquadro. Qui un menu a discesa dentro .rg-topbar__actions verrebbe tagliato: e' scritto nel
+     doc, ed e' una ragione in piu' per adottare il pannello. */
+  .rg-topbar > .rg-topbar__actions { min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+  .rg-topbar > .rg-topbar__nav a { display: inline-flex; align-items: center; min-height: calc(var(--rg-space-12) - var(--rg-space-1)); white-space: nowrap; }
+  /* 2. Il pannello. Il <details> e' gia' posizionato dalla barra sticky; una barra non ancorata
+     deve diventare il riferimento dell'assoluto, e la riga e' qualificata per non riscrivere
+     position: sticky a chi ce l'ha. */
+  .rg-topbar:not(.rg-topbar--sticky) { position: relative; }
+  .rg-topbar__menu-toggle { display: block; flex: none; margin-inline-start: auto; }
+  .rg-topbar__menu-toggle > summary { display: inline-flex; align-items: center; gap: var(--rg-space-2); min-height: calc(var(--rg-space-12) - var(--rg-space-1)); padding-inline: var(--rg-space-3); color: inherit; border: var(--rg-border-hairline) var(--rg-border-style) currentColor; border-radius: var(--rg-radius-md); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); list-style: none; cursor: pointer; }
+  .rg-topbar__menu-toggle > summary::-webkit-details-marker { display: none; }
+  /* Stesso segno +/- di rg-disclosure: il DS ha gia' una convenzione per aperto/chiuso e non se
+     ne inventa una seconda. Non e' il solo colore a dirlo. */
+  .rg-topbar__menu-toggle > summary::after { content: "+"; font-family: var(--rg-font-mono); }
+  .rg-topbar__menu-toggle[open] > summary::after { content: "−"; }
+  .rg-topbar__menu { position: absolute; inset-inline: 0; top: 100%; z-index: var(--rg-z-dropdown); display: none; flex-direction: column; align-items: stretch; gap: 0; max-height: calc(100vh - var(--rg-layout-header)); overflow-y: auto; background: var(--rg-color-black); box-shadow: var(--rg-shadow-overlay); }
+  .rg-topbar--app .rg-topbar__menu { background: var(--rg-color-surface-raised); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+  .rg-topbar__menu-toggle[open] ~ .rg-topbar__menu { display: flex; }
+  /* Le voci diventano righe piene da 44 px: sotto i 680 px si tocca, e la regola §11 dice 44 sul
+     dito (1.30.0). Lo stato attivo prende la barretta a sinistra di rg-sidebar-item, in
+     currentColor perche' la stessa riga vale su barra chiara e su barra nera. */
+  /* Nel pannello la nav e' una colonna: si toglie la striscia che scorre, con il suo padding. */
+  .rg-topbar__menu .rg-topbar__nav { flex-direction: column; gap: 0; padding-block: 0; overflow: visible; }
+  .rg-topbar__menu .rg-topbar__nav a { display: flex; align-items: center; min-height: calc(var(--rg-space-12) - var(--rg-space-1)); padding: 0 var(--rg-space-4); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-inline-start: var(--rg-border-strong) var(--rg-border-style) transparent; }
+  .rg-topbar__menu .rg-topbar__nav > a:first-child { border-top: 0; }
+  .rg-topbar__menu .rg-topbar__nav a[aria-current="page"] { border-inline-start-color: currentColor; font-weight: var(--rg-weight-medium); }
+  /* Le azioni chiudono il pannello, staccate dalla nav da un filetto intermedio (visibile sia sul
+     bianco sia sul nero) e a 16 px dai bordi, come in ogni barra (§5). */
+  .rg-topbar__menu .rg-topbar__actions { flex-wrap: wrap; margin-inline-start: 0; padding: var(--rg-space-4); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); }
+}
 /* Anche la sidebar e chrome sollevato (v1.13.0): senza fondo proprio ereditava la pagina, e
    l'hover della voce (neutral-50) sarebbe diventato invisibile sul nuovo fondo neutro. */
 .rg-sidebar { display: flex; flex-direction: column; padding: var(--rg-space-8) var(--rg-space-4) var(--rg-space-6); background: var(--rg-color-surface-raised); border-right: 1px solid var(--rg-color-border-strong); }
@@ -1575,7 +1660,7 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
    la lettura.
    --inline (1.26.0): didascalia A SINISTRA del codice, allineata in basso, invece che sotto: il QR non
    aggiunge altezza a una testata bassa. Nel markup la didascalia resta dopo l'immagine.
-   NIENTE crispEdges SULL'SVG (1.39.0). Il QR inline non e un'immagine a pixel, e un TRACCIATO: chi lo
+   NIENTE crispEdges SULL'SVG (1.40.0). Il QR inline non e un'immagine a pixel, e un TRACCIATO: chi lo
    genera lo disegna come linee orizzontali con stroke-width di UNA unita del viewBox. Sul QR della fase
    (41 moduli in ~13 mm) quel tratto e piu sottile del passo della griglia del dispositivo, e crispEdges
    — che aggancia i bordi del tratto a quella griglia — invece di tenere il nero netto lo fa EVAPORARE.

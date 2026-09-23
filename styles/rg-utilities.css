@@ -190,7 +190,7 @@
      serve a tutte e due, perche anche in griglia un titolo lungo si deve poter stringere. */
   .rg-worksheet-block--compact .rg-worksheet-block__head { flex-wrap: nowrap; }
   .rg-worksheet-block--compact .rg-worksheet-block__work { min-width: 0; }
-  /* IL QR DELLA FASE SALE A 64 px (1.39.0), dopo esserci sceso a 48 nella 1.26.0 per risparmiare 12 px
+  /* IL QR DELLA FASE SALE A 64 px (1.40.0), dopo esserci sceso a 48 nella 1.26.0 per risparmiare 12 px
      di pagina per blocco. Quel risparmio era sbagliato due volte. Primo: la testata NON la detta piu il
      QR — dalla 1.34.0 e una griglia e il QR sta di fianco al titolo, che e l'elemento alto; misurato sul
      fascicolo, a 64 px il foglio del ricamo tiene ancora i suoi 18 stop in una pagina. Secondo, e piu

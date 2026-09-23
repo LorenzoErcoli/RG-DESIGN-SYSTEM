@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RG — la topbar sul telefono</title>
+  <!-- Base RG importata nello stesso ordine richiesto alle applicazioni. Qui NON c'è CSS locale:
+       questa pagina serve a guardare un comportamento che dipende dalla LARGHEZZA DEL VIEWPORT
+       (la soglia dei 680 px), e non si può dimostrare dentro un riquadro di una tavola.
+       Aprirla stretta, o guardarla nella components library dove sta dentro un iframe da 375 px. -->
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="../styles/rg-core.css">
+  <link rel="stylesheet" href="../styles/rg-typography.css">
+  <link rel="stylesheet" href="../styles/rg-components.css">
+  <link rel="stylesheet" href="../styles/rg-layout.css">
+  <link rel="stylesheet" href="../styles/rg-utilities.css">
+</head>
+<body>
+<div class="rg-appshell">
+
+  <header class="rg-topbar rg-topbar--app rg-topbar--sticky">
+    <a class="rg-topbar__brand" href="#">RG</a>
+
+    <!-- Il controllo: un <details> vuoto. Il pannello è suo FRATELLO e sta DOPO di lui,
+         perché il legame lo fa il selettore [open] ~ .rg-topbar__menu. -->
+    <details class="rg-topbar__menu-toggle">
+      <summary>Menu</summary>
+    </details>
+
+    <div class="rg-topbar__menu">
+      <nav class="rg-topbar__nav" aria-label="Navigazione principale">
+        <a href="#" aria-current="page">Prodotti</a>
+        <a href="#">Revisione</a>
+        <a href="#">Materiali</a>
+        <a href="#">Codici</a>
+        <a href="#">Clienti</a>
+        <a href="#">Macchine</a>
+        <a href="#">Costi</a>
+      </nav>
+      <div class="rg-topbar__actions">
+        <a class="rg-button rg-button--secondary rg-button--small" href="#">Compilatore schede</a>
+        <a class="rg-small" href="#">Lorenzo Ercoli</a>
+        <button class="rg-button rg-button--secondary rg-button--small" type="button">Esci</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="rg-appshell__main">
+    <header class="rg-section-header">
+      <div><p class="rg-label">Archivio</p><h1 class="rg-section-header__title">Prodotti</h1></div>
+      <span class="rg-section-header__meta">248 RECORD</span>
+    </header>
+    <dl class="rg-key-value rg-key-value--ruled">
+      <dt>Ultimo import</dt><dd>2026-09-18 14:32</dd>
+      <dt>In revisione</dt><dd>3</dd>
+      <dt>Archivio</dt><dd>server rgproductsuite</dd>
+    </dl>
+    <p class="rg-body">Il contenuto sta dentro la larghezza dello schermo e ci resta anche a menu
+      aperto: il pannello si posa sopra la pagina, non la spinge in basso e non la sposta di lato.</p>
+  </main>
+
+  <footer class="rg-footer-note rg-u-no-print">RG Product Platform · dati interni</footer>
+</div>
+
+<script>
+  /* Solo dimostrazione: con ?aperto la tavola della components library mostra il pannello aperto
+     senza che nessuno debba toccarlo. In un'applicazione non serve nessun JavaScript. */
+  if (location.search.indexOf('aperto') >= 0) {
+    document.querySelector('.rg-topbar__menu-toggle').open = true;
+  }
+</script>
+</body>
+</html>

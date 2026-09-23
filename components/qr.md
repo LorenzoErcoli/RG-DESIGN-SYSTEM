@@ -22,7 +22,7 @@ sistema dal foglio in reparto.
 
 ## Uso e limiti
 
-**Nitido, e senza `crispEdges` (1.39.0).** Sull'SVG il DS dichiara `shape-rendering: geometricPrecision`;
+**Nitido, e senza `crispEdges` (1.40.0).** Sull'SVG il DS dichiara `shape-rendering: geometricPrecision`;
 `image-rendering: pixelated` resta, ma solo sull'`<img>`, dove un QR raster ce l'ha davvero. Generare l'SVG
 con un `viewBox` in moduli (per esempio 29 × 29 per un QR da 21 con la zona di rispetto) e nessuna
 `width`/`height` fissa: la misura la dà il contenitore.
@@ -45,8 +45,8 @@ riquadro con moduli più piccoli.
 | --- | --- | --- | --- |
 | `rg-qr` (pagina della parte) | 104 px (~27,5 mm) | 29 | ~0,95 mm |
 | `rg-qr--small` (testata della pagina della parte) | 60 px (~15,9 mm) | 37 | ~0,43 mm |
-| `rg-qr--small` nel foglio compatto, **dalla 1.39.0** | 64 px (~16,9 mm) | 41 | ~0,41 mm |
-| ~~`rg-qr--small` nel foglio compatto, 1.26.0 → 1.38.0~~ | ~~48 px (~12,7 mm)~~ | 41 | ~~~0,31 mm~~ |
+| `rg-qr--small` nel foglio compatto, **dalla 1.40.0** | 64 px (~16,9 mm) | 41 | ~0,41 mm |
+| ~~`rg-qr--small` nel foglio compatto, 1.26.0 → 1.39.0~~ | ~~48 px (~12,7 mm)~~ | 41 | ~~~0,31 mm~~ |
 
 **La zona di rispetto sta nell'SVG.** Un QR vuole 4 moduli bianchi intorno. Il contenitore non ha bordo né
 padding proprio, perché un filetto attaccato al codice ne disturba la lettura: la zona di rispetto la genera

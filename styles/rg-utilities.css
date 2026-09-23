@@ -190,10 +190,22 @@
      serve a tutte e due, perche anche in griglia un titolo lungo si deve poter stringere. */
   .rg-worksheet-block--compact .rg-worksheet-block__head { flex-wrap: nowrap; }
   .rg-worksheet-block--compact .rg-worksheet-block__work { min-width: 0; }
-  /* Il QR della fase scende da 60 a 48 px di lato. E l'elemento che DETTA l'altezza della testata, piu
-     del titolo: 12 px di pagina per blocco. A 12,7 mm per 41 moduli il modulo resta a ~0,31 mm, cioe
-     leggibile da un telefono a distanza di lettura; sotto questa misura non si va. */
-  .rg-worksheet-block--compact .rg-qr--small > .rg-qr__img { width: var(--rg-space-12); }
+  /* IL QR DELLA FASE SALE A 64 px (1.39.0), dopo esserci sceso a 48 nella 1.26.0 per risparmiare 12 px
+     di pagina per blocco. Quel risparmio era sbagliato due volte. Primo: la testata NON la detta piu il
+     QR — dalla 1.34.0 e una griglia e il QR sta di fianco al titolo, che e l'elemento alto; misurato sul
+     fascicolo, a 64 px il foglio del ricamo tiene ancora i suoi 18 stop in una pagina. Secondo, e piu
+     grave: 48 px per 41 moduli fanno ~0,31 mm per modulo, e su un QR DI FASE non bastano. La URL della
+     fase e piu lunga di quella della parte (ci aggiunge l'id della fase), quindi ha PIU moduli da far
+     stare in MENO spazio — doppia penalita, e in reparto il codice non si leggeva.
+     64 px (~16,9 mm) per 41 moduli fanno ~0,41 mm per modulo: la stessa misura del QR della parte, che
+     in reparto funziona (60 px, 37 moduli, ~0,43 mm). La regola d'ora in poi non e il lato del riquadro
+     ma il MODULO: ~0,4 mm, e da li si ricava il lato quando cambia la lunghezza della URL.
+     Il lato lo prende la scala (--rg-space-16 = 64) e cresce anche il contenitore, ma SOLO se non e
+     --inline: con la sola immagine a 64 dentro un --small da 60 il codice sborderebbe di 4 px, mentre
+     un --inline ha gia width: auto perche deve tenere la didascalia di fianco, e fissarlo a 64 gli
+     toglierebbe il posto dove metterla. */
+  .rg-worksheet-block--compact .rg-qr--small:not(.rg-qr--inline) { width: var(--rg-space-16); }
+  .rg-worksheet-block--compact .rg-qr--small > .rg-qr__img { width: var(--rg-space-16); }
   /* IL BLOCCO CHE CONTINUA: e il secondo di una coppia e non apre niente. Non ha la banda di reparto
      (il reparto e lo stesso, l'ha gia detto il primo) e qui rinuncia anche alla testata in grande:
      titolo a 20 invece di 28, come un titolo di contenitore invece che di pagina. Chi legge e gia

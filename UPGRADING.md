@@ -61,6 +61,26 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.39.0 — il QR si legge
+
+Nessuna classe rimossa o rinominata, nessun token toccato, **niente da cambiare nel markup**. Ma due
+cose cambiano da sole appena sale il pin, e vanno **verificate su una stampa vera**.
+
+**Il QR SVG non ha più `shape-rendering: crispEdges`.** Se il prodotto stampava QR inline e i codici
+uscivano grigi o non si facevano leggere dal telefono, è questo: su un tracciato con `stroke-width` di
+una unità di viewBox, `crispEdges` faceva evaporare il nero (pixel più scuro 217/255 sul PDF a 600 dpi;
+ora 0). Se invece il prodotto usa QR **raster** in un `<img>`, non cambia niente: `image-rendering:
+pixelated` è rimasto lì.
+
+**Il QR della fase nel foglio compatto passa da 48 a 64 px** (~12,7 → ~16,9 mm), cioè da ~0,31 a
+~0,41 mm per modulo. Sul fascicolo RG non costa pagine — la testata è una griglia dalla 1.34.0 e
+l'altezza la detta il titolo, e il foglio del ricamo tiene i suoi 18 stop — ma se un prodotto ha
+testate strette o QR affiancati ad altro, **ricontare le pagine** come da regola della 1.34.0.
+
+**La regola da portarsi dietro**: la misura di un QR non è il lato del riquadro, è il **modulo**, e sotto
+~0,4 mm in stampa il codice smette di farsi leggere. Una URL più lunga ha più moduli e vuole **più
+spazio**: se si allunga l'indirizzo, si allarga il riquadro, non si stringe il modulo.
+
 ### 1.38.0 — la tabella degli stop si scrive a mano
 
 Nessuna classe rimossa o rinominata, nessun token toccato. **Ma è l'unico rilascio recente in cui

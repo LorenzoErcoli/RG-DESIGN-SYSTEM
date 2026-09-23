@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.38.0",
+  "dsVersion": "1.39.0",
   "generated": "2026-09-22",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
@@ -3255,7 +3255,7 @@
       "doc": "components/qr.md",
       "specimenAnchor": "qr",
       "snippet": "<figure class=\"rg-qr\">\n  <div class=\"rg-qr__img\"><svg viewBox=\"0 0 29 29\" role=\"img\" aria-label=\"QR: apri la parte in RG\"><!-- moduli --></svg></div>\n  <figcaption class=\"rg-qr__caption\">Apri la parte in RG</figcaption>\n</figure>",
-      "notes": "shape-rendering crispEdges sull SVG, image-rendering pixelated su img. Zona di rispetto (4 moduli) dentro l SVG, il contenitore non ha bordo. Nero su bianco, niente logo. SVG con role=img e aria-label. Nell intestazione di pagina il QR lo mette l app sul PDF (16 mm). 1.26.0: rg-qr--inline mette la didascalia a sinistra del codice, allineata in basso: il QR non aggiunge altezza a una testata bassa. 1.34.0: la didascalia di --inline sta su UNA RIGA (white-space: nowrap) - una didascalia di due parole che va a capo perche il posto e stretto si riprende proprio l'altezza che --inline esiste per risparmiare; se non ci sta, a cedere e l'elemento accanto, non il QR.",
+      "notes": "shape-rendering geometricPrecision sull SVG (DALLA 1.39.0; prima era crispEdges), image-rendering pixelated solo su img. Zona di rispetto (4 moduli) dentro l SVG, il contenitore non ha bordo. Nero su bianco, niente logo. SVG con role=img e aria-label. Nell intestazione di pagina il QR lo mette l app sul PDF (16 mm). 1.26.0: rg-qr--inline mette la didascalia a sinistra del codice, allineata in basso: il QR non aggiunge altezza a una testata bassa. 1.34.0: la didascalia di --inline sta su UNA RIGA (white-space: nowrap) - una didascalia di due parole che va a capo perche il posto e stretto si riprende proprio l'altezza che --inline esiste per risparmiare; se non ci sta, a cedere e l'elemento accanto, non il QR. 1.39.0 - IL QR STAMPATO NON SI LEGGEVA, due cause e due rimedi. (1) VIA crispEdges DALL SVG: il QR inline non e un raster ma un TRACCIATO, disegnato come linee orizzontali con stroke-width di UNA unita del viewBox; su un QR di fase (41 moduli in ~13 mm) quel tratto e piu sottile del passo della griglia del dispositivo e crispEdges, agganciando i bordi alla griglia, fa EVAPORARE il nero. Misura sul PDF del fascicolo a 600 dpi, riquadro del solo QR: con crispEdges il pixel piu scuro era 217/255 e nessuno sotto 128 (una velatura grigia, non un codice); con geometricPrecision il piu scuro e 0 e la copertura scura e il 29%. Stessa lezione gia imparata su rg-dept-mark, dove crispEdges storceva tondi e croci: sui tracciati fini si dichiara la precisione geometrica. image-rendering: pixelated resta ma solo sull img. (2) IL QR DELLA FASE NEL FOGLIO COMPATTO PASSA DA 48 A 64 px (rg-utilities.css): 48 px per 41 moduli fanno ~0,31 mm per modulo, e la URL della fase e piu lunga di quella della parte (ci aggiunge l id della fase), quindi piu moduli in meno spazio - doppia penalita. 64 px (~16,9 mm, --rg-space-16) danno ~0,41 mm per modulo, come il QR della parte che in reparto funziona (60 px, 37 moduli, ~0,43 mm). LA REGOLA NON E IL LATO MA IL MODULO: ~0,4 mm, e da li si ricava il lato quando cambia la lunghezza della URL. Non costa pagina: dalla 1.34.0 la testata del blocco compatto e una griglia e l altezza la detta il titolo, non il QR - misurato, il foglio del ricamo tiene ancora 18 stop. Nel compatto cresce anche il contenitore, ma solo se non e --inline (un --inline ha width auto perche tiene la didascalia di fianco).",
       "keywords": [
         "qr",
         "qr code",
@@ -3268,7 +3268,22 @@
         "codice a barre",
         "scan",
         "stampa",
-        "print"
+        "print",
+        "qr illeggibile",
+        "qr sbiadito",
+        "qr grigio",
+        "qr non si legge",
+        "qr stampato",
+        "shape-rendering",
+        "crispEdges",
+        "geometricPrecision",
+        "dimensione del modulo",
+        "modulo qr",
+        "mm per modulo",
+        "qr della fase",
+        "qr troppo piccolo",
+        "nitidezza",
+        "rendering svg"
       ],
       "variantsSince": {
         "rg-qr--inline": "1.26.0"

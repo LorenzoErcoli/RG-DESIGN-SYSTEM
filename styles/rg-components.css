@@ -1570,15 +1570,27 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-fill-field--check { display: inline-block; box-sizing: border-box; width: calc(var(--rg-space-4) + var(--rg-space-1)); height: calc(var(--rg-space-4) + var(--rg-space-1)); vertical-align: middle; background: var(--rg-color-white); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
 
 /* QR CODE — il contenitore; l'immagine la genera l'app (SVG inline). Quadrato, dimensionato dal DS:
-   104 px (~27,5 mm) di base, 60 px (~15,9 mm) con --small per l'intestazione. shape-rendering: crispEdges
-   tiene i moduli netti in stampa e a schermo. La zona di rispetto (4 moduli) sta NELL'SVG: il contenitore
-   non ha bordo, perche un bordo attaccato al codice ne disturba la lettura.
+   104 px (~27,5 mm) di base, 60 px (~15,9 mm) con --small per l'intestazione. La zona di rispetto
+   (4 moduli) sta NELL'SVG: il contenitore non ha bordo, perche un bordo attaccato al codice ne disturba
+   la lettura.
    --inline (1.26.0): didascalia A SINISTRA del codice, allineata in basso, invece che sotto: il QR non
-   aggiunge altezza a una testata bassa. Nel markup la didascalia resta dopo l'immagine. */
+   aggiunge altezza a una testata bassa. Nel markup la didascalia resta dopo l'immagine.
+   NIENTE crispEdges SULL'SVG (1.39.0). Il QR inline non e un'immagine a pixel, e un TRACCIATO: chi lo
+   genera lo disegna come linee orizzontali con stroke-width di UNA unita del viewBox. Sul QR della fase
+   (41 moduli in ~13 mm) quel tratto e piu sottile del passo della griglia del dispositivo, e crispEdges
+   — che aggancia i bordi del tratto a quella griglia — invece di tenere il nero netto lo fa EVAPORARE.
+   Misurato sul PDF del fascicolo a 600 dpi, riquadro del solo QR: con crispEdges il pixel piu scuro di
+   tutto il codice era 217 su 255 e nessuno scendeva sotto 128 — non un QR sbiadito, una velatura
+   grigia; con geometricPrecision il piu scuro e 0 e la copertura scura e il 29%. E la stessa lezione di
+   rg-dept-mark, dove crispEdges storceva tondi e croci: su un tracciato fine si dichiara la precisione
+   geometrica e si lascia che sia l'antialiasing a fare il bordo. Su un QR RASTER il problema non c'e:
+   image-rendering: pixelated resta, ma sull'<img>, dove serve. */
 .rg-qr { display: inline-flex; flex-direction: column; align-items: center; gap: var(--rg-space-1); width: calc(var(--rg-space-24) + var(--rg-space-2)); margin: 0; }
 .rg-qr--small { width: calc(var(--rg-space-12) + var(--rg-space-3)); }
 .rg-qr__img { display: block; width: 100%; aspect-ratio: 1 / 1; background: var(--rg-color-white); }
-.rg-qr__img > svg, .rg-qr__img > img { display: block; width: 100%; height: 100%; shape-rendering: crispEdges; image-rendering: pixelated; }
+.rg-qr__img > :is(svg, img) { display: block; width: 100%; height: 100%; }
+.rg-qr__img > svg { shape-rendering: geometricPrecision; }
+.rg-qr__img > img { image-rendering: pixelated; }
 .rg-qr__caption { color: var(--rg-color-text-label); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); text-align: center; }
 .rg-qr--inline { flex-direction: row-reverse; align-items: flex-end; gap: var(--rg-space-2); width: auto; }
 .rg-qr--inline > .rg-qr__img { flex: none; width: calc(var(--rg-space-24) + var(--rg-space-2)); }

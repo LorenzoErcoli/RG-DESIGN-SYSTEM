@@ -7,6 +7,53 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.40.0 — 2026-09-23
+
+**Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Ma **il QR stampato
+cambia**: chi aggiorna il pin e ristampa il fascicolo trova un codice che si legge e un QR di fase più grande
+(vedi [UPGRADING](UPGRADING.md#1400--il-qr-si-legge)).
+
+### Il QR della fase, sulla carta, non c'era
+
+Non era sbiadito: **non c'era**. Misurato in Chrome headless sul PDF del fascicolo vero, renderizzato a
+600 dpi e ritagliato sul riquadro del solo QR: il pixel **più scuro** di tutto il codice era **217 su 255**, e
+nessun pixel scendeva sotto 128. Al posto di un codice, una velatura grigia. Un telefono lì sopra non aggancia
+niente.
+
+La causa era una riga del DS: `shape-rendering: crispEdges` su `.rg-qr__img > svg`.
+
+**Un QR inline non è un'immagine a pixel, è un tracciato.** Le librerie comuni lo disegnano come linee
+orizzontali con `stroke-width` di **una unità del viewBox**: sul QR della fase — viewBox da 41 moduli reso in
+~13 mm — quel tratto è **più sottile del passo della griglia del dispositivo**. `crispEdges` aggancia i bordi
+del tratto a quella griglia, e su un tratto così fine il nero non si arrotonda: **evapora**. Su un `<img>`
+raster `crispEdges` aiuta; su un tracciato di questa finezza lo distrugge.
+
+Ora l'SVG dichiara `shape-rendering: geometricPrecision` — stesso riquadro, stessa misura: pixel più scuro
+**0**, copertura scura **29%**, codice nitido e quadrato. `image-rendering: pixelated` resta, ma sull'`<img>`,
+dove un raster c'è davvero. È la **stessa lezione già imparata** con `rg-dept-mark`, dove `crispEdges`
+trasformava i tondi in trifogli e le croci si storcevano: sui tracciati fini si dichiara la precisione
+geometrica e il bordo lo fa l'antialiasing. Al QR non era stata applicata.
+
+Il QR della **parte** si salvava per un soffio, ed è il motivo per cui il problema poteva sembrare un
+capriccio del telefono: è più grande e la sua URL è più corta.
+
+### E il QR della fase era anche troppo piccolo
+
+Seconda causa, indipendente dalla prima. Nella 1.26.0 il QR del foglio compatto era sceso da 60 a **48 px**
+per risparmiare 12 px di pagina per blocco. Ma 48 px per 41 moduli fanno **~0,31 mm per modulo**, mentre il QR
+della parte — quello che in reparto funziona — sta a **~0,43 mm**. E la URL della fase è **più lunga** di
+quella della parte, perché ci aggiunge l'id della fase: **più moduli da far stare in meno spazio**, doppia
+penalità.
+
+Il QR della fase passa a **64 px** (`--rg-space-16`, ~16,9 mm): **~0,41 mm per modulo**, la stessa misura di
+quello della parte.
+
+**E non costa pagina.** Il risparmio della 1.26.0 non serve più: dalla **1.34.0** la testata del blocco
+compatto è una *griglia*, il QR ha una colonna sua e l'altezza la detta il **titolo**. Misurato sul fascicolo,
+il foglio del ricamo tiene ancora i suoi **18 stop in una pagina**.
+
+**La regola d'ora in poi è il modulo, non il lato**: ~0,4 mm, e da lì si ricava il lato quando cambia la
+lunghezza della URL. Una URL più lunga vuole **più spazio**, non lo stesso riquadro con moduli più piccoli.
 ## 1.39.0 — 2026-09-22
 
 **Minor.** Due classi **nuove** e additive, `rg-topbar__menu` e `rg-topbar__menu-toggle`; nessuna

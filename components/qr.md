@@ -22,10 +22,31 @@ sistema dal foglio in reparto.
 
 ## Uso e limiti
 
-**Nitido.** Sull'SVG il DS mette `shape-rendering: crispEdges` (e `image-rendering: pixelated` su un
-`<img>`): i moduli restano quadrati pieni, senza bordi sfumati, a schermo e in stampa. Generare l'SVG con un
-`viewBox` in moduli (per esempio 29 × 29 per un QR da 21 con la zona di rispetto) e nessuna `width`/`height`
-fissa: la misura la dà il contenitore.
+**Nitido, e senza `crispEdges` (1.40.0).** Sull'SVG il DS dichiara `shape-rendering: geometricPrecision`;
+`image-rendering: pixelated` resta, ma solo sull'`<img>`, dove un QR raster ce l'ha davvero. Generare l'SVG
+con un `viewBox` in moduli (per esempio 29 × 29 per un QR da 21 con la zona di rispetto) e nessuna
+`width`/`height` fissa: la misura la dà il contenitore.
+
+> **Perché `crispEdges` faceva sparire il codice.** Un QR inline non è un'immagine a pixel, è un
+> **tracciato**: le librerie comuni lo disegnano come linee orizzontali con `stroke-width` di **una unità del
+> viewBox**. Su un QR da 41 moduli in ~13 mm quel tratto è più sottile del passo della griglia del
+> dispositivo, e `crispEdges` — che aggancia i bordi del tratto a quella griglia — invece di tenere il nero
+> netto lo fa **evaporare**. Misurato sul PDF del fascicolo a 600 dpi, sul riquadro del solo QR: con
+> `crispEdges` il pixel più scuro di tutto il codice era **217 su 255** e nessuno scendeva sotto 128 — non un
+> QR sbiadito, una velatura grigia. Con `geometricPrecision`: pixel più scuro **0**, copertura scura **29%**,
+> codice nitido. È la stessa lezione di [dept-mark](dept-mark.md), dove `crispEdges` storceva tondi e croci.
+
+**La misura che conta è il modulo, non il lato.** Sotto **~0,4 mm per modulo** un QR stampato smette di farsi
+leggere comodamente da un telefono in reparto. Il lato si ricava da lì — `moduli × 0,4 mm`, dove i moduli sono
+quelli dei dati **più gli 8 della zona di rispetto** — e una URL più lunga vuole **più spazio**, non lo stesso
+riquadro con moduli più piccoli.
+
+| Dove | Lato | Moduli | Modulo |
+| --- | --- | --- | --- |
+| `rg-qr` (pagina della parte) | 104 px (~27,5 mm) | 29 | ~0,95 mm |
+| `rg-qr--small` (testata della pagina della parte) | 60 px (~15,9 mm) | 37 | ~0,43 mm |
+| `rg-qr--small` nel foglio compatto, **dalla 1.40.0** | 64 px (~16,9 mm) | 41 | ~0,41 mm |
+| ~~`rg-qr--small` nel foglio compatto, 1.26.0 → 1.39.0~~ | ~~48 px (~12,7 mm)~~ | 41 | ~~~0,31 mm~~ |
 
 **La zona di rispetto sta nell'SVG.** Un QR vuole 4 moduli bianchi intorno. Il contenitore non ha bordo né
 padding proprio, perché un filetto attaccato al codice ne disturba la lettura: la zona di rispetto la genera

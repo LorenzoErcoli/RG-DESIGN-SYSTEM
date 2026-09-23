@@ -48,6 +48,19 @@ riquadro con moduli più piccoli.
 | `rg-qr--small` nel foglio compatto, **dalla 1.40.0** | 64 px (~16,9 mm) | 41 | ~0,41 mm |
 | ~~`rg-qr--small` nel foglio compatto, 1.26.0 → 1.39.0~~ | ~~48 px (~12,7 mm)~~ | 41 | ~~~0,31 mm~~ |
 
+**Quanto costa il QR grande, e perché si tiene (1.40.1).** Sul foglio del ricamo il codice a 64 px pesa
+**~4 mm**. La 1.40.0 diceva che non costava niente e che il foglio teneva «18 stop»: era falso in tutte e
+due le parti. Gli stop in una pagina, a grandezza vera, sono **17**; i 18 venivano da un render in cui il
+foglio sforava in larghezza e Chrome rimpiccioliva tutta la pagina del ~5% — un errore di misura, non di
+CSS (vedi [la checklist di verifica, §11](../agent/verify-checklist.md)). Mancano ~7 mm al diciottesimo
+stop e il QR ne spiega 4: **non è il solo colpevole, e non si rimpicciolisce**. Fra un codice che si legge
+e uno stop in più sulla stessa facciata, in reparto vale di più il codice — il diciottesimo va sul retro,
+dove il foglio si stampa comunque fronte-retro.
+
+> **Il QR come strumento di misura.** Proprio perché il suo lato è dichiarato qui, un `rg-qr` è il modo
+> più veloce per accorgersi che una pagina è stata scalata: se `rg-qr--small` nel foglio compatto misura
+> ~16,0 mm invece di ~16,9, quella pagina è al 95% e ogni conteggio di righe fatto sopra non vale.
+
 **La zona di rispetto sta nell'SVG.** Un QR vuole 4 moduli bianchi intorno. Il contenitore non ha bordo né
 padding proprio, perché un filetto attaccato al codice ne disturba la lettura: la zona di rispetto la genera
 l'app dentro l'immagine (`border=4` nelle librerie comuni). Un QR da 21 moduli + 8 di rispetto su 27,5 mm dà

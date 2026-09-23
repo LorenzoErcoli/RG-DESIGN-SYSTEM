@@ -73,13 +73,21 @@ ora 0). Se invece il prodotto usa QR **raster** in un `<img>`, non cambia niente
 pixelated` è rimasto lì.
 
 **Il QR della fase nel foglio compatto passa da 48 a 64 px** (~12,7 → ~16,9 mm), cioè da ~0,31 a
-~0,41 mm per modulo. Sul fascicolo RG non costa pagine — la testata è una griglia dalla 1.34.0 e
-l'altezza la detta il titolo, e il foglio del ricamo tiene i suoi 18 stop — ma se un prodotto ha
-testate strette o QR affiancati ad altro, **ricontare le pagine** come da regola della 1.34.0.
+~0,41 mm per modulo. La testata non si alza per questo — è una griglia dalla 1.34.0 e l'altezza la
+detta il titolo — ma il QR più grande **pesa lo stesso ~4 mm** sul foglio, e su una pagina già piena
+quei millimetri si vedono: **ricontare le pagine**, come da regola della 1.34.0.
+
+> **Corretto nella 1.40.1.** Qui c'era scritto che il foglio del ricamo teneva «i suoi 18 stop». Sono
+> **17**. I 18 venivano da un render in cui il foglio sforava in larghezza e Chrome rimpiccioliva
+> tutta la pagina del ~5%, in silenzio. Il QR grande costa ~4 mm dei ~7 che mancano al diciottesimo:
+> non è il solo colpevole e **non va rimpicciolito** — fra un codice che si legge e uno stop in più, in
+> reparto vale di più il codice, e il diciottesimo va sul retro (Lorenzo, 2026-09-23). Prima di contare
+> righe per pagina, vedi la §11 di `agent/verify-checklist.md`.
 
 **La regola da portarsi dietro**: la misura di un QR non è il lato del riquadro, è il **modulo**, e sotto
 ~0,4 mm in stampa il codice smette di farsi leggere. Una URL più lunga ha più moduli e vuole **più
 spazio**: se si allunga l'indirizzo, si allarga il riquadro, non si stringe il modulo.
+
 ### 1.39.0 — la topbar non fa più slittare la pagina sul telefono
 
 Nessuna classe rimossa o rinominata, nessun token toccato. **Salire il pin basta a togliere il
@@ -149,8 +157,9 @@ nessuno usa. La regola per decidere è una domanda sola: *su questa tabella qual
 (~10,58 mm)** e i valori già stampati si allineano **in basso** invece che a metà cella. La **testata**
 prende 4 px di aria per lato, che la staccano dai filetti verticali, e non va più a capo. Il **corpo
 non cambia misura**: resta quella di `rg-table--compact`, e con essa restano valide le larghezze di
-colonna e le abbreviazioni tarate su di lei. Ne entrano **18 per pagina A4**; dalla diciannovesima si
-va alla pagina dopo con l'intestazione della tabella ripetuta.
+colonna e le abbreviazioni tarate su di lei. Ne entrano **17 per pagina A4** (la 1.38.0 diceva 18: era
+un render scalato, vedi 1.40.1); dalla diciottesima si va alla pagina dopo con l'intestazione della
+tabella ripetuta.
 
 **Una parola di testata che sborda si accorcia.** Con `table-layout: fixed` e il `nowrap` non c'è a
 capo: se un'intestazione esce dalla sua colonna, il rimedio è l'abbreviazione nel template («Tempo» →
@@ -162,7 +171,7 @@ quella tabella — serviva a non far andare a capo `OPERAZIONE` e `MATERIALE` �
 Nell'ordine: tag, pin del submodule, classe sul markup, poi via l'inline. Toglierlo prima significa
 una testata che va a capo sul prossimo fascicolo stampato.
 
-**Da contare prima di mandare in reparto.** Un foglio con più di 18 stop prende **una facciata in
+**Da contare prima di mandare in reparto.** Un foglio con più di 17 stop prende **una facciata in
 più** di prima. Sul fascicolo di prova RG (ricami da 3 stop) le pagine non cambiano — 18 prima e
 dopo, 0 gruppi di fasi collegate spezzati — ma un prodotto con ricami lunghi va ristampato e contato.
 Vale la regola della 1.34.0.

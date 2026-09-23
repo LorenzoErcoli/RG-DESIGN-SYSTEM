@@ -262,9 +262,9 @@ quello stop si annotano a biro con la macchina in moto.
 Era la richiesta gemella («possiamo anche farle con un font un po' più piccolo»), ed è stata
 **provata e scartata sulla misura**. `.rg-table th` è già a `--rg-font-size-xs`, l'ultimo gradino
 della scala: per ottenere un gradino bisognava **alzare il corpo** a `--rg-font-size-sm`. Misurato in
-Chrome su A4, sulla pagina vera del ricamo, il passo di riga passava da **10,58 a 10,85 mm** e i
-diciotto stop diventavano **diciassette**, col diciottesimo da solo sul retro — esattamente quello che
-la variante esiste per evitare. Uno stop per pagina vale più di un gradino tipografico; e un token più
+Chrome su A4, sulla pagina vera del ricamo, il passo di riga passava da **10,58 a 10,85 mm** e la
+pagina **perdeva uno stop**, che finiva da solo sul retro — esattamente quello che la variante esiste per
+evitare. Uno stop per pagina vale più di un gradino tipografico; e un token più
 piccolo di `xs` non si inventa per un caso locale.
 
 Il problema che quella richiesta voleva risolvere — le parole lunghe sopra colonne da quattro
@@ -273,14 +273,23 @@ dell'intestazione dove serve.
 
 ### Quante righe per pagina
 
-Diciotto, ed è un numero **misurato**, non una regola: il CSS non sa contare le righe. Su A4 con
-intestazione di pagina (`rg-u-print-a4--head`, margini 30/12 mm) e la testata del foglio del ricamo
-sopra la tabella, per il corpo restano ~194 mm: **18 righe da 10,6 mm ne occupano 190 e la
-diciannovesima non entra**. Il resto passa alla pagina dopo con l'intestazione ripetuta (la regola è
-di `rg-worksheet-block--long`, in `rg-utilities.css`) — il foglio si stampa fronte-retro e il
-diciannovesimo stop sta dietro.
+**Diciassette** — e la storia di questo numero vale più del numero stesso (vedi
+[la checklist di verifica, §11](../agent/verify-checklist.md)).
 
-**Limite dichiarato**: quel 18 dipende da quanto c'è **sopra** la tabella. Una fase con una riga di
+Il CSS non sa contare le righe: quante ne entrano è una **misura**, e va presa su una pagina sana. Su A4
+con intestazione di pagina (`rg-u-print-a4--head`, margini 30/12 mm) e la testata del foglio del ricamo
+sopra la tabella, per il corpo restano **~184 mm**: 17 righe da 10,58 mm ne occupano ~180, e alla
+diciottesima mancano ~6 mm. Il resto passa alla pagina dopo con l'intestazione ripetuta (la regola è di
+`rg-worksheet-block--long`, in `rg-utilities.css`) — il foglio si stampa fronte-retro e il diciottesimo
+stop sta dietro.
+
+> **Fino alla 1.40.0 qui c'era scritto «diciotto», con ~194 mm di spazio.** Era anche il numero
+> *chiesto*, ed è il motivo per cui è passato senza che nessuno lo mettesse in dubbio: tornava. Ma il
+> foglio degli stop sforava in **larghezza**, e Chrome in stampa rimpiccioliva in silenzio l'intera
+> pagina del ~5% — compresi i millimetri con cui si faceva il conto. A grandezza vera sono diciassette.
+> Corretto nella **1.40.1**.
+
+**Limite dichiarato**: quel numero dipende da quanto c'è **sopra** la tabella. Una fase con una riga di
 campi in meno ne fa entrare una in più, una con un titolo su due righe una in meno. Chi ha bisogno di
 un numero esatto di righe per pagina non lo ottiene dal CSS: lo ottiene spezzando la tabella a monte.
 

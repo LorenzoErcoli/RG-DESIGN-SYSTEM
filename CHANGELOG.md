@@ -7,6 +7,52 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.40.1 — diciassette, non diciotto
+
+**Patch di sola documentazione: non cambia una riga di CSS.** Corregge un numero che il DS ripeteva da
+tre versioni.
+
+### Il numero
+
+«Diciotto stop per pagina» era **diciassette**. Il numero compariva nel CHANGELOG della 1.38.0 e della
+1.40.0, in `components/tables.md`, in `components/qr.md`, in `UPGRADING.md`, in un commento di
+`rg-components.css` e in uno di `rg-utilities.css`, nel manifest e in una tavola della vetrina: è
+corretto in tutti.
+
+Su A4, a grandezza vera, per il corpo della tabella degli stop restano **~184 mm** — non i ~194
+dichiarati fin qui. 17 righe da 10,58 mm ne occupano ~180; alla diciottesima mancano **~6 mm**.
+
+### Perché nessuno se n'era accorto
+
+Il foglio degli stop **sforava in larghezza**, e Chrome, in stampa, quando il contenuto è più largo del
+foglio **rimpicciolisce tutta la pagina in silenzio** — qui di circa il 5%. Nessun avviso, nessun errore:
+una pagina più piccola, e con lei tutti i millimetri su cui si stava facendo il conto. Il risultato
+tornava, ed era per giunta **il numero che era stato chiesto**: due ottime ragioni per non metterlo in
+dubbio.
+
+Il difetto è venuto fuori solo confrontando **due render con lo stesso identico CSS**, dove lo stesso
+riquadro di QR misurava **16,0 mm** in uno e **16,9** nell'altro: il 5,5% su tutto, testata compresa.
+Tolto lo sforamento — intestazione «TEM» invece di «TEMPO», e l'aria laterale presa dalla regola del DS
+invece che da un `nowrap` scritto a mano — il foglio è tornato a grandezza vera, e con lui il conto.
+
+### La regola che resta
+
+**Una prova di impaginazione fatta con Chrome non vale se prima non si è escluso che la pagina sfori in
+larghezza.** Il controllo costa niente: si misura un elemento di **larghezza nota** e si guarda se torna.
+Il riquadro di un `rg-qr` va benissimo — se `rg-qr--small` nel foglio compatto misura ~16,0 mm invece di
+~16,9, quella pagina è al 95% e ogni conteggio fatto sopra è da rifare. In alternativa,
+`documentElement.scrollWidth` contro `clientWidth`.
+
+Sta nella **§11 di [`agent/verify-checklist.md`](agent/verify-checklist.md)**, che da oggi ha una sezione
+per le misure di stampa: è il posto dove si passa *prima* di dichiarare un numero.
+
+### Il QR grande resta grande
+
+Il codice a 64 px pesa **~4 mm** dei ~7 che mancano al diciottesimo stop: non è il solo colpevole, e non
+si rimpicciolisce. La scelta è stata fatta guardando in faccia i due esiti (Lorenzo, 2026-09-23): un QR
+che si legge in reparto e la riga del magazzino in testata valgono più del diciottesimo stop, che va sul
+retro — dove il foglio si stampa comunque fronte-retro.
+
 ## 1.40.0 — 2026-09-23
 
 **Minor.** Nessuna classe nuova, nessuna rimossa o rinominata, nessun token toccato. Ma **il QR stampato
@@ -50,7 +96,11 @@ quello della parte.
 
 **E non costa pagina.** Il risparmio della 1.26.0 non serve più: dalla **1.34.0** la testata del blocco
 compatto è una *griglia*, il QR ha una colonna sua e l'altezza la detta il **titolo**. Misurato sul fascicolo,
-il foglio del ricamo tiene ancora i suoi **18 stop in una pagina**.
+il foglio del ricamo tiene i suoi stop in una pagina.
+
+> **Corretto nella 1.40.1**: gli stop in una pagina sono **17**, non 18, e il QR grande **pesa ~4 mm** —
+> non è gratis. Vedi la nota della [1.40.1](#1401--diciassette-non-diciotto)
+> qui sopra: il QR resta grande lo stesso, ed è una scelta, non una svista.
 
 **La regola d'ora in poi è il modulo, non il lato**: ~0,4 mm, e da lì si ricava il lato quando cambia la
 lunghezza della URL. Una URL più lunga vuole **più spazio**, non lo stesso riquadro con moduli più piccoli.
@@ -168,6 +218,12 @@ della pagina della parte — e alzarle tutte vorrebbe dire pagare in carta uno s
 La classe la mette l'app sulla tabella che si compila, e solo lì.
 
 ### Diciotto, e da dove viene il numero
+
+> **Erano diciassette** (corretto nella 1.40.1). Tutto il conto qui sotto è stato fatto su un render in
+> cui il foglio **sforava in larghezza** e Chrome, stampando, rimpiccioliva in silenzio l'intera pagina
+> del ~5%: i «~194 mm» erano ~184. Il numero tornava, ed era anche quello chiesto — due buoni motivi per
+> non metterlo in dubbio. Il testo resta com'era scritto allora; la misura giusta e il metodo per non
+> ricascarci stanno nella 1.40.1 e nella §11 della checklist di verifica.
 
 È **misurato**, non imposto: il CSS non sa contare le righe. Su A4 con intestazione di pagina
 (`rg-u-print-a4--head`, margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo,

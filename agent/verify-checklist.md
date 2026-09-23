@@ -75,6 +75,27 @@ l'integrazione — correggi o, se è un'eccezione legittima, documentala (vedi �
       definita nel CSS, se un `doc` punta a un file inesistente, se un `specimenAnchor` manca in
       vetrina, o se un modulo contiene un HEX crudo.
 
+## 11. Misure di stampa (se il componente finisce su carta)
+
+- [ ] **Prima di contare righe o pagine, escludere che la pagina sfori in larghezza.** Chrome, in
+      stampa, se il contenuto è più largo del foglio **rimpicciolisce tutto in silenzio**: nessun
+      avviso, nessun errore, solo una pagina più piccola. Ogni conteggio fatto su quel render è
+      sbagliato, e lo è **verso l'alto** — entra una riga in più di quante ne entreranno davvero.
+- [ ] Il controllo costa niente: **misurare un elemento di larghezza nota** e vedere se torna. Il
+      riquadro di un `rg-qr` va benissimo: se `rg-qr--small` nel foglio compatto misura ~16,9 mm la
+      pagina è a grandezza vera, se ne misura ~16,0 è stata scalata del 5% e il conto non vale.
+      In alternativa `documentElement.scrollWidth` contro `clientWidth`, come per la 1.39.0.
+- [ ] Una misura di impaginazione si dichiara **con la configurazione in cui è stata presa** (quale
+      documento, quale fase, quali colonne): quante righe stanno in una pagina non è una proprietà
+      del CSS, è il risultato di quel foglio lì.
+
+> **Storia vera, 1.38.0 → 1.40.1.** «Diciotto stop per pagina» è finito in tre versioni del DS: nel
+> CHANGELOG, in due doc, in una tavola della vetrina e in un commento del CSS. Erano **diciassette**.
+> Il foglio degli stop sforava in larghezza e Chrome lo stampava al ~95%; il difetto è saltato fuori
+> solo confrontando due render con lo **stesso** CSS, dove lo stesso QR misurava 16,0 mm in uno e 16,9
+> nell'altro. Il conto delle righe tornava, ma per il motivo sbagliato — ed era stato ripetuto tante
+> volte da sembrare verificato.
+
 ---
 
 **Esito atteso del passo VERIFY**: un elenco PASS/FAIL con, per ogni FAIL, la riga di CSS/HTML

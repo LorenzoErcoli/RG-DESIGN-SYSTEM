@@ -580,7 +580,7 @@ in un altro punto del fascicolo.
 meno. Chi ha bisogno di un numero **esatto** di righe per pagina non lo ottiene dal CSS: lo ottiene
 spezzando la tabella a monte, in due blocchi.
 
-**Costo in carta, dichiarato.** Un ricamo con più di 18 stop prende una facciata in più di prima. È
+**Costo in carta, dichiarato.** Un ricamo con più di 17 stop prende una facciata in più di prima (la 1.38.0 diceva 18: era un render scalato, vedi la 1.40.1). È
 il prezzo esplicito della richiesta: prima le righe c'erano tutte e non ci si poteva scrivere, il che
 vuol dire che non c'erano. Sul fascicolo di prova (3 parti, 11 fasi, 15 fogli — ricami da 3 stop) le
 pagine restano **18** e i gruppi di due fasi collegate spezzati restano **0**.

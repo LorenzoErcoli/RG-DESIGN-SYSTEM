@@ -192,9 +192,8 @@
   .rg-worksheet-block--compact .rg-worksheet-block__work { min-width: 0; }
   /* IL QR DELLA FASE SALE A 64 px (1.40.0), dopo esserci sceso a 48 nella 1.26.0 per risparmiare 12 px
      di pagina per blocco. Quel risparmio era sbagliato due volte. Primo: la testata NON la detta piu il
-     QR — dalla 1.34.0 e una griglia e il QR sta di fianco al titolo, che e l'elemento alto; misurato sul
-     fascicolo, a 64 px il foglio del ricamo tiene ancora i suoi 18 stop in una pagina. Secondo, e piu
-     grave: 48 px per 41 moduli fanno ~0,31 mm per modulo, e su un QR DI FASE non bastano. La URL della
+     QR — dalla 1.34.0 e una griglia e il QR sta di fianco al titolo, che e l'elemento alto. Secondo, e
+     piu grave: 48 px per 41 moduli fanno ~0,31 mm per modulo, e su un QR DI FASE non bastano. La URL della
      fase e piu lunga di quella della parte (ci aggiunge l'id della fase), quindi ha PIU moduli da far
      stare in MENO spazio — doppia penalita, e in reparto il codice non si leggeva.
      64 px (~16,9 mm) per 41 moduli fanno ~0,41 mm per modulo: la stessa misura del QR della parte, che
@@ -203,7 +202,14 @@
      Il lato lo prende la scala (--rg-space-16 = 64) e cresce anche il contenitore, ma SOLO se non e
      --inline: con la sola immagine a 64 dentro un --small da 60 il codice sborderebbe di 4 px, mentre
      un --inline ha gia width: auto perche deve tenere la didascalia di fianco, e fissarlo a 64 gli
-     toglierebbe il posto dove metterla. */
+     toglierebbe il posto dove metterla.
+     QUANTO COSTA, PER DAVVERO (corretto nella 1.40.1). Nella 1.40.0 qui c'era scritto che il QR grande
+     non costava niente e che il foglio del ricamo teneva ancora 18 stop: e falso. A grandezza vera gli
+     stop in una pagina sono 17, e i 18 di prima venivano da una pagina che Chrome rimpiccioliva del 5%
+     perche il foglio sforava in larghezza (vedi agent/verify-checklist.md §11). Il QR piu grande pesa
+     ~4 mm dei ~7 che mancano al diciottesimo: non e il solo colpevole, e non si rimpicciolisce. La
+     scelta e stata fatta guardando i due esiti in faccia (Lorenzo, 2026-09-23): un codice che si legge
+     e la riga del magazzino in testata valgono piu del diciottesimo stop, che va sul retro. */
   .rg-worksheet-block--compact .rg-qr--small:not(.rg-qr--inline) { width: var(--rg-space-16); }
   .rg-worksheet-block--compact .rg-qr--small > .rg-qr__img { width: var(--rg-space-16); }
   /* IL BLOCCO CHE CONTINUA: e il secondo di una coppia e non apre niente. Non ha la banda di reparto

@@ -7,6 +7,14 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.40.2 — le ultime due frasi
+
+**Patch di sola documentazione.** La 1.40.1 aveva corretto «diciotto» ovunque tranne che in due note
+del manifest — quella di `table` («un ricamo con più di 18 stop prende una facciata in più») e quella
+di `worksheet-block` («ne entrano 18 per pagina A4»). `components.json` è la fonte che leggono gli
+agenti: se resta indietro, il numero sbagliato torna in circolo dalla porta di servizio. Adesso dicono
+**17**, con il rimando alla 1.40.1.
+
 ## 1.40.1 — diciassette, non diciotto
 
 **Patch di sola documentazione: non cambia una riga di CSS.** Corregge un numero che il DS ripeteva da

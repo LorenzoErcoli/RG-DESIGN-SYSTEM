@@ -2235,7 +2235,7 @@ status         VALID</pre></div>
             </section>
           </div></div>
         </div>
-        <p class="specimen-note">Intestazione di pagina: la stampa l’app sul PDF (Chrome non ripete elementi per pagina). Fascia da 8 a 24 mm dall’alto, Helvetica-Bold 11 pt e Courier 8 pt, filetto 0,5 pt a 25 mm, QR 16 mm a destra; il contenuto HTML comincia a 30 mm. Misure complete in components/worksheet-block.md.</p>
+        <p class="specimen-note">Intestazione di pagina: la stampa l’app sul PDF (Chrome non ripete elementi per pagina), il DS riserva solo lo spazio. <strong>Dalla 1.41.0 il contenuto HTML comincia a 20 mm</strong> (era 30) e tutto ciò che il PDF stampa in testa — testo e filetto — deve stare entro <strong>45,4 pt (16 mm)</strong>, con 4 mm d’aria sotto; il QR da 16 mm sta a destra. Le due misure si cambiano <strong>insieme</strong>: se scende il margine e non l’intestazione, il testo del PDF finisce sopra la scheda. Misure complete in components/worksheet-block.md.</p>
       </section>
 
       <section class="specimen-section" id="bed-layout">
@@ -2822,6 +2822,13 @@ status         VALID</pre></div>
               <div class="rg-fill-field"><span class="rg-fill-field__label">Lato del pezzo</span><span class="rg-fill-field__line"></span></div>
             </div>
           </div></div>
+          <div class="specimen-cell specimen-cell--wide" id="worksheet-foot-compact"><span class="specimen-label">3 · <code class="rg-mono">rg-worksheet-foot--compact</code> (1.41.0) — lo stesso piede su una riga sola: ~14 mm invece di ~37, per non farlo finire sul retro</span><div class="specimen-stage specimen-stage--page">
+            <div class="rg-worksheet-foot rg-worksheet-foot--compact">
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+              <div class="rg-fill-field rg-worksheet-foot__note"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+            </div>
+          </div><p class="specimen-note">Non è una densità, è una <strong>scelta di pagina</strong>. Il piede intero ha ragione — lo spazio bianco su cui si scrive non si comprime — e resta il default. Ma il piede di un gruppo di fasi collegate sta tutto in fondo all’<em>ultimo</em> blocco, e se non ci sta va sul retro: una firma su una facciata dove la fase che si è firmata non c’è. Misurato sul fascicolo vero (M3641 COCOTTE, PRESSATURA + SABBIATURA): il contenuto arriva a <strong>270 mm</strong> su <strong>285</strong> utili, restano <strong>15 mm</strong> e il piede ne chiede <strong>~25</strong>. La riga resta alta <strong>32 px (~8,5 mm)</strong>, la grafia adulta di <code class="rg-mono">rg-fill-field</code>: si perde la <em>seconda</em> riga di scrittura, non la prima. L’etichetta della nota torna <strong>sopra</strong> — dentro un riquadro da 32 si mangerebbe metà riga — e le proporzioni 1 : 1 : 3 dicono che una firma e una data sono corte e prevedibili, una nota no. Se in quel reparto la nota è sempre lunga, questa variante è la scelta sbagliata: si spezza il gruppo.</p></div>
         </div>
         <p class="specimen-note"><strong>Limite dichiarato, e misurato.</strong> Il piede vorrebbe due cose insieme: non spezzarsi e non staccarsi dal blocco che lo precede. In Chrome — il motore che impagina il fascicolo — le due si escludono: con <code class="rg-mono">break-before: avoid</code> il fragmentatore tiene il piede attaccato al blocco e taglia <em>dentro</em> il piede, e il riquadro della nota esce diviso fra due fogli. Provato a riempimenti crescenti, da 860 a 980 px: con <code class="rg-mono">break-before</code> si spezza sempre, senza resta sempre intero. Fra «il piede scende intero alla pagina dopo» e «la nota esce tagliata a metà» il reparto perde poco nel primo caso e tutto nel secondo: <code class="rg-mono">break-before</code> non si dichiara, e a rendere raro il caso ci pensa la compattazione.</p>
       </section>

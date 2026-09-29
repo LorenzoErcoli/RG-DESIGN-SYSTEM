@@ -1543,6 +1543,28 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-foot__note { position: relative; }
 .rg-worksheet-foot__note > .rg-fill-field__label { position: absolute; top: calc(var(--rg-space-1) / 2); left: var(--rg-space-2); margin-bottom: 0; }
 .rg-worksheet-foot__note > .rg-fill-field__line { min-height: calc(var(--rg-space-16) + var(--rg-space-4)); padding: calc(var(--rg-space-4) + var(--rg-space-1)) 0 0 var(--rg-space-2); }
+/* PIEDE SU UNA RIGA SOLA — rg-worksheet-foot--compact (1.41.0), OPT-IN. Operatore, Data e Nota
+   affiancati; la nota resta la piu larga (3 parti su 5), ma da riquadro alto diventa RIGA LARGA.
+   PERCHE ESISTE, E PERCHE E OPT-IN. Il piede normale dice una cosa giusta — lo spazio bianco su cui
+   si scrive non si comprime — e resta il default. Ma il piede di un gruppo di fasi collegate sta
+   tutto in fondo all'ULTIMO blocco, e se non ci sta finisce da solo sul retro del foglio: una firma
+   su una facciata dove non c'e la fase che si e firmata. Misurato sul fascicolo vero (M3641 COCOTTE,
+   gruppo PRESSATURA + SABBIATURA): il contenuto arriva a 270 mm su 285 utili, restano 15 mm e il
+   piede ne chiede ~25. Fra una nota di due righe sul retro e una nota di una riga sotto la sua fase,
+   in reparto vale la seconda: chi scrive vuole scrivere LI.
+   NON SI RINUNCIA ALLA MANO: la riga resta alta --rg-space-8 (32 px, ~8,5 mm), la grafia adulta
+   dichiarata da rg-fill-field. Si rinuncia alla SECONDA riga di scrittura, non alla prima.
+   L'ETICHETTA DELLA NOTA TORNA SOPRA (annulla l'assoluta della 1.37.0): dentro un riquadro da 80 px
+   occupava un quinto, dentro uno da 32 si mangerebbe meta della riga. Cosi i tre campi della fila
+   sono uguali — etichetta sopra, riga sotto — e la fila si legge come una fila.
+   LE PROPORZIONI NON SONO ESTETICHE: una firma e una data sono corte e prevedibili, una nota no; una
+   nota larga come la data non e una nota. Sotto i 480 px si torna in colonna — tre campi affiancati
+   su un telefono non sono tre campi, sono tre fessure. */
+.rg-worksheet-foot--compact { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 3fr); }
+.rg-worksheet-foot--compact > .rg-worksheet-foot__note { grid-column: auto; position: static; }
+.rg-worksheet-foot--compact > .rg-worksheet-foot__note > .rg-fill-field__label { position: static; margin-bottom: var(--rg-space-1); }
+.rg-worksheet-foot--compact > .rg-worksheet-foot__note > .rg-fill-field__line { min-height: var(--rg-space-8); padding: 0; }
+@media (max-width: 480px) { .rg-worksheet-foot--compact { grid-template-columns: minmax(0, 1fr); } }
 
 /* Testata di PARTE in linea (proposta 1.23.0). Prima ogni parte apriva una pagina sua, quasi vuota, con
    l'indice delle sue lavorazioni. Ora la parte e una testata di una o due righe che APRE una pagina

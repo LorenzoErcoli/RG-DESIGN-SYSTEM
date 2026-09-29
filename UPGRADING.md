@@ -61,6 +61,51 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.41.0 — il margine in alto, e il piede su una riga
+
+**Da leggere prima di salire il pin**, se il prodotto stampa con `rg-u-print-a4--head`.
+
+**Il margine superiore di `@page rg-a4-head` passa da 30 a 20 mm.** Il DS lassù non disegna niente:
+riserva il posto all'intestazione che l'**app** stampa sul PDF dopo l'impaginazione. Il patto, da qui in
+avanti, è scritto: **tutto ciò che il PDF stampa in testa — testo e filetto — sta entro 45,4 pt (16 mm)
+dal bordo del foglio**, e restano 4 mm d'aria prima del contenuto HTML.
+
+**Cosa fare, nell'ordine.**
+
+1. **Misurare l'intestazione che il prodotto disegna sul PDF**, filetto compreso. Il numero da
+   confrontare è 45,4 pt.
+2. Se ci sta: salire il pin e basta — si guadagnano 10 mm di pagina.
+3. Se **non** ci sta (tipicamente un'intestazione su due righe, com'era quella di RG fino alla 1.40.x):
+   **prima** riscriverla su una riga dentro il budget, **poi** salire. Le due misure si cambiano nello
+   stesso momento; se scende il margine e non l'intestazione, il testo del PDF finisce **sopra** la
+   scheda, e non c'è nessun errore che lo segnali — si vede solo sulla carta.
+4. Se l'intestazione non si può accorciare, **restare a `v1.40.2`**. Non c'è un secondo margine
+   configurabile: una `@page` non legge le custom property, quindi il valore è uno solo.
+
+**Effetto collaterale già contato**: `rg-part-sheet--no-head`, che torna alla pagina `rg-a4`, si riprende
+ora **8 mm** invece di 18.
+
+**E c'è una variante nuova, opt-in: `rg-worksheet-foot--compact`.** Serve quando il piede di un gruppo di
+fasi, intero, finisce sul retro del foglio. Mette Operatore, Data e Nota su una riga (1 : 1 : 3) e porta
+la nota da 80 a 32 px, con l'etichetta sopra. **Cambia il markup** di quel piede:
+
+```diff
+- <div class="rg-worksheet-foot">
++ <div class="rg-worksheet-foot rg-worksheet-foot--compact">
+    …
+-   <div class="rg-fill-field rg-fill-field--tall rg-worksheet-foot__note">
++   <div class="rg-fill-field rg-worksheet-foot__note">
+```
+
+Nel piede compatto la nota **non** porta `rg-fill-field--tall`: la riga è quella base da 32 px. Il piede
+normale non cambia — chi non mette la classe non vede differenza — e la variante si mette **solo** dove
+il piede rischia di staccarsi dalla sua fase, non ovunque per guadagnare carta.
+
+**Cosa verificare dopo.** Una stampa vera del documento più pieno che il prodotto produce: che
+l'intestazione del PDF non tocchi il contenuto, e che il piede stia sotto la sua fase. Prima di contare
+righe o pagine vale la [§11 della checklist](agent/verify-checklist.md) — escludere che la pagina sfori
+in **larghezza**, altrimenti il conto è falso, e lo è verso l'alto.
+
 ### 1.40.0 — il QR si legge
 
 Nessuna classe rimossa o rinominata, nessun token toccato, **niente da cambiare nel markup**. Ma due

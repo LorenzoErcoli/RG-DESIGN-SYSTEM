@@ -17,8 +17,8 @@ lascia scorrere i blocchi; questa è una pagina che sta da sola. Un fascicolo us
 
 | Classe | Quando |
 | --- | --- |
-| `rg-part-sheet` | La pagina, in un documento `rg-u-print-a4--head`: resta sotto i 30 mm riservati all'intestazione. |
-| `rg-part-sheet--no-head` | La pagina **senza** intestazione stampata: in stampa passa alla pagina `rg-a4` (margine 12 mm) e si riprende i 18 mm. L'app non deve stamparci sopra l'intestazione. |
+| `rg-part-sheet` | La pagina, in un documento `rg-u-print-a4--head`: resta sotto i 20 mm riservati all'intestazione (30 fino alla 1.40.x). |
+| `rg-part-sheet--no-head` | La pagina **senza** intestazione stampata: in stampa passa alla pagina `rg-a4` (margine 12 mm) e si riprende gli 8 mm dell'intestazione (erano 18 fino alla 1.40.x). L'app non deve stamparci sopra l'intestazione. |
 
 | Elemento | Cosa porta |
 | --- | --- |

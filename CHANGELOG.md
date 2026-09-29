@@ -7,6 +7,60 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.41.0 — 2026-09-29
+
+**Minor.** Una variante nuova e additiva, `rg-worksheet-foot--compact` (opt-in). **Ma cambia anche una
+misura di pagina che vale per chiunque stampi con `rg-u-print-a4--head`**: il margine superiore passa da
+30 a 20 mm. Chi ha un'intestazione PDF più alta di 16 mm legga
+[UPGRADING](UPGRADING.md#1410--il-margine-in-alto-e-il-piede-su-una-riga) **prima** di salire il pin.
+
+### Il problema: ~10 mm
+
+> «Ci sono parti di finale di scheda che finiscono dall'altra parte.» (Lorenzo)
+
+Il piede di un gruppo di fasi collegate sta tutto in fondo all'**ultimo** blocco, e se non ci sta va sul
+retro del foglio: una firma su una facciata dove la fase che si è firmata non c'è. Misurato sul fascicolo
+vero (M3641 COCOTTE, gruppo PRESSATURA + SABBIATURA): la pagina utile arriva a **285 mm**, il contenuto
+delle due fasi finisce a **270**, restano **15 mm** e il piede ne chiede **~25**. Mancano ~10 mm, e si
+prendono da due parti.
+
+### 10 mm dal margine: `rg-u-print-a4--head` passa a 20 mm
+
+Quei 30 mm riservavano il posto all'intestazione che l'app stampa **sul PDF** (PyMuPDF): il DS lassù non
+disegna niente, tiene il posto. L'intestazione era su **due** righe; riscritta su **una** occupa fino a
+**45,4 pt (16 mm)** filetto compreso, e 20 mm la contengono con **4 mm d'aria**.
+
+**Il margine è un contratto, e le due misure si cambiano insieme**: se scende il margine e non
+l'intestazione, il testo del PDF finisce sopra la scheda. Il patto è scritto adesso in tre posti — il
+commento di `@page rg-a4-head`, la tabella in `components/worksheet-block.md` e la nota in vetrina —
+perché è il tipo di vincolo che sopravvive solo se sta accanto al numero.
+
+Effetto collaterale già contato: `rg-part-sheet--no-head`, che torna alla pagina `rg-a4`, si riprende ora
+**8 mm** invece di 18.
+
+### Il resto dal piede: `rg-worksheet-foot--compact`, opt-in
+
+Operatore, Data e Nota **su una riga sola**, con la nota larga tre volte gli altri due (1 : 1 : 3): una
+firma e una data sono corte e prevedibili, una nota no, e una nota larga come la data non è una nota.
+
+È **opt-in**, e non un cambio del piede per tutti, perché il piede normale ha ragione: lo spazio bianco
+su cui si scrive non si comprime, e dove la pagina non è piena la nota di due righe resta la forma
+giusta. La variante è la scelta fra **una nota di due righe sul retro** e **una nota di una riga sotto la
+sua fase** — in reparto vince la seconda, perché chi scrive vuole scrivere lì.
+
+**Non si rinuncia alla mano**: la riga resta alta 32 px (~8,5 mm), la grafia adulta dichiarata da
+`rg-fill-field`. Si rinuncia alla *seconda* riga di scrittura, non alla prima. L'etichetta della nota
+torna **sopra** (annulla l'assoluta della 1.37.0): dentro un riquadro da 80 px occupava un quinto, dentro
+uno da 32 si mangerebbe metà della riga. Sotto i 480 px i tre campi tornano in colonna.
+
+### Il conto
+
+Sul foglio il piede passa da ~37 a ~14 mm: **~23 mm**, non i ~12 stimati prima di farlo. Con i 10 del
+margine fanno ~33 mm contro i ~10 che mancavano — deve avanzare aria. È una stima **geometrica**, fatta
+sulle altezze dichiarate (etichetta 12 px + riga 32, contro etichetta + 32 + gap + 80): la misura vera è
+sul fascicolo, e vale la [§11 della checklist](agent/verify-checklist.md) — prima di contare, escludere
+che la pagina sfori in **larghezza**, perché qui cambia la verticale ma il controllo costa niente.
+
 ## 1.40.2 — le ultime due frasi
 
 **Patch di sola documentazione.** La 1.40.1 aveva corretto «diciotto» ovunque tranne che in due note

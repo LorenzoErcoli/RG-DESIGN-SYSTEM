@@ -26,8 +26,48 @@ mano invece di una, più la fascia dell'etichetta che dalla **1.37.0** le sta de
 | --- | --- |
 | `rg-worksheet-foot` | **Base**: contenitore a due colonne, subito sotto il blocco. |
 | `rg-worksheet-foot__note` | La nota che prende la fila intera e la riga alta 80 px, con l'etichetta **dentro** il riquadro. Si mette **insieme** a `rg-fill-field--tall`. |
+| `rg-worksheet-foot--compact` (1.41.0) | **Tutto su una riga**: Operatore, Data e Nota affiancati, la nota larga tre volte gli altri due. La nota perde la seconda riga di scrittura (80 → 32 px) e si riprende l'etichetta **sopra**. Opt-in. |
 
-Non ha varianti di densità: vedi sopra.
+### Quando usare `--compact`
+
+Quando il piede, com'è, **finisce sul retro del foglio**. Non è una scelta di densità — quella sopra
+resta vera — è la scelta fra una nota di due righe su una facciata dove la fase non c'è e una nota di
+una riga sotto la sua fase. In reparto vince la seconda: chi scrive vuole scrivere *lì*.
+
+Il caso che l'ha chiesta, misurato sul fascicolo vero (M3641 COCOTTE, gruppo PRESSATURA +
+SABBIATURA): il contenuto delle due fasi arriva a **270 mm** su **285** utili, restano **15 mm** e il
+piede intero ne chiede **~25**. Su una riga sola ne occupa ~14 invece di ~37.
+
+**Non si rinuncia alla mano.** La riga resta alta 32 px (~8,5 mm), la grafia adulta dichiarata da
+[`rg-fill-field`](fill-field.md): si rinuncia alla **seconda** riga di scrittura, non alla prima. Se
+in quel reparto la nota è sempre lunga, questa variante è la scelta sbagliata — meglio spezzare il
+gruppo e dare a ogni fase il suo piede intero.
+
+**L'etichetta della nota torna sopra.** Dentro un riquadro da 80 px occupava un quinto; dentro uno da
+32 si mangerebbe metà della riga. Così i tre campi della fila sono uguali — etichetta sopra, riga
+sotto — e la fila si legge come una fila.
+
+**Proporzioni 1 : 1 : 3**, e non è estetica: una firma e una data sono corte e prevedibili, una nota
+no. Una nota larga come la data non è una nota. Sotto i 480 px i tre campi tornano in colonna.
+
+```html
+<div class="rg-worksheet-foot rg-worksheet-foot--compact">
+  <div class="rg-fill-field">
+    <span class="rg-fill-field__label">Operatore</span>
+    <span class="rg-fill-field__line"></span>
+  </div>
+  <div class="rg-fill-field">
+    <span class="rg-fill-field__label">Data</span>
+    <span class="rg-fill-field__line"></span>
+  </div>
+  <div class="rg-fill-field rg-worksheet-foot__note">
+    <span class="rg-fill-field__label">Note</span>
+    <span class="rg-fill-field__line"></span>
+  </div>
+</div>
+```
+
+Nel piede compatto la nota **non** porta `rg-fill-field--tall`: la riga è quella base da 32 px.
 
 **Il piede è parte del foglio**, anche se sta fuori dal riquadro: dalla **1.34.0** dichiara
 `text-transform: uppercase` come il blocco, così un testo stampato qui esce in maiuscolo come tutto

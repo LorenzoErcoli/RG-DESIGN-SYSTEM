@@ -50,10 +50,20 @@
   .rg-u-print-a4 { page: rg-a4; }
   /* A4 CON INTESTAZIONE DI PAGINA (proposta 1.25.0). Chrome non ripete un elemento su ogni pagina: la
      riga «Parte 1 di 4 · FONDO BORDATO — codice · cliente · prodotto» (+ QR piccolo) la stampa l'app sul
-     PDF dopo l'impaginazione (PyMuPDF). Qui si riserva lo spazio: margine superiore 30 mm invece di 12,
-     cosi il contenuto HTML comincia sotto la fascia 8–24 mm dove va l'intestazione. Misure esatte in
-     components/worksheet-block.md (Intestazione di pagina). */
-  @page rg-a4-head { size: A4; margin: 30mm 12mm 12mm; }
+     PDF dopo l'impaginazione (PyMuPDF). Qui si riserva lo spazio, e basta: il DS non disegna niente
+     lassu, tiene solo il posto.
+     MARGINE SUPERIORE 20 mm (1.41.0; era 30). QUESTO NUMERO E UN CONTRATTO CON CHI DISEGNA
+     L'INTESTAZIONE SUL PDF, e le due misure si cambiano INSIEME: se scende il margine e non
+     l'intestazione, il testo del PDF finisce sopra la scheda. Il patto oggi e: tutto cio che il PDF
+     stampa in testa — testo E filetto — sta entro 45,4 pt (16 mm) dal bordo del foglio, e restano
+     4 mm d'aria prima che cominci il contenuto HTML. I 30 mm di prima servivano a un'intestazione su
+     DUE righe; su una riga sola ne bastano 20, e i 10 mm recuperati sono quelli che fanno stare il
+     piede di un gruppo di due fasi sulla stessa facciata invece che sul retro (il caso: M3641 COCOTTE,
+     PRESSATURA + SABBIATURA, dove al piede mancavano ~10 mm).
+     Se un prodotto ha un'intestazione piu alta di 16 mm, NON si ritocca qui: o la si riscrive dentro
+     il budget, o si resta al tag precedente. Misure in components/worksheet-block.md (Intestazione di
+     pagina). Le misure sono in mm perche qui la misura E fisica (vedi sopra). */
+  @page rg-a4-head { size: A4; margin: 20mm 12mm 12mm; }
   .rg-u-print-a4--head { page: rg-a4-head; }
 
   /* Schede di lavorazione — paginazione dei blocchi (v1.14.0).
@@ -89,7 +99,8 @@
   .rg-part-sheet:first-child, .rg-cutout-sheet:first-child { break-before: auto; page-break-before: auto; }
   .rg-part-sheet { break-inside: avoid; page-break-inside: avoid; }
   /* Pagina della parte SENZA intestazione stampata (1.26.0): in un documento rg-u-print-a4--head la sezione
-     passa alla pagina rg-a4 (margine 12 mm) e si riprende i 18 mm riservati all'intestazione. Il cambio di
+     passa alla pagina rg-a4 (margine 12 mm) e si riprende gli 8 mm riservati all'intestazione (erano 18
+     finche il margine di rg-a4-head era 30; dalla 1.41.0 e 20). Il cambio di
      pagina nominata forza gia un salto: coerente con break-before/after qui sopra. */
   .rg-part-sheet--no-head { page: rg-a4; }
   /* Blocco che continua il precedente (1.27.0): resta sulla stessa pagina del blocco sopra, se ci sta. */

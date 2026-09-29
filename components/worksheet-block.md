@@ -200,19 +200,32 @@ ambito: il blocco stampato.
 ### Intestazione di pagina
 
 Chrome non ripete un elemento su ogni pagina: l'intestazione la stampa l'app **sul PDF**, dopo
-l'impaginazione (PyMuPDF). Il DS riserva lo spazio: **`rg-u-print-a4--head`** sul contenitore che stampa (al
-posto di `rg-u-print-a4`) dà una pagina A4 con **margine superiore di 30 mm** (12 ai lati e in basso).
+l'impaginazione (PyMuPDF). Il DS **riserva lo spazio, e basta** — lassù non disegna niente, tiene il
+posto. **`rg-u-print-a4--head`** sul contenitore che stampa (al posto di `rg-u-print-a4`) dà una pagina A4
+con **margine superiore di 20 mm** (12 ai lati e in basso).
+
+> **Le due misure si cambiano insieme (1.41.0).** Il margine è un **contratto** con chi disegna
+> l'intestazione sul PDF: se scende il margine e non l'intestazione, il testo del PDF finisce sopra la
+> scheda. Il patto è: **tutto ciò che il PDF stampa in testa — testo e filetto — sta entro 45,4 pt
+> (16 mm) dal bordo**, e restano 4 mm d'aria prima del contenuto HTML. Fino alla 1.40.x il margine era
+> 30 mm perché l'intestazione era su **due** righe; riscritta su una riga sola ne bastano 20, e i 10 mm
+> recuperati sono quelli che fanno stare il piede di un gruppo di due fasi sulla stessa facciata. Chi ha
+> un'intestazione più alta di 16 mm non ritocca il DS: o la riscrive dentro il budget, o resta al tag
+> precedente.
 
 | Cosa | Misura (dal bordo del foglio) | In punti PDF (1 mm = 2,835 pt) |
 | --- | --- | --- |
 | Pagina | A4, 210 × 297 mm | 595,3 × 841,9 |
-| Fascia dell'intestazione | y da 8 a 24 mm, x da 12 a 198 mm | y 22,7–68,0 · x 34,0–561,3 |
-| Riga 1: «Parte 1 di 4 · FONDO BORDATO» | Helvetica-Bold (`hebo`) **11 pt**, nero, linea di base a y = 14 mm, x = 12 mm | base y 39,7 · x 34,0 |
-| Riga 2: «RG-26-DIO-0441-P · DIOR · M3641 COCOTTE» | Courier (`cour`) **8 pt**, nero, linea di base a y = 19,5 mm, x = 12 mm | base y 55,3 · x 34,0 |
-| Filetto sotto l'intestazione | 0,5 pt nero, a y = 25 mm, da x 12 a 198 mm | y 70,9 |
-| QR piccolo (facoltativo) | 16 × 16 mm, allineato a destra: x 182–198, y 8–24 mm | rect (515,9, 22,7, 561,3, 68,0) |
+| **Budget dell'intestazione** (testo **e** filetto) | da y = 8 mm a **y = 16 mm**, x da 12 a 198 mm | fino a **45,4** · x 34,0–561,3 |
+| Aria fra intestazione e contenuto | 4 mm | 11,3 |
+| **Inizio del contenuto HTML** | y = 20 mm | 56,7 |
+| QR piccolo (facoltativo) | 16 × 16 mm, allineato a destra: x 182–198 | x 515,9–561,3 |
 | Testo, larghezza massima | fino a x = 178 mm se c'è il QR, altrimenti 198 | 504,6 / 561,3 |
-| Inizio del contenuto HTML | y = 30 mm | 85,0 |
+
+Che cosa sta dentro quel budget lo decide l'app: in RG oggi è **una riga sola** — parte, codici, cliente
+e prodotto — con il filetto sotto, entro i 45,4 pt. Il disegno su **due** righe usato fino alla 1.40.x
+(Helvetica-Bold 11 pt con base a y = 14 mm, Courier 8 pt a y = 19,5 mm, filetto a y = 25 mm) **non entra
+più**: è esattamente la ragione per cui margine e intestazione vanno cambiati nello stesso momento.
 
 Helvetica e Courier sono i font base del PDF (niente font da incorporare) e sono i fallback dichiarati del DS
 per identità e mono. Il QR sul PDF va generato con la sua zona di rispetto dentro i 16 mm (vedi [qr](qr.md)).

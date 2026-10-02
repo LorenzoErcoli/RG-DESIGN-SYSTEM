@@ -79,6 +79,32 @@
      tonda: la distanza la fanno figura e misura, non la tinta. Chi mette i due accanto non aggiunga
      colore, aggiunga forma. */
   --rg-color-scope: #f59e0b; --rg-color-scope-text: var(--rg-color-black);
+  /* GEMELLAGGIO DEI PARAMETRI (1.42.0) — il secondo valore dello stesso asse dell'ambito: la fase
+     resta di QUESTA parte, ma i suoi parametri (righe, macchine, valori) sono tenuti uguali alla
+     stessa fase su altre parti; i TEMPI PER PEZZO no, perche il taglio del davanti e quello del
+     dietro seguono perimetri diversi. Come --rg-color-scope non e uno stato e vale per un ruolo
+     solo: mai azione, mai navigazione, mai focus, mai testo, mai stato.
+     PERCHE NON --rg-color-success. Il verde chiesto dal campo («magari un colore verde») nel DS
+     esiste gia due volte, e due volte occupato: --rg-color-success (#365c45) e lo stato «conforme,
+     validato» ED e --rg-color-category-5, cioe il reparto Finissaggio e Controllo Qualita;
+     --rg-color-accent-sage (#89958a) e --rg-color-category-7, cioe le Incollature, ed e anche
+     l'identita della quarta parte in rg-part-mark. E' lo stesso argomento con cui l'ambito ha
+     escluso warning e danger, piu uno peggiore: nel pannello della fase i parametri portano il
+     proprio stato di validazione, e una fascia verde in testa che dica «parametri uguali» verrebbe
+     letta «parametri validati». Il significato sbagliato, sul fatto piu delicato della pagina.
+     IL VALORE. #58d6a0: tinta 154° — 29° dalla salvia (125°) e 10° dal verde di success (144°), il
+     massimo di distanza che resta restando verde — saturazione 59%, cioe meno della meta di quella
+     dell'ambra (96%): il gemellaggio e un fatto piu debole dell'ambito e il colore lo dichiara.
+     TESTO NERO, e come per l'ambito i due token sono una COPPIA: nero su #58d6a0 fa 11,54:1 (meglio
+     dei 9,78:1 dell'ambra), bianco farebbe 1,82:1. Chi cambia il primo ricalcola il secondo.
+     FOTOCOPIA. In scala di grigi sta al 75%: 6 punti sopra l'ambra (69%) e 18 sopra la salvia (57%).
+     I 6 punti dall'ambra NON bastano da soli, ed e dichiarato: i due timbri possono comparire nello
+     stesso elenco, e li a separarli non e il tono ma la FIGURA — il timbro del gemellaggio porta un
+     segno di UGUALE fatto di due filetti neri (bordi, non sfondo: in stampa i bordi escono sempre),
+     il timbro d'ambito no. Il gemellaggio e un segno da SCHERMO: non entra nel foglio di reparto e
+     non ha print-color-adjust, quindi su carta il colore cade e resta la parola. Vedi
+     components/twin.md. */
+  --rg-color-twin: #58d6a0; --rg-color-twin-text: var(--rg-color-black);
   --rg-color-accent-sage: var(--rg-color-perugino-sage); --rg-color-accent-blue: var(--rg-color-perugino-powder-blue);
   --rg-color-accent-sand: var(--rg-color-perugino-sand-ochre);
 

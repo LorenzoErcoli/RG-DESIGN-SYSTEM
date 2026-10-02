@@ -272,6 +272,29 @@ In un gruppo di tre o quattro fasi, quelle **in mezzo** hanno solo `rg-step--gro
   controlli espliciti "sposta su / sposta giù", non come solo trascinamento.
 - Sequenza vuota: `rg-empty` con testo esplicito, mai un `<ol>` senza fasi.
 
+## La fase gemella dentro l'elenco della parte (1.42.0)
+
+Una fase può essere la **stessa fase** che sta anche su altre parti, tenuta uguale nei **parametri**
+ma non nei **tempi per pezzo**. Nell'elenco, fino alla 1.41.0, non si vedeva affatto: il segno è
+`rg-twin-mark` dentro `rg-step__headline`, e le parole sono in [twin](twin.md).
+
+```html
+<span class="rg-step__headline">
+  <span class="rg-twin-mark">Parametri uguali · dietro, fondo</span>
+  <span class="rg-step__title">Taglio laser</span>
+</span>
+```
+
+- **Solo il timbro: nessun modificatore di riga.** `rg-step--product` aggiunge i filetti forti perché
+  stacca **l'eccezione**, e l'eccezione è una; le gemelle in una parte possono essere tre o quattro, e
+  quattro righe listate di nero sono una griglia, non un segno.
+- **Dopo `rg-step__role`, prima di `rg-step__title`**, quando la riga sta anche in un gruppo: il ruolo
+  dice dove sei nella sequenza di **questa** parte, il timbro dice cosa accade **fuori** dalla parte.
+- **Timbro e graffa non si toccano**: la graffa di `rg-steps--grouped` occupa la colonna a sinistra
+  dei numeri, il timbro sta dentro l'intestazione della riga. Una gemella può stare in un gruppo.
+- «Collegata» e «gemella» **non sono la stessa cosa**: collegate sono fasi **diverse** di **questa**
+  parte tenute in sequenza da una graffa; gemella è la **stessa** fase su **altre** parti.
+
 ## La fase di tutto il prodotto dentro l'elenco della parte (1.31.0)
 
 Una fase può valere per **tutto il prodotto** invece che per una parte — il controllo qualità finale,

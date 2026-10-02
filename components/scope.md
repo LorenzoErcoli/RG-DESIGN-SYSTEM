@@ -17,6 +17,23 @@ delle parti.
 Sbagliarlo non è un fastidio estetico: in reparto vuol dire **fare tre volte** un controllo che va
 fatto una, o farlo su una parte sola quando andava fatto sull'oggetto finito.
 
+### L'asse completo: tre stati, una grammatica (dalla 1.42.0)
+
+«Di chi è questa fase» non è una domanda a due risposte. Dalla 1.42.0 i valori dichiarati sono tre, e
+si leggono con le stesse due misure — una fascia e un timbro:
+
+| Stato | Cosa vuol dire | Segno |
+| --- | --- | --- |
+| **autonoma** | vale per questa parte e basta | **nessuno**, ed è voluto: marcare tutto equivale a non marcare niente |
+| **gemella** | la **stessa** fase su più parti: **parametri** uguali, **tempi per pezzo** no | [`rg-twin-band` / `rg-twin-mark`](twin.md) (1.42.0) |
+| **di tutto il prodotto** | una fase sola per l'oggetto, si conta **una volta** | `rg-scope-band` / `rg-scope-mark`, questo documento |
+
+Le due fasce sono **mutuamente esclusive nei fatti** (una fase di tutto il prodotto non ha altre parti
+con cui essere gemella) e i due timbri possono invece **convivere nello stesso elenco**: a separarli è
+la **figura** — il timbro del gemellaggio porta un segno di **uguale** fatto di due filetti neri,
+questo no — perché in fotocopia il verde (75% di grigio) e l'ambra (69%) sono vicini. Il verde non è
+`--rg-color-success`: il perché sta in [twin](twin.md#il-colore---rg-color-twin-e-perché-non-il-verde-che-cera-già).
+
 ## Il segno: uno, in due misure
 
 | Classe | Misura | Dove |

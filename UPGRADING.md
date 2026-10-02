@@ -61,6 +61,27 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.42.0 — il segno della fase gemella
+
+**Niente da fare.** Due classi additive (`rg-twin-band`, `rg-twin-mark`) e un token additivo
+(`--rg-color-twin`, `--rg-color-twin-text`). Nessuna classe esistente cambia comportamento, nessuna
+misura di pagina si muove, il foglio stampato è identico.
+
+Chi vuole il segno, nella pagina della fase e nell'elenco delle fasi della parte, legge
+[components/twin.md](components/twin.md). Tre cose da sapere prima di scriverlo:
+
+- **La nota della fascia non è facoltativa**: dice il limite («i tempi per pezzo sono di questa
+  parte»), ed è metà del significato. Un segno che dica solo «uguale in dietro» fa danno.
+- **L'ordine dei figli di `rg-phase-panel`** è `rg-scope-band`, `rg-twin-band`, reparto, `__head`,
+  `__body`, `__foot`.
+- **Non va sul foglio stampato**, per decisione: due fogli gemelli vanno lavorati tutti e due, e un
+  timbro somigliante a quello d'ambito direbbe l'opposto. Le due classi non hanno
+  `print-color-adjust: exact`: se una pagina a schermo viene stampata, il colore cade e resta la
+  parola.
+
+Chi aveva risolto il gemellaggio con CSS locale (una riga di testo grigia sopra il titolo, un badge)
+può togliere l'eccezione: adesso c'è il componente.
+
 ### 1.41.0 — il margine in alto, e il piede su una riga
 
 **Da leggere prima di salire il pin**, se il prodotto stampa con `rg-u-print-a4--head`.

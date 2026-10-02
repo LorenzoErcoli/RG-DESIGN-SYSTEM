@@ -7,6 +7,134 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.42.0 — 2026-10-02
+
+**Minor.** Due classi nuove e additive — `rg-twin-band` e `rg-twin-mark` — e **un token nuovo**,
+`--rg-color-twin` (+ `--rg-color-twin-text`). Nessuna classe esistente cambia di una riga: chi sale il
+pin non ha niente da fare, chi vuole il segno lo aggiunge dove gli serve.
+
+### Il problema: tre stati, due invisibili
+
+Dentro un prodotto una fase sta in uno di tre stati, e sono i tre valori di **un solo asse** — «la
+concatenazione tra fasi rispetto alle parti». Fino alla 1.41.0 se ne vedeva **uno**.
+
+| Stato | Cosa vuol dire | Come si vedeva |
+| --- | --- | --- |
+| **autonoma** | vale per questa parte e basta | niente, ed è giusto: marcare tutto equivale a non marcare niente |
+| **gemella** | la **stessa** fase su più parti: **parametri** uguali, **tempi per pezzo** no | una riga di testo grigia sopra il titolo; nell'elenco delle fasi, **niente** |
+| **di tutto il prodotto** | una fase sola per l'oggetto, si conta una volta | `rg-scope-band` (ambra) dal 1.31.0 |
+
+> «In questo momento la concatenazione tra fasi rispetto alle parti è poco chiara. Le possibilità sono:
+> fase scollegata autonoma, fase collegata ad altre parti per quanto riguarda parametri tecnici ma non
+> con tempi, fase univoca che viene conteggiata una volta sola. […] Per le fasi univoche usiamo una
+> fascia con colore, ti chiedo di evidenziare in qualche modo anche le fasi con parametri concatenate,
+> magari un colore verde esplicitando che solo i parametri sono uguali e non i tempi.» (Lorenzo)
+
+Il taglio laser del davanti e quello del dietro hanno gli **stessi parametri** e **perimetri diversi**:
+1.840 mm contro 2.310. Chi cambiava una riga su una gemella non sapeva di cambiarla anche altrove; chi
+leggeva «uguale in dietro» poteva dedurre che fossero uguali anche i tempi — e il tempo è ciò che entra
+nel costo. **Il limite è metà del significato, non una postilla**: per questo la nota della fascia non è
+facoltativa e la parola del timbro dice «parametri», non «gemella».
+
+### Il segno: le stesse due misure dell'ambito
+
+`rg-twin-band` è la fascia in testa al blocco della fase, `rg-twin-mark` il timbro nella riga
+dell'elenco. Stessa grammatica dei tre stati, così si leggono come tre valori di una cosa sola.
+
+**Ordine dei figli di `rg-phase-panel`**: `rg-scope-band` (di chi è), `rg-twin-band` (come è tenuta),
+la banda o la riga del reparto (chi la esegue), poi `__head`, `__body`, `__foot`. Le due fasce sono
+mutuamente esclusive **nei fatti** — una fase di tutto il prodotto non ha altre parti con cui essere
+gemella — ma se capitano insieme il CSS non si rompe: gli angoli alti li prende solo il **primo**
+figlio del pannello.
+
+**Nell'elenco il timbro è tutto il segno**: nessun modificatore di riga, a differenza di
+`rg-step--product`. I filetti forti staccano **l'eccezione**, e l'eccezione è una; le gemelle in una
+parte possono essere tre o quattro, e quattro righe listate di nero sono una griglia, non un segno.
+
+### Il colore: verde, ma non uno dei due verdi che c'erano
+
+Il verde è stato chiesto dal campo. Nel DS esisteva già, due volte, e due volte occupato:
+
+| Verde | Primo significato | Secondo |
+| --- | --- | --- |
+| `--rg-color-success` `#365c45` | lo **stato** «conforme, validato» | `--rg-color-category-5`, il reparto **Finissaggio** |
+| `--rg-color-accent-sage` `#89958a` | `--rg-color-category-7`, le **Incollature** | l'identità della **quarta parte** |
+
+È l'argomento con cui l'ambito escluse `warning` e `danger` nella 1.31.0 — lo stesso valore con tre
+significati a due metri di distanza — più uno **peggiore, e decisivo**: nel pannello della fase i
+parametri portano il **proprio stato di validazione**, e una fascia verde che dice «parametri uguali»
+verrebbe letta «parametri **validati**». Il significato sbagliato sul fatto più delicato della pagina.
+
+Quindi `--rg-color-twin: #58d6a0`, token di **ruolo** come `--rg-color-scope`: tinta **154°** (29° dalla
+salvia, 10° dal verde di `success`: il massimo di distanza che resta restando verde), saturazione **59%**
+contro il **96%** dell'ambra, testo **nero** obbligatorio (**11,54:1**; bianco farebbe 1,82:1, e i due
+token sono una coppia). Il fatto più debole porta il colore più debole, e lo stesso vale per la linea: il
+filetto sotto la fascia è **hairline** dove l'ambito ha il nero **forte**. Se le due fasce urlassero
+uguale, «questa si conta una volta» verrebbe appiattito da «i parametri sono uguali».
+
+### Il segno di uguale, perché sei punti di grigio non bastano
+
+In fotocopia il verde sta al **75%** di grigio e l'ambra al **69%**. Sei punti non bastano, e i due
+timbri possono comparire **nello stesso elenco**: a separarli è la **figura**, non il tono. Il timbro del
+gemellaggio porta un **segno di uguale** — due filetti neri davanti alla parola, generati dal DS — e
+quello d'ambito no. È fatto di **bordi**, non di sfondo, perché un bordo si stampa anche quando il
+browser butta via le campiture.
+
+### Sul foglio stampato no, ed è una decisione
+
+L'argomento a favore esisteva: il reparto riceve due fogli quasi identici su due parti e non sa che sono
+lo stesso lavoro scritto una volta. Ma **non è lo stesso lavoro** — i tempi sono diversi, i due fogli
+vanno lavorati tutti e due — mentre il segno d'ambito sul foglio dice l'opposto: «questa si fa una volta
+sola». Mettere accanto al secondo un timbro che gli somiglia invita l'inferenza sbagliata, e la paga il
+reparto con un pezzo non fatto. Il gemellaggio è un fatto **d'ufficio**: chi cambia un parametro deve
+sapere dove arriva il cambio.
+
+Conseguenza voluta: le due classi **non** sono nell'elenco `print-color-adjust: exact` di
+`rg-utilities.css`. Se una pagina a schermo viene stampata, la campitura cade e restano la parola e il
+segno di uguale — che lassù è il peso giusto. **Non c'è una variante per la carta, e non è una
+dimenticanza.**
+
+### Perché classi proprie e non `rg-scope-band--twin`
+
+L'asse è uno, e nella documentazione resta uno (la tabella dei tre stati è in
+[components/scope.md](components/scope.md) e in [components/twin.md](components/twin.md)). Le classi no,
+per tre ragioni verificate: la parola «scope» nel markup direbbe «tutto il prodotto» in un caso che è
+l'opposto; `rg-utilities.css` applica `print-color-adjust: exact` a `.rg-scope-band`, e qui non lo
+vogliamo; la fascia porta una figura in più che la variante avrebbe dovuto aggiungere comunque.
+
+Per la stessa ragione la classe non si chiama `--linked`: «collegata» nel DS è **già presa** e dice
+un'altra cosa — in `rg-steps--grouped` sono fasi **diverse** di **questa** parte tenute da una graffa.
+Due significati sulla stessa parola a due righe di distanza sono lo stesso errore che si evita sui
+colori. Una gemella può stare dentro un gruppo: la graffa occupa la colonna a sinistra dei numeri, il
+timbro sta dentro l'intestazione della riga, e in quel caso va **dopo** `rg-step__role`.
+
+### Due correzioni prese dentro
+
+Toccano anche `rg-scope-band`, che aveva gli stessi due difetti da sola:
+
+- **Angoli alti.** `.rg-phase-panel > .rg-scope-band ~ .rg-phase-panel__band` li perde: una banda di
+  reparto in seconda posizione si arrotondava ancora come se fosse la prima.
+- **Rientro sotto i 680 px.** Le fasce in testa passano a 16 px di padding laterale come la testa del
+  blocco: la loro parola sta sul **filo del titolo**, non otto pixel più dentro.
+
+### File toccati
+
+`tokens.css`, `tokens.json`, `styles/rg-components.css`, `components/twin.md` (nuovo),
+`components/scope.md`, `components/steps.md`, `design-rules.md`, `components.json`,
+`examples/rg-components-library.html` (tavola 49, `#twin`).
+
+### Limiti dichiarati
+
+- **Il DS dichiara il legame, non lo fa rispettare.** Se il segno dice «parametri uguali», il
+  salvataggio dell'app deve propagare i parametri — e **non** i tempi.
+- **Il costo non cambia**: una gemella conta su **ogni** parte, con i tempi della parte. È la differenza
+  da `rg-scope-band`, che conta una volta. Chi le scambia sbaglia il costo per difetto.
+- **I 6 punti di grigio fra verde e ambra** restano la coppia da tenere d'occhio, come ambra e sabbia
+  dalla 1.32.0: chi aggiunge un terzo pieno nella stessa vista non aggiunga colore, aggiunga forma.
+- Resa **verificata staticamente** (lint di coerenza, bilanciamento del CSS e del markup della vetrina,
+  contrasti e grigi calcolati): la tavola `#twin` non è ancora stata vista su schermo con i font
+  ufficiali caricati.
+
 ## 1.41.0 — 2026-09-29
 
 **Minor.** Una variante nuova e additiva, `rg-worksheet-foot--compact` (opt-in). **Ma cambia anche una

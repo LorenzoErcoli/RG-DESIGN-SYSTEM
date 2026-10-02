@@ -2,8 +2,8 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.41.0",
-  "generated": "2026-09-22",
+  "dsVersion": "1.42.0",
+  "generated": "2026-10-02",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
   "appLocalExceptions": [],
@@ -2210,7 +2210,8 @@
           "rg-dept-label",
           "rg-dept-label__kind",
           "rg-scope-mark",
-          "rg-scope-band"
+          "rg-scope-band",
+          "rg-twin-mark"
         ]
       },
       "variants": [
@@ -5282,7 +5283,9 @@
           "rg-dept-band",
           "rg-worksheet-block__step",
           "rg-worksheet-block__work",
-          "rg-worksheet-block__part"
+          "rg-worksheet-block__part",
+          "rg-twin-band",
+          "rg-twin-mark"
         ]
       },
       "variants": [
@@ -5369,7 +5372,8 @@
           "rg-steps__break-note",
           "rg-step__headline",
           "rg-badge",
-          "rg-part-mark"
+          "rg-part-mark",
+          "rg-twin-mark"
         ]
       },
       "variants": [
@@ -5424,6 +5428,175 @@
         "timbro ambra"
       ],
       "snippet": "<li class=\"rg-step rg-step--product\">\n  <div class=\"rg-step__head\">\n    <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-3-toggle\" aria-controls=\"fase-3\" aria-expanded=\"false\">\n      <span class=\"rg-step__num\">3</span>\n      <span class=\"rg-step__headline\">\n        <span class=\"rg-scope-mark\">Tutto il prodotto</span>\n        <span class=\"rg-step__title\">Controllo qualità</span>\n      </span>\n    </button>\n  </div>\n  <div class=\"rg-step__body\" id=\"fase-3\" role=\"region\" aria-labelledby=\"fase-3-toggle\" hidden></div>\n</li>"
+    },
+    {
+      "id": "twin-band",
+      "title": "Fascia di gemellaggio dei parametri",
+      "status": "beta",
+      "since": "1.42.0",
+      "kind": "component",
+      "role": "Dichiara che questa fase e' LA STESSA FASE che sta anche su altre parti, e dice fin dove arriva l'uguaglianza: i PARAMETRI (righe, macchine, valori) sono tenuti uguali, i TEMPI PER PEZZO no (il taglio del davanti e quello del dietro seguono perimetri diversi). Fascia a campitura piena nel colore di gemellaggio (--rg-color-twin, VERDE #58d6a0, che NON e' --rg-color-success ne' --rg-color-accent-sage, entrambi gia' doppi: stato E categoria/reparto), da bordo a bordo, in testa al blocco della fase a schermo, sotto l'eventuale fascia d'ambito e sopra la riga del reparto. Secondo valore dello stesso asse di rg-scope-band: autonoma (nessun segno) / gemella (questa) / di tutto il prodotto (rg-scope-band). Tre segnali e uno solo e' il colore: campitura piena, SEGNO DI UGUALE fatto di due filetti neri generati dal DS (bordi, non sfondo: si stampano sempre), maiuscoletto nero. La nota col limite NON e' facoltativa: e' meta' del significato. Solo a schermo: non va sul foglio di reparto.",
+      "classes": {
+        "base": "rg-twin-band",
+        "elements": [
+          "rg-twin-band__text",
+          "rg-twin-band__note"
+        ],
+        "related": [
+          "rg-twin-mark",
+          "rg-phase-panel",
+          "rg-scope-band",
+          "rg-dept-band",
+          "rg-phase-panel__band",
+          "rg-phase-panel__department",
+          "rg-phase-panel__name",
+          "rg-step",
+          "rg-steps--grouped"
+        ]
+      },
+      "variants": [
+        "una sola forma"
+      ],
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-twin",
+        "--rg-color-twin-text",
+        "--rg-color-black",
+        "--rg-font-identity",
+        "--rg-font-size-sm",
+        "--rg-font-size-xs",
+        "--rg-weight-bold",
+        "--rg-letter-label",
+        "--rg-line-height-technical",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-space-3",
+        "--rg-space-4",
+        "--rg-space-6",
+        "--rg-border-hairline",
+        "--rg-border-strong",
+        "--rg-radius-md"
+      ],
+      "doc": "components/twin.md",
+      "rulesRef": "design-rules.md#4-colore",
+      "patternRef": "components/scope.md",
+      "specimenAnchor": "twin-band",
+      "keywords": [
+        "gemella",
+        "gemellaggio",
+        "fase gemella",
+        "fasi gemelle",
+        "twin",
+        "twin phase",
+        "parametri uguali",
+        "stessi parametri",
+        "parametri concatenati",
+        "concatenazione",
+        "fase concatenata",
+        "fasi concatenate",
+        "legame fra parti",
+        "stessa fase su piu parti",
+        "uguale in dietro",
+        "uguale nelle altre parti",
+        "propagazione dei parametri",
+        "tempi non uguali",
+        "tempi per pezzo",
+        "tempo di questa parte",
+        "limite del legame",
+        "fascia verde",
+        "verde",
+        "green",
+        "colore di gemellaggio",
+        "colore verde fase",
+        "ambito della fase",
+        "scope",
+        "tre stati della fase",
+        "autonoma",
+        "fase autonoma",
+        "taglio laser davanti dietro",
+        "parte",
+        "parti del prodotto",
+        "scheda parte",
+        "pannello della fase",
+        "testa del pannello",
+        "fascia in testa",
+        "banda verde"
+      ],
+      "snippet": "<article class=\"rg-phase-panel\">\n  <p class=\"rg-twin-band\">\n    <span class=\"rg-twin-band__text\">Parametri uguali in dietro, fondo</span>\n    <span class=\"rg-twin-band__note\">Righe, macchine e valori restano uguali · i tempi per pezzo sono di questa parte</span>\n  </p>\n  <p class=\"rg-phase-panel__department\"><span class=\"rg-dept-label\"><span class=\"rg-dept-label__kind\">Reparto</span> Stampa, Laser e HF</span></p>\n  <header class=\"rg-phase-panel__head\">\n    <div class=\"rg-phase-panel__heading\"><span class=\"rg-phase-panel__num\" aria-hidden=\"true\">2</span><div class=\"rg-phase-panel__name\"><p class=\"rg-phase-panel__kind\"><span>Fase 2 di 4</span></p><h1 class=\"rg-phase-panel__title\"><span class=\"rg-u-visually-hidden\">Fase 2: </span>Taglio laser</h1></div></div>\n  </header>\n  <div class=\"rg-phase-panel__body\"><!-- parametri --></div>\n</article>"
+    },
+    {
+      "id": "twin-mark",
+      "title": "Timbro di gemellaggio in linea",
+      "status": "beta",
+      "since": "1.42.0",
+      "kind": "component",
+      "role": "Il segno del gemellaggio in misura da etichetta, per la riga dell'elenco delle fasi (dentro rg-step__headline, prima del titolo e dopo l'eventuale rg-step__role), per una cella o per rg-phase-panel__name dove la fascia non ci sta: campitura piena verde (--rg-color-twin) con la parola in NERO, contorno nero e un SEGNO DI UGUALE di due filetti neri davanti alla parola. Il segno di uguale e' cio' che lo distingue dal timbro d'ambito (ambra) quando i due compaiono nello stesso elenco: in fotocopia il verde sta al 75% di grigio e l'ambra al 69%, sei punti che non bastano, e a separarli e' la figura. A differenza di rg-step--product la riga NON prende filetti forti: le gemelle possono essere tre o quattro, e quattro righe listate di nero sarebbero una griglia. Non e' un badge: il badge non si riempie.",
+      "classes": {
+        "base": "rg-twin-mark",
+        "related": [
+          "rg-twin-band",
+          "rg-step__headline",
+          "rg-step__role",
+          "rg-step__title",
+          "rg-steps--grouped",
+          "rg-scope-mark",
+          "rg-step--product",
+          "rg-phase-panel__name",
+          "rg-badge",
+          "rg-part-mark"
+        ]
+      },
+      "variants": [
+        "una sola forma"
+      ],
+      "states": [
+        "default"
+      ],
+      "tokens": [
+        "--rg-color-twin",
+        "--rg-color-twin-text",
+        "--rg-color-black",
+        "--rg-font-identity",
+        "--rg-font-size-xs",
+        "--rg-weight-medium",
+        "--rg-letter-label",
+        "--rg-line-height-technical",
+        "--rg-space-1",
+        "--rg-space-2",
+        "--rg-border-hairline",
+        "--rg-border-strong",
+        "--rg-radius-sm"
+      ],
+      "doc": "components/twin.md",
+      "patternRef": "components/steps.md",
+      "specimenAnchor": "twin-mark",
+      "keywords": [
+        "timbro",
+        "stamp",
+        "gemella",
+        "gemellaggio",
+        "parametri uguali",
+        "segno di uguale",
+        "riga dell'elenco",
+        "elenco fasi",
+        "steps",
+        "fase nell'elenco",
+        "etichetta in linea",
+        "twin",
+        "concatenata",
+        "fase collegata ai parametri",
+        "verde",
+        "badge pieno verde",
+        "fotocopia",
+        "figura invece del colore",
+        "timbro verde",
+        "timbro ambra e verde insieme",
+        "ruolo nel gruppo",
+        "graffa e timbro"
+      ],
+      "snippet": "<li class=\"rg-step\">\n  <div class=\"rg-step__head\">\n    <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-2-toggle\" aria-controls=\"fase-2\" aria-expanded=\"false\">\n      <span class=\"rg-step__num\">2</span>\n      <span class=\"rg-step__headline\">\n        <span class=\"rg-twin-mark\">Parametri uguali · dietro, fondo</span>\n        <span class=\"rg-step__title\">Taglio laser</span>\n      </span>\n    </button>\n  </div>\n  <div class=\"rg-step__body\" id=\"fase-2\" role=\"region\" aria-labelledby=\"fase-2-toggle\" hidden></div>\n</li>"
     }
   ]
 }

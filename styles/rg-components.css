@@ -845,6 +845,9 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
   .rg-phase-panel__heading ~ .rg-phase-panel__meta { padding-inline-start: 0; }
   .rg-phase-panel__summary { padding-inline-start: 0; }
   .rg-dept-band.rg-phase-panel__band { padding-inline: var(--rg-space-4); }
+  /* Le fasce in testa rientrano con la testa del blocco: la loro parola sta sul filo del titolo, non
+     otto pixel piu' dentro (1.42.0; valeva gia' per la fascia d'ambito da sola). */
+  .rg-phase-panel > .rg-scope-band, .rg-phase-panel > .rg-twin-band { padding-inline: var(--rg-space-4); }
   .rg-phase-panel__department { margin-inline: var(--rg-space-4); }
   .rg-phase-panel__gestures { justify-content: flex-start; margin-inline-start: 0; }
 }
@@ -2409,3 +2412,99 @@ a.rg-icon-button { text-decoration: none; }
 .rg-steps__break-note { margin: var(--rg-space-1) 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); }
 /* Con lo stacco (uso opzionale) il filo della sequenza si ferma: li' la sequenza della parte finisce. */
 .rg-step:has(+ .rg-steps__break)::before { content: none; }
+
+/* ── GEMELLAGGIO DEI PARAMETRI: LA STESSA FASE SU PIU' PARTI (1.42.0) ─────────────────────────────
+   Dentro un prodotto una fase sta in uno di TRE stati, e sono i tre valori di UN solo asse — «la
+   concatenazione tra fasi rispetto alle parti». Fino alla 1.41.0 se ne vedeva uno:
+   1) AUTONOMA — vale per questa parte e basta. NESSUN SEGNO, e non e' una dimenticanza: marcare
+      tutto equivale a non marcare niente, ed e' la regola gia' scritta per rg-scope-mark--part.
+   2) GEMELLA — la STESSA fase su piu' parti, tenuta uguale nei PARAMETRI (righe, macchine, valori)
+      ma NON nei tempi per pezzo: il taglio laser del davanti e quello del dietro seguono perimetri
+      diversi. E' lo stato aggiunto qui. Prima lo diceva una riga di testo grigia sopra il titolo e
+      nell'elenco delle fasi della parte non si vedeva affatto.
+   3) DI TUTTO IL PRODOTTO — una fase sola per l'oggetto, contata una volta: rg-scope-band e
+      rg-scope-mark (1.31.0), che non cambiano di una riga.
+   Richiesta: «per le fasi univoche usiamo una fascia con colore, ti chiedo di evidenziare in qualche
+   modo anche le fasi con parametri concatenate, magari un colore verde esplicitando che SOLO I
+   PARAMETRI sono uguali e NON I TEMPI». Il limite e' meta' del significato, non una postilla: per
+   questo la nota della fascia non e' facoltativa e la parola del timbro dice «parametri», non
+   «gemella».
+
+   DUE MISURE, LE STESSE DELL'AMBITO, cosi' i tre stati si leggono con la stessa grammatica:
+   - rg-twin-band — la FASCIA in testa al blocco della fase a schermo (rg-phase-panel);
+   - rg-twin-mark — il TIMBRO in linea, per la riga dell'elenco (rg-step).
+   ORDINE DEI FIGLI in rg-phase-panel: prima di chi e' la fase (rg-scope-band), poi come e' tenuta
+   (rg-twin-band), poi chi la esegue (rg-phase-panel__band o __department), poi __head, __body,
+   __foot. Le due fasce sono mutuamente esclusive nei fatti — una fase di tutto il prodotto non ha
+   altre parti con cui essere gemella — ma se capitano insieme il CSS non si rompe: gli angoli alti
+   li prende solo il PRIMO figlio, e la banda del reparto che segue una fascia li perde (correzione
+   che valeva gia' per rg-scope-band, dove la banda del reparto in seconda posizione si arrotondava
+   ancora come se fosse la prima).
+
+   CLASSI PROPRIE E NON UNA VARIANTE DI rg-scope-band, per tre ragioni verificate, non di gusto:
+   la parola «scope» nel markup direbbe «tutto il prodotto» in un caso che e' l'opposto; il blocco
+   @media print di rg-utilities.css applica print-color-adjust: exact a .rg-scope-band, e qui NON lo
+   vogliamo (vedi CARTA); e la fascia porta una figura in piu' che la variante avrebbe dovuto
+   aggiungere comunque.
+
+   IL COLORE: --rg-color-twin (#58d6a0), token di RUOLO come --rg-color-scope, con il testo nero
+   obbligatorio (11,54:1; bianco farebbe 1,82:1). Il verde chiesto dal campo nel DS era gia' speso
+   due volte: --rg-color-success e' lo stato «conforme/validato» ED e' --rg-color-category-5, il
+   reparto Finissaggio; --rg-color-accent-sage e' --rg-color-category-7, le Incollature, ed e' anche
+   l'identita' della quarta parte. E' l'argomento con cui l'ambito ha escluso warning e danger, piu'
+   uno peggiore: nel pannello della fase i parametri portano il loro stato di validazione, e una
+   fascia verde che dice «parametri uguali» verrebbe letta «parametri validati» — il significato
+   sbagliato sul fatto piu' delicato della pagina. Quindi un verde proprio, a 154° di tinta (il
+   massimo di distanza da salvia e success restando verde) e a saturazione 59% contro il 96%
+   dell'ambra: il gemellaggio e' un fatto piu' debole dell'ambito, e il colore lo dichiara.
+
+   TRE SEGNALI, E UNO SOLO E' IL COLORE (regole §4):
+   (a) LA PAROLA, contenuto del markup: «PARAMETRI UGUALI IN DIETRO, FONDO» e la nota col limite.
+       Resta anche senza CSS; la cassa la mette il CSS.
+   (b) IL SEGNO DI UGUALE, due filetti neri generati dal DS. E' la figura che separa i due timbri
+       quando compaiono nello stesso elenco: in fotocopia il verde sta al 75% di grigio e l'ambra al
+       69%, sei punti che NON bastano. E' fatto di BORDI, non di sfondo, perche' i bordi si stampano
+       sempre anche quando il browser butta via le campiture.
+   (c) IL FILETTO SOTTO, nero HAIRLINE dove la fascia d'ambito ha il nero FORTE: la gerarchia fra i
+       due fatti e' scritta nello spessore della linea, non solo nella tinta.
+
+   PERCHE' LA RIGA D'ELENCO NON PRENDE ANCHE I FILETTI FORTI, come fa rg-step--product. Quelli
+   staccano l'eccezione dalle vicine, e l'eccezione e' UNA; le gemelle in una parte possono essere
+   tre o quattro, e quattro righe listate di nero sarebbero una griglia, non un segno. Il timbro
+   basta, e non entra in conflitto con la graffa di rg-steps--grouped, che occupa la colonna a
+   sinistra dei numeri.
+
+   CARTA: il gemellaggio NON va sul foglio di reparto, ed e' una decisione, non un rinvio. Due fogli
+   gemelli vanno lavorati tutti e due — i tempi sono diversi, il lavoro e' doppio — mentre il segno
+   d'ambito sul foglio dice l'opposto, «questa si fa una volta sola». Mettere accanto al secondo un
+   timbro che somiglia al primo invita l'inferenza sbagliata, e la paga il reparto. Il gemellaggio e'
+   un fatto d'ufficio: vive nel pannello e nell'elenco. Di conseguenza queste due classi NON sono
+   nell'elenco print-color-adjust: exact di rg-utilities.css: se una pagina a schermo viene stampata
+   la campitura cade e resta la parola col segno di uguale, che e' esattamente il peso giusto lassu'.
+
+   Nessuno stato: non e' interattivo, non ha hover ne' focus. Cliccabile e' la riga, non il timbro. */
+.rg-twin-band { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-3); margin: 0; padding: var(--rg-space-2) var(--rg-space-4); color: var(--rg-color-twin-text); background: var(--rg-color-twin); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
+/* Il segno di UGUALE, generato dal DS (come la graffa del gruppo o la trama del reparto): due
+   filetti di 2 px con 4 px di luce, fatti di BORDI perche' un bordo si stampa anche dove uno sfondo
+   viene scartato. box-sizing esplicito: in rg-core tutto e' border-box, e li' i due filetti si
+   toccherebbero. */
+.rg-twin-band::before, .rg-twin-mark::before { content: ""; flex: none; align-self: center; box-sizing: content-box; height: var(--rg-space-1); border-top: var(--rg-border-strong) var(--rg-border-style) currentColor; border-bottom: var(--rg-border-strong) var(--rg-border-style) currentColor; }
+.rg-twin-band::before { width: var(--rg-space-3); }
+.rg-twin-band__text { flex: none; color: var(--rg-color-twin-text); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+/* La nota NON e' facoltativa: dice il limite del legame, che e' meta' del significato. Nera come il
+   testo (nero su twin = 11,54:1, AA con margine anche a 12 px), distinta per misura e peso. */
+.rg-twin-band__note { min-width: 0; color: var(--rg-color-twin-text); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); }
+/* IN TESTA AL BLOCCO DELLA FASE (a schermo), sopra la riga del reparto e sotto l'eventuale fascia
+   d'ambito. Gli angoli alti li prende solo il primo figlio del pannello. */
+.rg-phase-panel > .rg-twin-band { padding-inline: var(--rg-space-6); }
+.rg-phase-panel > .rg-twin-band:first-child { border-start-start-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); border-start-end-radius: calc(var(--rg-radius-md) - var(--rg-border-hairline)); }
+.rg-phase-switch ~ .rg-phase-panel > .rg-twin-band:first-child { border-start-start-radius: 0; }
+/* Una fascia in testa passa il bordo alto a se' stessa: cio' che la segue e' squadrato. */
+.rg-phase-panel > .rg-scope-band ~ .rg-phase-panel__band, .rg-phase-panel > .rg-twin-band ~ .rg-phase-panel__band { border-start-start-radius: 0; border-start-end-radius: 0; }
+
+/* IL TIMBRO IN LINEA — nella riga dell'elenco (rg-step__headline), subito prima del titolo e dopo
+   l'eventuale rg-step__role: il ruolo dice dove sei nella sequenza DI QUESTA parte, il timbro dice
+   cosa accade FUORI dalla parte, e il contesto locale si legge per primo. */
+.rg-twin-mark { display: inline-flex; align-items: center; gap: var(--rg-space-1); padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); color: var(--rg-color-twin-text); background: var(--rg-color-twin); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-twin-mark::before { width: var(--rg-space-2); }
+.rg-step__headline > .rg-twin-mark, .rg-phase-panel__name > .rg-twin-mark { justify-self: start; }

@@ -92,7 +92,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -3194,6 +3194,98 @@ status         VALID</pre></div>
         <p class="specimen-note"><strong>Due risposte, una dentro l'altra.</strong> La prima non chiede niente al markup: la nav scorre dentro il proprio riquadro a qualunque larghezza — e sotto i 680 px lo fanno anche le azioni — così la barra torna larga quanto lo schermo. A qualunque larghezza perché questa barra, tutta intera, chiede 737 px: fermarsi alla soglia dei telefoni avrebbe lasciato la pagina che slitta fra 681 e 737, cioè su un tablet in verticale o su una finestra stretta. Vale per ogni app già in campo salendo il tag — misurato a 375 px: <code class="rg-mono">scrollWidth 375 = clientWidth 375</code>. Ma è una rete di sicurezza, non una forma: la nav si riduce a una striscia da ~170 px. La seconda è la forma giusta, ed è quella delle tavole 1 e 2: nav e azioni dentro <code class="rg-mono">rg-topbar__menu</code>, aperte da <code class="rg-mono">rg-topbar__menu-toggle</code>. <strong>Sopra i 680 px il markup in più non cambia niente</strong>: verificato a 1280 px, nav e azioni cadono allo stesso pixel di prima.</p>
         <p class="specimen-note"><strong>Perché un <code class="rg-mono">&lt;details&gt;</code> e non un bottone.</strong> Nessun JavaScript da scrivere in ogni app, stato aperto/chiuso annunciato dal browser, Invio e Spazio già funzionanti: la navigazione resta raggiungibile da tastiera anche a menu chiuso — si tabula sul controllo, si apre, si tabula nelle voci. E <strong>il pannello non è figlio del <code class="rg-mono">&lt;details&gt;</code></strong>: un figlio di <code class="rg-mono">&lt;details&gt;</code> chiuso lo nasconde lo user-agent, e per rimostrarlo su desktop servirebbe <code class="rg-mono">::details-content</code>, che è recente (misurato in Chrome: <code class="rg-mono">display: contents</code> sul <code class="rg-mono">&lt;details&gt;</code> <em>non</em> lo rimostra). Da fratello il pannello è un elemento come un altro e su desktop lo mostra una media query normale: il chrome di ogni scrivania non dipende da una pseudo-classe nuova. Il prezzo è che il legame lo fa il selettore <code class="rg-mono">[open] ~</code>, quindi l'ordine nel markup non è libero.</p>
         <p class="specimen-note"><strong>Cosa entra nel pannello.</strong> Ciò che può aspettare: le sezioni e le azioni di servizio. Ciò che deve restare a portata di pollice — il marchio, il titolo, un'azione primaria contestuale — resta <em>fuori</em>, sulla barra. Le righe sono da 44 px (regola §11 sul dito, 1.30.0), la voce corrente prende la barretta nera a sinistra come <code class="rg-mono">rg-sidebar-item</code> e il segno <code class="rg-mono">+</code>/<code class="rg-mono">−</code> del controllo è quello di <code class="rg-mono">rg-disclosure</code>: il DS non si inventa una seconda convenzione per dire aperto e chiuso. <strong>Limite dichiarato</strong>: senza JavaScript il pannello non si chiude toccando fuori né con Esc — si chiude ritoccando il controllo o, nella pratica, navigando.</p>
+      </section>
+      <section class="specimen-section" id="twin">
+        <div class="specimen-section__head"><span class="specimen-section__index">49</span><h2>La fase gemella: parametri uguali, tempi no (1.42.0)</h2><p>Dentro un prodotto una fase sta in uno di <strong>tre</strong> stati, e sono i tre valori di <strong>un solo asse</strong> — «la concatenazione tra fasi rispetto alle parti». Fino alla 1.41.0 se ne vedeva uno: <strong>autonoma</strong> (nessun segno, ed è voluto), <strong>gemella</strong> (la stessa fase su più parti, tenuta uguale nei <strong>parametri</strong> ma non nei <strong>tempi per pezzo</strong>: il taglio laser del davanti e quello del dietro seguono perimetri diversi) e <strong>di tutto il prodotto</strong> (<code class="rg-mono">rg-scope-band</code>, ambra, invariata). Il gemellaggio lo diceva una riga di testo grigia sopra il titolo, e nell'elenco delle fasi della parte <strong>non si vedeva affatto</strong>. Adesso ha le stesse due misure dell'ambito: <code class="rg-mono">rg-twin-band</code>, la fascia, e <code class="rg-mono">rg-twin-mark</code>, il timbro. <strong>Il limite è metà del significato</strong>: la nota della fascia non è facoltativa e la parola del timbro dice «parametri», non «gemella» — se qualcuno deducesse che anche i tempi sono uguali, sbaglierebbe il costo. Il colore è <code class="rg-mono">--rg-color-twin</code> <code class="rg-mono">#58d6a0</code>, verde come chiesto dal campo ma <strong>non uno dei due verdi che c'erano</strong>: <code class="rg-mono">--rg-color-success</code> è lo stato «conforme» <em>e</em> il reparto Finissaggio, <code class="rg-mono">--rg-color-accent-sage</code> è le Incollature <em>e</em> la quarta parte — e soprattutto perché nel pannello i parametri portano il loro stato di validazione: una fascia verde che dice «parametri uguali» verrebbe letta «parametri <strong>validati</strong>». Saturazione 59% contro il 96% dell'ambra e filetto sotto <strong>hairline</strong> dove l'ambito ha il nero <strong>forte</strong>: il fatto più debole porta il segno più debole. Vedi components/twin.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide" id="twin-band"><span class="specimen-label">1 · Testa del blocco della fase — l'ordine dei figli: di chi è la fase (nessuna fascia d'ambito: è di questa parte), come è tenuta (gemella), chi la esegue, poi la testa</span><div class="specimen-stage specimen-stage--page">
+            <article class="rg-phase-panel">
+              <p class="rg-twin-band">
+                <span class="rg-twin-band__text">Parametri uguali in dietro, fondo</span>
+                <span class="rg-twin-band__note">Righe, macchine e valori restano uguali · i tempi per pezzo sono di questa parte</span>
+              </p>
+              <p class="rg-phase-panel__department"><span class="rg-dept-label"><span class="rg-dept-mark rg-dept-mark--stampa rg-dept-mark--quiet" aria-hidden="true"></span><span class="rg-dept-label__kind">Reparto</span> Stampa, Laser e HF</span></p>
+              <header class="rg-phase-panel__head">
+                <div class="rg-phase-panel__heading"><span class="rg-phase-panel__num" aria-hidden="true">2</span><div class="rg-phase-panel__name"><p class="rg-phase-panel__kind"><span>Fase 2 di 4</span></p><h3 class="rg-phase-panel__title"><span class="rg-u-visually-hidden">Fase 2: </span>Taglio laser</h3></div></div>
+                <div class="rg-phase-panel__summary"><p class="rg-phase-panel__meta"><span>3 operazioni</span><span>perimetro <strong>1.840 mm</strong></span><span>tempo pezzo <strong>42 s</strong></span></p><div class="rg-phase-panel__status"><span class="rg-badge rg-badge--validated">parametri validati</span></div></div>
+              </header>
+              <div class="rg-phase-panel__body"><p class="rg-small">Il tempo pezzo di questa fase è <strong>di questa parte</strong>: in DIETRO la stessa fase ha gli stessi parametri e un perimetro di 2.310 mm, quindi un tempo diverso. Cambiando una riga qui, cambia anche là; cambiando il tempo, no.</p></div>
+            </article>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide" id="twin-mark"><span class="specimen-label">2 · Elenco delle fasi della parte DAVANTI — i due timbri nella stessa vista: la 2 è gemella (verde, col segno di uguale), la 4 è di tutto il prodotto (ambra, con i filetti forti). La gemella non prende filetti: le gemelle possono essere quattro, e quattro righe listate di nero sarebbero una griglia</span>
+            <ol class="rg-steps">
+              <li class="rg-step">
+                <div class="rg-step__head">
+                  <button class="rg-step__toggle" type="button" id="spec-twin-1-toggle" aria-controls="spec-twin-1" aria-expanded="false">
+                    <span class="rg-step__num">1</span>
+                    <span class="rg-step__headline">
+                      <span class="rg-step__title">Ricamo piatto</span>
+                      <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Ricamo</span><span>4 operazioni</span></span>
+                    </span>
+                  </button>
+                  <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#twin" aria-label="Apri fase 1: Ricamo piatto">Apri</a></div>
+                </div>
+                <div class="rg-step__body" id="spec-twin-1" role="region" aria-labelledby="spec-twin-1-toggle" hidden></div>
+              </li>
+              <li class="rg-step">
+                <div class="rg-step__head">
+                  <button class="rg-step__toggle" type="button" id="spec-twin-2-toggle" aria-controls="spec-twin-2" aria-expanded="false">
+                    <span class="rg-step__num">2</span>
+                    <span class="rg-step__headline">
+                      <span class="rg-twin-mark">Parametri uguali · dietro, fondo</span>
+                      <span class="rg-step__title">Taglio laser</span>
+                      <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Stampa, Laser e HF</span><span>tempo pezzo 42 s</span></span>
+                    </span>
+                  </button>
+                  <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#twin" aria-label="Apri fase 2: Taglio laser, parametri uguali in dietro e fondo">Apri</a></div>
+                </div>
+                <div class="rg-step__body" id="spec-twin-2" role="region" aria-labelledby="spec-twin-2-toggle" hidden></div>
+              </li>
+              <li class="rg-step">
+                <div class="rg-step__head">
+                  <button class="rg-step__toggle" type="button" id="spec-twin-3-toggle" aria-controls="spec-twin-3" aria-expanded="false">
+                    <span class="rg-step__num">3</span>
+                    <span class="rg-step__headline">
+                      <span class="rg-step__title">Incollatura del bordo</span>
+                      <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Incollature</span><span>2 operazioni</span></span>
+                    </span>
+                  </button>
+                  <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#twin" aria-label="Apri fase 3: Incollatura del bordo">Apri</a></div>
+                </div>
+                <div class="rg-step__body" id="spec-twin-3" role="region" aria-labelledby="spec-twin-3-toggle" hidden></div>
+              </li>
+              <li class="rg-step rg-step--product">
+                <div class="rg-step__head">
+                  <button class="rg-step__toggle" type="button" id="spec-twin-4-toggle" aria-controls="spec-twin-4" aria-expanded="false">
+                    <span class="rg-step__num">4</span>
+                    <span class="rg-step__headline">
+                      <span class="rg-scope-mark">Tutto il prodotto</span>
+                      <span class="rg-step__title">Controllo qualità</span>
+                      <span class="rg-step__meta"><span class="rg-dept-label"><span class="rg-dept-label__kind">Reparto</span> Finissaggio e Controllo Qualità</span><span>6 controlli</span></span>
+                    </span>
+                  </button>
+                  <div class="rg-step__actions"><a class="rg-button rg-button--ghost" href="#twin" aria-label="Apri fase 4: Controllo qualità, di tutto il prodotto">Apri</a></div>
+                </div>
+                <div class="rg-step__body" id="spec-twin-4" role="region" aria-labelledby="spec-twin-4-toggle" hidden></div>
+              </li>
+            </ol>
+          </div>
+          <div class="specimen-cell specimen-cell--half" id="twin-vs-scope"><span class="specimen-label">Le due fasce a confronto — stessa grammatica, due pesi: la campitura dell'ambito chiude con il filetto <strong>forte</strong>, quella del gemellaggio con un <strong>hairline</strong>, e il verde è saturo meno della metà. Sotto, i due verdi già occupati: il reparto Finissaggio (che è anche lo stato «conforme») e le Incollature</span><div class="specimen-stage specimen-column">
+            <p class="rg-scope-band"><span class="rg-scope-band__text">Fase di tutto il prodotto</span><span class="rg-scope-band__note">Si compila una volta sola · nel costo conta una volta</span></p>
+            <p class="rg-twin-band"><span class="rg-twin-band__text">Parametri uguali in dietro, fondo</span><span class="rg-twin-band__note">I tempi per pezzo sono di questa parte</span></p>
+            <p class="rg-dept-band rg-dept-band--finissaggio"><span class="rg-dept-band__name">Reparto Finissaggio e Controllo Qualità</span></p>
+            <p class="rg-dept-band rg-dept-band--incollature"><span class="rg-dept-band__name">Reparto Incollature</span></p>
+            <div class="rg-alert rg-alert--success"><div><p class="rg-alert__title">Parametri validati</p><p class="rg-alert__message">Ecco perché la fascia non può essere questo verde: a un metro dicono la stessa cosa, e invece dicono due cose diverse.</p></div></div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half" id="twin-photocopy"><span class="specimen-label">In fotocopia (grigio, contrasto spinto) — il verde sta al 75% di grigio e l'ambra al 69%: <strong>sei punti non bastano</strong>. A separare i due timbri è il <strong>segno di uguale</strong>, due filetti fatti di bordi, che si stampano anche dove la campitura viene buttata via</span><div class="specimen-stage specimen-stage--photocopy specimen-column">
+            <p class="rg-small"><span class="rg-twin-mark">Parametri uguali</span> <span class="rg-scope-mark">Tutto il prodotto</span></p>
+            <p class="rg-twin-band"><span class="rg-twin-band__text">Parametri uguali in dietro, fondo</span><span class="rg-twin-band__note">I tempi per pezzo sono di questa parte</span></p>
+            <p class="rg-scope-band"><span class="rg-scope-band__text">Fase di tutto il prodotto</span><span class="rg-scope-band__note">Si compila una volta sola</span></p>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Perché classi proprie e non una variante di <code class="rg-mono">rg-scope-band</code>.</strong> L'asse è uno — e nella documentazione resta uno — ma la parola «scope» nel markup direbbe «tutto il prodotto» in un caso che è l'opposto; <code class="rg-mono">rg-utilities.css</code> applica <code class="rg-mono">print-color-adjust: exact</code> a <code class="rg-mono">.rg-scope-band</code>, e qui <strong>non</strong> lo vogliamo; e la fascia porta una figura in più che la variante avrebbe dovuto aggiungere comunque. <strong>Ordine dei figli di <code class="rg-mono">rg-phase-panel</code></strong>: <code class="rg-mono">rg-scope-band</code>, <code class="rg-mono">rg-twin-band</code>, la banda o la riga del reparto, poi <code class="rg-mono">__head</code>, <code class="rg-mono">__body</code>, <code class="rg-mono">__foot</code> — di chi è, come è tenuta, chi la esegue. Le due fasce sono mutuamente esclusive nei fatti, ma se capitano insieme il CSS non si rompe: gli angoli alti li prende solo il primo figlio, e la banda del reparto che segue una fascia li perde (correzione che valeva già per la fascia d'ambito da sola).</p>
+        <p class="specimen-note"><strong>Sul foglio stampato no, ed è una decisione.</strong> L'argomento a favore esiste: il reparto riceve due fogli quasi identici e non sa che sono lo stesso lavoro scritto una volta. Ma <strong>non è lo stesso lavoro</strong>: i tempi sono diversi e i due fogli vanno lavorati tutti e due, mentre il segno d'ambito sul foglio dice l'opposto — «questa si fa una volta sola». Un timbro somigliante accanto al secondo invita l'inferenza sbagliata, e la paga il reparto con un pezzo non fatto. Il gemellaggio è un fatto <strong>d'ufficio</strong>: chi cambia un parametro deve sapere dove arriva il cambio. Conseguenza voluta: le due classi non sono nell'elenco <code class="rg-mono">print-color-adjust: exact</code>, quindi se una pagina a schermo viene stampata la campitura cade e restano la parola e il segno di uguale. Non c'è una variante per la carta, e non è una dimenticanza.</p>
+        <p class="specimen-note"><strong>«Collegata» era già presa, e dice un'altra cosa.</strong> In <code class="rg-mono">rg-steps--grouped</code> le fasi collegate sono fasi <em>diverse</em> di <em>questa</em> parte, tenute in sequenza da una graffa; la gemella è la <em>stessa</em> fase su <em>altre</em> parti. Per questo la classe non si chiama <code class="rg-mono">--linked</code>: due significati sulla stessa parola a due righe di distanza sono lo stesso errore che si evita sui colori. Una gemella può stare dentro un gruppo — la graffa occupa la colonna a sinistra dei numeri, il timbro sta dentro l'intestazione della riga — e in quel caso il timbro va <strong>dopo</strong> <code class="rg-mono">rg-step__role</code>: il ruolo dice dove sei nella sequenza di questa parte, il timbro dice cosa accade fuori dalla parte.</p>
       </section>
     </main>
   </div>

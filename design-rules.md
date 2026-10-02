@@ -104,6 +104,30 @@ colore: dice il **ruolo**, non la tinta. Chi consuma il DS non ha toccato una cl
   e limitata a un componente: se servisse per una seconda cosa, la domanda da farsi è se quella
   seconda cosa sia davvero un ambito.
 
+### Il colore del gemellaggio (dalla 1.42.0)
+
+`--rg-color-twin` è il **secondo valore dello stesso asse**: la fase resta di questa parte, ma i suoi
+**parametri** sono tenuti uguali alla stessa fase su altre parti — e i **tempi per pezzo** no
+([twin](components/twin.md)). Tutti i vincoli di `--rg-color-scope` valgono identici: un ruolo solo,
+mai azione/navigazione/focus/testo/stato, mai da solo, testo nero in coppia col colore.
+
+- **È verde, ma non uno dei due verdi che c'erano.** `--rg-color-success` è lo stato «conforme» **e**
+  `--rg-color-category-5` (reparto Finissaggio); `--rg-color-accent-sage` è `--rg-color-category-7`
+  (Incollature) **e** l'identità della quarta parte. Oltre all'argomento dei tre significati, ce n'è
+  uno peggiore e decisivo: nel pannello della fase i parametri portano il proprio stato di
+  validazione, e una fascia verde che dice «parametri uguali» verrebbe letta «parametri **validati**».
+- **La campitura piena resta il segno di questo asse, e solo suo.** Dalla 1.42.0 l'asse ha due valori
+  marcati: il colore dice quale, la **figura** li separa dove convivono (il timbro del gemellaggio
+  porta un segno di uguale fatto di due filetti neri, quello d'ambito no), perché in fotocopia il
+  verde sta al 75% di grigio e l'ambra al 69% e sei punti non bastano. Nessuno **stato** riempie
+  ancora una superficie: alert, badge e campi in errore restano filetti e parole su bianco.
+- **Il fatto più debole porta il colore più debole**: saturazione 59% contro il 96% dell'ambra,
+  filetto hairline sotto la fascia dove l'ambito ha il filetto forte. Se le due fasce urlassero
+  uguale, «questa si conta una volta» verrebbe appiattito da «i parametri sono uguali».
+- **Non arriva sulla carta, per decisione.** Due fogli gemelli vanno lavorati **tutti e due**, mentre
+  il segno d'ambito sul foglio dice l'opposto: un timbro somigliante accanto invita l'inferenza
+  sbagliata. Il gemellaggio è un fatto d'ufficio e vive a schermo.
+
 ### Identità delle parti (dalla 1.17.0)
 
 Le parti di un prodotto (DAVANTI, DIETRO, LATO, FONDO, MANICO…) sono oggetti pari-ordinati: la

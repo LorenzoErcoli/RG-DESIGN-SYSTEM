@@ -89,7 +89,12 @@ Quindi un token di **ruolo** proprio, come `--rg-color-scope`:
 2. **Il segno di uguale**, generato dal DS: due filetti neri di 2 px con 4 px di luce, davanti alla
    parola. È la figura che **separa i due timbri** quando compaiono nello stesso elenco, e serve
    perché in fotocopia il verde sta al **75%** di grigio e l'ambra al **69%**: sei punti **non**
-   bastano. È fatto di **bordi**, non di sfondo, perché un bordo si stampa anche quando il browser
+   bastano. **Misurato sulla pagina vera** (parte «dietro» di un prodotto: una fase gemella col
+   timbro verde e, due righe sotto, una fase di tutto il prodotto col timbro ambra; filtro
+   `grayscale(1) contrast(1.6)` sull'elemento radice) i due rettangoli arrivano **praticamente allo
+   stesso grigio**: i sei punti a occhio non si distinguono. A separarli restano il segno di uguale e
+   le due parole, che non si assomigliano per niente — «PARAMETRI UGUALI · DAVANTI» contro «TUTTO IL
+   PRODOTTO». È fatto di **bordi**, non di sfondo, perché un bordo si stampa anche quando il browser
    butta via le campiture.
 3. **Il filetto sotto la fascia**, nero **hairline** dove l'ambito ha il nero **forte** (2 px): la
    gerarchia fra i due fatti è scritta anche nello spessore della linea.
@@ -241,3 +246,8 @@ separarli è la **figura**, non il tono.
 - **Il costo non cambia**: una gemella conta su **ogni** parte, con i tempi della parte. È la
   differenza da `rg-scope-band`, che conta una volta. Se qualcuno la scambia, il costo esce sbagliato
   per difetto.
+- **Non rendere le due fasce insieme.** Una fase di tutto il prodotto non ha altre parti con cui
+  essere gemella: lo stato è uno. Il CSS non si rompe se capitano nello stesso pannello (gli angoli
+  alti li prende solo il primo figlio), ma è una **contraddizione nei dati**, non un caso di
+  impaginazione — in archivi marcati prima di questa regola la convivenza può esistere davvero, e si
+  fa decidere a chi conosce il prodotto: il dato non dice quale delle due cose si voleva.

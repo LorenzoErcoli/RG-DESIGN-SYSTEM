@@ -61,6 +61,31 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.43.0 — il titoletto della fase
+
+Additiva: una classe nuova, `rg-phase-panel__purpose`, nessun token. Chi sale il pin e non la usa non
+ha niente da fare.
+
+Chi vuole il titoletto:
+
+1. **Nella testa del blocco**, dopo `rg-phase-panel__gestures` e **prima** di
+   `rg-phase-panel__summary`, aggiungere la zona con il campo (un `<div>` dentro la form unica della
+   pagina, una `<form>` propria dove la form unica non c'è).
+2. **`rg-phase-panel__title` porta il nome di catalogo**, non il nome composto: il pezzo scritto a
+   mano sta nel campo. Fuori dalla testa — `rg-step__title`, `rg-phase-switch__title`, percorso,
+   foglio — il nome resta **composto**, con un trattino lungo fra due spazi.
+3. **Togliere lo «scopo» da `rg-phase-panel__kind`**: lì si ripeteva dal campo che lo scrive, e
+   `__kind` torna a dire soltanto «Fase N di M» e la relazione.
+4. **Il campo «Scopo» della sezione «Informazioni generali» NON si tocca.** È un parametro di
+   catalogo a scelta chiusa che il motore del costo legge, non il titoletto con un'altra interfaccia:
+   convivono sulla stessa fase. Se un conto lo legge è un parametro e sta nella sua sezione; se
+   nessun conto lo legge ed è lì per distinguere la cosa, è nome e sta nella testa.
+
+E una regola che vale anche per chi non usa il titoletto: **dentro `rg-phase-panel__body` non si mette
+niente prima di `rg-phase-panel__sections`**. Quella striscia ha i margini negativi ed è il primo
+figlio per contratto; ciò che le sta davanti le finisce sotto per 24 px, e la testa si ritrova due
+filetti.
+
 ### 1.42.0 — il segno della fase gemella
 
 **Niente da fare.** Due classi additive (`rg-twin-band`, `rg-twin-mark`) e un token additivo

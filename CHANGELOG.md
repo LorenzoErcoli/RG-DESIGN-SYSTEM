@@ -10,9 +10,9 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 ## 1.43.0 — 2026-10-06
 
 **Minor.** Una classe nuova e additiva, `rg-phase-panel__purpose`, e nessun token nuovo. Nessuna
-classe esistente cambia di una riga: chi sale il pin non ha niente da fare. Due cose **si dichiarano
-superate** nei doc (non nel CSS): lo «scopo» come voce di `rg-phase-panel__kind` e il campo «Scopo»
-dentro la sezione «Informazioni generali».
+classe esistente cambia di una riga: chi sale il pin non ha niente da fare. **Una** cosa si dichiara
+superata nei doc (non nel CSS): lo «scopo» come voce di `rg-phase-panel__kind`, dove si ripeteva dal
+campo che lo scrive.
 
 ### Il problema: si sapeva dove leggere, non dove scrivere
 
@@ -96,14 +96,35 @@ che chiede un gesto per comparire è un valore che non si legge.
 - **Sul foglio stampato nessun campo**: il titoletto è già dentro il nome della lavorazione
   (`rg-worksheet-block__work`). Niente cambia in stampa.
 
+### Il titoletto non è lo scopo — correzione prima del tag
+
+La prima stesura di questa proposta dichiarava superato anche il **campo «Scopo»** della sezione
+«Informazioni generali», dandolo per la stessa cosa del titoletto con un'interfaccia diversa.
+**Sbagliato**, e la correzione è arrivata da `rg-product-platform` prima del rilascio: lo scopo è un
+parametro di **catalogo a scelta chiusa** (quattro sotto-tipi — Pressatura, Forno, Applicazione DTF,
+Applicazione strass — e sei valori: rimozione garze, ritiro materiale, trasferimento, sublimazione,
+fissaggio, pressatura frange) **che il motore del costo legge**: `core.storage.stoffa.contesto()`
+riconosce da lì la sublimatica su stoffa, e il catalogo lo usa per far nascere il ritiro materiale
+agganciato al taglio laser. Toglierlo dalla sua sezione lo renderebbe non scrivibile, e con esso un
+pezzo del calcolo.
+
+Il titoletto è testo libero, su qualunque fase, e non entra in nessun conto. **Convivono**: una
+pressatura può avere scopo «ritiro materiale» e titoletto «quella del davanti». Il numero che chiude
+la questione: lo scopo esiste su quattro sotto-tipi e l'archivio ha **263 ricami su 282 fasi** — se il
+titoletto avesse sostituito lo scopo, i ricami sarebbero rimasti senza l'uno e senza l'altro.
+
+**La prova da applicare** quando due campi sembrano lo stesso campo: se un conto lo legge è un
+**parametro**, e sta nella sezione dei suoi parametri; se nessun conto lo legge e serve a distinguere
+la cosa, è **nome**, e sta nella testa. È la regola §8 applicata a una coppia che la parola comune
+nascondeva.
+
 ### Superato (resta nel CSS, non va usato nel markup nuovo)
 
-- lo **«scopo» come voce di `__kind`** («Fase 2 di 4 · *rimozione garze* · Principale · con la 3»);
-- il **campo «Scopo» nella sezione «Informazioni generali»**, che era un parametro fra i parametri e
-  sulla pagina del ricamo — che non ha quella sezione — non aveva posto.
+- lo **«scopo» come voce di `__kind`** («Fase 2 di 4 · *rimozione garze* · Principale · con la 3»): lì
+  era una **ripetizione** del campo che lo scrive, due righe più in basso. `__kind` torna a dire
+  soltanto posizione e relazione.
 
-Sono la stessa cosa del titoletto, e il titoletto ha una zona sua: `__kind` torna a dire soltanto
-posizione e relazione.
+Il **campo** «Scopo» non è superato e resta dov'è.
 
 ## 1.42.0 — 2026-10-02
 

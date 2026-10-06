@@ -126,7 +126,7 @@ Variabile: `--rg-phase-switch-ground`, il fondo dietro la didascalia (default
 | `rg-phase-panel__name` | (1.17.0) Colonna di etichetta e nome. |
 | `rg-scope-band` | **1.31.0.** La **fascia d'ambito**: primo figlio del blocco, **sopra** `__department`, quando la fase vale per tutto il prodotto e non per una parte. Campitura piena nel colore d'ambito (ambra dalla 1.32.0, parola in nero), da bordo a bordo, filetto nero forte sotto. Vedi [scope](scope.md). |
 | `rg-phase-panel__department` | **Proposta 1.21.0.** La **riga del reparto**: primo figlio del blocco, prima di `__head`. `rg-dept-label` con tessera e la parola «Reparto» (`rg-dept-label__kind`): «Reparto Ricamo», «Reparto da assegnare». Chiusa da un filetto neutro rientrato. Vedi *Il reparto in una riga sua*. |
-| `rg-phase-panel__kind` | (1.17.0) «Fase 2 di 4», poi lo scopo e la relazione: «Principale · con la 3», «Collegata · dopo la 2». Sempre, anche con una fase sola. Nella 1.20.0 il primo elemento era il reparto (`rg-dept-label`): **superato dalla proposta 1.21.0**, il reparto va in `__department`. |
+| `rg-phase-panel__kind` | (1.17.0) «Fase 2 di 4» e la relazione: «Principale · con la 3». **Dalla proposta 1.43.0 non porta più lo scopo**, che si ripeteva dal campo che lo scrive. Forma precedente: «Fase 2 di 4», poi lo scopo e la relazione: «Principale · con la 3», «Collegata · dopo la 2». Sempre, anche con una fase sola. Nella 1.20.0 il primo elemento era il reparto (`rg-dept-label`): **superato dalla proposta 1.21.0**, il reparto va in `__department`. |
 | `rg-phase-panel__title` | (1.17.0) Il nome della fase: `<h1>` se la pagina mostra una fase, `<h2>` in un gruppo. |
 | `rg-phase-panel__purpose` | **Proposta 1.43.0.** Il **titoletto della fase**: la zona in cui si *scrive* il pezzo di nome che non viene dal catalogo. Quinta zona della testa, fra la riga del titolo e `__summary`, sul filo del titolo. Contiene un `rg-field` (dentro la form unica della pagina) oppure una `<form>` propria. Vedi *Il titoletto della fase*. |
 | `rg-phase-panel__meta` | Riepilogo della fase: `12 materiali` · `48 stop` · `9 fili` · `dati dal PDF caricato su questa fase`. Senza testa titolata (forma 1.16) è posizione e relazione. |
@@ -910,13 +910,47 @@ Con una form sua (il ricamo):
 (`rg-worksheet-block__work`), che il foglio porta in maiuscolo da sé. Nulla cambia in
 [worksheet-block](worksheet-block.md).
 
+#### Il titoletto non è lo scopo, e lo scopo non si tocca
+
+Nel pannello convivono **due** cose che si somigliano a parole e non si somigliano per niente nei
+fatti. La prima stesura di questa proposta le aveva dichiarate la stessa cosa con due interfacce
+diverse, e **sbagliava**: la correzione è arrivata da `rg-product-platform` prima del tag.
+
+| | **Scopo** | **Titoletto** |
+| --- | --- | --- |
+| che cos'è | parametro di **catalogo**, a **scelta chiusa** | **testo libero**, massimo 40 caratteri |
+| dove esiste | su **quattro sotto-tipi** (Pressatura, Forno, Applicazione DTF, Applicazione strass) | su **qualunque** fase |
+| quanti valori | sei: rimozione garze, ritiro materiale, trasferimento, sublimazione, fissaggio, pressatura frange | infiniti: lo scrive chi prepara la scheda |
+| chi lo legge | **il motore del costo** | nessun conto |
+| dove si scrive | nella sezione che contiene i suoi parametri («Informazioni generali»), **e ci resta** | `rg-phase-panel__purpose`, nella testa |
+
+**Lo scopo entra nel calcolo, e per questo non può uscire dalla sua sezione.** Nella piattaforma
+`core.storage.stoffa.contesto()` riconosce da lì la sublimatica su stoffa, e il catalogo lo usa per
+far nascere il ritiro materiale agganciato al taglio laser: toglierlo da «Informazioni generali» lo
+renderebbe non scrivibile, e con esso un pezzo del costo. Il titoletto non entra in nessun conto.
+
+**Convivono sulla stessa fase**, e si leggono come due cose diverse perché stanno in due posti
+diversi: una pressatura può avere scopo «ritiro materiale» — che il costo legge — e titoletto
+«quella del davanti», che nessuno calcola.
+
+**Il numero che chiude la questione**: lo scopo esiste su quattro sotto-tipi, e l'archivio ha **263
+ricami su 282 fasi**. Se il titoletto avesse sostituito lo scopo, i ricami — la quasi totalità delle
+fasi — sarebbero rimasti senza l'uno e senza l'altro.
+
+**La prova da applicare**, quando due campi sembrano lo stesso campo: **se un conto lo legge è un
+parametro, e sta nella sezione dei suoi parametri; se nessun conto lo legge e serve a distinguere la
+cosa, è nome, e sta nella testa.** È la regola §8 («separare input, risultato calcolato e dato
+validato») applicata a una coppia che la parola comune nascondeva: nella prima stesura
+l'identità era stata dedotta dal fatto che `__kind` scriveva «rimozione garze» accanto al titolo —
+e lì la ripetizione c'era davvero, ma era fra `__kind` e il campo dello scopo, non fra lo scopo e il
+titoletto.
+
 **Che cosa è superato da questa proposta** (resta nel CSS e nei doc, non va usato nel markup nuovo):
 
 - **lo «scopo» come voce di `__kind`** («Fase 2 di 4 · *rimozione garze* · Principale · con la 3»):
-  è la stessa cosa del titoletto, e il titoletto ha una zona sua. `__kind` torna a dire soltanto
-  posizione e relazione;
-- **il campo «Scopo» nella sezione «Informazioni generali»**: era un parametro fra i parametri, e
-  sulla pagina del ricamo — che non ha quella sezione — non aveva posto.
+  lì era una **ripetizione** del campo che lo scrive, due righe più in basso. `__kind` torna a dire
+  soltanto posizione e relazione. Il **campo** «Scopo» nella sezione «Informazioni generali» **non è
+  superato**: è un'altra cosa, e resta dov'è.
 
 **Misurato** (Chrome headless, pannello largo 1.132 px, testa con «Torna alla prima lettura» e
 «Elimina fase» in `__gestures`, valore di 34 caratteri):

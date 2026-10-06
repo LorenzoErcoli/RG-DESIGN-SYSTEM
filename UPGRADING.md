@@ -74,8 +74,12 @@ Chi vuole il titoletto:
 2. **`rg-phase-panel__title` porta il nome di catalogo**, non il nome composto: il pezzo scritto a
    mano sta nel campo. Fuori dalla testa — `rg-step__title`, `rg-phase-switch__title`, percorso,
    foglio — il nome resta **composto**, con un trattino lungo fra due spazi.
-3. **Togliere lo «scopo» da `rg-phase-panel__kind`** e il campo «Scopo» dalla sezione «Informazioni
-   generali»: `__kind` torna a dire soltanto «Fase N di M», scopo del gruppo e relazione.
+3. **Togliere lo «scopo» da `rg-phase-panel__kind`**: lì si ripeteva dal campo che lo scrive, e
+   `__kind` torna a dire soltanto «Fase N di M» e la relazione.
+4. **Il campo «Scopo» della sezione «Informazioni generali» NON si tocca.** È un parametro di
+   catalogo a scelta chiusa che il motore del costo legge, non il titoletto con un'altra interfaccia:
+   convivono sulla stessa fase. Se un conto lo legge è un parametro e sta nella sua sezione; se
+   nessun conto lo legge ed è lì per distinguere la cosa, è nome e sta nella testa.
 
 E una regola che vale anche per chi non usa il titoletto: **dentro `rg-phase-panel__body` non si mette
 niente prima di `rg-phase-panel__sections`**. Quella striscia ha i margini negativi ed è il primo

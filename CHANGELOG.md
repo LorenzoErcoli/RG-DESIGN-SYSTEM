@@ -7,6 +7,104 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.43.0 — 2026-10-06
+
+**Minor.** Una classe nuova e additiva, `rg-phase-panel__purpose`, e nessun token nuovo. Nessuna
+classe esistente cambia di una riga: chi sale il pin non ha niente da fare. Due cose **si dichiarano
+superate** nei doc (non nel CSS): lo «scopo» come voce di `rg-phase-panel__kind` e il campo «Scopo»
+dentro la sezione «Informazioni generali».
+
+### Il problema: si sapeva dove leggere, non dove scrivere
+
+Una fase ha un **titoletto**: testo libero corto (massimo 40 caratteri) che chi prepara la scheda
+aggiunge al nome che viene dal catalogo.
+
+> «un titoletto da aggiungere vicino al nome della fase, mi serve per poter rapidamente vedere cosa fa
+> la fase a livello più specifico — RICAMO “BASE PANNELLO”, PRESSATURA “RITIRO MATERIALE”»
+
+Su una parte con due ricami l'elenco diceva due volte «Ricamo». **Leggerlo** era già risolto: il nome
+composto entra nel titolo della riga d'elenco (`rg-step__title`), sulla linguetta e sul foglio.
+**Scriverlo** no: non c'era un posto, dentro il blocco della fase, per un campo che modifica
+l'**identità** della fase. Il tentativo — un `rg-disclosure` come primo figlio di
+`rg-phase-panel__body`, prima della striscia delle tab — **si sovrapponeva**: misurato a schermo, il
+`<details>` occupava 361–519 px e la striscia partiva a 495.
+
+### Perché si sovrapponeva, e perché è un contratto e non un difetto
+
+`rg-phase-panel__sections` porta `margin: -24px -24px 24px`: è **disegnata per essere il primo figlio**
+di `__body` e salire contro la testa, così le linguette di sezione si attaccano sotto il titolo da
+bordo a bordo (forma 1.17.0). Un blocco messo davanti se lo mangia per 24 px. E c'è un secondo
+effetto: la regola `:has(> __body > __sections:first-child)` che toglie il filetto alla testa smette di
+valere, quindi la testa si ritrova due linee.
+
+**Dentro `__body` non si mette niente prima delle tab.** È ora scritto nel CSS, nel doc e nella
+vetrina.
+
+### La forma: `rg-phase-panel__purpose`, quinta zona della testa
+
+La testa del blocco passa a cinque zone: `__heading`, `__gestures`, **`__purpose`**, `__summary`,
+`__document`. La zona nuova è una riga intera con lo **stesso rientro** di `__meta` e `__summary`
+(`calc(--rg-space-8 + --rg-space-3)`), quindi cade sul **filo sinistro del titolo**; il campo è largo
+**40 caratteri** (`calc(40ch + --rg-space-8)`, la stessa aritmetica di `rg-field--w*`) e si restringe
+con la testa; sotto i 680 px il rientro cade, come per le altre zone.
+
+**Nella testa il nome si scompone**, e questo è l'unico cambio che chi consuma deve fare:
+`__title` porta il **nome di catalogo**, `__purpose` il **pezzo scritto a mano**. Due ragioni, nessuna
+di gusto: il titolo è lo stato **salvato** e il campo è lo stato che si sta **scrivendo**, quindi
+tenere il valore in tutti e due li fa divergere al primo tasto; e scomporre dichiara **quale pezzo del
+nome si può cambiare**, che nella testa è l'informazione utile — chi è lì sa già su quale fase sta.
+Fuori dalla testa il **nome composto** non cambia: elenco, linguetta, percorso, foglio.
+
+**Due forme, perché ci sono due pagine.** La fase generica sta tutta in **una form sola**: lì
+`__purpose` è un `<div>` con un `rg-field`, e si salva con «Salva i valori». Il ricamo non ha una form
+unica: lì `__purpose` è una `<form>` sua, con un `rg-button--secondary`. Il DS stila la **zona**, non
+il salvataggio: la classe va sul contenitore che la occupa, qualunque elemento sia — lo stesso idioma
+di `__sections` sulla `rg-tabs` e di `__band` sulla `rg-dept-band`.
+
+**Misurato** (Chrome headless, pannello largo 1.132 px, testa con due gesti, valore di 34 caratteri): il filo sinistro del titolo e quello del campo cadono entrambi a 93 px; il campo è 388 px × 41 px; il fondo della testa e la cima della striscia delle tab coincidono a 307 px, cioè **nessuna sovrapposizione**, e il filetto inferiore della testa resta a 0 px — la regola `:has(> __body > __sections:first-child)` vale ancora. A 420 px il rientro cade e il campo scende a 338 px senza uscire dal pannello.
+
+### Il separatore è un trattino lungo, non un punto mediano
+
+Il nome composto è «Ricamo normale — base pannello». Nel DS « · » è il separatore che il **CSS
+genera** fra voci distinte di una riga di meta (`__kind`, `__meta`, `rg-step__meta`): un punto scritto
+a mano dentro un titolo si leggerebbe come quello, cioè come **due informazioni invece di un nome**. E
+il titoletto non va in `rg-step__meta`: là vanno i **dati** della fase, mentre questo è ciò che
+distingue una riga dall'altra — cioè titolo.
+
+### I cinque posti scartati
+
+| Posto | Perché no |
+| --- | --- |
+| primo figlio di `__body` | si sovrappone di 24 px (sopra) |
+| terzo figlio di `__name` | giusto di significato, ma nella riga del titolo un campo contende lo spazio a `__gestures` e sotto i 680 px va a capo dove capita: è lo stesso scarto della proposta 1.21.0 per l'etichetta del reparto a destra. In `__name` stanno solo `rg-scope-mark` e `rg-twin-mark`, timbri da 20 px, non controlli da 40 |
+| in `__gestures` | lì stanno i gesti che cambiano o **tolgono** i dati della fase |
+| in un `rg-tabpanel` | il titoletto è della **fase**, non di una sezione: sulla pagina del ricamo (cinque tab) finirebbe in «Impostazioni», cioè nascosto |
+| fuori dal pannello | su una pagina di gruppo con tre pannelli non dice di quale fase è |
+
+E non in un `rg-disclosure` chiuso col valore nel trigger: **leggere è il 95% degli usi**, e un valore
+che chiede un gesto per comparire è un valore che non si legge.
+
+### Dettagli che non sono dettagli
+
+- **`maxlength="40"` sul campo e il limite anche scritto** nell'aiuto: un valore tagliato in silenzio
+  è un dato perso.
+- **L'aiuto nomina il nome di catalogo** («Si aggiunge a «Pressatura»…») e **non ripete il valore**:
+  su una pagina di gruppo ogni aiuto dice della sua fase, e nessuno diventa stantio mentre si scrive.
+- **Nessun placeholder al posto dell'etichetta**: campo vuoto quando il titoletto non c'è.
+- **Niente `text-transform` sul campo**: chi scrive deve vedere ciò che batte. Il maiuscolo del foglio
+  lo mette `rg-worksheet-block` da sé, dalla 1.34.0.
+- **Sul foglio stampato nessun campo**: il titoletto è già dentro il nome della lavorazione
+  (`rg-worksheet-block__work`). Niente cambia in stampa.
+
+### Superato (resta nel CSS, non va usato nel markup nuovo)
+
+- lo **«scopo» come voce di `__kind`** («Fase 2 di 4 · *rimozione garze* · Principale · con la 3»);
+- il **campo «Scopo» nella sezione «Informazioni generali»**, che era un parametro fra i parametri e
+  sulla pagina del ricamo — che non ha quella sezione — non aveva posto.
+
+Sono la stessa cosa del titoletto, e il titoletto ha una zona sua: `__kind` torna a dire soltanto
+posizione e relazione.
+
 ## 1.42.0 — 2026-10-02
 
 **Minor.** Due classi nuove e additive — `rg-twin-band` e `rg-twin-mark` — e **un token nuovo**,

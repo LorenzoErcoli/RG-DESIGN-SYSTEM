@@ -128,6 +128,7 @@ Variabile: `--rg-phase-switch-ground`, il fondo dietro la didascalia (default
 | `rg-phase-panel__department` | **Proposta 1.21.0.** La **riga del reparto**: primo figlio del blocco, prima di `__head`. `rg-dept-label` con tessera e la parola «Reparto» (`rg-dept-label__kind`): «Reparto Ricamo», «Reparto da assegnare». Chiusa da un filetto neutro rientrato. Vedi *Il reparto in una riga sua*. |
 | `rg-phase-panel__kind` | (1.17.0) «Fase 2 di 4», poi lo scopo e la relazione: «Principale · con la 3», «Collegata · dopo la 2». Sempre, anche con una fase sola. Nella 1.20.0 il primo elemento era il reparto (`rg-dept-label`): **superato dalla proposta 1.21.0**, il reparto va in `__department`. |
 | `rg-phase-panel__title` | (1.17.0) Il nome della fase: `<h1>` se la pagina mostra una fase, `<h2>` in un gruppo. |
+| `rg-phase-panel__purpose` | **Proposta 1.43.0.** Il **titoletto della fase**: la zona in cui si *scrive* il pezzo di nome che non viene dal catalogo. Quinta zona della testa, fra la riga del titolo e `__summary`, sul filo del titolo. Contiene un `rg-field` (dentro la form unica della pagina) oppure una `<form>` propria. Vedi *Il titoletto della fase*. |
 | `rg-phase-panel__meta` | Riepilogo della fase: `12 materiali` · `48 stop` · `9 fili` · `dati dal PDF caricato su questa fase`. Senza testa titolata (forma 1.16) è posizione e relazione. |
 | `rg-phase-panel__status` | Stato del costo (`rg-badge`) e timbro di reparto. |
 | `rg-phase-panel__band` | (1.19.0) Sulla `rg-dept-band`, con `--quiet`: la **fascia del reparto**, primo figlio del blocco, da bordo a bordo, alta 48 px, etichetta a sinistra sul filo del numero. **A schermo superata dalla 1.20.0**; dalla proposta 1.21.0 il reparto va in `__department`. |
@@ -803,6 +804,148 @@ Reparto non assegnato:
 togliere `__text` e `__role`, portare `__title` diretto nella linguetta senza tessera, aggiungere il
 ruolo nascosto, ridurre il badge al numero con «da compilare» nascosto, togliere «completa».
 
+### Il titoletto della fase (proposta 1.43.0)
+
+Richiesta dal campo: *«​un titoletto da aggiungere vicino al nome della fase, mi serve per poter
+rapidamente vedere cosa fa la fase a livello più specifico — RICAMO “BASE PANNELLO”, PRESSATURA
+“RITIRO MATERIALE”»*. Su una parte con due ricami l'elenco diceva due volte «Ricamo».
+
+Il titoletto è **testo libero corto (massimo 40 caratteri)** che chi prepara la scheda aggiunge al
+nome che viene dal catalogo. Non è un parametro: è **un pezzo del nome della fase**.
+
+**Il nome composto è il nome della fase in tutte le viste che la leggono e basta**: la riga
+dell'elenco (`rg-step__title`), la linguetta (`rg-phase-switch__title`), il percorso, il foglio
+stampato. Il separatore è un **trattino lungo fra due spazi**: «Ricamo — base pannello». Non è
+« · », che nel DS è il separatore **generato dal CSS** fra voci distinte di una riga di meta
+(`__kind`, `__meta`, `rg-step__meta`): un punto scritto a mano dentro un titolo si leggerebbe come
+quello, cioè come due informazioni invece di un nome.
+
+**Nella testa del pannello il nome si scompone**, perché è l'unico posto in cui si scrive:
+
+- `rg-phase-panel__title` porta il **nome di catalogo** («Ricamo normale», «Pressatura»);
+- `rg-phase-panel__purpose` porta il **pezzo scritto a mano**, nel campo che lo modifica.
+
+Due ragioni, e nessuna è di gusto. La prima: il titolo è lo stato **salvato**, il campo è lo stato
+che si sta scrivendo; un `<h1>` che contiene il valore e un campo che lo contiene a 20 px di distanza
+dicono la stessa cosa due volte, e appena si batte un tasto non la dicono più. La seconda: scomporre
+dichiara **quale pezzo del nome si può cambiare** — nella testa l'informazione utile non è il nome
+composto (chi è lì sa su quale fase sta), è la cucitura.
+
+**Dov'è la zona.** La testa del blocco passa a cinque zone, in quest'ordine:
+
+| Zona | Classe | Che cosa |
+| --- | --- | --- |
+| Titolo | `rg-phase-panel__heading` | numero, «Fase N di M», nome di catalogo |
+| Gesti sulla fase | `rg-phase-panel__gestures` | a destra del titolo |
+| **Titoletto** | `rg-phase-panel__purpose` | riga intera, sul filo del titolo: etichetta «Titoletto», campo, aiuto |
+| Riepilogo | `rg-phase-panel__summary` | `__meta` a sinistra, `__status` a destra |
+| Documento | `rg-phase-panel__document` | `rg-document` |
+
+- **Riga intera, stesso rientro di `__meta` e `__summary`** (`calc(--rg-space-8 + --rg-space-3)`,
+  cioè il numero più il suo stacco): il campo cade sul filo sinistro del titolo. Sotto i 680 px il
+  rientro cade, come per le altre zone.
+- **Il campo è largo 40 caratteri** (`calc(40ch + --rg-space-8)`, la stessa aritmetica di
+  `rg-field--w*`) e si restringe con la testa: quaranta caratteri è il limite del valore, e un
+  titoletto che si legge a metà non si rilegge.
+- **Non è un terzo figlio di `__name`.** È la ragione per cui la proposta 1.21.0 scartò l'etichetta
+  del reparto a destra: nella riga del titolo un campo contende lo spazio a `__gestures`, e sotto i
+  680 px va a capo in un punto che non si decide. I due soli altri figli ammessi in `__name` sono
+  `rg-scope-mark` e `rg-twin-mark`, che sono timbri da 20 px, non controlli da 40.
+- **Il valore si legge senza aprire niente**, perché è il valore del campo: leggere è il 95% degli
+  usi, quindi niente `rg-disclosure`, chiuso o aperto.
+
+**Due forme, perché ci sono due pagine.** La fase **generica** sta tutta in **una form sola**: lì il
+titoletto è un campo di quella form e si salva con «Salva i valori». Il **ricamo** non ha una form
+unica: lì `__purpose` è una `<form>` sua, con un bottone **secondario** suo. Il DS stila la zona, non
+il salvataggio: la classe va sul contenitore che occupa la zona, qualunque elemento sia.
+
+Dentro la form unica (fase generica, pagina di gruppo):
+
+```html
+<div class="rg-phase-panel__purpose">
+  <label class="rg-field">
+    <span class="rg-field__label">Titoletto</span>
+    <input class="rg-input" type="text" name="fasi[2][titoletto]" value="ritiro materiale"
+           maxlength="40" aria-describedby="aiuto-titoletto-2">
+    <span class="rg-field__help" id="aiuto-titoletto-2">Si aggiunge a «Pressatura» nell'elenco e sul foglio. Massimo 40 caratteri.</span>
+  </label>
+</div>
+```
+
+Con una form sua (il ricamo):
+
+```html
+<form class="rg-phase-panel__purpose" method="post" action="…/titoletto">
+  <label class="rg-field">
+    <span class="rg-field__label">Titoletto</span>
+    <input class="rg-input" type="text" name="titoletto" value="base pannello"
+           maxlength="40" aria-describedby="aiuto-titoletto-1">
+    <span class="rg-field__help" id="aiuto-titoletto-1">Si aggiunge a «Ricamo normale» nell'elenco e sul foglio. Massimo 40 caratteri.</span>
+  </label>
+  <div class="rg-cluster rg-u-mt-2"><button class="rg-button rg-button--secondary" type="submit">Salva il titoletto</button></div>
+</form>
+```
+
+**Stati.**
+
+| Stato | Come si vede |
+| --- | --- |
+| con valore | il valore nel campo; il nome composto si legge nell'elenco, sulla linguetta e sul foglio |
+| vuoto | campo vuoto. **Nessun placeholder al posto dell'etichetta**: l'esempio sta nell'aiuto |
+| sola lettura | `<input readonly>`: il DS lo dà già su fondo `neutral-50` con il filetto neutro |
+| errore (oltre 40 caratteri, lato server) | `rg-field.is-error` + `aria-invalid="true"` e il problema **scritto** nell'aiuto |
+
+- **`maxlength="40"` sul campo**, e il limite anche **scritto** nell'aiuto: un valore tagliato in
+  silenzio è un dato perso.
+- **L'aiuto nomina il nome di catalogo** («Si aggiunge a «Pressatura»…») e **non ripete il valore**:
+  su una pagina di gruppo con tre pannelli ogni aiuto dice della sua fase, e nessuno diventa stantio
+  mentre si scrive.
+- **Niente `text-transform` sul campo.** Chi scrive deve vedere ciò che batte. Il maiuscolo del
+  foglio lo mette il foglio: `rg-worksheet-block` lo dichiara per tutto il suo contenuto dalla
+  1.34.0.
+- **Su una pagina di gruppo ogni pannello ha la sua zona**, con `name` e `id` propri: la zona sta
+  dentro il blocco, quindi dice da sé di quale fase è il titoletto.
+
+**Sul foglio stampato non c'è nessun campo**: il titoletto è già dentro il nome della lavorazione
+(`rg-worksheet-block__work`), che il foglio porta in maiuscolo da sé. Nulla cambia in
+[worksheet-block](worksheet-block.md).
+
+**Che cosa è superato da questa proposta** (resta nel CSS e nei doc, non va usato nel markup nuovo):
+
+- **lo «scopo» come voce di `__kind`** («Fase 2 di 4 · *rimozione garze* · Principale · con la 3»):
+  è la stessa cosa del titoletto, e il titoletto ha una zona sua. `__kind` torna a dire soltanto
+  posizione e relazione;
+- **il campo «Scopo» nella sezione «Informazioni generali»**: era un parametro fra i parametri, e
+  sulla pagina del ricamo — che non ha quella sezione — non aveva posto.
+
+**Misurato** (Chrome headless, pannello largo 1.132 px, testa con «Torna alla prima lettura» e
+«Elimina fase» in `__gestures`, valore di 34 caratteri):
+
+| Cosa | Valore |
+| --- | --- |
+| filo sinistro del titolo / del campo | 93 px / 93 px — **coincidono** |
+| larghezza del campo | 388 px (40ch + 32) |
+| altezza del campo | 41 px (≥ 40, regole §11) |
+| fondo della testa / cima della striscia delle tab | 307 px / 307 px — **nessuna sovrapposizione** |
+| filetto inferiore della testa | 0 px — la regola `:has(> __body > __sections:first-child)` vale ancora |
+| altezza della zona | 111 px nella form unica, 160 px con la form sua (campo + bottone) |
+
+A 420 px di larghezza il rientro cade e il campo scende a 338 px senza uscire dal pannello; il titolo
+mantiene il suo rientro di 44 px, esattamente come fanno già `__meta` e `__summary`. La misura
+dichiara la configurazione in cui è stata presa: una testa con tre gesti e un valore più lungo alza
+la testa, non sposta i fili.
+
+**I posti valutati e scartati**, con la ragione:
+
+| Posto | Perché no |
+| --- | --- |
+| primo figlio di `__body`, prima di `rg-tabs rg-phase-panel__sections` | **si sovrappone**: `__sections` ha `margin: -24px -24px 24px` ed è disegnata per essere il **primo** figlio di `__body` e salire contro la testa. Qualunque blocco messo prima le finisce sotto per 24 px (misurato: `<details>` a 361–519 px, striscia a 495). In più la regola `:has(> __body > __sections:first-child)` che toglie il filetto alla testa smette di valere, e la testa si ritrova due linee. **Dentro `__body` non si mette niente prima delle tab.** |
+| terzo figlio di `__name`, sotto `__title` | giusto di significato, ma contende lo spazio a `__gestures` nella riga del titolo e va a capo dove capita sotto i 680 px (è lo scarto della 1.21.0). `__purpose` prende lo stesso filo sinistro senza stare in quella riga |
+| dentro `__gestures` | sono i gesti che cambiano o tolgono i **dati** della fase, a target 40, allineati a destra: un campo di testo lì dentro è un controllo di un'altra famiglia |
+| dentro un `rg-tabpanel` | il titoletto è della **fase**, non di una sezione. Sulla pagina del ricamo (cinque tab) finirebbe in «Impostazioni», cioè nascosto, e per leggerlo bisognerebbe scegliere una sezione |
+| fuori dal pannello, sopra | perde il legame con la fase: su una pagina di gruppo con tre pannelli non si capisce di quale fase sia |
+| in un `rg-disclosure` chiuso, col valore nel trigger | leggere è il 95% degli usi: un valore che chiede un gesto per comparire è un valore che non si legge. E aperto, dentro `__body`, finisce sotto le tab |
+
 ## Tastiera e accessibilità
 
 
@@ -882,6 +1025,9 @@ document.addEventListener('keydown', (e) => {
 - **La riga del reparto con un fondo o con il filetto da bordo a bordo**: sotto la linguetta scelta si legge come la sua base.
 - **Il ruolo, la tessera o «N da compilare» a parole sulla linguetta**: numero, titolo e un numero nudo bastano.
 - **`<a href>` sulle linguette in un form unico:** la navigazione perderebbe i valori non salvati.
+- **Qualunque cosa prima di `rg-phase-panel__sections` dentro `__body`**: la striscia delle tab ha i margini negativi ed è il primo figlio per contratto; ciò che le sta davanti le finisce sotto per 24 px.
+- **Il titoletto in un `rg-tabpanel`, in `__gestures`, in un `rg-disclosure` o fuori dal pannello**: sta in `rg-phase-panel__purpose`, nella testa del blocco.
+- **Il titoletto scritto due volte nella stessa testa** (dentro `__title` *e* nel campo, o nel campo *e* come voce di `__kind`).
 - **Rinumerare le fasi dentro il gruppo, o usare 2a/2b.**
 
 ## Fonti

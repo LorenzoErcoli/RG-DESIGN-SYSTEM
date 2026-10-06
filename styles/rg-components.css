@@ -756,6 +756,22 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-phase-panel__summary { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--rg-space-2) var(--rg-space-6); padding-inline-start: calc(var(--rg-space-8) + var(--rg-space-3)); }
 .rg-phase-panel__summary > .rg-phase-panel__status { margin-inline-start: auto; }
 .rg-phase-panel__document { flex-basis: 100%; min-width: 0; }
+/* IL TITOLETTO DELLA FASE (proposta 1.43.0) — la zona dove si SCRIVE il pezzo di nome che non viene
+   dal catalogo: «Ricamo» dal catalogo, «base pannello» scritto da chi prepara la scheda. Richiesta
+   dal campo: «un titoletto da aggiungere vicino al nome della fase, mi serve per poter rapidamente
+   vedere cosa fa la fase a livello piu' specifico». Sta nella TESTA perche' e' il nome della fase e
+   non un parametro di una sezione: dentro un rg-tabpanel sarebbe della sezione, e sulla pagina del
+   ricamo (cinque tab) finirebbe nascosto in «Impostazioni».
+   QUINTA ZONA DELLA TESTA, fra la riga del titolo e il riepilogo: riga intera e lo stesso rientro di
+   __meta e __summary, quindi cade sul filo del titolo. Riga sua e non terzo figlio di __name per la
+   ragione per cui la 1.21.0 scarto' l'etichetta del reparto a destra: nella riga del titolo un campo
+   contende lo spazio a __gestures, e sotto i 680 px va a capo in un punto che non si decide.
+   NON SI METTE NIENTE PRIMA DI __sections DENTRO __body: quella striscia ha i margini negativi (vedi
+   sotto) ed e' disegnata per essere il PRIMO figlio; cio' che le sta davanti le finisce sotto. */
+.rg-phase-panel__purpose { flex-basis: 100%; min-width: 0; padding-inline-start: calc(var(--rg-space-8) + var(--rg-space-3)); }
+/* Quaranta caratteri visibili tutti insieme: e' il limite del campo, e un titoletto che si legge a
+   meta' non si rilegge. Stessa aritmetica di rg-field--w* (caratteri + il padding dell'input). */
+.rg-phase-panel__purpose > .rg-field { max-width: calc(40ch + var(--rg-space-8)); }
 .rg-phase-panel__meta strong { color: var(--rg-color-text-primary); font-weight: var(--rg-weight-medium); }
 /* Stato e reparto a destra: il costo non calcolato e il timbro del reparto (rg-dept-band--quiet). */
 .rg-phase-panel__status { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-3); }
@@ -844,6 +860,7 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
   .rg-phase-panel__sections { margin: calc(-1 * var(--rg-space-4)) calc(-1 * var(--rg-space-4)) var(--rg-space-4); padding-inline: var(--rg-space-4); overflow-x: auto; }
   .rg-phase-panel__heading ~ .rg-phase-panel__meta { padding-inline-start: 0; }
   .rg-phase-panel__summary { padding-inline-start: 0; }
+  .rg-phase-panel__purpose { padding-inline-start: 0; }
   .rg-dept-band.rg-phase-panel__band { padding-inline: var(--rg-space-4); }
   /* Le fasce in testa rientrano con la testa del blocco: la loro parola sta sul filo del titolo, non
      otto pixel piu' dentro (1.42.0; valeva gia' per la fascia d'ambito da sola). */

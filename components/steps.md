@@ -138,6 +138,13 @@ esistono altre fonti di verità dello stato: niente classe `is-open` locale.
 ## Uso e limiti
 
 - Massimo una sequenza per schermata; se le sequenze sono due, il problema è la pagina.
+- **Il titoletto della fase entra in `rg-step__title`** (proposta 1.43.0): il titolo della riga è il
+  **nome composto**, nome di catalogo più titoletto separati da un trattino lungo fra due spazi
+  — «Ricamo — base pannello», «Pressatura — ritiro materiale». È ciò che distingue due fasi dello
+  stesso tipo sulla stessa parte, dove l'elenco diceva due volte «Ricamo». Non va in `rg-step__meta`:
+  là vanno i dati della fase, e la riga si distingue dal titolo. Il titoletto **si scrive** nella
+  pagina della fase, in [`rg-phase-panel__purpose`](phase-switch.md#il-titoletto-della-fase-proposta-1430):
+  nell'elenco si legge e basta.
 - Nel corpo va il contenuto della fase (operazioni in `rg-table` o `rg-list`, parametri in
   `rg-key-value`), non un'altra sequenza: `rg-step` **non si annida**. Per dire che più fasi
   vanno insieme c'è il gruppo (sotto), che resta una lista piatta.

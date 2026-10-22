@@ -61,6 +61,32 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.44.0 — il foglio a schermo
+
+**Niente da fare**, se non lo si vuole. Tre classi additive (`rg-u-screen-a4`,
+`rg-u-screen-a4--head`, `rg-u-screen-a4-bar`), nessun token, e **tutte dentro `@media screen`**:
+nessuna pagina stampata cambia di un millimetro, nessuna misura di impaginazione si muove, i PDF
+che un'app genera e poi misura restano identici.
+
+Chi ha una pagina che **è** un documento di carta (`rg-u-print-a4` o `--head` sul `<body>`) e a
+schermo si apre da bordo a bordo:
+
+1. **Avvolgere i fogli** in un contenitore con `rg-u-screen-a4` o `rg-u-screen-a4--head`, secondo
+   la `@page` che la pagina usa. Il modificatore si usa **da solo**, come `rg-u-print-a4--head`.
+2. **Non metterla sul `<body>`.** Lo sfondo del body si propaga alla tela della finestra: il foglio
+   bianco diventerebbe tutto lo schermo e non si staccherebbe da niente. Il body resta con la sua
+   classe di stampa; il foglio va su un contenitore dentro.
+3. **La barra che non si stampa** (`rg-u-no-print`) prende `rg-u-screen-a4-bar`: stessa colonna,
+   nessuna carta sotto. Senza, i bottoni restano larghi quanto il monitor sopra un foglio di 210 mm.
+4. **Verificare la stampa una volta**, non perché il DS la cambi, ma perché il contenitore nuovo è
+   un elemento in più nel DOM: i `break-before`/`break-after` dei fogli continuano a valere e
+   `:first-child` resta il primo figlio del contenitore. Se l'app conta le pagine del PDF, il conto
+   deve tornare identico a prima del bump.
+
+E una cosa che il DS **non** fa, dichiarata perché non venga aggiunta in locale: **non disegna i
+salti di pagina**. A schermo il browser non sa dove cadrà il taglio; una riga ogni 297 mm direbbe
+una bugia. Dove cade il taglio lo mostra il PDF.
+
 ### 1.43.0 — il titoletto della fase
 
 Additiva: una classe nuova, `rg-phase-panel__purpose`, nessun token. Chi sale il pin e non la usa non

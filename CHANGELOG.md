@@ -7,6 +7,106 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.44.0 — 2026-10-22
+
+**Minor.** Tre classi nuove e additive — `rg-u-screen-a4`, `rg-u-screen-a4--head`,
+`rg-u-screen-a4-bar` — **tutte dentro `@media screen`**, e nessun token nuovo. Nessuna regola di
+stampa cambia di un millimetro: chi sale il pin e non le usa non ha niente da fare, e chi stampa
+ottiene esattamente le pagine di prima.
+
+### Il problema: il foglio senza larghezza
+
+Due pagine della piattaforma sono **fogli di carta resi in HTML**: il fascicolo di lavorazione che
+il reparto apre dal prodotto e i moduli in bianco. Hanno `@page rg-a4-head` e in stampa escono
+giuste. A schermo non avevano **nessuna larghezza**.
+
+> «Non è ben leggibile perché si apre su tutto lo schermo. Possiamo renderla simile a pagine di A4?»
+> — Lorenzo, 2026-10-22
+
+Misurato su 1920 px: la riga di un `rg-fill-field` era lunga quasi il **triplo** di quella stampata,
+l'etichetta «CLIENTE» stava a sinistra e il suo valore a circa 400 px di distanza, e non si capiva
+dove finisse un foglio. Il documento era giusto in carta e illeggibile sul monitor che lo apre.
+
+### La regola: la giustezza è quella della carta
+
+`rg-u-screen-a4` è l'utility **speculare** a `rg-u-print-a4`: quella dichiara la geometria alla
+stampante, questa la mostra al monitor. La colonna è larga quanto il **foglio** (210 mm) e il
+respiro laterale è quello della sua `@page`, quindi la colonna di testo misura **186 mm anche a
+schermo** — 703 px a 96 dpi. Il testo va a capo **negli stessi punti**: l'anteprima non è
+un'altra impaginazione, è quella.
+
+| Classe | Geometria | Si accoppia a |
+| --- | --- | --- |
+| `rg-u-screen-a4` | foglio 210 mm, margine 12 mm sui quattro lati | `@page rg-a4` |
+| `rg-u-screen-a4--head` | foglio 210 mm, 20 mm in alto, 12 ai lati e in basso | `@page rg-a4-head` |
+| `rg-u-screen-a4-bar` | la stessa colonna **senza carta**, per la barra `rg-u-no-print` | — |
+
+Il modificatore si usa **da solo**, come `rg-u-print-a4--head`. I 20 mm in alto restano vuoti anche
+a schermo, ed è corretto: è il posto riservato all'intestazione che l'app stampa sul PDF.
+
+### Le quattro decisioni, e perché
+
+**La stampa non cambia di un millimetro.** Tutto sta dentro `@media screen`, che in stampa non si
+applica. Non è prudenza generica: il fascicolo esce anche in PDF da Chrome headless, e quel PDF
+viene **misurato** per agganciare le schede macchina al posto giusto. Una geometria diversa in
+stampa romperebbe l'aggancio. Chi tocca questo blocco non esce da `@media screen`.
+
+**Niente finti salti pagina.** A schermo il browser non sa dove cadrà il taglio — è la stessa cosa
+che `rg-blank-page` dichiara da tre versioni («il recto lo conta l'app, non il CSS»). Una riga ogni
+297 mm direbbe una bugia, e la direbbe quasi sempre nel punto sbagliato. Il foglio a schermo è una
+**colonna continua** della larghezza giusta; dove cade il taglio lo mostra il PDF, che è lì accanto
+nella stessa barra.
+
+**Non va sul `<body>`.** Lo sfondo del body si propaga alla tela della finestra: un body bianco non
+si stacca da niente, perché il bianco diventa tutto lo schermo. Il foglio va su un contenitore
+**dentro** il body, che resta libero di portare `rg-u-print-a4--head`. Due classi su due elementi:
+una parla alla stampante, l'altra al monitor.
+
+**Il filetto, non l'ombra** (regole §6: ombra solo per elementi sovrapposti, e un foglio non è
+sovrapposto a niente). La carta si stacca perché il fondo è `--rg-color-background` e il foglio
+`--rg-color-surface-raised`. Il filetto sta **fuori** dai 210 mm
+(`max-width: calc(210mm + hairline * 2)`): con `box-sizing: border-box` starebbe dentro e la
+giustezza scenderebbe di 2 px rispetto alla carta. Sono due pixel, ma la coincidenza con la carta è
+l'unica cosa che questo utility promette.
+
+### Misure
+
+A 96 dpi, zoom 100 % (1 mm = 3,7795 px): foglio **210 mm = 793,7 px**; giustezza **186 mm =
+703,0 px**; margine laterale 12 mm = 45,4 px; testa di `--head` 20 mm = 75,6 px.
+
+Sotto la larghezza del foglio **non si scrolla in orizzontale**: la colonna si restringe e basta
+(`width: 100%` più `box-sizing`). Il tablet del reparto (768–1024 px) resta sopra la soglia dei
+680 px e tiene i margini veri; sotto i 680 px i 24 mm di margine laterale sarebbero un quarto della
+pagina e scendono a `--rg-space-4`.
+
+**Le misure sono in millimetri**, eccezione dichiarata come per `@page` (regole §12): qui la misura
+**è** fisica e deve coincidere con quella della pagina nominata. `@page rg-a4-head` e
+`rg-u-screen-a4--head` sono una coppia e si cambiano insieme.
+
+**Misurato in Chrome** (sei `rg-worksheet-block--compact` su `@page rg-a4-head`, headless, lo stesso
+motore che genera il PDF del fascicolo). A schermo, a 1889 px di finestra: foglio 795,69 px
+(210 mm più i due filetti), colonna **703,00 px** (186 mm esatti), e il campo che si vedeva lungo il
+triplo passa da **456,75 a 160,25 px**, cioè 2,85 volte. A 993 px la colonna è ancora 703,00; a
+737 px il foglio si restringe a 737 e la colonna a 644,31; a 485 px i margini scendono a 16 px.
+`scrollWidth` è sempre uguale a `clientWidth`: **nessuno scroll orizzontale** a nessuna delle
+quattro larghezze. La barra misura 793,69 px e il suo contenuto comincia a 593,01 px, dove comincia
+il blocco dentro il foglio (593,00).
+
+**E la stampa è la stessa pagina.** `--print-to-pdf` sullo stesso documento, con e senza il
+contenitore: **3 pagine** in tutti e due, **222 parole alle stesse coordinate** (differenze 0,
+tolleranza 0,01 pt), stessi disegni su ogni pagina. La giustezza stampata misura 186,27 mm (186 più
+il filetto del blocco) e comincia a 20,11 mm dal bordo: la pagina **non è scalata**, che è il
+controllo chiesto da [verify-checklist §11](agent/verify-checklist.md) prima di fidarsi di una
+misura presa su un render.
+
+### Documentazione
+
+- [components/screen-a4.md](components/screen-a4.md), nuovo.
+- [components/worksheet-block.md](components/worksheet-block.md) — «Formato pagina» rimanda qui per
+  lo stesso documento a schermo.
+- Vetrina: sezione **51 · Il foglio a schermo**, con il confronto fra il documento senza larghezza
+  e il foglio.
+
 ## 1.43.0 — 2026-10-06
 
 **Minor.** Una classe nuova e additiva, `rg-phase-panel__purpose`, e nessun token nuovo. Nessuna

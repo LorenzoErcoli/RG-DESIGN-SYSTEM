@@ -619,6 +619,12 @@ A4 verticale con margini uniformi, l'opt-in è `rg-u-print-a4` sul contenitore c
 il `<body>`); dove le *named pages* non sono supportate restano i margini di default e non si rompe
 niente.
 
+**Lo stesso documento, a schermo** (dalla 1.44.0). Una pagina che è il foglio — il fascicolo, i
+moduli in bianco — senza larghezza si apre da bordo a bordo del monitor e la riga di un campo
+diventa tre volte quella stampata. L'opt-in è [`rg-u-screen-a4`](screen-a4.md) (o `--head`, secondo
+la `@page`) su un contenitore **dentro** il body: stessa giustezza, 186 mm, e il testo va a capo
+dove andrà a capo in carta. È tutto in `@media screen`: la stampa non cambia.
+
 **Limite noto — `--long` che sfora.** Se la tabella supera comunque il foglio, il blocco si spezza
 fra righe con l'intestazione della tabella ripetuta, ma **la banda di reparto non si ripete**: la
 pagina di continuazione perde il suo segnale di reparto. Non è un difetto che il CSS possa

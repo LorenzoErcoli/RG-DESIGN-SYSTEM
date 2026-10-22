@@ -2,8 +2,8 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.43.0",
-  "generated": "2026-10-02",
+  "dsVersion": "1.44.0",
+  "generated": "2026-10-22",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
   "appLocalExceptions": [],
@@ -5640,6 +5640,82 @@
         "graffa e timbro"
       ],
       "snippet": "<li class=\"rg-step\">\n  <div class=\"rg-step__head\">\n    <button class=\"rg-step__toggle\" type=\"button\" id=\"fase-2-toggle\" aria-controls=\"fase-2\" aria-expanded=\"false\">\n      <span class=\"rg-step__num\">2</span>\n      <span class=\"rg-step__headline\">\n        <span class=\"rg-twin-mark\">Parametri uguali · dietro, fondo</span>\n        <span class=\"rg-step__title\">Taglio laser</span>\n      </span>\n    </button>\n  </div>\n  <div class=\"rg-step__body\" id=\"fase-2\" role=\"region\" aria-labelledby=\"fase-2-toggle\" hidden></div>\n</li>"
+    },
+    {
+      "id": "screen-a4",
+      "title": "Il foglio a schermo",
+      "status": "stable",
+      "since": "1.44.0",
+      "kind": "foundation",
+      "role": "Mostrare a schermo un documento stampabile come un foglio A4: colonna bianca centrata larga 210 mm, respiro laterale uguale ai margini della sua @page, quindi la stessa giustezza di 186 mm che esce in carta. Utility speculare a rg-u-print-a4, tutta dentro @media screen.",
+      "classes": {
+        "base": "rg-u-screen-a4",
+        "variants": [
+          "rg-u-screen-a4--head"
+        ],
+        "related": [
+          "rg-u-screen-a4-bar",
+          "rg-u-print-a4",
+          "rg-u-print-a4--head",
+          "rg-u-no-print",
+          "rg-worksheet-block",
+          "rg-part-sheet",
+          "rg-blank-page"
+        ]
+      },
+      "variants": [
+        "base",
+        "head",
+        "bar"
+      ],
+      "states": [
+        "screen",
+        "mobile"
+      ],
+      "tokens": [
+        "--rg-color-surface-raised",
+        "--rg-color-background",
+        "--rg-color-border-medium",
+        "--rg-border-hairline",
+        "--rg-border-style",
+        "--rg-space-6",
+        "--rg-space-4"
+      ],
+      "doc": "components/screen-a4.md",
+      "rulesRef": "design-rules.md#6-linee-superfici-radius-e-ombre",
+      "specimenAnchor": "screen-a4",
+      "snippet": "<body class=\"rg-u-print-a4--head\">\n  <form class=\"rg-u-no-print rg-u-screen-a4-bar rg-u-mb-4\" method=\"get\" action=\"...\">\n    <div class=\"rg-cluster\"><button class=\"rg-button rg-button--primary\" type=\"submit\">Apri il PDF per la stampa</button></div>\n  </form>\n  <div class=\"rg-u-screen-a4--head\">\n    <!-- i fogli: rg-worksheet-part, rg-worksheet-block, rg-part-sheet -->\n  </div>\n</body>",
+      "notes": "Nata dal fascicolo di lavorazione e dai moduli in bianco, due pagine che sono fogli di carta resi in HTML: in stampa uscivano giuste, a schermo andavano da bordo a bordo del monitor (su 1920 px una riga di rg-fill-field lunga quasi il triplo di quella stampata, l etichetta CLIENTE a sinistra e il suo valore a ~400 px). LA STAMPA NON CAMBIA DI UN MILLIMETRO: tutto sta dentro @media screen, che in stampa non si applica - niente max-width, niente padding, niente sfondo sul foglio stampato, quindi le posizioni che il PDF del fascicolo misura dopo l impaginazione restano quelle. DUE GEOMETRIE perche le @page sono due: rg-u-screen-a4 per @page rg-a4 (12 mm sui quattro lati) e rg-u-screen-a4--head per @page rg-a4-head (20 mm in alto, 12 ai lati e in basso); il modificatore si usa DA SOLO, come rg-u-print-a4--head. I 20 mm in alto restano vuoti anche a schermo: e il posto riservato all intestazione che l app stampa sul PDF. NON VA SUL <body>: lo sfondo del body si propaga alla tela della finestra e un body bianco non si stacca da niente, quindi il foglio va su un contenitore DENTRO il body - che resta libero di portare rg-u-print-a4--head. NIENTE FINTI SALTI PAGINA: a schermo il browser non sa dove cadra il taglio (stessa ragione per cui blank-page dichiara che il recto lo conta l app), quindi il foglio a schermo e una colonna continua e dove cade il taglio lo mostra il PDF. rg-u-screen-a4-bar e la stessa colonna SENZA carta, per la barra rg-u-no-print sopra il foglio: stesso filo sinistro dei campi, e si vede che e chrome e non documento. MISURE a 96 dpi: foglio 210 mm = 793,7 px; giustezza 186 mm = 703,0 px; margine 12 mm = 45,4 px; testa 20 mm = 75,6 px. Il filetto sta FUORI dai 210 mm (max-width calc(210mm + hairline * 2)): con box-sizing border-box starebbe dentro e la giustezza scenderebbe di 2 px rispetto alla carta. Filetto e non ombra (regole 6: ombra solo per elementi sovrapposti). Le misure sono in mm, eccezione dichiarata come per @page: qui la misura E fisica e deve coincidere con quella della pagina nominata, quindi chi cambia una @page cambia anche la sua riga qui. Sotto la larghezza del foglio non si scrolla in orizzontale (width 100% + border-box); sotto i 680 px i margini laterali scendono a --rg-space-4, mentre il tablet del reparto (768-1024 px) tiene i margini veri. NON E UN ANTEPRIMA DI STAMPA: dice la giustezza, non l impaginazione - non conta le pagine, non disegna l intestazione.",
+      "keywords": [
+        "foglio a schermo",
+        "foglio A4",
+        "A4 a video",
+        "pagina A4",
+        "larghezza del foglio",
+        "giustezza",
+        "colonna di lettura",
+        "documento a schermo",
+        "anteprima del foglio",
+        "anteprima di stampa",
+        "carta a schermo",
+        "simula il foglio",
+        "max-width del documento",
+        "contenuto da bordo a bordo",
+        "righe troppo lunghe",
+        "fascicolo di lavorazione",
+        "moduli in bianco",
+        "schede vuote",
+        "screen a4",
+        "paper on screen",
+        "page width",
+        "measure",
+        "line length",
+        "sheet",
+        "document width",
+        "print preview",
+        "stampa",
+        "print"
+      ]
     }
   ]
 }

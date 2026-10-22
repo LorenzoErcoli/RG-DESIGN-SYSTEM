@@ -92,7 +92,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -3393,6 +3393,94 @@ status         VALID</pre></div>
         <p class="specimen-note"><strong>I cinque posti scartati, e perché.</strong> <strong>Primo figlio di <code class="rg-mono">__body</code>, prima delle tab</strong>: si <em>sovrappone</em> — <code class="rg-mono">rg-phase-panel__sections</code> ha <code class="rg-mono">margin: -24px -24px 24px</code> ed è disegnata per essere il <em>primo</em> figlio e salire contro la testa, quindi ciò che le sta davanti le finisce sotto per 24 px (misurato su un <code class="rg-mono">&lt;details&gt;</code>: 361–519 px, striscia a 495); in più la regola <code class="rg-mono">:has(&gt; __body &gt; __sections:first-child)</code> che toglie il filetto alla testa smette di valere e la testa si ritrova due linee. <strong>Terzo figlio di <code class="rg-mono">__name</code></strong>: giusto di significato, ma nella riga del titolo un campo contende lo spazio a <code class="rg-mono">__gestures</code> e sotto i 680 px va a capo dove capita — è lo stesso scarto della proposta 1.21.0 per l'etichetta del reparto a destra; <code class="rg-mono">__purpose</code> prende lo stesso filo sinistro senza stare in quella riga. <strong>In <code class="rg-mono">__gestures</code></strong>: lì stanno i gesti che cambiano o tolgono i <em>dati</em> della fase, allineati a destra. <strong>In un <code class="rg-mono">rg-tabpanel</code></strong>: il titoletto è della <em>fase</em>, non di una sezione, e sulla pagina del ricamo (cinque tab) finirebbe in «Impostazioni», cioè nascosto. <strong>Fuori dal pannello</strong>: su una pagina di gruppo con tre pannelli non si capisce di quale fase sia. <strong>In un <code class="rg-mono">rg-disclosure</code> chiuso</strong>: leggere è il 95% degli usi, e un valore che chiede un gesto per comparire è un valore che non si legge.</p>
         <p class="specimen-note"><strong>Il titoletto non è lo scopo, e lo scopo non si tocca — correzione prima del tag.</strong> La prima stesura di questa proposta dichiarava superato anche il <strong>campo «Scopo»</strong> della sezione «Informazioni generali», dandolo per il titoletto con un'altra interfaccia. È <strong>sbagliato</strong>, e la correzione è arrivata da <code class="rg-mono">rg-product-platform</code> prima del rilascio. Lo <strong>scopo</strong> è un parametro di <strong>catalogo a scelta chiusa</strong> — quattro sotto-tipi (Pressatura, Forno, Applicazione DTF, Applicazione strass), sei valori (rimozione garze, ritiro materiale, trasferimento, sublimazione, fissaggio, pressatura frange) — e <strong>il motore del costo lo legge</strong>: <code class="rg-mono">core.storage.stoffa.contesto()</code> riconosce da lì la sublimatica su stoffa, e il catalogo lo usa per far nascere il ritiro materiale agganciato al taglio laser. Toglierlo dalla sua sezione lo renderebbe <em>non scrivibile</em>, e con esso un pezzo del calcolo. Il <strong>titoletto</strong> è testo libero, su qualunque fase, e non entra in nessun conto: <strong>convivono</strong> — una pressatura può avere scopo «ritiro materiale» e titoletto «quella del davanti». Il numero che chiude la questione: lo scopo esiste su quattro sotto-tipi e l'archivio ha <strong>263 ricami su 282 fasi</strong>, quindi se il titoletto avesse sostituito lo scopo la quasi totalità delle fasi sarebbe rimasta senza l'uno e senza l'altro. <strong>La prova da applicare</strong> quando due campi sembrano lo stesso campo: se un conto lo legge è un <strong>parametro</strong> e sta nella sezione dei suoi parametri; se nessun conto lo legge e serve a distinguere la cosa, è <strong>nome</strong> e sta nella testa (regole §8).</p>
         <p class="specimen-note"><strong>Che cosa è superato, e basta quello.</strong> Lo «scopo» come <em>voce di</em> <code class="rg-mono">__kind</code> («Fase 2 di 4 · <em>rimozione garze</em> · Principale · con la 3»): lì era una <strong>ripetizione del campo che lo scrive</strong>, due righe più in basso, e <code class="rg-mono">__kind</code> torna a dire soltanto posizione e relazione. Il <strong>campo</strong> «Scopo» resta dov'è, nella sua sezione, col marcatore <code class="rg-mono">€</code> che dichiara che entra nel costo. <strong>Sul foglio stampato non c'è nessun campo</strong>: il titoletto è già dentro il nome della lavorazione (<code class="rg-mono">rg-worksheet-block__work</code>), che il foglio porta in maiuscolo da sé dalla 1.34.0. E <strong>niente <code class="rg-mono">text-transform</code> sul campo</strong>: chi scrive deve vedere ciò che batte.</p>
+      </section>
+
+      <section class="specimen-section" id="screen-a4">
+        <div class="specimen-section__head"><span class="specimen-section__index">51</span><h2>Il foglio a schermo (proposta 1.44.0)</h2><p>Due pagine della piattaforma sono <strong>fogli di carta resi in HTML</strong>: il fascicolo di lavorazione e i moduli in bianco. In stampa escono giusti (<code class="rg-mono">@page rg-a4-head</code>, margini 20/12/12 mm); a schermo non avevano nessuna larghezza e andavano da bordo a bordo del monitor. <em>&#171;Non &#232; ben leggibile perch&#233; si apre su tutto lo schermo. Possiamo renderla simile a pagine di A4?&#187;</em> (Lorenzo, 2026-10-22). <code class="rg-mono">rg-u-screen-a4</code> e <code class="rg-mono">rg-u-screen-a4--head</code> sono l&#8217;utility speculare a <code class="rg-mono">rg-u-print-a4</code>: colonna centrata larga <strong>210 mm</strong>, respiro laterale uguale ai margini della sua <code class="rg-mono">@page</code>, quindi <strong>la stessa giustezza di 186 mm</strong> che esce in carta. Tutto dentro <code class="rg-mono">@media screen</code>: la stampa non cambia di un millimetro. Vedi components/screen-a4.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 &#183; Com&#8217;era: il documento prende tutta la larghezza disponibile, l&#8217;etichetta e il suo valore si allontanano</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <p class="rg-worksheet-block__step">Fase 2 di 3</p>
+              <p class="rg-dept-band rg-dept-band--pressatura">
+                <span class="rg-dept-band__name">Reparto Pressatura e soffiatura</span>
+                <span class="rg-dept-band__note">Foglio 2 / 12</span>
+              </p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Pressatura</h3>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Piazzamento</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Cliente</span><span class="rg-fill-field__line">Gucci</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Codice</span><span class="rg-fill-field__line">M3641</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pezzi per ciclo</span><span class="rg-fill-field__line">2</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">80</span></div>
+                </div>
+                <p class="rg-worksheet-block__op">Pressatura</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">&#176;C</span></span><span class="rg-fill-field__line">150</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">10</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Punto morto inferiore</span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </div>
+              <footer class="rg-worksheet-foot">
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+              </footer>
+            </section>
+          </div></div>
+
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">2 &#183; Con <code class="rg-mono">rg-u-screen-a4--head</code>: il foglio largo 210 mm, i 20 mm in alto riservati all&#8217;intestazione del PDF, e la barra <code class="rg-mono">rg-u-no-print</code> sulla stessa colonna con <code class="rg-mono">rg-u-screen-a4-bar</code></span><div class="specimen-stage specimen-stage--page">
+            <form class="rg-u-no-print rg-u-screen-a4-bar rg-u-mb-4" action="#screen-a4" method="get">
+              <div class="rg-cluster">
+                <button class="rg-button rg-button--primary" type="submit">Apri il PDF per la stampa</button>
+                <button class="rg-button rg-button--ghost" type="button">Stampa questa pagina</button>
+                <a class="rg-button rg-button--ghost" href="#screen-a4">Torna al prodotto</a>
+              </div>
+            </form>
+            <div class="rg-u-screen-a4--head">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <p class="rg-worksheet-block__step">Fase 2 di 3</p>
+              <p class="rg-dept-band rg-dept-band--pressatura">
+                <span class="rg-dept-band__name">Reparto Pressatura e soffiatura</span>
+                <span class="rg-dept-band__note">Foglio 2 / 12</span>
+              </p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Pressatura</h3>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <p class="rg-worksheet-block__op">Piazzamento</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Cliente</span><span class="rg-fill-field__line">Gucci</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Codice</span><span class="rg-fill-field__line">M3641</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pezzi per ciclo</span><span class="rg-fill-field__line">2</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">80</span></div>
+                </div>
+                <p class="rg-worksheet-block__op">Pressatura</p>
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">&#176;C</span></span><span class="rg-fill-field__line">150</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line">10</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Punto morto inferiore</span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </div>
+              <footer class="rg-worksheet-foot">
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+              </footer>
+            </section>
+            </div>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>La stampa non cambia di un millimetro, ed &#232; il primo vincolo.</strong> Le regole stanno tutte dentro <code class="rg-mono">@media screen</code>, che in stampa non si applica: niente <code class="rg-mono">max-width</code>, niente padding aggiunto, niente sfondo sul foglio stampato. Il fascicolo esce anche in PDF da Chrome headless, e quel PDF viene <em>misurato</em> per agganciare le schede macchina: una geometria diversa in stampa romperebbe l&#8217;aggancio.</p>
+        <p class="specimen-note"><strong>Niente finti salti pagina.</strong> A schermo il browser non sa dove cadr&#224; il taglio &#8212; &#232; lo stesso motivo per cui <code class="rg-mono">rg-blank-page</code> dichiara che &#171;il recto lo conta l&#8217;app, non il CSS&#187;. Una riga ogni 297 mm direbbe una bugia, e la direbbe quasi sempre nel punto sbagliato. Il foglio a schermo &#232; <strong>una colonna continua</strong> della larghezza giusta; dove cade il taglio lo mostra il PDF, che &#232; lo stesso bottone della barra.</p>
+        <p class="specimen-note"><strong>Non va sul <code class="rg-mono">&lt;body&gt;</code>.</strong> Lo sfondo del body si propaga alla tela della finestra: un body bianco non si stacca da niente, perch&#233; il bianco diventa tutto lo schermo. Il foglio va su un contenitore <em>dentro</em> il body, che resta libero di portare <code class="rg-mono">rg-u-print-a4--head</code> per la stampa &#8212; una classe parla alla stampante, l&#8217;altra al monitor.</p>
+        <p class="specimen-note"><strong>Il filetto, non l&#8217;ombra</strong> (regole &#167;6: ombra solo per elementi sovrapposti, e un foglio non &#232; sovrapposto a niente). La carta si stacca perch&#233; il fondo &#232; <code class="rg-mono">--rg-color-background</code> e il foglio <code class="rg-mono">--rg-color-surface-raised</code>. Il filetto sta <em>fuori</em> dai 210 mm (<code class="rg-mono">calc(210mm + hairline * 2)</code>): con <code class="rg-mono">box-sizing: border-box</code> starebbe dentro e la giustezza scenderebbe di 2 px rispetto alla carta.</p>
+        <p class="specimen-note"><strong>Sul tablet del reparto non si scrolla in orizzontale.</strong> Sotto la larghezza del foglio la colonna si restringe e basta; sotto i 680 px i 24 mm di margine laterale sarebbero un quarto della pagina e scendono alla scala di spazio (<code class="rg-mono">--rg-space-4</code>). Fra 768 e 1024 px i margini restano quelli veri.</p>
+        <p class="specimen-note"><strong>Misurato in Chrome</strong>, sei blocchi compatti su <code class="rg-mono">@page rg-a4-head</code>, lo stesso motore che genera il PDF del fascicolo. A schermo, finestra da 1889 px: foglio <strong>795,69 px</strong> (210 mm pi&#249; i due filetti), colonna <strong>703,00 px</strong> (186 mm esatti), e il campo che si vedeva lungo il triplo passa da <strong>456,75 a 160,25 px</strong> &#8212; 2,85 volte. A 993 px la colonna &#232; ancora 703,00; a 737 px il foglio si restringe a 737 e la colonna a 644,31; a 485 px i margini scendono a 16 px. <code class="rg-mono">scrollWidth</code> sempre uguale a <code class="rg-mono">clientWidth</code>: nessuno scroll orizzontale. La barra misura 793,69 px e il suo contenuto comincia a 593,01 px, dove comincia il blocco dentro il foglio (593,00). <strong>E la stampa &#232; la stessa pagina</strong>: <code class="rg-mono">--print-to-pdf</code> con e senza il contenitore d&#224; <strong>3 pagine</strong> in tutti e due e <strong>222 parole alle stesse coordinate</strong> (tolleranza 0,01 pt), con la giustezza stampata a 186,27 mm che comincia a 20,11 mm dal bordo &#8212; pagina non scalata (verify-checklist &#167;11).</p>
       </section>
     </main>
   </div>

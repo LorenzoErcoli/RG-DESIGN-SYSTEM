@@ -254,3 +254,58 @@
   .rg-table tbody tr:hover { background: transparent; }
 }
 
+
+/* IL FOGLIO A SCHERMO (1.44.0). Opt-in, speculare a rg-u-print-a4 / --head.
+   IL PROBLEMA, MISURATO: un documento di carta aperto nel browser non ha larghezza. Il fascicolo di
+   lavorazione e i moduli in bianco escono giusti dalla stampante (@page qui sopra) ma a schermo vanno
+   da bordo a bordo del monitor: su 1920 px una riga di rg-fill-field e lunga quasi il triplo di quella
+   stampata, l'etichetta CLIENTE sta a sinistra e il suo valore a 400 px di distanza, e non si capisce
+   dove finisce un foglio. «Non e ben leggibile perche si apre su tutto lo schermo. Possiamo renderla
+   simile a pagine di A4?» (Lorenzo, 2026-10-22).
+   LA REGOLA: la colonna a schermo e larga quanto il FOGLIO, e il respiro laterale e quello della sua
+   @page. Cosi la giustezza che si legge a schermo e la stessa che esce in carta — 186 mm — e il testo
+   va a capo negli stessi punti: l'anteprima non e un'altra impaginazione, e quella.
+   LA STAMPA NON CAMBIA DI UN MILLIMETRO: tutto sta dentro @media screen, che in stampa non si applica.
+   Niente max-width, niente padding, niente sfondo sul foglio stampato; le posizioni che il PDF del
+   fascicolo misura dopo l'impaginazione restano quelle.
+   LE MISURE SONO IN mm perche qui la misura E fisica e deve COINCIDERE con quella della @page (vedi la
+   stessa eccezione dichiarata sopra, regole §12). 210 mm e l'A4; 12 e 20 mm sono i margini delle due
+   pagine nominate. Chi cambia una @page cambia anche la sua riga qui: sono una coppia.
+   IL FILETTO, NON L'OMBRA: la carta si stacca dal fondo perche il fondo e --rg-color-background e il
+   foglio e --rg-color-surface-raised, piu un filetto intermedio (regole §6: ombra solo per elementi
+   sovrapposti, e un foglio non e sovrapposto a niente). Il foglio NON va sul <body>: lo sfondo del
+   body si propaga alla tela della finestra e il bianco si mangerebbe tutto il fondo. Va su un
+   contenitore DENTRO il body — che resta libero di portare rg-u-print-a4--head per la stampa.
+   NIENTE FINTI SALTI PAGINA: a schermo il browser non sa dove cadra il taglio (lo dice gia
+   blank-page.md per il recto), quindi una riga ogni 297 mm direbbe una bugia. Il foglio a schermo e
+   una colonna continua della larghezza giusta; dove cade il taglio lo mostra il PDF. */
+@media screen {
+  .rg-u-screen-a4, .rg-u-screen-a4--head, .rg-u-screen-a4-bar {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 12mm;
+  }
+  /* Il filetto sta FUORI dai 210 mm: con box-sizing: border-box starebbe dentro e la giustezza
+     scenderebbe di 2 px rispetto alla carta. Due pixel, ma e l'unica cosa che questo utility promette. */
+  .rg-u-screen-a4, .rg-u-screen-a4--head {
+    max-width: calc(210mm + var(--rg-border-hairline) * 2);
+    margin-block: var(--rg-space-6);
+    padding-block: 12mm;
+    background: var(--rg-color-surface-raised);
+    border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium);
+  }
+  /* Pagina con intestazione: in alto 20 mm come @page rg-a4-head. Lo spazio resta vuoto anche a
+     schermo — e il posto dell'intestazione che l'app stampa sul PDF, e vederlo vuoto e corretto. */
+  .rg-u-screen-a4--head { padding-block-start: 20mm; }
+  /* La barra che non si stampa (rg-u-no-print): stessa colonna, stesso filo dei campi, nessuna carta.
+     Senza, i bottoni restano larghi quanto il monitor sopra un foglio largo 210 mm. */
+  .rg-u-screen-a4-bar { max-width: 210mm; padding-block: var(--rg-space-6) 0; }
+}
+/* Sotto la larghezza del foglio NON si scrolla in orizzontale: il foglio si restringe e basta
+   (width: 100% + box-sizing). Sul telefono i 24 mm di margine laterale sono un quarto della pagina e
+   non sono piu una fedelta ma una perdita: scendono alla scala di spazio. Il tablet del reparto
+   (768-1024 px) resta sopra la soglia e tiene i margini veri. */
+@media screen and (max-width: 680px) {
+  .rg-u-screen-a4, .rg-u-screen-a4--head, .rg-u-screen-a4-bar { padding-inline: var(--rg-space-4); }
+  .rg-u-screen-a4, .rg-u-screen-a4--head { padding-block: var(--rg-space-6); }
+}

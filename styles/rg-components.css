@@ -112,6 +112,60 @@
 .rg-autocomplete__option:hover, .rg-autocomplete__option.is-active { background: var(--rg-color-neutral-100); }
 .rg-autocomplete__empty { padding: 8px var(--rg-space-3); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); }
 
+/* Lookup — il campo che si completa CHIEDENDO ALL'ARCHIVIO (proposta 1.45.0).
+   Fratello di rg-autocomplete, non una sua variante, e la differenza sta nel dato, non
+   nell'aspetto: lì le voci stanno già nel markup e il filtro è una sottostringa fatta in
+   pagina (venti materiali); qui la pagina parte VUOTA e la lista arriva dal server a ogni
+   battuta — oggi 181 codici di filato, domani le ~35.000 righe del magazzino, che in pagina
+   non ci stanno. Da lì discende tutto il resto: gli stati che l'altro non ha (sotto soglia,
+   in ricerca, nessun risultato, archivio muto) e il pannello che non è un <ul> nudo.
+   Il namespace separato ha una ragione pratica prima che teorica: i due campi convivono
+   nella stessa pagina (l'editor delle schede) e un controller delegato su
+   .rg-autocomplete__input prenderebbe anche questo, provando a filtrare opzioni che non
+   esistono ancora. Due componenti, due selettori, nessuna interferenza.
+   NON è una lista chiusa: ciò che resta nell'input è il valore anche se non è fra i
+   suggerimenti — la scheda di carta ha ragione lei. Nessuno stato dice il contrario e
+   nessuno colora il campo: il testo libero qui non è un errore.
+   IL PANNELLO È position: fixed, e non per gusto: i due posti dove vive lo taglierebbero —
+   .rg-modal ha overflow: hidden e .rg-modal__body overflow-y: auto, e una colonna stretta di
+   griglia lo stringerebbe a 150 px. Le tre misure le scrive chi lo apre
+   (--rg-lookup-top/left/width sull'elemento): il DS non serve JS, il controller di
+   riferimento sta in components/lookup.md e nella vetrina.
+   Le due misure scritte a mano: 280 px di tetto sono sei righe da 40 piu la riga di stato
+   (rg-autocomplete sta a 240 per la stessa ragione), e 40 px di riga e il bersaglio minimo
+   delle regole, lo stesso di rg-input. */
+.rg-lookup { position: relative; display: block; }
+.rg-lookup__input { width: 100%; }
+/* Quando ciò che si batte è un codice (regole §3: i codici sono mono) l'input lo dichiara. */
+.rg-lookup--code .rg-lookup__input { font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; }
+.rg-lookup__panel { position: fixed; top: var(--rg-lookup-top, auto); left: var(--rg-lookup-left, auto); width: var(--rg-lookup-width, auto); min-width: calc(24ch + var(--rg-space-8)); max-width: calc(100vw - var(--rg-space-6)); max-height: 280px; overflow-y: auto; z-index: var(--rg-z-dropdown); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-md); box-shadow: var(--rg-shadow-overlay); }
+.rg-lookup__panel[hidden] { display: none; }
+/* La riga di stato è del componente, non di chi lo usa: le quattro frasi sono in lookup.md.
+   Stanno in cima perché durante una ricerca i suggerimenti di prima restano sotto, leggibili. */
+.rg-lookup__status { margin: 0; padding: var(--rg-space-2) var(--rg-space-3); color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); }
+/* Le tre condizioni senza guasto si distinguono per PAROLA, non per colore: hanno la stessa
+   forma, e la classe serve a chi legge il DOM e a chi deve agganciarcisi. */
+.rg-lookup__status--hint, .rg-lookup__status--busy, .rg-lookup__status--empty { color: var(--rg-color-text-secondary); }
+/* L'archivio che non risponde è un avviso, non un errore del valore: il campo non si tinge
+   e la frase dice per esteso che quello che si è battuto resta valido. */
+.rg-lookup__status--offline { color: var(--rg-color-warning); }
+.rg-lookup__status:not([hidden]) + .rg-lookup__list:not(:empty) { border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-lookup__list { margin: 0; padding: 0; list-style: none; }
+/* 40 px di bersaglio come rg-input; a capo ammesso, perché in colonna stretta la spalla
+   scende sotto invece di schiacciare il codice. */
+.rg-lookup__option { display: flex; flex-wrap: wrap; align-items: baseline; align-content: center; gap: var(--rg-space-1) var(--rg-space-3); min-height: 40px; padding: var(--rg-space-2) var(--rg-space-3); cursor: pointer; }
+.rg-lookup__option + .rg-lookup__option { border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-lookup__option:hover { background: var(--rg-color-neutral-50); }
+/* La riga raggiunta da tastiera non si distingue dal solo fondo — che l'hover usa già: porta
+   anche un filetto nero a sinistra, visibile in scala di grigi. */
+.rg-lookup__option.is-active, .rg-lookup__option[aria-selected="true"] { background: var(--rg-color-neutral-100); box-shadow: inset var(--rg-border-strong) 0 0 var(--rg-color-black); }
+/* I tre pezzi della riga sono l'informazione, non decorazione: il codice è il dato che
+   finisce nel campo, la spec è ciò che si controlla, la spalla è secondaria e può mancare. */
+.rg-lookup__code { color: var(--rg-color-black); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rg-lookup__spec { color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rg-lookup__aside { margin-left: auto; color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); white-space: nowrap; }
+.rg-lookup__input:disabled, .rg-lookup__input[readonly] { cursor: default; }
+
 /* Tables */
 .rg-table-wrap { overflow-x: auto; }
 /* La tabella E una superficie sollevata (v1.13.0): il dato tabellare non si legge sul fondo
@@ -2295,6 +2349,7 @@ a.rg-icon-button { text-decoration: none; }
   .rg-icon-button, .rg-icon-button--full, .rg-page { min-width: calc(var(--rg-space-12) - var(--rg-space-1)); min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
   .rg-segmented__item, .rg-chip, .rg-tab, .rg-topbar__back, .rg-breadcrumb a, .rg-table__toggle, .rg-list-row--link, .rg-action-menu__item, .rg-choice { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
   .rg-disclosure--boxed > .rg-disclosure__trigger { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
+  .rg-lookup__option { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
   .rg-operation-row__slot { width: calc(var(--rg-space-12) - var(--rg-space-1)); height: calc(var(--rg-space-12) - var(--rg-space-1)); }
   .rg-operation-sequence { --rg-operation-actions: calc(4 * (var(--rg-space-12) - var(--rg-space-1)) + 3 * var(--rg-space-1) + var(--rg-space-2) + var(--rg-space-3) + var(--rg-border-hairline)); }
 }

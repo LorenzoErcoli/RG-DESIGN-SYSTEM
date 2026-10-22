@@ -7,6 +7,59 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.45.0 — 2026-10-22 (proposta)
+
+**Minor, additiva.** Un componente nuovo, nessun token, nessuna classe esistente toccata.
+
+### Il campo che chiede all'archivio: `rg-lookup`
+
+`rg-autocomplete` ha un limite che non era scritto da nessuna parte: **le voci stanno nel
+markup**. Un `<li>` per voce e un filtro per sottostringa fatto in pagina — perfetto per i venti
+materiali del registro, impossibile per i **filati del ricamo**, che sono 181 codici oggi e
+saranno le **~35.000 righe** del catalogo di magazzino. Lì la lista deve arrivare **dal server a
+ogni battuta**, e al caricamento la pagina non ne ha nemmeno una.
+
+Da quel solo fatto — il dato arriva dopo — discende tutto il componente:
+
+- **Quattro stati che l'altro non ha**, e le frasi le scrive il DS, non chi lo usa:
+  `rg-lookup__status--hint` («Batti almeno 2 caratteri», soglia da `data-min`), `--busy`
+  («Cerco…», con `aria-busy` sulla lista), `--empty` («Nessun codice somigliante. Quello che hai
+  scritto resta valido.»), `--offline` («Archivio non raggiungibile…»). Due prodotti che dicono
+  «nessun risultato» in due modi diversi sono due interfacce diverse.
+- **La riga porta tre pezzi, tutti informazione**: `__code` è il valore che finirà nel campo
+  (mono, `621/30`), `__spec` è il dato che si controlla (`Tit. 30`, il titolo del filo), `__aside`
+  è la spalla secondaria a destra — oggi «189 volte», domani la marca e il codice del magazzino —
+  e **può mancare**.
+- **Il pannello è `position: fixed`**, perché i due posti dove il campo vive lo taglierebbero: la
+  colonna di una griglia a quattro (Filo sopra · Colore sopra · Filo sotto · Colore sotto, ~150
+  px) e `rg-modal`, che ha `overflow: hidden` con un corpo in `overflow-y: auto`. Le tre misure
+  (`--rg-lookup-top/left/width`) le scrive il controller; in cambio il pannello può essere più
+  largo del campo (`min-width` di 24 caratteri) e si ribalta sopra quando sotto non c'è spazio.
+
+**Non è una variante, ed è una decisione.** Oltre alla differenza di dato c'è una ragione
+pratica: nell'editor delle schede della piattaforma i due campi **convivono nella stessa pagina**,
+e un controller delegato su `.rg-autocomplete__input` prenderebbe anche il campo remoto, provando
+a filtrare opzioni che non esistono. Due namespace, nessuna interferenza. `rg-autocomplete` non
+cambia di una riga: guadagna solo un `notes` nel manifest e un rimando in `forms.md` che dice
+dov'è il suo limite.
+
+**La lista non è chiusa, e nessuno stato dice il contrario.** Il valore è ciò che resta
+nell'input anche quando non è fra i suggerimenti: la scheda di carta ha ragione lei, e se dice un
+codice che a magazzino non c'è si scrive quel codice. Il campo **non si tinge mai** (niente
+`is-error`, niente `aria-invalid`), le due frasi che potrebbero sembrare un rimprovero finiscono
+entrambe con «quello che hai scritto resta valido», e l'archivio muto è **giallo d'avviso, non
+rosso**: il guasto è dell'archivio, non del valore. Il messaggio dei materiali («Non nel registro
+— verrà salvato come extra») qui non si riusa: là esiste un registro che accoglie l'extra.
+
+**Il DS continua a non servire JavaScript.** Il contratto (dove si scrive ogni stato) e un
+controller di riferimento senza dipendenze stanno in [components/lookup.md](components/lookup.md)
+e nella vetrina (tavola 52, con un archivio finto). Due cose che il contratto chiede e che si
+pagano se si saltano: la richiesta **attesa** (`data-debounce`, 160 ms) e le risposte **vecchie
+buttate** — con 35.000 articoli l'ordine di arrivo non è l'ordine di partenza.
+
+Nuovi: `rg-lookup`, `rg-lookup--code`, `__input`, `__panel`, `__status` (+ `--hint`, `--busy`,
+`--empty`, `--offline`), `__list`, `__option`, `__code`, `__spec`, `__aside`.
+
 ## 1.44.0 — 2026-10-22
 
 **Minor.** Tre classi nuove e additive — `rg-u-screen-a4`, `rg-u-screen-a4--head`,

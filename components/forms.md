@@ -6,7 +6,7 @@ Raccogliere dati affidabili riducendo ambiguità, errori e perdita di contesto t
 
 ## Varianti
 
-- Input testuale/numerico, textarea, select, checkbox/radio, **toggle**, **segmented**, upload, ricerca, **autocomplete** (input con suggerimenti filtrati) e campo calcolato in sola lettura.
+- Input testuale/numerico, textarea, select, checkbox/radio, **toggle**, **segmented**, upload, ricerca, **autocomplete** (input con suggerimenti filtrati, voci in pagina), **lookup** (suggerimenti chiesti al server, vedi [lookup.md](lookup.md)) e campo calcolato in sola lettura.
 - **Inline** per filtri semplici; **stacked** per inserimenti complessi; **step** solo quando esistono fasi reali.
 
 ## Uso e limiti
@@ -436,6 +436,13 @@ Comportamento atteso (implementazione JS di riferimento, indipendente da libreri
 ogni digitazione, filtra le `option` per sottostringa e mostra la lista; selezione con click o
 tastiera (frecce su/giù, Invio); chiusura con Esc o click esterno; se nessuna corrispondenza,
 mostra `.rg-autocomplete__empty`. Il valore libero digitato resta valido.
+
+**Le voci stanno nel markup, ed è il limite del componente.** Quando la lista non può stare in
+pagina — perché arriva dal server a ogni battuta, perché l'archivio ha decine di migliaia di
+righe — il componente è un altro: [`rg-lookup`](lookup.md), che ha gli stati che qui non
+servono (sotto soglia, in ricerca, archivio muto) e una riga composta invece di una stringa.
+Non è una variante di questo: namespace separato, perché i due campi convivono nella stessa
+pagina e un controller delegato su `.rg-autocomplete__input` prenderebbe anche l'altro.
 
 ## Toggle (`.rg-toggle`)
 

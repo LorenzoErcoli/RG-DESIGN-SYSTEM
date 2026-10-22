@@ -85,6 +85,9 @@
       .specimen-section__head { grid-template-columns: 40px 1fr; }
       .specimen-cell, .specimen-cell--half, .specimen-cell--wide { grid-column: 1 / -1; }
     }
+    /* Tavola 52 — il pannello di rg-lookup e sospeso (position: fixed) e lo colloca il controller:
+       per mostrarlo FERMO in una tavola lo si riporta in flusso. Solo impaginazione della specimen. */
+    .specimen-lookup-fermo .rg-lookup__panel { position: static; width: auto; min-width: 0; max-width: none; max-height: none; box-shadow: none; }
   </style>
 </head>
 <body>
@@ -92,7 +95,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -3482,6 +3485,54 @@ status         VALID</pre></div>
         <p class="specimen-note"><strong>Sul tablet del reparto non si scrolla in orizzontale.</strong> Sotto la larghezza del foglio la colonna si restringe e basta; sotto i 680 px i 24 mm di margine laterale sarebbero un quarto della pagina e scendono alla scala di spazio (<code class="rg-mono">--rg-space-4</code>). Fra 768 e 1024 px i margini restano quelli veri.</p>
         <p class="specimen-note"><strong>Misurato in Chrome</strong>, sei blocchi compatti su <code class="rg-mono">@page rg-a4-head</code>, lo stesso motore che genera il PDF del fascicolo. A schermo, finestra da 1889 px: foglio <strong>795,69 px</strong> (210 mm pi&#249; i due filetti), colonna <strong>703,00 px</strong> (186 mm esatti), e il campo che si vedeva lungo il triplo passa da <strong>456,75 a 160,25 px</strong> &#8212; 2,85 volte. A 993 px la colonna &#232; ancora 703,00; a 737 px il foglio si restringe a 737 e la colonna a 644,31; a 485 px i margini scendono a 16 px. <code class="rg-mono">scrollWidth</code> sempre uguale a <code class="rg-mono">clientWidth</code>: nessuno scroll orizzontale. La barra misura 793,69 px e il suo contenuto comincia a 593,01 px, dove comincia il blocco dentro il foglio (593,00). <strong>E la stampa &#232; la stessa pagina</strong>: <code class="rg-mono">--print-to-pdf</code> con e senza il contenitore d&#224; <strong>3 pagine</strong> in tutti e due e <strong>222 parole alle stesse coordinate</strong> (tolleranza 0,01 pt), con la giustezza stampata a 186,27 mm che comincia a 20,11 mm dal bordo &#8212; pagina non scalata (verify-checklist &#167;11).</p>
       </section>
+
+      <section class="specimen-section" id="lookup">
+        <div class="specimen-section__head"><span class="specimen-section__index">52</span><h2>Il campo che chiede all&#8217;archivio (proposta 1.45.0)</h2><p><code class="rg-mono">rg-lookup</code> &#232; il fratello di <code class="rg-mono">rg-autocomplete</code> per quando le voci <strong>non possono stare in pagina</strong>: la lista arriva dal server a ogni battuta. I filati del ricamo sono <strong>181 codici</strong> oggi e saranno le <strong>~35.000 righe</strong> del magazzino. Da l&#236; vengono gli stati che l&#8217;altro non ha (sotto soglia, in ricerca, nessun risultato, archivio muto), la riga a tre pezzi (codice, titolo, spalla) e il pannello <code class="rg-mono">position: fixed</code>, che il modale e la colonna stretta non tagliano. <strong>La lista non &#232; chiusa</strong>: quello che si batte resta il valore anche se non &#232; in elenco. Vedi components/lookup.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Vivo &#8212; la griglia dell&#8217;editor: batti <code class="rg-mono">62</code>, <code class="rg-mono">30</code> o <code class="rg-mono">zzz</code> nel primo campo</span><div class="specimen-stage">
+            <div class="rg-form-row">
+              <div class="rg-field rg-field--w16">
+                <label class="rg-field__label" for="spec-lk-filo-sopra">Filo sopra</label>
+                <div class="rg-lookup rg-lookup--code" data-min="2" id="spec-lk-1">
+                  <input class="rg-input rg-lookup__input" id="spec-lk-filo-sopra" type="text" role="combobox" aria-expanded="false" aria-controls="spec-lk-lista-1" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Codice filato">
+                  <div class="rg-lookup__panel" hidden><p class="rg-lookup__status" role="status" hidden></p><ul class="rg-lookup__list" id="spec-lk-lista-1" role="listbox" aria-label="Filati somiglianti"></ul></div>
+                </div>
+                <span class="rg-field__help">Se il codice non &#232; in archivio, scrivilo lo stesso: vale quello.</span>
+              </div>
+              <div class="rg-field rg-field--w16">
+                <label class="rg-field__label" for="spec-lk-colore-sopra">Colore sopra</label>
+                <input class="rg-input" id="spec-lk-colore-sopra" type="text" placeholder="Colore">
+              </div>
+              <div class="rg-field rg-field--w16">
+                <label class="rg-field__label" for="spec-lk-filo-sotto">Filo sotto</label>
+                <div class="rg-lookup rg-lookup--code" data-min="2" id="spec-lk-2">
+                  <input class="rg-input rg-lookup__input" id="spec-lk-filo-sotto" type="text" role="combobox" aria-expanded="false" aria-controls="spec-lk-lista-2" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Codice filato">
+                  <div class="rg-lookup__panel" hidden><p class="rg-lookup__status" role="status" hidden></p><ul class="rg-lookup__list" id="spec-lk-lista-2" role="listbox" aria-label="Filati somiglianti"></ul></div>
+                </div>
+              </div>
+              <div class="rg-field rg-field--w16">
+                <label class="rg-field__label" for="spec-lk-colore-sotto">Colore sotto</label>
+                <input class="rg-input" id="spec-lk-colore-sotto" type="text" placeholder="Colore">
+              </div>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half specimen-lookup-fermo"><span class="specimen-label">I quattro stati &#8212; qui fermi in flusso per la tavola; nel vero il pannello &#232; sospeso</span><div class="specimen-stage specimen-column">
+            <div class="rg-lookup rg-lookup--code"><input class="rg-input rg-lookup__input" type="text" value="6" aria-label="Sotto soglia" role="combobox" aria-expanded="true" aria-controls="spec-lk-s1" aria-autocomplete="list" autocomplete="off"><div class="rg-lookup__panel"><p class="rg-lookup__status rg-lookup__status--hint" role="status">Batti almeno 2 caratteri</p><ul class="rg-lookup__list" id="spec-lk-s1" role="listbox" aria-label="Filati somiglianti"></ul></div></div>
+            <div class="rg-lookup rg-lookup--code"><input class="rg-input rg-lookup__input" type="text" value="621" aria-label="In ricerca" role="combobox" aria-expanded="true" aria-controls="spec-lk-s2" aria-autocomplete="list" autocomplete="off"><div class="rg-lookup__panel"><p class="rg-lookup__status rg-lookup__status--busy" role="status">Cerco&#8230;</p><ul class="rg-lookup__list" id="spec-lk-s2" role="listbox" aria-label="Filati somiglianti" aria-busy="true"><li class="rg-lookup__option" role="option" aria-selected="false"><span class="rg-lookup__code">621/30</span><span class="rg-lookup__spec">Tit. 30</span><span class="rg-lookup__aside">189 volte</span></li></ul></div></div>
+            <div class="rg-lookup rg-lookup--code"><input class="rg-input rg-lookup__input" type="text" value="ZZ9" aria-label="Nessun risultato" role="combobox" aria-expanded="true" aria-controls="spec-lk-s3" aria-autocomplete="list" autocomplete="off"><div class="rg-lookup__panel"><p class="rg-lookup__status rg-lookup__status--empty" role="status">Nessun codice somigliante. Quello che hai scritto resta valido.</p><ul class="rg-lookup__list" id="spec-lk-s3" role="listbox" aria-label="Filati somiglianti"></ul></div></div>
+            <div class="rg-lookup rg-lookup--code"><input class="rg-input rg-lookup__input" type="text" value="621/30" aria-label="Archivio muto" role="combobox" aria-expanded="true" aria-controls="spec-lk-s4" aria-autocomplete="list" autocomplete="off"><div class="rg-lookup__panel"><p class="rg-lookup__status rg-lookup__status--offline" role="status">Archivio non raggiungibile. Quello che hai scritto resta valido.</p><ul class="rg-lookup__list" id="spec-lk-s4" role="listbox" aria-label="Filati somiglianti"></ul></div></div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half specimen-lookup-fermo"><span class="specimen-label">La riga &#8212; tre pezzi, la spalla pu&#242; mancare; la seconda riga &#232; quella raggiunta da tastiera</span><div class="specimen-stage specimen-column">
+            <div class="rg-lookup rg-lookup--code"><div class="rg-lookup__panel"><p class="rg-lookup__status" hidden></p><ul class="rg-lookup__list" id="spec-lk-s5" role="listbox" aria-label="Filati somiglianti"><li class="rg-lookup__option" role="option" aria-selected="false"><span class="rg-lookup__code">621/30</span><span class="rg-lookup__spec">Tit. 30</span><span class="rg-lookup__aside">189 volte</span></li><li class="rg-lookup__option is-active" role="option" aria-selected="true" id="spec-lk-s5-o1"><span class="rg-lookup__code">621/40</span><span class="rg-lookup__spec">Tit. 40</span><span class="rg-lookup__aside">52 volte</span></li><li class="rg-lookup__option" role="option" aria-selected="false"><span class="rg-lookup__code">621/120</span><span class="rg-lookup__spec">Tit. 120</span></li></ul></div></div>
+            <span class="specimen-label">Domani la spalla verr&#224; dal magazzino: marca e codice articolo</span>
+            <div class="rg-lookup rg-lookup--code"><div class="rg-lookup__panel"><p class="rg-lookup__status" hidden></p><ul class="rg-lookup__list" id="spec-lk-s6" role="listbox" aria-label="Filati somiglianti"><li class="rg-lookup__option" role="option" aria-selected="false"><span class="rg-lookup__code">621/30</span><span class="rg-lookup__spec">Tit. 30</span><span class="rg-lookup__aside">CF &#183; <span class="rg-mono">GUT</span></span></li><li class="rg-lookup__option" role="option" aria-selected="false"><span class="rg-lookup__code">108/40</span><span class="rg-lookup__spec">Tit. 40</span><span class="rg-lookup__aside">MD &#183; <span class="rg-mono">MAD</span></span></li></ul></div></div>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Perch&#233; non &#232; una variante di <code class="rg-mono">rg-autocomplete</code>.</strong> Non per l&#8217;aspetto: per il dato. L&#236; le voci stanno nel markup e il filtro &#232; una sottostringa fatta in pagina &#8212; va benissimo per venti materiali; qui la pagina parte <em>vuota</em>. E c&#8217;&#232; una ragione pratica che basterebbe da sola: nell&#8217;editor delle schede i due campi stanno nella <em>stessa pagina</em>, e un controller delegato su <code class="rg-mono">.rg-autocomplete__input</code> prenderebbe anche questo, provando a filtrare opzioni che non esistono.</p>
+        <p class="specimen-note"><strong>Il testo libero non &#232; un errore, e nessuno stato lo dice.</strong> La scheda di carta ha ragione lei: se dice un codice che a magazzino non c&#8217;&#232;, si scrive quel codice. Le due frasi che potrebbero sembrare un rimprovero finiscono entrambe con <em>&#171;quello che hai scritto resta valido&#187;</em>, il campo non si tinge mai (niente <code class="rg-mono">is-error</code>, niente <code class="rg-mono">aria-invalid</code>) e l&#8217;archivio muto &#232; <strong>giallo d&#8217;avviso, non rosso</strong>: il guasto &#232; suo, non del valore. Il messaggio dell&#8217;autocomplete dei materiali (&#171;Non nel registro &#8212; verr&#224; salvato come extra&#187;) qui non c&#8217;entra: l&#224; esiste un registro che accoglie l&#8217;extra.</p>
+        <p class="specimen-note"><strong>Il pannello &#232; sospeso, e non per gusto.</strong> I due posti dove il campo vive lo taglierebbero: la colonna di una griglia a quattro (~150 px) e <code class="rg-mono">rg-modal</code>, che ha <code class="rg-mono">overflow: hidden</code> con un corpo in <code class="rg-mono">overflow-y: auto</code>. Quindi <code class="rg-mono">position: fixed</code>, <code class="rg-mono">--rg-z-dropdown</code>, e le tre misure (<code class="rg-mono">--rg-lookup-top/left/width</code>) le scrive il controller. Il prezzo &#232; dichiarato: il pannello non segue il campo da solo e va ricollocato allo scroll <em>in cattura</em>, perch&#233; a scorrere &#232; il corpo del modale. In compenso pu&#242; essere <strong>pi&#249; largo del campo</strong> (<code class="rg-mono">min-width</code> di 24 caratteri): in colonna stretta tre pezzi in 150 px non ci stanno.</p>
+        <p class="specimen-note"><strong>Le frasi sono del DS, non di chi lo usa.</strong> Quattro stati, quattro testi scritti in components/lookup.md: due prodotti che dicono &#171;nessun risultato&#187; in due modi diversi sono due interfacce diverse. La riga di stato sta <em>in cima</em> al pannello perch&#233; durante &#171;Cerco&#8230;&#187; i suggerimenti di prima restano sotto, leggibili, invece di far lampeggiare la lista a ogni tasto; e sta <em>fuori</em> dal <code class="rg-mono">listbox</code>, come <code class="rg-mono">role="status"</code>, perch&#233; un <code class="rg-mono">&lt;li&gt;</code> che non &#232; un&#8217;opzione dentro un listbox non &#232; ARIA valido &#8212; lo stesso difetto corretto nella 1.44.0 per <code class="rg-mono">rg-list-row</code>.</p>
+      </section>
     </main>
   </div>
 
@@ -3630,6 +3681,159 @@ status         VALID</pre></div>
     var r = e.target.closest && e.target.closest('.rg-operation-row.is-new');
     if (r && e.relatedTarget && !r.contains(e.relatedTarget)) r.classList.remove('is-new');
   });
+  </script>
+
+  <!-- Controller di riferimento per .rg-lookup (proposta 1.45.0) — identico a quello di
+       components/lookup.md, che resta la fonte. Qui l'archivio e finto (ritardo e filtro in
+       locale) perche la vetrina non ha un server: nel prodotto `cerca` fa la fetch.
+       Fonti di verita dello stato: aria-expanded sull'input + hidden sul pannello; la riga
+       raggiunta da tastiera e aria-selected + is-active + aria-activedescendant. Nessuna
+       classe locale: le tre misure del pannello sono custom property del DS. -->
+  <script>
+  function rgLookup(root, { cerca, riga }) {
+    const input = root.querySelector('.rg-lookup__input');
+    const panel = root.querySelector('.rg-lookup__panel');
+    const stato = root.querySelector('.rg-lookup__status');
+    const lista = root.querySelector('.rg-lookup__list');
+    const soglia = Number(root.dataset.min || 2);
+    const attesa = Number(root.dataset.debounce || 160);
+    const MARGINE = 12;
+    const mappa = riga || (r => ({
+      valore: r.codice, codice: r.codice,
+      spec: r.titolo ? 'Tit. ' + r.titolo : '', spalla: r.spalla || ''
+    }));
+    let timer = null, corsa = 0, attiva = -1;
+    const righe = () => Array.from(lista.children);
+
+    function dimmi(testo, modo) {
+      stato.textContent = testo;
+      stato.hidden = !testo;
+      stato.className = 'rg-lookup__status' + (modo ? ' rg-lookup__status--' + modo : '');
+    }
+
+    function colloca() {
+      const r = input.getBoundingClientRect();
+      panel.style.setProperty('--rg-lookup-width', Math.round(r.width) + 'px');
+      panel.style.setProperty('--rg-lookup-left', Math.round(r.left) + 'px');
+      const largo = panel.offsetWidth, alto = panel.offsetHeight;
+      const sotto = window.innerHeight - r.bottom;
+      const giu = sotto >= alto || sotto >= r.top;
+      panel.style.setProperty('--rg-lookup-top', Math.round(giu ? r.bottom : Math.max(MARGINE, r.top - alto)) + 'px');
+      panel.style.setProperty('--rg-lookup-left', Math.round(Math.max(MARGINE, Math.min(r.left, window.innerWidth - largo - MARGINE))) + 'px');
+    }
+
+    function apri(aperto) {
+      panel.hidden = !aperto;
+      input.setAttribute('aria-expanded', String(aperto));
+      if (aperto) colloca();
+      else { input.removeAttribute('aria-activedescendant'); attiva = -1; }
+    }
+
+    function segna(i) {
+      const o = righe();
+      if (o[attiva]) { o[attiva].classList.remove('is-active'); o[attiva].setAttribute('aria-selected', 'false'); }
+      attiva = i;
+      if (!o[i]) { input.removeAttribute('aria-activedescendant'); return; }
+      o[i].classList.add('is-active');
+      o[i].setAttribute('aria-selected', 'true');
+      input.setAttribute('aria-activedescendant', o[i].id);
+      o[i].scrollIntoView({ block: 'nearest' });
+    }
+
+    function disegna(dati) {
+      attiva = -1;
+      lista.textContent = '';
+      dati.forEach((d, i) => {
+        const v = mappa(d);
+        const li = document.createElement('li');
+        li.className = 'rg-lookup__option';
+        li.id = lista.id + '-o' + i;
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', 'false');
+        li.dataset.valore = v.valore;
+        [['code', v.codice], ['spec', v.spec], ['aside', v.spalla]].forEach(([parte, testo]) => {
+          if (!testo) return;
+          const s = document.createElement('span');
+          s.className = 'rg-lookup__' + parte;
+          s.textContent = testo;
+          li.appendChild(s);
+        });
+        lista.appendChild(li);
+      });
+    }
+
+    function chiedi() {
+      const q = input.value.trim();
+      if (q.length < soglia) {
+        disegna([]); dimmi('Batti almeno ' + soglia + ' caratteri', 'hint'); apri(true); return;
+      }
+      const mia = ++corsa;
+      dimmi('Cerco…', 'busy');
+      lista.setAttribute('aria-busy', 'true');
+      apri(true);
+      Promise.resolve(cerca(q)).then(dati => {
+        if (mia !== corsa) return;                  // risposta vecchia: si butta
+        lista.removeAttribute('aria-busy');
+        disegna(dati || []);
+        if (dati && dati.length) dimmi('', '');
+        else dimmi('Nessun codice somigliante. Quello che hai scritto resta valido.', 'empty');
+        colloca();
+      }).catch(() => {
+        if (mia !== corsa) return;
+        lista.removeAttribute('aria-busy');
+        disegna([]);
+        dimmi('Archivio non raggiungibile. Quello che hai scritto resta valido.', 'offline');
+        colloca();
+      });
+    }
+
+    function scegli(li) {
+      input.value = li.dataset.valore;
+      apri(false);
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(chiedi, attesa); });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { apri(false); return; }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        if (panel.hidden) { chiedi(); return; }
+        const o = righe(); if (!o.length) return;
+        e.preventDefault();
+        segna(e.key === 'ArrowDown' ? Math.min(attiva + 1, o.length - 1) : Math.max(attiva - 1, 0));
+        return;
+      }
+      // Invio senza riga attiva non si intercetta: il testo battuto e gia il valore.
+      if (e.key === 'Enter' && !panel.hidden && attiva >= 0) { e.preventDefault(); scegli(righe()[attiva]); }
+    });
+    panel.addEventListener('mousedown', e => {
+      e.preventDefault();                           // il campo non perde il fuoco
+      const li = e.target.closest('.rg-lookup__option');
+      if (li) scegli(li);
+    });
+    input.addEventListener('blur', () => apri(false));
+    const segui = () => { if (!panel.hidden) colloca(); };
+    window.addEventListener('scroll', segui, true); // in cattura: a scorrere e il corpo del modale
+    window.addEventListener('resize', segui);
+  }
+
+  // Archivio finto della tavola 52: nel prodotto al suo posto c'e una fetch.
+  (function () {
+    const ARCHIVIO = [
+      { codice: '621/30', numero: '621', titolo: '30', spalla: '189 volte' },
+      { codice: '621/40', numero: '621', titolo: '40', spalla: '52 volte' },
+      { codice: '621/120', numero: '621', titolo: '120', spalla: '7 volte' },
+      { codice: '108/40', numero: '108', titolo: '40', spalla: '96 volte' },
+      { codice: '108/30', numero: '108', titolo: '30', spalla: '31 volte' },
+      { codice: '262/30', numero: '262', titolo: '30', spalla: '24 volte' },
+      { codice: '1005/40', numero: '1005', titolo: '40', spalla: '18 volte' },
+      { codice: '5115/30', numero: '5115', titolo: '30', spalla: '12 volte' },
+      { codice: '9999/50', numero: '9999', titolo: '50' }
+    ];
+    const finta = q => new Promise(ok => setTimeout(
+      () => ok(ARCHIVIO.filter(r => r.codice.includes(q)).slice(0, 20)), 320));
+    document.querySelectorAll('#spec-lk-1, #spec-lk-2').forEach(r => rgLookup(r, { cerca: finta }));
+  })();
   </script>
 </body>
 </html>

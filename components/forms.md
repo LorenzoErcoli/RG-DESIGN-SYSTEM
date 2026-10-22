@@ -59,6 +59,21 @@ non è più leggibile e la label a due parole va a capo tre volte.
   gruppo e usare `rg-input` semplice è preferibile a ripetere un suffisso che ruba spazio.
 - L'input non sborda mai il proprio contenitore: il DS gli impone `min-width: 0`, che annulla la
   dimensione minima automatica del controllo. Non aggiungere `width`/`min-width` locali.
+- **Dentro una larghezza dichiarata** (`rg-field--w4…w24`, dalla 1.47.0) la misura è quella del
+  **valore**, e l'unità si aggiunge accanto: `rg-field--w8` + campo con unità = 8 caratteri di valore
+  (più il cromo dell'input) **e** la pastiglia dell'unità. Il contenitore è largo quanto le sue due
+  tracce, non di più. Il modificatore ridefinisce `--rg-input-numeric-width`, quindi non serve
+  impostarla a mano. Fino alla 1.46 il contenitore prendeva la misura ma la griglia restava
+  `12ch | unità`, e il campo usciva dalla sua scatola (vedi *Larghezza dichiarata*).
+
+```html
+<label class="rg-field rg-field--w8">
+  <span class="rg-field__label">Altezza</span>
+  <span class="rg-field-with-unit">
+    <input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="42,9"> <span>cm</span>
+  </span>
+</label>
+```
 
 ## Campo numerico (`.rg-input--numeric`)
 
@@ -111,13 +126,23 @@ controllo (padding e bordo, coperti da `--rg-space-8`).
 - Il **valore misurato** aveva già la sua larghezza: `rg-input--numeric` si ferma a
   `--rg-input-numeric-width` (12ch). Questi modificatori servono al **testo**, che finora prendeva
   sempre tutta la colonna anche quando conteneva tre lettere.
-- **La misura è del controllo, non dell'etichetta** (dalla 1.16.0). Input, select e
-  `rg-field-with-unit` restano alla larghezza dichiarata. Il campo è largo quanto la sua etichetta,
+- **La misura è del controllo, non dell'etichetta** (dalla 1.16.0). Input e select restano alla
+  larghezza dichiarata; `rg-field-with-unit` la dà al valore e aggiunge l'unità (punto seguente). Il campo è largo quanto la sua etichetta,
   mai meno della misura, e l'etichetta non va a capo sopra i 680 px.
   Fino alla 1.15 il modificatore stringeva anche l'etichetta: «Pezzi per ciclo (n)» andava su due
   righe sopra una casella da quattro cifre, e la riga dei campi perdeva l'allineamento delle
   etichette. L'affermazione «qui ci vanno quattro caratteri» riguarda il contenuto, e il contenuto
   sta nel controllo. Sotto i 680 px l'etichetta torna a capo: sbordare dallo schermo è peggio.
+- **Con l'unità la misura è del valore, e l'unità si aggiunge** (dalla 1.47.0). Dentro un `--wN`,
+  `rg-field-with-unit` ha la traccia del valore larga `Nch` più il cromo (il modificatore ridefinisce
+  `--rg-input-numeric-width`) e accanto la pastiglia dell'unità; il contenitore è largo quanto le due
+  tracce. Il numero nel nome resta il numero di caratteri che si scrivono: l'unità non li scrive chi
+  compila, e toglierla dalla misura vorrebbe dire lasciare a `--w4` meno di una cifra. In una colonna
+  più stretta il valore si stringe invece di sbordare. Un `rg-field-with-unit--compact` dentro un
+  `--wN` tiene la sua misura compatta.
+  *Prima della 1.47.0* il contenitore prendeva la misura (`8ch + 32 px` per `--w8`) ma la sua griglia
+  restava `--rg-input-numeric-width` (12ch) più l'unità: le tracce erano più larghe della scatola e
+  il campo ne usciva, sopra il campo accanto.
 - Un'etichetta **molto** più lunga del suo controllo resta un segnale. Di solito l'unità va tolta
   dall'etichetta e messa accanto al valore (`rg-field-with-unit`), oppure l'etichetta va accorciata.
 - **Se anche un solo campo della riga ha un aiuto o può mostrare un errore**, la riga è

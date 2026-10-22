@@ -1881,7 +1881,19 @@ td.rg-part-sheet__dept { font-family: var(--rg-font-identity); letter-spacing: v
 .rg-field--w24 { --rg-field-width: calc(24ch + var(--rg-space-8)); }
 .rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24 { flex: none; justify-items: start; width: max-content; min-width: var(--rg-field-width); max-width: 100%; }
 .rg-field--w4 > .rg-field__label, .rg-field--w8 > .rg-field__label, .rg-field--w16 > .rg-field__label, .rg-field--w24 > .rg-field__label { white-space: nowrap; }
-:is(.rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24) > :is(.rg-input, .rg-select, .rg-field-with-unit) { width: var(--rg-field-width); max-width: 100%; }
+:is(.rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24) > :is(.rg-input, .rg-select) { width: var(--rg-field-width); max-width: 100%; }
+/* CAMPO CON UNITA DENTRO UNA LARGHEZZA DICHIARATA (1.47.0). Fino alla 1.46 il contenitore
+   rg-field-with-unit prendeva la misura (8ch + 32 per --w8) mentre la sua griglia restava
+   `--rg-input-numeric-width (12ch) | unita`: le tracce erano piu larghe della scatola e il campo ne
+   usciva. Ora la misura dichiarata e quella del VALORE — il numero nel nome sono i caratteri attesi, e
+   i caratteri stanno nell'input — e l'unita si aggiunge accanto: --wN ridefinisce
+   --rg-input-numeric-width, la traccia del valore la legge, e il contenitore e largo quanto le sue
+   due tracce (max-content), non un pixel di piu. minmax(0, …) e max-width 100% lasciano stringere il
+   valore in una colonna piu stretta invece di sbordare. Un --compact dentro un --wN ridefinisce la
+   variabile su di se e vince: e la scelta piu vicina al campo. ch si risolve nel font del contenitore,
+   come per la regola numerica qui sopra (vedi 1.19.1). */
+:is(.rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24) { --rg-input-numeric-width: var(--rg-field-width); }
+:is(.rg-field--w4, .rg-field--w8, .rg-field--w16, .rg-field--w24) > .rg-field-with-unit { grid-template-columns: minmax(0, var(--rg-input-numeric-width)) auto; justify-content: start; width: max-content; max-width: 100%; }
 @media (max-width: 680px) { .rg-field--w4 > .rg-field__label, .rg-field--w8 > .rg-field__label, .rg-field--w16 > .rg-field__label, .rg-field--w24 > .rg-field__label { white-space: normal; } }
 /* Lunghezza variabile e senza tetto ragionevole (un percorso file, una descrizione): prende lo
    spazio che avanza sulla riga invece di dichiarare una misura falsa. Terzo caso di Baymard. */

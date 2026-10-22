@@ -27,6 +27,25 @@ meta aprendo ~200 px di vuoto.
 - **Per chi usa già la classe**: niente da fare. Se un prodotto aveva messo una pezza locale
   (`flex-basis`, `align-content: start`, altezze) su `__heading`, si può togliere.
 
+### Il campo con unità sta nella sua larghezza dichiarata
+
+`rg-field--w8` dava al contenitore `rg-field-with-unit` la misura `8ch + 32 px`, ma la griglia del
+campo numerico restava `--rg-input-numeric-width` (12ch) più l'unità: tracce più larghe della scatola,
+e il campo usciva dal suo contenitore, sopra il vicino.
+
+- **Dentro un `--wN` la misura è del valore, e l'unità si aggiunge.** Ogni `--wN` ridefinisce
+  `--rg-input-numeric-width` con la propria misura; il campo con unità ha la traccia del valore
+  `minmax(0, --rg-input-numeric-width)` e accanto l'unità, ed è largo quanto le due tracce
+  (`max-content`, `max-width: 100%`). Il numero nel nome resta il numero di caratteri che si scrivono.
+- In una colonna più stretta il valore si stringe invece di sbordare.
+- `rg-field-with-unit--compact` dentro un `--wN` tiene la sua misura compatta.
+- **Per chi usa già le classi**: input e select nudi in un `--wN` non cambiano. Un campo con unità in
+  un `--wN` **cambia larghezza**: prima la scatola era `Nch + 32 px` e il contenuto ne usciva, ora la
+  scatola è valore + unità — più larga di prima di circa la pastiglia (≥ 42 px), e per `--w4` il
+  valore è più stretto dei 12ch di prima. Una riga di campi può quindi andare a capo in un punto
+  diverso. Se un prodotto aveva forzato `--rg-input-numeric-width` o una `width` locale sul campo con
+  unità per tenerlo dentro, la pezza si può togliere.
+
 ## 1.46.0 — 2026-10-22 (proposta)
 
 **Minor, additiva.** Due componenti nuovi, **un token di layout nuovo** (`--rg-layout-drawer`),

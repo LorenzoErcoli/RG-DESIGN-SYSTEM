@@ -7,6 +7,79 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.46.0 — 2026-10-22 (proposta)
+
+**Minor, additiva.** Due componenti nuovi, **un token di layout nuovo** (`--rg-layout-drawer`),
+una riga di stampa in `rg-utilities.css`. Nessuna classe esistente cambia.
+
+### L'assistenza, da ogni pagina
+
+La piattaforma prodotti avrà un pannello **Assistenza**: si apre da un bottone nella topbar, in
+qualunque pagina, e dentro c'è una conversazione — con l'assistente automatico prima, con una
+persona dell'assistenza quando serve. Le stesse conversazioni si rileggono nella pagina
+«Le mie richieste» (e, per chi le gestisce, «Tutte le richieste»). Servivano due cose che il DS
+non aveva: un pannello che sta **accanto** alla pagina, e un filo di messaggi.
+
+### Il pannello laterale: `rg-drawer`
+
+Entra da destra **sopra la pagina e sopra la topbar ancorata**, e ci resta finché non lo si chiude.
+Testa e piede fermi, corpo che scorre da solo.
+
+- **Non è un modale, ed è una decisione.** Chi scrive all'assistenza deve poter guardare la cosa di
+  cui parla («il costo dei materiali di questa parte è vuoto»): niente scrim, `role="dialog"`
+  senza `aria-modal`, la pagina resta leggibile e su desktop usabile. Per una decisione breve
+  resta `rg-modal`.
+- **Non è un `<dialog>`**, e non per abitudine: `showModal()` lo metterebbe nel *top layer*, e una
+  schermata allegata aperta in `rg-lightbox` gli finirebbe sotto. Sta su `--rg-z-overlay` (300):
+  sopra la topbar ancorata, sotto un modale e sotto il lightbox, senza `z-index` locali.
+- **Aperto e chiuso sono l'attributo `hidden`**, e basta (più `aria-expanded` sul bottone). Il DS
+  non serve JavaScript; il contratto del controller è in [components/drawer.md](components/drawer.md):
+  fuoco al titolo (al campo se la conversazione è vuota), Esc chiude, il fuoco torna al bottone, e
+  **sotto i 680 px la pagina dietro diventa `inert`** — per questo il pannello è fratello del
+  contenitore della pagina, non figlio.
+- **480 px su schermo largo, tutto lo schermo fino a 680.** Il token nuovo `--rg-layout-drawer`
+  vale la misura del modale standard; non riusa `--rg-layout-tool-panel` (380), che è la colonna
+  dei parametri di uno strumento.
+- Niente ombra: un filetto nero a sinistra. Entra con una corsa breve, tolta con
+  `prefers-reduced-motion`. **In stampa non esiste.**
+
+Nuovi: `rg-drawer`, `__header`, `__heading`, `__title`, `__subtitle`, `__close`, `__body`, `__footer`.
+
+### La conversazione: `rg-chat`
+
+Lo stesso filo vive nel corpo del pannello (~430 px) e a tutta larghezza nella pagina: nessuna
+misura dipende dal contenitore, un messaggio è al massimo **l'85% della colonna e 68 caratteri**.
+
+- **Cinque voci, riconoscibili senza il colore**: `--user` a destra in campitura; `--assistant`
+  con l'etichetta **«Assistente automatico»** in contorno; `--staff` con il filetto nero e
+  l'etichetta **«Assistenza»** piena; `--system` una frase piccola fra due filetti; `--note`
+  tratteggiata con l'etichetta **«Nota interna»**. **Si deve sempre sapere se ha risposto una
+  persona o la macchina**: l'etichetta di ruolo è obbligatoria.
+- **Il richiedente sta sempre a destra**, chiunque guardi: il lato dice il ruolo nella richiesta.
+- **Stati**: `--pending` («Sta scrivendo…», viene *sostituito* dalla risposta, non riempito a
+  pezzi), `--failed` («Non inviato» scritto, e «Riprova»), `rg-chat__empty`.
+- **Live region**: il filo è `role="log"` con `aria-live="polite"`; si legge ciò che si aggiunge.
+- **Gli a capo si conservano dentro `<p>` e `<li>`**, non sul contenitore, che altrimenti
+  trasformerebbe in righe vuote gli a capo dell'HTML.
+- **Il compositore dispone e basta**: `rg-textarea` (cresce col testo, `field-sizing: content` con
+  ripiego di tre righe di JS), `rg-file-input__control` per la schermata, `rg-button--primary` per
+  inviare. Può stare fuori da `.rg-chat`: nel pannello sta nel piede, fermo.
+
+Nuovi: `rg-chat`, `__msg` (+ `--user`, `--assistant`, `--staff`, `--system`, `--note`,
+`--pending`, `--failed`), `__meta`, `__author`, `__role`, `__time`, `__status`, `__text`,
+`__attachments`, `__empty`, `__composer`, `__actions`.
+
+Vetrina: tavole 53 e 54, con una pagina di prova nuova, `examples/rg-assistenza.html` (topbar
+ancorata, pannello, conversazione e controller di riferimento senza dipendenze; `?aperto`,
+`?vuota`), mostrata in iframe a finestra larga e a 375 px.
+
+Misurato in Chrome headless. A 1280×800: pannello 480×800 a destra, `z-index` 300 contro i 100
+della topbar, il punto in alto a destra colpisce il pannello e non la barra; testa 64, chiudi
+40×40 a 12 px dal bordo; il campo cresce da 64 a 146 px; il corpo resta in fondo dopo l'invio;
+Esc chiude e riporta il fuoco al bottone. A 375×812 con tocco emulato: pannello a tutto schermo,
+senza filetto, pagina `inert` mentre è aperto e non più dopo la chiusura; chiudi 44×44, campo a
+16 px. Nessun errore JS. `ds-lint`: 0 violazioni.
+
 ## 1.45.0 — 2026-10-22 (proposta)
 
 **Minor, additiva.** Un componente nuovo, nessun token, nessuna classe esistente toccata.

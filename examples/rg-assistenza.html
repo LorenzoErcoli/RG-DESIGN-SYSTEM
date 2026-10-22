@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>RG — il pannello dell'assistenza</title>
+  <!-- Base RG importata nello stesso ordine richiesto alle applicazioni. Qui NON c'è CSS locale.
+       La pagina dimostra rg-drawer + rg-chat dove contano davvero: sopra una topbar ancorata, a
+       finestra larga (pannello da 480 px) e sotto i 680 px (pannello a tutto schermo). La
+       components library la mostra dentro due iframe; aprirla da sola per provarla a mano.
+       ?aperto apre il pannello al caricamento, ?vuota mostra la conversazione ancora da cominciare.
+       Lo <script> in fondo è il CONTROLLER DI RIFERIMENTO: il DS non serve JS, il prodotto lo copia. -->
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="../styles/rg-core.css">
+  <link rel="stylesheet" href="../styles/rg-typography.css">
+  <link rel="stylesheet" href="../styles/rg-components.css">
+  <link rel="stylesheet" href="../styles/rg-layout.css">
+  <link rel="stylesheet" href="../styles/rg-utilities.css">
+</head>
+<body>
+<!-- La pagina sta in un contenitore suo, e il pannello è FRATELLO di quel contenitore: sul telefono
+     il controller rende `inert` la pagina mentre il pannello la copre, e un elemento inert non può
+     contenere il pannello stesso. -->
+<div class="rg-appshell" id="pagina">
+
+  <header class="rg-topbar rg-topbar--app rg-topbar--sticky">
+    <a class="rg-topbar__brand" href="#">RG</a>
+    <p class="rg-topbar__title">Costi</p>
+    <div class="rg-topbar__actions">
+      <button class="rg-button rg-button--secondary" type="button" id="apri-assistenza" aria-expanded="false" aria-controls="assistenza" aria-haspopup="dialog">Assistenza</button>
+    </div>
+  </header>
+
+  <main class="rg-appshell__main">
+    <header class="rg-section-header">
+      <div><p class="rg-label">Prodotto</p><h1 class="rg-section-header__title">M3641 COCOTTE</h1></div>
+      <span class="rg-section-header__meta">REV. 04</span>
+    </header>
+    <dl class="rg-key-value rg-key-value--ruled">
+      <dt>Ricamo</dt><dd>12,88 €</dd>
+      <dt>Materiali</dt><dd>—</dd>
+      <dt>Lavorazioni</dt><dd>6,10 €</dd>
+    </dl>
+    <p class="rg-body">Il pannello entra da destra sopra la pagina e sopra la barra ancorata. Su uno
+      schermo largo la pagina resta leggibile e usabile accanto: si scrive all'assistenza guardando
+      la cosa di cui si parla. Sotto i 680 px il pannello prende tutto lo schermo.</p>
+    <p class="rg-body">Testo di riempimento per far scorrere la pagina sotto la barra.</p>
+    <p class="rg-body">Testo di riempimento per far scorrere la pagina sotto la barra.</p>
+    <p class="rg-body">Testo di riempimento per far scorrere la pagina sotto la barra.</p>
+  </main>
+</div>
+
+<div class="rg-drawer" id="assistenza" role="dialog" aria-labelledby="assistenza-titolo" hidden>
+  <header class="rg-drawer__header">
+    <div class="rg-drawer__heading">
+      <h2 class="rg-drawer__title" id="assistenza-titolo" tabindex="-1">Assistenza</h2>
+      <p class="rg-drawer__subtitle">Richiesta n. 12 · aperta da questa pagina</p>
+    </div>
+    <button class="rg-icon-button rg-icon-button--full rg-drawer__close" type="button" aria-label="Chiudi l'assistenza"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-chiudi"></use></svg></button>
+  </header>
+
+  <div class="rg-drawer__body">
+    <div class="rg-chat" id="assistenza-filo" role="log" aria-live="polite" aria-label="Conversazione con l'assistenza">
+      <div class="rg-chat__msg rg-chat__msg--system"><p class="rg-chat__text">Richiesta n. 12 aperta · <time datetime="2026-10-22T10:41">22/10 10:41</time></p></div>
+
+      <div class="rg-chat__msg rg-chat__msg--user">
+        <p class="rg-chat__meta"><span class="rg-chat__author">Tu</span><time class="rg-chat__time" datetime="2026-10-22T10:41">10:41</time></p>
+        <div class="rg-chat__text"><p>Nella scheda costi di M3641 il costo dei materiali è vuoto.
+Ho già provato a ricaricare la pagina.</p></div>
+      </div>
+
+      <div class="rg-chat__msg rg-chat__msg--assistant">
+        <p class="rg-chat__meta"><span class="rg-chat__role">Assistente automatico</span><time class="rg-chat__time" datetime="2026-10-22T10:41">10:41</time></p>
+        <div class="rg-chat__text"><p>Il costo dei materiali resta vuoto quando un articolo non ha prezzo a listino. In M3641 ne mancano due:</p><ul><li><code>TOP-0042</code> TOPAZIO GOTS</li><li><code>FIL-0281</code> viscosa opaca 40</li></ul><p>Se il prezzo c'è e non lo vedo, passo la richiesta a una persona.</p></div>
+      </div>
+
+      <div class="rg-chat__msg rg-chat__msg--system"><p class="rg-chat__text">Registrata come problema · passata all'assistenza</p></div>
+
+      <div class="rg-chat__msg rg-chat__msg--staff">
+        <p class="rg-chat__meta"><span class="rg-chat__role">Assistenza</span><span class="rg-chat__author">Lorenzo E.</span><time class="rg-chat__time" datetime="2026-10-22T11:05">11:05</time></p>
+        <div class="rg-chat__text"><p>Ho inserito i due prezzi a listino. Ricarica la scheda: il totale ora c'è.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="rg-drawer__footer">
+    <form class="rg-chat__composer" id="assistenza-compositore" action="#" method="post">
+      <label class="rg-u-visually-hidden" for="assistenza-testo">Messaggio per l'assistenza</label>
+      <textarea class="rg-textarea" id="assistenza-testo" name="testo" rows="2" placeholder="Scrivi cosa ti serve o cosa non va…"></textarea>
+      <div class="rg-chat__attachments" id="assistenza-allegato" hidden>
+        <span class="rg-file-input__status" id="assistenza-allegato-nome"></span>
+        <button class="rg-button rg-button--ghost" type="button" id="assistenza-allegato-togli">Togli</button>
+      </div>
+      <div class="rg-chat__actions">
+        <label class="rg-file-input__control"><input type="file" name="schermata" accept="image/*" id="assistenza-file"><span class="rg-button rg-button--ghost"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-immagine"></use></svg>Allega schermata</span></label>
+        <button class="rg-button rg-button--primary" type="submit">Invia</button>
+      </div>
+    </form>
+  </footer>
+</div>
+
+<script>
+/* ── CONTROLLER DI RIFERIMENTO — rg-drawer ────────────────────────────────────────────────────────
+   Il contratto (components/drawer.md):
+   - aperto/chiuso = attributo hidden sul pannello + aria-expanded sul bottone che lo apre;
+   - all'apertura il fuoco va al TITOLO se c'è già una conversazione (non apre la tastiera del
+     telefono e il lettore di schermo dice dove si è), al CAMPO se la conversazione è vuota;
+   - Esc dentro il pannello chiude; chiudendo, il fuoco torna al bottone;
+   - sotto i 680 px la pagina dietro diventa inert finché il pannello è aperto. */
+function rgDrawer(drawer, trigger, pagina) {
+  const telefono = window.matchMedia('(max-width: 680px)');
+  const corpo = drawer.querySelector('.rg-drawer__body');
+  const blocca = () => { if (pagina) pagina.inert = !drawer.hidden && telefono.matches; };
+  function apri(senzaFuoco) {
+    drawer.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    blocca();
+    corpo.scrollTop = corpo.scrollHeight;
+    if (senzaFuoco) return;
+    const vuota = !drawer.querySelector('.rg-chat__msg');
+    (vuota ? drawer.querySelector('.rg-chat__composer textarea') : drawer.querySelector('.rg-drawer__title')).focus();
+  }
+  function chiudi() {
+    drawer.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+    blocca();
+    trigger.focus();
+  }
+  trigger.addEventListener('click', () => (drawer.hidden ? apri(false) : chiudi()));
+  drawer.querySelector('.rg-drawer__close').addEventListener('click', chiudi);
+  drawer.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); chiudi(); } });
+  telefono.addEventListener('change', blocca);
+  return { apri, chiudi };
+}
+
+/* ── CONTROLLER DI RIFERIMENTO — rg-chat ──────────────────────────────────────────────────────────
+   - il testo dell'utente entra con textContent dentro un <p>: niente HTML iniettato, e gli a capo
+     restano perché il <p> della chat è pre-line;
+   - il messaggio si AGGIUNGE in fondo al role="log": il lettore di schermo legge solo quello;
+   - «sta scrivendo» è un messaggio --pending che viene SOSTITUITO dalla risposta, non riempito a pezzi;
+   - Invio va a capo, Ctrl+Invio (Cmd+Invio sul Mac) invia: sul telefono si scrive su più righe;
+   - il campo cresce da solo con field-sizing: content; dove manca, lo fanno le tre righe di cresci(). */
+function rgChat(filo, form, scorri) {
+  const campo = form.querySelector('textarea');
+  const invio = form.querySelector('[type="submit"]');
+  const ora = () => new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+  function messaggio(voce, chi, testo, ruolo) {
+    const msg = document.createElement('div');
+    msg.className = 'rg-chat__msg ' + voce.split(' ').map(v => 'rg-chat__msg--' + v).join(' ');
+    const meta = document.createElement('p');
+    meta.className = 'rg-chat__meta';
+    if (ruolo) { const r = document.createElement('span'); r.className = 'rg-chat__role'; r.textContent = ruolo; meta.append(r); }
+    if (chi) { const a = document.createElement('span'); a.className = 'rg-chat__author'; a.textContent = chi; meta.append(a); }
+    const t = document.createElement('time'); t.className = 'rg-chat__time'; t.textContent = ora(); meta.append(t);
+    const corpo = document.createElement('div'); corpo.className = 'rg-chat__text';
+    const p = document.createElement('p'); p.textContent = testo; corpo.append(p);
+    msg.append(meta, corpo);
+    return msg;
+  }
+  function aggiungi(msg) { filo.querySelector('.rg-chat__empty')?.remove(); filo.append(msg); scorri(msg); return msg; }
+  function cresci() {
+    if (CSS.supports('field-sizing', 'content')) return;
+    campo.style.height = 'auto';
+    campo.style.height = campo.scrollHeight + 'px';
+  }
+  campo.addEventListener('input', cresci);
+  campo.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); form.requestSubmit(); } });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const testo = campo.value.trim();
+    if (!testo) { campo.focus(); return; }
+    aggiungi(messaggio('user', 'Tu', testo));
+    campo.value = ''; cresci();
+    invio.setAttribute('aria-busy', 'true');
+    const attesa = aggiungi(messaggio('assistant pending', null, 'Sta scrivendo…', 'Assistente automatico'));
+    // Nel prodotto qui c'è la fetch; la risposta SOSTITUISCE il messaggio in attesa.
+    setTimeout(() => {
+      attesa.replaceWith(messaggio('assistant', null, 'Ricevuto. Questa è una risposta finta della pagina di prova.', 'Assistente automatico'));
+      scorri(filo.lastElementChild);
+      invio.removeAttribute('aria-busy');
+    }, 1400);
+  });
+  return { messaggio, aggiungi };
+}
+
+/* Allegato: il nome e la misura del file scelto stanno scritti sopra la riga delle azioni. */
+function rgAllegato(input, riga, nome, togli) {
+  input.addEventListener('change', () => {
+    const f = input.files[0];
+    riga.hidden = !f;
+    if (f) nome.textContent = 'Allegato: ' + f.name + ' · ' + Math.max(1, Math.round(f.size / 1024)) + ' KB';
+  });
+  togli.addEventListener('click', () => { input.value = ''; riga.hidden = true; input.focus(); });
+}
+
+(function () {
+  const drawer = document.getElementById('assistenza');
+  const corpo = drawer.querySelector('.rg-drawer__body');
+  const filo = document.getElementById('assistenza-filo');
+  if (location.search.indexOf('vuota') >= 0) {
+    filo.innerHTML = '<p class="rg-chat__empty">Scrivi cosa ti serve o cosa non va. Se puoi, allega una schermata della pagina.</p>';
+  }
+  const pannello = rgDrawer(drawer, document.getElementById('apri-assistenza'), document.getElementById('pagina'));
+  rgChat(filo, document.getElementById('assistenza-compositore'), () => { corpo.scrollTop = corpo.scrollHeight; });
+  rgAllegato(document.getElementById('assistenza-file'), document.getElementById('assistenza-allegato'),
+    document.getElementById('assistenza-allegato-nome'), document.getElementById('assistenza-allegato-togli'));
+  // In tavola (iframe) si apre SENZA spostare il fuoco: la pagina che lo ospita non deve saltare.
+  if (location.search.indexOf('aperto') >= 0) pannello.apri(true);
+})();
+</script>
+</body>
+</html>

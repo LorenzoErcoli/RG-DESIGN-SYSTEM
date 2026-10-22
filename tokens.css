@@ -1,4 +1,4 @@
-/* RG Design System v1.31.0 — keep synchronized with tokens.json. */
+/* RG Design System v1.46.0 — keep synchronized with tokens.json. */
 :root {
   --rg-font-identity: AGNext, Arial, sans-serif;
   --rg-font-body: GT-America-Standard, Helvetica, Arial, sans-serif;
@@ -133,6 +133,12 @@
   --rg-shadow-none: none; --rg-shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.1);
   --rg-layout-content-max: 1440px; --rg-layout-reading-max: 720px; --rg-layout-sidebar: 280px;
   --rg-layout-tool-panel: 380px; --rg-layout-param-col-min: 132px;
+  /* PANNELLO LATERALE (1.46.0) — larghezza di rg-drawer su schermo largo; sotto i 680 px il pannello va
+     a tutto schermo e questo valore non conta. 480 e la misura del modale standard: chi conosce il DS
+     la riconosce, e un messaggio di chat (85% della colonna, testo a 16) ci tiene ~48 caratteri per
+     riga, sopra la soglia di lettura comoda. Non riusa --rg-layout-tool-panel (380): quella e la
+     colonna dei parametri di uno strumento, e un pannello che cresce con lei sarebbe un legame finto. */
+  --rg-layout-drawer: 480px;
   --rg-layout-header: 64px; --rg-layout-grid-gap: 24px;
   /* Scala z: layer di base a passi di 100. --rg-z-lightbox (450) e un mezzo-passo tra
      modal (400) e toast (500): un ingrandimento aperto DENTRO un dialog deve stargli sopra,

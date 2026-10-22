@@ -36,6 +36,8 @@
 @media print {
   .rg-u-no-print { display: none !important; }
   .rg-topbar, .rg-sidebar { display: none !important; }
+  /* Il pannello laterale (1.46.0) e chrome di schermo come la topbar: su carta non esiste, aperto o no. */
+  .rg-drawer { display: none !important; }
   .rg-appshell__main { max-width: none !important; padding: 0 !important; }
   body { background: var(--rg-color-white); }
 

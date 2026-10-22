@@ -2580,3 +2580,134 @@ a.rg-icon-button { text-decoration: none; }
 .rg-twin-mark { display: inline-flex; align-items: center; gap: var(--rg-space-1); padding: calc(var(--rg-space-1) / 2) var(--rg-space-2); color: var(--rg-color-twin-text); background: var(--rg-color-twin); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
 .rg-twin-mark::before { width: var(--rg-space-2); }
 .rg-step__headline > .rg-twin-mark, .rg-phase-panel__name > .rg-twin-mark { justify-self: start; }
+
+/* ── PANNELLO LATERALE: rg-drawer (proposta 1.46.0) ──────────────────────────────────────────────
+   Nato dall'ASSISTENZA della piattaforma prodotti: un pannello che si apre da ogni pagina (bottone in
+   rg-topbar__actions), entra da destra SOPRA la pagina e ci resta finche non lo si chiude.
+   NON E UN MODALE, ed e una decisione. rg-modal interrompe il flusso per una decisione breve; qui chi
+   scrive deve poter GUARDARE la pagina di cui sta parlando («il costo di questa parte e sbagliato»),
+   quindi niente scrim, la pagina resta leggibile e su desktop resta usabile. Ruolo: role="dialog"
+   senza aria-modal. Sotto i 680 px il pannello copre tutto lo schermo e la pagina dietro non si vede:
+   li il contratto chiede `inert` sul contenitore della pagina (components/drawer.md).
+   PERCHE NON <dialog>. Il DS ha gia deprecato il <dialog> nativo per rg-modal, e qui la ragione e
+   concreta: showModal() mette il pannello nel top layer, e una schermata allegata aperta in rg-lightbox
+   (--rg-z-lightbox, 450) gli finirebbe SOTTO. Con un elemento normale la scala z resta quella del DS:
+   sopra la topbar ancorata (--rg-z-sticky), sotto un modale aperto dal pannello e sotto il lightbox.
+   APERTO/CHIUSO = l'attributo hidden, e basta. Niente classe di stato: hidden toglie il pannello
+   dall'albero dell'accessibilita e dall'ordine di tabulazione senza altro lavoro, e l'unica altra
+   verita e aria-expanded sul bottone che lo apre.
+   NIENTE OMBRA: un filetto nero sul lato sinistro, come il bordo di rg-modal. Il pannello e sovrapposto,
+   e il nero gia lo dice. Entra con una corsa breve da destra (--rg-motion-normal), tolta con
+   prefers-reduced-motion; esce senza animazione, perche hidden e istantaneo. In stampa non esiste
+   (rg-utilities.css, @media print). */
+.rg-drawer { position: fixed; inset-block: 0; inset-inline-end: 0; z-index: var(--rg-z-overlay); display: flex; flex-direction: column; width: min(100%, var(--rg-layout-drawer)); color: var(--rg-color-text-primary); background: var(--rg-color-surface-raised); border-inline-start: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-strong); animation: rg-drawer-in var(--rg-motion-normal) var(--rg-motion-easing); }
+.rg-drawer[hidden] { display: none; }
+@keyframes rg-drawer-in { from { transform: translateX(100%); } }
+/* La testa e alta quanto la topbar che copre: il filetto sotto il titolo cade sulla stessa riga del
+   filetto della barra, anche col sottotitolo (8 + 44 di testo + 8 sta dentro i 64). Superficie
+   rientrante come testa e piede di rg-modal (regole §6). Il bottone chiudi sta a 12 px dal bordo
+   destro, il minimo della regola sulle distanze. */
+.rg-drawer__header { display: flex; flex: none; align-items: center; gap: var(--rg-space-3); min-height: var(--rg-layout-header); padding: var(--rg-space-2) var(--rg-space-3) var(--rg-space-2) var(--rg-space-6); background: var(--rg-color-surface); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-drawer__heading { flex: 1 1 auto; min-width: 0; }
+.rg-drawer__title { margin: 0; font-family: var(--rg-font-identity); font-size: var(--rg-font-size-md); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); }
+.rg-drawer__subtitle { margin: var(--rg-space-1) 0 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
+/* Il chiudi e un rg-icon-button--full (40x40, 44 al tocco): questa classe lo colloca e basta. */
+.rg-drawer__close { flex: none; }
+/* Il corpo scorre DA SOLO: testa e piede restano fermi. overscroll-behavior: arrivati in fondo alla
+   conversazione, la rotella non passa a far scorrere la pagina sotto. min-height: 0 serve al flex
+   per lasciarlo stringere sotto il suo contenuto, senza il quale non scorrerebbe mai. */
+.rg-drawer__body { flex: 1 1 auto; min-height: 0; padding: var(--rg-space-6); overflow-y: auto; overscroll-behavior: contain; }
+/* Il piede e fermo in basso: ci va il compositore. Sul telefono senza tasto fisico la riga delle
+   azioni non finisce sotto la barretta di sistema (safe-area, che vale 0 dove non c'e). */
+.rg-drawer__footer { flex: none; padding: var(--rg-space-4) var(--rg-space-6) calc(var(--rg-space-4) + env(safe-area-inset-bottom)); background: var(--rg-color-surface); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+@media (max-width: 680px) {
+  .rg-drawer { width: 100%; border-inline-start: 0; }
+  .rg-drawer__header { padding-inline-start: var(--rg-space-4); }
+  .rg-drawer__body { padding: var(--rg-space-4); }
+  .rg-drawer__footer { padding-inline: var(--rg-space-4); }
+}
+@media (prefers-reduced-motion: reduce) { .rg-drawer { animation: none; } }
+
+/* ── CONVERSAZIONE: rg-chat (proposta 1.46.0) ────────────────────────────────────────────────────
+   Il filo di una richiesta di assistenza. Vive in due contenitori e deve reggere in tutti e due:
+   nel corpo di rg-drawer (colonna da ~430 px) e a tutta larghezza nella pagina «Le mie richieste».
+   Per questo NESSUNA misura dipende dal contenitore: il messaggio prende al massimo l'85% della
+   colonna E al massimo 68 caratteri (regole §9, colonna di lettura 65-75), e vince la piu stretta.
+   CHI PARLA SI LEGGE SENZA IL COLORE. Cinque voci, e ognuna ha una FIGURA e una PAROLA proprie:
+     --user       a destra, campitura rientrante, nessun bordo. Meta «Tu» (o il nome del richiedente).
+     --assistant  a sinistra, filetto intermedio, etichetta «Assistente automatico» in contorno.
+     --staff      a sinistra, filetto NERO con il lato d'attacco a 2 px, etichetta «Assistenza» PIENA
+                  (nero, testo bianco). Si deve sempre sapere se ha risposto una persona o la macchina.
+     --system     al centro, piccolo, fra due filetti: un fatto della richiesta, non una voce.
+     --note       a tutta colonna, TRATTEGGIO nero, etichetta «Nota interna» tratteggiata: la vede solo
+                  chi gestisce le richieste. Il tratteggio e lo stesso segno di rg-badge--archived e di
+                  rg-chip--add: «non e come gli altri», mai un colore di stato.
+   Il richiedente sta SEMPRE a destra, chiunque guardi: nella pagina «Tutte le richieste» la stessa
+   conversazione si legge uguale. Il lato dice il ruolo nella richiesta, non chi e davanti allo schermo.
+   LIVE REGION: il contenitore e role="log" (aria-live polite implicito, ripetuto per sicurezza), cosi
+   un messaggio AGGIUNTO viene letto e la storia gia presente all'apertura no. Si posa su una superficie
+   sollevata (il corpo del drawer, una rg-section-card), non sul fondo di pagina. */
+.rg-chat { display: flex; flex-direction: column; gap: var(--rg-space-4); min-width: 0; }
+.rg-chat__msg { display: grid; gap: var(--rg-space-1); align-self: flex-start; min-width: 0; max-width: min(85%, 68ch); }
+/* Il lato e del RUOLO: --assistant e --staff stanno a sinistra (dichiarato, non lasciato al
+   default), il richiedente a destra. */
+.rg-chat__msg--assistant, .rg-chat__msg--staff { align-self: flex-start; }
+.rg-chat__msg--user { align-self: flex-end; justify-items: end; }
+/* Autore e ora STANNO SOPRA il testo, fuori dalla bolla: chi scorre la colonna legge prima chi parla. */
+.rg-chat__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--rg-space-1) var(--rg-space-2); margin: 0; color: var(--rg-color-text-label); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); }
+.rg-chat__msg--user > .rg-chat__meta { justify-content: flex-end; }
+.rg-chat__author { font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
+.rg-chat__role { padding: 0 var(--rg-space-1); color: var(--rg-color-text-label); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-radius: var(--rg-radius-sm); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-chat__time { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-variant-numeric: tabular-nums; }
+/* Il testo e TESTO CORRENTE (16, regole §3). Gli a capo si conservano dentro ogni <p> e <li>
+   (pre-line), non sul contenitore: fra un blocco e l'altro il codice HTML ha i suoi a capo, e se li
+   conservasse anche il contenitore ogni paragrafo si porterebbe dietro una riga vuota. */
+.rg-chat__text { min-width: 0; padding: var(--rg-space-2) var(--rg-space-3); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-radius: var(--rg-radius-md); font-size: var(--rg-font-size-md); line-height: var(--rg-line-height-body); overflow-wrap: anywhere; }
+.rg-chat__text :is(p, ul, ol) { margin: 0 0 var(--rg-space-2); }
+.rg-chat__text > :last-child { margin-bottom: 0; }
+.rg-chat__text :is(ul, ol) { padding-inline-start: var(--rg-space-6); }
+.rg-chat__text :is(p, li) { white-space: pre-line; }
+.rg-chat__text code { font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; }
+.rg-chat__msg--user > .rg-chat__text { background: var(--rg-color-surface); border-color: var(--rg-color-surface); }
+.rg-chat__msg--staff > .rg-chat__text { border-color: var(--rg-color-border-strong); border-inline-start-width: var(--rg-border-strong); }
+.rg-chat__msg--staff .rg-chat__role { color: var(--rg-color-action-primary-text); background: var(--rg-color-action-primary); border-color: var(--rg-color-action-primary); }
+.rg-chat__msg--note { align-self: stretch; max-width: 68ch; }
+.rg-chat__msg--note > .rg-chat__text { background: var(--rg-color-neutral-50); border: var(--rg-border-hairline) dashed var(--rg-color-border-strong); }
+.rg-chat__msg--note .rg-chat__role { color: var(--rg-color-text-primary); border-style: dashed; border-color: var(--rg-color-border-strong); }
+/* Il fatto di sistema non e una bolla: una riga centrata fra due filetti, come un separatore che
+   porta una frase. Tutta la colonna, perche non e di nessuno dei due lati. */
+.rg-chat__msg--system { display: flex; align-items: center; align-self: stretch; gap: var(--rg-space-3); max-width: none; }
+.rg-chat__msg--system::before, .rg-chat__msg--system::after { content: ""; flex: 1 1 var(--rg-space-4); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-chat__msg--system > .rg-chat__text { flex: 0 1 auto; padding: 0; color: var(--rg-color-text-label); background: none; border: 0; font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); text-align: center; }
+/* Risposta in arrivo: si compone con --assistant (o --staff). La frase e scritta, il cerchio che gira
+   e solo la prova che la pagina non si e fermata: con prefers-reduced-motion sta fermo e la frase resta. */
+.rg-chat__msg--pending > .rg-chat__text { display: flex; align-items: center; gap: var(--rg-space-2); color: var(--rg-color-text-secondary); }
+.rg-chat__msg--pending > .rg-chat__text::before { content: ""; flex: none; width: var(--rg-space-3); height: var(--rg-space-3); border: var(--rg-border-hairline) var(--rg-border-style) currentColor; border-inline-end-color: transparent; border-radius: 50%; animation: rg-chat-spin calc(var(--rg-motion-normal) * 4) linear infinite; }
+@keyframes rg-chat-spin { to { transform: rotate(1turn); } }
+@media (prefers-reduced-motion: reduce) { .rg-chat__msg--pending > .rg-chat__text::before { animation: none; } }
+/* Messaggio che non e partito (rete del telefono, sessione scaduta): resta nel filo, con la parola
+   «Non inviato» in rg-chat__status e un bottone «Riprova». Il filetto rosso accompagna, non dice. */
+.rg-chat__status { color: var(--rg-color-text-secondary); }
+.rg-chat__msg--failed > .rg-chat__text { border-color: var(--rg-color-danger); }
+.rg-chat__msg--failed .rg-chat__status { display: inline-flex; align-items: center; gap: var(--rg-space-1); color: var(--rg-color-danger); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
+.rg-chat__msg--failed .rg-chat__status > .rg-icon { --rg-icon-size: var(--rg-space-3); }
+/* Schermate allegate: miniature rg-lightbox__thumb, che aprono l'ingrandimento sopra il pannello. */
+.rg-chat__attachments { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); }
+.rg-chat__msg--user > .rg-chat__attachments { justify-content: flex-end; }
+.rg-chat__attachments .rg-lightbox__thumb img { width: calc(var(--rg-space-24) + var(--rg-space-6)); height: auto; }
+/* Conversazione vuota: una frase che dice cosa scrivere, al centro della colonna. */
+.rg-chat__empty { margin: 0; padding: var(--rg-space-8) var(--rg-space-4); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); text-align: center; }
+
+/* IL COMPOSITORE dispone e basta: il campo e un rg-textarea, gli allegati un rg-file-input__control,
+   l'invio un rg-button--primary. Puo stare FUORI da .rg-chat — nel drawer sta nel piede, fermo,
+   mentre il filo scorre nel corpo — quindi nessuna sua regola dipende dal contenitore.
+   Il campo CRESCE col testo: field-sizing: content dove c'e (Chromium), altrimenti lo fa il controller
+   (components/chat.md, tre righe). Parte da due righe e si ferma al 40% dell'altezza della finestra,
+   poi scorre: sul telefono con la tastiera aperta il filo deve restare visibile sopra. */
+.rg-chat__composer { display: grid; gap: var(--rg-space-2); min-width: 0; }
+.rg-chat__composer .rg-textarea { min-height: var(--rg-space-16); max-height: min(40vh, calc(var(--rg-space-24) * 2)); resize: none; field-sizing: content; }
+.rg-chat__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--rg-space-2); }
+.rg-chat__actions > .rg-button--primary { margin-inline-start: auto; }
+.rg-chat__actions .rg-file-input__control { display: inline-block; }
+.rg-chat__actions .rg-file-input__control .rg-button { width: auto; }
+.rg-chat__composer > .rg-chat__attachments .rg-file-input__status { flex: 1 1 auto; min-width: 0; }

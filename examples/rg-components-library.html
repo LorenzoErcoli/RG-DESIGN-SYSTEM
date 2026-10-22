@@ -58,6 +58,9 @@
        larghezza del VIEWPORT (la topbar sotto i 680 px) e non si puo mostrare dentro un riquadro
        di questa pagina, che il viewport ce l'ha largo. Solo presentazione della tavola. */
     .specimen-viewport { width: 375px; max-width: 100%; height: 420px; border: 1px solid var(--rg-color-border-strong); background: var(--rg-color-white); }
+    /* Finestra LARGA (tavola 53): la stessa pagina sopra i 680 px, dove il pannello e largo 480 e la pagina
+       resta accanto. Solo presentazione della tavola. */
+    .specimen-viewport--wide { width: 100%; height: 560px; }
     .specimen-stack { display: flex; flex-wrap: wrap; gap: var(--rg-space-3); align-items: center; }
     .specimen-column { display: grid; gap: var(--rg-space-4); }
     /* Ingrandimento 3x delle tessere di reparto, per leggerne la figura. Solo presentazione. */
@@ -95,7 +98,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -3532,6 +3535,105 @@ status         VALID</pre></div>
         <p class="specimen-note"><strong>Il testo libero non &#232; un errore, e nessuno stato lo dice.</strong> La scheda di carta ha ragione lei: se dice un codice che a magazzino non c&#8217;&#232;, si scrive quel codice. Le due frasi che potrebbero sembrare un rimprovero finiscono entrambe con <em>&#171;quello che hai scritto resta valido&#187;</em>, il campo non si tinge mai (niente <code class="rg-mono">is-error</code>, niente <code class="rg-mono">aria-invalid</code>) e l&#8217;archivio muto &#232; <strong>giallo d&#8217;avviso, non rosso</strong>: il guasto &#232; suo, non del valore. Il messaggio dell&#8217;autocomplete dei materiali (&#171;Non nel registro &#8212; verr&#224; salvato come extra&#187;) qui non c&#8217;entra: l&#224; esiste un registro che accoglie l&#8217;extra.</p>
         <p class="specimen-note"><strong>Il pannello &#232; sospeso, e non per gusto.</strong> I due posti dove il campo vive lo taglierebbero: la colonna di una griglia a quattro (~150 px) e <code class="rg-mono">rg-modal</code>, che ha <code class="rg-mono">overflow: hidden</code> con un corpo in <code class="rg-mono">overflow-y: auto</code>. Quindi <code class="rg-mono">position: fixed</code>, <code class="rg-mono">--rg-z-dropdown</code>, e le tre misure (<code class="rg-mono">--rg-lookup-top/left/width</code>) le scrive il controller. Il prezzo &#232; dichiarato: il pannello non segue il campo da solo e va ricollocato allo scroll <em>in cattura</em>, perch&#233; a scorrere &#232; il corpo del modale. In compenso pu&#242; essere <strong>pi&#249; largo del campo</strong> (<code class="rg-mono">min-width</code> di 24 caratteri): in colonna stretta tre pezzi in 150 px non ci stanno.</p>
         <p class="specimen-note"><strong>Le frasi sono del DS, non di chi lo usa.</strong> Quattro stati, quattro testi scritti in components/lookup.md: due prodotti che dicono &#171;nessun risultato&#187; in due modi diversi sono due interfacce diverse. La riga di stato sta <em>in cima</em> al pannello perch&#233; durante &#171;Cerco&#8230;&#187; i suggerimenti di prima restano sotto, leggibili, invece di far lampeggiare la lista a ogni tasto; e sta <em>fuori</em> dal <code class="rg-mono">listbox</code>, come <code class="rg-mono">role="status"</code>, perch&#233; un <code class="rg-mono">&lt;li&gt;</code> che non &#232; un&#8217;opzione dentro un listbox non &#232; ARIA valido &#8212; lo stesso difetto corretto nella 1.44.0 per <code class="rg-mono">rg-list-row</code>.</p>
+      </section>
+
+      <section class="specimen-section" id="drawer">
+        <div class="specimen-section__head"><span class="specimen-section__index">53</span><h2>Il pannello laterale (proposta 1.46.0)</h2><p><code class="rg-mono">rg-drawer</code> entra da destra <strong>sopra la pagina e sopra la topbar ancorata</strong>, e ci resta finch&#233; non lo si chiude. Nasce per l&#8217;assistenza: si apre da un bottone della topbar in ogni pagina, e chi scrive deve poter guardare la cosa di cui parla. Per questo <strong>non &#232; un modale</strong>: niente scrim, la pagina resta leggibile e su desktop usabile. Testa e piede fermi, il corpo scorre da solo. 480 px da token (<code class="rg-mono">--rg-layout-drawer</code>), a tutto schermo sotto i 680. Le due tavole sono <strong>iframe</strong> di <code class="rg-mono">examples/rg-assistenza.html</code>: la soglia dipende dal viewport. Vedi components/drawer.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 &#183; Finestra larga &#8212; il pannello copre la topbar sul suo lato, la pagina resta l&#236; accanto. Si chiude con &#215;, con Esc o col bottone &#171;Assistenza&#187;</span><div class="specimen-stage specimen-stage--page"><iframe class="specimen-viewport specimen-viewport--wide" src="rg-assistenza.html?aperto" title="Pannello dell'assistenza a finestra larga, aperto" loading="lazy"></iframe></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">2 &#183; Telefono, 375 px &#8212; a tutto schermo, la pagina dietro &#232; inert</span><div class="specimen-stage specimen-stage--page"><iframe class="specimen-viewport" src="rg-assistenza.html?aperto" title="Pannello dell'assistenza a 375 px, aperto" loading="lazy"></iframe></div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">3 &#183; Telefono, conversazione da cominciare &#8212; il fuoco andr&#224; al campo</span><div class="specimen-stage specimen-stage--page"><iframe class="specimen-viewport" src="rg-assistenza.html?aperto&amp;vuota" title="Pannello dell'assistenza a 375 px, conversazione vuota" loading="lazy"></iframe></div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">4 &#183; Il markup: il pannello &#232; FRATELLO del contenitore della pagina, aperto e chiuso dal solo hidden</span><div class="specimen-stage"><pre class="rg-code">&lt;button class="rg-button rg-button--secondary" type="button" id="apri-assistenza"
+        aria-expanded="false" aria-controls="assistenza" aria-haspopup="dialog"&gt;Assistenza&lt;/button&gt;   &lt;!-- in rg-topbar__actions --&gt;
+
+&lt;div class="rg-drawer" id="assistenza" role="dialog" aria-labelledby="assistenza-titolo" hidden&gt;
+  &lt;header class="rg-drawer__header"&gt;
+    &lt;div class="rg-drawer__heading"&gt;
+      &lt;h2 class="rg-drawer__title" id="assistenza-titolo" tabindex="-1"&gt;Assistenza&lt;/h2&gt;
+      &lt;p class="rg-drawer__subtitle"&gt;Richiesta n. 12 · aperta da questa pagina&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;button class="rg-icon-button rg-icon-button--full rg-drawer__close" type="button" aria-label="Chiudi l'assistenza"&gt;…&lt;/button&gt;
+  &lt;/header&gt;
+  &lt;div class="rg-drawer__body"&gt;…&lt;/div&gt;     &lt;!-- scorre da solo --&gt;
+  &lt;footer class="rg-drawer__footer"&gt;…&lt;/footer&gt;  &lt;!-- fermo in basso --&gt;
+&lt;/div&gt;</pre></div></div>
+        </div>
+        <p class="specimen-note"><strong>Aperto e chiuso sono l&#8217;attributo <code class="rg-mono">hidden</code>, e basta.</strong> Niente classe di stato: <code class="rg-mono">hidden</code> toglie il pannello dall&#8217;albero dell&#8217;accessibilit&#224; e dal Tab senza altro lavoro, e l&#8217;unica altra verit&#224; &#232; <code class="rg-mono">aria-expanded</code> sul bottone. Il JavaScript della pagina fa cinque cose: toglie e rimette <code class="rg-mono">hidden</code>; porta il fuoco al titolo (al campo, se la conversazione &#232; vuota) e lo riporta al bottone chiudendo; chiude con Esc; porta il corpo in fondo; sotto i 680 px mette <code class="rg-mono">inert</code> sulla pagina dietro. Il controller di riferimento &#232; in fondo a <code class="rg-mono">rg-assistenza.html</code>.</p>
+        <p class="specimen-note"><strong>Perch&#233; non un <code class="rg-mono">&lt;dialog&gt;</code>.</strong> <code class="rg-mono">showModal()</code> mette il pannello nel <em>top layer</em>, e una schermata allegata aperta in <code class="rg-mono">rg-lightbox</code> gli finirebbe sotto. Un elemento normale resta nella scala del DS: <code class="rg-mono">--rg-z-overlay</code> (300), sopra la topbar ancorata (100), sotto un modale (400) e sotto il lightbox (450). Niente ombra: un filetto nero a sinistra, come il bordo di <code class="rg-mono">rg-modal</code>. In stampa non esiste.</p>
+      </section>
+
+      <section class="specimen-section" id="chat">
+        <div class="specimen-section__head"><span class="specimen-section__index">54</span><h2>La conversazione (proposta 1.46.0)</h2><p><code class="rg-mono">rg-chat</code> &#232; il filo di una richiesta di assistenza: lo stesso nel corpo del pannello (colonna da ~430 px) e a tutta larghezza nella pagina &#171;Le mie richieste&#187;. Un messaggio prende al massimo l&#8217;85% della colonna <strong>e</strong> 68 caratteri, e vince la misura pi&#249; stretta. Cinque voci, <strong>ognuna riconoscibile senza il colore</strong>: posizione, figura e parola. Il filo &#232; <code class="rg-mono">role="log"</code>: si legge ci&#242; che si aggiunge, non la storia. Vedi components/chat.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 &#183; A tutta larghezza &#8212; la vista di chi gestisce (&#171;Tutte le richieste&#187;): le cinque voci. Il richiedente sta a destra anche qui, col suo nome al posto di &#171;Tu&#187;</span><div class="specimen-stage">
+            <div class="rg-chat" role="log" aria-live="polite" aria-label="Conversazione della richiesta n. 12">
+              <div class="rg-chat__msg rg-chat__msg--system"><p class="rg-chat__text">Richiesta n. 12 aperta da Giulia B. (Ufficio stile) · <time datetime="2026-10-22T10:41">22/10 10:41</time></p></div>
+              <div class="rg-chat__msg rg-chat__msg--user">
+                <p class="rg-chat__meta"><span class="rg-chat__author">Giulia B.</span><time class="rg-chat__time" datetime="2026-10-22T10:41">10:41</time></p>
+                <div class="rg-chat__text"><p>Nella scheda costi di M3641 il costo dei materiali &#232; vuoto.
+Ho gi&#224; provato a ricaricare la pagina.</p></div>
+                <div class="rg-chat__attachments"><button class="rg-lightbox__thumb" type="button" aria-label="Ingrandisci: schermata allegata"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='150'%3E%3Crect width='240' height='150' fill='white'/%3E%3Crect width='240' height='18' fill='black'/%3E%3Crect x='16' y='34' width='110' height='10' fill='gray'/%3E%3Crect x='16' y='60' width='200' height='6' fill='silver'/%3E%3Crect x='16' y='76' width='170' height='6' fill='silver'/%3E%3Crect x='16' y='92' width='190' height='6' fill='silver'/%3E%3C/svg%3E" alt="Schermata della scheda costi di M3641" width="120"></button></div>
+              </div>
+              <div class="rg-chat__msg rg-chat__msg--assistant">
+                <p class="rg-chat__meta"><span class="rg-chat__role">Assistente automatico</span><time class="rg-chat__time" datetime="2026-10-22T10:41">10:41</time></p>
+                <div class="rg-chat__text"><p>Il costo dei materiali resta vuoto quando un articolo non ha prezzo a listino. In M3641 ne mancano due:</p><ul><li><code>TOP-0042</code> TOPAZIO GOTS</li><li><code>FIL-0281</code> viscosa opaca 40</li></ul><p>Se il prezzo c&#8217;&#232; e non lo vedo, passo la richiesta a una persona.</p></div>
+              </div>
+              <div class="rg-chat__msg rg-chat__msg--system"><p class="rg-chat__text">Registrata come problema · passata all&#8217;assistenza</p></div>
+              <div class="rg-chat__msg rg-chat__msg--note">
+                <p class="rg-chat__meta"><span class="rg-chat__role">Nota interna</span><span class="rg-chat__author">Lorenzo E.</span><time class="rg-chat__time" datetime="2026-10-22T10:58">10:58</time></p>
+                <div class="rg-chat__text"><p>Listino FILTES non aggiornato da settembre: controllare anche le altre stoffe.</p></div>
+              </div>
+              <div class="rg-chat__msg rg-chat__msg--staff">
+                <p class="rg-chat__meta"><span class="rg-chat__role">Assistenza</span><span class="rg-chat__author">Lorenzo E.</span><time class="rg-chat__time" datetime="2026-10-22T11:05">11:05</time></p>
+                <div class="rg-chat__text"><p>Ho inserito i due prezzi a listino. Ricarica la scheda: il totale ora c&#8217;&#232;.</p></div>
+              </div>
+              <div class="rg-chat__msg rg-chat__msg--user">
+                <p class="rg-chat__meta"><span class="rg-chat__author">Giulia B.</span><time class="rg-chat__time" datetime="2026-10-22T11:07">11:07</time></p>
+                <div class="rg-chat__text"><p>Grazie, ora lo vedo.</p></div>
+              </div>
+              <div class="rg-chat__msg rg-chat__msg--system"><p class="rg-chat__text">Richiesta chiusa da Lorenzo E. · <time datetime="2026-10-22T11:10">22/10 11:10</time></p></div>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">2 &#183; Gli stati, nella vista di chi scrive &#8212; il messaggio non partito e la risposta in arrivo (che verr&#224; sostituita)</span><div class="specimen-stage">
+            <div class="rg-chat" role="log" aria-live="polite" aria-label="Conversazione con l'assistenza">
+              <div class="rg-chat__msg rg-chat__msg--user rg-chat__msg--failed">
+                <p class="rg-chat__meta"><span class="rg-chat__author">Tu</span><time class="rg-chat__time" datetime="2026-10-22T11:07">11:07</time><span class="rg-chat__status"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-errore"></use></svg>Non inviato</span></p>
+                <div class="rg-chat__text"><p>La scheda di M3641 ora si apre, ma il PDF no.</p></div>
+                <button class="rg-button rg-button--ghost" type="button">Riprova</button>
+              </div>
+              <div class="rg-chat__msg rg-chat__msg--user">
+                <p class="rg-chat__meta"><span class="rg-chat__author">Tu</span><time class="rg-chat__time" datetime="2026-10-22T11:08">11:08</time></p>
+                <div class="rg-chat__text"><p>La scheda di M3641 ora si apre, ma il PDF no.</p></div>
+              </div>
+              <div class="rg-chat__msg rg-chat__msg--assistant rg-chat__msg--pending">
+                <p class="rg-chat__meta"><span class="rg-chat__role">Assistente automatico</span></p>
+                <div class="rg-chat__text"><p>Sta scrivendo&#8230;</p></div>
+              </div>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">3 &#183; In scala di grigi &#8212; chi parla si legge lo stesso: parola, pieno contro contorno, nero contro grigio, tratteggio, la parola &#171;Non inviato&#187;</span><div class="specimen-stage specimen-stage--grayscale">
+            <div class="rg-chat" role="group" aria-label="Le voci in scala di grigi">
+              <div class="rg-chat__msg rg-chat__msg--assistant"><p class="rg-chat__meta"><span class="rg-chat__role">Assistente automatico</span><time class="rg-chat__time">10:41</time></p><div class="rg-chat__text"><p>Risposta della macchina.</p></div></div>
+              <div class="rg-chat__msg rg-chat__msg--staff"><p class="rg-chat__meta"><span class="rg-chat__role">Assistenza</span><span class="rg-chat__author">Lorenzo E.</span><time class="rg-chat__time">11:05</time></p><div class="rg-chat__text"><p>Risposta di una persona.</p></div></div>
+              <div class="rg-chat__msg rg-chat__msg--note"><p class="rg-chat__meta"><span class="rg-chat__role">Nota interna</span><span class="rg-chat__author">Lorenzo E.</span><time class="rg-chat__time">10:58</time></p><div class="rg-chat__text"><p>Solo per chi gestisce.</p></div></div>
+              <div class="rg-chat__msg rg-chat__msg--user rg-chat__msg--failed"><p class="rg-chat__meta"><span class="rg-chat__author">Tu</span><time class="rg-chat__time">11:07</time><span class="rg-chat__status"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-errore"></use></svg>Non inviato</span></p><div class="rg-chat__text"><p>Messaggio non partito.</p></div></div>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half"><span class="specimen-label">4 &#183; Conversazione vuota e compositore con una schermata scelta &#8212; il compositore dispone, non ridisegna: rg-textarea, rg-file-input__control, rg-button</span><div class="specimen-stage specimen-column">
+            <div class="rg-chat" role="log" aria-live="polite" aria-label="Conversazione con l'assistenza"><p class="rg-chat__empty">Scrivi cosa ti serve o cosa non va. Se puoi, allega una schermata della pagina.</p></div>
+            <form class="rg-chat__composer" action="#chat" method="post">
+              <label class="rg-u-visually-hidden" for="spec-chat-testo">Messaggio per l'assistenza</label>
+              <textarea class="rg-textarea" id="spec-chat-testo" name="testo" rows="2" placeholder="Scrivi cosa ti serve o cosa non va&#8230;"></textarea>
+              <div class="rg-chat__attachments"><span class="rg-file-input__status">Allegato: schermata-costi.png · 214 KB</span><button class="rg-button rg-button--ghost" type="button">Togli</button></div>
+              <div class="rg-chat__actions">
+                <label class="rg-file-input__control"><input type="file" name="schermata" accept="image/*"><span class="rg-button rg-button--ghost"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-immagine"></use></svg>Allega schermata</span></label>
+                <button class="rg-button rg-button--primary" type="submit">Invia</button>
+              </div>
+            </form>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Si deve sempre sapere se ha risposto una persona o la macchina.</strong> L&#8217;etichetta di ruolo &#232; obbligatoria su <code class="rg-mono">--assistant</code> e <code class="rg-mono">--staff</code>, con parole fisse: &#171;Assistente automatico&#187; in contorno, &#171;Assistenza&#187; piena e nera, e la bolla della persona ha il filetto nero col lato d&#8217;attacco a 2 px. La nota interna &#232; tratteggiata (lo stesso segno di <code class="rg-mono">rg-badge--archived</code>: &#171;non &#232; come gli altri&#187;), mai colorata; non la vede chi ha aperto la richiesta, e a filtrarla &#232; il server, non il CSS.</p>
+        <p class="specimen-note"><strong>Gli a capo restano dentro ogni <code class="rg-mono">&lt;p&gt;</code>, non sul contenitore.</strong> Il testo dell&#8217;utente entra escapato in un <code class="rg-mono">&lt;p&gt;</code> e le righe che ha battuto si vedono (prima bolla della tavola 1). Se il contenitore conservasse gli a capo, quelli dell&#8217;HTML fra un paragrafo e l&#8217;altro diventerebbero righe vuote. <strong>La risposta in arrivo si sostituisce</strong>, non si riempie a pezzi: un <code class="rg-mono">role="log"</code> che cambia a ogni parola fa ripetere la frase al lettore di schermo.</p>
       </section>
     </main>
   </div>

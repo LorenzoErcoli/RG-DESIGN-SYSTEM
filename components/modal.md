@@ -24,6 +24,10 @@ dentro il dialog e ritorno al trigger alla chiusura. Il backdrop è uno scrim (n
 una superficie: non collocarci contenuto. Azione primaria del footer a destra; l'azione
 distruttiva separata da quella di conferma.
 
+**Non è un pannello.** Se il contenuto si consulta o si scrive *accanto* alla pagina, e deve restare
+aperto mentre la si guarda (l'assistenza, dalla 1.46.0), non è un modale: è un
+[rg-drawer](drawer.md), senza scrim e senza `aria-modal`.
+
 ## Struttura
 
 Backdrop → dialog (header con titolo + close → body → footer). Bordo 1 px nero, radius 4 px,

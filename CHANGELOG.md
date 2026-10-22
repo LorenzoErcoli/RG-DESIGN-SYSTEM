@@ -7,6 +7,26 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.47.0 — proposta (non rilasciata)
+
+**Minor.** Tre buchi emersi nella piattaforma prodotti il 22/10/2026. Nessun token nuovo, nessuna
+classe rimossa o rinominata. Non è taggata: il tag e l'aggiornamento del sottomodulo li decide chi
+rilascia.
+
+### La testata non è più alta e vuota sotto i 680 px
+
+`rg-page-header__heading` ha `flex: 1 1 32ch`: la base serve **in riga**, è la larghezza sotto la
+quale le azioni vanno a capo. Sotto i 680 px `__main` passa in colonna, l'asse principale diventa
+verticale e **la stessa base diventava un'altezza**. Misurato nella piattaforma su una pagina Parte a
+375 px: `__heading` alta 285 px per un contenuto di 77 px, e la sua griglia stirava percorso, titolo e
+meta aprendo ~200 px di vuoto.
+
+- Nella media query ≤ 680 px `__heading` prende `flex-basis: auto`: alta quanto il contenuto.
+- **Sopra i 680 px non cambia niente.** Vale per ogni testata con `__main`, anche dentro `--compact`.
+- `__actions` non aveva il problema (nessuna base propria): in colonna è alta quanto i suoi bottoni.
+- **Per chi usa già la classe**: niente da fare. Se un prodotto aveva messo una pezza locale
+  (`flex-basis`, `align-content: start`, altezze) su `__heading`, si può togliere.
+
 ## 1.46.0 — 2026-10-22 (proposta)
 
 **Minor, additiva.** Due componenti nuovi, **un token di layout nuovo** (`--rg-layout-drawer`),

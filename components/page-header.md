@@ -58,7 +58,9 @@ del titolo), `__headline` (titolo + stato sulla stessa linea di base).
 - **Sottotitolo** e **meta** sono una riga ciascuno. Un paragrafo va nel contenuto, non in testata.
 - **Schermi stretti** (≤ 680 px): le azioni vanno sotto il titolo, allineate a sinistra; percorso,
   contesto e meta vanno a capo, senza troncare. Un nome lungo come «1296 DAV RIW OBLIQUE - GRIS»
-  si spezza, non sparisce dietro un'ellissi.
+  si spezza, non sparisce dietro un'ellissi. Il blocco titolo è **alto quanto il suo contenuto**
+  (dalla 1.47.0): fino alla 1.46 la sua base `32ch`, pensata per la riga, in colonna diventava
+  un'altezza e apriva ~200 px di vuoto fra percorso, titolo e meta. Nessuna classe da aggiungere.
 - Il `<title>` del documento ripete titolo e genitore diretto: `Ricamo normale — 1296 DAV RIW OBLIQUE - GRIS — RG Platform`.
 
 ## Regola di navigazione

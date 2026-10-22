@@ -478,8 +478,15 @@ a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: va
 .rg-page-header__meta { display: flex; flex-wrap: wrap; gap: 0 var(--rg-space-2); margin: 0; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
 .rg-page-header__meta > * + *::before { content: "·"; content: "·" / ""; padding-right: var(--rg-space-2); color: var(--rg-color-neutral-400); }
 .rg-page-header__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); }
+/* In colonna la base del blocco titolo torna al suo contenuto (1.47.0). La base 32ch serve in RIGA:
+   e la larghezza sotto la quale le azioni vanno a capo. Con __main in colonna l'asse principale e
+   verticale e la stessa base diventava un'ALTEZZA: misurato nella piattaforma su una pagina Parte a
+   375 px, __heading alta 285 px per 77 px di contenuto, e la sua griglia stirava percorso, titolo e
+   meta aprendo ~200 px di vuoto. flex-basis: auto = altezza del contenuto. Sopra i 680 px non cambia
+   niente. __actions non ha una base propria (0 1 auto): in colonna e gia alta quanto i suoi bottoni. */
 @media (max-width: 680px) {
   .rg-page-header__main { flex-direction: column; align-items: stretch; }
+  .rg-page-header__heading { flex-basis: auto; }
   .rg-page-header__actions { justify-content: flex-start; }
 }
 .rg-pagination { display: flex; gap: var(--rg-space-1); }

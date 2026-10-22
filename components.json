@@ -341,37 +341,46 @@
         "related": [
           "rg-filter-group",
           "rg-action-bar",
+          "rg-action-bar--sticky",
           "rg-confirmation",
           "rg-toolbar",
           "rg-toolbar--open",
           "rg-field",
           "rg-label",
-          "rg-stack"
+          "rg-stack",
+          "rg-cluster"
         ]
       },
       "variants": [
         "parameter-group",
         "filter-group",
         "action-bar",
+        "action-bar-sticky",
         "confirmation"
       ],
       "states": [
         "default",
         "read-only"
       ],
+      "cssVars": [
+        "--rg-action-bar-clearance"
+      ],
       "tokens": [
         "--rg-color-border",
         "--rg-color-black",
         "--rg-color-white",
         "--rg-space-4",
-        "--rg-space-6"
+        "--rg-space-6",
+        "--rg-space-12",
+        "--rg-space-24",
+        "--rg-z-sticky"
       ],
       "doc": "components/forms.md",
       "patternRef": "patterns/settings.md",
       "rulesRef": "design-rules.md#8-interfacce-tecniche",
       "specimenAnchor": "forms",
       "snippet": "<fieldset class=\"rg-parameter-group\"><legend class=\"rg-label\">Parametri macchina</legend><div class=\"rg-parameter-group__grid\"><label class=\"rg-field\"><span class=\"rg-field__label\">Tariffa macchina</span><span class=\"rg-field-with-unit\"><input class=\"rg-input rg-input--numeric\" value=\"80\"> <span>&#8364;/h</span></span></label></div></fieldset>",
-      "notes": "CSS presente dal seed in styles/rg-layout.css e gia in vetrina, ma assente dal registro fino a 1.4.0: i prodotti lo stavano riscrivendo in locale. E la risposta a 'form di configurazione a coppie etichetta/valore' quando i valori sono EDITABILI; se sono di sola lettura il componente e rg-key-value--ruled, non un form con i campi spenti. rg-parameter-group e un <fieldset> con <legend class=\"rg-label\">: raggruppamento nativo di form, non una card — per una sola sezione su una pagina gia intitolata si usa il solo __grid senza riquadro. rg-action-bar chiude il form con stato a sinistra e azioni a destra. La pagina intera di configurazione e in patterns/settings.md.",
+      "notes": "CSS presente dal seed in styles/rg-layout.css e gia in vetrina, ma assente dal registro fino a 1.4.0: i prodotti lo stavano riscrivendo in locale. E la risposta a 'form di configurazione a coppie etichetta/valore' quando i valori sono EDITABILI; se sono di sola lettura il componente e rg-key-value--ruled, non un form con i campi spenti. rg-parameter-group e un <fieldset> con <legend class=\"rg-label\">: raggruppamento nativo di form, non una card — per una sola sezione su una pagina gia intitolata si usa il solo __grid senza riquadro. rg-action-bar chiude il form con stato a sinistra e azioni a destra. La pagina intera di configurazione e in patterns/settings.md. 1.47.0 (proposta) rg-action-bar--sticky: la barra ferma in fondo alla finestra mentre si scorre un EDITOR LUNGO (la scheda di ricamo di un gruppo di fasi). position: sticky; bottom: 0; z-index --rg-z-sticky (sotto dropdown, drawer, modale, lightbox). Ultimo figlio del form, nel flusso: a fine form occupa il suo posto e non copre l'ultimo campo. :root:has(.rg-action-bar--sticky) riserva scroll-padding-block-end (96 px, 144 sotto i 680 px, regolabile con --rg-action-bar-clearance) perche un campo raggiunto con Tab non finisca sotto la barra (WCAG 2.4.11). Un antenato con overflow diverso da visible spegne lo sticky; se l'app scorre in un contenitore, lo scroll-padding va messo li. In stampa position: static. Una per pagina, una sola primaria, nessuna azione distruttiva.",
       "keywords": [
         "gruppo di campi",
         "fieldset",
@@ -398,7 +407,16 @@
         "barra strumenti",
         "barra di strumenti",
         "filtra ordina esporta",
-        "toolbar aperta"
+        "toolbar aperta",
+        "barra ferma in fondo",
+        "barra appiccicata",
+        "sticky footer",
+        "sticky action bar",
+        "salva sempre visibile",
+        "salvataggio in fondo",
+        "editor lungo",
+        "form lungo",
+        "barra di salvataggio fissa"
       ]
     },
     {

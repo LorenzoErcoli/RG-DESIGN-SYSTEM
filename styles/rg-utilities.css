@@ -38,6 +38,9 @@
   .rg-topbar, .rg-sidebar { display: none !important; }
   /* Il pannello laterale (1.46.0) e chrome di schermo come la topbar: su carta non esiste, aperto o no. */
   .rg-drawer { display: none !important; }
+  /* La barra d'azioni ferma in fondo (1.47.0) su carta torna al suo posto, nel flusso: la carta non
+     scorre, e una barra incollata al piede non deve poter finire sopra il contenuto. */
+  .rg-action-bar--sticky { position: static !important; }
   .rg-appshell__main { max-width: none !important; padding: 0 !important; }
   body { background: var(--rg-color-white); }
 

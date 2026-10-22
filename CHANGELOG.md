@@ -46,6 +46,25 @@ e il campo usciva dal suo contenitore, sopra il vicino.
   diverso. Se un prodotto aveva forzato `--rg-input-numeric-width` o una `width` locale sul campo con
   unità per tenerlo dentro, la pezza si può togliere.
 
+### La barra d'azioni ferma in fondo: `rg-action-bar--sticky`
+
+Nella piattaforma l'editor della scheda di ricamo di un gruppo di fasi è lungo molte sezioni, e
+«Salva sul gruppo» stava dopo l'ultima: per tenerlo a portata il template aveva uno stile scritto a
+mano (`position: sticky; bottom: 0` inline). Ora è una variante del DS.
+
+- `position: sticky; bottom: 0; z-index: var(--rg-z-sticky)`. **Sticky, non fixed**: la barra è
+  l'ultimo figlio del form, a fine form occupa il suo posto e non copre l'ultimo campo.
+- Livello: lo stesso della topbar ancorata (100), sotto i menu a tendina, il pannello laterale, i
+  modali e il lightbox. Nessun `z-index` locale.
+- **Focus non coperto** (WCAG 2.4.11): `:root:has(.rg-action-bar--sticky)` riserva
+  `scroll-padding-block-end` — 96 px (`--rg-space-24`), 144 sotto i 680 px dove la barra può andare su
+  due righe. Si regola con la variabile `--rg-action-bar-clearance`.
+- **In stampa** torna nel flusso (`rg-utilities.css`, `@media print`).
+- Limiti dichiarati: un antenato con `overflow` diverso da `visible` spegne lo sticky; se l'app scorre
+  dentro un contenitore, lo `scroll-padding` va messo su quel contenitore.
+- **Per chi usa già `rg-action-bar`**: niente cambia senza il modificatore. Nuovi: `rg-action-bar--sticky`
+  e la variabile `--rg-action-bar-clearance`.
+
 ## 1.46.0 — 2026-10-22 (proposta)
 
 **Minor, additiva.** Due componenti nuovi, **un token di layout nuovo** (`--rg-layout-drawer`),

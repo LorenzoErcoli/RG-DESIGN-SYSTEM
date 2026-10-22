@@ -398,8 +398,48 @@ Famiglia dei control group, tutti in `styles/rg-layout.css`:
 | `rg-parameter-group` + `__grid` | parametri di calcolo o configurazione, in fieldset |
 | `rg-filter-group` | filtri di un elenco: campi + azione allineati al piede |
 | `rg-action-bar` | barra di conferma: stato a sinistra, azioni a destra |
+| `rg-action-bar--sticky` | la stessa barra, ferma in fondo alla finestra mentre si scorre un editor lungo (1.47.0) |
 | `rg-confirmation` | blocco di conferma con titolo, conseguenze e azioni |
 | `rg-toolbar` / `--open` | barra di strumenti sopra un elenco o una tabella: filtri e ordinamento a sinistra, esportazione a destra |
+
+### Barra d'azioni ferma in fondo (`.rg-action-bar--sticky`) — 1.47.0
+
+Un editor lungo (la scheda di ricamo di un gruppo di fasi: pantografo, stop, filati, molte sezioni) ha
+il salvataggio dopo l'ultima sezione: per salvare bisogna scorrere fino in fondo, e chi ha corretto un
+campo in cima non vede il bottone. `rg-action-bar--sticky` tiene la barra **incollata al piede della
+finestra** finché il form è in vista.
+
+- **Sticky, non fixed.** La barra è l'ultimo figlio del `<form>`, nel flusso: si incolla in fondo
+  mentre il form scorre, e quando si arriva alla fine occupa il suo posto e **non copre l'ultimo
+  campo**. Finito il form, se ne va con lui.
+- **Livello**: `--rg-z-sticky`, come la topbar ancorata (che sta in alto e non la incontra). Una lista
+  di suggerimenti aperta sopra la barra le resta sopra; pannello laterale, modali e lightbox pure.
+- **Il focus non finisce sotto la barra** (WCAG 2.4.11): quando la pagina contiene la barra, il
+  documento riserva in fondo `scroll-padding` — 96 px, 144 sotto i 680 px dove la barra può andare su
+  due righe. Un campo raggiunto con Tab si ferma sopra la barra. Se la barra di un prodotto è più alta,
+  si regola `--rg-action-bar-clearance` su `:root`.
+- **Condizioni**: lo sticky si spegne se un antenato ha `overflow` diverso da `visible` (un
+  `overflow: hidden` messo per pulire un float basta). Se l'app scorre dentro un contenitore e non nel
+  documento, la barra si incolla al piede di quel contenitore, e lo `scroll-padding-block-end:
+  var(--rg-action-bar-clearance, var(--rg-space-24))` va messo lì.
+- **In stampa** torna al suo posto, nel flusso (`rg-utilities.css`).
+- Contenuto: come `rg-action-bar` — a sinistra lo stato o la portata del salvataggio (una frase
+  breve), a destra le azioni in un `rg-cluster`, **una sola primaria**. Non è il posto per le azioni
+  distruttive.
+- **Una per pagina**, e solo per un form che supera la finestra. Un form corto ha la barra normale.
+
+```html
+<form method="post" action="/gruppo/salva">
+  <!-- … sezioni dell'editor … -->
+  <div class="rg-action-bar rg-action-bar--sticky">
+    <span class="rg-small">Va su tutti i 3 membri del gruppo</span>
+    <div class="rg-cluster">
+      <a class="rg-button rg-button--secondary" href="?tab=sequenza">Chiudi</a>
+      <button class="rg-button rg-button--primary" type="submit">Salva sul gruppo (3)</button>
+    </div>
+  </div>
+</form>
+```
 
 ### Barra di strumenti (`.rg-toolbar`)
 

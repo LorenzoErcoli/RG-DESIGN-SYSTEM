@@ -37,6 +37,25 @@
 .rg-parameter-group__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--rg-space-4); }
 .rg-filter-group { grid-template-columns: 1fr 1fr auto; align-items: end; background: var(--rg-color-surface); }
 .rg-action-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--rg-space-4); padding: var(--rg-space-4); background: var(--rg-color-white); border-block: 1px solid var(--rg-color-black); }
+/* Barra d'azioni FERMA IN FONDO (1.47.0) — rg-action-bar--sticky. Per un editor lungo (una scheda di
+   ricamo, molte sezioni): il salvataggio resta a portata mentre si scorre, invece di stare dopo
+   l'ultima sezione. E sticky, non fixed: sta nel flusso in fondo al suo form, si incolla al piede
+   della finestra finche il form e in vista e se ne va con lui; arrivati in fondo occupa il suo posto
+   e non copre l'ultimo campo. Fondo bianco e filetto nero sopra (gia della barra) la staccano dal
+   contenuto che le scorre sotto: niente ombra.
+   Z: --rg-z-sticky (100), lo stesso gradino della topbar ancorata, che sta in alto e non la incontra.
+   Sotto i menu a tendina (200: una lista di suggerimenti aperta sopra la barra le resta sopra), sotto
+   il pannello laterale (300), i modali (400) e il lightbox (450).
+   FOCUS NON COPERTO (WCAG 2.4.11, tecnica C43): un campo raggiunto con Tab finirebbe sotto la barra.
+   scroll-padding sul documento riserva in fondo l'altezza della barra quando il browser porta in
+   vista un elemento: 96 px = bottone 40 (44 al tocco) + 2x16 di respiro + filetti, con margine.
+   Sotto i 680 px la barra puo andare su due righe: 144. Se la barra di un prodotto e piu alta, o se
+   l'app scorre dentro un contenitore e non nel documento, si regola --rg-action-bar-clearance (e la
+   si mette su quel contenitore). Un antenato con overflow diverso da visible spegne lo sticky.
+   In stampa torna al suo posto (rg-utilities.css, @media print). */
+.rg-action-bar--sticky { position: sticky; bottom: 0; z-index: var(--rg-z-sticky); }
+:root:has(.rg-action-bar--sticky) { scroll-padding-block-end: var(--rg-action-bar-clearance, var(--rg-space-24)); }
+@media (max-width: 680px) { :root:has(.rg-action-bar--sticky) { scroll-padding-block-end: var(--rg-action-bar-clearance, calc(var(--rg-space-24) + var(--rg-space-12))); } }
 .rg-confirmation { border-color: var(--rg-color-black); }
 .rg-confirmation h3 { margin: 0; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
 

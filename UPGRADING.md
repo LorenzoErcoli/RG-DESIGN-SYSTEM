@@ -61,6 +61,23 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.47.0 — il campo con unità nella sua larghezza, la testata sul telefono, la barra ferma
+
+**Un controllo**, nessun token nuovo, nessuna classe rimossa o rinominata.
+
+- **Campo con unità dentro `rg-field--wN` — cambia larghezza.** Prima la scatola era `Nch + 32 px`
+  e il contenuto ne usciva sopra il vicino; ora è valore (`Nch`) + unità, più larga di prima di circa
+  la pastiglia dell'unità (≥ 42 px); per `--w4` il valore è più stretto dei 12ch di prima. Una riga di
+  campi può andare a capo in un punto diverso: guardare le schermate con campi numerici in colonne
+  dichiarate. Se il prodotto aveva forzato `--rg-input-numeric-width` o una `width` locale sul campo
+  con unità per tenerlo dentro, la pezza si toglie. Input e select nudi in un `--wN` non cambiano.
+- **Testata sotto i 680 px**: `rg-page-header__heading` è alta quanto il contenuto. Niente da fare;
+  una pezza locale su `__heading` (`flex-basis`, `align-content: start`, altezze) si può togliere.
+  Sopra i 680 px non cambia niente.
+- **`rg-action-bar--sticky`** è nuova: dove un template aveva `position: sticky; bottom: 0` scritto a
+  mano sulla barra d'azioni, va sostituito col modificatore (e niente `z-index` locale). Limite: un
+  antenato con `overflow` diverso da `visible` spegne lo sticky.
+
 ### 1.44.0 — il foglio a schermo
 
 **Niente da fare**, se non lo si vuole. Tre classi additive (`rg-u-screen-a4`,

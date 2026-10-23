@@ -7,11 +7,11 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.47.0 — proposta (non rilasciata)
+## 1.47.0 — 2026-10-23
 
 **Minor.** Tre buchi emersi nella piattaforma prodotti il 22/10/2026. Nessun token nuovo, nessuna
-classe rimossa o rinominata. Non è taggata: il tag e l'aggiornamento del sottomodulo li decide chi
-rilascia.
+classe rimossa o rinominata. **Un controllo per chi sale il pin**: il campo con unità dentro un
+`rg-field--wN` cambia larghezza (vedi sotto e [UPGRADING.md](UPGRADING.md)).
 
 ### La testata non è più alta e vuota sotto i 680 px
 
@@ -65,7 +65,7 @@ mano (`position: sticky; bottom: 0` inline). Ora è una variante del DS.
 - **Per chi usa già `rg-action-bar`**: niente cambia senza il modificatore. Nuovi: `rg-action-bar--sticky`
   e la variabile `--rg-action-bar-clearance`.
 
-## 1.46.0 — 2026-10-22 (proposta)
+## 1.46.0 — 2026-10-22
 
 **Minor, additiva.** Due componenti nuovi, **un token di layout nuovo** (`--rg-layout-drawer`),
 una riga di stampa in `rg-utilities.css`. Nessuna classe esistente cambia.
@@ -138,7 +138,7 @@ Esc chiude e riporta il fuoco al bottone. A 375×812 con tocco emulato: pannello
 senza filetto, pagina `inert` mentre è aperto e non più dopo la chiusura; chiudi 44×44, campo a
 16 px. Nessun errore JS. `ds-lint`: 0 violazioni.
 
-## 1.45.0 — 2026-10-22 (proposta)
+## 1.45.0 — 2026-10-22
 
 **Minor, additiva.** Un componente nuovo, nessun token, nessuna classe esistente toccata.
 

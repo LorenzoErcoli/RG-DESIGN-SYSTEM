@@ -40,7 +40,7 @@ resta la risposta giusta e non va sostituito ([forms.md](forms.md#autocomplete-r
 Per i filati si usa `rg-lookup--code`: `621/30` è un dato, e in mono le cifre stanno in colonna
 con quelle dei suggerimenti sotto.
 
-Due estensioni della **lista**, indipendenti dalla variante del campo (proposta 1.48.0):
+Due estensioni della **lista**, indipendenti dalla variante del campo (1.48.0):
 
 | Cosa | Classi | Quando |
 | --- | --- | --- |

@@ -61,6 +61,16 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.48.0 — i gruppi nella tendina che chiede all'archivio
+
+**Niente da fare**: estensione additiva di `rg-lookup`, nessun token nuovo, nessuna classe rimossa o
+rinominata. I campi a codice (`rg-lookup--code`, i filati) si disegnano come prima.
+
+- Per proporre voci che vengono da posti diversi (di questo prodotto / basi / dal magazzino):
+  `rg-lookup__group` + `__group-title` + `__group-list`, e la riga a nome `__name` con la cifra
+  `__figure`. Chi ha una COPIA del controller di riferimento (components/lookup.md) la ricopia:
+  le frecce devono cercare `.rg-lookup__option` in tutta la lista, non fra i figli diretti.
+
 ### 1.47.0 — il campo con unità nella sua larghezza, la testata sul telefono, la barra ferma
 
 **Un controllo**, nessun token nuovo, nessuna classe rimossa o rinominata.

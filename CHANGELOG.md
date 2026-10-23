@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.48.0 — 2026-10-23 (proposta, ramo `ds/lookup-gruppi`)
+## 1.48.0 — 2026-10-23
 
 **Minor, additiva.** Un'estensione di `rg-lookup`, nessun token nuovo, nessuna classe esistente
 cambia. I campi dei filati (lista piatta, `rg-lookup--code`) si comportano come prima.

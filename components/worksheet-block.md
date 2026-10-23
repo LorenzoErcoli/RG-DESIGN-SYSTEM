@@ -599,6 +599,62 @@ vuol dire che non c'erano. Sul fascicolo di prova (3 parti, 11 fasi, 15 fogli �
 pagine restano **18** e i gruppi di due fasi collegate spezzati restano **0**.
 
 
+## Il campo chiave in testa, e la riga delle pallette (proposta 1.49.0)
+
+Due richieste dal foglio del ricamo, lo stesso giorno (Lorenzo, 2026-10-23).
+
+### Il campo chiave in testa (proposta 1.49.0)
+
+> «Quanti pezzi è un'indicazione da scrivere in fase di ricamo per indicare quanti pezzi devono
+> essere realizzati. Va in testa e molto evidente.»
+
+«Pezzi da fare» è un [`rg-fill-field--key`](fill-field.md#il-campo-chiave-proposta-1490) messo
+**dentro `rg-worksheet-block__head`**, come figlio diretto, dopo titolo e ruolo e prima del QR. La
+testata a griglia (1.34.0) gli fa posto da sola:
+
+| | senza campo chiave | con il campo chiave |
+| --- | --- | --- |
+| colonne della testata | titolo · QR | titolo · **campo** · QR |
+| campo chiave | — | colonna 2, su tutte e due le righe (titolo e ruolo) |
+| QR | a destra | **a destra**, sempre (`grid-column: -2`, l'ultima colonna) |
+| altezza della testata (stampa A4, blocco compatto) | 73 px | **73 px**: etichetta accanto alla casella, e la casella da 48 sta dentro i 64 del QR |
+| sotto i 680 px a schermo | — | il campo scende sotto titolo e ruolo, a sinistra |
+
+**Gerarchia, misurata sulla carta**: il titolo (`__work`, 28 px grassetto) resta il primo; la casella
+nera da 2 px con il suo numero mono a 28 è il secondo; il ruolo, la banda e il resto vengono dopo.
+Nessun colore: forma (casella su quattro lati), peso (grassetto) e misura.
+
+**Vuoto o stampato.** Senza valore la casella resta della sua misura e si scrive a mano; quando l'app
+il numero lo sa, lo stampa dentro `rg-fill-field__line`. Lo stesso markup per tutti e due i casi.
+
+**Senza QR** il campo prende la seconda colonna e la testata resta a due. Nella testa 1.23
+(`__phase` / `__part` / `__meta`, fila di flex) il campo è un elemento in fila come gli altri.
+
+**Limite dichiarato.** Con campo e QR il titolo ha ~220 px su A4: «RICAMO» ci sta, un nome di
+lavorazione lungo va a capo (cresce la testata, non si sovrappone niente). Un motore senza `:has()`
+scarta le regole della testata a griglia e torna alla fila di flex della 1.33.0, come già prima.
+
+### La riga delle pallette, sotto il suo stop (proposta 1.49.0)
+
+> «Una riga autonoma sotto lo stop dedicato alle pallette.»
+
+È una [sottoriga di carta](tables.md#sottoriga-di-carta-rg-table__row--sub-proposta-1490):
+`<tr class="rg-table__row--sub">` con una `<td colspan>` larga quanto la tabella, etichetta
+`rg-label` («Pallette dello stop 4») e valore («3 MM · C01 (3-1) ARGENTO»). È **alta 24 px**, quanto il
+dato stampato, non 40 come le righe di stop — su di lei non si scrive; se il valore non si sa e va
+scritto, la cella è `td.rg-fill-field--cell` e torna a 40. È **attaccata allo stop sopra**: il filetto
+fra le due è puntinato, quello sotto pieno. In stampa **non comincia mai una pagina** da sola.
+
+Le celle dello stop con **`rowspan`** sulla sottoriga (Stop, N. ago) ora parlano della **prima** riga:
+il loro testo cade sulla stessa linea delle altre celle dello stop (misurato in Chrome: scarto 0 px),
+invece di scendere in fondo, accanto alle pallette.
+
+**Costo in carta**: 24 px (~6,4 mm) per ogni stop che ha le pallette, contro i 40 che costerebbe una
+riga di stop. I diciassette stop per pagina valgono se nessuno ha le pallette; con le pallette su
+*tutti* lo stop costa ~16,9 mm e sui ~184 mm della pagina ne entrano **dieci** — è un **conto** sulle
+misure di riga, non una misura della pagina vera: va preso sul foglio stampato (vedi
+[Quante righe per pagina](tables.md#quante-righe-per-pagina) e la checklist §11).
+
 ## Uso e limiti
 
 **È riquadrato, ed è un'eccezione dichiarata.** Le regole (§6) dicono di non incorniciare tutto e

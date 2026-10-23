@@ -7,6 +7,52 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.49.0 — 2026-10-23 (proposta, ramo `ds/foglio-di-reparto`)
+
+**Minor, additiva.** Tre richieste dal foglio del ricamo nella piattaforma prodotti. Nessun token
+nuovo, nessuna classe rimossa o rinominata. Un controllo per chi sale il pin: `rg-table-wrap` in
+stampa (vedi sotto e [UPGRADING.md](UPGRADING.md)).
+
+### Il campo chiave in testa al blocco: «Pezzi da fare»
+
+«Quanti pezzi è un'indicazione da scrivere in fase di ricamo per indicare quanti pezzi devono essere
+realizzati. Va in testa e molto evidente» (Lorenzo, 2026-10-23).
+
+- **`rg-fill-field--key`**, variante di `rg-fill-field`: una **casella** nera da 2 px sui quattro
+  lati, alta 48 px (~12,7 mm), larga almeno 128 (~34 mm); etichetta nera in grassetto 14 px
+  **accanto**; il valore stampato, se l'app lo sa, è mono grassetto 28 px centrato. Vuota tiene la
+  sua misura. Forma e peso, nessun colore: regge la fotocopia.
+- **Nella testata a griglia** (`rg-worksheet-block__head` con `__work`) è un figlio diretto e prende
+  la colonna fra titolo/ruolo e QR: tre colonne solo se c'è il QR. Il QR passa a `grid-column: -2`
+  (l'ultima: identico con due colonne). Sotto i 680 px a schermo il campo scende sotto il titolo.
+- **La testata non si alza**: misurato in Chrome su A4, blocco compatto, 73 px con il campo e 73
+  senza — la casella da 48 sta dentro i 64 del QR.
+- Battono le regole del blocco compatto (etichetta grigia da 10 px in stampa, riga da 24): i
+  selettori portano `.rg-fill-field` davanti.
+
+### La sottoriga di carta, e la cella con rowspan che parla della prima riga
+
+«Una riga autonoma sotto lo stop dedicato alle pallette» (Lorenzo, 2026-10-23).
+
+- **`rg-table__row--sub`** sulla `<tr>` sotto la riga a cui appartiene, con una `<td colspan>`:
+  `rg-label` + valore. In `rg-table--hand` è **alta 24 px** (il dato stampato) e non 40; se il valore
+  va scritto a mano la cella è `td.rg-fill-field--cell` e torna a 40. In `rg-table--grid` è
+  **attaccata** alla riga sopra: filetto in mezzo **puntinato** nero, sotto pieno (dichiarato sui due
+  lati del bordo collassato; senza `:has()` resta pieno). In stampa **non apre una pagina**
+  (`break-before: avoid`; misurato in Chrome su 30 stop e cinque punti di taglio: senza la regola 2
+  su 5 aprivano la pagina con una sottoriga, con la regola 0).
+- **`rowspan` in `rg-table--hand`**: la cella va in alto, e nel blocco compatto il testo cade sulla
+  stessa linea delle altre celle della prima riga (misurato in Chrome: scarto 0 px). Prima finiva in
+  fondo alla sottoriga, accanto alle pallette. Limite: se la prima riga cresce, la cella non la segue.
+
+### `rg-table-wrap` su carta non scorre
+
+- In `@media print` il contenitore è `overflow: visible !important`. Chrome stampava la barra di
+  scorrimento e **tagliava** la tabella (visto in un tagliando `rg-cutout`). Una tabella più larga del
+  foglio adesso sfora e Chrome scala la pagina in silenzio (checklist §11): va fatta stare.
+
+Vetrina: tavole 56 `#worksheet-key` e 57 `#table-sub`.
+
 ## 1.48.0 — 2026-10-23
 
 **Minor, additiva.** Un'estensione di `rg-lookup`, nessun token nuovo, nessuna classe esistente

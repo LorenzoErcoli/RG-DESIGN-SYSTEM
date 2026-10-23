@@ -41,6 +41,14 @@
   /* La barra d'azioni ferma in fondo (1.47.0) su carta torna al suo posto, nel flusso: la carta non
      scorre, e una barra incollata al piede non deve poter finire sopra il contenuto. */
   .rg-action-bar--sticky { position: static !important; }
+  /* Il contenitore che scorre (1.49.0): la carta non scorre. Con overflow-x: auto Chrome stampava la
+     barra di scorrimento e TAGLIAVA la tabella al bordo del contenitore (visto in un tagliando
+     rg-cutout, con la colonna «Ordinato» persa). Su carta il contenuto si vede tutto. ATTENZIONE: una
+     tabella davvero piu larga del foglio adesso SFORA, e Chrome rimpicciolisce in silenzio tutta la
+     pagina (agent/verify-checklist.md §11) — e meglio che tagliarla, ma la tabella va fatta stare. */
+  .rg-table-wrap { overflow: visible !important; }
+  /* La sottoriga (1.49.0) appartiene alla riga sopra: non comincia una pagina da sola. */
+  .rg-table__row--sub { break-before: avoid; page-break-before: avoid; }
   .rg-appshell__main { max-width: none !important; padding: 0 !important; }
   body { background: var(--rg-color-white); }
 

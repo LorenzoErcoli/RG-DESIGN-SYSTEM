@@ -33,6 +33,7 @@ Tre scelte, e sono tutte a servizio di quella frase:
 | `rg-fill-field--cell` | **Forma tabella**: si mette su una `<td>` di `rg-table`, dove l'etichetta sta già nella `<th>`. Trenta righe da riempire sono una tabella, non trenta campi. L'altezza la decide la tabella: se su quelle righe si scrive davvero, è [`rg-table--hand`](tables.md#tabella-su-cui-si-scrive-a-penna-rg-table--hand-proposta-1380). |
 | `rg-fill-field--check` | **Casella da spuntare** (proposta 1.25.0), 20 px (~5,3 mm; 24 nella 1.25), contorno nero: «Fatta» nella tabella delle fasi della [pagina della parte](part-sheet.md). Ci va un segno di penna. Su uno `<span>` dentro una `<td>`, etichetta nella `<th>`. |
 | `rg-fill-field--swatch` | **Casella quadrata** (proposta 1.23.0), ~10,6 mm di lato (40 px), contorno nero su quattro lati: il posto dove **attaccare un pezzo di filo** o segnare il colore del cono. Su uno `<span>` dentro una `<td>`, con l'etichetta nella `<th>` («Cono»). |
+| `rg-fill-field--key` | **Campo chiave** (proposta 1.49.0): il numero che il foglio esiste per dire — «Pezzi da fare». Casella nera da 2 px sui quattro lati, alta 48 px e larga almeno 128, etichetta nera in grassetto **accanto**; il valore stampato (quando c'è) è mono grassetto 28 px. Uno per blocco, in testa: vedi [Il campo chiave](#il-campo-chiave-proposta-1490). |
 
 **Densità compatta** (proposta 1.23.0). Dentro un [`rg-worksheet-block--compact`](worksheet-block.md#fascicolo-compatto-proposta-1230)
 la riga scende a **24 px** (~6,4 mm) e la cella `--cell` a 24 px; `--tall` resta 48. Nessuna classe da
@@ -62,6 +63,33 @@ niente. Vedi [worksheet-block.md § La nota con l'etichetta dentro](worksheet-bl
 [`rg-worksheet-foot`](worksheet-foot.md), le righe restano quelle della base e la nota sale a 80 px
 (64 fino alla 1.36.0, più la fascia dell'etichetta che ora le sta dentro): è l'unico posto in cui si
 scrive davvero a mano, e le due righe che promette restano due.
+
+### Il campo chiave (proposta 1.49.0)
+
+> «Quanti pezzi è un'indicazione da scrivere in fase di ricamo per indicare quanti pezzi devono
+> essere realizzati. Va in testa e molto evidente.» — Lorenzo, 2026-10-23
+
+Un campo come gli altri — etichetta più spazio da scrivere — che però **non è uno fra tanti**: è il
+numero che chi prende in mano il foglio deve vedere per primo, dopo il nome della lavorazione.
+`rg-fill-field--key` lo dice con la forma, non con il colore:
+
+- **Una casella, non una riga.** La staffa a L della base dice «qui si scrive»; il contorno nero da
+  **2 px sui quattro lati** dice «questo è *il* numero del foglio». Nero pieno: deve sopravvivere alla
+  fotocopia, che i grigi chiari li perde.
+- **Alta 48 px (~12,7 mm), larga almeno 128 (~34 mm).** La misura di `--tall`: una cifra scritta
+  *grande*, non una sigla; quattro cifre a mano ci stanno senza stringerle.
+- **Il valore stampato** (quando l'app lo sa) è **mono, grassetto, 28 px**, centrato, cifre tabulari:
+  la stessa misura di `rg-worksheet-block__work`, non di più — è il secondo della testata, non il primo.
+- **L'etichetta è forte**: nera, grassetto, 14 px, maiuscola, **accanto** alla casella e non sopra.
+  Accanto perché così la testata del blocco **non si alza** (la sua altezza la detta il QR, 64 px in
+  stampa): misurato in Chrome su A4, testata alta 73 px con il campo e 73 senza.
+- **Vuoto è un campo, non un errore**: la casella tiene la sua misura anche senza niente dentro.
+- **Dove sta**: in [`rg-worksheet-block__head`](worksheet-block.md#il-campo-chiave-in-testa-proposta-1490),
+  fra titolo e QR. Fuori dalla testata è un campo in fila come gli altri (`inline-flex`).
+- **Dentro il blocco compatto non si compatta**: i selettori portano `.rg-fill-field` davanti e
+  battono le regole del foglio (etichetta grigia da 10 px in stampa, riga da 24).
+- **Uno per blocco.** Due campi chiave sono zero campi chiave: se un secondo valore sembra altrettanto
+  importante, va nei campi del corpo.
 
 ## Uso e limiti
 
@@ -174,6 +202,19 @@ Forma tabella — righe da riempire, intestazione già stampata:
     </tr>
   </tbody>
 </table>
+```
+
+Campo chiave — in testa al blocco, vuoto da scrivere o con il valore stampato:
+
+```html
+<div class="rg-fill-field rg-fill-field--key">
+  <span class="rg-fill-field__label">Pezzi da fare</span>
+  <span class="rg-fill-field__line"></span>
+</div>
+<div class="rg-fill-field rg-fill-field--key">
+  <span class="rg-fill-field__label">Pezzi da fare</span>
+  <span class="rg-fill-field__line">1200</span>
+</div>
 ```
 
 Casella quadrata — il cono della legenda, con codice e colore stampati accanto:

@@ -101,7 +101,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li><li><a href="#lookup-groups">L&#8217;archivio a gruppi</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li><li><a href="#lookup-groups">L&#8217;archivio a gruppi</a></li><li><a href="#worksheet-key">Il campo chiave</a></li><li><a href="#table-sub">La sottoriga di carta</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -3667,6 +3667,109 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
         <p class="specimen-note"><strong>Il titolo non &#232; un&#8217;opzione.</strong> &#200; il listbox raggruppato di ARIA: <code class="rg-mono">listbox &gt; group &gt; option</code>, con il gruppo che prende il nome dal titolo (<code class="rg-mono">aria-labelledby</code>), il titolo in <code class="rg-mono">role="presentation"</code> e la sottolista in <code class="rg-mono">role="none"</code>. Le frecce scorrono <code class="rg-mono">.rg-lookup__option</code> ovunque sia, non i figli della lista: dall&#8217;ultima riga di un gruppo si passa alla prima del successivo, e il clic sul titolo non sceglie niente.</p>
         <p class="specimen-note"><strong>Il titolo resta fermo mentre il pannello scorre</strong> (<code class="rg-mono">position: sticky</code>): a met&#224; di venti righe di magazzino si sa ancora da dove vengono. Le righe raggruppate hanno uno <code class="rg-mono">scroll-margin-top</code> alto quanto il titolo, cos&#236; quella raggiunta da tastiera non gli finisce sotto.</p>
         <p class="specimen-note"><strong>Nome in corpo, cifra in mono.</strong> Regole &#167;3: il mono &#232; per codici, misure e quantit&#224;. Un materiale si chiama, non si codifica: <code class="rg-mono">rg-lookup__name</code> &#232; GT America Standard e va a capo se &#232; lungo. Le altezze dei rotoli stanno in <code class="rg-mono">rg-lookup__spec</code> con la loro sigla (<code class="rg-mono">h150</code>, mai un numero nudo); il prezzo in <code class="rg-mono">rg-lookup__figure</code>, mono a cifre tabulari, perch&#233; i prezzi di righe diverse si confrontano in colonna. Spec e cifra arrivano <strong>gi&#224; composte</strong> dal server, unit&#224; comprese.</p>
+      </section>
+      <section class="specimen-section" id="worksheet-key">
+        <div class="specimen-section__head"><span class="specimen-section__index">56</span><h2>Il campo chiave in testa al blocco (proposta 1.49.0)</h2><p>&#171;Quanti pezzi &#232; un&#8217;indicazione da scrivere in fase di ricamo per indicare quanti pezzi devono essere realizzati. Va in testa e molto evidente&#187; (Lorenzo, 2026-10-23). <code class="rg-mono">rg-fill-field--key</code> &#232; una variante del campo da compilare, non un componente nuovo: <strong>una casella</strong> nera da 2 px sui quattro lati, alta 48 px e larga almeno 128, con l&#8217;etichetta nera in grassetto <strong>accanto</strong>. Nella testata a griglia prende la colonna fra titolo e QR.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 &#183; Vuoto &#8212; si scrive a mano, la casella resta della sua misura</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <p class="rg-worksheet-block__step">Fase 1 di 3</p>
+              <p class="rg-dept-band rg-dept-band--ricamo">
+                <span class="rg-dept-band__name">Reparto Ricamo</span>
+              </p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Ricamo</h3>
+                <span class="rg-worksheet-block__role">Prima di due fasi collegate</span>
+                <div class="rg-fill-field rg-fill-field--key">
+                  <span class="rg-fill-field__label">Pezzi da fare</span>
+                  <span class="rg-fill-field__line"></span>
+                </div>
+                <figure class="rg-qr rg-qr--small rg-qr--inline">
+                  <div class="rg-qr__img"><svg viewBox="0 0 29 29" role="img" aria-label="QR: apri la fase in RG"><rect width="29" height="29" fill="white"/><path d="M4 4h7v7h-7zM18 4h7v7h-7zM4 18h7v7h-7z" fill="none" stroke="black"/><path d="M6 6h3v3h-3zM20 6h3v3h-3zM6 20h3v3h-3zM13 4h2v2h-2zM13 8h1v3h-1zM15 13h3v1h-3zM13 13h1v4h-1zM19 15h2v2h-2zM22 19h2v3h-2zM16 20h3v1h-3zM13 22h2v3h-2zM18 23h1v2h-1z"/></svg></div>
+                  <figcaption class="rg-qr__caption">Questa fase</figcaption>
+                </figure>
+              </header>
+            </section>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">2 &#183; Stampato &#8212; l&#8217;app il numero lo sa: mono grassetto a 28, la misura del titolo e non di pi&#249;</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Ricamo</h3>
+                <div class="rg-fill-field rg-fill-field--key">
+                  <span class="rg-fill-field__label">Pezzi da fare</span>
+                  <span class="rg-fill-field__line">1200</span>
+                </div>
+                <figure class="rg-qr rg-qr--small rg-qr--inline">
+                  <div class="rg-qr__img"><svg viewBox="0 0 29 29" role="img" aria-label="QR: apri la fase in RG"><rect width="29" height="29" fill="white"/><path d="M4 4h7v7h-7zM18 4h7v7h-7zM4 18h7v7h-7z" fill="none" stroke="black"/><path d="M6 6h3v3h-3zM20 6h3v3h-3zM6 20h3v3h-3zM13 4h2v2h-2zM13 8h1v3h-1zM15 13h3v1h-3zM13 13h1v4h-1zM19 15h2v2h-2zM22 19h2v3h-2zM16 20h3v1h-3zM13 22h2v3h-2zM18 23h1v2h-1z"/></svg></div>
+                  <figcaption class="rg-qr__caption">Questa fase</figcaption>
+                </figure>
+              </header>
+            </section>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>La testata non si alza.</strong> L&#8217;etichetta sta accanto alla casella e non sopra: l&#8217;altezza della testata la detta il QR (64 px in stampa) e la casella da 48 ci sta dentro. Misurato in Chrome su A4: 73 px con il campo e 73 senza &#8212; la tabella degli stop sotto non perde una riga.</p>
+        <p class="specimen-note"><strong>Forma, peso, misura: niente colore.</strong> Il titolo resta il primo (28 px grassetto); la casella con il suo numero &#232; il secondo. Nero pieno perch&#233; sopravviva alla fotocopia. Uno per blocco: due campi chiave sono zero campi chiave.</p>
+      </section>
+
+      <section class="specimen-section" id="table-sub">
+        <div class="specimen-section__head"><span class="specimen-section__index">57</span><h2>La sottoriga di carta, e la tabella che in stampa non scorre (proposta 1.49.0)</h2><p>&#171;Una riga autonoma sotto lo stop dedicato alle pallette&#187; (Lorenzo, 2026-10-23). <code class="rg-mono">rg-table__row--sub</code> &#232; una riga che <strong>appartiene alla riga sopra</strong>: alta quanto il dato stampato (24 px, non i 40 della penna), attaccata con un filetto puntinato, una <code class="rg-mono">&lt;td colspan&gt;</code> con etichetta e valore. Le celle con <code class="rg-mono">rowspan</code> parlano della prima riga.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 &#183; Lo stop 4 con le pallette, lo stop 5 con le pallette da scrivere</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact">
+              <div class="rg-worksheet-block__body">
+                <table class="rg-table rg-table--compact rg-table--grid rg-table--hand" style="--rg-table-cols: 6">
+                  <caption>Stop &#8212; le pallette sotto il loro stop</caption>
+                  <thead>
+                    <tr>
+                      <th class="rg-table__numeric" scope="col">Stop</th>
+                      <th class="rg-table__numeric" scope="col">N. ago</th>
+                      <th scope="col">Operazione</th>
+                      <th class="rg-table__grow" scope="col">Materiale</th>
+                      <th class="rg-table__numeric" scope="col">Tem</th>
+                      <th scope="col">Note</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="rg-table__numeric">3</td>
+                      <td class="rg-table__numeric">1</td>
+                      <td>Appoggio</td>
+                      <td>1 Tulle TML01012</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr>
+                      <td class="rg-table__numeric" rowspan="2">4</td>
+                      <td class="rg-table__numeric" rowspan="2">2</td>
+                      <td>Appoggio</td>
+                      <td>1 Tulle TML01012</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr class="rg-table__row--sub">
+                      <td colspan="4"><span class="rg-label">Pallette dello stop 4</span> 3 MM &#183; C01 (3-1) ARGENTO</td>
+                    </tr>
+                    <tr>
+                      <td class="rg-table__numeric">5</td>
+                      <td class="rg-table__numeric">2</td>
+                      <td>Ricamo</td>
+                      <td>&#8212;</td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                      <td class="rg-fill-field rg-fill-field--cell"></td>
+                    </tr>
+                    <tr class="rg-table__row--sub">
+                      <td colspan="6" class="rg-fill-field rg-fill-field--cell"><span class="rg-label">Pallette dello stop 5</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Il pieno chiude lo stop, il puntinato dice &#171;continua&#187;.</strong> Nero tutti e due: la fotocopia i grigi li perde, e un filetto sparito attaccherebbe la sottoriga allo stop sotto. L&#8217;etichetta ripete il numero dello stop, cos&#236; l&#8217;appartenenza non dipende dal solo segno.</p>
+        <p class="specimen-note"><strong>Si legge, non si scrive &#8212; tranne quando si scrive.</strong> 24 px per la riga stampata; se le pallette ci sono ma non si sa quali, la cella &#232; <code class="rg-mono">td.rg-fill-field--cell</code> e torna ai 40 della mano (stop 5). In stampa la sottoriga non comincia mai una pagina.</p>
+        <p class="specimen-note"><strong>Stop e N. ago a cavallo delle due righe</strong> (<code class="rg-mono">rowspan</code>) stanno sulla linea della prima, non in fondo accanto alle pallette: misurato in Chrome, scarto 0 px. Il <code class="rg-mono">rowspan</code> &#232; facoltativo.</p>
+        <p class="specimen-note"><strong><code class="rg-mono">rg-table-wrap</code> in stampa non scorre</strong> (1.49.0): <code class="rg-mono">overflow: visible</code> in <code class="rg-mono">@media print</code>. Prima Chrome stampava la barra e tagliava la tabella al bordo del contenitore. Una tabella pi&#249; larga del foglio adesso sfora, e Chrome rimpicciolisce la pagina in silenzio (checklist &#167;11): va fatta stare.</p>
       </section>
     </main>
   </div>

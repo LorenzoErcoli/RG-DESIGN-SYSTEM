@@ -1609,6 +1609,40 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
    gradino tipografico, e un token piu piccolo di xs non si inventa per un caso locale. Il corpo resta
    quello che gli da rg-table--compact. */
 .rg-table.rg-table--hand thead th { padding-inline: var(--rg-space-1); white-space: nowrap; overflow-wrap: normal; }
+/* SOTTORIGA DI CARTA (proposta 1.49.0): una riga che APPARTIENE alla riga sopra. Dal foglio del ricamo:
+   «una riga autonoma sotto lo stop dedicato alle pallette» (Lorenzo, 2026-10-23) — «Pallette dello
+   stop 4 · 3 MM · C01 (3-1) ARGENTO», una <td colspan> larga quanto la tabella, etichetta (rg-label)
+   e valore. Due cose la distinguono da una riga di stop:
+   1) E ALTA QUANTO IL DATO STAMPATO, NON QUANTO LA PENNA: 24 px (la riga del dato denso del blocco
+      compatto), non i 40 di --hand. Su quella riga non si scrive: si legge, e 16 px per stop
+      moltiplicati per diciassette stop sono una pagina che sfora. ECCEZIONE: se il valore non si sa
+      e va scritto, la cella e td.rg-fill-field--cell e torna alla misura della mano — l'altezza e la
+      mano, non il testo, e la regola vale anche qui.
+   2) E ATTACCATA ALLA RIGA SOPRA: il filetto fra le due e PUNTINATO, nero, mentre quello sotto resta
+      pieno. Il pieno chiude lo stop, il puntinato dice «continua». Nero e non grigio perche la
+      fotocopia i grigi chiari li perde, e un filetto che sparisce attacca la sottoriga allo stop
+      SBAGLIATO, quello sotto. Nel bordo collassato vince lo stile piu forte (pieno su puntinato),
+      quindi il puntinato va dichiarato su TUTTI E DUE i lati del filetto: in basso sulle celle della
+      riga sopra (:has), in alto sulle celle della sottoriga. Le celle con rowspan sono escluse: il
+      loro fondo e quello della sottoriga, cioe la fine dello stop. Senza :has() resta il pieno —
+      la sottoriga si legge come una riga in piu, non si rompe niente.
+   Non dipende dal solo segno: l'etichetta ripete il numero dello stop («dello stop 4»).
+   In stampa non si stacca dalla riga sopra (rg-utilities.css, @media print). */
+.rg-table--hand tbody tr.rg-table__row--sub > :is(th, td):not(.rg-fill-field--cell) { height: var(--rg-space-6); padding-block: calc(var(--rg-space-1) / 2); vertical-align: middle; }
+.rg-table--grid tbody tr:has(+ tr.rg-table__row--sub) > :is(th, td):not([rowspan]) { border-bottom-style: dotted; }
+.rg-table--grid tbody tr.rg-table__row--sub > :is(th, td) { border-top-style: dotted; }
+.rg-table__row--sub .rg-label { margin-right: var(--rg-space-1); color: var(--rg-color-text-label); }
+/* LA CELLA A CAVALLO DI DUE RIGHE PARLA DELLA PRIMA (1.49.0). In --hand le celle appoggiano in basso
+   (sopra e lo spazio della mano); una cella con rowspan che scavalca la sottoriga finiva quindi in
+   fondo alla SOTTORIGA: il numero dello stop scendeva accanto alle pallette invece che ai dati del suo
+   stop. Ora va in ALTO. Nel blocco compatto, dove il DS conosce le misure della cella (40 di riga, 6 px
+   d'aria sotto, filetto da 1), la si spinge giu quanto basta perche il testo cada sulla STESSA linea
+   delle altre celle della prima riga (misurato in Chrome). LIMITE dichiarato: se la prima riga cresce
+   (un valore che va a capo) le altre celle scendono e questa no — resta comunque sulla prima riga,
+   che e cio che conta. Fuori dal blocco compatto: in alto e basta. 1lh e la riga di testo della
+   cella; un motore che non lo conosce scarta la regola e la cella resta in alto. */
+.rg-table--hand tbody :is(th, td)[rowspan] { vertical-align: top; }
+.rg-worksheet-block--compact .rg-table--hand tbody :is(th, td)[rowspan] { padding-top: calc(var(--rg-space-8) + var(--rg-space-2) - 1lh - var(--rg-space-1) * 1.5 - var(--rg-border-hairline)); }
 /* Piede su UNA riga dove ci sta: Tempo, Operatore, Data prendono il loro contenuto (etichetta + almeno
    64 px di riga), la Nota prende il resto. Se non ci stanno vanno a capo, senza tagliare niente. */
 .rg-worksheet-block--compact .rg-worksheet-block__foot { align-items: flex-end; gap: var(--rg-space-2) var(--rg-space-4); padding: var(--rg-space-2) var(--rg-space-3); }
@@ -1744,7 +1778,41 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block__head:has(> .rg-worksheet-block__work) { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; align-items: center; column-gap: var(--rg-space-6); row-gap: 0; }
 .rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-worksheet-block__work { grid-column: 1; grid-row: 1; }
 .rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-worksheet-block__role { grid-column: 1; grid-row: 2; padding-left: 0; border-left: 0; }
-.rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-qr { grid-column: 2; grid-row: 1 / -1; }
+/* grid-column -2 (era 2, 1.49.0): l'ULTIMA colonna, che con due colonne e la stessa cosa. Con il campo
+   chiave la testata ne ha tre e il QR resta a destra, dove chi scansiona lo cerca. */
+.rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-qr { grid-column: -2; grid-row: 1 / -1; }
+/* CAMPO CHIAVE (proposta 1.49.0): rg-fill-field--key, «PEZZI DA FARE». «Quanti pezzi e un'indicazione
+   da scrivere in fase di ricamo per indicare quanti pezzi devono essere realizzati. Va in testa e molto
+   evidente» (Lorenzo, 2026-10-23). E la cosa piu evidente del blocco DOPO il nome della lavorazione:
+   - UNA CASELLA, NON UNA RIGA: contorno nero da 2 px sui quattro lati. La riga a L di rg-fill-field
+     dice «qui si scrive»; la casella forte dice «questo e il numero del foglio». Nero pieno perche
+     deve sopravvivere alla fotocopia, che i grigi li perde.
+   - ALTA 48 px (~12,7 mm), la misura della riga alta di rg-fill-field: una cifra scritta GRANDE, non
+     una sigla. Larga almeno 128 px (~34 mm): quattro cifre a mano ci stanno senza stringerle.
+   - IL VALORE STAMPATO (quando l'app lo sa) e mono, grassetto, 28 px — la misura di __work, non di
+     piu: e il secondo della testata, non il primo. Centrato, cifre tabulari.
+   - L'ETICHETTA E FORTE: nera, grassetto, 14 px, accanto alla casella e non sopra. Accanto perche
+     cosi la testata NON SI ALZA: la misura la detta il QR (64 px in stampa), e etichetta + casella da
+     48 ci stanno dentro — la tabella degli stop sotto non perde una riga. Non va a capo.
+   - VUOTO E UN CAMPO, non un errore: la casella resta della sua misura anche senza niente dentro.
+   I selettori portano .rg-fill-field davanti perche dentro rg-worksheet-block--compact le regole del
+   campo (etichetta grigia da 10 px in stampa, riga da 24 con il valore a 14) pesano (0,2,0) e qui deve
+   vincere il campo chiave. Vale ovunque: in testa al blocco ha il suo posto (sotto), altrove e un
+   campo in fila come gli altri. */
+.rg-fill-field--key { display: inline-flex; align-items: center; gap: var(--rg-space-3); }
+.rg-fill-field.rg-fill-field--key > .rg-fill-field__label { margin: 0; color: var(--rg-color-text-primary); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-bold); line-height: var(--rg-line-height-tight); white-space: nowrap; }
+.rg-fill-field.rg-fill-field--key > .rg-fill-field__line { display: flex; align-items: center; justify-content: center; box-sizing: border-box; min-width: calc(var(--rg-space-24) + var(--rg-space-8)); min-height: var(--rg-space-12); padding: 0 var(--rg-space-3); background: var(--rg-color-white); border: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-black); color: var(--rg-color-text-primary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xl); font-weight: var(--rg-weight-bold); font-variant-numeric: tabular-nums; line-height: var(--rg-line-height-tight); }
+/* IL SUO POSTO NELLA TESTATA: fra il titolo (con il ruolo sotto) e il QR, su tutte e due le righe.
+   Tre colonne solo se c'e anche il QR; senza, il campo prende la seconda e a destra non resta un
+   buco largo quanto un column-gap. Sotto i 680 px a schermo la terza colonna stringerebbe il titolo
+   a una parola: il campo scende sotto titolo e ruolo, allineato a sinistra. In stampa non succede
+   (la pagina e larga 186 mm). */
+.rg-worksheet-block__head:has(> .rg-worksheet-block__work):has(> .rg-fill-field--key):has(> .rg-qr) { grid-template-columns: minmax(0, 1fr) auto auto; }
+.rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-fill-field--key { grid-column: 2; grid-row: 1 / -1; }
+@media (max-width: 680px) {
+  .rg-worksheet-block__head:has(> .rg-worksheet-block__work):has(> .rg-fill-field--key):has(> .rg-qr) { grid-template-columns: minmax(0, 1fr) auto; }
+  .rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-fill-field--key { grid-column: 1 / -1; grid-row: 3; justify-self: start; margin-top: var(--rg-space-2); }
+}
 /* SOTTOTITOLO DI OPERAZIONE dentro il corpo («Piazzamento», «Pressatura», «Sabbiatura automatica»):
    14, un filetto neutro sopra che separa un'operazione dalla precedente. Non e un'etichetta maiuscola
    ripetuta: quella la si toglie quando la sezione e una sola.

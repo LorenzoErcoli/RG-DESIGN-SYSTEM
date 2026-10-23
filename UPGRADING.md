@@ -61,6 +61,23 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.49.0 — il campo chiave, la sottoriga di carta, la tabella che in stampa non scorre
+
+**Quasi niente da fare**: estensioni additive, nessun token nuovo, nessuna classe rimossa o
+rinominata. Due controlli per chi sale il pin:
+
+- **`rg-table-wrap` in stampa è `overflow: visible !important`.** Se un foglio aveva tolto il wrap
+  (o messo un `overflow` locale) per non far tagliare la tabella su carta, la pezza si può togliere.
+  Una tabella più larga del foglio adesso **sfora** invece di essere tagliata: controllare che la
+  pagina non sia scalata (checklist §11).
+- **In `rg-table--hand` una cella con `rowspan` va in alto** (prima in basso). Nessun cambio per chi
+  non usa `rowspan` nelle tabelle a mano.
+- Il QR nella testata a griglia è passato da `grid-column: 2` a `-2` (ultima colonna): identico con
+  due colonne.
+- Per usarli: `rg-fill-field--key` dentro `rg-worksheet-block__head` («Pezzi da fare»),
+  `<tr class="rg-table__row--sub">` sotto lo stop per le pallette (si può riprendere il `rowspan` su
+  Stop e N. ago, che ora sta sulla prima riga).
+
 ### 1.48.0 — i gruppi nella tendina che chiede all'archivio
 
 **Niente da fare**: estensione additiva di `rg-lookup`, nessun token nuovo, nessuna classe rimossa o

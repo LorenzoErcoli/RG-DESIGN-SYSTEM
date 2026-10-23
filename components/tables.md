@@ -14,6 +14,9 @@ Confrontare record strutturati: materiali, fili, operazioni, consumi, revisioni 
   tutte le celle e colonne uguali.
 - **Da scrivere a mano** (`rg-table--hand`, 1.38.0): si aggiunge a `--grid` quando su quelle righe
   si scrive *davvero*; le porta a 40 px (~10,6 mm), l'altezza di una grafia.
+- **Sottoriga di carta** (`rg-table__row--sub`, proposta 1.49.0): una riga che **appartiene alla
+  riga sopra** — le pallette sotto il loro stop. Alta quanto il dato stampato (24 px), attaccata con
+  un filetto puntinato. Vedi [Sottoriga di carta](#sottoriga-di-carta-rg-table__row--sub-proposta-1490).
 - **Espandibile** (`rg-table__row--expandable` + `rg-table__detail`): una riga-record che
   rivela in loco la propria scomposizione (i sotto-record che la compongono) senza lasciare
   la tabella. Variante, non componente a sé: preserva la semantica tabellare.
@@ -322,6 +325,99 @@ un numero esatto di righe per pagina non lo ottiene dal CSS: lo ottiene spezzand
   </tbody>
 </table>
 ```
+
+## Sottoriga di carta (`rg-table__row--sub`, proposta 1.49.0)
+
+> «Una riga autonoma sotto lo stop dedicato alle pallette.» — Lorenzo, 2026-10-23
+
+Nella tabella degli stop del ricamo (`--grid --hand`) uno stop può avere le **pallette**: dimensione
+e colore, «3 MM · C01 (3-1) ARGENTO». Non sono una colonna (la maggior parte degli stop non le ha, e
+una colonna vuota su diciassette righe costa larghezza a tutti) e non sono un altro stop: sono **un
+pezzo dello stop sopra**. `<tr class="rg-table__row--sub">`, subito sotto la riga a cui appartiene,
+con una `<td colspan>` larga quanto la tabella: un'etichetta `rg-label` e il valore.
+
+- **Alta quanto il dato stampato, non quanto la penna**: 24 px (~6,4 mm), non i 40 di `--hand`. Su
+  quella riga si legge, non si scrive.
+- **Se il valore non si sa e va scritto a mano**, la cella è `td.rg-fill-field--cell` e torna alla
+  misura della mano (40 px): l'altezza è la mano, non il testo, anche qui. Etichetta dentro la cella,
+  spazio per scrivere dopo.
+- **Attaccata alla riga sopra**: il filetto fra le due è **puntinato** (nero), quello sotto resta
+  **pieno**. Il pieno chiude lo stop, il puntinato dice «continua». Nero e non grigio: la fotocopia i
+  grigi chiari li perde, e un filetto sparito attaccherebbe la sottoriga allo stop *sbagliato*.
+- **Non dipende dal solo segno**: l'etichetta ripete di chi è («Pallette dello stop **4**»).
+- **In stampa non comincia una pagina** (`break-before: avoid`, in `rg-utilities.css`): misurato in
+  Chrome su una tabella da 30 stop con le pallette, spostando il punto di taglio in cinque posizioni:
+  senza la regola in due casi su cinque la pagina nuova cominciava con una sottoriga, con la regola
+  in nessuno.
+- **Specificità**: l'altezza vale con `rg-table--hand`, il puntinato con `rg-table--grid`. Il
+  filetto puntinato è dichiarato su tutti e due i lati del bordo collassato (in basso sulla riga sopra,
+  via `:has()`, e in alto sulla sottoriga), perché fra pieno e puntinato il bordo collassato tiene il
+  pieno. Un motore senza `:has()` tiene il filetto pieno: la sottoriga si legge come una riga in più.
+
+### La cella a cavallo di due righe parla della prima
+
+In `--hand` le celle appoggiano **in basso** (sopra c'è lo spazio della mano). Una cella con
+`rowspan` che scavalca la sottoriga — Stop, N. ago — finiva quindi in fondo alla **sottoriga**: il
+numero dello stop scendeva accanto alle pallette, invece che ai dati del suo stop.
+
+Dalla 1.49.0 in `--hand` una cella con `rowspan` va **in alto**; dentro
+[`rg-worksheet-block--compact`](worksheet-block.md), dove le misure della cella sono del DS (riga 40,
+aria sotto 6 px, filetto 1), viene spinta giù quanto basta perché il testo cada **sulla stessa linea**
+delle altre celle della prima riga — misurato in Chrome: scarto 0 px. **Limite dichiarato**: se la
+prima riga cresce (un valore che va a capo) le altre celle scendono e questa no; resta comunque sulla
+prima riga. Fuori dal blocco compatto: in alto e basta.
+
+```html
+<table class="rg-table rg-table--compact rg-table--grid rg-table--hand" style="--rg-table-cols: 5">
+  <thead>
+    <tr>
+      <th class="rg-table__numeric" scope="col">Stop</th>
+      <th class="rg-table__numeric" scope="col">N. ago</th>
+      <th scope="col">Operazione</th>
+      <th class="rg-table__grow" scope="col">Materiale</th>
+      <th class="rg-table__numeric" scope="col">Tem</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rg-table__numeric" rowspan="2">4</td>
+      <td class="rg-table__numeric">2</td>
+      <td>Appoggio</td>
+      <td>1 Tulle TML01012</td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+    </tr>
+    <tr class="rg-table__row--sub">
+      <td colspan="4"><span class="rg-label">Pallette dello stop 4</span> 3 MM · C01 (3-1) ARGENTO</td>
+    </tr>
+    <tr>
+      <td class="rg-table__numeric">5</td>
+      <td class="rg-table__numeric">2</td>
+      <td>Ricamo</td>
+      <td>—</td>
+      <td class="rg-fill-field rg-fill-field--cell"></td>
+    </tr>
+    <!-- le pallette ci sono ma non si sa quali: si scrivono -->
+    <tr class="rg-table__row--sub">
+      <td colspan="5" class="rg-fill-field rg-fill-field--cell"><span class="rg-label">Pallette dello stop 5</span></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+Il `rowspan` è **facoltativo**: senza, la sottoriga attraversa tutta la tabella (`colspan` pari al
+numero delle colonne) e lo stop si legge lo stesso dal testo dell'etichetta.
+
+## Il contenitore che scorre, in stampa (`rg-table-wrap`, 1.49.0)
+
+A schermo `rg-table-wrap` ha `overflow-x: auto`: una tabella larga scorre invece di rompere la
+pagina. **La carta non scorre**: stampando, Chrome disegnava la barra di scorrimento e **tagliava** la
+tabella al bordo del contenitore (visto in un tagliando `rg-cutout`, con l'ultima colonna persa).
+In `@media print` il contenitore è `overflow: visible`: la tabella si stampa intera, e nessun prodotto
+deve togliere il wrap dai fogli per stamparli.
+
+**Attenzione**: una tabella davvero più larga del foglio adesso **sfora**, e Chrome rimpicciolisce in
+silenzio tutta la pagina ([checklist §11](../agent/verify-checklist.md)). È meglio che tagliarla, ma
+non è una soluzione: la tabella va fatta stare (colonne in `ch`, `--grid` a layout fisso).
 
 ## Struttura
 

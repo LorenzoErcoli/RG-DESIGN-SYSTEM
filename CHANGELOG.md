@@ -7,6 +7,37 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.48.0 — 2026-10-23 (proposta, ramo `ds/lookup-gruppi`)
+
+**Minor, additiva.** Un'estensione di `rg-lookup`, nessun token nuovo, nessuna classe esistente
+cambia. I campi dei filati (lista piatta, `rg-lookup--code`) si comportano come prima.
+
+### Il campo che chiede all'archivio, a gruppi
+
+Nell'editor della scheda ricamo la casella **Materiale** propone voci che vengono da tre posti —
+i materiali già usati in questo prodotto, le basi, il magazzino — e la stessa voce può stare in
+due. Servivano i gruppi con un titolo, e una riga che porta un **nome** (non un codice) con le
+altezze dei rotoli e il prezzo.
+
+- **Gruppi con titolo**: `rg-lookup__group` (`<li role="group" aria-labelledby>`),
+  `rg-lookup__group-title` (`role="presentation"`, etichetta AGNext maiuscola da CSS, ferma in
+  cima mentre il pannello scorre), `rg-lookup__group-list` (`<ul role="none">`). È il listbox
+  raggruppato di ARIA: `listbox > group > option`. **Il titolo non è un'opzione** e le frecce lo
+  saltano; le opzioni raggruppate hanno uno `scroll-margin-top` alto quanto il titolo, così la
+  riga raggiunta da tastiera non ci finisce sotto (misurato in Chrome: la riga attiva si ferma
+  esattamente sotto il titolo).
+- **Riga a nome**: `rg-lookup__name` (corpo, non mono, va a capo) al posto di `rg-lookup__code`;
+  `rg-lookup__figure` a destra per una cifra da confrontare («3,20 €/m»: mono, cifre tabulari,
+  testo primario). Le altezze vanno in `rg-lookup__spec` con la loro sigla («h150 · h160»).
+- **Controller di riferimento** (components/lookup.md e vetrina): `righe()` cerca
+  `.rg-lookup__option` in tutta la lista invece di `lista.children`; `disegna()` accetta anche
+  `{gruppi: [{titolo, righe}]}`, salta i gruppi vuoti e restituisce il numero di opzioni; la riga
+  ha due pezzi in più (`nome`, `cifra`) e `valore` vale `valore || codice || nome`.
+- **Frase di «nessun risultato»**: senza `--code` diventa «Nessuna voce somigliante. Quello che
+  hai scritto resta valido.» — chi batte «canvas» non ha scritto un codice. Con `--code` resta
+  identica.
+- Vetrina: tavola 55, `#lookup-groups`, con un archivio finto che risponde a gruppi.
+
 ## 1.47.0 — 2026-10-23
 
 **Minor.** Tre buchi emersi nella piattaforma prodotti il 22/10/2026. Nessun token nuovo, nessuna

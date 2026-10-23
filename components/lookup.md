@@ -40,6 +40,16 @@ resta la risposta giusta e non va sostituito ([forms.md](forms.md#autocomplete-r
 Per i filati si usa `rg-lookup--code`: `621/30` è un dato, e in mono le cifre stanno in colonna
 con quelle dei suggerimenti sotto.
 
+Due estensioni della **lista**, indipendenti dalla variante del campo (proposta 1.48.0):
+
+| Cosa | Classi | Quando |
+| --- | --- | --- |
+| **gruppi con titolo** | `rg-lookup__group`, `rg-lookup__group-title`, `rg-lookup__group-list` | le proposte vengono da posti diversi e chi sceglie deve sapere da dove ([sotto](#gruppi-con-titolo)) |
+| **riga a nome** | `rg-lookup__name` al posto di `rg-lookup__code`, più `rg-lookup__figure` a destra | la voce è un nome («CANVAS GREGGIO»), non un codice, e porta una cifra da confrontare (un prezzo) |
+
+Per i materiali dell'editor ricamo si usa `rg-lookup` **senza** `--code` (si batte un nome), con i
+gruppi e con la riga a nome.
+
 ## Gli stati sono del componente, non di chi lo usa
 
 Le frasi sono **qui**, non nel codice del prodotto: due prodotti che scrivono «nessun risultato»
@@ -50,7 +60,7 @@ cima al pannello e porta un modificatore per volta.
 | --- | --- | --- |
 | si è battuto meno della soglia | `rg-lookup__status--hint` | «Batti almeno 2 caratteri» (il numero è la soglia dichiarata) |
 | la richiesta è partita e non è tornata | `rg-lookup__status--busy` | «Cerco…» — e la lista porta `aria-busy="true"` |
-| l'archivio ha risposto zero righe | `rg-lookup__status--empty` | «Nessun codice somigliante. Quello che hai scritto resta valido.» |
+| l'archivio ha risposto zero righe | `rg-lookup__status--empty` | con `--code`: «Nessun codice somigliante. Quello che hai scritto resta valido.» — senza: «Nessuna voce somigliante. Quello che hai scritto resta valido.» (1.48.0: chi batte «canvas» non ha scritto un codice) |
 | l'archivio non ha risposto | `rg-lookup__status--offline` | «Archivio non raggiungibile. Quello che hai scritto resta valido.» |
 | ci sono righe | la riga di stato è `hidden` | — |
 
@@ -89,6 +99,92 @@ Tre cose da non perdere:
   contiene, ma è il pezzo che chi compila sta controllando, e va letto senza doverlo estrarre.
 - In colonna stretta la riga **va a capo** e la spalla scende sotto, allineata a destra: non si
   schiaccia e non si taglia il codice.
+
+### La riga a nome (proposta 1.48.0)
+
+```
+CANVAS GREGGIO        h150 · h160                      3,20 €/m
+└ __name              └ __spec                         └ __figure
+```
+
+| Parte | Cos'è | Forma |
+| --- | --- | --- |
+| `rg-lookup__name` | il **nome** della voce, quando non è un codice: un materiale, un articolo per descrizione | corpo (GT America Standard), nero, `sm`; **va a capo** se è lungo, non si taglia |
+| `rg-lookup__spec` | come sopra: il dato che si controlla — per un materiale **le altezze dei rotoli** | mono piccolo, label |
+| `rg-lookup__figure` | una **cifra con la sua unità** che si confronta riga per riga: il prezzo | mono, cifre tabulari, **testo primario**, a destra; può mancare |
+
+- `__name` e `__code` sono **alternativi**: il nome non va in mono (regole §3 — il mono è per
+  codici, misure e quantità), il codice non va nel corpo. Se una voce ha entrambi, il codice
+  viene prima e il nome dopo.
+- **La cifra non è la spalla.** La spalla è un commento secondario in corpo grigio («189 volte»);
+  la cifra è un dato che si confronta, e sta in mono perché i prezzi di righe diverse vanno in
+  colonna. Si possono avere entrambe: la spalla spinge a destra, la cifra le sta accanto.
+- **La cifra arriva composta, unità compresa**: «3,20 €/m», non `3.2`. Come per la spalla, la
+  formattazione è del dominio (virgola, euro, al metro), non del DS. Regole §8: l'unità sta
+  accanto al valore.
+- Le altezze si scrivono **con la loro sigla** («h150 · h160»), mai numeri nudi — stessa ragione
+  di «Tit. 30».
+
+## Gruppi con titolo
+
+Proposta 1.48.0. Quando le proposte vengono da **posti diversi** — i materiali già usati in questo
+prodotto, le basi, il magazzino — la lista si divide, e ogni parte porta un titolo che dice **da
+dove viene** quella riga. È la stessa voce che può comparire in due gruppi («CANVAS GREGGIO» sta
+nel prodotto *e* a magazzino): il titolo è l'informazione che le distingue.
+
+```
+Materiale  [ canvas            ]
+  DI QUESTO PRODOTTO
+    CANVAS GREGGIO
+  BASI
+    CANVAS NERO
+  DAL MAGAZZINO
+    CANVAS GREGGIO        h150 · h160      3,20 €/m
+    PANAMA VIADANA BIANCO h150             4,10 €/m
+```
+
+```html
+<ul class="rg-lookup__list" id="materiale-lista" role="listbox" aria-label="Materiali somiglianti">
+  <li class="rg-lookup__group" role="group" aria-labelledby="materiale-lista-g0">
+    <span class="rg-lookup__group-title" id="materiale-lista-g0" role="presentation">Di questo prodotto</span>
+    <ul class="rg-lookup__group-list" role="none">
+      <li class="rg-lookup__option" role="option" id="materiale-lista-o0" aria-selected="false" data-valore="CANVAS GREGGIO">
+        <span class="rg-lookup__name">CANVAS GREGGIO</span>
+      </li>
+    </ul>
+  </li>
+  <li class="rg-lookup__group" role="group" aria-labelledby="materiale-lista-g2">
+    <span class="rg-lookup__group-title" id="materiale-lista-g2" role="presentation">Dal magazzino</span>
+    <ul class="rg-lookup__group-list" role="none">
+      <li class="rg-lookup__option" role="option" id="materiale-lista-o2" aria-selected="false" data-valore="CANVAS GREGGIO">
+        <span class="rg-lookup__name">CANVAS GREGGIO</span>
+        <span class="rg-lookup__spec">h150 · h160</span>
+        <span class="rg-lookup__figure">3,20 €/m</span>
+      </li>
+    </ul>
+  </li>
+</ul>
+```
+
+Regole del gruppo:
+
+- **Il titolo non è un'opzione.** Non si sceglie, il clic non fa nulla, e **le frecce lo
+  saltano**: il controller scorre `.rg-lookup__option` ovunque siano, non i figli della lista.
+  Da tastiera si passa dall'ultima riga di un gruppo alla prima del successivo.
+- **Il titolo resta fermo in cima** mentre il pannello scorre (`position: sticky`): a metà di
+  venti righe di magazzino si sa ancora in che gruppo si è. Le opzioni raggruppate portano uno
+  `scroll-margin-top` alto quanto il titolo, così la riga raggiunta da tastiera non gli finisce
+  sotto.
+- **Il titolo si scrive normale** («Di questo prodotto»): il maiuscolo è del CSS, come per tutte
+  le etichette (AGNext, `xs`, spaziatura `--rg-letter-label`). Chi legge l'HTML o lo screen reader
+  ha la frase, non un grido.
+- **Un gruppo vuoto non si mostra.** Il server può mandarli sempre tutti e tre; il controller
+  salta quelli senza righe. Se tutti sono vuoti lo stato è `--empty`, come per una lista piatta.
+- **L'ordine dei gruppi e delle righe è del server**, come per la lista piatta.
+- **Gruppi e lista piatta non si escludono**: un gruppo senza titolo disegna le sue righe
+  direttamente nella lista. Ma in un pannello o tutti hanno il titolo o nessuno: righe orfane
+  accanto a righe raggruppate non si sa a quale gruppo appartengano.
+- **Il tetto delle 20 righe vale per il totale**, non per gruppo (per esempio 3 + 3 + 14).
 
 ## Uso e limiti
 
@@ -165,11 +261,13 @@ conforme.
 | --- | --- |
 | aperto / chiuso | `aria-expanded` sull'input **e** `hidden` sul pannello — scritti insieme, una sola verità |
 | riga raggiunta da tastiera | `aria-selected="true"` + classe `is-active` sull'opzione, `aria-activedescendant` sull'input con l'**id** dell'opzione |
+| quali righe scorrono le frecce | **solo** `.rg-lookup__option`, cercate in tutta la lista (`querySelectorAll`), non `lista.children`: con i gruppi i figli della lista sono gruppi, e i titoli non si raggiungono |
 | in ricerca | `aria-busy="true"` sulla lista, testo in `rg-lookup__status--busy` |
 | posizione | `--rg-lookup-left` / `--rg-lookup-top` / `--rg-lookup-width`, in px, sul pannello |
 | valore scelto | nel `value` dell'input, poi un evento `change` (non `input`: rilancerebbe la ricerca) |
 
-Tastiera, come l'autocomplete: **↓/↑** scorrono (↓ a pannello chiuso rilancia la ricerca),
+Tastiera, come l'autocomplete: **↓/↑** scorrono le opzioni saltando i titoli dei gruppi (↓ a
+pannello chiuso rilancia la ricerca),
 **Invio** sceglie la riga attiva — e se non c'è riga attiva non fa nulla, **Esc** chiude
 lasciando il testo, il **clic** sceglie. Il fuoco **non lascia mai il campo**: le opzioni non
 sono raggiungibili con Tab, si annunciano via `aria-activedescendant`.
@@ -182,7 +280,15 @@ fa.
 ### Controller di riferimento
 
 Indipendente da librerie, nessuna dipendenza. `cerca(q)` restituisce una Promise con le righe
-del server; `riga` è facoltativo e serve solo se il server parla un'altra lingua.
+del server — **una lista di righe**, oppure **`{gruppi: [{titolo, righe}]}`** (1.48.0); `riga` è
+facoltativo e serve solo se il server parla un'altra lingua. Una riga, dopo `riga`, è
+`{valore, codice, nome, spec, spalla, cifra}`: tutti facoltativi tranne `valore`, i vuoti non si
+disegnano.
+
+Cosa cambia dalla 1.45.0 (le parti segnate `1.48.0` nel codice): `righe()` cerca le opzioni in
+tutta la lista invece di prendere i figli, `disegna()` accetta i gruppi e restituisce quante
+opzioni ha disegnato, la riga ha due pezzi in più (`nome`, `cifra`), e la frase di «nessun
+risultato» dipende da `--code`. Con le risposte dei filati di oggi il comportamento è identico.
 
 ```js
 function rgLookup(root, { cerca, riga }) {
@@ -193,12 +299,16 @@ function rgLookup(root, { cerca, riga }) {
   const soglia = Number(root.dataset.min || 2);
   const attesa = Number(root.dataset.debounce || 160);
   const MARGINE = 12;
+  // 1.48.0: si batte un codice o una parola, e la frase lo rispetta.
+  const VUOTO = (root.classList.contains('rg-lookup--code') ? 'Nessun codice' : 'Nessuna voce')
+    + ' somigliante. Quello che hai scritto resta valido.';
   const mappa = riga || (r => ({
-    valore: r.codice, codice: r.codice,
-    spec: r.titolo ? 'Tit. ' + r.titolo : '', spalla: r.spalla || ''
+    valore: r.valore || r.codice || r.nome, codice: r.codice || '', nome: r.nome || '',
+    spec: r.spec || (r.titolo ? 'Tit. ' + r.titolo : ''), spalla: r.spalla || '', cifra: r.cifra || ''
   }));
   let timer = null, corsa = 0, attiva = -1;
-  const righe = () => Array.from(lista.children);
+  // 1.48.0: solo le opzioni, ovunque siano — i titoli dei gruppi le frecce li saltano.
+  const righe = () => Array.from(lista.querySelectorAll('.rg-lookup__option'));
 
   function dimmi(testo, modo) {
     stato.textContent = testo;
@@ -235,26 +345,56 @@ function rgLookup(root, { cerca, riga }) {
     o[i].scrollIntoView({ block: 'nearest' });
   }
 
+  function opzione(d, n) {
+    const v = mappa(d);
+    const li = document.createElement('li');
+    li.className = 'rg-lookup__option';
+    li.id = lista.id + '-o' + n;
+    li.setAttribute('role', 'option');
+    li.setAttribute('aria-selected', 'false');
+    li.dataset.valore = v.valore;
+    [['code', v.codice], ['name', v.nome], ['spec', v.spec],
+     ['aside', v.spalla], ['figure', v.cifra]].forEach(([parte, testo]) => {
+      if (!testo) return;
+      const s = document.createElement('span');
+      s.className = 'rg-lookup__' + parte;
+      s.textContent = testo;
+      li.appendChild(s);
+    });
+    return li;
+  }
+
+  // 1.48.0: `dati` e una lista di righe oppure {gruppi: [{titolo, righe}]}.
+  // Un gruppo vuoto non si disegna; uno senza titolo mette le righe nella lista.
+  // Restituisce quante opzioni ha disegnato.
   function disegna(dati) {
     attiva = -1;
     lista.textContent = '';
-    dati.forEach((d, i) => {
-      const v = mappa(d);
-      const li = document.createElement('li');
-      li.className = 'rg-lookup__option';
-      li.id = lista.id + '-o' + i;
-      li.setAttribute('role', 'option');
-      li.setAttribute('aria-selected', 'false');
-      li.dataset.valore = v.valore;
-      [['code', v.codice], ['spec', v.spec], ['aside', v.spalla]].forEach(([parte, testo]) => {
-        if (!testo) return;
-        const s = document.createElement('span');
-        s.className = 'rg-lookup__' + parte;
-        s.textContent = testo;
-        li.appendChild(s);
-      });
-      lista.appendChild(li);
+    const gruppi = Array.isArray(dati) ? [{ righe: dati }] : ((dati && dati.gruppi) || []);
+    let n = 0;
+    gruppi.forEach((g, gi) => {
+      const rr = g.righe || [];
+      if (!rr.length) return;
+      let dove = lista;
+      if (g.titolo) {
+        const gruppo = document.createElement('li');
+        gruppo.className = 'rg-lookup__group';
+        gruppo.setAttribute('role', 'group');
+        const titolo = document.createElement('span');
+        titolo.className = 'rg-lookup__group-title';
+        titolo.id = lista.id + '-g' + gi;
+        titolo.setAttribute('role', 'presentation');
+        titolo.textContent = g.titolo;
+        gruppo.setAttribute('aria-labelledby', titolo.id);
+        dove = document.createElement('ul');
+        dove.className = 'rg-lookup__group-list';
+        dove.setAttribute('role', 'none');
+        gruppo.append(titolo, dove);
+        lista.appendChild(gruppo);
+      }
+      rr.forEach(d => dove.appendChild(opzione(d, n++)));
     });
+    return n;
   }
 
   function chiedi() {
@@ -269,9 +409,8 @@ function rgLookup(root, { cerca, riga }) {
     Promise.resolve(cerca(q)).then(dati => {
       if (mia !== corsa) return;                  // risposta vecchia: si butta
       lista.removeAttribute('aria-busy');
-      disegna(dati || []);
-      if (dati && dati.length) dimmi('', '');
-      else dimmi('Nessun codice somigliante. Quello che hai scritto resta valido.', 'empty');
+      if (disegna(dati || [])) dimmi('', '');     // 1.48.0: conta le opzioni, non i gruppi
+      else dimmi(VUOTO, 'empty');
       colloca();
     }).catch(() => {
       if (mia !== corsa) return;
@@ -329,6 +468,29 @@ Va bene così. Il componente legge **`codice`**, **`titolo`** e **`spalla`**; `n
 3. **Un tetto alle righe** (20 bastano): il pannello ne mostra ~6 e scorre; mandarne 500 è banda
    sprecata e una lista che non si legge.
 
+### Con i gruppi (proposta 1.48.0)
+
+La forma più semplice che il controller di riferimento capisce così com'è, senza `riga`:
+
+```json
+{"gruppi": [
+  {"titolo": "Di questo prodotto", "righe": [{"nome": "CANVAS GREGGIO"}]},
+  {"titolo": "Basi",               "righe": [{"nome": "CANVAS NERO"}]},
+  {"titolo": "Dal magazzino",      "righe": [
+    {"nome": "CANVAS GREGGIO",        "spec": "h150 · h160", "cifra": "3,20 €/m"},
+    {"nome": "PANAMA VIADANA BIANCO", "spec": "h150",        "cifra": "4,10 €/m"}
+  ]}
+]}
+```
+
+- **`valore`** è ciò che finisce nel campo; se manca vale `codice`, se manca anche quello `nome`.
+  Serve scriverlo solo quando il valore da salvare non è il testo mostrato (un id, un codice
+  articolo dietro un nome).
+- **`spec` e `cifra` arrivano composte**: «h150 · h160», «3,20 €/m». Il DS non sa che le altezze
+  si scrivono con la h né che i prezzi sono al metro.
+- **Il titolo arriva in minuscolo normale**; il maiuscolo lo mette il CSS.
+- Un gruppo senza righe si può mandare: non si vede.
+
 ## Accessibilità
 
 - Combobox ARIA 1.2: `role="combobox"` + `aria-expanded` + `aria-controls` sull'input,
@@ -336,6 +498,11 @@ Va bene così. Il componente legge **`codice`**, **`titolo`** e **`spalla`**; `n
 - La **lista contiene solo opzioni**: la riga di stato le sta fuori, come `role="status"`, e
   l'annuncio arriva da lì. Un `<li>` che non è un'opzione dentro un listbox non è ARIA valido —
   è lo stesso difetto corretto nella 1.44.0 per `rg-list-row`.
+- **Con i gruppi** (1.48.0) è il listbox raggruppato di ARIA: `listbox > group > option`. Il
+  `<li class="rg-lookup__group">` è `role="group"` con `aria-labelledby` sull'id del titolo; il
+  titolo è `role="presentation"` (non è un'opzione e non è un'intestazione di pagina) e la
+  sottolista `<ul>` è `role="none"`, così nell'albero di accessibilità restano solo gruppi e
+  opzioni. Quando la riga attiva entra in un gruppo nuovo, lo screen reader ne annuncia il nome.
 - La riga attiva da tastiera si distingue **anche in scala di grigi**: oltre al fondo, un filetto
   nero a sinistra (l'hover ha solo il fondo).
 - Bersaglio: 40 px per riga, 44 su `pointer: coarse`.

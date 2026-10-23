@@ -101,7 +101,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li><li><a href="#lookup-groups">L&#8217;archivio a gruppi</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -3640,6 +3640,34 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
         <p class="specimen-note"><strong>Si deve sempre sapere se ha risposto una persona o la macchina.</strong> L&#8217;etichetta di ruolo &#232; obbligatoria su <code class="rg-mono">--assistant</code> e <code class="rg-mono">--staff</code>, con parole fisse: &#171;Assistente automatico&#187; in contorno, &#171;Assistenza&#187; piena e nera, e la bolla della persona ha il filetto nero col lato d&#8217;attacco a 2 px. La nota interna &#232; tratteggiata (lo stesso segno di <code class="rg-mono">rg-badge--archived</code>: &#171;non &#232; come gli altri&#187;), mai colorata; non la vede chi ha aperto la richiesta, e a filtrarla &#232; il server, non il CSS.</p>
         <p class="specimen-note"><strong>Gli a capo restano dentro ogni <code class="rg-mono">&lt;p&gt;</code>, non sul contenitore.</strong> Il testo dell&#8217;utente entra escapato in un <code class="rg-mono">&lt;p&gt;</code> e le righe che ha battuto si vedono (prima bolla della tavola 1). Se il contenitore conservasse gli a capo, quelli dell&#8217;HTML fra un paragrafo e l&#8217;altro diventerebbero righe vuote. <strong>La risposta in arrivo si sostituisce</strong>, non si riempie a pezzi: un <code class="rg-mono">role="log"</code> che cambia a ogni parola fa ripetere la frase al lettore di schermo.</p>
       </section>
+
+      <section class="specimen-section" id="lookup-groups">
+        <div class="specimen-section__head"><span class="specimen-section__index">55</span><h2>Il campo che chiede all&#8217;archivio, a gruppi (proposta 1.48.0)</h2><p>Estensione di <code class="rg-mono">rg-lookup</code> (tavola 52), non un componente nuovo. Quando le proposte vengono da <strong>posti diversi</strong> &#8212; i materiali gi&#224; usati nel prodotto, le basi, il magazzino &#8212; la lista si divide in gruppi con un <strong>titolo che dice da dove viene la riga</strong>: la stessa voce pu&#242; stare in due gruppi, e il titolo &#232; ci&#242; che le distingue. La voce qui &#232; un <strong>nome</strong>, non un codice: va in <code class="rg-mono">rg-lookup__name</code> (corpo, non mono), e a destra porta una <strong>cifra</strong> da confrontare, il prezzo, in <code class="rg-mono">rg-lookup__figure</code>. Vedi components/lookup.md, &#171;Gruppi con titolo&#187;.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">Vivo &#8212; l&#8217;editor della scheda ricamo: batti <code class="rg-mono">canvas</code>, <code class="rg-mono">nero</code>, <code class="rg-mono">organza</code> o <code class="rg-mono">zzz</code></span><div class="specimen-stage">
+            <div class="rg-form-row">
+              <div class="rg-field rg-field--w24">
+                <label class="rg-field__label" for="spec-lkg-materiale">Materiale</label>
+                <div class="rg-lookup" data-min="2" id="spec-lkg-1">
+                  <input class="rg-input rg-lookup__input" id="spec-lkg-materiale" type="text" role="combobox" aria-expanded="false" aria-controls="spec-lkg-lista" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Nome del materiale">
+                  <div class="rg-lookup__panel" hidden><p class="rg-lookup__status" role="status" hidden></p><ul class="rg-lookup__list" id="spec-lkg-lista" role="listbox" aria-label="Materiali somiglianti"></ul></div>
+                </div>
+                <span class="rg-field__help">Se il materiale non &#232; fra le proposte, scrivilo lo stesso: vale quello.</span>
+              </div>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half specimen-lookup-fermo"><span class="specimen-label">Tre gruppi &#8212; la riga attiva &#232; la prima del magazzino: le frecce ci arrivano dalla riga delle basi saltando il titolo</span><div class="specimen-stage specimen-column">
+            <div class="rg-lookup"><div class="rg-lookup__panel"><p class="rg-lookup__status" hidden></p><ul class="rg-lookup__list" id="spec-lkg-s1" role="listbox" aria-label="Materiali somiglianti"><li class="rg-lookup__group" role="group" aria-labelledby="spec-lkg-s1-g0"><span class="rg-lookup__group-title" id="spec-lkg-s1-g0" role="presentation">Di questo prodotto</span><ul class="rg-lookup__group-list" role="none"><li class="rg-lookup__option" role="option" id="spec-lkg-s1-o0" aria-selected="false"><span class="rg-lookup__name">CANVAS GREGGIO</span></li></ul></li><li class="rg-lookup__group" role="group" aria-labelledby="spec-lkg-s1-g1"><span class="rg-lookup__group-title" id="spec-lkg-s1-g1" role="presentation">Basi</span><ul class="rg-lookup__group-list" role="none"><li class="rg-lookup__option" role="option" id="spec-lkg-s1-o1" aria-selected="false"><span class="rg-lookup__name">CANVAS NERO</span></li></ul></li><li class="rg-lookup__group" role="group" aria-labelledby="spec-lkg-s1-g2"><span class="rg-lookup__group-title" id="spec-lkg-s1-g2" role="presentation">Dal magazzino</span><ul class="rg-lookup__group-list" role="none"><li class="rg-lookup__option is-active" role="option" id="spec-lkg-s1-o2" aria-selected="true"><span class="rg-lookup__name">CANVAS GREGGIO</span><span class="rg-lookup__spec">h150 &#183; h160</span><span class="rg-lookup__figure">3,20 &#8364;/m</span></li><li class="rg-lookup__option" role="option" id="spec-lkg-s1-o3" aria-selected="false"><span class="rg-lookup__name">PANAMA VIADANA BIANCO</span><span class="rg-lookup__spec">h150</span><span class="rg-lookup__figure">4,10 &#8364;/m</span></li><li class="rg-lookup__option" role="option" id="spec-lkg-s1-o4" aria-selected="false"><span class="rg-lookup__name">ORGANZA SETA AVORIO</span><span class="rg-lookup__spec">h140</span><span class="rg-lookup__figure">12,80 &#8364;/m</span></li></ul></li></ul></div></div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--half specimen-lookup-fermo"><span class="specimen-label">Un gruppo vuoto non si vede; con zero righe in tutti, la frase &#232; quella del campo a testo</span><div class="specimen-stage specimen-column">
+            <div class="rg-lookup"><div class="rg-lookup__panel"><p class="rg-lookup__status" hidden></p><ul class="rg-lookup__list" id="spec-lkg-s2" role="listbox" aria-label="Materiali somiglianti"><li class="rg-lookup__group" role="group" aria-labelledby="spec-lkg-s2-g2"><span class="rg-lookup__group-title" id="spec-lkg-s2-g2" role="presentation">Dal magazzino</span><ul class="rg-lookup__group-list" role="none"><li class="rg-lookup__option" role="option" id="spec-lkg-s2-o0" aria-selected="false"><span class="rg-lookup__name">TULLE NERO</span><span class="rg-lookup__spec">h300</span><span class="rg-lookup__figure">2,90 &#8364;/m</span></li></ul></li></ul></div></div>
+            <div class="rg-lookup"><input class="rg-input rg-lookup__input" type="text" value="zzz" aria-label="Nessun risultato, campo a testo" role="combobox" aria-expanded="true" aria-controls="spec-lkg-s3" aria-autocomplete="list" autocomplete="off"><div class="rg-lookup__panel"><p class="rg-lookup__status rg-lookup__status--empty" role="status">Nessuna voce somigliante. Quello che hai scritto resta valido.</p><ul class="rg-lookup__list" id="spec-lkg-s3" role="listbox" aria-label="Materiali somiglianti"></ul></div></div>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Il titolo non &#232; un&#8217;opzione.</strong> &#200; il listbox raggruppato di ARIA: <code class="rg-mono">listbox &gt; group &gt; option</code>, con il gruppo che prende il nome dal titolo (<code class="rg-mono">aria-labelledby</code>), il titolo in <code class="rg-mono">role="presentation"</code> e la sottolista in <code class="rg-mono">role="none"</code>. Le frecce scorrono <code class="rg-mono">.rg-lookup__option</code> ovunque sia, non i figli della lista: dall&#8217;ultima riga di un gruppo si passa alla prima del successivo, e il clic sul titolo non sceglie niente.</p>
+        <p class="specimen-note"><strong>Il titolo resta fermo mentre il pannello scorre</strong> (<code class="rg-mono">position: sticky</code>): a met&#224; di venti righe di magazzino si sa ancora da dove vengono. Le righe raggruppate hanno uno <code class="rg-mono">scroll-margin-top</code> alto quanto il titolo, cos&#236; quella raggiunta da tastiera non gli finisce sotto.</p>
+        <p class="specimen-note"><strong>Nome in corpo, cifra in mono.</strong> Regole &#167;3: il mono &#232; per codici, misure e quantit&#224;. Un materiale si chiama, non si codifica: <code class="rg-mono">rg-lookup__name</code> &#232; GT America Standard e va a capo se &#232; lungo. Le altezze dei rotoli stanno in <code class="rg-mono">rg-lookup__spec</code> con la loro sigla (<code class="rg-mono">h150</code>, mai un numero nudo); il prezzo in <code class="rg-mono">rg-lookup__figure</code>, mono a cifre tabulari, perch&#233; i prezzi di righe diverse si confrontano in colonna. Spec e cifra arrivano <strong>gi&#224; composte</strong> dal server, unit&#224; comprese.</p>
+      </section>
     </main>
   </div>
 
@@ -3805,12 +3833,16 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
     const soglia = Number(root.dataset.min || 2);
     const attesa = Number(root.dataset.debounce || 160);
     const MARGINE = 12;
+    // 1.48.0: si batte un codice o una parola, e la frase lo rispetta.
+    const VUOTO = (root.classList.contains('rg-lookup--code') ? 'Nessun codice' : 'Nessuna voce')
+      + ' somigliante. Quello che hai scritto resta valido.';
     const mappa = riga || (r => ({
-      valore: r.codice, codice: r.codice,
-      spec: r.titolo ? 'Tit. ' + r.titolo : '', spalla: r.spalla || ''
+      valore: r.valore || r.codice || r.nome, codice: r.codice || '', nome: r.nome || '',
+      spec: r.spec || (r.titolo ? 'Tit. ' + r.titolo : ''), spalla: r.spalla || '', cifra: r.cifra || ''
     }));
     let timer = null, corsa = 0, attiva = -1;
-    const righe = () => Array.from(lista.children);
+    // 1.48.0: solo le opzioni, ovunque siano — i titoli dei gruppi le frecce li saltano.
+    const righe = () => Array.from(lista.querySelectorAll('.rg-lookup__option'));
 
     function dimmi(testo, modo) {
       stato.textContent = testo;
@@ -3847,26 +3879,56 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
       o[i].scrollIntoView({ block: 'nearest' });
     }
 
+    function opzione(d, n) {
+      const v = mappa(d);
+      const li = document.createElement('li');
+      li.className = 'rg-lookup__option';
+      li.id = lista.id + '-o' + n;
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', 'false');
+      li.dataset.valore = v.valore;
+      [['code', v.codice], ['name', v.nome], ['spec', v.spec],
+       ['aside', v.spalla], ['figure', v.cifra]].forEach(([parte, testo]) => {
+        if (!testo) return;
+        const s = document.createElement('span');
+        s.className = 'rg-lookup__' + parte;
+        s.textContent = testo;
+        li.appendChild(s);
+      });
+      return li;
+    }
+
+    // 1.48.0: `dati` e una lista di righe oppure {gruppi: [{titolo, righe}]}.
+    // Un gruppo vuoto non si disegna; uno senza titolo mette le righe nella lista.
+    // Restituisce quante opzioni ha disegnato.
     function disegna(dati) {
       attiva = -1;
       lista.textContent = '';
-      dati.forEach((d, i) => {
-        const v = mappa(d);
-        const li = document.createElement('li');
-        li.className = 'rg-lookup__option';
-        li.id = lista.id + '-o' + i;
-        li.setAttribute('role', 'option');
-        li.setAttribute('aria-selected', 'false');
-        li.dataset.valore = v.valore;
-        [['code', v.codice], ['spec', v.spec], ['aside', v.spalla]].forEach(([parte, testo]) => {
-          if (!testo) return;
-          const s = document.createElement('span');
-          s.className = 'rg-lookup__' + parte;
-          s.textContent = testo;
-          li.appendChild(s);
-        });
-        lista.appendChild(li);
+      const gruppi = Array.isArray(dati) ? [{ righe: dati }] : ((dati && dati.gruppi) || []);
+      let n = 0;
+      gruppi.forEach((g, gi) => {
+        const rr = g.righe || [];
+        if (!rr.length) return;
+        let dove = lista;
+        if (g.titolo) {
+          const gruppo = document.createElement('li');
+          gruppo.className = 'rg-lookup__group';
+          gruppo.setAttribute('role', 'group');
+          const titolo = document.createElement('span');
+          titolo.className = 'rg-lookup__group-title';
+          titolo.id = lista.id + '-g' + gi;
+          titolo.setAttribute('role', 'presentation');
+          titolo.textContent = g.titolo;
+          gruppo.setAttribute('aria-labelledby', titolo.id);
+          dove = document.createElement('ul');
+          dove.className = 'rg-lookup__group-list';
+          dove.setAttribute('role', 'none');
+          gruppo.append(titolo, dove);
+          lista.appendChild(gruppo);
+        }
+        rr.forEach(d => dove.appendChild(opzione(d, n++)));
       });
+      return n;
     }
 
     function chiedi() {
@@ -3881,9 +3943,8 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
       Promise.resolve(cerca(q)).then(dati => {
         if (mia !== corsa) return;                  // risposta vecchia: si butta
         lista.removeAttribute('aria-busy');
-        disegna(dati || []);
-        if (dati && dati.length) dimmi('', '');
-        else dimmi('Nessun codice somigliante. Quello che hai scritto resta valido.', 'empty');
+        if (disegna(dati || [])) dimmi('', '');     // 1.48.0: conta le opzioni, non i gruppi
+        else dimmi(VUOTO, 'empty');
         colloca();
       }).catch(() => {
         if (mia !== corsa) return;
@@ -3940,6 +4001,30 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
     const finta = q => new Promise(ok => setTimeout(
       () => ok(ARCHIVIO.filter(r => r.codice.includes(q)).slice(0, 20)), 320));
     document.querySelectorAll('#spec-lk-1, #spec-lk-2').forEach(r => rgLookup(r, { cerca: finta }));
+  })();
+  // Archivio finto della tavola 55: risponde a gruppi, come la rotta dei materiali.
+  (function () {
+    const PRODOTTO = ['CANVAS GREGGIO', 'ORGANZA SETA AVORIO'];
+    const BASI = ['CANVAS NERO', 'CANVAS BIANCO', 'TULLE NERO'];
+    const MAGAZZINO = [
+      { nome: 'CANVAS GREGGIO', spec: 'h150 · h160', cifra: '3,20 €/m' },
+      { nome: 'CANVAS NERO', spec: 'h150', cifra: '3,40 €/m' },
+      { nome: 'CANVAS BIANCO', spec: 'h150 · h160', cifra: '3,40 €/m' },
+      { nome: 'PANAMA VIADANA BIANCO', spec: 'h150', cifra: '4,10 €/m' },
+      { nome: 'ORGANZA SETA AVORIO', spec: 'h140', cifra: '12,80 €/m' },
+      { nome: 'ORGANZA SETA NERA', spec: 'h140', cifra: '12,80 €/m' },
+      { nome: 'TULLE NERO', spec: 'h300', cifra: '2,90 €/m' }
+    ];
+    const finta = q => new Promise(ok => setTimeout(() => {
+      const Q = q.toUpperCase();
+      const nomi = l => l.filter(n => n.includes(Q)).map(nome => ({ nome }));
+      ok({ gruppi: [
+        { titolo: 'Di questo prodotto', righe: nomi(PRODOTTO) },
+        { titolo: 'Basi', righe: nomi(BASI) },
+        { titolo: 'Dal magazzino', righe: MAGAZZINO.filter(r => r.nome.includes(Q)) }
+      ] });
+    }, 320));
+    rgLookup(document.getElementById('spec-lkg-1'), { cerca: finta });
   })();
   </script>
 </body>

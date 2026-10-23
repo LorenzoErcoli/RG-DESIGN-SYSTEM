@@ -164,6 +164,30 @@
 .rg-lookup__code { color: var(--rg-color-black); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .rg-lookup__spec { color: var(--rg-color-text-label); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .rg-lookup__aside { margin-left: auto; color: var(--rg-color-text-secondary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-xs); white-space: nowrap; }
+/* Quando la voce è un NOME e non un codice (proposta 1.48.0: «CANVAS GREGGIO», un materiale)
+   va in __name, non in __code: regole §3, il mono è per codici e misure, non per le parole.
+   Può andare a capo — un nome lungo non si taglia — e allora spec e cifra scendono sotto. */
+.rg-lookup__name { min-width: 0; color: var(--rg-color-text-primary); font-family: var(--rg-font-body); font-size: var(--rg-font-size-sm); overflow-wrap: anywhere; }
+/* La CIFRA a destra (proposta 1.48.0): un valore con la sua unità che si confronta da una riga
+   all'altra — «3,20 €/m». Mono e cifre tabulari, così i prezzi stanno in colonna; testo
+   primario, perché è un dato e non un commento come la spalla. Se c'è anche la spalla, la
+   spinta a destra la dà lei e la cifra le sta accanto. */
+.rg-lookup__figure { margin-left: auto; color: var(--rg-color-text-primary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rg-lookup__aside + .rg-lookup__figure { margin-left: 0; }
+/* GRUPPI CON TITOLO (proposta 1.48.0). Quando le proposte vengono da posti diversi («di questo
+   prodotto», «basi», «dal magazzino») la lista si divide, e ogni parte dice da dove viene.
+   ARIA del listbox raggruppato: listbox > group > option. Il <li> del gruppo è role="group" con
+   aria-labelledby sul titolo; il titolo è role="presentation", la sottolista role="none": nel
+   listbox restano solo gruppi e opzioni. Il titolo NON è un'opzione: non si sceglie e le frecce
+   lo saltano (il controller cerca .rg-lookup__option, non i figli della lista).
+   Il titolo resta fermo in cima mentre il pannello scorre: con venti righe di magazzino chi è a
+   metà deve sapere ancora in che gruppo sta. Per questo le opzioni raggruppate portano uno
+   scroll-margin alto quanto il titolo, e scrollIntoView non le fa finire sotto. */
+.rg-lookup__group { margin: 0; padding: 0; }
+.rg-lookup__group + .rg-lookup__group, .rg-lookup__option + .rg-lookup__group, .rg-lookup__group + .rg-lookup__option { border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-lookup__group-title { position: sticky; top: 0; z-index: 1; display: block; padding: var(--rg-space-2) var(--rg-space-3) var(--rg-space-1); background: var(--rg-color-surface-raised); color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-technical); letter-spacing: var(--rg-letter-label); text-transform: uppercase; cursor: default; }
+.rg-lookup__group-list { margin: 0; padding: 0; list-style: none; }
+.rg-lookup__group .rg-lookup__option { scroll-margin-top: calc(var(--rg-font-size-xs) * var(--rg-line-height-technical) + var(--rg-space-2) + var(--rg-space-1)); }
 .rg-lookup__input:disabled, .rg-lookup__input[readonly] { cursor: default; }
 
 /* Tables */

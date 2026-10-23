@@ -781,7 +781,12 @@
           "rg-lookup__option",
           "rg-lookup__code",
           "rg-lookup__spec",
-          "rg-lookup__aside"
+          "rg-lookup__aside",
+          "rg-lookup__name",
+          "rg-lookup__figure",
+          "rg-lookup__group",
+          "rg-lookup__group-title",
+          "rg-lookup__group-list"
         ],
         "variants": [
           "rg-lookup--code",
@@ -798,8 +803,17 @@
       },
       "variants": [
         "testo",
-        "code"
+        "code",
+        "gruppi con titolo (1.48.0)",
+        "riga a nome con cifra (1.48.0)"
       ],
+      "variantsSince": {
+        "rg-lookup__group": "1.48.0",
+        "rg-lookup__group-title": "1.48.0",
+        "rg-lookup__group-list": "1.48.0",
+        "rg-lookup__name": "1.48.0",
+        "rg-lookup__figure": "1.48.0"
+      },
       "states": [
         "closed",
         "open",
@@ -808,6 +822,7 @@
         "empty",
         "offline",
         "active-option",
+        "grouped",
         "disabled",
         "read-only"
       ],
@@ -824,6 +839,10 @@
         "--rg-color-warning",
         "--rg-font-mono",
         "--rg-font-body",
+        "--rg-font-identity",
+        "--rg-weight-medium",
+        "--rg-letter-label",
+        "--rg-color-text-primary",
         "--rg-space-1",
         "--rg-space-2",
         "--rg-space-3"
@@ -831,7 +850,7 @@
       "doc": "components/lookup.md",
       "specimenAnchor": "lookup",
       "snippet": "<div class=\"rg-field\"><label class=\"rg-field__label\" for=\"filo-sopra\">Filo sopra</label><div class=\"rg-lookup rg-lookup--code\" data-min=\"2\"><input class=\"rg-input rg-lookup__input\" id=\"filo-sopra\" type=\"text\" role=\"combobox\" aria-expanded=\"false\" aria-controls=\"filo-sopra-lista\" aria-autocomplete=\"list\" autocomplete=\"off\" placeholder=\"Codice filato\"><div class=\"rg-lookup__panel\" hidden><p class=\"rg-lookup__status\" role=\"status\" hidden></p><ul class=\"rg-lookup__list\" id=\"filo-sopra-lista\" role=\"listbox\" aria-label=\"Filati somiglianti\"></ul></div></div><span class=\"rg-field__help\">Se il codice non e in archivio, scrivilo lo stesso: vale quello.</span></div>",
-      "notes": "PROPOSTA 1.45.0. Fratello di rg-autocomplete, NON una sua variante: li le voci stanno nel markup e il filtro e una sottostringa in pagina (venti materiali), qui la pagina parte VUOTA e la lista arriva dal server a ogni battuta (181 codici di filato oggi, ~35.000 articoli di magazzino domani). Namespace separato anche per una ragione pratica: i due campi convivono nell'editor delle schede e un controller delegato su .rg-autocomplete__input prenderebbe anche questo. NON E UNA LISTA CHIUSA: il valore e cio che resta nell'input anche se non e fra i suggerimenti, nessuno stato lo tratta da errore, il campo non si tinge mai (niente is-error, niente aria-invalid). Quattro stati con frasi FISSATE DAL DS in components/lookup.md: --hint sotto soglia (data-min, 2 di suo), --busy in ricerca (aria-busy sulla lista), --empty zero righe, --offline archivio muto (giallo d'avviso, non rosso: il guasto e dell'archivio, non del valore). La riga porta tre pezzi: __code (il valore, mono), __spec (il dato che si controlla, per i filati 'Tit. 30'), __aside (spalla secondaria a destra, FACOLTATIVA). Il pannello e position: fixed perche rg-modal ha overflow: hidden e la colonna della griglia a quattro e larga ~150 px: le misure --rg-lookup-top/left/width le scrive il controller, che deve anche ricollocarlo allo scroll IN CATTURA e al resize. Il DS non serve JS: contratto e controller di riferimento in components/lookup.md e nella vetrina. Il server risponde {codice, titolo, spalla}; l'ordine delle righe e suo, il componente non riordina.",
+      "notes": "PROPOSTA 1.45.0. Fratello di rg-autocomplete, NON una sua variante: li le voci stanno nel markup e il filtro e una sottostringa in pagina (venti materiali), qui la pagina parte VUOTA e la lista arriva dal server a ogni battuta (181 codici di filato oggi, ~35.000 articoli di magazzino domani). Namespace separato anche per una ragione pratica: i due campi convivono nell'editor delle schede e un controller delegato su .rg-autocomplete__input prenderebbe anche questo. NON E UNA LISTA CHIUSA: il valore e cio che resta nell'input anche se non e fra i suggerimenti, nessuno stato lo tratta da errore, il campo non si tinge mai (niente is-error, niente aria-invalid). Quattro stati con frasi FISSATE DAL DS in components/lookup.md: --hint sotto soglia (data-min, 2 di suo), --busy in ricerca (aria-busy sulla lista), --empty zero righe, --offline archivio muto (giallo d'avviso, non rosso: il guasto e dell'archivio, non del valore). La riga porta tre pezzi: __code (il valore, mono), __spec (il dato che si controlla, per i filati 'Tit. 30'), __aside (spalla secondaria a destra, FACOLTATIVA). Il pannello e position: fixed perche rg-modal ha overflow: hidden e la colonna della griglia a quattro e larga ~150 px: le misure --rg-lookup-top/left/width le scrive il controller, che deve anche ricollocarlo allo scroll IN CATTURA e al resize. Il DS non serve JS: contratto e controller di riferimento in components/lookup.md e nella vetrina. Il server risponde {codice, titolo, spalla}; l'ordine delle righe e suo, il componente non riordina. ESTENSIONE 1.48.0 (proposta, ramo ds/lookup-gruppi), additiva: (1) GRUPPI CON TITOLO quando le proposte vengono da posti diversi (di questo prodotto / basi / dal magazzino): li.rg-lookup__group role=group aria-labelledby -> span.rg-lookup__group-title role=presentation (maiuscolo da CSS, sticky in cima mentre il pannello scorre) + ul.rg-lookup__group-list role=none con le option; listbox > group > option, i titoli NON sono opzioni e le frecce li saltano (il controller cerca .rg-lookup__option in tutta la lista, non lista.children). (2) RIGA A NOME: rg-lookup__name (corpo, non mono, va a capo) al posto di __code quando la voce e un nome; rg-lookup__figure a destra per una cifra da confrontare (prezzo '3,20 €/m', mono tabulare, testo primario). Il server puo rispondere {gruppi:[{titolo, righe:[{nome, spec, cifra, valore?}]}]} oppure la lista piatta di prima; i gruppi vuoti non si disegnano; valore = valore || codice || nome. La frase --empty senza --code diventa 'Nessuna voce somigliante...'; con --code resta identica. Tavola in vetrina: #lookup-groups.",
       "keywords": [
         "lookup",
         "autocomplete remoto",
@@ -868,7 +887,32 @@
         "loading state",
         "dropdown non tagliato",
         "tendina nel modale",
-        "overflow hidden"
+        "overflow hidden",
+        "gruppi",
+        "gruppi con titolo",
+        "proposte raggruppate",
+        "titolo di gruppo",
+        "intestazione di gruppo",
+        "sezioni nella tendina",
+        "provenienza",
+        "di questo prodotto",
+        "basi",
+        "dal magazzino",
+        "materiale",
+        "materiali",
+        "tessuto",
+        "rotolo",
+        "altezza rotolo",
+        "prezzo",
+        "prezzo al metro",
+        "nome non codice",
+        "grouped options",
+        "option group",
+        "optgroup",
+        "listbox group",
+        "grouped combobox",
+        "section header",
+        "price column"
       ]
     },
     {

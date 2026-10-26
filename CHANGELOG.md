@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.50.0 — 2026-10-26 (proposta, ramo `ds/campo-largo`)
+## 1.50.0 — 2026-10-26
 
 **Minor, additiva.** Una variante nuova di `rg-fill-field`, nessun token nuovo, nessuna classe
 rimossa o rinominata, nessuna regola esistente cambiata: chi non usa la classe non vede niente.

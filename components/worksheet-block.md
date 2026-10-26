@@ -655,7 +655,7 @@ riga di stop. I diciassette stop per pagina valgono se nessuno ha le pallette; c
 misure di riga, non una misura della pagina vera: va preso sul foglio stampato (vedi
 [Quante righe per pagina](tables.md#quante-righe-per-pagina) e la checklist §11).
 
-## La cartella intera: il campo largo (proposta 1.50.0)
+## La cartella intera: il campo largo (1.50.0)
 
 > La cartella del programma: «intera, più piccola». — Lorenzo, 2026-10-26
 

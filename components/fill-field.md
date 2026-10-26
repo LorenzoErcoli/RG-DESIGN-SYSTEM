@@ -34,7 +34,7 @@ Tre scelte, e sono tutte a servizio di quella frase:
 | `rg-fill-field--check` | **Casella da spuntare** (proposta 1.25.0), 20 px (~5,3 mm; 24 nella 1.25), contorno nero: «Fatta» nella tabella delle fasi della [pagina della parte](part-sheet.md). Ci va un segno di penna. Su uno `<span>` dentro una `<td>`, etichetta nella `<th>`. |
 | `rg-fill-field--swatch` | **Casella quadrata** (proposta 1.23.0), ~10,6 mm di lato (40 px), contorno nero su quattro lati: il posto dove **attaccare un pezzo di filo** o segnare il colore del cono. Su uno `<span>` dentro una `<td>`, con l'etichetta nella `<th>` («Cono»). |
 | `rg-fill-field--key` | **Campo chiave** (1.49.0): il numero che il foglio esiste per dire — «Pezzi da fare». Casella nera da 2 px sui quattro lati, alta 48 px e larga almeno 128, etichetta nera in grassetto **accanto**; il valore stampato (quando c'è) è mono grassetto 28 px. Uno per blocco, in testa: vedi [Il campo chiave](#il-campo-chiave-proposta-1490). |
-| `rg-fill-field--wide` | **Campo largo** (proposta 1.50.0): un **valore lungo già stampato** — la cartella del programma, il nome di un file. Prende **tutta la fila** della griglia, resta **alto come un campo normale** con l'etichetta sopra, il valore è mono **12 px nero** e va a capo **fra le cartelle**. Non è `--tall`: vedi [Il campo largo](#il-campo-largo-proposta-1500). |
+| `rg-fill-field--wide` | **Campo largo** (1.50.0): un **valore lungo già stampato** — la cartella del programma, il nome di un file. Prende **tutta la fila** della griglia, resta **alto come un campo normale** con l'etichetta sopra, il valore è mono **12 px nero** e va a capo **fra le cartelle**. Non è `--tall`: vedi [Il campo largo](#il-campo-largo-proposta-1500). |
 
 **Densità compatta** (proposta 1.23.0). Dentro un [`rg-worksheet-block--compact`](worksheet-block.md#fascicolo-compatto-proposta-1230)
 la riga scende a **24 px** (~6,4 mm) e la cella `--cell` a 24 px; `--tall` resta 48. Nessuna classe da
@@ -92,7 +92,7 @@ numero che chi prende in mano il foglio deve vedere per primo, dopo il nome dell
 - **Uno per blocco.** Due campi chiave sono zero campi chiave: se un secondo valore sembra altrettanto
   importante, va nei campi del corpo.
 
-### Il campo largo (proposta 1.50.0)
+### Il campo largo (1.50.0)
 
 > La cartella del programma: «intera, più piccola». — Lorenzo, 2026-10-26
 

@@ -655,6 +655,25 @@ riga di stop. I diciassette stop per pagina valgono se nessuno ha le pallette; c
 misure di riga, non una misura della pagina vera: va preso sul foglio stampato (vedi
 [Quante righe per pagina](tables.md#quante-righe-per-pagina) e la checklist §11).
 
+## La cartella intera: il campo largo (proposta 1.50.0)
+
+> La cartella del programma: «intera, più piccola». — Lorenzo, 2026-10-26
+
+Nei quattro quarti di `rg-worksheet-block__fields` un percorso di rete di 100–150 caratteri andava a
+capo su sette righe e alzava tutta la fila (i campi di una fila sono alti uguale, 1.36.0). Il campo
+è [`rg-fill-field--wide`](fill-field.md#il-campo-largo-proposta-1500): **tutta la fila**, alto come un
+campo normale (24 px nel blocco compatto), etichetta sopra, valore mono **12 px nero** che va a capo
+**fra le cartelle** (l'app mette `<wbr>` dopo ogni barra rovesciata). Vale per **Cartella** e **File**
+su tutti i fogli; vuoto, è una riga da scrivere larga tutta la fila.
+
+Si mette **in fondo alla griglia**, dopo i campi da un quarto: una fila intera in mezzo spezzerebbe
+le file dei quarti. Due campi larghi di fila (Cartella e File) sono due file.
+
+**Costo in carta**, misurato in Chrome su A4 (blocco compatto, stampa, mono di ripiego a 12 px,
+~100 caratteri per riga): una fila di **35 px** (etichetta e riga da 24) per un valore di una riga,
+**44 px** per il percorso di 150 caratteri, che sta in due. Nel suo quarto lo stesso percorso andava
+su **sette** righe e alzava la fila — e con lei i tre campi accanto — a **126 px**.
+
 ## Uso e limiti
 
 **È riquadrato, ed è un'eccezione dichiarata.** Le regole (§6) dicono di non incorniciare tutto e

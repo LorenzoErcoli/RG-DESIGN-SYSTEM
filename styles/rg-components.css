@@ -1849,6 +1849,32 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block--compact .rg-fill-field__line { display: flex; align-items: flex-end; padding: 0 0 calc(var(--rg-space-1) + var(--rg-space-1) / 2) var(--rg-space-2); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-sm); font-variant-numeric: tabular-nums; line-height: var(--rg-line-height-tight); }
 .rg-worksheet-block--compact .rg-table td { padding-bottom: calc(var(--rg-space-1) + var(--rg-space-1) / 2); vertical-align: bottom; }
 
+/* CAMPO LARGO (proposta 1.50.0): rg-fill-field--wide, il campo con un VALORE LUNGO GIA STAMPATO — la
+   cartella del programma (\\SRV01\CONDIVISA\_2026\...\S2504\OTLAS, 100-150 caratteri), il nome di un
+   file. «Intera, piu piccola» (Lorenzo, 2026-10-26). In un quarto di griglia andava a capo su sette
+   righe e alzava la fila intera; tagliata non serve a niente, perche chi la legge la deve ritrovare.
+   - TUTTA LA FILA: grid-column 1 / -1 in qualunque griglia di campi (__fields, compatta o no). Fuori da
+     una griglia non fa niente.
+   - ALTO COME UN CAMPO NORMALE: nessuna altezza propria, vale quella del contenitore (24 px nel blocco
+     compatto, 32 fuori). NON e --tall, che e la riga da penna della nota; l'etichetta resta SOPRA come
+     per gli altri campi. Se il valore chiede una seconda riga il campo cresce (min-height, 1.33.0).
+   - IL VALORE PIU PICCOLO: mono 12 (xs) invece di 14, NERO: niente grigi, deve reggere la fotocopia.
+   - A CAPO FRA LE CARTELLE, NON DENTRO I NOMI: l'app mette <wbr> dopo ogni barra rovesciata e il CSS
+     non lo impedisce — white-space normale, nessun word-break: break-all, nessuna sillabazione (un
+     trattino inventato dentro un percorso e un percorso sbagliato). overflow-wrap: anywhere resta
+     quello della base: spezza un nome SOLO se da solo e piu largo di tutta la fila.
+   - display: block e non flex nel blocco compatto. La riga compatta e un flex che allinea il valore in
+     basso; ma in un flex ogni elemento figlio diventa un pezzo a se e gli spazi accanto spariscono
+     (misurato: «PRIMA <b>parte</b> DOPO» esce PRIMAPARTEDOPO). Il <wbr> Chrome lo tratta come testo, la
+     specifica come un elemento: un valore lungo e TESTO e deve scorrere come testo. In blocco lo fa,
+     e align-content: end lo tiene in basso come quello dei campi accanto (allineamento dei blocchi:
+     Chrome 123+, il motore che stampa il fascicolo; un motore che non lo sa mette il testo in alto,
+     dentro la stessa riga). Misurato in Chrome, A4, blocco compatto: con una riga di valore 24 px come
+     i campi accanto, con due 37 px (il percorso di 150 caratteri sta in due righe da ~100). */
+.rg-fill-field--wide { grid-column: 1 / -1; }
+.rg-fill-field--wide > .rg-fill-field__line { color: var(--rg-color-text-primary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-tight); white-space: normal; word-break: normal; hyphens: manual; }
+.rg-worksheet-block--compact .rg-fill-field--wide > .rg-fill-field__line { display: block; align-content: end; }
+
 /* CASELLA DA SPUNTARE («Fatta»): quadrata da 20 px (~5,3 mm; 24 nella 1.25, ridotta nella 1.26 per la pagina
    della parte compatta), contorno nero. Piu piccola di --swatch perche ci va un segno di penna, non un pezzo
    di filo. L'etichetta sta nella <th>. */

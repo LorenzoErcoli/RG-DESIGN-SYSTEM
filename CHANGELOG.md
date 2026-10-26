@@ -7,6 +7,35 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.50.0 — 2026-10-26 (proposta, ramo `ds/campo-largo`)
+
+**Minor, additiva.** Una variante nuova di `rg-fill-field`, nessun token nuovo, nessuna classe
+rimossa o rinominata, nessuna regola esistente cambiata: chi non usa la classe non vede niente.
+
+### Il campo largo: la cartella intera, più piccola
+
+La cartella del programma sul foglio: «intera, più piccola» (Lorenzo, 2026-10-26).
+
+- **`rg-fill-field--wide`**, variante di `rg-fill-field`, per un **valore lungo già stampato** che non
+  si può accorciare: il percorso di rete della cartella (100–150 caratteri) e il nome del file, su
+  tutti i fogli.
+- **Tutta la fila**: `grid-column: 1 / -1` in qualunque griglia di campi (`rg-worksheet-block__fields`,
+  compatta o no).
+- **Alto come un campo normale** (24 px nel blocco compatto, 32 fuori), etichetta sopra: non è
+  `--tall`. Cresce solo se il valore chiede una seconda riga (min-height, come dalla 1.33.0).
+- **Valore mono 12 px nero** (`--rg-font-size-xs`, `--rg-color-text-primary`, interlinea tight).
+- **A capo fra le cartelle**: l'app mette `<wbr>` dopo ogni barra rovesciata; il CSS non lo impedisce
+  (white-space normale, nessun `word-break: break-all`, `hyphens: manual`). Un nome si spezza solo se
+  da solo è più largo della fila.
+- Nel blocco compatto la riga è **`display: block` con `align-content: end`** invece del flex: in un
+  flex ogni elemento figlio è un pezzo a sé e gli spazi accanto spariscono. `align-content` su un
+  blocco è Chrome 123+; senza, il valore sta in alto nella stessa riga.
+- **Misurato** in Chrome, A4, blocco compatto, stampa (mono di ripiego): una riga di valore = riga da
+  24 px, fila da 35; il percorso di 150 caratteri sta in due righe = riga da 33, fila da 44. Nel suo
+  quarto lo stesso percorso faceva sette righe e una fila da 126 px.
+
+Vetrina: tavola 58 `#worksheet-wide`.
+
 ## 1.49.0 — 2026-10-23
 
 **Minor, additiva.** Tre richieste dal foglio del ricamo nella piattaforma prodotti. Nessun token

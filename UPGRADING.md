@@ -61,6 +61,18 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.50.0 — il campo largo (proposta)
+
+**Niente da fare**: variante additiva di `rg-fill-field`, nessun token nuovo, nessuna regola esistente
+cambiata. Per usarla, sui campi **Cartella** e **File** di ogni foglio:
+
+- aggiungere `rg-fill-field--wide` al `div.rg-fill-field` e metterlo **in fondo** a
+  `rg-worksheet-block__fields`, dopo i campi da un quarto;
+- nel valore, un `<wbr>` dopo ogni barra rovesciata del percorso (lato server, dopo l'escape HTML del
+  valore: `\` → `\<wbr>`), così il percorso va a capo fra le cartelle;
+- togliere eventuali pezze locali che accorciavano o rimpicciolivano il percorso (troncamento, `font-size`
+  locale, `title` con il percorso intero).
+
 ### 1.49.0 — il campo chiave, la sottoriga di carta, la tabella che in stampa non scorre
 
 **Quasi niente da fare**: estensioni additive, nessun token nuovo, nessuna classe rimossa o

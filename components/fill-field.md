@@ -34,6 +34,7 @@ Tre scelte, e sono tutte a servizio di quella frase:
 | `rg-fill-field--check` | **Casella da spuntare** (proposta 1.25.0), 20 px (~5,3 mm; 24 nella 1.25), contorno nero: «Fatta» nella tabella delle fasi della [pagina della parte](part-sheet.md). Ci va un segno di penna. Su uno `<span>` dentro una `<td>`, etichetta nella `<th>`. |
 | `rg-fill-field--swatch` | **Casella quadrata** (proposta 1.23.0), ~10,6 mm di lato (40 px), contorno nero su quattro lati: il posto dove **attaccare un pezzo di filo** o segnare il colore del cono. Su uno `<span>` dentro una `<td>`, con l'etichetta nella `<th>` («Cono»). |
 | `rg-fill-field--key` | **Campo chiave** (1.49.0): il numero che il foglio esiste per dire — «Pezzi da fare». Casella nera da 2 px sui quattro lati, alta 48 px e larga almeno 128, etichetta nera in grassetto **accanto**; il valore stampato (quando c'è) è mono grassetto 28 px. Uno per blocco, in testa: vedi [Il campo chiave](#il-campo-chiave-proposta-1490). |
+| `rg-fill-field--wide` | **Campo largo** (proposta 1.50.0): un **valore lungo già stampato** — la cartella del programma, il nome di un file. Prende **tutta la fila** della griglia, resta **alto come un campo normale** con l'etichetta sopra, il valore è mono **12 px nero** e va a capo **fra le cartelle**. Non è `--tall`: vedi [Il campo largo](#il-campo-largo-proposta-1500). |
 
 **Densità compatta** (proposta 1.23.0). Dentro un [`rg-worksheet-block--compact`](worksheet-block.md#fascicolo-compatto-proposta-1230)
 la riga scende a **24 px** (~6,4 mm) e la cella `--cell` a 24 px; `--tall` resta 48. Nessuna classe da
@@ -90,6 +91,48 @@ numero che chi prende in mano il foglio deve vedere per primo, dopo il nome dell
   battono le regole del foglio (etichetta grigia da 10 px in stampa, riga da 24).
 - **Uno per blocco.** Due campi chiave sono zero campi chiave: se un secondo valore sembra altrettanto
   importante, va nei campi del corpo.
+
+### Il campo largo (proposta 1.50.0)
+
+> La cartella del programma: «intera, più piccola». — Lorenzo, 2026-10-26
+
+Alcuni valori che l'app stampa sul foglio sono **lunghi per natura** e non si possono accorciare: il
+percorso di rete della cartella del programma (100–150 caratteri,
+`\\SRV01\CONDIVISA\_2026\CAMPIONARIO\DIOR\RIVIERA 27\DONNA\PELLETTERIA\OBLIQUE BRODERIE ANGLAISE\S2504\OTLAS`)
+o il nome del file. In un quarto di griglia un percorso così va a capo su sette righe e alza la fila
+intera; tagliato non serve, perché chi lo legge lo deve ritrovare. `rg-fill-field--wide`:
+
+- **Prende tutta la fila**: `grid-column: 1 / -1` in qualunque griglia di campi
+  (`rg-worksheet-block__fields`, compatta o no). Fuori da una griglia non fa niente.
+- **Resta alto come un campo normale**: nessuna altezza propria, vale quella del contenitore (24 px nel
+  blocco compatto, 32 fuori). **Non è `--tall`**, che è la riga da penna della nota: qui non si scrive
+  una frase, si legge un dato. L'etichetta sta **sopra**, come per gli altri campi.
+- **Il valore è più piccolo e nero**: mono **12 px** (`--rg-font-size-xs`, contro i 14 dei valori
+  accanto), `--rg-color-text-primary`. Niente grigi: deve reggere la fotocopia.
+- **Va a capo fra le cartelle, non dentro i nomi.** L'app mette `<wbr>` dopo ogni barra rovesciata; il
+  CSS non lo impedisce (white-space normale, nessun `word-break: break-all`, nessuna sillabazione — un
+  trattino inventato dentro un percorso è un percorso sbagliato). Un nome viene spezzato solo se **da
+  solo** è più largo dell'intera fila (`overflow-wrap: anywhere` della base).
+- **Una riga sta dove stanno le altre**: nel blocco compatto il valore è allineato in basso come
+  quello dei campi accanto. Misurato in Chrome, A4, blocco compatto, stampa: con una riga il campo è
+  **24 px** come gli altri, con due **33 px**; il percorso di 150 caratteri sta in **due righe** (~100
+  caratteri per riga a 12 px sulla giustezza di 186 mm, misurato con il mono di ripiego).
+- **Vuoto** (modulo in bianco) è una riga da scrivere larga tutta la fila, alta 24.
+- **Maiuscolo, come tutto il foglio**: il valore esce in maiuscolo (`text-transform` del foglio,
+  1.33.0). Per un percorso di rete Windows non cambia niente, i nomi non distinguono maiuscole e
+  minuscole.
+
+**Perché `display: block` e non flex.** Nel blocco compatto la riga è un flex che allinea il valore in
+basso. Ma in un flex **ogni elemento figlio diventa un pezzo a sé** e gli spazi accanto spariscono
+(misurato in Chrome: «PRIMA `<b>`parte`</b>` DOPO» esce PRIMAPARTEDOPO); il `<wbr>` Chrome lo tratta
+come testo, la specifica come un elemento. Un valore lungo è **testo** e deve scorrere come testo: in
+blocco lo fa, e `align-content: end` (allineamento dei blocchi, Chrome 123+: il motore che stampa il fascicolo) lo
+tiene in basso. Un motore che non lo sa mette il valore in alto dentro la stessa riga: niente si
+sovrappone e niente si perde.
+
+**Per quali campi.** Cartella e File, su tutti i fogli. Non per un valore che è lungo *per caso*
+(«SABBIATRICE MANUALE · BANCO SOFFIATURA» va a capo nel suo quarto e va bene così): il campo largo
+costa una fila intera, e si spende solo dove il valore non può essere accorciato.
 
 ## Uso e limiti
 
@@ -214,6 +257,22 @@ Campo chiave — in testa al blocco, vuoto da scrivere o con il valore stampato:
 <div class="rg-fill-field rg-fill-field--key">
   <span class="rg-fill-field__label">Pezzi da fare</span>
   <span class="rg-fill-field__line">1200</span>
+</div>
+```
+
+Campo largo — la cartella del programma e il file, nella griglia dei campi; `<wbr>` dopo ogni barra
+rovesciata, lo mette l'app. Vuoto, è la riga da scrivere larga tutta la fila:
+
+```html
+<div class="rg-worksheet-block__fields">
+  <div class="rg-fill-field rg-fill-field--wide">
+    <span class="rg-fill-field__label">Cartella</span>
+    <span class="rg-fill-field__line">\<wbr>\<wbr>SRV01\<wbr>CONDIVISA\<wbr>_2026\<wbr>CAMPIONARIO\<wbr>DIOR\<wbr>RIVIERA 27\<wbr>DONNA\<wbr>PELLETTERIA\<wbr>OBLIQUE BRODERIE ANGLAISE\<wbr>S2504\<wbr>OTLAS</span>
+  </div>
+  <div class="rg-fill-field rg-fill-field--wide">
+    <span class="rg-fill-field__label">File</span>
+    <span class="rg-fill-field__line"></span>
+  </div>
 </div>
 ```
 

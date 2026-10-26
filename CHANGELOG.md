@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.49.0 — 2026-10-23 (proposta, ramo `ds/foglio-di-reparto`)
+## 1.49.0 — 2026-10-23
 
 **Minor, additiva.** Tre richieste dal foglio del ricamo nella piattaforma prodotti. Nessun token
 nuovo, nessuna classe rimossa o rinominata. Un controllo per chi sale il pin: `rg-table-wrap` in

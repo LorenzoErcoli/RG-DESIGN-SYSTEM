@@ -33,7 +33,7 @@ Tre scelte, e sono tutte a servizio di quella frase:
 | `rg-fill-field--cell` | **Forma tabella**: si mette su una `<td>` di `rg-table`, dove l'etichetta sta già nella `<th>`. Trenta righe da riempire sono una tabella, non trenta campi. L'altezza la decide la tabella: se su quelle righe si scrive davvero, è [`rg-table--hand`](tables.md#tabella-su-cui-si-scrive-a-penna-rg-table--hand-proposta-1380). |
 | `rg-fill-field--check` | **Casella da spuntare** (proposta 1.25.0), 20 px (~5,3 mm; 24 nella 1.25), contorno nero: «Fatta» nella tabella delle fasi della [pagina della parte](part-sheet.md). Ci va un segno di penna. Su uno `<span>` dentro una `<td>`, etichetta nella `<th>`. |
 | `rg-fill-field--swatch` | **Casella quadrata** (proposta 1.23.0), ~10,6 mm di lato (40 px), contorno nero su quattro lati: il posto dove **attaccare un pezzo di filo** o segnare il colore del cono. Su uno `<span>` dentro una `<td>`, con l'etichetta nella `<th>` («Cono»). |
-| `rg-fill-field--key` | **Campo chiave** (proposta 1.49.0): il numero che il foglio esiste per dire — «Pezzi da fare». Casella nera da 2 px sui quattro lati, alta 48 px e larga almeno 128, etichetta nera in grassetto **accanto**; il valore stampato (quando c'è) è mono grassetto 28 px. Uno per blocco, in testa: vedi [Il campo chiave](#il-campo-chiave-proposta-1490). |
+| `rg-fill-field--key` | **Campo chiave** (1.49.0): il numero che il foglio esiste per dire — «Pezzi da fare». Casella nera da 2 px sui quattro lati, alta 48 px e larga almeno 128, etichetta nera in grassetto **accanto**; il valore stampato (quando c'è) è mono grassetto 28 px. Uno per blocco, in testa: vedi [Il campo chiave](#il-campo-chiave-proposta-1490). |
 
 **Densità compatta** (proposta 1.23.0). Dentro un [`rg-worksheet-block--compact`](worksheet-block.md#fascicolo-compatto-proposta-1230)
 la riga scende a **24 px** (~6,4 mm) e la cella `--cell` a 24 px; `--tall` resta 48. Nessuna classe da
@@ -64,7 +64,7 @@ niente. Vedi [worksheet-block.md § La nota con l'etichetta dentro](worksheet-bl
 (64 fino alla 1.36.0, più la fascia dell'etichetta che ora le sta dentro): è l'unico posto in cui si
 scrive davvero a mano, e le due righe che promette restano due.
 
-### Il campo chiave (proposta 1.49.0)
+### Il campo chiave (1.49.0)
 
 > «Quanti pezzi è un'indicazione da scrivere in fase di ricamo per indicare quanti pezzi devono
 > essere realizzati. Va in testa e molto evidente.» — Lorenzo, 2026-10-23

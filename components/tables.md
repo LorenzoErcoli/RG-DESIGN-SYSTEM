@@ -14,7 +14,7 @@ Confrontare record strutturati: materiali, fili, operazioni, consumi, revisioni 
   tutte le celle e colonne uguali.
 - **Da scrivere a mano** (`rg-table--hand`, 1.38.0): si aggiunge a `--grid` quando su quelle righe
   si scrive *davvero*; le porta a 40 px (~10,6 mm), l'altezza di una grafia.
-- **Sottoriga di carta** (`rg-table__row--sub`, proposta 1.49.0): una riga che **appartiene alla
+- **Sottoriga di carta** (`rg-table__row--sub`, 1.49.0): una riga che **appartiene alla
   riga sopra** — le pallette sotto il loro stop. Alta quanto il dato stampato (24 px), attaccata con
   un filetto puntinato. Vedi [Sottoriga di carta](#sottoriga-di-carta-rg-table__row--sub-proposta-1490).
 - **Espandibile** (`rg-table__row--expandable` + `rg-table__detail`): una riga-record che
@@ -326,7 +326,7 @@ un numero esatto di righe per pagina non lo ottiene dal CSS: lo ottiene spezzand
 </table>
 ```
 
-## Sottoriga di carta (`rg-table__row--sub`, proposta 1.49.0)
+## Sottoriga di carta (`rg-table__row--sub`, 1.49.0)
 
 > «Una riga autonoma sotto lo stop dedicato alle pallette.» — Lorenzo, 2026-10-23
 

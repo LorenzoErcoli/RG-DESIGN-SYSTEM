@@ -1609,7 +1609,7 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
    gradino tipografico, e un token piu piccolo di xs non si inventa per un caso locale. Il corpo resta
    quello che gli da rg-table--compact. */
 .rg-table.rg-table--hand thead th { padding-inline: var(--rg-space-1); white-space: nowrap; overflow-wrap: normal; }
-/* SOTTORIGA DI CARTA (proposta 1.49.0): una riga che APPARTIENE alla riga sopra. Dal foglio del ricamo:
+/* SOTTORIGA DI CARTA (1.49.0): una riga che APPARTIENE alla riga sopra. Dal foglio del ricamo:
    «una riga autonoma sotto lo stop dedicato alle pallette» (Lorenzo, 2026-10-23) — «Pallette dello
    stop 4 · 3 MM · C01 (3-1) ARGENTO», una <td colspan> larga quanto la tabella, etichetta (rg-label)
    e valore. Due cose la distinguono da una riga di stop:
@@ -1781,7 +1781,7 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 /* grid-column -2 (era 2, 1.49.0): l'ULTIMA colonna, che con due colonne e la stessa cosa. Con il campo
    chiave la testata ne ha tre e il QR resta a destra, dove chi scansiona lo cerca. */
 .rg-worksheet-block__head:has(> .rg-worksheet-block__work) > .rg-qr { grid-column: -2; grid-row: 1 / -1; }
-/* CAMPO CHIAVE (proposta 1.49.0): rg-fill-field--key, «PEZZI DA FARE». «Quanti pezzi e un'indicazione
+/* CAMPO CHIAVE (1.49.0): rg-fill-field--key, «PEZZI DA FARE». «Quanti pezzi e un'indicazione
    da scrivere in fase di ricamo per indicare quanti pezzi devono essere realizzati. Va in testa e molto
    evidente» (Lorenzo, 2026-10-23). E la cosa piu evidente del blocco DOPO il nome della lavorazione:
    - UNA CASELLA, NON UNA RIGA: contorno nero da 2 px sui quattro lati. La riga a L di rg-fill-field

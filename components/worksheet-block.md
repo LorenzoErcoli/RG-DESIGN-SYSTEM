@@ -599,11 +599,11 @@ vuol dire che non c'erano. Sul fascicolo di prova (3 parti, 11 fasi, 15 fogli �
 pagine restano **18** e i gruppi di due fasi collegate spezzati restano **0**.
 
 
-## Il campo chiave in testa, e la riga delle pallette (proposta 1.49.0)
+## Il campo chiave in testa, e la riga delle pallette (1.49.0)
 
 Due richieste dal foglio del ricamo, lo stesso giorno (Lorenzo, 2026-10-23).
 
-### Il campo chiave in testa (proposta 1.49.0)
+### Il campo chiave in testa (1.49.0)
 
 > «Quanti pezzi è un'indicazione da scrivere in fase di ricamo per indicare quanti pezzi devono
 > essere realizzati. Va in testa e molto evidente.»
@@ -634,7 +634,7 @@ il numero lo sa, lo stampa dentro `rg-fill-field__line`. Lo stesso markup per tu
 lavorazione lungo va a capo (cresce la testata, non si sovrappone niente). Un motore senza `:has()`
 scarta le regole della testata a griglia e torna alla fila di flex della 1.33.0, come già prima.
 
-### La riga delle pallette, sotto il suo stop (proposta 1.49.0)
+### La riga delle pallette, sotto il suo stop (1.49.0)
 
 > «Una riga autonoma sotto lo stop dedicato alle pallette.»
 

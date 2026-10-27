@@ -2879,7 +2879,7 @@ a.rg-icon-button { text-decoration: none; }
 .rg-chat__actions .rg-file-input__control .rg-button { width: auto; }
 .rg-chat__composer > .rg-chat__attachments .rg-file-input__status { flex: 1 1 auto; min-width: 0; }
 
-/* IL PDF INCORPORATO (proposta 1.52.0): rg-pdf-frame, il contenitore di un PDF vero dentro una pagina
+/* IL PDF INCORPORATO (1.52.0): rg-pdf-frame, il contenitore di un PDF vero dentro una pagina
    di stampa. Nato dalle «Schede di reparto» della piattaforma prodotti (Lorenzo, 2026-10-27): la pagina
    e una barra rg-u-no-print + rg-u-screen-a4-bar, e sotto il PDF del fascicolo in un <iframe> dello
    stesso sito; «Stampa le schede» chiama iframe.contentWindow.print().

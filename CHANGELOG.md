@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.52.0 — 2026-10-27 (proposta, ramo `ds/pdf-frame`)
+## 1.52.0 — 2026-10-27
 
 **Minor, additiva.** Un componente nuovo, nessun token nuovo, nessuna classe rimossa o rinominata,
 nessuna regola esistente cambiata: chi non usa la classe non vede niente.

@@ -1,4 +1,4 @@
-# Il PDF incorporato (`rg-pdf-frame`) — proposta 1.52.0
+# Il PDF incorporato (`rg-pdf-frame`) — 1.52.0
 
 > La pagina «Schede di reparto» diventa una pagina di stampa: in cima la barra, sotto il PDF vero
 > del fascicolo. — Lorenzo, 2026-10-27

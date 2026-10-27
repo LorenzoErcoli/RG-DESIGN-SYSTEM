@@ -217,8 +217,14 @@
 /* Riga espandibile: la <tr> madre porta un <button> con aria-expanded che rivela una <tr>
    di dettaglio con <td colspan> su tutte le colonne — resta una tabella vera, le colonne
    restano allineate alla riga madre. Stato = aria-expanded sul toggle + [hidden] sulla riga
-   di dettaglio, mai il solo colore: il segno +/- e generato dal DS (idioma di disclosure/step). */
-.rg-table__row--expandable > td:first-child { padding: 0; }
+   di dettaglio, mai il solo colore: il segno +/- e generato dal DS (idioma di disclosure/step).
+   Il margine lo da il bottone, quindi ha padding 0 la cella che lo CONTIENE (1.51.0). Fino alla 1.50.0
+   era la PRIMA cella, e con la miniatura davanti (rg-table__thumb) la prima perdeva il margine e la
+   seconda lo aveva doppio. Senza :has() resta la regola di prima, miniatura esclusa. */
+.rg-table__row--expandable > td:has(> .rg-table__toggle) { padding: 0; }
+@supports not selector(:has(*)) {
+  .rg-table__row--expandable > td:first-child:not(.rg-table__thumb) { padding: 0; }
+}
 .rg-table__toggle { display: flex; align-items: center; gap: var(--rg-space-2); width: 100%; min-height: 40px; padding: var(--rg-space-3); color: inherit; background: transparent; border: 0; font: inherit; text-align: left; cursor: pointer; }
 .rg-table__toggle:hover { background: var(--rg-color-neutral-50); }
 .rg-table__toggle:hover .rg-table__toggle-label { text-decoration: underline; text-underline-offset: var(--rg-space-1); }
@@ -228,6 +234,14 @@
 .rg-table__detail[hidden] { display: none; }
 .rg-table__detail > td { padding: 0; background: var(--rg-color-surface); box-shadow: inset var(--rg-border-strong) 0 0 var(--rg-color-border-strong); }
 .rg-table__detail-inner { padding: var(--rg-space-4) var(--rg-space-6); }
+/* Miniatura in testa alla riga (1.51.0) — la foto del record all'inizio della riga, negli elenchi.
+   La cella e stretta quanto la miniatura (width 1%, come rg-table__actions); sopra e sotto 8 px invece
+   di 16 perche l'immagine e gia alta, ai lati restano i 12 della cella (§5). Dentro: rg-thumb, nuda o
+   in un button.rg-lightbox__thumb; senza immagine rg-thumb--empty, cosi la colonna non cambia
+   larghezza. Vale anche come prima cella di una riga espandibile (sopra: il padding 0 segue il
+   toggle). In rg-table--compact la miniatura scende da sola a 48 (regola di rg-thumb). */
+.rg-table :is(th, td).rg-table__thumb { width: 1%; }
+.rg-table td.rg-table__thumb { padding-block: var(--rg-space-2); }
 
 /* Cards */
 /* Profondita e linea (v1.13.0): la card e una superficie SOLLEVATA sul fondo di pagina, e il suo
@@ -1176,6 +1190,22 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-lightbox__thumb { display: block; padding: 0; background: var(--rg-color-neutral-50); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-sm); cursor: zoom-in; }
 .rg-lightbox__thumb:hover { border-color: var(--rg-color-black); }
 .rg-lightbox__thumb img { display: block; }
+
+/* Miniatura di un record (1.51.0) — l'immagine che dice QUALE record e la riga, a misura di riga:
+   64 px, 48 nella forma compatta (rg-table--compact, liste). Quadrata e ritagliata (cover): a quella
+   misura serve a riconoscere, non a leggere; per leggere c'e il lightbox. max-width: none perche la
+   regola generale (img max-width 100%) in una cella larga «il minimo» le dava larghezza zero e la
+   faceva sparire. Si posa nuda o dentro button.rg-lightbox__thumb, che le da fondo e filetto.
+   --empty: segnaposto invisibile della stessa larghezza, quando il record non ha immagine.
+   --drawing: un DISEGNO (il ricamo estratto dalla scheda tecnica), non una foto. Due segni, nessun
+   colore: intero e non ritagliato (contain) su un passe-partout bianco, e un filetto nero sottile
+   rientrato di 2 px dal bordo, come il riquadro di un foglio. La foto arriva al bordo, il disegno no.
+   Non tratteggiato: nel DS il tratteggio dice «manca / provvisorio / da tagliare» (badge archiviato,
+   reparto da assegnare, tagliando). L'outline sta nel margine bianco e non tocca il disegno. */
+.rg-thumb { display: block; flex: none; box-sizing: border-box; width: var(--rg-space-16); max-width: none; height: var(--rg-space-16); object-fit: cover; border-radius: var(--rg-radius-sm); }
+.rg-thumb--compact, .rg-table--compact .rg-thumb { width: var(--rg-space-12); height: var(--rg-space-12); }
+.rg-thumb.rg-thumb--empty { height: 0; }
+.rg-thumb--drawing { padding: var(--rg-space-1); object-fit: contain; background: var(--rg-color-white); outline: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-strong); outline-offset: calc(var(--rg-border-hairline) - var(--rg-space-1)); }
 
 /* Worksheet block — l'unita STAMPABILE di una fase di lavorazione (v1.14.0). Il foglio esce dalla
    stampante, va in reparto, l'operatore ci scrive sopra a penna i valori mancanti e torna in

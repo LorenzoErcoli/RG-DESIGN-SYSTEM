@@ -61,6 +61,27 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.51.0 — la foto all'inizio della riga (proposta)
+
+**Un controllo e una pulizia.**
+
+- **Controllo**: nelle righe `rg-table__row--expandable` il padding 0 va alla cella che contiene
+  `rg-table__toggle` come **figlio diretto**, non più alla prima cella. Se un template avvolge il
+  toggle in un altro elemento, o marca `--expandable` una riga senza toggle, quella cella ritrova il
+  padding normale. Le pagine con il toggle direttamente nella prima `<td>` non cambiano.
+- **Pulizia** (RG Product Suite): sostituire le classi locali della foto in riga e togliere le pezze.
+
+| Locale | DS |
+| --- | --- |
+| `td.app-cella-foto`, `th.app-cella-foto` | `rg-table__thumb` |
+| `img.app-miniatura-riga` | `img.rg-thumb` |
+| `img.app-miniatura-riga--compatta` | `rg-thumb--compact` (in `rg-table--compact` non serve) |
+| `span.app-cella-foto--vuota` | `span.rg-thumb.rg-thumb--empty` con `aria-hidden="true"` |
+| `.rg-table__row--expandable > td.app-cella-foto` / `td.app-cella-toggle` | da togliere: il padding segue il toggle |
+
+Il disegno del ricamo al posto della foto: `rg-thumb--drawing`, e il bottone dice «Ingrandisci il
+disegno del ricamo di …».
+
 ### 1.50.0 — il campo largo (proposta)
 
 **Niente da fare**: variante additiva di `rg-fill-field`, nessun token nuovo, nessuna regola esistente

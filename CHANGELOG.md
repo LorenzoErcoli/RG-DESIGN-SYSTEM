@@ -7,6 +7,45 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.51.0 — 2026-10-27 (proposta, ramo `ds/miniatura-in-riga`)
+
+**Minor, additiva**, più una correzione di comportamento nella riga espandibile che non cambia nulla
+alle tabelle di oggi. Nessun token nuovo, nessuna classe rimossa o rinominata.
+
+### La foto all'inizio della riga
+
+«La foto del prodotto all'inizio della riga, negli elenchi» (Lorenzo, 2026-10-26). Chiesta dalla
+RG Product Suite, che la faceva con classi locali (`app-miniatura-riga`, `app-cella-foto`).
+
+- **`rg-thumb`**, componente nuovo ([thumb](components/thumb.md)): la miniatura di un record,
+  64 × 64 (`--rg-space-16`), quadrata, `object-fit: cover`, radius 2, `max-width: none` (la regola
+  generale `img { max-width: 100% }` in una cella larga 1% le dava larghezza zero). Nuda o dentro
+  `button.rg-lightbox__thumb`.
+- **`rg-thumb--compact`**: 48 × 48 (`--rg-space-12`), per liste e righe dense; dentro
+  `rg-table--compact` la miniatura è a 48 senza la classe.
+- **`rg-thumb--empty`**: segnaposto invisibile della stessa larghezza (alto zero), su uno `<span>`
+  `aria-hidden`, quando il record non ha immagine.
+- **`rg-thumb--drawing`**: un **disegno** (il ricamo estratto dalla scheda tecnica) al posto della
+  foto. Intero (`contain`) su un passe-partout bianco di 4 px, con un filetto nero hairline rientrato
+  di 2 px (outline con offset negativo): la foto arriva al bordo, il disegno no. Forma, non colore;
+  **non tratteggiato**, perché nel DS il tratteggio dice manca / provvisorio / da tagliare.
+- **`rg-table__thumb`**, la cella (`th` e `td`): `width: 1%` come `rg-table__actions`, 8 px sopra e
+  sotto, 12 ai lati.
+- **Misurato** in Chrome: riga con la foto nel bottone 83 px (66 + 8 + 8 + filetto), senza foto torna
+  a 54; colonna larga 90 (66 + 12 + 12) con o senza foto; in `--compact` miniatura e segnaposto a 48.
+
+### Riga espandibile: il margine segue il toggle
+
+- Il padding 0 è ora della cella che **contiene** `rg-table__toggle` (`td:has(> .rg-table__toggle)`),
+  non della **prima** cella. Con la miniatura davanti la prima perdeva il margine (la foto toccava il
+  filetto) e la seconda lo aveva doppio.
+- Senza `:has()` (`@supports not selector(:has(*))`) resta la regola di prima, miniatura esclusa.
+- **Nessun cambiamento** per le tabelle con il toggle nella prima cella (verificato: padding 0 come
+  prima). Cambia solo chi aveva una riga `--expandable` con il toggle **non** figlio diretto della
+  `<td>`, o senza toggle: quella cella ritrova i suoi 16/12 px.
+
+Vetrina: tavola 59 `#thumb`.
+
 ## 1.50.0 — 2026-10-26
 
 **Minor, additiva.** Una variante nuova di `rg-fill-field`, nessun token nuovo, nessuna classe

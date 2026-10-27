@@ -45,4 +45,6 @@ Miniatura (trigger) nel flusso + overlay unico a fine pagina, riutilizzato da tu
 ```
 
 Lo stato aperto è la classe `is-open` sull'overlay (e la rimozione di `hidden`). La larghezza della
-miniatura la decide il contesto che la ospita, non il componente.
+miniatura la decide il contesto che la ospita, non il componente — tranne la miniatura **di un
+record in testa alla riga** (la foto del prodotto in un elenco), che dalla 1.51.0 ha la sua misura:
+[`rg-thumb`](thumb.md), 64 o 48 px, con la variante `--drawing` per un disegno al posto della foto.

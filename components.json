@@ -2,7 +2,7 @@
   "$schema": "./components.schema.json",
   "schemaVersion": "1.0",
   "dsName": "RG Design System",
-  "dsVersion": "1.50.0",
+  "dsVersion": "1.51.0",
   "generated": "2026-10-22",
   "note": "Registro macchina-leggibile dei componenti RG. Fonte di verita per il MATCH dell'agente design-system e per i sistemi chiamanti. Aggiornato a ogni componente creato o modificato. Regola: se un componente esiste qui, non ricrearlo; estendine le varianti.",
   "appLocalPolicy": "Il prefisso rg- appartiene al DS e a nessun altro. Un componente app-local non si dichiara come eccezione: si chiama con un prefisso proprio (app-, o il nome del dominio) nel CSS locale del prodotto. La regola e verificabile con un grep, non richiede di consultare questo file, e non ha stati intermedi. Da 1.1.0 appLocalExceptions e vuota di proposito e non va ripopolata: se una classe merita il prefisso rg-, merita di stare nel DS.",
@@ -936,7 +936,8 @@
           "rg-table__detail",
           "rg-table__detail-inner",
           "rg-table__grow",
-          "rg-table__row--sub"
+          "rg-table__row--sub",
+          "rg-table__thumb"
         ],
         "variants": [
           "rg-table--compact",
@@ -947,7 +948,9 @@
           "rg-fill-field--cell",
           "rg-worksheet-block--compact",
           "rg-worksheet-block--long",
-          "rg-u-print-a4--head"
+          "rg-u-print-a4--head",
+          "rg-thumb",
+          "rg-lightbox__thumb"
         ]
       },
       "variants": [
@@ -958,7 +961,8 @@
         "expandable",
         "grid",
         "hand (tabella su cui si scrive a penna, 1.38.0)",
-        "sub (sottoriga di carta, 1.49.0)"
+        "sub (sottoriga di carta, 1.49.0)",
+        "thumb (miniatura in testa alla riga, 1.51.0)"
       ],
       "states": [
         "default",
@@ -978,7 +982,7 @@
       "doc": "components/tables.md",
       "specimenAnchor": "tables",
       "snippet": "<div class=\"rg-table-wrap\"><table class=\"rg-table\"><thead><tr><th>Codice</th><th class=\"rg-table__numeric\">Consumo (m)</th></tr></thead><tbody><tr><td class=\"rg-table__code\">FIL-0281</td><td class=\"rg-table__numeric\">18.42</td></tr></tbody></table></div>",
-      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase. Da 1.23.0 rg-table__grow sulla <th> della colonna larga (Note, Descrizione, Colore): width 100% nel layout automatico, le altre colonne scendono alla larghezza del proprio contenuto. Una per tabella. Da 1.24.0 rg-table--grid e la tabella DI CARTA da compilare a penna: filetto nero hairline su tutte le celle (testata compresa) e table-layout fixed, colonne uguali che non dipendono dal contenuto; rg-table__grow sulla th vale il DOPPIO delle altre, con style=\"--rg-table-cols: N\" sulla table (se manca vale 6). Celle --cell 32 px, 24 dentro rg-worksheet-block--compact. Nata perche --compact + td.rg-fill-field--cell con righe tutte vuote stampava righe da quaderno senza divisori e colonne di larghezza casuale. Non usare rg-table__grow senza --grid su una tabella tutta vuota: le altre colonne collassano. 1.25.0: con piu colonne larghe nella griglia, --rg-table-wide: K (se manca vale 1); ogni __grow vale 2/(cols+K). 1.38.0: rg-table--hand SI AGGIUNGE a --grid quando su quelle righe si scrive DAVVERO, ed e una decisione diversa - --grid dice DOVE si scrive (il divisore verticale), --hand dice QUANTO SPAZIO c'e per farlo. Caso che l'ha generata: la tabella degli stop del foglio del ricamo, una riga per stop, su cui l'operatore annota tempo e note MENTRE la macchina lavora («righe piu alte, 18 per pagina. Serve spazio per scrivere le note. E deve essere abbastanza per stop», Lorenzo, 2026-09-22). Le righe erano ~26 px (~7 mm), cioe la misura del TESTO STAMPATO; qui vale invece la frase di rg-fill-field, L'ALTEZZA E LA MANO NON IL TESTO: sette millimetri sono una riga letta, la punta della biro ci entra e la grafia no, e una riga in cui non si riesce a scrivere resta vuota, cioe il dato si perde. MISURA 40 px (~10,6 mm) sulle celle del tbody: i 32 px della grafia adulta dichiarati dalla base di rg-fill-field piu un passo, perche qui la mano scrive DENTRO una griglia chiusa sui quattro lati e non sopra una riga aperta, quindi non puo sbordare. Sta sulla scala (32 + 8) ed e un MINIMO: una cella con un valore lungo che va a capo cresce. La TESTATA non si alza (su di lei non si scrive) e le celle sono allineate IN BASSO, cosi il dato gia stampato e il valore scritto a mano cadono sulla stessa linea invece di galleggiare uno a meta cella e l'altro sul filetto. Specificita: i selettori sono .rg-table--hand tbody :is(th, td) e .rg-table--hand tbody td.rg-fill-field--cell, perche .rg-worksheet-block--compact td.rg-fill-field--cell pesa (0,2,1) e altrimenti vincerebbe. DICIOTTO RIGHE PER PAGINA e un numero MISURATO, non una regola: il CSS non sa contare. Su A4 con rg-u-print-a4--head (margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo, per il corpo della tabella restano ~194 mm; 17 righe da 10,58 ne occupano ~180 e alla diciottesima mancano ~6 mm (CORRETTO NELLA 1.40.1: fino alla 1.40.0 qui c'era scritto 18 righe su ~194 mm, misurate su un render in cui il foglio sforava in larghezza e Chrome rimpiccioliva la pagina del ~5% - vedi agent/verify-checklist.md §11). Il resto passa alla pagina dopo con la thead ripetuta (regola di rg-worksheet-block--long) e il foglio si stampa fronte-retro. LIMITE DICHIARATO: quel 18 dipende da quanto c'e SOPRA la tabella e il margine e ~3 mm - una fila di campi in meno ne fa entrare una in piu, un titolo su due righe una in meno; chi ha bisogno di un numero esatto spezza la tabella a monte. OPT-IN per una ragione precisa: nello stesso fascicolo ci sono tabelle che si LEGGONO soltanto (legenda dei coni, fasi della pagina della parte) e alzarle tutte vorrebbe dire pagare in carta uno spazio che nessuno usa. Vale a schermo come in stampa: l'altezza e una misura fisica della mano, non un fatto della carta. MISURA sul fascicolo di prova (3 parti, 11 fasi, 15 fogli, ricami da 3 stop, Chrome): 18 pagine prima e dopo, 0 gruppi di fasi collegate spezzati prima e dopo. Costo dichiarato: un ricamo con piu di 17 stop prende una facciata in piu. LA TESTATA (stessa 1.38.0, seconda osservazione dallo stesso foglio), due regole sulla sola thead e il corpo NON si tocca: (1) padding-inline --rg-space-1 (4 px per lato, 8 in tutto) perche con --grid ogni cella ha il suo filetto nero, testata compresa, e STOP finiva attaccato alla linea verticale - due segni neri a contatto; gli 8 px per lato del corpo sarebbero 16, meta di una colonna da quattro cifre, e nel corpo restano perche li e la penna a non dover toccare il filetto; (2) white-space: nowrap DENTRO IL DS, cosi il template non lo mette inline su ogni th (si toglie dopo aver salito il pin, vedi UPGRADING). Il selettore porta .rg-table davanti perche .rg-worksheet-block--compact .rg-table--grid th rimette white-space: normal e pesa (0,2,1). LIMITE: con table-layout fixed una testata che non ci sta SBORDA invece di andare a capo - e la scelta, un a capo in testata costa l'altezza di una riga di stop mentre una parola che sborda si accorcia (Tempo -> Tem). TESTATA PIU PICCOLA DEL CORPO: PROVATA E SCARTATA SULLA MISURA. .rg-table th e gia a --rg-font-size-xs, ultimo gradino della scala, quindi per fare un gradino serviva ALZARE il corpo a --rg-font-size-sm; ma su quei 12 px e tarato tutto il foglio (larghezze in ch, nomi dei materiali a 18 caratteri, due codici filo uno sotto l'altro nella riga) e in Chrome su A4, pagina vera del ricamo, il passo di riga passava da 10,58 a 10,85 mm e la pagina perdeva uno stop, che finiva da solo sul retro. Uno stop per pagina vale piu di un gradino tipografico, e un token piu piccolo di xs non si inventa per un caso locale. Il corpo resta quello di rg-table--compact (12 px) e il passo di riga resta 10,58 mm. 1.49.0 (proposta, ramo ds/foglio-di-reparto): (1) SOTTORIGA DI CARTA, <tr class=rg-table__row--sub> subito sotto la riga a cui appartiene, una <td colspan> con rg-label + valore ('Pallette dello stop 4  3 MM · C01 (3-1) ARGENTO', Lorenzo, 2026-10-23). Con --hand e ALTA 24 px (il dato stampato), non 40: su di lei si legge; se il valore va scritto a mano la cella e td.rg-fill-field--cell e torna a 40. Con --grid e ATTACCATA alla riga sopra: filetto in mezzo PUNTINATO nero, sotto pieno; dichiarato sui due lati del bordo collassato (in basso sulla riga sopra via :has(+ .rg-table__row--sub), escluse le celle [rowspan], e in alto sulla sottoriga) perche nel collassato il pieno vince sul puntinato; senza :has() resta pieno. L'etichetta ripete di chi e (non solo il segno). In stampa break-before: avoid (rg-utilities.css): misurato in Chrome, senza la regola 2 tagli su 5 aprivano la pagina con una sottoriga, con la regola 0. (2) ROWSPAN in --hand: vertical-align top (prima la cella finiva in fondo alla sottoriga); dentro rg-worksheet-block--compact padding-top calc(40 - 1lh - 6 - 1) e il testo cade sulla linea delle altre celle della prima riga (misurato in Chrome, scarto 0 px). Limite: se la prima riga cresce la cella non la segue. (3) rg-table-wrap IN STAMPA: overflow visible !important in @media print — Chrome stampava la barra di scorrimento e tagliava la tabella (tagliando rg-cutout). Una tabella piu larga del foglio adesso sfora e Chrome scala la pagina (checklist §11).",
+      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase. Da 1.23.0 rg-table__grow sulla <th> della colonna larga (Note, Descrizione, Colore): width 100% nel layout automatico, le altre colonne scendono alla larghezza del proprio contenuto. Una per tabella. Da 1.24.0 rg-table--grid e la tabella DI CARTA da compilare a penna: filetto nero hairline su tutte le celle (testata compresa) e table-layout fixed, colonne uguali che non dipendono dal contenuto; rg-table__grow sulla th vale il DOPPIO delle altre, con style=\"--rg-table-cols: N\" sulla table (se manca vale 6). Celle --cell 32 px, 24 dentro rg-worksheet-block--compact. Nata perche --compact + td.rg-fill-field--cell con righe tutte vuote stampava righe da quaderno senza divisori e colonne di larghezza casuale. Non usare rg-table__grow senza --grid su una tabella tutta vuota: le altre colonne collassano. 1.25.0: con piu colonne larghe nella griglia, --rg-table-wide: K (se manca vale 1); ogni __grow vale 2/(cols+K). 1.38.0: rg-table--hand SI AGGIUNGE a --grid quando su quelle righe si scrive DAVVERO, ed e una decisione diversa - --grid dice DOVE si scrive (il divisore verticale), --hand dice QUANTO SPAZIO c'e per farlo. Caso che l'ha generata: la tabella degli stop del foglio del ricamo, una riga per stop, su cui l'operatore annota tempo e note MENTRE la macchina lavora («righe piu alte, 18 per pagina. Serve spazio per scrivere le note. E deve essere abbastanza per stop», Lorenzo, 2026-09-22). Le righe erano ~26 px (~7 mm), cioe la misura del TESTO STAMPATO; qui vale invece la frase di rg-fill-field, L'ALTEZZA E LA MANO NON IL TESTO: sette millimetri sono una riga letta, la punta della biro ci entra e la grafia no, e una riga in cui non si riesce a scrivere resta vuota, cioe il dato si perde. MISURA 40 px (~10,6 mm) sulle celle del tbody: i 32 px della grafia adulta dichiarati dalla base di rg-fill-field piu un passo, perche qui la mano scrive DENTRO una griglia chiusa sui quattro lati e non sopra una riga aperta, quindi non puo sbordare. Sta sulla scala (32 + 8) ed e un MINIMO: una cella con un valore lungo che va a capo cresce. La TESTATA non si alza (su di lei non si scrive) e le celle sono allineate IN BASSO, cosi il dato gia stampato e il valore scritto a mano cadono sulla stessa linea invece di galleggiare uno a meta cella e l'altro sul filetto. Specificita: i selettori sono .rg-table--hand tbody :is(th, td) e .rg-table--hand tbody td.rg-fill-field--cell, perche .rg-worksheet-block--compact td.rg-fill-field--cell pesa (0,2,1) e altrimenti vincerebbe. DICIOTTO RIGHE PER PAGINA e un numero MISURATO, non una regola: il CSS non sa contare. Su A4 con rg-u-print-a4--head (margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo, per il corpo della tabella restano ~194 mm; 17 righe da 10,58 ne occupano ~180 e alla diciottesima mancano ~6 mm (CORRETTO NELLA 1.40.1: fino alla 1.40.0 qui c'era scritto 18 righe su ~194 mm, misurate su un render in cui il foglio sforava in larghezza e Chrome rimpiccioliva la pagina del ~5% - vedi agent/verify-checklist.md §11). Il resto passa alla pagina dopo con la thead ripetuta (regola di rg-worksheet-block--long) e il foglio si stampa fronte-retro. LIMITE DICHIARATO: quel 18 dipende da quanto c'e SOPRA la tabella e il margine e ~3 mm - una fila di campi in meno ne fa entrare una in piu, un titolo su due righe una in meno; chi ha bisogno di un numero esatto spezza la tabella a monte. OPT-IN per una ragione precisa: nello stesso fascicolo ci sono tabelle che si LEGGONO soltanto (legenda dei coni, fasi della pagina della parte) e alzarle tutte vorrebbe dire pagare in carta uno spazio che nessuno usa. Vale a schermo come in stampa: l'altezza e una misura fisica della mano, non un fatto della carta. MISURA sul fascicolo di prova (3 parti, 11 fasi, 15 fogli, ricami da 3 stop, Chrome): 18 pagine prima e dopo, 0 gruppi di fasi collegate spezzati prima e dopo. Costo dichiarato: un ricamo con piu di 17 stop prende una facciata in piu. LA TESTATA (stessa 1.38.0, seconda osservazione dallo stesso foglio), due regole sulla sola thead e il corpo NON si tocca: (1) padding-inline --rg-space-1 (4 px per lato, 8 in tutto) perche con --grid ogni cella ha il suo filetto nero, testata compresa, e STOP finiva attaccato alla linea verticale - due segni neri a contatto; gli 8 px per lato del corpo sarebbero 16, meta di una colonna da quattro cifre, e nel corpo restano perche li e la penna a non dover toccare il filetto; (2) white-space: nowrap DENTRO IL DS, cosi il template non lo mette inline su ogni th (si toglie dopo aver salito il pin, vedi UPGRADING). Il selettore porta .rg-table davanti perche .rg-worksheet-block--compact .rg-table--grid th rimette white-space: normal e pesa (0,2,1). LIMITE: con table-layout fixed una testata che non ci sta SBORDA invece di andare a capo - e la scelta, un a capo in testata costa l'altezza di una riga di stop mentre una parola che sborda si accorcia (Tempo -> Tem). TESTATA PIU PICCOLA DEL CORPO: PROVATA E SCARTATA SULLA MISURA. .rg-table th e gia a --rg-font-size-xs, ultimo gradino della scala, quindi per fare un gradino serviva ALZARE il corpo a --rg-font-size-sm; ma su quei 12 px e tarato tutto il foglio (larghezze in ch, nomi dei materiali a 18 caratteri, due codici filo uno sotto l'altro nella riga) e in Chrome su A4, pagina vera del ricamo, il passo di riga passava da 10,58 a 10,85 mm e la pagina perdeva uno stop, che finiva da solo sul retro. Uno stop per pagina vale piu di un gradino tipografico, e un token piu piccolo di xs non si inventa per un caso locale. Il corpo resta quello di rg-table--compact (12 px) e il passo di riga resta 10,58 mm. 1.49.0 (proposta, ramo ds/foglio-di-reparto): (1) SOTTORIGA DI CARTA, <tr class=rg-table__row--sub> subito sotto la riga a cui appartiene, una <td colspan> con rg-label + valore ('Pallette dello stop 4  3 MM · C01 (3-1) ARGENTO', Lorenzo, 2026-10-23). Con --hand e ALTA 24 px (il dato stampato), non 40: su di lei si legge; se il valore va scritto a mano la cella e td.rg-fill-field--cell e torna a 40. Con --grid e ATTACCATA alla riga sopra: filetto in mezzo PUNTINATO nero, sotto pieno; dichiarato sui due lati del bordo collassato (in basso sulla riga sopra via :has(+ .rg-table__row--sub), escluse le celle [rowspan], e in alto sulla sottoriga) perche nel collassato il pieno vince sul puntinato; senza :has() resta pieno. L'etichetta ripete di chi e (non solo il segno). In stampa break-before: avoid (rg-utilities.css): misurato in Chrome, senza la regola 2 tagli su 5 aprivano la pagina con una sottoriga, con la regola 0. (2) ROWSPAN in --hand: vertical-align top (prima la cella finiva in fondo alla sottoriga); dentro rg-worksheet-block--compact padding-top calc(40 - 1lh - 6 - 1) e il testo cade sulla linea delle altre celle della prima riga (misurato in Chrome, scarto 0 px). Limite: se la prima riga cresce la cella non la segue. (3) rg-table-wrap IN STAMPA: overflow visible !important in @media print — Chrome stampava la barra di scorrimento e tagliava la tabella (tagliando rg-cutout). Una tabella piu larga del foglio adesso sfora e Chrome scala la pagina (checklist §11). 1.51.0: (1) MINIATURA IN TESTA ALLA RIGA, td.rg-table__thumb (e th, con la parola Foto in rg-u-visually-hidden): la foto del record all'inizio della riga negli elenchi (Lorenzo, 2026-10-26). Cella stretta quanto la miniatura (width 1%, come rg-table__actions), padding-block 8 invece di 16, 12 ai lati. Dentro una rg-thumb (64 px; 48 da sola in rg-table--compact), di solito in un button.rg-lightbox__thumb con aria-label che nomina il record e img alt vuoto; senza immagine span.rg-thumb.rg-thumb--empty aria-hidden (largo quanto la miniatura, alto zero) e la colonna non cambia larghezza. Disegno al posto della foto: rg-thumb--drawing. (2) RIGA ESPANDIBILE: padding 0 sulla cella che CONTIENE il toggle (td:has(> .rg-table__toggle)), non piu sulla prima: con la miniatura davanti la prima perdeva il margine e la seconda lo aveva doppio. Il toggle va figlio DIRETTO della td. Senza :has() resta la regola di prima (td:first-child), miniatura esclusa. Pagine con il toggle nella prima cella: nessun cambiamento.",
       "keywords": [
         "tabella",
         "table",
@@ -1080,11 +1084,27 @@
         "barra di scorrimento in stampa",
         "tabella tagliata in stampa",
         "overflow print",
-        "tagliando tagliato"
+        "tagliando tagliato",
+        "miniatura in tabella",
+        "foto in tabella",
+        "foto all'inizio della riga",
+        "foto nella riga",
+        "immagine nella riga",
+        "thumbnail cell",
+        "image column",
+        "colonna foto",
+        "cella foto",
+        "riga senza foto",
+        "segnaposto foto",
+        "toggle nella seconda cella",
+        "margine cella toggle",
+        "padding cella toggle",
+        "riga espandibile con foto"
       ],
       "elementsSince": {
         "rg-table__grow": "1.23.0",
-        "rg-table__row--sub": "1.49.0"
+        "rg-table__row--sub": "1.49.0",
+        "rg-table__thumb": "1.51.0"
       },
       "variantsSince": {
         "rg-table--grid": "1.24.0",
@@ -2344,7 +2364,7 @@
       "rulesRef": "design-rules.md#7-tono-visivo",
       "specimenAnchor": "lightbox",
       "snippet": "<button class=\"rg-lightbox__thumb\" aria-label=\"Ingrandisci: fermata 03\"><img src=\"stop-03.jpg\" alt=\"Fermata 03\" width=\"132\"></button>\n<div class=\"rg-lightbox\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Immagine ingrandita\" hidden><img class=\"rg-lightbox__image\" src=\"\" alt=\"\"></div>",
-      "notes": "Overlay di SOLA LETTURA. Se serve una decisione, un form o metadati editabili, il componente e rg-modal. Da 1.8.0 sta su --rg-z-lightbox (450), SOPRA il dialog (--rg-z-modal 400) e sotto i toast (--rg-z-toast 500): un ingrandimento aperto dentro un modal deve poter salire sopra il modal, non finirci dietro (prima era su --rg-z-overlay 300 e i prodotti lo tamponavano in locale). Chiusura obbligatoria con click sullo scrim E con Esc. La miniatura e un <button> con aria-label: il cursore zoom-in non e un'affordance accessibile.",
+      "notes": "Overlay di SOLA LETTURA. Se serve una decisione, un form o metadati editabili, il componente e rg-modal. Da 1.8.0 sta su --rg-z-lightbox (450), SOPRA il dialog (--rg-z-modal 400) e sotto i toast (--rg-z-toast 500): un ingrandimento aperto dentro un modal deve poter salire sopra il modal, non finirci dietro (prima era su --rg-z-overlay 300 e i prodotti lo tamponavano in locale). Chiusura obbligatoria con click sullo scrim E con Esc. La miniatura e un <button> con aria-label: il cursore zoom-in non e un'affordance accessibile. Da 1.51.0 la miniatura di un RECORD in testa alla riga ha la sua misura: rg-thumb (64 / 48 px, --drawing per un disegno al posto della foto), nella cella rg-table__thumb.",
       "keywords": [
         "lightbox",
         "zoom",
@@ -2362,6 +2382,93 @@
         "layering",
         "sopra il modal",
         "dentro un modal"
+      ]
+    },
+    {
+      "id": "thumb",
+      "title": "Thumb — miniatura di un record",
+      "role": "Mostrare in testa a una riga di tabella o di elenco l'immagine che dice quale record e (la foto del prodotto), a misura di riga, distinguendo una foto da un disegno.",
+      "status": "stable",
+      "since": "1.51.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-thumb",
+        "variants": [
+          "rg-thumb--compact",
+          "rg-thumb--empty",
+          "rg-thumb--drawing"
+        ],
+        "related": [
+          "rg-table__thumb",
+          "rg-lightbox__thumb",
+          "rg-table--compact"
+        ]
+      },
+      "variants": [
+        "standard (64 px)",
+        "compact (48 px; automatica dentro rg-table--compact)",
+        "empty (segnaposto invisibile della stessa larghezza)",
+        "drawing (disegno, non foto: intero su bianco con filetto rientrato)"
+      ],
+      "states": [
+        "default",
+        "loading",
+        "hover (del bottone)",
+        "focus (del bottone)",
+        "empty"
+      ],
+      "tokens": [
+        "--rg-space-16",
+        "--rg-space-12",
+        "--rg-space-1",
+        "--rg-radius-sm",
+        "--rg-color-white",
+        "--rg-color-border-strong",
+        "--rg-border-hairline"
+      ],
+      "doc": "components/thumb.md",
+      "specimenAnchor": "thumb",
+      "snippet": "<td class=\"rg-table__thumb\"><button class=\"rg-lightbox__thumb\" type=\"button\" aria-label=\"Ingrandisci la foto di 0432 BOOK TOTE\"><img class=\"rg-thumb\" src=\"/products/12/miniatura\" alt=\"\" loading=\"lazy\"></button></td>",
+      "notes": "Chiesta dalla RG Product Suite: la foto del prodotto all'inizio della riga negli elenchi (Lorenzo, 2026-10-26); sostituisce le classi locali app-miniatura-riga / app-cella-foto. 64 x 64 (--rg-space-16), 48 (--rg-space-12) con --compact o dentro rg-table--compact. object-fit cover, radius sm, max-width none (la regola img max-width 100% in una cella larga 1% la portava a zero). Nuda o dentro button.rg-lightbox__thumb (fondo neutro mentre carica, filetto, nero all'hover, focus globale); img alt vuoto, il nome lo da l'aria-label del bottone. --empty: span aria-hidden largo quanto la miniatura e alto zero, invisibile per scelta (l'assenza si legge da sola; se e un dato va detta a parole). --drawing: il DISEGNO del ricamo estratto dalla scheda tecnica al posto della foto. Due segni di forma, nessun colore: object-fit contain su passe-partout bianco di 4 px e un filetto nero hairline rientrato di 2 px (outline con offset negativo, sta nel margine bianco). La foto arriva al bordo, il disegno no. NON tratteggiato: nel DS il tratteggio dice manca/provvisorio/da tagliare. Il bottone dice 'il disegno del ricamo', non 'la foto'; intestazione 'Immagine' se la colonna mescola foto e disegni. Una per riga.",
+      "keywords": [
+        "miniatura",
+        "thumbnail",
+        "thumb",
+        "foto",
+        "foto prodotto",
+        "foto del prodotto",
+        "immagine",
+        "immagine prodotto",
+        "foto in riga",
+        "foto all'inizio della riga",
+        "foto in tabella",
+        "foto in elenco",
+        "avatar prodotto",
+        "anteprima",
+        "preview image",
+        "row image",
+        "record image",
+        "segnaposto",
+        "placeholder immagine",
+        "senza foto",
+        "nessuna foto",
+        "disegno",
+        "disegno del ricamo",
+        "disegno tecnico",
+        "drawing",
+        "line art",
+        "scheda tecnica",
+        "foto o disegno",
+        "distinguere foto e disegno",
+        "passe-partout",
+        "object-fit",
+        "cover",
+        "contain",
+        "64 px",
+        "48 px",
+        "compatta",
+        "lightbox",
+        "ingrandisci"
       ]
     },
     {

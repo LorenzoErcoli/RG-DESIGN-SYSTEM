@@ -20,6 +20,9 @@ Confrontare record strutturati: materiali, fili, operazioni, consumi, revisioni 
 - **Espandibile** (`rg-table__row--expandable` + `rg-table__detail`): una riga-record che
   rivela in loco la propria scomposizione (i sotto-record che la compongono) senza lasciare
   la tabella. Variante, non componente a sé: preserva la semantica tabellare.
+- **Miniatura in testa alla riga** (`rg-table__thumb`, 1.51.0): la cella stretta che porta la foto
+  del record ([`rg-thumb`](thumb.md)), 64 px, 48 in `--compact`. Vedi
+  [Miniatura in testa alla riga](#miniatura-in-testa-alla-riga-rg-table__thumb-1510).
 
 ## Uso e limiti
 
@@ -45,6 +48,12 @@ Regole:
   affidarti al solo colore. Il toggle è alto ≥ 40 px e ha focus visibile.
 - La riga di dettaglio associa il proprio contenuto al trigger con `role="region"` +
   `aria-labelledby` sull'`id` del toggle.
+- **Il margine lo dà il bottone**: la cella che **contiene** `rg-table__toggle` (figlio diretto della
+  `<td>`) ha padding 0, e il bottone porta i 12 px. Dalla 1.51.0 vale per la cella del toggle
+  **ovunque sia**; fino alla 1.50.0 valeva per la prima cella della riga, e con una
+  [miniatura](#miniatura-in-testa-alla-riga-rg-table__thumb-1510) davanti la prima perdeva il margine e
+  la seconda lo aveva doppio. Il toggle va **direttamente** nella `<td>`, non avvolto in un altro
+  elemento. In un motore senza `:has()` resta la regola di prima (prima cella), miniatura esclusa.
 
 ```html
 <div class="rg-table-wrap">
@@ -83,6 +92,127 @@ Regole:
 
 A riga chiusa la `<tr class="rg-table__detail">` porta l'attributo `hidden`; il JS che gestisce
 il toggle inverte `aria-expanded` e aggiunge/toglie `hidden`, nient'altro.
+
+## Miniatura in testa alla riga (`rg-table__thumb`, 1.51.0)
+
+> «La foto del prodotto all'inizio della riga, negli elenchi.» — Lorenzo, 2026-10-26
+
+La foto del record sta nella **prima colonna**, in una cella `rg-table__thumb`: stretta quanto la
+miniatura (come `rg-table__actions`), 8 px sopra e sotto invece di 16 perché l'immagine è già alta, i
+12 px ai lati della cella (§5). Dentro c'è una [`rg-thumb`](thumb.md), di solito nel bottone
+`rg-lightbox__thumb` che apre l'ingrandimento.
+
+- **Misura**: 64 px; in `rg-table--compact` 48, da sola (nessuna classe in più sulla miniatura).
+  Fuori da una tabella compatta, la forma piccola è `rg-thumb--compact`.
+- **Riga senza immagine**: la cella c'è lo stesso, con dentro `<span class="rg-thumb rg-thumb--empty"
+  aria-hidden="true">` largo quanto la miniatura. Così la colonna non cambia larghezza anche dove
+  nessuna riga ha la foto. Il segnaposto tiene la larghezza, non l'altezza: quelle righe restano
+  basse.
+- **Disegno al posto della foto**: `rg-thumb--drawing` (intero su bianco, filetto rientrato), e il
+  bottone dice «il disegno», non «la foto». Vedi [Foto o disegno](thumb.md#foto-o-disegno).
+- **Intestazione**: `<th class="rg-table__thumb" scope="col"><span class="rg-u-visually-hidden">Foto</span></th>`
+  — «Immagine» se la colonna mescola foto e disegni.
+- **Con la riga espandibile**: la miniatura è la prima cella e il toggle la seconda. Non serve niente
+  di più: il padding 0 segue il toggle, non la posizione (vedi [Riga espandibile](#riga-espandibile)).
+  Il toggle resta alto 40 px dentro una riga da 83: il suo fondo di hover non riempie la cella, ed è
+  accettato (la riga intera non è il trigger).
+- **Una per riga.** La miniatura è l'identità del record, non il suo contenuto.
+
+(a) Riga con foto e (b) riga senza:
+
+```html
+<table class="rg-table">
+  <thead>
+    <tr>
+      <th class="rg-table__thumb" scope="col"><span class="rg-u-visually-hidden">Foto</span></th>
+      <th scope="col">Codice RG</th>
+      <th class="rg-table__grow" scope="col">Prodotto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rg-table__thumb">
+        <button class="rg-lightbox__thumb" type="button" data-foto="/products/12/immagine"
+                aria-label="Ingrandisci la foto di 0432 BOOK TOTE">
+          <img class="rg-thumb" src="/products/12/miniatura" alt="" loading="lazy">
+        </button>
+      </td>
+      <td class="rg-table__code">0432</td>
+      <td>BOOK TOTE</td>
+    </tr>
+    <tr>
+      <td class="rg-table__thumb"><span class="rg-thumb rg-thumb--empty" aria-hidden="true"></span></td>
+      <td class="rg-table__code">0433</td>
+      <td>SADDLE</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+(c) Riga espandibile con foto e toggle — la miniatura prima, il toggle nella seconda cella:
+
+```html
+<tr class="rg-table__row--expandable">
+  <td class="rg-table__thumb">
+    <button class="rg-lightbox__thumb" type="button" data-foto="/products/12/immagine"
+            aria-label="Ingrandisci la foto di 0432 BOOK TOTE">
+      <img class="rg-thumb" src="/products/12/miniatura" alt="" loading="lazy">
+    </button>
+  </td>
+  <td class="rg-table__code">
+    <button class="rg-table__toggle" type="button" id="art-1-tog"
+            aria-expanded="false" aria-controls="art-1-det">
+      <span class="rg-table__toggle-label">0432</span>
+    </button>
+  </td>
+  <td>BOOK TOTE</td>
+</tr>
+<tr class="rg-table__detail" id="art-1-det" hidden>
+  <td colspan="3"><div class="rg-table__detail-inner" role="region" aria-labelledby="art-1-tog">…</div></td>
+</tr>
+```
+
+(d) Mini-tabella compatta — la miniatura è a 48 da sola, segnaposto compreso:
+
+```html
+<table class="rg-table rg-table--compact">
+  <thead>
+    <tr>
+      <th class="rg-table__thumb" scope="col"><span class="rg-u-visually-hidden">Foto</span></th>
+      <th scope="col">Codice RG</th>
+      <th class="rg-table__grow" scope="col">Variante</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rg-table__thumb">
+        <button class="rg-lightbox__thumb" type="button" data-foto="/products/13/immagine"
+                aria-label="Ingrandisci la foto di 0433 BOOK TOTE NERO">
+          <img class="rg-thumb" src="/products/13/miniatura" alt="" loading="lazy">
+        </button>
+      </td>
+      <td class="rg-table__code">0433</td>
+      <td>Nero</td>
+    </tr>
+    <tr>
+      <td class="rg-table__thumb"><span class="rg-thumb rg-thumb--empty" aria-hidden="true"></span></td>
+      <td class="rg-table__code">0435</td>
+      <td>Ecru</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+(e) Disegno al posto della foto:
+
+```html
+<td class="rg-table__thumb">
+  <button class="rg-lightbox__thumb" type="button" data-foto="/products/14/disegno"
+          aria-label="Ingrandisci il disegno del ricamo di 0434 OBLIQUE">
+    <img class="rg-thumb rg-thumb--drawing" src="/products/14/disegno-miniatura" alt="" loading="lazy">
+  </button>
+</td>
+```
 
 ## Azioni in riga (`rg-table__actions`, dalla 1.17.0)
 

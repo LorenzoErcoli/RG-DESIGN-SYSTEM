@@ -2878,3 +2878,53 @@ a.rg-icon-button { text-decoration: none; }
 .rg-chat__actions .rg-file-input__control { display: inline-block; }
 .rg-chat__actions .rg-file-input__control .rg-button { width: auto; }
 .rg-chat__composer > .rg-chat__attachments .rg-file-input__status { flex: 1 1 auto; min-width: 0; }
+
+/* IL PDF INCORPORATO (proposta 1.52.0): rg-pdf-frame, il contenitore di un PDF vero dentro una pagina
+   di stampa. Nato dalle «Schede di reparto» della piattaforma prodotti (Lorenzo, 2026-10-27): la pagina
+   e una barra rg-u-no-print + rg-u-screen-a4-bar, e sotto il PDF del fascicolo in un <iframe> dello
+   stesso sito; «Stampa le schede» chiama iframe.contentWindow.print().
+   LARGO COME IL FOGLIO A SCHERMO: stessa max-width di rg-u-screen-a4 (210 mm piu i due filetti), stesso
+   fondo e stesso filetto, centrato. Sotto quella larghezza si restringe e basta: width 100% +
+   border-box, niente scorrimento orizzontale (a 375 px il riquadro e largo 375).
+   ALTO QUANTO LA FINESTRA MENO LA BARRA, mai meno di 60vh. Quanto e alta la barra lo sa la pagina,
+   non il DS: --rg-pdf-frame-offset e una manopola del componente (non un token), con un default che
+   copre la testata dell'app (--rg-layout-header) e una barra di due righe. dvh dove c'e: sul telefono
+   la barra degli indirizzi entra ed esce e 100vh e piu alto della finestra vera.
+   TRE STATI, UNA CLASSE: senza modificatore si vede il PDF; --loading mostra __wait (rg-empty,
+   role=status) al posto del PDF; --error mostra __error (rg-alert--error). La pagina cambia solo la
+   classe del contenitore: i tre figli stanno sempre nel DOM.
+   IN ATTESA L'IFRAME RESTA IMPAGINATO, SOLO INVISIBILE (visibility, non display): il visore PDF del
+   browser si inizializza e l'evento load arriva anche mentre si legge «Sto preparando le schede».
+   Tutti i figli stanno nella stessa cella della griglia, quindi l'attesa sta SOPRA l'iframe e il
+   riquadro non cambia misura quando il PDF arriva. In errore l'iframe esce dall'impaginazione e il
+   riquadro si stringe sull'avviso: un 80% di finestra vuoto attorno a tre righe direbbe «manca qualcosa».
+   IN STAMPA NON ESISTE: si stampa il PDF dall'iframe, non la pagina che lo contiene. */
+.rg-pdf-frame {
+  --rg-pdf-frame-offset: calc(var(--rg-layout-header) + var(--rg-space-24) * 2);
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  width: 100%;
+  max-width: calc(210mm + var(--rg-border-hairline) * 2);
+  height: max(60vh, calc(100vh - var(--rg-pdf-frame-offset)));
+  height: max(60dvh, calc(100dvh - var(--rg-pdf-frame-offset)));
+  margin-inline: auto;
+  margin-block: var(--rg-space-6);
+  background: var(--rg-color-surface-raised);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium);
+}
+.rg-pdf-frame > * { grid-area: 1 / 1; min-width: 0; }
+.rg-pdf-frame__doc { display: block; width: 100%; height: 100%; border: 0; background: var(--rg-color-surface-raised); }
+.rg-pdf-frame__wait, .rg-pdf-frame__error { display: none; }
+/* L'attesa: un rg-empty senza la sua cornice (il filetto e gia del riquadro), al centro. Il cerchio
+   che gira e lo stesso del messaggio in attesa della conversazione (rg-chat-spin): 20-30 secondi di
+   testo fermo sembrano una pagina bloccata. Fermo con prefers-reduced-motion: resta la frase. */
+.rg-pdf-frame--loading > .rg-pdf-frame__doc { visibility: hidden; }
+.rg-pdf-frame--loading > .rg-pdf-frame__wait { display: block; align-self: center; background: transparent; border-block: 0; }
+.rg-pdf-frame__wait::before { content: ""; display: block; width: var(--rg-space-6); height: var(--rg-space-6); margin: 0 auto var(--rg-space-4); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-text-primary); border-inline-end-color: transparent; border-radius: 50%; animation: rg-chat-spin calc(var(--rg-motion-normal) * 4) linear infinite; }
+@media (prefers-reduced-motion: reduce) { .rg-pdf-frame__wait::before { animation: none; } }
+/* L'errore: il riquadro si stringe sull'avviso, che sta sul foglio col suo respiro. */
+.rg-pdf-frame--error { height: auto; padding: var(--rg-space-6); }
+.rg-pdf-frame--error > .rg-pdf-frame__doc { display: none; }
+.rg-pdf-frame--error > .rg-pdf-frame__error { display: grid; }
+@media (max-width: 680px) { .rg-pdf-frame--error { padding: var(--rg-space-4); } }
+@media print { .rg-pdf-frame { display: none !important; } }

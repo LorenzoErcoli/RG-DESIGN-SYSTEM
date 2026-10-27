@@ -7,6 +7,36 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.52.0 — 2026-10-27 (proposta, ramo `ds/pdf-frame`)
+
+**Minor, additiva.** Un componente nuovo, nessun token nuovo, nessuna classe rimossa o rinominata,
+nessuna regola esistente cambiata: chi non usa la classe non vede niente.
+
+### Il PDF incorporato
+
+La pagina «Schede di reparto» diventa una pagina di stampa: in cima la barra, sotto il PDF vero del
+fascicolo (Lorenzo, 2026-10-27). Chiesta dalla RG Product Suite.
+
+- **`rg-pdf-frame`**, componente nuovo ([pdf-frame](components/pdf-frame.md)): il contenitore di un
+  PDF in un `<iframe>` dello stesso sito (`rg-pdf-frame__doc`). Largo quanto il **foglio a schermo**
+  (`max-width` di `rg-u-screen-a4`, 210 mm più i due filetti), stesso fondo e stesso filetto,
+  centrato; sotto quella larghezza si restringe e basta, a 375 px nessuno scorrimento orizzontale.
+- **Alto quanto la finestra meno la barra**, mai meno di 60vh: `max(60dvh, 100dvh − offset)`, con il
+  ripiego in `vh`. `--rg-pdf-frame-offset` è una manopola del componente (non un token), default
+  `--rg-layout-header` + 192 px.
+- **Tre stati, una classe**: senza modificatore il PDF; **`rg-pdf-frame--loading`** mostra
+  `rg-pdf-frame__wait` (un `rg-empty` con `role="status"`, «Sto preparando le schede», cerchio che
+  gira, fermo con `prefers-reduced-motion`); **`rg-pdf-frame--error`** mostra `rg-pdf-frame__error`
+  (`rg-alert rg-alert--error`). I tre figli stanno sempre nel DOM: la pagina cambia solo il modificatore.
+- **In attesa l'iframe resta impaginato** (`visibility: hidden`): il visore PDF si inizializza e il
+  `load` arriva; l'attesa gli sta sopra nella stessa cella e il riquadro non salta quando il PDF
+  compare. In errore l'iframe esce e il riquadro si stringe sull'avviso.
+- **In stampa non esiste**: si stampa il PDF dall'iframe (`contentWindow.print()`).
+- **Misurato** in Chrome: a 1904 × 985 riquadro 795,69 × 729 (985 − 256), iframe 793,69 × 727; a
+  375 × 667 riquadro 375 × 411, `scrollWidth` = `clientWidth`; in errore 375 × 144.
+
+Vetrina: tavola 60 `#pdf-frame`.
+
 ## 1.51.0 — 2026-10-27 (proposta, ramo `ds/miniatura-in-riga`)
 
 **Minor, additiva**, più una correzione di comportamento nella riga espandibile che non cambia nulla

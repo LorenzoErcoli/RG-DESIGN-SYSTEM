@@ -61,6 +61,17 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.52.0 — il PDF incorporato (proposta)
+
+Additiva, nessun controllo richiesto. Per la pagina «Schede di reparto» (RG Product Suite):
+
+- il contenitore del PDF è `rg-pdf-frame`, l'iframe `rg-pdf-frame__doc`, l'attesa
+  `rg-pdf-frame__wait rg-empty`, l'errore `rg-pdf-frame__error rg-alert rg-alert--error`;
+- la pagina parte con `rg-pdf-frame--loading`, al `load` dell'iframe lo toglie, in errore lo
+  sostituisce con `rg-pdf-frame--error`: nessun `hidden` da gestire sui figli;
+- se la barra sopra è più alta o più bassa del default, la pagina regola `--rg-pdf-frame-offset` nel
+  suo CSS, su un selettore suo; un'eventuale altezza locale dell'iframe va tolta.
+
 ### 1.51.0 — la foto all'inizio della riga (proposta)
 
 **Un controllo e una pulizia.**

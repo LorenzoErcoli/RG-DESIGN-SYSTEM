@@ -103,7 +103,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li><li><a href="#lookup-groups">L&#8217;archivio a gruppi</a></li><li><a href="#worksheet-key">Il campo chiave</a></li><li><a href="#table-sub">La sottoriga di carta</a></li><li><a href="#worksheet-wide">Il campo largo</a></li><li><a href="#thumb">La foto in testa alla riga</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li><li><a href="#lookup-groups">L&#8217;archivio a gruppi</a></li><li><a href="#worksheet-key">Il campo chiave</a></li><li><a href="#table-sub">La sottoriga di carta</a></li><li><a href="#worksheet-wide">Il campo largo</a></li><li><a href="#thumb">La foto in testa alla riga</a></li><li><a href="#pdf-frame">Il PDF incorporato</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -3817,6 +3817,64 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
         </div>
         <p class="specimen-note"><strong>Foto o disegno senza colore.</strong> La foto &#232; ritagliata e arriva al bordo; il disegno &#232; intero su un passe-partout bianco con un filetto nero rientrato di 2 px, come il riquadro di un foglio. Non tratteggiato: nel DS il tratteggio dice <em>manca</em>, <em>provvisorio</em>, <em>da tagliare</em>. Per chi non vede lo dice il bottone: &#171;Ingrandisci il disegno del ricamo di&#8230;&#187;.</p>
         <p class="specimen-note"><strong>Il margine segue il toggle, non la posizione.</strong> Fino alla 1.50.0 il padding 0 era della prima cella della riga espandibile: con la miniatura davanti la miniatura toccava il filetto e il codice aveva il margine doppio. Ora &#232; della cella che contiene <code class="rg-mono">rg-table__toggle</code>; le tabelle con il toggle nella prima cella non cambiano.</p>
+      </section>
+      <section class="specimen-section" id="pdf-frame">
+        <div class="specimen-section__head"><span class="specimen-section__index">60</span><h2>Il PDF incorporato (proposta 1.52.0)</h2><p>La pagina &#171;Schede di reparto&#187; diventa una pagina di stampa (Lorenzo, 2026-10-27): in cima la barra <code class="rg-mono">rg-u-no-print rg-u-screen-a4-bar</code> con un solo primario, &#171;Stampa le schede&#187;, e sotto il <strong>PDF vero</strong> del fascicolo in un <code class="rg-mono">&lt;iframe&gt;</code> dello stesso sito; il bottone chiama <code class="rg-mono">iframe.contentWindow.print()</code>. <code class="rg-mono">rg-pdf-frame</code> &#232; largo quanto il <strong>foglio a schermo</strong>, con lo stesso fondo e lo stesso filetto, alto quanto la finestra meno la barra (mai meno di 60vh), e in stampa non c&#8217;&#232;. <strong>Tre stati, una classe</strong>: la pagina cambia solo il modificatore del contenitore. Vedi components/pdf-frame.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 &#183; <code class="rg-mono">rg-pdf-frame--loading</code> &#8212; la pagina appena aperta: l&#8217;attesa al centro, il PDF che arriva sotto, invisibile</span><div class="specimen-stage specimen-stage--page">
+            <form class="rg-u-no-print rg-u-screen-a4-bar rg-u-mb-4" action="#pdf-frame" method="get">
+              <div class="rg-cluster">
+                <button class="rg-button rg-button--primary" type="button" disabled>Stampa le schede</button>
+                <a class="rg-button rg-button--ghost" href="#pdf-frame">Torna al prodotto</a>
+              </div>
+              <fieldset class="rg-form-row__group rg-u-mt-4">
+                <legend class="rg-form-row__legend">Schede da stampare</legend>
+                <div class="rg-cluster">
+                  <label class="rg-choice"><input type="checkbox" name="reparto" value="ricamo" checked> Ricamo</label>
+                  <label class="rg-choice"><input type="checkbox" name="reparto" value="pressatura" checked> Pressatura e soffiatura</label>
+                  <label class="rg-choice"><input type="checkbox" name="reparto" value="laser" checked> Taglio laser</label>
+                </div>
+              </fieldset>
+            </form>
+            <div class="rg-pdf-frame rg-pdf-frame--loading">
+              <iframe class="rg-pdf-frame__doc" title="Schede di reparto (PDF), esempio" srcdoc="&lt;p style='font-family:sans-serif'&gt;Qui il PDF del fascicolo.&lt;/p&gt;"></iframe>
+              <div class="rg-pdf-frame__wait rg-empty" role="status" aria-busy="true">
+                <h3>Sto preparando le schede</h3>
+                <p>Pu&#242; volerci mezzo minuto.</p>
+              </div>
+              <div class="rg-pdf-frame__error rg-alert rg-alert--error" role="alert">
+                <div><p class="rg-alert__title">Le schede non si sono preparate</p><p class="rg-alert__message">Riprova fra un momento; se si ripete, avvisa l&#8217;amministratore.</p></div>
+              </div>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">2 &#183; <code class="rg-mono">rg-pdf-frame</code> &#8212; il PDF &#232; pronto: tolta la classe, si vede l&#8217;iframe (qui un segnaposto al posto del PDF)</span><div class="specimen-stage specimen-stage--page">
+            <div class="rg-pdf-frame">
+              <iframe class="rg-pdf-frame__doc" title="Schede di reparto (PDF), esempio" srcdoc="&lt;p style='font-family:sans-serif'&gt;Qui il PDF del fascicolo: la barra delle pagine e lo zoom sono del visore del browser.&lt;/p&gt;"></iframe>
+              <div class="rg-pdf-frame__wait rg-empty" role="status" aria-busy="true">
+                <h3>Sto preparando le schede</h3>
+                <p>Pu&#242; volerci mezzo minuto.</p>
+              </div>
+              <div class="rg-pdf-frame__error rg-alert rg-alert--error" role="alert">
+                <div><p class="rg-alert__title">Le schede non si sono preparate</p><p class="rg-alert__message">Riprova fra un momento; se si ripete, avvisa l&#8217;amministratore.</p></div>
+              </div>
+            </div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">3 &#183; <code class="rg-mono">rg-pdf-frame--error</code> &#8212; l&#8217;avviso al posto del PDF, il riquadro stretto su di lui</span><div class="specimen-stage specimen-stage--page">
+            <div class="rg-pdf-frame rg-pdf-frame--error">
+              <iframe class="rg-pdf-frame__doc" title="Schede di reparto (PDF), esempio" srcdoc="&lt;p&gt;PDF&lt;/p&gt;"></iframe>
+              <div class="rg-pdf-frame__wait rg-empty" role="status" aria-busy="true">
+                <h3>Sto preparando le schede</h3>
+                <p>Pu&#242; volerci mezzo minuto.</p>
+              </div>
+              <div class="rg-pdf-frame__error rg-alert rg-alert--error" role="alert">
+                <div><p class="rg-alert__title">Le schede non si sono preparate</p><p class="rg-alert__message">Riprova fra un momento; se si ripete, avvisa l&#8217;amministratore.</p></div>
+              </div>
+            </div>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Largo come il foglio, alto come la finestra.</strong> <code class="rg-mono">max-width</code> uguale a <code class="rg-mono">rg-u-screen-a4</code> (210 mm pi&#249; i due filetti): a 1904 px il riquadro misura 795,69 e comincia un filetto prima del filo della barra, come il foglio. Altezza: la finestra meno <code class="rg-mono">--rg-pdf-frame-offset</code> (manopola del componente, default testata + 192 px), mai meno di 60vh. A 375 px &#232; largo 375 e non scorre di lato (misurato in Chrome).</p>
+        <p class="specimen-note"><strong>In attesa il PDF si sta gi&#224; caricando.</strong> L&#8217;iframe resta impaginato con <code class="rg-mono">visibility: hidden</code>, non <code class="rg-mono">display: none</code>: il visore si inizializza e l&#8217;evento <code class="rg-mono">load</code> arriva. L&#8217;attesa gli sta sopra nella stessa cella, quindi il riquadro non salta quando il PDF compare. Il cerchio che gira sta fermo con <code class="rg-mono">prefers-reduced-motion</code>; la frase resta. Finch&#233; il PDF non c&#8217;&#232;, &#171;Stampa le schede&#187; &#232; <code class="rg-mono">disabled</code> e il perch&#233; si legge nel riquadro.</p>
+        <p class="specimen-note"><strong>In stampa non esiste.</strong> Si stampa il PDF dall&#8217;iframe, non la pagina. Sul telefono Chrome per Android non disegna un PDF dentro un iframe: se la pagina deve servire anche l&#236;, la barra porta un collegamento &#171;Apri il PDF&#187;.</p>
       </section>
     </main>
   </div>

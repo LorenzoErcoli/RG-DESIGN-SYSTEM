@@ -6322,6 +6322,99 @@
         "role log",
         "live region"
       ]
+    },
+    {
+      "id": "pdf-frame",
+      "title": "Il PDF incorporato",
+      "role": "Contenere un PDF vero incorporato in una pagina di stampa (iframe dello stesso sito), largo quanto il foglio a schermo e alto quanto la finestra meno la barra, con il posto per l'attesa e per l'errore al posto del PDF: la pagina cambia solo una classe del contenitore.",
+      "status": "beta",
+      "since": "1.52.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-pdf-frame",
+        "variants": [
+          "rg-pdf-frame--loading",
+          "rg-pdf-frame--error"
+        ],
+        "elements": [
+          "rg-pdf-frame__doc",
+          "rg-pdf-frame__wait",
+          "rg-pdf-frame__error"
+        ],
+        "related": [
+          "rg-u-screen-a4",
+          "rg-u-screen-a4-bar",
+          "rg-u-no-print",
+          "rg-empty",
+          "rg-alert",
+          "rg-alert--error",
+          "rg-choice",
+          "rg-form-row__group",
+          "rg-form-row__legend"
+        ]
+      },
+      "variants": [
+        "base (PDF pronto: si vede l iframe)",
+        "loading (attesa: rg-empty con role=status al centro, iframe impaginato ma invisibile)",
+        "error (rg-alert--error al posto del PDF, riquadro stretto sull avviso)"
+      ],
+      "states": [
+        "default",
+        "loading",
+        "error",
+        "print (nascosto)",
+        "mobile",
+        "reduced-motion"
+      ],
+      "tokens": [
+        "--rg-color-surface-raised",
+        "--rg-color-border-medium",
+        "--rg-color-text-primary",
+        "--rg-border-hairline",
+        "--rg-border-style",
+        "--rg-layout-header",
+        "--rg-space-24",
+        "--rg-space-6",
+        "--rg-space-4",
+        "--rg-motion-normal"
+      ],
+      "doc": "components/pdf-frame.md",
+      "rulesRef": "design-rules.md#6-linee-superfici-radius-e-ombre",
+      "specimenAnchor": "pdf-frame",
+      "snippet": "<div class=\"rg-pdf-frame rg-pdf-frame--loading\" id=\"schede\">\n  <iframe class=\"rg-pdf-frame__doc\" src=\"...\" title=\"Schede di reparto (PDF)\"></iframe>\n  <div class=\"rg-pdf-frame__wait rg-empty\" role=\"status\" aria-busy=\"true\"><h3>Sto preparando le schede</h3><p>Puo volerci mezzo minuto.</p></div>\n  <div class=\"rg-pdf-frame__error rg-alert rg-alert--error\" role=\"alert\"><div><p class=\"rg-alert__title\">Le schede non si sono preparate</p><p class=\"rg-alert__message\">Riprova fra un momento; se si ripete, avvisa l amministratore.</p></div></div>\n</div>",
+      "notes": "Proposta 1.52.0, chiesta dalla RG Product Suite per la pagina Schede di reparto (Lorenzo, 2026-10-27): barra rg-u-no-print rg-u-screen-a4-bar con un solo primario «Stampa le schede» che chiama iframe.contentWindow.print(), e sotto il PDF vero del fascicolo. LARGHEZZA del foglio a schermo: max-width calc(210mm + 2 hairline), centrato, stesso fondo (--rg-color-surface-raised) e filetto (--rg-color-border-medium) di rg-u-screen-a4; sotto si restringe (width 100%, border-box), a 375 px nessuno scorrimento orizzontale. ALTEZZA max(60dvh, 100dvh - --rg-pdf-frame-offset), ripiego in vh; --rg-pdf-frame-offset e una manopola del componente, non un token: default --rg-layout-header + 192 px, la pagina la cambia nel suo CSS se la barra e diversa. TRE STATI, UNA CLASSE: i tre figli stanno sempre nel DOM, la pagina parte con --loading, al load lo toglie, in errore lo sostituisce con --error. In attesa l iframe resta impaginato con visibility hidden (il visore PDF si inizializza e il load arriva), l attesa gli sta sopra nella stessa cella e il riquadro non cambia misura; cerchio che gira (rg-chat-spin) fermo con prefers-reduced-motion. In errore l iframe esce (display none) e il riquadro si stringe sull avviso. In stampa display none: si stampa il PDF dall iframe. Sul telefono Chrome Android non disegna un PDF in un iframe e iOS ne mostra la prima pagina: se serve, la barra porta un collegamento Apri il PDF. Solo stesso sito (contentWindow.print su altro dominio e bloccato). Niente loading=lazy sull iframe.",
+      "keywords": [
+        "pdf incorporato",
+        "pdf nella pagina",
+        "pdf in iframe",
+        "iframe",
+        "anteprima pdf",
+        "anteprima di stampa",
+        "pagina di stampa",
+        "stampa le schede",
+        "schede di reparto",
+        "fascicolo",
+        "visore pdf",
+        "documento incorporato",
+        "contenitore pdf",
+        "riquadro pdf",
+        "attesa",
+        "sto preparando",
+        "caricamento pdf",
+        "errore pdf",
+        "contentWindow.print",
+        "embedded pdf",
+        "pdf viewer",
+        "pdf embed",
+        "print page",
+        "print preview",
+        "document frame",
+        "loading state",
+        "error state",
+        "a4",
+        "stampa",
+        "print"
+      ]
     }
   ]
 }

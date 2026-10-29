@@ -3,7 +3,7 @@
 ## Scopo
 
 Un pezzo di foglio stampato **fatto per essere ritagliato** e usato da solo: la legenda dei coni in fondo
-al foglio del ricamo, che si taglia e si attacca alla macchina. Deve dire due cose sulla carta, anche in
+al foglio del ricamo, che si taglia e si attacca alla macchina, o i fili da ordinare di un prodotto. Deve dire due cose sulla carta, anche in
 fotocopia bianco e nero: **dove si taglia** e **da dove viene** il pezzo, una volta staccato.
 
 Nasce dal fascicolo compatto (proposta 1.23.0).
@@ -17,8 +17,8 @@ Nessuna.
 | `rg-cutout` | Il riquadro: contorno **tratteggiato nero** su quattro lati, che è la linea di taglio. |
 | `rg-cutout__cue` | L'indicazione scritta **sulla** linea, in alto a sinistra: «Ritaglia lungo il tratteggio». |
 | `rg-cutout__head` | La testa del pezzo: titolo e identità. |
-| `rg-cutout__title` | Cosa è: «Legenda coni · Fase 1 di 3 · Ricamo». |
-| `rg-cutout__meta` | Da dove viene: prodotto, parte. Mono, a destra. |
+| `rg-cutout__title` | Cosa è: «Legenda coni · Fase 1 di 3 · Ricamo», «Fili da ordinare · tutte le parti · 2 di 3». |
+| `rg-cutout__meta` | Da dove viene: il prodotto, e la parte se il pezzo è di una parte sola. Mono, a destra. |
 
 ## Uso e limiti
 
@@ -32,7 +32,9 @@ fondo bianco sotto la parola interrompe il tratteggio: in stampa arriva con `pri
 (`rg-utilities.css`); dove il browser lo ignora la linea passa sotto la parola, che resta leggibile.
 
 **Il pezzo staccato si identifica da solo.** La testa ripete fase e prodotto: attaccata alla macchina, la
-legenda deve ancora dire di quale lavoro è.
+legenda deve ancora dire di quale lavoro è. Un tagliando che vale per tutto il prodotto (i fili da ordinare)
+porta nel titolo cosa copre e, se continua in un altro, «2 di 3»; il prodotto in `__meta`
+(vedi [foglio dei tagliandi](cutout-sheet.md)).
 
 **Dove sta.** Come **ultimo figlio di un [`rg-worksheet-block`](worksheet-block.md)**, dopo il piede: resta
 dentro il riquadro della fase, con i margini laterali del blocco, e non si separa dal suo foglio. Non si
@@ -43,7 +45,8 @@ filo · Colore · Metri · Cono, con la casella quadrata [`rg-fill-field--swatch
 Cono e [`rg-table__grow`](tables.md) sulla colonna Colore.
 
 **Su una pagina sua** (proposta 1.25.0). Tagliare il fondo di un foglio taglia anche il retro: i tagliandi di
-un prodotto vanno insieme nel [foglio dei tagliandi](cutout-sheet.md), col retro bianco. Dentro un blocco resta
+un prodotto vanno insieme nel [foglio dei tagliandi](cutout-sheet.md), col retro bianco, uno per fase o, come
+i fili da ordinare dal 29/10/2026, uno solo per il prodotto con i fili accorpati. Dentro un blocco resta
 solo per un foglio stampato su una facciata. La legenda dei coni ha ora anche la spolina: Codice filo · Tipo
 (sopra/sotto) · Aghi · Metri · Colore.
 

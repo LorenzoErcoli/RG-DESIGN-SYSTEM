@@ -218,7 +218,10 @@ impilamento.
 **Disabilitato e sola lettura** vengono da `rg-input`, e il pannello non si apre.
 
 **Un campo, un controller.** Il DS **non serve JavaScript**: il controller qui sotto è di
-riferimento e va copiato una volta sola nel prodotto, non per ogni campo.
+riferimento e va copiato una volta sola nel prodotto, non per ogni campo. Quando il controller di
+riferimento cambia — è successo nella 1.48.0 e nella 1.53.0 — la copia nel prodotto va **riportata
+in pari**: è l'unico modo in cui le due non divergono, e una correzione fatta solo da un lato torna
+indietro al primo che ricopia.
 
 ## Struttura
 
@@ -264,7 +267,7 @@ conforme.
 | quali righe scorrono le frecce | **solo** `.rg-lookup__option`, cercate in tutta la lista (`querySelectorAll`), non `lista.children`: con i gruppi i figli della lista sono gruppi, e i titoli non si raggiungono |
 | in ricerca | `aria-busy="true"` sulla lista, testo in `rg-lookup__status--busy` |
 | posizione | `--rg-lookup-left` / `--rg-lookup-top` / `--rg-lookup-width`, in px, sul pannello |
-| valore scelto | nel `value` dell'input, poi un evento `change` (non `input`: rilancerebbe la ricerca) |
+| valore scelto | nel `value` dell'input, poi un `change` (non `input`: rilancerebbe la ricerca) che **porta la riga scelta** in `detail.riga` ([sotto](#il-change-porta-la-riga-scelta-1530)) |
 
 Tastiera, come l'autocomplete: **↓/↑** scorrono le opzioni saltando i titoli dei gruppi (↓ a
 pannello chiuso rilancia la ricerca),
@@ -276,6 +279,40 @@ Due dettagli che si pagano se si saltano: la richiesta va **attesa** (debounce, 
 160 ms di suo) e le risposte **vecchie si buttano** — con 35.000 articoli l'ordine di arrivo non
 è l'ordine di partenza, e una risposta in ritardo riscrive la lista con la ricerca di due tasti
 fa.
+
+### Il `change` porta la riga scelta (1.53.0)
+
+Il `change` che il componente manda quando si **sceglie una riga** è un `CustomEvent`, e porta in
+`detail.riga` la riga **come l'ha mandata il server** — l'oggetto di partenza, non quello passato
+per `riga`. Chi ascolta sa così *quale* riga è stata scelta, non soltanto che testo è finito nel
+campo.
+
+```js
+input.addEventListener('change', e => {
+  const riga = e.detail && e.detail.riga;        // la riga scelta, oppure niente
+  if (riga && riga.tipo === 'magazzino') { /* … */ }
+  else { /* nessuna riga: vale il testo che c'è nel campo */ }
+});
+```
+
+Tre cose, e sono il contratto:
+
+- **La riga c'è solo quando una riga è stata scelta.** Se il valore è stato **battuto a mano**, il
+  `change` è quello del browser: non ha `detail`, e non c'è nessuna riga da leggere. Si legge
+  sempre `e.detail && e.detail.riga`, e l'assenza vuol dire «vale il testo che c'è nel campo» —
+  che qui è la regola del componente, non un caso limite.
+- **La riga non si ricerca per valore.** Tenersi una mappa da valore a riga e interrogarla dopo il
+  `change` è l'errore che questo evento esiste per togliere: lo **stesso nome può stare in due
+  gruppi** (la base e l'articolo di magazzino che si chiamano uguale), e in una mappa per valore
+  vince l'ultimo arrivato. Il 29/10/2026, in piattaforma, si sceglieva la base «TERMOGARZA
+  PESANTE BIANCA» e si apriva la conferma dell'articolo di magazzino omonimo. Quale riga è stata
+  scelta è l'unica informazione che distingue le due, e il valore scritto non la porta.
+- **Per chi guarda solo il valore non cambia niente.** `CustomEvent` è un `Event`: il tipo resta
+  `change`, risale come prima, e un ascoltatore che legge `e.target.value` non vede la differenza.
+  Per questo l'estensione è additiva.
+
+Il contrario — mandare un `change` **senza** `detail` quando una riga è stata scelta — non è
+ammesso: chi ascolta non avrebbe nessun altro modo di sapere quale riga era.
 
 ### Controller di riferimento
 
@@ -289,6 +326,10 @@ Cosa cambia dalla 1.45.0 (le parti segnate `1.48.0` nel codice): `righe()` cerca
 tutta la lista invece di prendere i figli, `disegna()` accetta i gruppi e restituisce quante
 opzioni ha disegnato, la riga ha due pezzi in più (`nome`, `cifra`), e la frase di «nessun
 risultato» dipende da `--code`. Con le risposte dei filati di oggi il comportamento è identico.
+
+Cosa cambia dalla 1.48.0 (le parti segnate `1.53.0`): due righe sole — `opzione()` tiene la riga
+di partenza su `li._dato`, e `scegli()` manda un `CustomEvent` al posto di un `Event`, con quella
+riga in `detail.riga`.
 
 ```js
 function rgLookup(root, { cerca, riga }) {
@@ -353,6 +394,7 @@ function rgLookup(root, { cerca, riga }) {
     li.setAttribute('role', 'option');
     li.setAttribute('aria-selected', 'false');
     li.dataset.valore = v.valore;
+    li._dato = d;                                 // 1.53.0: la riga com'è arrivata, va con `change`
     [['code', v.codice], ['name', v.nome], ['spec', v.spec],
      ['aside', v.spalla], ['figure', v.cifra]].forEach(([parte, testo]) => {
       if (!testo) return;
@@ -421,10 +463,13 @@ function rgLookup(root, { cerca, riga }) {
     });
   }
 
+  // 1.53.0: il `change` porta la RIGA scelta in `detail.riga`. Lo stesso nome puo stare in
+  // due gruppi, e chi ascolta deve sapere quale riga si e scelta, non solo il valore scritto.
+  // A testo battuto il `change` e quello del browser e non ha `detail`.
   function scegli(li) {
     input.value = li.dataset.valore;
     apri(false);
-    input.dispatchEvent(new Event('change', { bubbles: true }));
+    input.dispatchEvent(new CustomEvent('change', { bubbles: true, detail: { riga: li._dato } }));
   }
 
   input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(chiedi, attesa); });

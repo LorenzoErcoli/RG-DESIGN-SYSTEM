@@ -7,6 +7,38 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.53.0 — 2026-10-29 (proposta, ramo `ds/lookup-riga-scelta`)
+
+**Minor, additiva.** Nessuna classe e nessun token nuovo, nessuna regola CSS toccata: cambia solo il
+**contratto JS** del lookup, e cambia aggiungendo.
+
+### Il `change` del lookup porta la riga scelta
+
+«Si sceglieva la base TERMOGARZA PESANTE BIANCA e si apriva lo stesso *Dal magazzino: come lo
+chiamate?*» (regia RG Product Suite, 2026-10-29). L'articolo di magazzino TER/PES h183 si chiamava
+come la base, le due righe scrivevano nel campo **lo stesso testo**, e chi ascoltava si ritrovava la
+riga in una mappa indicizzata **per valore**: vinceva l'ultima arrivata. La correzione è già in
+piattaforma (`dcca9f8`); qui entra nel controller di riferimento, perché le due copie non divergano.
+
+- **`change` è un `CustomEvent` con `detail.riga`**: la riga scelta, **com'è arrivata dal server** —
+  l'oggetto di partenza, non quello passato per la mappa `riga`.
+- **A testo battuto non c'è riga.** Quel `change` è quello del browser e non ha `detail`: si legge
+  sempre `e.detail && e.detail.riga`, e l'assenza vuol dire «vale il testo che c'è nel campo» — in
+  questo componente è la regola, non un caso limite.
+- **Il lookup per valore non è più ammesso.** Nessuna mappa da valore a riga: lo stesso nome può
+  stare in due gruppi, ed è la riga scelta l'unica informazione che li distingue.
+- **Chi guarda solo il valore non vede la differenza**: `CustomEvent` è un `Event`, il tipo resta
+  `change` e risale come prima. Per questo è una minor e non una major.
+- Nel controller di riferimento sono **due righe**: `opzione()` tiene la riga su `li._dato`,
+  `scegli()` manda il `CustomEvent`.
+
+Vetrina: tavola 55 `#lookup-groups`. «CANVAS GREGGIO» sta in due gruppi, e il campo vivo scrive
+sotto **quale** riga ha mandato l'evento.
+
+**Chi ha copiato il controller lo riporta in pari.** Il DS non serve JavaScript: il controller è di
+riferimento e vive come copia nel prodotto. Una correzione fatta da un lato solo torna indietro al
+primo che ricopia.
+
 ## 1.52.0 — 2026-10-27
 
 **Minor, additiva.** Un componente nuovo, nessun token nuovo, nessuna classe rimossa o rinominata,

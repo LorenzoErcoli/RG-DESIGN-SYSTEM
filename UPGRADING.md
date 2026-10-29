@@ -61,6 +61,20 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.53.0 — il `change` del lookup porta la riga scelta (proposta)
+
+Nessun CSS, nessun token: **un controllo**, e solo per chi usa `rg-lookup` con JavaScript proprio.
+
+- Chi ha **copiato il controller di riferimento** da [lookup.md](components/lookup.md) lo riporta in
+  pari: due righe, `li._dato = d` in `opzione()` e il `CustomEvent` in `scegli()`.
+- Chi **ascolta il `change`** del campo e si teneva la riga in una **mappa per valore** butta la
+  mappa e legge `e.detail && e.detail.riga`. Con due righe dello stesso nome la mappa dava
+  l'ultima arrivata, non quella scelta.
+- Chi legge solo `e.target.value` non ha niente da fare.
+
+In `rg-product-platform` è già fatto (`dcca9f8`, 29/10/2026): `rg-lookup.js` e
+`materiale-dal-magazzino.js`.
+
 ### 1.52.0 — il PDF incorporato (proposta)
 
 Additiva, nessun controllo richiesto. Per la pagina «Schede di reparto» (RG Product Suite):

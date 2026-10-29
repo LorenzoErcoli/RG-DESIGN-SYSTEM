@@ -3657,6 +3657,7 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
                 <span class="rg-field__help">Se il materiale non &#232; fra le proposte, scrivilo lo stesso: vale quello.</span>
               </div>
             </div>
+            <p class="rg-u-text-label" id="spec-lkg-eco" role="status">Scegli una riga: qui compare <strong>quale</strong> riga ha mandato il <code class="rg-mono">change</code>.</p>
           </div></div>
           <div class="specimen-cell specimen-cell--half specimen-lookup-fermo"><span class="specimen-label">Tre gruppi &#8212; la riga attiva &#232; la prima del magazzino: le frecce ci arrivano dalla riga delle basi saltando il titolo</span><div class="specimen-stage specimen-column">
             <div class="rg-lookup"><div class="rg-lookup__panel"><p class="rg-lookup__status" hidden></p><ul class="rg-lookup__list" id="spec-lkg-s1" role="listbox" aria-label="Materiali somiglianti"><li class="rg-lookup__group" role="group" aria-labelledby="spec-lkg-s1-g0"><span class="rg-lookup__group-title" id="spec-lkg-s1-g0" role="presentation">Di questo prodotto</span><ul class="rg-lookup__group-list" role="none"><li class="rg-lookup__option" role="option" id="spec-lkg-s1-o0" aria-selected="false"><span class="rg-lookup__name">CANVAS GREGGIO</span></li></ul></li><li class="rg-lookup__group" role="group" aria-labelledby="spec-lkg-s1-g1"><span class="rg-lookup__group-title" id="spec-lkg-s1-g1" role="presentation">Basi</span><ul class="rg-lookup__group-list" role="none"><li class="rg-lookup__option" role="option" id="spec-lkg-s1-o1" aria-selected="false"><span class="rg-lookup__name">CANVAS NERO</span></li></ul></li><li class="rg-lookup__group" role="group" aria-labelledby="spec-lkg-s1-g2"><span class="rg-lookup__group-title" id="spec-lkg-s1-g2" role="presentation">Dal magazzino</span><ul class="rg-lookup__group-list" role="none"><li class="rg-lookup__option is-active" role="option" id="spec-lkg-s1-o2" aria-selected="true"><span class="rg-lookup__name">CANVAS GREGGIO</span><span class="rg-lookup__spec">h150 &#183; h160</span><span class="rg-lookup__figure">3,20 &#8364;/m</span></li><li class="rg-lookup__option" role="option" id="spec-lkg-s1-o3" aria-selected="false"><span class="rg-lookup__name">PANAMA VIADANA BIANCO</span><span class="rg-lookup__spec">h150</span><span class="rg-lookup__figure">4,10 &#8364;/m</span></li><li class="rg-lookup__option" role="option" id="spec-lkg-s1-o4" aria-selected="false"><span class="rg-lookup__name">ORGANZA SETA AVORIO</span><span class="rg-lookup__spec">h140</span><span class="rg-lookup__figure">12,80 &#8364;/m</span></li></ul></li></ul></div></div>
@@ -3669,6 +3670,7 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
         <p class="specimen-note"><strong>Il titolo non &#232; un&#8217;opzione.</strong> &#200; il listbox raggruppato di ARIA: <code class="rg-mono">listbox &gt; group &gt; option</code>, con il gruppo che prende il nome dal titolo (<code class="rg-mono">aria-labelledby</code>), il titolo in <code class="rg-mono">role="presentation"</code> e la sottolista in <code class="rg-mono">role="none"</code>. Le frecce scorrono <code class="rg-mono">.rg-lookup__option</code> ovunque sia, non i figli della lista: dall&#8217;ultima riga di un gruppo si passa alla prima del successivo, e il clic sul titolo non sceglie niente.</p>
         <p class="specimen-note"><strong>Il titolo resta fermo mentre il pannello scorre</strong> (<code class="rg-mono">position: sticky</code>): a met&#224; di venti righe di magazzino si sa ancora da dove vengono. Le righe raggruppate hanno uno <code class="rg-mono">scroll-margin-top</code> alto quanto il titolo, cos&#236; quella raggiunta da tastiera non gli finisce sotto.</p>
         <p class="specimen-note"><strong>Nome in corpo, cifra in mono.</strong> Regole &#167;3: il mono &#232; per codici, misure e quantit&#224;. Un materiale si chiama, non si codifica: <code class="rg-mono">rg-lookup__name</code> &#232; GT America Standard e va a capo se &#232; lungo. Le altezze dei rotoli stanno in <code class="rg-mono">rg-lookup__spec</code> con la loro sigla (<code class="rg-mono">h150</code>, mai un numero nudo); il prezzo in <code class="rg-mono">rg-lookup__figure</code>, mono a cifre tabulari, perch&#233; i prezzi di righe diverse si confrontano in colonna. Spec e cifra arrivano <strong>gi&#224; composte</strong> dal server, unit&#224; comprese.</p>
+        <p class="specimen-note"><strong>Scegliere &#232; un&#8217;informazione, non solo un valore (1.53.0).</strong> Qui sopra &#171;CANVAS GREGGIO&#187; sta in <strong>due gruppi</strong>, nel prodotto e a magazzino, e le due righe scrivono nel campo <strong>lo stesso testo</strong>: chi ascolta il solo valore non pu&#242; distinguerle, e con una mappa da valore a riga vince l&#8217;ultima arrivata. Per questo il <code class="rg-mono">change</code> che il componente manda alla scelta &#232; un <code class="rg-mono">CustomEvent</code> e porta la riga in <code class="rg-mono">detail.riga</code>, com&#8217;&#232; arrivata dal server. A <strong>testo battuto</strong> il <code class="rg-mono">change</code> &#232; quello del browser e non ha <code class="rg-mono">detail</code>: si legge sempre <code class="rg-mono">e.detail &amp;&amp; e.detail.riga</code>, e l&#8217;assenza vuol dire che vale il testo nel campo. Vedi components/lookup.md.</p>
       </section>
       <section class="specimen-section" id="worksheet-key">
         <div class="specimen-section__head"><span class="specimen-section__index">56</span><h2>Il campo chiave in testa al blocco (1.49.0)</h2><p>&#171;Quanti pezzi &#232; un&#8217;indicazione da scrivere in fase di ricamo per indicare quanti pezzi devono essere realizzati. Va in testa e molto evidente&#187; (Lorenzo, 2026-10-23). <code class="rg-mono">rg-fill-field--key</code> &#232; una variante del campo da compilare, non un componente nuovo: <strong>una casella</strong> nera da 2 px sui quattro lati, alta 48 px e larga almeno 128, con l&#8217;etichetta nera in grassetto <strong>accanto</strong>. Nella testata a griglia prende la colonna fra titolo e QR.</p></div>
@@ -4095,6 +4097,7 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
       li.setAttribute('role', 'option');
       li.setAttribute('aria-selected', 'false');
       li.dataset.valore = v.valore;
+      li._dato = d;                                 // 1.53.0: la riga com'e arrivata, va con `change`
       [['code', v.codice], ['name', v.nome], ['spec', v.spec],
        ['aside', v.spalla], ['figure', v.cifra]].forEach(([parte, testo]) => {
         if (!testo) return;
@@ -4163,10 +4166,13 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
       });
     }
 
+    // 1.53.0: il `change` porta la RIGA scelta in `detail.riga`. Lo stesso nome puo stare
+    // in due gruppi, e chi ascolta deve sapere quale riga si e scelta, non solo il valore
+    // scritto. A testo battuto il `change` e quello del browser e non ha `detail`.
     function scegli(li) {
       input.value = li.dataset.valore;
       apri(false);
-      input.dispatchEvent(new Event('change', { bubbles: true }));
+      input.dispatchEvent(new CustomEvent('change', { bubbles: true, detail: { riga: li._dato } }));
     }
 
     input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(chiedi, attesa); });
@@ -4215,24 +4221,35 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
     const PRODOTTO = ['CANVAS GREGGIO', 'ORGANZA SETA AVORIO'];
     const BASI = ['CANVAS NERO', 'CANVAS BIANCO', 'TULLE NERO'];
     const MAGAZZINO = [
-      { nome: 'CANVAS GREGGIO', spec: 'h150 · h160', cifra: '3,20 €/m' },
-      { nome: 'CANVAS NERO', spec: 'h150', cifra: '3,40 €/m' },
-      { nome: 'CANVAS BIANCO', spec: 'h150 · h160', cifra: '3,40 €/m' },
-      { nome: 'PANAMA VIADANA BIANCO', spec: 'h150', cifra: '4,10 €/m' },
-      { nome: 'ORGANZA SETA AVORIO', spec: 'h140', cifra: '12,80 €/m' },
-      { nome: 'ORGANZA SETA NERA', spec: 'h140', cifra: '12,80 €/m' },
-      { nome: 'TULLE NERO', spec: 'h300', cifra: '2,90 €/m' }
+      { nome: 'CANVAS GREGGIO', spec: 'h150 · h160', cifra: '3,20 €/m', tipo: 'magazzino' },
+      { nome: 'CANVAS NERO', spec: 'h150', cifra: '3,40 €/m', tipo: 'magazzino' },
+      { nome: 'CANVAS BIANCO', spec: 'h150 · h160', cifra: '3,40 €/m', tipo: 'magazzino' },
+      { nome: 'PANAMA VIADANA BIANCO', spec: 'h150', cifra: '4,10 €/m', tipo: 'magazzino' },
+      { nome: 'ORGANZA SETA AVORIO', spec: 'h140', cifra: '12,80 €/m', tipo: 'magazzino' },
+      { nome: 'ORGANZA SETA NERA', spec: 'h140', cifra: '12,80 €/m', tipo: 'magazzino' },
+      { nome: 'TULLE NERO', spec: 'h300', cifra: '2,90 €/m', tipo: 'magazzino' }
     ];
     const finta = q => new Promise(ok => setTimeout(() => {
       const Q = q.toUpperCase();
-      const nomi = l => l.filter(n => n.includes(Q)).map(nome => ({ nome }));
+      const nomi = (l, tipo) => l.filter(n => n.includes(Q)).map(nome => ({ nome, tipo }));
       ok({ gruppi: [
-        { titolo: 'Di questo prodotto', righe: nomi(PRODOTTO) },
-        { titolo: 'Basi', righe: nomi(BASI) },
+        { titolo: 'Di questo prodotto', righe: nomi(PRODOTTO, 'prodotto') },
+        { titolo: 'Basi', righe: nomi(BASI, 'base') },
         { titolo: 'Dal magazzino', righe: MAGAZZINO.filter(r => r.nome.includes(Q)) }
       ] });
     }, 320));
     rgLookup(document.getElementById('spec-lkg-1'), { cerca: finta });
+    // 1.53.0: la stessa voce sta in due gruppi e scrive nel campo lo stesso testo. Quale
+    // riga si e scelta lo dice `change` in `detail.riga`; a testo battuto `detail` non c'e.
+    const DOVE = { prodotto: 'di questo prodotto', base: 'una base', magazzino: 'dal magazzino' };
+    const eco = document.getElementById('spec-lkg-eco');
+    document.getElementById('spec-lkg-materiale').addEventListener('change', e => {
+      const riga = e.detail && e.detail.riga;
+      eco.textContent = riga
+        ? 'Riga scelta: ' + riga.nome + ' — ' + (DOVE[riga.tipo] || 'senza gruppo')
+          + (riga.spec ? ' (' + riga.spec + ')' : '')
+        : 'Nessuna riga: vale il testo battuto, «' + e.target.value + '».';
+    });
   })();
   </script>
 </body>

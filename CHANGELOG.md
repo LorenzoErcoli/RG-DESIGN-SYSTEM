@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.53.0 — 2026-10-29 (proposta, ramo `ds/lookup-riga-scelta`)
+## 1.53.0 — 2026-10-29
 
 **Minor, additiva.** Nessuna classe e nessun token nuovo, nessuna regola CSS toccata: cambia solo il
 **contratto JS** del lookup, e cambia aggiungendo.

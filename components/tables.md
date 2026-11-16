@@ -426,6 +426,15 @@ stop sta dietro.
 campi in meno ne fa entrare una in più, una con un titolo su due righe una in meno. Chi ha bisogno di
 un numero esatto di righe per pagina non lo ottiene dal CSS: lo ottiene spezzando la tabella a monte.
 
+**Quando il foglio sfora di poco (proposta 1.54.0).** Con i [gradini di stampa](print-fit.md) la riga
+di `--hand` scende: al gradino 1 il dato delle celle va a interlinea stretta (un valore su due righe
+non alza più lo stop oltre i 40 px: due righe a interlinea tecnica sono ~42), al gradino 2 la riga
+scende a **32 px**, che è il pavimento — l'eccezione dichiarata di
+[design-rules §5](../design-rules.md#lo-spazio-in-cui-si-scrive-a-mano-dalla-1380). Misurato sul
+ricamo di prova: lo stop passa da 10,6 mm a 8,7–9,0 al gradino 2 (le due righe di filo lo tengono un
+po' sopra il pavimento) e a **8,5** ai gradini 3 e 4, dove il resto del foglio scala e la riga no. La
+sottoriga resta 24 px a ogni gradino.
+
 ```html
 <table class="rg-table rg-table--compact rg-table--grid rg-table--hand" style="--rg-table-cols: 8">
   <caption>Stop — tempi e note si scrivono su qualunque riga</caption>

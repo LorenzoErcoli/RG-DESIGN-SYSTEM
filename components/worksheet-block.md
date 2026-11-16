@@ -39,6 +39,11 @@ importanza" a una fase — l'importanza non è una proprietà della carta.
 | `rg-worksheet-block__step` | **Testa 1.25.0**: «FASE 1 DI 3» piccolo, in cima, **sopra** la banda, che così si stacca dai bordi e cresce. |
 | `rg-worksheet-block__work` | **Testa 1.25.0**: la lavorazione, 28 px, grassetto, maiuscolo («RICAMO»). Titolo del blocco. |
 | `rg-worksheet-block__op` | Sottotitolo di un'**operazione** nel corpo («Piazzamento»): 14 px, grassetto (1.36.0), filetto sopra — non dentro `--compact`. |
+| `rg-worksheet-block__foot--sign` | **Il piede con la firma, a due file** (proposta 1.54.0), solo per il **ricamo**: consuntivo sopra, firma sotto, un piede solo. Vedi [sotto](#il-piede-con-la-firma-a-due-file-proposta-1540). |
+| `rg-worksheet-block__sign` | La **seconda fila** di `__foot--sign`: Operatore, Data, Note in `rg-fill-field--inline`, righe da 32 px, 1 : 1 : 3. |
+
+Per il foglio che sfora di poco ci sono i **gradini di stampa** [`rg-print-fit--1` … `--4`](print-fit.md)
+(proposta 1.54.0), che si mettono su ogni blocco del foglio e sul suo piede.
 
 ### Ruolo nel gruppo (`__role`)
 
@@ -673,6 +678,58 @@ le file dei quarti. Due campi larghi di fila (Cartella e File) sono due file.
 ~100 caratteri per riga): una fila di **35 px** (etichetta e riga da 24) per un valore di una riga,
 **44 px** per il percorso di 150 caratteri, che sta in due. Nel suo quarto lo stesso percorso andava
 su **sette** righe e alzava la fila — e con lei i tre campi accanto — a **126 px**.
+
+## Il piede con la firma, a due file (proposta 1.54.0)
+
+> «Un piede solo.» — Lorenzo, 2026-11-16
+
+Il foglio del ricamo aveva **due piedi**: il consuntivo della macchina dentro il blocco
+(`__foot`: Macchina, Teste usate, Preparazione, Pezzi fatti) e la firma fuori, in un
+[`rg-worksheet-foot--compact`](worksheet-foot.md). A pagina piena il secondo finiva da solo sul
+retro. Ora è uno: **`rg-worksheet-block__foot--sign`**, con una seconda fila
+**`rg-worksheet-block__sign`** per la firma. È un'**eccezione dichiarata** a «la firma sta fuori dal
+riquadro», e vale **solo per il ricamo**: il perché è in
+[worksheet-foot § Eccezione](worksheet-foot.md#eccezione-la-firma-dentro-il-blocco-per-il-ricamo-proposta-1540).
+
+| | Prima fila (consuntivo) | Seconda fila (firma) |
+| --- | --- | --- |
+| campi | quelli di sempre, `rg-fill-field--inline` | Operatore · Data · Note, `rg-fill-field--inline` |
+| a capo | — | **forzato**: `__sign` prende la fila intera |
+| riga | 24 px (dato del blocco compatto) | **32 px** (~8,5 mm, la grafia adulta) |
+| etichetta | di fianco, 10 px in stampa | **di fianco**, 10 px in stampa |
+| larghezze | ognuno il suo contenuto, almeno 64 px di riga | **righe 1 : 1 : 3** — Operatore, Data, Note |
+
+**Le righe, non i campi, stanno 1 : 1 : 3.** È la regola del piede su una riga sola, dove
+l'etichetta sta sopra e campo e riga coincidono. Con l'etichetta di fianco si divide ciò che resta
+dopo le tre etichette: la nota cresce di tre. Misurato in Chrome, A4, stampa: righe di **27, 27 e
+76 mm** (i ~2 mm in più della proporzione sono il rientro di 8 px che ogni riga ha già).
+
+**In stampa non si spezza** (`break-inside: avoid`, anche sui singoli campi). Il blocco del ricamo è
+`--long` e si spezza fra le righe della tabella degli stop: senza questa regola il piede, ultimo
+figlio, poteva uscire a metà. Se non sta dopo l'ultimo stop scende intero alla pagina dopo — ed è
+il caso per cui ci sono i [gradini di stampa](print-fit.md).
+
+**Costa meno dei due piedi.** Sullo stesso ricamo di prova (17 stop) il foglio è alto 288,0 mm con il
+piede a due file e 291,9 con il consuntivo dentro e il piede compatto fuori: **3,9 mm** in meno, cioè
+il distacco fra blocco e piede e la fascia dell'etichetta sopra le righe della firma.
+
+Sotto i 480 px, a schermo, i tre campi della firma vanno in colonna.
+
+```html
+<footer class="rg-worksheet-block__foot rg-worksheet-block__foot--sign">
+  <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Macchina</span><span class="rg-fill-field__line"></span></div>
+  <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Teste usate</span><span class="rg-fill-field__line"></span></div>
+  <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Preparazione <span class="rg-fill-field__unit">min</span></span><span class="rg-fill-field__line"></span></div>
+  <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Pezzi fatti</span><span class="rg-fill-field__line"></span></div>
+  <div class="rg-worksheet-block__sign">
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+    <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+  </div>
+</footer>
+</section>
+<!-- nessun rg-worksheet-foot dopo il ricamo: la firma e gia dentro -->
+```
 
 ## Uso e limiti
 

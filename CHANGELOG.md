@@ -7,6 +7,56 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.54.0 — 2026-11-16 (proposta, ramo `ds/stampa-che-sta`)
+
+**Minor, additiva.** Classi nuove, nessun token nuovo, nessuna classe rimossa o rinominata, nessuna
+regola esistente cambiata: chi non mette le classi nuove non vede niente, né a schermo né in stampa.
+Chiesta dalla RG Product Suite (chat Layout schede) per il fascicolo «Schede di reparto».
+
+> «Non deve accadere» che per poche righe un pezzo di foglio finisca sul retro o su un foglio
+> nuovo. — Lorenzo, 2026-11-16
+
+### I gradini di stampa — `rg-print-fit--1` … `--4`
+
+Componente nuovo ([print-fit](components/print-fit.md)), solo `@media print`. L'app misura il PDF e,
+per il foglio che sfora di poco (il ricamo, o il gruppo di fasi collegate con il suo piede), ristampa
+con **lo stesso gradino su ogni elemento del foglio**, senza contenitore. Cumulativi, il primo che basta:
+
+1. **meno aria dove non si scrive** — testata, riga «Fase n di N», margini della banda, corpo, stacchi
+   fra le file di campi al mezzo passo; piede del blocco a 4 px; riga del tempo per pezzo; spazio fra
+   blocco e piede; dato delle tabelle a interlinea 1,1;
+2. **+ righe da scrivere al pavimento** — stop di `rg-table--hand` 40 → **32 px**, `--tall` del blocco
+   48 → **40**, nota del piede intero 80 → **48**. **Eccezione dichiarata** a design-rules §5 (aggiunta
+   lì, con la forma del §12);
+3. **+ scala 95%**; 4. **+ scala 90%**, mai sotto.
+
+- **`zoom`, non `transform`**: cambia l'impaginazione. **Il foglio non si stringe**: `zoom` scala le
+  misure in px, non le larghezze in % e fr; il blocco resta largo **186,3 mm** a tutti i gradini, le
+  colonne al loro posto. Niente da allineare né da centrare.
+- **Fuori dalla scala**: ogni `rg-fill-field` (Pezzi da fare compreso) e `rg-qr` con un contro-zoom;
+  righe di stop, sottorighe e celle da compilare con l'altezza divisa per la scala. Misurato: etichette
+  **10 px**, QR con il modulo a **0,413 mm**, righe 24 / 32 / 40, stop mai sotto **32 px**, a ogni gradino.
+- **`--rg-print-fit-scale`** è la manopola del componente (0.95, 0.9), non un token.
+- **Misurato** (Chrome 157, `rg-a4-head`, facciata 265 mm, guadagno cumulato): ricamo da 17 stop
+  288,0 mm → **−10,3 / −40,2 / −48,2 / −49,8**; gruppo di due fasi con 3 operazioni ciascuna e piede
+  compatto 294,9 mm → **−15,4 / −28,1 / −33,1 / −36,8**.
+
+### Il piede del ricamo, a due file — `rg-worksheet-block__foot--sign`
+
+Variante del piede del blocco ([worksheet-block](components/worksheet-block.md#il-piede-con-la-firma-a-due-file-proposta-1540)):
+il consuntivo della macchina sopra, **a capo forzato**, e sotto **`rg-worksheet-block__sign`** con
+Operatore, Data, Note in `rg-fill-field--inline` — etichetta di fianco, righe da **32 px**, righe
+**1 : 1 : 3** (misurato: 27, 27, 76 mm). In stampa `break-inside: avoid`. Sotto 480 px la firma va in
+colonna.
+
+- **Eccezione «firma dentro il blocco»**, solo per il ricamo, scritta in
+  [worksheet-foot](components/worksheet-foot.md#eccezione-la-firma-dentro-il-blocco-per-il-ricamo-proposta-1540):
+  dopo un ricamo con il piede a due file **non** si mette `rg-worksheet-foot`.
+- Sul ricamo di prova il foglio è **3,9 mm** più basso che con consuntivo dentro e piede compatto fuori.
+
+Vetrina: tavole 61 `#print-fit` e 62 `#worksheet-sign`. Doc: print-fit (nuovo), worksheet-block,
+worksheet-foot, tables, design-rules §5.
+
 ## 1.53.0 — 2026-10-29
 
 **Minor, additiva.** Nessuna classe e nessun token nuovo, nessuna regola CSS toccata: cambia solo il

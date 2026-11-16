@@ -249,6 +249,83 @@
      perche la sua etichetta e entrata dentro il riquadro e sotto le restano le due righe intere. */
   .rg-worksheet-foot { gap: var(--rg-space-1) var(--rg-space-4); }
   .rg-worksheet-foot .rg-fill-field__label { margin-bottom: 0; line-height: var(--rg-line-height-tight); }
+  /* IL PIEDE CON LA FIRMA DEL RICAMO (proposta 1.54.0) non si spezza: consuntivo e firma sono una cosa
+     sola da compilare, come il piede autonomo qui sopra. Il blocco del ricamo e --long e si spezza fra
+     le righe della tabella: senza questa regola il piede, ultimo figlio, poteva uscire a meta. */
+  .rg-worksheet-block__foot--sign { break-inside: avoid; page-break-inside: avoid; }
+  .rg-worksheet-block__sign > .rg-fill-field { break-inside: avoid; page-break-inside: avoid; }
+
+  /* GRADINI DI STAMPA — rg-print-fit--1 ... --4 (proposta 1.54.0). «Non deve accadere» (Lorenzo,
+     2026-11-16) che per poche righe un pezzo di foglio finisca sul retro o su un foglio nuovo. Il CSS
+     non sa misurare una pagina: la misura la fa l'app sul PDF e, per il FOGLIO che sfora di poco (un
+     ricamo, o un gruppo di fasi collegate: il blocco --long, i --continued e il rg-worksheet-foot
+     dopo), ristampa con lo stesso gradino su OGNI elemento di quel foglio. Niente contenitore attorno:
+     romperebbe :first-child e .rg-worksheet-part + .rg-worksheet-block--long qui sopra.
+     I GRADINI SONO CUMULATIVI e l'app ne mette UNO, il primo che basta: --3 contiene --2 e --1.
+       1 · meno aria DOVE NON SI SCRIVE: testata, riga «Fase n di N», banda, stacchi fra le file di
+           campi, corpo, margini del piede, riga del tempo per pezzo. Lo spazio torna al mezzo passo.
+       2 · + righi per scrivere piu bassi: stop di --hand 40 -> 32, --tall 48 -> 40, nota del piede
+           intero 80 -> 48. E' L'ECCEZIONE DICHIARATA (design-rules §5 e §12): vedi sotto.
+       3 · + scala 95%.   4 · + scala 90%, e sotto non si va.
+     LA SCALA E zoom, NON transform: transform disegna piu piccolo ma impagina alla misura vera, e il
+     foglio occuperebbe la stessa altezza di prima. zoom cambia l'impaginazione (Chrome, il motore del
+     fascicolo). E IL FOGLIO NON SI STRINGE: zoom moltiplica le misure in px (testo, altezze, spessori,
+     aria), non le larghezze in % e in fr. Il blocco resta largo 186 mm, le colonne della griglia e
+     della tabella degli stop restano dove sono, e non c'e niente da allineare ne da centrare.
+     FUORI DALLA SCALA, per costruzione: tutto cio che si compila (ogni rg-fill-field, Pezzi da fare
+     compreso: etichetta 10 px, riga da 24, nota, firma) e il QR (modulo ~0,4 mm, 1.40.0). Un
+     contro-zoom (1 / scala) li riporta alla misura vera; le celle di tabella non lo prendono — una
+     cella con un altro zoom romperebbe la riga — e tengono la misura con un'altezza divisa per la
+     scala. La scala quindi rimpicciolisce il DATO STAMPATO e l'aria, mai lo spazio della mano.
+     --rg-print-fit-scale e una manopola del componente, non un token: vale 0.95 o 0.9 e la fissa il
+     gradino. 95 e 90 sono la richiesta, non misure: rapporti senza unita.
+     Solo @media print: a schermo il foglio non cambia di un pixel, con o senza gradino. */
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact { margin-bottom: calc(var(--rg-space-1) / 2); }
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact + .rg-worksheet-block--continued { margin-top: calc(-1 * (var(--rg-space-1) / 2 + var(--rg-border-hairline))); }
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-worksheet-block__step { padding-top: calc(var(--rg-space-1) / 2); }
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-worksheet-block__step + .rg-dept-band { margin-block: calc(var(--rg-space-1) / 2); }
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-worksheet-block__head { padding-block: calc(var(--rg-space-1) / 2); }
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-worksheet-block__body { padding-block: calc(var(--rg-space-1) / 2); }
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-worksheet-block__fields { row-gap: calc(var(--rg-space-1) / 2); }
+  /* Il dato stampato nelle tabelle a interlinea stretta. Un valore su due righe (un materiale lungo)
+     a interlinea tecnica fa una cella di ~42 px, piu dei 40 della riga di stop: e il DATO, non la
+     mano, a dettare l'altezza dello stop (misurato: 11,1 mm invece di 10,6). A 1,1 la seconda riga
+     costa 13 px invece di 17 e torna a comandare la riga da scrivere. Vale anche per intestazioni,
+     sottorighe e la riga «In magazzino». La cella dei fili della piattaforma lo fa gia in linea. */
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-table :is(th, td) { line-height: var(--rg-line-height-tight); }
+  /* La riga del tempo per pezzo porta rg-u-mt-2, che ha !important: per abbassarla serve lo stesso peso. */
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-worksheet-block__body > .rg-small { margin-top: calc(var(--rg-space-1) / 2) !important; }
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-worksheet-block__foot { row-gap: var(--rg-space-1); padding-block: var(--rg-space-1); }
+  :is(.rg-print-fit--1, .rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-foot { row-gap: calc(var(--rg-space-1) / 2); margin-bottom: 0; }
+  /* Gradino 2 — I RIGHI PIU BASSI. Eccezione dichiarata alla tabella di design-rules §5 (40 px per la
+     riga di una tabella da compilare, 48 per la nota, «la compattazione non arriva qui»). Problema: un
+     foglio che sfora di pochi millimetri manda la sua coda sul retro o su un foglio nuovo, dove in
+     reparto non la legge nessuno — «non deve accadere». Ambito: SOLO il foglio che l'app ha misurato
+     e trovato fuori di poco, SOLO in stampa, SOLO dal gradino 2. Durata: finche il fascicolo e di
+     carta. Responsabile: prodotto RG (Lorenzo, 2026-11-16). I pavimenti, che nessun gradino scavalca:
+     riga di stop 32 px (~8,5 mm, la grafia adulta della riga aperta), nota 40 (~10,6 mm). Non si
+     abbassano: le caselle di dato da 24, le sottorighe da 24, la firma e la nota del piede su una
+     riga (32), Pezzi da fare (48), le caselle da spuntare e da attaccare. */
+  :is(.rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4) .rg-table--hand tbody :is(th, td),
+  :is(.rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4) .rg-table--hand tbody td.rg-fill-field--cell { height: var(--rg-space-8); }
+  :is(.rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-table--hand tbody :is(th, td)[rowspan] { padding-top: calc(var(--rg-space-8) - 1lh - var(--rg-space-1) * 1.5 - var(--rg-border-hairline)); }
+  :is(.rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-fill-field--tall > .rg-fill-field__line { min-height: calc(var(--rg-space-8) + var(--rg-space-2)); }
+  :is(.rg-print-fit--2, .rg-print-fit--3, .rg-print-fit--4).rg-worksheet-foot:not(.rg-worksheet-foot--compact) > .rg-worksheet-foot__note > .rg-fill-field__line { min-height: var(--rg-space-12); }
+  /* Gradini 3 e 4 — LA SCALA, e cio che ne resta fuori. */
+  .rg-print-fit--3 { --rg-print-fit-scale: 0.95; }
+  .rg-print-fit--4 { --rg-print-fit-scale: 0.9; }
+  :is(.rg-print-fit--3, .rg-print-fit--4) { zoom: var(--rg-print-fit-scale); }
+  /* Contro-zoom: il campo da compilare (non la cella di tabella, e non un campo dentro un campo, che
+     lo prenderebbe due volte) e il QR tornano alla misura vera. */
+  :is(.rg-print-fit--3, .rg-print-fit--4) :is(.rg-fill-field:not(.rg-fill-field--cell, .rg-fill-field .rg-fill-field), .rg-qr) { zoom: calc(1 / var(--rg-print-fit-scale)); }
+  /* Le celle tengono la misura vera dividendo per la scala: 32 la riga di stop, 24 la sottoriga e la
+     cella da compilare delle tabelle compatte. */
+  :is(.rg-print-fit--3, .rg-print-fit--4) .rg-table--hand tbody :is(th, td),
+  :is(.rg-print-fit--3, .rg-print-fit--4) .rg-table--hand tbody td.rg-fill-field--cell { height: calc(var(--rg-space-8) / var(--rg-print-fit-scale)); }
+  :is(.rg-print-fit--3, .rg-print-fit--4) .rg-table--hand tbody tr.rg-table__row--sub > :is(th, td):not(.rg-fill-field--cell) { height: calc(var(--rg-space-6) / var(--rg-print-fit-scale)); }
+  :is(.rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact .rg-table--hand tbody :is(th, td)[rowspan] { padding-top: calc(var(--rg-space-8) / var(--rg-print-fit-scale) - 1lh - var(--rg-space-1) * 1.5 - var(--rg-border-hairline)); }
+  :is(.rg-print-fit--3, .rg-print-fit--4).rg-worksheet-block--compact td.rg-fill-field--cell { height: calc(var(--rg-space-6) / var(--rg-print-fit-scale)); }
+
   /* Senza questo il browser butta via le campiture: per default non stampa gli sfondi, e la banda
      di reparto perderebbe due dei suoi tre segnali (colore e trama) restando il solo nome.
      rg-cutout__cue (1.23.0): il fondo bianco interrompe la linea di taglio sotto la parola.

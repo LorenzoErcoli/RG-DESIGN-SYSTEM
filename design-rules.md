@@ -168,6 +168,13 @@ penna. La densità si decide guardando il contenuto; questa si decide guardando 
   mano può sbordare, dentro una cella no.
 - La misura resta un **minimo**, non un'altezza fissa: un valore già stampato che va a capo fa
   crescere il campo invece di uscirne.
+- **Un'eccezione dichiarata, una sola (proposta 1.54.0).** Quando l'app ha misurato che un foglio
+  sfora la facciata **di poco**, il gradino 2 dei [gradini di stampa](components/print-fit.md) porta
+  la riga di tabella a **32 px** e la nota a **40**, e non oltre: dopo aver tolto tutta l'aria dove
+  non si scrive, e prima di rimpicciolire il dato stampato — che ai gradini 3 e 4 scala, mentre lo
+  spazio della mano no. È la scelta fra una riga più stretta sotto la sua fase e una riga comoda su
+  una facciata che in reparto non gira nessuno (Lorenzo, 2026-11-16). Fuori da quel gradino la
+  tabella qui sopra vale com'è.
 
 ### Distanza delle azioni dal bordo
 

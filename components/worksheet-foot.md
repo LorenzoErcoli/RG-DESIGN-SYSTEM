@@ -84,6 +84,37 @@ firma il lavoro, non ogni riga del lavoro. Per una fase singola il piede sta sot
 valido e non cambia: chi non migra non vede differenza. La scelta fra i due è di contenuto — dentro
 se è un dato della fase (un'ora di ciclo rilevata), fuori se è la firma di chi l'ha fatta.
 
+### Eccezione: la firma dentro il blocco, per il ricamo (proposta 1.54.0)
+
+> «Un piede solo.» — Lorenzo, 2026-11-16
+
+Il foglio del ricamo è l'**unico** che firma **dentro** il riquadro. Ha già un piede nel blocco — il
+consuntivo della macchina: Macchina, Teste usate, Preparazione, Pezzi fatti — e con questo piede
+sotto ne aveva **due**, uno dentro e uno fuori, per un foglio solo. Il secondo, a pagina piena,
+finiva da solo sul retro: una firma su una facciata dove la fase non c'è.
+
+La ragione per cui la firma sta fuori (sopra: *«è di chi lavora, non della scheda»*) qui non regge,
+per due motivi che valgono solo per il ricamo:
+
+1. **Non c'è un gruppo da firmare.** Il piede autonomo esiste per stare sotto l'**ultimo** di più
+   blocchi collegati; il ricamo è un foglio di **una fase sola**, e fuori dal riquadro c'è la stessa
+   fase che c'è dentro.
+2. **Il consuntivo è già scritto a mano.** Il riquadro del ricamo, in fondo, non è più solo «dati
+   stampati»: Pezzi fatti e Teste usate li scrive l'operatore. Firma e consuntivo sono la stessa
+   compilazione, alla stessa ora.
+
+**Forma:** il piede del blocco nella variante `rg-worksheet-block__foot--sign`, con una seconda fila
+`rg-worksheet-block__sign` — Operatore, Data, Note, l'etichetta **di fianco**, le righe a **32 px** e
+fra loro **1 : 1 : 3**, come qui nel `--compact`. Markup e misure in
+[worksheet-block](worksheet-block.md#il-piede-con-la-firma-a-due-file-proposta-1540).
+
+**Ambito dell'eccezione:** solo il foglio del ricamo. *Durata:* finché il ricamo resta un foglio di
+una fase. *Responsabile:* prodotto RG. Se un domani il ricamo avesse fasi collegate dietro (stesso
+reparto, stesso banco), la firma torna fuori, sotto l'ultimo blocco, come per tutti.
+
+**Con un piede dentro, `rg-worksheet-foot` dopo il blocco non si mette.** Due firme per lo stesso
+lavoro sono zero firme: nessuno sa quale vale.
+
 **L'etichetta della nota sta dentro il riquadro (1.37.0).** In alto a sinistra, non sopra. La fascia
 sopra il riquadro non è spazio da scrivere: è spazio speso per dire di scrivere, e sul foglio era
 l'ultimo serbatoio rimasto. Qui il riquadro **cresce** invece di restare com'era — 64 → 80 px —
@@ -117,6 +148,11 @@ misurato proprio sul gruppo: due fasi collegate **e il loro piede** in una pagin
 
 Il `break-inside: avoid` è ripetuto anche sui singoli campi: se un motore ignora la regola sul
 contenitore, almeno il singolo riquadro da riempire non esce diviso.
+
+**Quando il foglio sfora di poco: i gradini di stampa (proposta 1.54.0).** Il piede prende lo stesso
+[`rg-print-fit--N`](print-fit.md) dei blocchi del suo foglio. Al gradino 1 perde il margine sotto; al
+2 la nota del piede **intero** scende da 80 a 48 px (con il `--compact` resta 32); ai gradini 3 e 4 i
+campi restano **fuori dalla scala**: firma, data e nota hanno a ogni gradino la misura di adesso.
 
 **Non è un controllo: è carta.** Vale parola per parola quanto detto per
 [`rg-fill-field`](fill-field.md): niente `input`, niente focus, niente errore. A schermo lo stesso

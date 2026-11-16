@@ -61,6 +61,22 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.54.0 — gradini di stampa e piede del ricamo a due file (proposta)
+
+Additiva: senza le classi nuove non cambia niente. Per usarla (RG Product Suite, fascicolo):
+
+- **Piede del ricamo**: nel `<footer class="rg-worksheet-block__foot">` del ricamo aggiungere
+  `rg-worksheet-block__foot--sign` e, dopo i campi del consuntivo, un
+  `<div class="rg-worksheet-block__sign">` con Operatore, Data, Note in `rg-fill-field--inline`,
+  in quest'ordine. **Togliere** il `rg-worksheet-foot` dopo il blocco del ricamo.
+- **Gradini**: per il foglio che sfora di poco, la stessa classe `rg-print-fit--N` su **ogni**
+  elemento del foglio — il blocco `--long`, i `--continued`, il `rg-worksheet-foot` — senza
+  avvolgerli. Uno solo, il primo che basta, rimisurando a ogni ristampa.
+- **Controllo**: la riga del tempo per pezzo deve essere un figlio diretto di
+  `rg-worksheet-block__body` con `rg-small` (oggi lo è, con `rg-u-mt-2`): il gradino 1 la aggancia lì.
+- **Fuori dal DS, segnalato**: il template usa `rg-u-mt-1` su due tabelle del ricamo, che il DS non
+  definisce (le utility di margine sono `-2`, `-4`, `-6`): oggi non fa niente.
+
 ### 1.53.0 — il `change` del lookup porta la riga scelta (proposta)
 
 Nessun CSS, nessun token: **un controllo**, e solo per chi usa `rg-lookup` con JavaScript proprio.

@@ -103,7 +103,7 @@
   <div class="specimen-shell">
     <nav class="specimen-nav" aria-label="Indice componenti"><ol>
       <li><a href="#typography">Typography</a></li><li><a href="#colors">Colors</a></li><li><a href="#buttons">Buttons</a></li><li><a href="#inputs">Inputs</a></li><li><a href="#tables">Tables</a></li><li><a href="#cards">Cards</a></li><li><a href="#badges">Badges</a></li><li><a href="#navigation">Navigation</a></li><li><a href="#alerts">Alerts</a></li><li><a href="#data">Technical Data</a></li><li><a href="#forms">Control Groups</a></li><li><a href="#layout">Layout Blocks</a></li><li><a href="#modal">Modal</a></li><li><a href="#chips">Chips</a></li><li><a href="#folders">Folders</a></li><li><a href="#workspace">Workspace</a></li><li><a href="#appshell">App-shell</a></li><li><a href="#lightbox">Lightbox</a></li><li><a href="#lists">Lists</a></li><li><a href="#steps">Steps</a></li><li><a href="#tool-panel">Tool panel</a></li><li><a href="#section-card">Section card</a></li><li><a href="#materials-row">Materiali</a></li><li><a href="#file-card">File card</a></li><li><a href="#worksheet-block">Blocco stampabile</a></li><li><a href="#dept-band">Banda di reparto</a></li><li><a href="#dept-mark">Segno del reparto</a></li><li><a href="#fill-field">Campo a penna</a></li><li><a href="#operation-row">Sequenza compilabile</a></li><li><a href="#phase-switch">Fasi e pannello</a></li><li><a href="#page-header">Testata di pagina</a></li><li><a href="#form-row">Riga di campi</a></li><li><a href="#icons">Icone</a></li><li><a href="#action-group">Azioni</a></li><li><a href="#part-mark">Identità delle parti</a></li><li><a href="#document">Documento</a></li><li><a href="#operation-sequence">Sequenza di operazioni</a></li><li><a href="#worksheet-compact">Fascicolo compatto</a></li><li><a href="#worksheet-compact-v2">Fascicolo, seconda versione</a></li><li><a href="#bed-layout">Gruppi e pezzi sul piano</a></li>
-    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li><li><a href="#lookup-groups">L&#8217;archivio a gruppi</a></li><li><a href="#worksheet-key">Il campo chiave</a></li><li><a href="#table-sub">La sottoriga di carta</a></li><li><a href="#worksheet-wide">Il campo largo</a></li><li><a href="#thumb">La foto in testa alla riga</a></li><li><a href="#pdf-frame">Il PDF incorporato</a></li></ol></nav>
+    <li><a href="#proposal">Proposte di modifica</a></li><li><a href="#scope">Ambito della fase</a></li><li><a href="#worksheet-foot">Piede del gruppo</a></li><li><a href="#worksheet-head">Testata a tre zone</a></li><li><a href="#worksheet-fields">Campi in quattro colonne</a></li><li><a href="#worksheet-note">Nota con l’etichetta dentro</a></li><li><a href="#table-hand">Tabella da scrivere a mano</a></li><li><a href="#topbar-mobile">La barra sul telefono</a></li><li><a href="#twin">Fasi gemelle</a></li><li><a href="#phase-purpose">Titoletto della fase</a></li><li><a href="#screen-a4">Il foglio a schermo</a></li><li><a href="#lookup">Il campo che chiede all&#8217;archivio</a></li><li><a href="#drawer">Il pannello laterale</a></li><li><a href="#chat">La conversazione</a></li><li><a href="#lookup-groups">L&#8217;archivio a gruppi</a></li><li><a href="#worksheet-key">Il campo chiave</a></li><li><a href="#table-sub">La sottoriga di carta</a></li><li><a href="#worksheet-wide">Il campo largo</a></li><li><a href="#thumb">La foto in testa alla riga</a></li><li><a href="#pdf-frame">Il PDF incorporato</a></li><li><a href="#print-fit">I gradini di stampa</a></li><li><a href="#worksheet-sign">Il piede del ricamo</a></li></ol></nav>
     <main class="specimen-main">
       <header class="specimen-intro"><p class="rg-label">RG / System foundation</p><h1>Componenti per strumenti di ricerca, ricamo e manifattura tessile.</h1><p>Una tavola tecnica di primitive riutilizzabili. Il nero e il bianco costruiscono la gerarchia; i colori Perugino annotano informazioni secondarie senza definire l'identità permanente.</p><div class="specimen-index">12 FAMIGLIE · 70+ ESEMPI · HTML/CSS · FRAMEWORK AGNOSTIC</div></header>
 
@@ -3877,6 +3877,93 @@ Ho gi&#224; provato a ricaricare la pagina.</p></div>
         <p class="specimen-note"><strong>Largo come il foglio, alto come la finestra.</strong> <code class="rg-mono">max-width</code> uguale a <code class="rg-mono">rg-u-screen-a4</code> (210 mm pi&#249; i due filetti): a 1904 px il riquadro misura 795,69 e comincia un filetto prima del filo della barra, come il foglio. Altezza: la finestra meno <code class="rg-mono">--rg-pdf-frame-offset</code> (manopola del componente, default testata + 192 px), mai meno di 60vh. A 375 px &#232; largo 375 e non scorre di lato (misurato in Chrome).</p>
         <p class="specimen-note"><strong>In attesa il PDF si sta gi&#224; caricando.</strong> L&#8217;iframe resta impaginato con <code class="rg-mono">visibility: hidden</code>, non <code class="rg-mono">display: none</code>: il visore si inizializza e l&#8217;evento <code class="rg-mono">load</code> arriva. L&#8217;attesa gli sta sopra nella stessa cella, quindi il riquadro non salta quando il PDF compare. Il cerchio che gira sta fermo con <code class="rg-mono">prefers-reduced-motion</code>; la frase resta. Finch&#233; il PDF non c&#8217;&#232;, &#171;Stampa le schede&#187; &#232; <code class="rg-mono">disabled</code> e il perch&#233; si legge nel riquadro.</p>
         <p class="specimen-note"><strong>In stampa non esiste.</strong> Si stampa il PDF dall&#8217;iframe, non la pagina. Sul telefono Chrome per Android non disegna un PDF dentro un iframe: se la pagina deve servire anche l&#236;, la barra porta un collegamento &#171;Apri il PDF&#187;.</p>
+      </section>
+      <section class="specimen-section" id="print-fit">
+        <div class="specimen-section__head"><span class="specimen-section__index">61</span><h2>I gradini di stampa (proposta 1.54.0)</h2><p>&#171;Non deve accadere&#187; che per poche righe un pezzo di foglio finisca sul retro o su un foglio nuovo (Lorenzo, 2026-11-16). L&#8217;app misura il PDF e, per il foglio che sfora di poco, ristampa con <strong>lo stesso gradino su ogni elemento del foglio</strong>: <code class="rg-mono">rg-print-fit--1</code> &#8230; <code class="rg-mono">--4</code>, cumulativi, il primo che basta. Solo in stampa: <strong>a schermo questa tavola &#232; identica a una senza gradino</strong>, e deve esserlo. Si vede dall&#8217;anteprima di stampa. Vedi components/print-fit.md.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 &#183; Cosa toglie ogni gradino, e quanto guadagna (Chrome 157, A4 con intestazione, facciata da 265 mm, cumulato)</span><div class="specimen-stage">
+            <div class="rg-table-wrap"><table class="rg-table rg-table--compact">
+              <thead><tr><th scope="col">Classe</th><th class="rg-table__grow" scope="col">Cosa toglie, in pi&#249; del gradino prima</th><th class="rg-table__numeric" scope="col">Ricamo, 17 stop</th><th class="rg-table__numeric" scope="col">Due fasi collegate</th></tr></thead>
+              <tbody>
+                <tr><td class="rg-table__code">&#8212;</td><td>Il foglio com&#8217;&#232;</td><td class="rg-table__numeric">288,0 mm</td><td class="rg-table__numeric">294,9 mm</td></tr>
+                <tr><td class="rg-table__code">rg-print-fit--1</td><td>Aria dove non si scrive: testata, &#171;Fase n di N&#187;, banda, stacchi fra le file, corpo e piede al mezzo passo; tempo per pezzo; dato delle tabelle a interlinea 1,1</td><td class="rg-table__numeric">&#8722;10,3 mm</td><td class="rg-table__numeric">&#8722;15,4 mm</td></tr>
+                <tr><td class="rg-table__code">rg-print-fit--2</td><td>Righe da scrivere al pavimento: stop 40 &#8594; 32 px, nota 48 &#8594; 40, nota del piede intero 80 &#8594; 48</td><td class="rg-table__numeric">&#8722;40,2 mm</td><td class="rg-table__numeric">&#8722;28,1 mm</td></tr>
+                <tr><td class="rg-table__code">rg-print-fit--3</td><td>Scala 95% del dato stampato e dell&#8217;aria</td><td class="rg-table__numeric">&#8722;48,2 mm</td><td class="rg-table__numeric">&#8722;33,1 mm</td></tr>
+                <tr><td class="rg-table__code">rg-print-fit--4</td><td>Scala 90%, e sotto non si va</td><td class="rg-table__numeric">&#8722;49,8 mm</td><td class="rg-table__numeric">&#8722;36,8 mm</td></tr>
+              </tbody>
+            </table></div>
+          </div></div>
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">2 &#183; Un gruppo di due fasi al gradino 2: la classe su ogni elemento, nessun contenitore attorno</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--long rg-print-fit--2">
+              <p class="rg-worksheet-block__step">Fase 2 di 3</p>
+              <p class="rg-dept-band rg-dept-band--pressatura"><span class="rg-dept-band__name">Reparto Pressatura</span></p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Pressatura</h3>
+                <span class="rg-worksheet-block__role">Principale &#183; con la 03</span>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Macchina</span><span class="rg-fill-field__line">Pressa 3</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Temperatura <span class="rg-fill-field__unit">&#176;C</span></span><span class="rg-fill-field__line">160</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Pressione <span class="rg-fill-field__unit">bar</span></span><span class="rg-fill-field__line">4</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field rg-fill-field--tall"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </div>
+            </section>
+            <section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--continued rg-print-fit--2">
+              <p class="rg-worksheet-block__step">Fase 3 di 3</p>
+              <header class="rg-worksheet-block__head">
+                <h3 class="rg-worksheet-block__work">Sabbiatura</h3>
+                <span class="rg-worksheet-block__role">Collegata &#183; dopo la 02</span>
+              </header>
+              <div class="rg-worksheet-block__body">
+                <div class="rg-worksheet-block__fields">
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Macchina</span><span class="rg-fill-field__line">Sabbiatrice</span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Passate</span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Tempo <span class="rg-fill-field__unit">s</span></span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field"><span class="rg-fill-field__label">Controllo</span><span class="rg-fill-field__line"></span></div>
+                </div>
+                <p class="rg-small rg-u-mt-2">Tempo per pezzo: Pressatura 0:12 + Sabbiatura 0:30 = <strong>0:42</strong></p>
+              </div>
+            </section>
+            <div class="rg-worksheet-foot rg-worksheet-foot--compact rg-print-fit--2">
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+              <div class="rg-fill-field"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+              <div class="rg-fill-field rg-worksheet-foot__note"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+            </div>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Il foglio non si stringe.</strong> La scala &#232; <code class="rg-mono">zoom</code>, non <code class="rg-mono">transform</code>: cambia l&#8217;impaginazione, e moltiplica le misure in px ma non le larghezze in % e in fr. Il blocco resta largo 186 mm a tutti i gradini (misurato: 186,3), le colonne restano al loro posto, il dato dentro &#232; pi&#249; piccolo. Niente da allineare, niente da centrare.</p>
+        <p class="specimen-note"><strong>Lo spazio della mano &#232; fuori dalla scala.</strong> Ogni <code class="rg-mono">rg-fill-field</code> e il QR prendono un contro-zoom e tornano alla misura vera: etichette 10 px, caselle di dato 24, firma 32, Pezzi da fare 48, QR 64 px con il modulo a 0,41 mm. Le righe di stop restano 32 a ogni gradino, le sottorighe 24. Il gradino 2 &#232; l&#8217;eccezione dichiarata a design-rules &#167;5: stop 32, nota 40, e non oltre.</p>
+      </section>
+      <section class="specimen-section" id="worksheet-sign">
+        <div class="specimen-section__head"><span class="specimen-section__index">62</span><h2>Il piede del ricamo, a due file (proposta 1.54.0)</h2><p>&#171;Un piede solo&#187; (Lorenzo, 2026-11-16). <code class="rg-mono">rg-worksheet-block__foot--sign</code>: sopra il consuntivo della macchina, com&#8217;era; <strong>a capo forzato</strong>; sotto <code class="rg-mono">rg-worksheet-block__sign</code> con Operatore, Data e Note, l&#8217;etichetta di fianco, righe da <strong>32 px</strong> che stanno <strong>1 : 1 : 3</strong>. &#200; l&#8217;eccezione dichiarata &#171;firma dentro il blocco&#187;, e vale solo per il ricamo: dopo il blocco non c&#8217;&#232; pi&#249; <code class="rg-mono">rg-worksheet-foot</code>.</p></div>
+        <div class="specimen-grid">
+          <div class="specimen-cell specimen-cell--wide"><span class="specimen-label">1 &#183; Il fondo del foglio del ricamo: l&#8217;ultimo stop, poi il piede con la firma</span><div class="specimen-stage specimen-stage--page">
+            <section class="rg-worksheet-block rg-worksheet-block--compact rg-worksheet-block--long">
+              <div class="rg-worksheet-block__body">
+                <table class="rg-table rg-table--compact rg-table--grid rg-table--hand" style="--rg-table-cols: 6">
+                  <thead><tr><th class="rg-table__numeric" scope="col">Stop</th><th class="rg-table__numeric" scope="col">N. ago</th><th scope="col">Operazione</th><th class="rg-table__grow" scope="col">Materiale</th><th class="rg-table__numeric" scope="col">Tem</th><th scope="col">Note</th></tr></thead>
+                  <tbody><tr><td class="rg-table__numeric">17 <span class="rg-fill-field rg-fill-field--check"></span></td><td class="rg-fill-field rg-fill-field--cell"></td><td>Raso</td><td>1 Tulle TML01012</td><td class="rg-fill-field rg-fill-field--cell"></td><td class="rg-fill-field rg-fill-field--cell"></td></tr></tbody>
+                </table>
+              </div>
+              <footer class="rg-worksheet-block__foot rg-worksheet-block__foot--sign">
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Macchina</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Teste usate</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Preparazione <span class="rg-fill-field__unit">min</span></span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Pezzi fatti</span><span class="rg-fill-field__line"></span></div>
+                <div class="rg-worksheet-block__sign">
+                  <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Operatore</span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Data</span><span class="rg-fill-field__line"></span></div>
+                  <div class="rg-fill-field rg-fill-field--inline"><span class="rg-fill-field__label">Note</span><span class="rg-fill-field__line"></span></div>
+                </div>
+              </footer>
+            </section>
+          </div></div>
+        </div>
+        <p class="specimen-note"><strong>Le righe, non i campi, stanno 1 : 1 : 3.</strong> &#200; la regola del piede su una riga sola, dove l&#8217;etichetta sta sopra e campo e riga coincidono. Con l&#8217;etichetta di fianco si divide ci&#242; che resta dopo le tre etichette, e la nota cresce di tre: misurato in Chrome su A4, righe di 27, 27 e 76 mm.</p>
+        <p class="specimen-note"><strong>In stampa non si spezza.</strong> Il ricamo &#232; <code class="rg-mono">--long</code> e si spezza fra le righe degli stop; il piede no: se non sta dopo l&#8217;ultimo stop scende intero, ed &#232; il caso dei gradini di stampa (tavola 61). Rispetto a consuntivo dentro e piede compatto fuori, il foglio di prova &#232; 3,9 mm pi&#249; basso.</p>
       </section>
     </main>
   </div>

@@ -1680,6 +1680,27 @@ td.rg-fill-field--cell { display: table-cell; height: var(--rg-space-8); backgro
 .rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--inline > .rg-fill-field__line { min-width: var(--rg-space-16); }
 .rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--tall { flex-grow: 3; }
 .rg-worksheet-block--compact .rg-worksheet-block__foot > .rg-fill-field--tall > .rg-fill-field__line { min-width: var(--rg-space-24); }
+/* PIEDE CON LA FIRMA, A DUE FILE — rg-worksheet-block__foot--sign (proposta 1.54.0). «Un piede solo»
+   (Lorenzo, 2026-11-16): il foglio del ricamo aveva il consuntivo DENTRO il blocco (Macchina, Teste
+   usate, Preparazione, Pezzi fatti) e la firma FUORI, in un rg-worksheet-foot--compact: due piedi
+   per un foglio solo, e il secondo, se la pagina era piena, finiva da solo sul retro.
+   ECCEZIONE DICHIARATA a worksheet-foot.md («la firma sta fuori dal riquadro»), e SOLO per il ricamo:
+   e un foglio di una fase sola, dove fuori dal riquadro non c'e un gruppo da firmare ma la stessa
+   fase. Il resto del fascicolo tiene il piede fuori.
+   FORMA: prima fila il consuntivo, com'era; poi A CAPO FORZATO (rg-worksheet-block__sign prende la
+   fila intera) e la seconda fila con Operatore, Data, Note, l'etichetta DI FIANCO alla riga
+   (rg-fill-field--inline). Le righe della firma sono 32 px (~8,5 mm), la grafia adulta, e non i 24
+   del dato del blocco compatto: qui si scrive un nome. LE RIGHE, non i campi, stanno 1 : 1 : 3 — la
+   stessa regola del piede su una riga sola (rg-worksheet-foot--compact), dove l'etichetta sta sopra e
+   campo e riga coincidono. Con l'etichetta di fianco si divide cio che resta dopo le tre etichette:
+   flex-basis auto = l'etichetta, flex-grow 1 / 1 / 3 = la riga. Ordine: Operatore, Data, Note — la
+   nota e l'ultima, ed e lei che cresce di tre.
+   In stampa non si spezza (rg-utilities.css). Sotto i 480 px a schermo i tre campi vanno in colonna. */
+.rg-worksheet-block__foot > .rg-worksheet-block__sign { display: flex; flex: 1 1 100%; align-items: flex-end; gap: var(--rg-space-2) var(--rg-space-4); }
+.rg-worksheet-block__sign > .rg-fill-field { flex: 1 1 auto; }
+.rg-worksheet-block__sign > .rg-fill-field:last-child { flex-grow: 3; }
+.rg-worksheet-block__sign > .rg-fill-field > .rg-fill-field__line { min-height: var(--rg-space-8); }
+@media (max-width: 480px) { .rg-worksheet-block__foot > .rg-worksheet-block__sign { flex-direction: column; align-items: stretch; } }
 
 /* ── Piede AUTONOMO del gruppo di fasi (1.33.0) ──────────────────────────────────────────────────
    Chi firma e chi scrive le note NON sta dentro il riquadro della fase. Il riquadro dice «questa e

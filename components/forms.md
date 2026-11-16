@@ -396,7 +396,7 @@ Famiglia dei control group, tutti in `styles/rg-layout.css`:
 | Classe | Ruolo |
 | --- | --- |
 | `rg-parameter-group` + `__grid` | parametri di calcolo o configurazione, in fieldset |
-| `rg-filter-group` | filtri di un elenco: campi + azione allineati al piede |
+| `rg-filter-group` | filtri di un elenco: campi + azione allineati al piede. Per una pagina elenco con molti valori per filtro, più valori insieme e i conteggi, c'è la [barra dei filtri](filter-bar.md) (`rg-filter-bar`, 1.55.0) |
 | `rg-action-bar` | barra di conferma: stato a sinistra, azioni a destra |
 | `rg-action-bar--sticky` | la stessa barra, ferma in fondo alla finestra mentre si scorre un editor lungo (1.47.0) |
 | `rg-confirmation` | blocco di conferma con titolo, conseguenze e azioni |

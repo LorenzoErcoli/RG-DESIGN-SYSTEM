@@ -937,7 +937,10 @@
           "rg-table__detail-inner",
           "rg-table__grow",
           "rg-table__row--sub",
-          "rg-table__thumb"
+          "rg-table__thumb",
+          "rg-table__group",
+          "rg-table__group-name",
+          "rg-table__group-count"
         ],
         "variants": [
           "rg-table--compact",
@@ -962,7 +965,8 @@
         "grid",
         "hand (tabella su cui si scrive a penna, 1.38.0)",
         "sub (sottoriga di carta, 1.49.0)",
-        "thumb (miniatura in testa alla riga, 1.51.0)"
+        "thumb (miniatura in testa alla riga, 1.51.0)",
+        "group (riga di gruppo per «Raggruppa per», 1.55.0)"
       ],
       "states": [
         "default",
@@ -982,7 +986,7 @@
       "doc": "components/tables.md",
       "specimenAnchor": "tables",
       "snippet": "<div class=\"rg-table-wrap\"><table class=\"rg-table\"><thead><tr><th>Codice</th><th class=\"rg-table__numeric\">Consumo (m)</th></tr></thead><tbody><tr><td class=\"rg-table__code\">FIL-0281</td><td class=\"rg-table__numeric\">18.42</td></tr></tbody></table></div>",
-      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase. Da 1.23.0 rg-table__grow sulla <th> della colonna larga (Note, Descrizione, Colore): width 100% nel layout automatico, le altre colonne scendono alla larghezza del proprio contenuto. Una per tabella. Da 1.24.0 rg-table--grid e la tabella DI CARTA da compilare a penna: filetto nero hairline su tutte le celle (testata compresa) e table-layout fixed, colonne uguali che non dipendono dal contenuto; rg-table__grow sulla th vale il DOPPIO delle altre, con style=\"--rg-table-cols: N\" sulla table (se manca vale 6). Celle --cell 32 px, 24 dentro rg-worksheet-block--compact. Nata perche --compact + td.rg-fill-field--cell con righe tutte vuote stampava righe da quaderno senza divisori e colonne di larghezza casuale. Non usare rg-table__grow senza --grid su una tabella tutta vuota: le altre colonne collassano. 1.25.0: con piu colonne larghe nella griglia, --rg-table-wide: K (se manca vale 1); ogni __grow vale 2/(cols+K). 1.38.0: rg-table--hand SI AGGIUNGE a --grid quando su quelle righe si scrive DAVVERO, ed e una decisione diversa - --grid dice DOVE si scrive (il divisore verticale), --hand dice QUANTO SPAZIO c'e per farlo. Caso che l'ha generata: la tabella degli stop del foglio del ricamo, una riga per stop, su cui l'operatore annota tempo e note MENTRE la macchina lavora («righe piu alte, 18 per pagina. Serve spazio per scrivere le note. E deve essere abbastanza per stop», Lorenzo, 2026-09-22). Le righe erano ~26 px (~7 mm), cioe la misura del TESTO STAMPATO; qui vale invece la frase di rg-fill-field, L'ALTEZZA E LA MANO NON IL TESTO: sette millimetri sono una riga letta, la punta della biro ci entra e la grafia no, e una riga in cui non si riesce a scrivere resta vuota, cioe il dato si perde. MISURA 40 px (~10,6 mm) sulle celle del tbody: i 32 px della grafia adulta dichiarati dalla base di rg-fill-field piu un passo, perche qui la mano scrive DENTRO una griglia chiusa sui quattro lati e non sopra una riga aperta, quindi non puo sbordare. Sta sulla scala (32 + 8) ed e un MINIMO: una cella con un valore lungo che va a capo cresce. La TESTATA non si alza (su di lei non si scrive) e le celle sono allineate IN BASSO, cosi il dato gia stampato e il valore scritto a mano cadono sulla stessa linea invece di galleggiare uno a meta cella e l'altro sul filetto. Specificita: i selettori sono .rg-table--hand tbody :is(th, td) e .rg-table--hand tbody td.rg-fill-field--cell, perche .rg-worksheet-block--compact td.rg-fill-field--cell pesa (0,2,1) e altrimenti vincerebbe. DICIOTTO RIGHE PER PAGINA e un numero MISURATO, non una regola: il CSS non sa contare. Su A4 con rg-u-print-a4--head (margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo, per il corpo della tabella restano ~194 mm; 17 righe da 10,58 ne occupano ~180 e alla diciottesima mancano ~6 mm (CORRETTO NELLA 1.40.1: fino alla 1.40.0 qui c'era scritto 18 righe su ~194 mm, misurate su un render in cui il foglio sforava in larghezza e Chrome rimpiccioliva la pagina del ~5% - vedi agent/verify-checklist.md §11). Il resto passa alla pagina dopo con la thead ripetuta (regola di rg-worksheet-block--long) e il foglio si stampa fronte-retro. LIMITE DICHIARATO: quel 18 dipende da quanto c'e SOPRA la tabella e il margine e ~3 mm - una fila di campi in meno ne fa entrare una in piu, un titolo su due righe una in meno; chi ha bisogno di un numero esatto spezza la tabella a monte. OPT-IN per una ragione precisa: nello stesso fascicolo ci sono tabelle che si LEGGONO soltanto (legenda dei coni, fasi della pagina della parte) e alzarle tutte vorrebbe dire pagare in carta uno spazio che nessuno usa. Vale a schermo come in stampa: l'altezza e una misura fisica della mano, non un fatto della carta. MISURA sul fascicolo di prova (3 parti, 11 fasi, 15 fogli, ricami da 3 stop, Chrome): 18 pagine prima e dopo, 0 gruppi di fasi collegate spezzati prima e dopo. Costo dichiarato: un ricamo con piu di 17 stop prende una facciata in piu. LA TESTATA (stessa 1.38.0, seconda osservazione dallo stesso foglio), due regole sulla sola thead e il corpo NON si tocca: (1) padding-inline --rg-space-1 (4 px per lato, 8 in tutto) perche con --grid ogni cella ha il suo filetto nero, testata compresa, e STOP finiva attaccato alla linea verticale - due segni neri a contatto; gli 8 px per lato del corpo sarebbero 16, meta di una colonna da quattro cifre, e nel corpo restano perche li e la penna a non dover toccare il filetto; (2) white-space: nowrap DENTRO IL DS, cosi il template non lo mette inline su ogni th (si toglie dopo aver salito il pin, vedi UPGRADING). Il selettore porta .rg-table davanti perche .rg-worksheet-block--compact .rg-table--grid th rimette white-space: normal e pesa (0,2,1). LIMITE: con table-layout fixed una testata che non ci sta SBORDA invece di andare a capo - e la scelta, un a capo in testata costa l'altezza di una riga di stop mentre una parola che sborda si accorcia (Tempo -> Tem). TESTATA PIU PICCOLA DEL CORPO: PROVATA E SCARTATA SULLA MISURA. .rg-table th e gia a --rg-font-size-xs, ultimo gradino della scala, quindi per fare un gradino serviva ALZARE il corpo a --rg-font-size-sm; ma su quei 12 px e tarato tutto il foglio (larghezze in ch, nomi dei materiali a 18 caratteri, due codici filo uno sotto l'altro nella riga) e in Chrome su A4, pagina vera del ricamo, il passo di riga passava da 10,58 a 10,85 mm e la pagina perdeva uno stop, che finiva da solo sul retro. Uno stop per pagina vale piu di un gradino tipografico, e un token piu piccolo di xs non si inventa per un caso locale. Il corpo resta quello di rg-table--compact (12 px) e il passo di riga resta 10,58 mm. 1.49.0 (proposta, ramo ds/foglio-di-reparto): (1) SOTTORIGA DI CARTA, <tr class=rg-table__row--sub> subito sotto la riga a cui appartiene, una <td colspan> con rg-label + valore ('Pallette dello stop 4  3 MM · C01 (3-1) ARGENTO', Lorenzo, 2026-10-23). Con --hand e ALTA 24 px (il dato stampato), non 40: su di lei si legge; se il valore va scritto a mano la cella e td.rg-fill-field--cell e torna a 40. Con --grid e ATTACCATA alla riga sopra: filetto in mezzo PUNTINATO nero, sotto pieno; dichiarato sui due lati del bordo collassato (in basso sulla riga sopra via :has(+ .rg-table__row--sub), escluse le celle [rowspan], e in alto sulla sottoriga) perche nel collassato il pieno vince sul puntinato; senza :has() resta pieno. L'etichetta ripete di chi e (non solo il segno). In stampa break-before: avoid (rg-utilities.css): misurato in Chrome, senza la regola 2 tagli su 5 aprivano la pagina con una sottoriga, con la regola 0. (2) ROWSPAN in --hand: vertical-align top (prima la cella finiva in fondo alla sottoriga); dentro rg-worksheet-block--compact padding-top calc(40 - 1lh - 6 - 1) e il testo cade sulla linea delle altre celle della prima riga (misurato in Chrome, scarto 0 px). Limite: se la prima riga cresce la cella non la segue. (3) rg-table-wrap IN STAMPA: overflow visible !important in @media print — Chrome stampava la barra di scorrimento e tagliava la tabella (tagliando rg-cutout). Una tabella piu larga del foglio adesso sfora e Chrome scala la pagina (checklist §11). 1.51.0: (1) MINIATURA IN TESTA ALLA RIGA, td.rg-table__thumb (e th, con la parola Foto in rg-u-visually-hidden): la foto del record all'inizio della riga negli elenchi (Lorenzo, 2026-10-26). Cella stretta quanto la miniatura (width 1%, come rg-table__actions), padding-block 8 invece di 16, 12 ai lati. Dentro una rg-thumb (64 px; 48 da sola in rg-table--compact), di solito in un button.rg-lightbox__thumb con aria-label che nomina il record e img alt vuoto; senza immagine span.rg-thumb.rg-thumb--empty aria-hidden (largo quanto la miniatura, alto zero) e la colonna non cambia larghezza. Disegno al posto della foto: rg-thumb--drawing. (2) RIGA ESPANDIBILE: padding 0 sulla cella che CONTIENE il toggle (td:has(> .rg-table__toggle)), non piu sulla prima: con la miniatura davanti la prima perdeva il margine e la seconda lo aveva doppio. Il toggle va figlio DIRETTO della td. Senza :has() resta la regola di prima (td:first-child), miniatura esclusa. Pagine con il toggle nella prima cella: nessun cambiamento.",
+      "notes": "Da 1.8.0 la riga ESPANDIBILE (rg-table__row--expandable + rg-table__detail) e una VARIANTE di rg-table, non un componente a se: una riga-record che rivela in loco la propria scomposizione (i sotto-record che la compongono). Preferita a rg-disclosure (che apre una SEZIONE di pagina e rompe la semantica tabellare) e a rg-step (SEQUENZA numerata) quando il dato e una riga di tabella. La <tr> madre porta un <button class=rg-table__toggle> con aria-expanded + aria-controls; il dettaglio e una seconda <tr class=rg-table__detail> con un <td colspan=N> su tutte le colonne (colonne allineate alla madre), tipicamente una rg-table--compact o un rg-key-value. Stato = aria-expanded + [hidden], segno +/- generato dal DS, mai il solo colore; toggle >=40px con focus visibile. Non rendere cliccabile l'intera <tr>: solo il button, le celle numeriche non catturano il click. Da 1.10.0 la colonna 'Qtà' ha UNA convenzione (vedi components/tables.md#colonna-qtà): valore in rg-table__numeric (destra, mono, tabulare); l'unita sta nell'header quando e uniforme ('Qtà (m)') e la cella porta il solo numero; quando l'unita varia per riga sta accanto al valore in rg-table__unit (secondaria, mai al posto del numero). Regola pensata per uniformare le tabelle fra i tab della pagina fase. Da 1.23.0 rg-table__grow sulla <th> della colonna larga (Note, Descrizione, Colore): width 100% nel layout automatico, le altre colonne scendono alla larghezza del proprio contenuto. Una per tabella. Da 1.24.0 rg-table--grid e la tabella DI CARTA da compilare a penna: filetto nero hairline su tutte le celle (testata compresa) e table-layout fixed, colonne uguali che non dipendono dal contenuto; rg-table__grow sulla th vale il DOPPIO delle altre, con style=\"--rg-table-cols: N\" sulla table (se manca vale 6). Celle --cell 32 px, 24 dentro rg-worksheet-block--compact. Nata perche --compact + td.rg-fill-field--cell con righe tutte vuote stampava righe da quaderno senza divisori e colonne di larghezza casuale. Non usare rg-table__grow senza --grid su una tabella tutta vuota: le altre colonne collassano. 1.25.0: con piu colonne larghe nella griglia, --rg-table-wide: K (se manca vale 1); ogni __grow vale 2/(cols+K). 1.38.0: rg-table--hand SI AGGIUNGE a --grid quando su quelle righe si scrive DAVVERO, ed e una decisione diversa - --grid dice DOVE si scrive (il divisore verticale), --hand dice QUANTO SPAZIO c'e per farlo. Caso che l'ha generata: la tabella degli stop del foglio del ricamo, una riga per stop, su cui l'operatore annota tempo e note MENTRE la macchina lavora («righe piu alte, 18 per pagina. Serve spazio per scrivere le note. E deve essere abbastanza per stop», Lorenzo, 2026-09-22). Le righe erano ~26 px (~7 mm), cioe la misura del TESTO STAMPATO; qui vale invece la frase di rg-fill-field, L'ALTEZZA E LA MANO NON IL TESTO: sette millimetri sono una riga letta, la punta della biro ci entra e la grafia no, e una riga in cui non si riesce a scrivere resta vuota, cioe il dato si perde. MISURA 40 px (~10,6 mm) sulle celle del tbody: i 32 px della grafia adulta dichiarati dalla base di rg-fill-field piu un passo, perche qui la mano scrive DENTRO una griglia chiusa sui quattro lati e non sopra una riga aperta, quindi non puo sbordare. Sta sulla scala (32 + 8) ed e un MINIMO: una cella con un valore lungo che va a capo cresce. La TESTATA non si alza (su di lei non si scrive) e le celle sono allineate IN BASSO, cosi il dato gia stampato e il valore scritto a mano cadono sulla stessa linea invece di galleggiare uno a meta cella e l'altro sul filetto. Specificita: i selettori sono .rg-table--hand tbody :is(th, td) e .rg-table--hand tbody td.rg-fill-field--cell, perche .rg-worksheet-block--compact td.rg-fill-field--cell pesa (0,2,1) e altrimenti vincerebbe. DICIOTTO RIGHE PER PAGINA e un numero MISURATO, non una regola: il CSS non sa contare. Su A4 con rg-u-print-a4--head (margini 30/12 mm), sotto la testata del foglio e la fila di campi del ricamo, per il corpo della tabella restano ~194 mm; 17 righe da 10,58 ne occupano ~180 e alla diciottesima mancano ~6 mm (CORRETTO NELLA 1.40.1: fino alla 1.40.0 qui c'era scritto 18 righe su ~194 mm, misurate su un render in cui il foglio sforava in larghezza e Chrome rimpiccioliva la pagina del ~5% - vedi agent/verify-checklist.md §11). Il resto passa alla pagina dopo con la thead ripetuta (regola di rg-worksheet-block--long) e il foglio si stampa fronte-retro. LIMITE DICHIARATO: quel 18 dipende da quanto c'e SOPRA la tabella e il margine e ~3 mm - una fila di campi in meno ne fa entrare una in piu, un titolo su due righe una in meno; chi ha bisogno di un numero esatto spezza la tabella a monte. OPT-IN per una ragione precisa: nello stesso fascicolo ci sono tabelle che si LEGGONO soltanto (legenda dei coni, fasi della pagina della parte) e alzarle tutte vorrebbe dire pagare in carta uno spazio che nessuno usa. Vale a schermo come in stampa: l'altezza e una misura fisica della mano, non un fatto della carta. MISURA sul fascicolo di prova (3 parti, 11 fasi, 15 fogli, ricami da 3 stop, Chrome): 18 pagine prima e dopo, 0 gruppi di fasi collegate spezzati prima e dopo. Costo dichiarato: un ricamo con piu di 17 stop prende una facciata in piu. LA TESTATA (stessa 1.38.0, seconda osservazione dallo stesso foglio), due regole sulla sola thead e il corpo NON si tocca: (1) padding-inline --rg-space-1 (4 px per lato, 8 in tutto) perche con --grid ogni cella ha il suo filetto nero, testata compresa, e STOP finiva attaccato alla linea verticale - due segni neri a contatto; gli 8 px per lato del corpo sarebbero 16, meta di una colonna da quattro cifre, e nel corpo restano perche li e la penna a non dover toccare il filetto; (2) white-space: nowrap DENTRO IL DS, cosi il template non lo mette inline su ogni th (si toglie dopo aver salito il pin, vedi UPGRADING). Il selettore porta .rg-table davanti perche .rg-worksheet-block--compact .rg-table--grid th rimette white-space: normal e pesa (0,2,1). LIMITE: con table-layout fixed una testata che non ci sta SBORDA invece di andare a capo - e la scelta, un a capo in testata costa l'altezza di una riga di stop mentre una parola che sborda si accorcia (Tempo -> Tem). TESTATA PIU PICCOLA DEL CORPO: PROVATA E SCARTATA SULLA MISURA. .rg-table th e gia a --rg-font-size-xs, ultimo gradino della scala, quindi per fare un gradino serviva ALZARE il corpo a --rg-font-size-sm; ma su quei 12 px e tarato tutto il foglio (larghezze in ch, nomi dei materiali a 18 caratteri, due codici filo uno sotto l'altro nella riga) e in Chrome su A4, pagina vera del ricamo, il passo di riga passava da 10,58 a 10,85 mm e la pagina perdeva uno stop, che finiva da solo sul retro. Uno stop per pagina vale piu di un gradino tipografico, e un token piu piccolo di xs non si inventa per un caso locale. Il corpo resta quello di rg-table--compact (12 px) e il passo di riga resta 10,58 mm. 1.49.0 (proposta, ramo ds/foglio-di-reparto): (1) SOTTORIGA DI CARTA, <tr class=rg-table__row--sub> subito sotto la riga a cui appartiene, una <td colspan> con rg-label + valore ('Pallette dello stop 4  3 MM · C01 (3-1) ARGENTO', Lorenzo, 2026-10-23). Con --hand e ALTA 24 px (il dato stampato), non 40: su di lei si legge; se il valore va scritto a mano la cella e td.rg-fill-field--cell e torna a 40. Con --grid e ATTACCATA alla riga sopra: filetto in mezzo PUNTINATO nero, sotto pieno; dichiarato sui due lati del bordo collassato (in basso sulla riga sopra via :has(+ .rg-table__row--sub), escluse le celle [rowspan], e in alto sulla sottoriga) perche nel collassato il pieno vince sul puntinato; senza :has() resta pieno. L'etichetta ripete di chi e (non solo il segno). In stampa break-before: avoid (rg-utilities.css): misurato in Chrome, senza la regola 2 tagli su 5 aprivano la pagina con una sottoriga, con la regola 0. (2) ROWSPAN in --hand: vertical-align top (prima la cella finiva in fondo alla sottoriga); dentro rg-worksheet-block--compact padding-top calc(40 - 1lh - 6 - 1) e il testo cade sulla linea delle altre celle della prima riga (misurato in Chrome, scarto 0 px). Limite: se la prima riga cresce la cella non la segue. (3) rg-table-wrap IN STAMPA: overflow visible !important in @media print — Chrome stampava la barra di scorrimento e tagliava la tabella (tagliando rg-cutout). Una tabella piu larga del foglio adesso sfora e Chrome scala la pagina (checklist §11). 1.51.0: (1) MINIATURA IN TESTA ALLA RIGA, td.rg-table__thumb (e th, con la parola Foto in rg-u-visually-hidden): la foto del record all'inizio della riga negli elenchi (Lorenzo, 2026-10-26). Cella stretta quanto la miniatura (width 1%, come rg-table__actions), padding-block 8 invece di 16, 12 ai lati. Dentro una rg-thumb (64 px; 48 da sola in rg-table--compact), di solito in un button.rg-lightbox__thumb con aria-label che nomina il record e img alt vuoto; senza immagine span.rg-thumb.rg-thumb--empty aria-hidden (largo quanto la miniatura, alto zero) e la colonna non cambia larghezza. Disegno al posto della foto: rg-thumb--drawing. (2) RIGA ESPANDIBILE: padding 0 sulla cella che CONTIENE il toggle (td:has(> .rg-table__toggle)), non piu sulla prima: con la miniatura davanti la prima perdeva il margine e la seconda lo aveva doppio. Il toggle va figlio DIRETTO della td. Senza :has() resta la regola di prima (td:first-child), miniatura esclusa. Pagine con il toggle nella prima cella: nessun cambiamento. 1.55.0 (proposta, ramo ds/filter-bar): RIGA DI GRUPPO per «Raggruppa per» (Lorenzo, 2026-11-16): un <tbody> per gruppo, prima riga <tr class=rg-table__group><th colspan=N scope=rowgroup> con rg-table__group-name e rg-table__group-count («172 prodotti», mono tabulare grigio, la parola sempre accanto al numero). Superficie rientrante --rg-color-surface, filetto intermedio sopra, peso 500, 14 px anche in --compact, nessun hover; non si piega e non e cliccabile. Gli elementi senza il dato del gruppo stanno in un gruppo «Senza cliente» in fondo. Una tabella sola, colonne allineate fra i gruppi.",
       "keywords": [
         "tabella",
         "table",
@@ -1099,12 +1103,26 @@
         "toggle nella seconda cella",
         "margine cella toggle",
         "padding cella toggle",
-        "riga espandibile con foto"
+        "riga espandibile con foto",
+        "riga di gruppo",
+        "raggruppa per",
+        "raggruppamento",
+        "gruppo in tabella",
+        "intestazione di sezione",
+        "group row",
+        "group header",
+        "grouped table",
+        "section header row",
+        "rowgroup",
+        "conteggio gruppo"
       ],
       "elementsSince": {
         "rg-table__grow": "1.23.0",
         "rg-table__row--sub": "1.49.0",
-        "rg-table__thumb": "1.51.0"
+        "rg-table__thumb": "1.51.0",
+        "rg-table__group": "1.55.0",
+        "rg-table__group-name": "1.55.0",
+        "rg-table__group-count": "1.55.0"
       },
       "variantsSince": {
         "rg-table--grid": "1.24.0",
@@ -1643,21 +1661,25 @@
       "classes": {
         "base": "rg-chip",
         "elements": [
-          "rg-chip-select"
+          "rg-chip-select",
+          "rg-chip__key"
         ],
         "variants": [
-          "rg-chip--add"
+          "rg-chip--add",
+          "rg-chip--remove"
         ]
       },
       "variants": [
         "chip",
-        "add"
+        "add",
+        "remove (etichetta di un valore gia scelto, link che lo toglie, 1.55.0)"
       ],
       "states": [
         "default",
         "hover",
         "checked",
-        "focus"
+        "focus",
+        "focus-visible (remove)"
       ],
       "tokens": [
         "--rg-radius-pill",
@@ -1674,8 +1696,26 @@
         "selezione multipla",
         "pill interattiva",
         "categoria",
-        "picker"
-      ]
+        "picker",
+        "etichetta filtro",
+        "togli filtro",
+        "filtro attivo",
+        "valore scelto",
+        "chip removibile",
+        "removable chip",
+        "filter tag",
+        "active filter",
+        "tag con x",
+        "chip con croce",
+        "rimuovi valore"
+      ],
+      "variantsSince": {
+        "rg-chip--remove": "1.55.0"
+      },
+      "elementsSince": {
+        "rg-chip__key": "1.55.0"
+      },
+      "notes": "1.55.0 (proposta, ramo ds/filter-bar): rg-chip--remove e l'ETICHETTA di un valore gia scelto sotto la barra dei filtri (rg-filter-bar__tags): un <a> all'indirizzo senza quel valore, non una casella. In testa rg-u-visually-hidden «Togli », poi rg-chip__key (nome del filtro, grigio), il valore, l'icona chiudi aria-hidden. Il link non si sottolinea (a.rg-chip, la lezione di a.rg-badge). Pillola 32 px, bersaglio 40 con un sovrapposto invisibile ::after che sporge 4 px sopra e sotto (misurato: 3 px sopra il bordo e sul link, 5 no); su pointer: coarse la pillola e 44 e il sovrapposto torna a zero. In stampa la croce sparisce."
     },
     {
       "id": "folder",
@@ -1865,7 +1905,10 @@
       "since": "0.1.0",
       "kind": "component",
       "classes": {
-        "base": "rg-empty"
+        "base": "rg-empty",
+        "elements": [
+          "rg-empty__actions"
+        ]
       },
       "states": [
         "default"
@@ -1877,7 +1920,7 @@
       "doc": "components/alerts.md",
       "specimenAnchor": "data",
       "snippet": "<div class=\"rg-empty\">Nessun consumo calcolato.</div>",
-      "notes": "Superficie aperta con filetti sopra e sotto, non un riquadro chiuso: lo stato vuoto non merita una cornice. Nomi alternativi da NON creare: rg-empty-state, rg-no-data.",
+      "notes": "Superficie aperta con filetti sopra e sotto, non un riquadro chiuso: lo stato vuoto non merita una cornice. Nomi alternativi da NON creare: rg-empty-state, rg-no-data. 1.55.0 (proposta): rg-empty__actions e la fila centrata delle uscite (gap 12). Caso d'uso: elenco vuoto per colpa dei filtri — titolo «Nessun prodotto con questi filtri», testo «Li svuota Categoria = BORSE: senza quel filtro i prodotti sono 236.», primo bottone rg-button--secondary che toglie QUEL filtro (link), secondo rg-button--ghost «Togli tutti i filtri». Il filtro da nominare lo sceglie il server (quello che, tolto da solo, fa tornare piu elementi).",
       "keywords": [
         "empty",
         "empty state",
@@ -1887,8 +1930,16 @@
         "nessun risultato",
         "placeholder",
         "no data",
-        "elenco vuoto"
-      ]
+        "elenco vuoto",
+        "nessun risultato con questi filtri",
+        "filtri troppo stretti",
+        "togli filtro",
+        "azioni stato vuoto",
+        "empty actions"
+      ],
+      "elementsSince": {
+        "rg-empty__actions": "1.55.0"
+      }
     },
     {
       "id": "loading",
@@ -6542,6 +6593,148 @@
         "keep on one page",
         "tighten print",
         "rg-print-fit"
+      ]
+    },
+    {
+      "id": "filter-bar",
+      "title": "La barra dei filtri di un elenco",
+      "role": "Restringere un elenco lungo da una barra sola sopra l'elenco: ricerca, filtri fissi a scelta multipla con i conteggi per valore (e ricerca dentro la lista), filtri rari dietro «Aggiungi filtro», riga del risultato con le etichette che tolgono, «Togli tutti» e «Raggruppa per». Form GET che funziona senza JavaScript; fino a 680 px i filtri stanno in un pannello che si apre con «Filtri · N».",
+      "status": "beta",
+      "since": "1.55.0",
+      "kind": "component",
+      "classes": {
+        "base": "rg-filter-bar",
+        "variants": [
+          "rg-filter-bar--live",
+          "rg-filter--end"
+        ],
+        "elements": [
+          "rg-filter-bar__row",
+          "rg-filter-bar__search",
+          "rg-filter-bar__toggle",
+          "rg-filter-bar__panel",
+          "rg-filter-bar__more",
+          "rg-filter-bar__extra",
+          "rg-filter-bar__apply",
+          "rg-filter-bar__active",
+          "rg-filter-bar__result",
+          "rg-filter-bar__tags",
+          "rg-filter-bar__setting",
+          "rg-filter",
+          "rg-filter__trigger",
+          "rg-filter__count",
+          "rg-filter__panel",
+          "rg-filter__find",
+          "rg-filter__set",
+          "rg-filter__legend",
+          "rg-filter__options",
+          "rg-filter__option",
+          "rg-filter__value",
+          "rg-filter__n",
+          "rg-filter__empty",
+          "rg-filter__foot"
+        ],
+        "related": [
+          "rg-button",
+          "rg-button--outline",
+          "rg-button--ghost",
+          "rg-button--secondary",
+          "rg-search",
+          "rg-select",
+          "rg-chip",
+          "rg-chip--remove",
+          "rg-chip__key",
+          "rg-icon",
+          "rg-u-visually-hidden",
+          "rg-table__group",
+          "rg-empty",
+          "rg-empty__actions",
+          "rg-toolbar",
+          "rg-filter-group"
+        ]
+      },
+      "variants": [
+        "desktop (sopra 680 px: una riga, pannelli sospesi sotto il bottone)",
+        "telefono (fino a 680 px: ricerca + «Filtri · N», pannello nel flusso, filtri a tutta larghezza, Applica in fondo)",
+        "live (messo dal controller: si invia da solo, Applica esce sopra 680 px)",
+        "end (pannello girato a sinistra, messo dal controller)"
+      ],
+      "states": [
+        "default",
+        "open",
+        "active (valori scelti: contorno nero + numero)",
+        "hover",
+        "focus-visible",
+        "find (ricerca nella lista)",
+        "empty (nessun valore con quel testo)",
+        "no-js",
+        "mobile",
+        "print"
+      ],
+      "tokens": [
+        "--rg-color-surface-raised",
+        "--rg-color-border",
+        "--rg-color-black",
+        "--rg-color-text-secondary",
+        "--rg-color-text-label",
+        "--rg-color-focus",
+        "--rg-shadow-overlay",
+        "--rg-z-dropdown",
+        "--rg-radius-md",
+        "--rg-border-hairline",
+        "--rg-font-mono",
+        "--rg-font-identity",
+        "--rg-space-*"
+      ],
+      "doc": "components/filter-bar.md",
+      "rulesRef": "design-rules.md#distanza-delle-azioni-dal-bordo",
+      "specimenAnchor": "filter-bar",
+      "snippet": "<form class=\"rg-filter-bar\" method=\"get\" action=\"/products\" role=\"search\" aria-label=\"Filtri dell'elenco prodotti\">\n  <div class=\"rg-filter-bar__row\">\n    <div class=\"rg-filter-bar__search\"><label class=\"rg-u-visually-hidden\" for=\"f-q\">Cerca nei prodotti</label><input class=\"rg-search\" type=\"search\" id=\"f-q\" name=\"q\"></div>\n    <details class=\"rg-filter-bar__toggle\"><summary class=\"rg-button rg-button--outline\">Filtri<span class=\"rg-filter__count\"><span class=\"rg-u-visually-hidden\">, scelti </span>1</span></summary></details>\n    <div class=\"rg-filter-bar__panel\">\n      <details class=\"rg-filter\" name=\"filtri-prodotti\">\n        <summary class=\"rg-button rg-button--outline rg-filter__trigger\">Cliente<span class=\"rg-filter__count\"><span class=\"rg-u-visually-hidden\">, scelti </span>1</span></summary>\n        <div class=\"rg-filter__panel\">\n          <fieldset class=\"rg-filter__set\"><legend class=\"rg-u-visually-hidden\">Cliente</legend>\n            <ul class=\"rg-filter__options\"><li><label class=\"rg-filter__option\"><input type=\"checkbox\" name=\"cliente\" value=\"DIOR\" checked><span class=\"rg-filter__value\">DIOR</span><span class=\"rg-filter__n\">172<span class=\"rg-u-visually-hidden\"> prodotti</span></span></label></li></ul>\n          </fieldset>\n          <div class=\"rg-filter__foot\"><button class=\"rg-button rg-button--secondary\" type=\"submit\">Applica</button></div>\n        </div>\n      </details>\n      <button class=\"rg-button rg-button--secondary rg-filter-bar__apply\" type=\"submit\">Applica</button>\n    </div>\n  </div>\n  <div class=\"rg-filter-bar__active\">\n    <p class=\"rg-filter-bar__result\"><strong>172</strong> prodotti su 412</p>\n    <ul class=\"rg-filter-bar__tags\" aria-label=\"Filtri scelti\"><li><a class=\"rg-chip rg-chip--remove\" href=\"/products\"><span class=\"rg-u-visually-hidden\">Togli </span><span class=\"rg-chip__key\">Cliente</span> DIOR</a></li></ul>\n    <a class=\"rg-button rg-button--ghost\" href=\"/products\">Togli tutti</a>\n  </div>\n</form>",
+      "notes": "Proposta 1.55.0 (ramo ds/filter-bar), chiesta dalla chat Prodotti e varianti della RG Product Suite; forma decisa da Lorenzo il 2026-11-16 per tutte le pagine elenco (Prodotti, poi Registro codici RG). NON DUPLICA: rg-filter-group e un select per filtro (un valore, niente conteggi); rg-toolbar e il contenitore vuoto (la barra ne prende le misure, 16 ai lati e 12 sopra e sotto); rg-chip e la casella-pillola per poche opzioni in vista (l'etichetta che toglie e la sua variante rg-chip--remove); rg-action-menu e il pannello sospeso per azioni; rg-autocomplete scrive UN valore in un campo e il suo controller delegato su .rg-autocomplete__input lo prenderebbe: la ricerca nella lista e rg-filter__find, senza name, nata hidden e rivelata dal controller. FORM GET: ogni casella ha name e value, i parametri si ripetono (?cliente=DIOR&cliente=FENDI). Ordine OBBLIGATORIO dei figli di __row: __search, __toggle, __panel (fratello DOPO il <details>, mostrato da [open] ~, come rg-topbar__menu); idem __more poi __extra (display contents quando aperto: i filtri rari entrano nella riga). Un filtro raro con valori scelti il server lo porta fra i fissi. FILTRO: <details class=rg-filter name=uguale-per-la-barra> (uno aperto alla volta, nativo), summary.rg-button.rg-button--outline.rg-filter__trigger, numero in rg-filter__count con rg-u-visually-hidden «, scelti » (il punto mediano e del DS, muto). Attivo = :has(input:checked) contorno nero + numero. Pannello sospeso --rg-z-dropdown, filetto nero, ombra overlay, 28-40ch, lista che scorre (sei righe e mezza), voci 40 px (44 al tocco), hover sottolinea. Piu insiemi nello stesso pannello (Collezione e Anno) con rg-filter__legend visibile. Piede: Togli (link, solo se attivo) + Applica (submit, ultimo, a destra). CONTEGGI (del server): elementi con quel valore e gli altri filtri come sono; valori a 0 non scelti non si mostrano, gli scelti si; scelti in testa. RIGA DEL RISULTATO rg-filter-bar__active: risultato, etichette rg-chip--remove (link senza quel valore), Togli tutti (ghost), Raggruppa per (rg-filter-bar__setting, select) a destra — nella prima riga a 1280 la barra andava a capo. TELEFONO (<=680): __toggle «Filtri · N» (contorno nero se c'e un filtro attivo), pannello nel flusso, filtri a tutta larghezza aperti in loco, Applica in fondo; la riga del risultato resta fuori. JS FACOLTATIVO, controller di riferimento in components/filter-bar.md e examples/rg-filter-bar.html (nella piattaforma: static/js/rg-filter-bar.js): --live, rivela e fa funzionare __find (accenti e maiuscole ignorati, scelti sempre in vista), un aperto alla volta, sopra 680 invia alla CHIUSURA del filtro se le caselle sono cambiate (non a ogni casella), gira il pannello (--end), Esc chiude e ANNULLA, Raggruppa per invia subito, aggiorna il numero. LIMITI: senza JS il pannello non si chiude con Esc o clic fuori, e il pannello dell'ultimo filtro puo uscire dalla finestra stretta; la barra non e sticky. Stampa: restano risultato ed etichette. Verificato in Chrome a 1280/1100/900/700/375: pannelli dentro la finestra, nessuno scorrimento di lato, invii e annulli come descritto.",
+      "keywords": [
+        "barra dei filtri",
+        "filtri elenco",
+        "filtri lista",
+        "filtri prodotti",
+        "filtri registro",
+        "filtra",
+        "filtro",
+        "filtro multiplo",
+        "scelta multipla",
+        "piu valori",
+        "caselle di spunta",
+        "checkbox list",
+        "faccette",
+        "facet",
+        "faceted search",
+        "filter bar",
+        "filter popover",
+        "filter dropdown",
+        "multi select filter",
+        "conteggio per valore",
+        "numero accanto al valore",
+        "aggiungi filtro",
+        "filtri rari",
+        "add filter",
+        "cerca nella lista",
+        "ricerca nel filtro",
+        "filtro con ricerca",
+        "filtro attivo",
+        "cliente · 2",
+        "etichette filtri",
+        "togli tutti",
+        "clear filters",
+        "filtri su telefono",
+        "pannello filtri",
+        "filtri mobile",
+        "form get",
+        "parametri ripetuti",
+        "query string",
+        "raggruppa per",
+        "group by",
+        "ricerca elenco",
+        "search bar",
+        "toolbar filtri"
       ]
     }
   ]

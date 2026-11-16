@@ -23,6 +23,9 @@ Confrontare record strutturati: materiali, fili, operazioni, consumi, revisioni 
 - **Miniatura in testa alla riga** (`rg-table__thumb`, 1.51.0): la cella stretta che porta la foto
   del record ([`rg-thumb`](thumb.md)), 64 px, 48 in `--compact`. Vedi
   [Miniatura in testa alla riga](#miniatura-in-testa-alla-riga-rg-table__thumb-1510).
+- **Riga di gruppo** (`rg-table__group`, proposta 1.55.0): l'intestazione di una sezione
+  dell'elenco quando lo si raggruppa («Raggruppa per Cliente»), con nome e conteggio. Vedi
+  [Riga di gruppo](#riga-di-gruppo-rg-table__group-proposta-1550).
 
 ## Uso e limiti
 
@@ -212,6 +215,51 @@ miniatura (come `rg-table__actions`), 8 px sopra e sotto invece di 16 perché l'
     <img class="rg-thumb rg-thumb--drawing" src="/products/14/disegno-miniatura" alt="" loading="lazy">
   </button>
 </td>
+```
+
+## Riga di gruppo (`rg-table__group`, proposta 1.55.0)
+
+> «Raggruppa per: Nessuno / Cliente / Collezione + Anno / Anno / Categoria» — Lorenzo, 2026-11-16,
+> per le pagine elenco con la [barra dei filtri](filter-bar.md).
+
+Quando l'elenco è raggruppato, ogni gruppo è **un `<tbody>` suo** e la sua prima riga è la riga di
+gruppo: una sola cella `<th colspan="N" scope="rowgroup">` su tutte le colonne, con il nome del gruppo
+(`rg-table__group-name`) e quanti elementi contiene (`rg-table__group-count`).
+
+- **Una tabella sola**, non una tabella per gruppo: le colonne restano allineate da un gruppo
+  all'altro e la testata resta una. `scope="rowgroup"` dice al lettore di schermo che la cella
+  intesta le righe del suo `<tbody>`.
+- **Superficie rientrante** (`--rg-color-surface`) dentro la tabella bianca e filetto intermedio
+  sopra: si legge come un divisore, non come una seconda testata (quella ha il filetto nero).
+  Nessun fondo di hover: non è un record.
+- **Il conteggio porta la parola**: «172 prodotti», «1 prodotto» (§8, l'unità accanto al valore).
+  Mono, tabulare, grigio, accanto al nome.
+- Peso di livello **contenitore** (500), 14 px anche in `rg-table--compact`.
+- **Non si piega** e non è cliccabile. Per una riga che si apre c'è la
+  [riga espandibile](#riga-espandibile); per piegare un gruppo intero servirebbe un'altra variante.
+- **Gli elementi senza il dato del gruppo** stanno in un gruppo loro, in fondo, con il nome detto:
+  «Senza cliente», «Senza collezione». Mai fuori in silenzio.
+- Con la [miniatura in testa alla riga](#miniatura-in-testa-alla-riga-rg-table__thumb-1510) il
+  `colspan` conta anche la colonna della foto.
+
+```html
+<div class="rg-table-wrap">
+  <table class="rg-table">
+    <caption class="rg-u-visually-hidden">Prodotti raggruppati per cliente</caption>
+    <thead>
+      <tr><th scope="col">Codice RG</th><th class="rg-table__grow" scope="col">Prodotto</th><th scope="col">Categoria</th></tr>
+    </thead>
+    <tbody>
+      <tr class="rg-table__group"><th colspan="3" scope="rowgroup"><span class="rg-table__group-name">DIOR</span><span class="rg-table__group-count">2 prodotti</span></th></tr>
+      <tr><td class="rg-table__code">0432</td><td>BOOK TOTE</td><td>BORSE</td></tr>
+      <tr><td class="rg-table__code">0436</td><td>SADDLE</td><td>BORSE</td></tr>
+    </tbody>
+    <tbody>
+      <tr class="rg-table__group"><th colspan="3" scope="rowgroup"><span class="rg-table__group-name">Senza cliente</span><span class="rg-table__group-count">1 prodotto</span></th></tr>
+      <tr><td class="rg-table__code">0440</td><td>PROVA LABORATORIO</td><td>BORSE</td></tr>
+    </tbody>
+  </table>
+</div>
 ```
 
 ## Azioni in riga (`rg-table__actions`, dalla 1.17.0)

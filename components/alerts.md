@@ -41,6 +41,32 @@ Spiegare *perché* è vuoto e *cosa fare* (azzera filtri, cambia ricerca). Non l
 </div>
 ```
 
+### Le uscite dello stato vuoto (`rg-empty__actions`, proposta 1.55.0)
+
+Quando l'elenco è vuoto **per colpa dei filtri**, lo stato vuoto dice quale filtro lo svuota e offre
+di toglierlo: è la regola qui sopra («spiegare perché è vuoto e cosa fare») resa precisa. Le azioni
+stanno in `rg-empty__actions`, una fila centrata con 12 px fra un bottone e l'altro; prima due bottoni
+nel testo centrato stavano a una spaziatura di parola.
+
+- **Titolo**: che cosa è vuoto e perché — «Nessun prodotto con questi filtri».
+- **Testo**: quale filtro lo svuota e che cosa succede togliendolo — «Li svuota Categoria = BORSE:
+  senza quel filtro i prodotti sono 236.» Il filtro da nominare lo sceglie il server: quello che,
+  tolto da solo, fa tornare più elementi.
+- **Azioni**: prima `rg-button--secondary` che toglie **quel** filtro (un link all'indirizzo senza di
+  lui), poi `rg-button--ghost` «Togli tutti i filtri». Bottoni a 40 px, non `--small`.
+- La [barra dei filtri](filter-bar.md) resta sopra, con «**0** prodotti su 412».
+
+```html
+<div class="rg-empty">
+  <h3>Nessun prodotto con questi filtri</h3>
+  <p>Li svuota Categoria = BORSE: senza quel filtro i prodotti sono 236.</p>
+  <div class="rg-empty__actions">
+    <a class="rg-button rg-button--secondary" href="/products?cliente=DIOR&amp;cliente=FENDI">Togli Categoria = BORSE</a>
+    <a class="rg-button rg-button--ghost" href="/products">Togli tutti i filtri</a>
+  </div>
+</div>
+```
+
 ## Loading (`rg-loading`)
 
 ### Scopo

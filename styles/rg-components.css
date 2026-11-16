@@ -242,6 +242,18 @@
    toggle). In rg-table--compact la miniatura scende da sola a 48 (regola di rg-thumb). */
 .rg-table :is(th, td).rg-table__thumb { width: 1%; }
 .rg-table td.rg-table__thumb { padding-block: var(--rg-space-2); }
+/* Riga di gruppo (1.55.0, proposta) — l'intestazione di una SEZIONE dell'elenco quando lo si
+   raggruppa («Raggruppa per Cliente»): nome del gruppo e quanti elementi contiene. Ogni gruppo e un
+   <tbody> suo e la prima riga e <tr class="rg-table__group"><th colspan="N" scope="rowgroup">: la
+   tabella resta UNA, le colonne restano allineate fra i gruppi e il lettore di schermo sa a quale
+   gruppo appartiene ogni riga. Superficie RIENTRANTE (--rg-color-surface) dentro la tabella sollevata,
+   filetto intermedio sopra: si legge come un divisore, non come un'altra testata (quella e nera). Non
+   e cliccabile e non si piega: per piegare c'e la riga espandibile. Il conteggio e mono, tabulare,
+   con la parola accanto («172 prodotti», §8), mai il solo numero. Peso di livello CONTENITORE (500). */
+.rg-table .rg-table__group > th { padding: var(--rg-space-2) var(--rg-space-3); color: var(--rg-color-text-primary); background: var(--rg-color-surface); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); text-align: left; }
+.rg-table tbody tr.rg-table__group:hover { background: transparent; }
+.rg-table__group-name { overflow-wrap: anywhere; }
+.rg-table__group-count { margin-inline-start: var(--rg-space-2); color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-regular); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* Cards */
 /* Profondita e linea (v1.13.0): la card e una superficie SOLLEVATA sul fondo di pagina, e il suo
@@ -547,6 +559,10 @@ a.rg-topbar__brand:hover { text-decoration: underline; text-underline-offset: va
    riga resterebbe a 700 dallo user-agent, piu pesante del titolo della card che lo contiene. */
 .rg-empty h3 { margin: 0; font-family: var(--rg-font-identity); font-weight: var(--rg-weight-medium); }
 .rg-empty p { color: var(--rg-color-text-secondary); }
+/* Le uscite dello stato vuoto (1.55.0, proposta) — una fila centrata di azioni sotto il testo:
+   «Togli Categoria = BORSE» e «Togli tutti i filtri». Prima un rg-button stava da solo nel testo
+   centrato e due bottoni si toccavano (lo spazio fra loro era quello di una parola). */
+.rg-empty__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--rg-space-3); margin-top: var(--rg-space-4); }
 .rg-loading { display: grid; gap: var(--rg-space-3); }
 .rg-loading__line { height: 12px; background: var(--rg-color-neutral-100); }
 .rg-loading__line:nth-child(2) { width: 74%; }
@@ -1002,6 +1018,22 @@ button.rg-list-row--link { width: 100%; font: inherit; text-align: left; }
 .rg-chip:has(input:focus-visible) { outline: 2px solid var(--rg-color-focus); outline-offset: 2px; }
 .rg-chip--add { border-style: dashed; font-weight: var(--rg-weight-bold); }
 .rg-chip--add:hover { color: var(--rg-color-black); background: var(--rg-color-neutral-50); }
+/* Chip che TOGLIE (1.55.0, proposta) — il valore di un filtro gia scelto, sotto la barra dei filtri
+   (rg-filter-bar__tags). Non e una casella: e un <a> che porta all'indirizzo senza quel valore, quindi
+   funziona senza JavaScript. Stessa pillola del chip (32 px, identity 12), la croce dice «togli» e il
+   nome accessibile lo dice in parole (rg-u-visually-hidden «Togli» in testa al testo). Il nome del filtro
+   (__key) sta in grigio prima del valore: «Cliente DIOR», «Categoria BORSE».
+   Il link non si sottolinea a riposo (la lezione di a.rg-badge, 1.53.1): l'hover fa il contorno nero
+   come ogni chip. BERSAGLIO A 40 senza alzare la pillola: un sovrapposto invisibile su ::after sporge
+   4 px sopra e sotto (32 + 4 + 4); per questo le righe di etichette stanno a 8 px una dall'altra. Su
+   pointer: coarse la pillola sale gia a 44 e il sovrapposto non serve. */
+a.rg-chip { text-decoration: none; }
+.rg-chip--remove { position: relative; gap: var(--rg-space-2); color: var(--rg-color-text-primary); border-color: var(--rg-color-border-medium); }
+.rg-chip--remove::after { content: ""; position: absolute; inset-inline: 0; inset-block: calc((var(--rg-space-12) - var(--rg-space-2) - var(--rg-space-8)) / -2); }
+.rg-chip--remove:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: var(--rg-border-strong); }
+.rg-chip--remove > .rg-icon { --rg-icon-size: var(--rg-space-3); }
+.rg-chip__key { color: var(--rg-color-text-secondary); }
+.rg-chip--remove:hover .rg-chip__key { color: var(--rg-color-text-primary); }
 
 /* Folder — tessera contenitore (famiglia card) per dashboard a sezioni (promosso da product-platform, v0.3.0) */
 .rg-folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--rg-space-6); }
@@ -2949,3 +2981,138 @@ a.rg-icon-button { text-decoration: none; }
 .rg-pdf-frame--error > .rg-pdf-frame__error { display: grid; }
 @media (max-width: 680px) { .rg-pdf-frame--error { padding: var(--rg-space-4); } }
 @media print { .rg-pdf-frame { display: none !important; } }
+
+/* ── BARRA DEI FILTRI DI UN ELENCO (1.55.0, proposta) ─────────────────────────────────────────────
+   Chiesta dalla RG Product Suite per le pagine elenco (Prodotti, poi Registro codici RG), forma decisa
+   da Lorenzo: UNA barra sopra l'elenco con la ricerca e i filtri fissi; i filtri rari dietro «Aggiungi
+   filtro»; ogni filtro si apre e mostra i valori con caselle di spunta, PIU VALORI, e accanto a ogni
+   valore quanti elementi ci sono; il bottone dice se il filtro e attivo e quanti valori; sotto la barra
+   ogni valore scelto e un'etichetta con la croce (rg-chip--remove), piu «Togli tutti».
+
+   E UN <form method="get">: i valori vanno nell'indirizzo come parametri ripetuti (?cliente=DIOR&
+   cliente=FENDI) e la pagina funziona SENZA JavaScript. Il JS e un miglioramento: invia quando un filtro
+   si chiude, rivela la ricerca dentro la lista, chiude con Esc e col clic fuori.
+
+   PERCHE <details>/<summary>: stessa scelta di rg-action-menu e di rg-topbar__menu — stato aperto/
+   chiuso annunciato dal browser, Invio e Spazio gia funzionanti, nessun JS obbligatorio. I filtri della
+   stessa barra portano lo stesso attributo name: il browser ne tiene aperto UNO alla volta (accordion
+   esclusivo nativo; dove non c'e, lo fa il controller).
+
+   DUE MISURE, UN MARKUP.
+   - Sopra i 680 px: una riga (ricerca, filtri, «Aggiungi filtro») e
+     ogni filtro apre un pannello SOSPESO sotto il suo bottone (rg-filter__panel, --rg-z-dropdown, filetto
+     nero e ombra minima come rg-action-menu__list).
+   - Fino a 680 px: la ricerca e il bottone «Filtri · N» (rg-filter-bar__toggle); il resto sta in un
+     pannello che si apre SOTTO la barra, nel flusso, e i filtri diventano voci a tutta larghezza che si
+     aprono in loco. Stesso meccanismo di rg-topbar__menu: il pannello e FRATELLO del <details>, dopo di
+     lui, e lo mostra il selettore [open] ~ (un figlio di un <details> chiuso non si rimostra su desktop).
+   - La riga sotto (rg-filter-bar__active) e la riga del RISULTATO: quanti elementi, i valori scelti,
+     «Togli tutti» e in fondo a destra «Raggruppa per» (rg-filter-bar__setting), che non filtra ma dice
+     come si legge l'elenco. Misurato: con «Raggruppa per» nella prima riga, a 1280 px la riga andava a
+     capo; nella riga del risultato sta anche in una colonna di 1160 (pagina con la barra laterale).
+
+   I FILTRI RARI: «Aggiungi filtro» (rg-filter-bar__more) e un altro <details> vuoto, e il suo fratello
+   rg-filter-bar__extra (display: contents quando e aperto) mette i filtri rari nella riga, accanto agli
+   altri. Un filtro raro con valori scelti NON sta li: il server lo porta fra i fissi, cosi il suo
+   bottone «Gamma · 1» si vede sempre.
+
+   LA RICERCA DENTRO LA LISTA (rg-filter__find) non e rg-autocomplete: quello scrive UN valore in un
+   campo, questo restringe una lista di caselle e non manda niente (nessun name). Il server la mette nei
+   filtri con molti valori, con l'attributo hidden: senza JS non servirebbe a niente e non si vede; il
+   controller la rivela. Senza JS la lista scorre (sei righe e mezza visibili) con i valori scelti in testa.
+
+   STATO ATTIVO, MAI SOLO COLORE: il bottone di un filtro con valori scelti ha il contorno NERO (gli altri
+   grigio) e il NUMERO dei valori scritto: «Cliente · 2». Il punto mediano e generato dal DS ed e muto
+   per il lettore di schermo, che sente «Cliente, scelti 2».
+
+   DISTANZE (§5): la barra e una barra, 16 px ai lati e 12 sopra e sotto (come rg-toolbar); il pannello
+   sospeso 16 ai lati e 12 sopra e sotto; le caselle hanno 4 px in piu dentro la lista, perche l'anello
+   del focus non venga tagliato dallo scorrimento. Nessun fondo di hover sulle voci (arriverebbe al bordo
+   del pannello): l'hover sottolinea il valore, come rg-choice. */
+.rg-filter-bar { display: grid; gap: var(--rg-space-3); padding: var(--rg-space-3) var(--rg-space-4); background: var(--rg-color-surface-raised); border-block: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-filter-bar__row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--rg-space-2); min-width: 0; }
+.rg-filter-bar__search { flex: 0 1 28ch; min-width: 16ch; }
+.rg-filter-bar__panel { display: flex; flex: 1 1 0%; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); min-width: 0; }
+.rg-filter-bar__toggle { display: none; }
+.rg-filter-bar__extra { display: none; }
+.rg-filter-bar__more[open] ~ .rg-filter-bar__extra { display: contents; }
+.rg-filter-bar__more[open] > summary { border-color: var(--rg-color-black); }
+.rg-filter-bar__setting { display: inline-flex; align-items: center; gap: var(--rg-space-2); margin-inline-start: auto; color: var(--rg-color-text-secondary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); white-space: nowrap; }
+.rg-filter-bar__setting .rg-select { width: auto; }
+/* «Applica»: serve SENZA JavaScript (la ricerca si manda anche con Invio, «Raggruppa per» no). Il
+   controller mette rg-filter-bar--live sul form e sopra i 680 px il bottone esce: li si invia da soli.
+   Sul telefono resta, in fondo al pannello: li si sceglie in piu filtri e si applica una volta. */
+.rg-filter-bar--live .rg-filter-bar__apply { display: none; }
+.rg-filter-bar__active { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2) var(--rg-space-3); }
+.rg-filter-bar__result { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+.rg-filter-bar__result strong { color: var(--rg-color-text-primary); font-family: var(--rg-font-mono); font-weight: var(--rg-weight-medium); font-variant-numeric: tabular-nums; }
+.rg-filter-bar__tags { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); margin: 0; padding: 0; list-style: none; }
+:is(.rg-filter, .rg-filter-bar__more, .rg-filter-bar__toggle) > summary { list-style: none; }
+:is(.rg-filter, .rg-filter-bar__more, .rg-filter-bar__toggle) > summary::-webkit-details-marker { display: none; }
+
+/* Il filtro: <details class="rg-filter" name="…"> con il bottone (summary.rg-button.rg-button--outline
+   .rg-filter__trigger) e il pannello. Il segno +/− segue [open], come rg-disclosure e la topbar. */
+.rg-filter { position: relative; display: inline-block; }
+.rg-filter__trigger::after { content: "+"; content: "+" / ""; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-weight: var(--rg-weight-regular); }
+.rg-filter[open] > .rg-filter__trigger::after { content: "\2212"; content: "\2212" / ""; }
+.rg-filter[open] > .rg-filter__trigger,
+.rg-filter:has(.rg-filter__option input:checked) > .rg-filter__trigger { border-color: var(--rg-color-black); }
+.rg-filter__count { font-family: var(--rg-font-mono); font-weight: var(--rg-weight-regular); font-variant-numeric: tabular-nums; }
+.rg-filter__count::before { content: "\00B7"; content: "\00B7" / ""; margin-inline-end: var(--rg-space-2); }
+.rg-filter__panel { position: absolute; top: calc(100% + var(--rg-space-1)); inset-inline-start: 0; z-index: var(--rg-z-dropdown); display: grid; gap: var(--rg-space-3); width: max-content; min-width: 28ch; max-width: min(40ch, calc(100vw - var(--rg-space-8))); padding: var(--rg-space-3) var(--rg-space-4); background: var(--rg-color-surface-raised); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); border-radius: var(--rg-radius-md); box-shadow: var(--rg-shadow-overlay); }
+/* Il pannello che non ci sta a destra si apre verso sinistra: lo decide il controller misurando. */
+.rg-filter--end > .rg-filter__panel { inset-inline-start: auto; inset-inline-end: 0; }
+.rg-filter__find[hidden] { display: none; }
+.rg-filter__set { min-width: 0; margin: 0; padding: 0; border: 0; }
+/* Piu insiemi nello stesso pannello (Collezione e Anno): la legenda si vede e un filetto li separa.
+   Con un insieme solo la legenda e rg-u-visually-hidden: il nome lo dice gia il bottone. */
+.rg-filter__set + .rg-filter__set { padding-top: var(--rg-space-3); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+.rg-filter__legend { padding: 0 0 var(--rg-space-1); color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-filter__options { display: grid; max-height: calc(var(--rg-space-12) * 6 + var(--rg-space-6)); margin: 0; padding: 0 var(--rg-space-1); overflow-y: auto; overscroll-behavior: contain; list-style: none; }
+.rg-filter__options > li[hidden] { display: none; }
+.rg-filter__option { display: flex; align-items: center; gap: var(--rg-space-2); min-height: 40px; font-size: var(--rg-font-size-sm); cursor: pointer; }
+.rg-filter__option input[type="checkbox"] { flex: none; width: var(--rg-space-4); height: var(--rg-space-4); margin: 0; accent-color: var(--rg-color-black); }
+.rg-filter__option input:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: var(--rg-border-hairline); }
+.rg-filter__value { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.rg-filter__option:hover .rg-filter__value { text-decoration: underline; text-underline-offset: 3px; }
+.rg-filter__option:has(input:checked) .rg-filter__value { font-weight: var(--rg-weight-medium); }
+.rg-filter__n { flex: none; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; }
+.rg-filter__empty { margin: 0; padding-block: var(--rg-space-2); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); }
+.rg-filter__empty[hidden] { display: none; }
+.rg-filter__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--rg-space-2); padding-top: var(--rg-space-3); border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+/* «Applica» e l'ultimo e sta sempre a destra; «Togli» (solo se il filtro e attivo) gli sta a sinistra. */
+.rg-filter__foot > :last-child { margin-inline-start: auto; }
+
+@media (max-width: 680px) {
+  .rg-filter-bar__search { flex: 1 1 12ch; min-width: 0; }
+  .rg-filter-bar__toggle { display: block; flex: none; }
+  .rg-filter-bar__toggle > summary::after { content: "+"; content: "+" / ""; color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-weight: var(--rg-weight-regular); }
+  .rg-filter-bar__toggle[open] > summary,
+  .rg-filter-bar__toggle:has(~ .rg-filter-bar__panel .rg-filter__option input:checked) > summary { border-color: var(--rg-color-black); }
+  .rg-filter-bar__toggle[open] > summary::after { content: "\2212"; content: "\2212" / ""; }
+  .rg-filter-bar__panel { display: none; flex: 1 1 100%; flex-direction: column; align-items: stretch; gap: 0; border-top: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+  .rg-filter-bar__toggle[open] ~ .rg-filter-bar__panel { display: flex; }
+  .rg-filter-bar__panel .rg-filter { display: block; border-bottom: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); }
+  .rg-filter-bar__panel .rg-filter__trigger { width: 100%; justify-content: flex-start; padding-inline: 0; border-color: transparent; border-radius: 0; }
+  .rg-filter-bar__panel .rg-filter__trigger:hover:not(:disabled) { border-color: transparent; text-decoration: underline; text-underline-offset: var(--rg-space-1); }
+  .rg-filter-bar__panel .rg-filter__trigger::after { margin-inline-start: auto; }
+  .rg-filter-bar__panel .rg-filter[open] > .rg-filter__trigger,
+  .rg-filter-bar__panel .rg-filter:has(.rg-filter__option input:checked) > .rg-filter__trigger { border-color: transparent; }
+  .rg-filter-bar__panel .rg-filter__panel { position: static; width: auto; min-width: 0; max-width: none; padding: 0 0 var(--rg-space-3); border: 0; border-radius: 0; box-shadow: none; }
+  .rg-filter-bar__more { align-self: flex-start; margin-block: var(--rg-space-2); }
+  .rg-filter-bar__more > summary { padding-inline: 0; }
+  .rg-filter-bar__setting { flex: 1 1 100%; justify-content: space-between; margin-inline-start: 0; }
+  .rg-filter-bar__apply { align-self: stretch; margin-top: var(--rg-space-2); }
+  .rg-filter-bar--live .rg-filter-bar__apply { display: inline-flex; }
+}
+@media (pointer: coarse) {
+  .rg-filter__option { min-height: calc(var(--rg-space-12) - var(--rg-space-1)); }
+  .rg-chip--remove::after { inset-block: 0; }
+}
+/* In stampa la barra dei comandi non serve; restano il conteggio e le etichette, che dicono quale
+   parte dell'elenco e sul foglio. */
+@media print {
+  .rg-filter-bar { padding-inline: 0; border: 0; }
+  .rg-filter-bar__row, .rg-filter-bar__active > .rg-button { display: none; }
+  .rg-chip--remove > .rg-icon { display: none; }
+}

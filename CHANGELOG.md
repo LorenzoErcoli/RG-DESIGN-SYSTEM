@@ -7,6 +7,54 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.54.0 — 2026-11-16 (proposta, ramo `ds/filter-bar`)
+
+**Minor, additiva.** Un componente nuovo e tre aggiunte a componenti esistenti, nessun token nuovo,
+nessuna classe rimossa o rinominata, nessuna regola esistente cambiata: chi non usa le classi nuove
+non vede niente.
+
+### La barra dei filtri di un elenco (`rg-filter-bar`, `rg-filter`)
+
+Chiesta dalla chat «Prodotti e varianti» della RG Product Suite; forma decisa da Lorenzo il
+2026-11-16 per **tutte** le pagine elenco della piattaforma (Prodotti, poi Registro codici RG).
+
+- **Una barra sola sopra l'elenco**: ricerca, filtri fissi (Cliente, Categoria, Collezione + Anno,
+  Divisione), i rari (Gamma, 76 valori) dietro **Aggiungi filtro**.
+- **Ogni filtro** è un `<details class="rg-filter">` che apre una lista di **caselle**: più valori
+  insieme, e accanto a ogni valore **quanti elementi** («DIOR 172»). Nei filtri lunghi una **ricerca
+  dentro la lista** (`rg-filter__find`), che non è `rg-autocomplete`: quello scrive un valore, questa
+  restringe le caselle e non manda niente.
+- Il bottone dice se il filtro è attivo e quanti valori: «**Cliente · 2**» — contorno nero e numero,
+  mai il solo colore.
+- Sotto, la **riga del risultato**: «37 prodotti su 412», ogni valore scelto come etichetta con la ×
+  (un link), **Togli tutti**, e a destra **Raggruppa per**.
+- **Form GET, funziona senza JavaScript**: i valori vanno nell'indirizzo come parametri ripetuti.
+  Il controller di riferimento (facoltativo) invia **quando un filtro si chiude** con le caselle
+  cambiate, non a ogni casella; Esc chiude e annulla.
+- **Fino a 680 px** la ricerca e **Filtri · N**; il resto in un pannello sotto la barra, nel flusso,
+  con Applica in fondo. Stesso meccanismo `[open] ~` della topbar del telefono.
+
+### Il chip che toglie (`rg-chip--remove`, `rg-chip__key`)
+
+L'etichetta di un valore già scelto: un `<a>` all'indirizzo senza quel valore. Pillola 32 px come il
+chip, bersaglio 40 con un sovrapposto invisibile (misurato), link non sottolineato.
+
+### La riga di gruppo (`rg-table__group`, `__group-name`, `__group-count`)
+
+Per «Raggruppa per»: un `<tbody>` per gruppo, la prima riga è un `<th colspan scope="rowgroup">` con
+il nome e il conteggio con la parola («172 prodotti»). Superficie rientrante, filetto intermedio,
+non si piega. Gli elementi senza il dato in un gruppo «Senza …» in fondo.
+
+### Le uscite dello stato vuoto (`rg-empty__actions`)
+
+Una fila centrata di azioni sotto il testo di `rg-empty`: «Nessun prodotto con questi filtri — Li
+svuota Categoria = BORSE» con **Togli Categoria = BORSE** e **Togli tutti i filtri**.
+
+Vetrina: tavola 61 `#filter-bar`, e la pagina intera `examples/rg-filter-bar.html` (con il
+controller, `?aperto`, `?aprifiltro`, `?vuoto`, `?senzajs`). Verificato in Chrome a 1280, 1100, 900,
+700 e 375 px: pannelli sempre dentro la finestra, nessuno scorrimento di lato, invii e annulli come
+descritto in [components/filter-bar.md](components/filter-bar.md).
+
 ## 1.53.0 — 2026-10-29
 
 **Minor, additiva.** Nessuna classe e nessun token nuovo, nessuna regola CSS toccata: cambia solo il

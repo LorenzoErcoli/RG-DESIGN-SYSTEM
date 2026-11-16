@@ -12,6 +12,13 @@ Ricerca dominante → filtri persistenti → conteggio/ordinamento → risultati
 
 Search form, filtri, cards entity/editorial, table, badges source/status, pagination, breadcrumb.
 
+Dalla 1.54.0 i filtri di un elenco della piattaforma stanno **sopra** l'elenco, in una barra sola
+([`rg-filter-bar`](../components/filter-bar.md)), e non in un pannello laterale: ricerca, filtri a
+scelta multipla con i conteggi, etichette dei valori scelti, «Raggruppa per» con la
+[riga di gruppo](../components/tables.md#riga-di-gruppo-rg-table__group-proposta-1540), e lo stato
+vuoto che dice quale filtro lo svuota. Il pannello laterale resta la forma per un archivio con
+molti filtri da tenere tutti in vista.
+
 ## Sezioni esempio
 
 - Identità: titolo, codice, stagione, cliente/progetto secondo permessi

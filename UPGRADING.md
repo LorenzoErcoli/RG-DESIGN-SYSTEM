@@ -61,6 +61,21 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.54.0 — la barra dei filtri di un elenco (proposta)
+
+Additiva, nessun controllo richiesto. Per le pagine elenco (RG Product Suite):
+
+- la barra è `rg-filter-bar` su un `<form method="get">`; i figli di `rg-filter-bar__row` vanno
+  **in quest'ordine**: `__search`, `__toggle`, `__panel` (e dentro il pannello `__more` prima di
+  `__extra`), perché i pannelli li mostra il selettore `[open] ~`;
+- ogni filtro è `<details class="rg-filter">` con lo **stesso `name`** per tutta la barra; caselle
+  con `name` e `value`, ricerca nella lista `rg-filter__find` **senza `name` e con `hidden`**;
+- conteggi, ordine dei valori, indirizzi delle etichette e del «Togli» li calcola il server;
+- il JavaScript è facoltativo: il controller di riferimento sta in
+  [components/filter-bar.md](components/filter-bar.md) e va copiato in un file del prodotto
+  (`static/js/rg-filter-bar.js`). Se un `rg-autocomplete` locale era stato messo dentro un filtro,
+  si toglie: il suo controller delegato scriverebbe il valore nel campo.
+
 ### 1.53.0 — il `change` del lookup porta la riga scelta (proposta)
 
 Nessun CSS, nessun token: **un controllo**, e solo per chi usa `rg-lookup` con JavaScript proprio.

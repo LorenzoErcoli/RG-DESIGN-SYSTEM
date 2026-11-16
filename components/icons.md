@@ -40,6 +40,7 @@ Il nome è l'**azione**, non la figura.
 | `stampa` | stampante | Stampa | |
 | `documento` | foglio | Scheda | |
 | `fascicolo` | fogli sovrapposti | Schede di reparto | |
+| `cartella` | cartella con la linguetta | la cartella compatta di un elenco, `rg-folder-grid--compact` (proposta 1.56.0) | il disegno pieno scritto nel template della pagina Prodotti |
 | `etichetta` | cartellino | Etichette | |
 | `costo` | euro | Costi | |
 | `materiali` | rotolo che si svolge e cono di filo | Consumi materiali: filati, materiali consumati, esploso per ordinare rotoli e coni (1.29.0) | |
@@ -51,7 +52,7 @@ Il nome è l'**azione**, non la figura.
 | `ripristina` | freccia di ritorno | Torna alla prima lettura | ↺ |
 | `filtro` / `togli-filtri` | imbuto / imbuto con croce | Filtra / × Rimuovi filtri, × Reset | × |
 | `ordina` | frecce su e giù | Ordina | |
-| `cerca` | lente | Cerca | |
+| `cerca` | lente | Cerca; lo stesso tracciato è la lente di `rg-search` (1.56.0), disegnata dal CSS senza markup | |
 | `avviso` | triangolo con punto esclamativo | avvisi, conteggi di anomalie | ⚠ |
 | `errore` | cerchio con croce | errori | |
 | `conferma` | spunta | conferma, completato | ✓ |

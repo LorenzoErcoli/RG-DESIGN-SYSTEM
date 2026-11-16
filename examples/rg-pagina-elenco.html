@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RG — la pagina elenco su una superficie</title>
+  <!-- Base RG importata nello stesso ordine richiesto alle applicazioni. Qui NON c'e CSS locale.
+       La pagina Prodotti riordinata (proposta 1.56.0): la barra dei filtri in testa a UNA section card,
+       e sotto, sullo stesso bianco, il percorso, «Ultimi caricati» (rg-record-strip) e le cartelle
+       compatte (rg-folder-grid--compact) — oppure la tabella, nella vista «Tutti».
+       Tre stati della stessa pagina, scelti dall'indirizzo, solo per le tavole:
+         (nessun parametro)  le cartelle per cliente, alla radice;
+         ?dentro             dentro la cartella DIOR: percorso, etichetta «Cliente DIOR», cartelle per Collezione + Anno;
+         ?elenco             la vista «Tutti»: la tabella, con «Raggruppa per».
+       Senza JavaScript si vedono tutte e tre una sotto l'altra. -->
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="../styles/rg-core.css">
+  <link rel="stylesheet" href="../styles/rg-typography.css">
+  <link rel="stylesheet" href="../styles/rg-components.css">
+  <link rel="stylesheet" href="../styles/rg-layout.css">
+  <link rel="stylesheet" href="../styles/rg-utilities.css">
+</head>
+<body>
+<main class="rg-u-p-4">
+  <header class="rg-page-header">
+    <div class="rg-page-header__main">
+      <div class="rg-page-header__heading">
+        <h1 class="rg-page-header__title">Prodotti</h1>
+        <p class="rg-page-header__meta"><span>238 articoli</span><span>412 prodotti</span></p>
+      </div>
+      <div class="rg-page-header__actions"><a class="rg-button rg-button--primary" href="#"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-aggiungi"></use></svg>Nuovo prodotto</a></div>
+    </div>
+  </header>
+
+  <!-- ═════════ 1 · LE CARTELLE, ALLA RADICE ═════════
+       La section card SENZA __header: la testa e la barra dei filtri, primo figlio. Corpo STANDARD
+       (padding 24) perche il contenuto non e una tabella. -->
+  <section class="rg-section-card" data-vista="radice" aria-label="Prodotti per cliente">
+    <form class="rg-filter-bar" method="get" action="#" role="search" aria-label="Filtri dell'elenco prodotti">
+      <div class="rg-filter-bar__row">
+        <div class="rg-filter-bar__search">
+          <label class="rg-u-visually-hidden" for="a-q">Cerca nei prodotti</label>
+          <input class="rg-search" type="search" id="a-q" name="q" placeholder="Codice RG, nome, codice prodotto…">
+        </div>
+        <details class="rg-filter-bar__toggle">
+          <summary class="rg-button rg-button--outline"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-filtro"></use></svg>Filtri</summary>
+        </details>
+        <div class="rg-filter-bar__panel">
+          <details class="rg-filter" name="filtri-a">
+            <summary class="rg-button rg-button--outline rg-filter__trigger">Cliente</summary>
+            <div class="rg-filter__panel">
+              <fieldset class="rg-filter__set"><legend class="rg-u-visually-hidden">Cliente</legend>
+                <ul class="rg-filter__options">
+                  <li><label class="rg-filter__option"><input type="checkbox" name="cliente" value="DIOR"><span class="rg-filter__value">DIOR</span><span class="rg-filter__n">172<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                  <li><label class="rg-filter__option"><input type="checkbox" name="cliente" value="FENDI"><span class="rg-filter__value">FENDI</span><span class="rg-filter__n">64<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                </ul>
+              </fieldset>
+              <div class="rg-filter__foot"><button class="rg-button rg-button--secondary" type="submit">Applica</button></div>
+            </div>
+          </details>
+          <details class="rg-filter" name="filtri-a">
+            <summary class="rg-button rg-button--outline rg-filter__trigger">Categoria</summary>
+            <div class="rg-filter__panel">
+              <fieldset class="rg-filter__set"><legend class="rg-u-visually-hidden">Categoria</legend>
+                <ul class="rg-filter__options">
+                  <li><label class="rg-filter__option"><input type="checkbox" name="categoria" value="BORSE"><span class="rg-filter__value">BORSE</span><span class="rg-filter__n">96<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                </ul>
+              </fieldset>
+              <div class="rg-filter__foot"><button class="rg-button rg-button--secondary" type="submit">Applica</button></div>
+            </div>
+          </details>
+          <details class="rg-filter" name="filtri-a">
+            <summary class="rg-button rg-button--outline rg-filter__trigger">Collezione</summary>
+            <div class="rg-filter__panel">
+              <fieldset class="rg-filter__set"><legend class="rg-u-visually-hidden">Collezione</legend>
+                <ul class="rg-filter__options">
+                  <li><label class="rg-filter__option"><input type="checkbox" name="collezione" value="SS"><span class="rg-filter__value">SS</span><span class="rg-filter__n">21<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                </ul>
+              </fieldset>
+              <div class="rg-filter__foot"><button class="rg-button rg-button--secondary" type="submit">Applica</button></div>
+            </div>
+          </details>
+          <details class="rg-filter" name="filtri-a">
+            <summary class="rg-button rg-button--outline rg-filter__trigger">Divisione</summary>
+            <div class="rg-filter__panel">
+              <fieldset class="rg-filter__set"><legend class="rg-u-visually-hidden">Divisione</legend>
+                <ul class="rg-filter__options">
+                  <li><label class="rg-filter__option"><input type="checkbox" name="divisione" value="DONNA"><span class="rg-filter__value">DONNA</span><span class="rg-filter__n">140<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                </ul>
+              </fieldset>
+              <div class="rg-filter__foot"><button class="rg-button rg-button--secondary" type="submit">Applica</button></div>
+            </div>
+          </details>
+          <button class="rg-button rg-button--secondary rg-filter-bar__apply" type="submit">Applica</button>
+        </div>
+      </div>
+
+      <!-- La riga del risultato: a destra i DUE comandi di «come si guarda», tenuti insieme da
+           __settings. La Vista e un segmented a link senza etichetta visibile (aria-label); «Cartelle
+           per» ha la sua etichetta. Le voci sono <a> con aria-current sulla scelta. -->
+      <div class="rg-filter-bar__active">
+        <p class="rg-filter-bar__result"><strong>14</strong> cartelle · <strong>238</strong> articoli · 412 prodotti</p>
+        <div class="rg-filter-bar__settings">
+          <div class="rg-segmented" role="group" aria-label="Vista">
+            <a class="rg-segmented__item" href="?" aria-current="page">Cartelle</a>
+            <a class="rg-segmented__item" href="?elenco">Tutti</a>
+          </div>
+          <div class="rg-filter-bar__setting"><span id="a-per">Cartelle per</span>
+            <div class="rg-segmented" role="group" aria-labelledby="a-per">
+              <a class="rg-segmented__item" href="?" aria-current="true">Cliente</a>
+              <a class="rg-segmented__item" href="?">Collezione + Anno</a>
+              <a class="rg-segmented__item" href="?">Anno</a>
+              <a class="rg-segmented__item" href="?">Categoria</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="rg-section-card__body rg-stack">
+      <section class="rg-record-strip" aria-labelledby="a-ultimi">
+        <h2 class="rg-record-strip__title" id="a-ultimi">Ultimi caricati</h2>
+        <ul class="rg-record-strip__list">
+          <li><a class="rg-record-strip__item" href="#"><img class="rg-thumb rg-thumb--compact rg-record-strip__thumb" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80'><rect width='120' height='80' fill='gainsboro'/><rect x='34' y='26' width='52' height='44' rx='3' fill='dimgray'/><path d='M46 26 q14 -20 28 0' fill='none' stroke='dimgray' stroke-width='4'/></svg>" alt=""><span class="rg-record-strip__body"><span class="rg-record-strip__name">Book Tote ricamo floreale</span><span class="rg-record-strip__meta">DIOR · SS 2026</span></span></a></li>
+          <li><a class="rg-record-strip__item" href="#"><img class="rg-thumb rg-thumb--compact rg-thumb--drawing rg-record-strip__thumb" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'><g fill='none' stroke='black' stroke-width='1.6'><path d='M6 35 C26 2 46 2 60 35 S94 68 114 35'/><circle cx='60' cy='35' r='9'/><path d='M6 35 C26 68 46 68 60 35 S94 2 114 35'/></g></svg>" alt=""><span class="rg-record-strip__body"><span class="rg-record-strip__name">Pochette Saddle</span><span class="rg-record-strip__meta">DIOR · FW 2026</span></span></a></li>
+          <li><a class="rg-record-strip__item" href="#"><img class="rg-thumb rg-thumb--compact rg-record-strip__thumb" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='silver'/><circle cx='40' cy='40' r='22' fill='gray'/></svg>" alt=""><span class="rg-record-strip__body"><span class="rg-record-strip__name">Baguette</span><span class="rg-record-strip__meta">FENDI · SS 2026</span></span></a></li>
+          <li><a class="rg-record-strip__item" href="#"><span class="rg-record-strip__body"><span class="rg-record-strip__name">Cintura con fibbia ricamata</span><span class="rg-record-strip__meta">BRUNELLO CUCINELLI · FW 2026</span></span></a></li>
+          <li><a class="rg-record-strip__item" href="#"><img class="rg-thumb rg-thumb--compact rg-record-strip__thumb" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='gainsboro'/><rect x='18' y='22' width='44' height='36' fill='dimgray'/></svg>" alt=""><span class="rg-record-strip__body"><span class="rg-record-strip__name">Shopper</span><span class="rg-record-strip__meta">BOTTEGA VENETA · SS 2027</span></span></a></li>
+          <li><a class="rg-record-strip__item" href="#"><img class="rg-thumb rg-thumb--compact rg-record-strip__thumb" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='lightgray'/><path d='M14 60 L40 18 L66 60z' fill='gray'/></svg>" alt=""><span class="rg-record-strip__body"><span class="rg-record-strip__name">Mini bag</span><span class="rg-record-strip__meta">LOUIS VUITTON MALLETIER · FW 2026</span></span></a></li>
+        </ul>
+      </section>
+
+      <div class="rg-folder-grid rg-folder-grid--compact">
+        <a class="rg-folder" href="?dentro"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">DIOR</span><span class="rg-folder__count">172 prodotti</span></span></a>
+        <a class="rg-folder" href="?dentro"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">BRUNELLO CUCINELLI</span><span class="rg-folder__count">48 prodotti</span></span></a>
+        <a class="rg-folder" href="?dentro"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">FENDI</span><span class="rg-folder__count">64 prodotti</span></span></a>
+        <a class="rg-folder" href="?dentro"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">BOTTEGA VENETA</span><span class="rg-folder__count">41 prodotti</span></span></a>
+        <a class="rg-folder" href="?dentro"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">LOUIS VUITTON MALLETIER</span><span class="rg-folder__count">36 prodotti</span></span></a>
+        <a class="rg-folder" href="?dentro"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">MAX MARA</span><span class="rg-folder__count">22 prodotti</span></span></a>
+        <a class="rg-folder" href="?dentro"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">SALVATORE FERRAGAMO</span><span class="rg-folder__count">18 prodotti</span></span></a>
+        <a class="rg-folder" href="?dentro"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">Senza cliente</span><span class="rg-folder__count">3 prodotti</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ 2 · DENTRO LA CARTELLA DIOR ═════════
+       L'etichetta «Cliente DIOR» la toglie; il percorso sta in testa al corpo. -->
+  <section class="rg-section-card" data-vista="dentro" aria-label="Prodotti di DIOR">
+    <form class="rg-filter-bar" method="get" action="#" role="search" aria-label="Filtri dell'elenco prodotti">
+      <div class="rg-filter-bar__row">
+        <div class="rg-filter-bar__search">
+          <label class="rg-u-visually-hidden" for="b-q">Cerca nei prodotti</label>
+          <input class="rg-search" type="search" id="b-q" name="q" placeholder="Codice RG, nome, codice prodotto…">
+        </div>
+        <details class="rg-filter-bar__toggle">
+          <summary class="rg-button rg-button--outline"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-filtro"></use></svg>Filtri<span class="rg-filter__count"><span class="rg-u-visually-hidden">, scelti </span>1</span></summary>
+        </details>
+        <div class="rg-filter-bar__panel">
+          <details class="rg-filter" name="filtri-b">
+            <summary class="rg-button rg-button--outline rg-filter__trigger">Cliente<span class="rg-filter__count"><span class="rg-u-visually-hidden">, scelti </span>1</span></summary>
+            <div class="rg-filter__panel">
+              <fieldset class="rg-filter__set"><legend class="rg-u-visually-hidden">Cliente</legend>
+                <ul class="rg-filter__options">
+                  <li><label class="rg-filter__option"><input type="checkbox" name="cliente" value="DIOR" checked><span class="rg-filter__value">DIOR</span><span class="rg-filter__n">172<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                  <li><label class="rg-filter__option"><input type="checkbox" name="cliente" value="FENDI"><span class="rg-filter__value">FENDI</span><span class="rg-filter__n">64<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                </ul>
+              </fieldset>
+              <div class="rg-filter__foot"><a class="rg-button rg-button--ghost" href="?">Togli</a><button class="rg-button rg-button--secondary" type="submit">Applica</button></div>
+            </div>
+          </details>
+          <details class="rg-filter" name="filtri-b">
+            <summary class="rg-button rg-button--outline rg-filter__trigger">Categoria</summary>
+            <div class="rg-filter__panel">
+              <fieldset class="rg-filter__set"><legend class="rg-u-visually-hidden">Categoria</legend>
+                <ul class="rg-filter__options">
+                  <li><label class="rg-filter__option"><input type="checkbox" name="categoria" value="BORSE"><span class="rg-filter__value">BORSE</span><span class="rg-filter__n">61<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                </ul>
+              </fieldset>
+              <div class="rg-filter__foot"><button class="rg-button rg-button--secondary" type="submit">Applica</button></div>
+            </div>
+          </details>
+          <button class="rg-button rg-button--secondary rg-filter-bar__apply" type="submit">Applica</button>
+        </div>
+      </div>
+      <div class="rg-filter-bar__active">
+        <p class="rg-filter-bar__result"><strong>6</strong> cartelle · <strong>98</strong> articoli su 238 · 172 prodotti</p>
+        <ul class="rg-filter-bar__tags" aria-label="Filtri scelti">
+          <li><a class="rg-chip rg-chip--remove" href="?"><span class="rg-u-visually-hidden">Togli </span><span class="rg-chip__key">Cliente</span> DIOR<svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-chiudi"></use></svg></a></li>
+        </ul>
+        <div class="rg-filter-bar__settings">
+          <div class="rg-segmented" role="group" aria-label="Vista">
+            <a class="rg-segmented__item" href="?dentro" aria-current="page">Cartelle</a>
+            <a class="rg-segmented__item" href="?elenco">Tutti</a>
+          </div>
+          <div class="rg-filter-bar__setting"><span id="b-per">Cartelle per</span>
+            <div class="rg-segmented" role="group" aria-labelledby="b-per">
+              <a class="rg-segmented__item" href="?">Cliente</a>
+              <a class="rg-segmented__item" href="?dentro" aria-current="true">Collezione + Anno</a>
+              <a class="rg-segmented__item" href="?dentro">Anno</a>
+              <a class="rg-segmented__item" href="?dentro">Categoria</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="rg-section-card__body rg-stack">
+      <nav class="rg-breadcrumb" aria-label="Percorso nelle cartelle">
+        <ol>
+          <li><a href="?">Prodotti</a></li>
+          <li><span class="rg-breadcrumb__current" aria-current="page">DIOR</span></li>
+        </ol>
+      </nav>
+      <div class="rg-folder-grid rg-folder-grid--compact">
+        <a class="rg-folder" href="?elenco"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">SS 2027</span><span class="rg-folder__count">12 prodotti</span></span></a>
+        <a class="rg-folder" href="?elenco"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">FW 2026</span><span class="rg-folder__count">58 prodotti</span></span></a>
+        <a class="rg-folder" href="?elenco"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">SS 2026</span><span class="rg-folder__count">61 prodotti</span></span></a>
+        <a class="rg-folder" href="?elenco"><svg class="rg-icon rg-folder__icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-cartella"></use></svg><span class="rg-folder__body"><span class="rg-folder__name">Senza collezione</span><span class="rg-folder__count">4 prodotti</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ 3 · LA VISTA «TUTTI»: LA TABELLA ═════════
+       Corpo --flush: la tabella arriva ai bordi. La barra perde il filetto di sotto da sola (:has),
+       perche l'intestazione della tabella porta il suo filetto nero. Al posto di «Cartelle per», il
+       select «Raggruppa per». -->
+  <section class="rg-section-card rg-section-card--flush" data-vista="elenco" aria-label="Tutti i prodotti">
+    <form class="rg-filter-bar" method="get" action="#" role="search" aria-label="Filtri dell'elenco prodotti">
+      <div class="rg-filter-bar__row">
+        <div class="rg-filter-bar__search">
+          <label class="rg-u-visually-hidden" for="c-q">Cerca nei prodotti</label>
+          <input class="rg-search" type="search" id="c-q" name="q" placeholder="Codice RG, nome, codice prodotto…">
+        </div>
+        <details class="rg-filter-bar__toggle">
+          <summary class="rg-button rg-button--outline"><svg class="rg-icon" aria-hidden="true" focusable="false"><use href="../icons/rg-icons.svg#rg-icon-filtro"></use></svg>Filtri</summary>
+        </details>
+        <div class="rg-filter-bar__panel">
+          <details class="rg-filter" name="filtri-c">
+            <summary class="rg-button rg-button--outline rg-filter__trigger">Cliente</summary>
+            <div class="rg-filter__panel">
+              <fieldset class="rg-filter__set"><legend class="rg-u-visually-hidden">Cliente</legend>
+                <ul class="rg-filter__options">
+                  <li><label class="rg-filter__option"><input type="checkbox" name="cliente" value="DIOR"><span class="rg-filter__value">DIOR</span><span class="rg-filter__n">172<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                </ul>
+              </fieldset>
+              <div class="rg-filter__foot"><button class="rg-button rg-button--secondary" type="submit">Applica</button></div>
+            </div>
+          </details>
+          <details class="rg-filter" name="filtri-c">
+            <summary class="rg-button rg-button--outline rg-filter__trigger">Categoria</summary>
+            <div class="rg-filter__panel">
+              <fieldset class="rg-filter__set"><legend class="rg-u-visually-hidden">Categoria</legend>
+                <ul class="rg-filter__options">
+                  <li><label class="rg-filter__option"><input type="checkbox" name="categoria" value="BORSE"><span class="rg-filter__value">BORSE</span><span class="rg-filter__n">96<span class="rg-u-visually-hidden"> articoli</span></span></label></li>
+                </ul>
+              </fieldset>
+              <div class="rg-filter__foot"><button class="rg-button rg-button--secondary" type="submit">Applica</button></div>
+            </div>
+          </details>
+          <button class="rg-button rg-button--secondary rg-filter-bar__apply" type="submit">Applica</button>
+        </div>
+      </div>
+      <div class="rg-filter-bar__active">
+        <p class="rg-filter-bar__result"><strong>238</strong> articoli · 412 prodotti</p>
+        <div class="rg-filter-bar__settings">
+          <div class="rg-segmented" role="group" aria-label="Vista">
+            <a class="rg-segmented__item" href="?">Cartelle</a>
+            <a class="rg-segmented__item" href="?elenco" aria-current="page">Tutti</a>
+          </div>
+          <label class="rg-filter-bar__setting">Raggruppa per
+            <select class="rg-select" name="raggruppa">
+              <option value="">Nessuno</option>
+              <option value="cliente">Cliente</option>
+              <option value="collezione">Collezione + Anno</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </form>
+
+    <div class="rg-section-card__body">
+      <div class="rg-table-wrap">
+        <table class="rg-table">
+          <caption class="rg-u-visually-hidden">Tutti i prodotti</caption>
+          <thead><tr><th class="rg-table__thumb" scope="col"><span class="rg-u-visually-hidden">Immagine</span></th><th scope="col">Codice RG</th><th class="rg-table__grow" scope="col">Nome prodotto</th><th scope="col">Cliente</th><th scope="col">Collezione</th></tr></thead>
+          <tbody>
+            <tr><td class="rg-table__thumb"><img class="rg-thumb" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80'><rect width='120' height='80' fill='gainsboro'/><rect x='34' y='26' width='52' height='44' rx='3' fill='dimgray'/></svg>" alt=""></td><td class="rg-mono">RG-26-DIO-0449</td><td>Book Tote ricamo floreale</td><td>DIOR</td><td>SS 2026</td></tr>
+            <tr><td class="rg-table__thumb"><span class="rg-thumb rg-thumb--empty" aria-hidden="true"></span></td><td class="rg-mono">RG-26-BRU-0451</td><td>Cintura con fibbia ricamata</td><td>BRUNELLO CUCINELLI</td><td>FW 2026</td></tr>
+            <tr><td class="rg-table__thumb"><img class="rg-thumb" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='silver'/><circle cx='40' cy='40' r='22' fill='gray'/></svg>" alt=""></td><td class="rg-mono">RG-26-FEN-0452</td><td>Baguette</td><td>FENDI</td><td>SS 2026</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+(function () {
+  // Solo per le tavole: quale dei tre stati mostrare. Nella piattaforma lo decide il server.
+  var q = location.search, vista = q.indexOf('elenco') !== -1 ? 'elenco' : q.indexOf('dentro') !== -1 ? 'dentro' : 'radice';
+  document.querySelectorAll('[data-vista]').forEach(function (s) { s.hidden = s.getAttribute('data-vista') !== vista; });
+})();
+</script>
+</body>
+</html>

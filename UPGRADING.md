@@ -61,6 +61,28 @@ fra due stati e non fra otto.
 Solo le versioni che richiedono un'azione o un controllo nel consumatore. Le altre sono additive
 e non hanno note: si sale e basta.
 
+### 1.56.0 — la pagina elenco su una superficie (proposta)
+
+Additiva, con **tre cambi d'aspetto** da guardare dopo il bump (nessuna classe rimossa o rinominata):
+
+- **`rg-search` ha la lente** e non più il filetto a 32 px. Il testo parte a 36 come prima. Se un
+  prodotto aveva messo un'icona propria dentro o accanto al campo, ora le lenti sono due: togliere la
+  propria.
+- **Il nome di `rg-folder` va a capo** invece di troncarsi coi puntini: le tessere con nomi lunghi
+  diventano più alte, e quelle della stessa riga con loro.
+- **`a.rg-segmented__item` non è più sottolineato**, è a 14 px e alto 34; `[aria-current]` lo segna
+  scelto. Una classe locale che copriva il buco (`app-link-segmentato`) si toglie.
+
+Per la pagina Prodotti (RG Product Suite), cosa sostituisce cosa:
+
+| Oggi | Con la 1.56.0 |
+| --- | --- |
+| due `rg-segmented` in un `rg-cluster` sopra la barra | dentro la barra, nella riga del risultato: `rg-filter-bar__settings` con la Vista (segmented a link, `aria-label="Vista"`) e «Cartelle per» (`rg-filter-bar__setting` + segmented a link) o «Raggruppa per» |
+| barra, poi percorso / cartelle / tabella sul fondo | una `rg-section-card` con la barra come primo figlio (niente `__header`); corpo standard per le cartelle, `--flush` per la tabella |
+| `app-recent-strip` / `app-recent-card` (CSS locale) | `rg-record-strip` (togliere il CSS locale) |
+| `rg-folder-grid` con l'icona disegnata nel template | `rg-folder-grid rg-folder-grid--compact` con `rg-icon rg-folder__icon` → `#rg-icon-cartella` |
+| `rg-breadcrumb rg-u-mb-6` sopra le cartelle | dentro il corpo della card, in un `rg-stack`, senza margine |
+
 ### 1.55.0 — la barra dei filtri di un elenco (proposta)
 
 Additiva, nessun controllo richiesto. Per le pagine elenco (RG Product Suite):

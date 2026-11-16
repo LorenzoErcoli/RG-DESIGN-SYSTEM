@@ -533,6 +533,51 @@ sono brevi e mutuamente esclusive (es. unità mm/px/originali). L'opzione attiva
 </div>
 ```
 
+### Segmented a link (proposta 1.56.0)
+
+Quando le opzioni sono **indirizzi** e non stati della stessa pagina — «Cartelle | Tutti», «Cartelle
+per: Cliente · Collezione + Anno · Anno · Categoria» — ogni voce è un `<a>` e la voce scelta porta
+**`aria-current`** (`"page"` se è la pagina in cui si è, `"true"` se è una scelta dentro la pagina),
+non `aria-pressed`. Il gruppo è `role="group"` con un nome: `aria-label`, o `aria-labelledby` verso
+l'etichetta visibile.
+
+- Fino alla 1.55.0 il DS non lo prevedeva: il link restava **sottolineato**, usciva a 16 px invece dei
+  14 dei controlli e, da elemento inline, ignorava l'altezza di 34 px. Dalla 1.56.0 `a.rg-segmented__item`
+  è un controllo come il `<button>`, e `[aria-current]` lo segna scelto (nero, testo bianco) senza
+  classi in più. Chi copriva il buco con una classe locale (`app-link-segmentato`) la può togliere.
+- L'altezza del gruppo è 40 (34 + 2 + 2 + i filetti): la stessa di `rg-select` e dei bottoni, quindi
+  sta in fila con loro. Non c'è una variante più piccola, e non serve: sotto i 40 il bersaglio scende
+  sotto la soglia (§11).
+- Se le voci non stanno in una riga vanno a capo dentro il gruppo solo dove lo dice il contenitore
+  (`rg-filter-bar__settings`, sul telefono); altrove il gruppo resta su una riga.
+
+```html
+<div class="rg-segmented" role="group" aria-label="Vista">
+  <a class="rg-segmented__item" href="/?view=folders" aria-current="page">Cartelle</a>
+  <a class="rg-segmented__item" href="/?view=all">Tutti</a>
+</div>
+```
+
+## Ricerca (`.rg-search`) — la lente (proposta 1.56.0)
+
+`<input class="rg-search" type="search">` porta da solo la **lente** del set (`rg-icon-cerca`) a
+sinistra: 16 px, 12 dal bordo, il testo parte a 36. **Nessun markup in più**: ogni campo di ricerca già
+scritto la prende. Fino alla 1.55.0 al suo posto c'era un riquadro vuoto chiuso da un filetto a 32 px.
+
+- La lente è grigia (`--rg-color-text-secondary`) a riposo, **nera** col fuoco, grigio 400 da
+  disabilitato; resta in sola lettura.
+- Come è fatta, per chi la tocca: lo sfondo ha due livelli, il tracciato della lente (un data URI, nero:
+  è solo la **forma**) e sopra una tinta piena `--rg-search-lens` fusa in `lighten`. La tinta si cambia
+  dalla variabile, non riscrivendo l'immagine. Regge su qualunque fondo del campo più chiaro della tinta
+  (bianco, neutral-50): sono tutti i fondi dei campi del DS.
+- Il nome del campo resta un `<label>` (anche `rg-u-visually-hidden`) o un `aria-label`: la lente è un
+  disegno, non un nome.
+
+```html
+<label class="rg-u-visually-hidden" for="q">Cerca nei prodotti</label>
+<input class="rg-search" type="search" id="q" name="q" placeholder="Codice RG, nome, codice prodotto">
+```
+
 ## Upload (`.rg-upload`)
 
 Area di caricamento file (DXF/SVG/PDF/macchina) con label esplicita e vincoli visibili. Fornire

@@ -7,6 +7,57 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.56.0 — proposta (ramo `ds/pagina-elenco`, non rilasciata)
+
+**Minor.** Un componente nuovo, una variante, un elemento, un'icona, due regole contestuali; nessun
+token, nessuna classe rimossa o rinominata. **Tre cambi d'aspetto** per chi c'era già: la lente in
+`rg-search`, il nome di `rg-folder` che va a capo, il segmented a link non più sottolineato (note in
+UPGRADING.md).
+
+Chiesta dalla chat «Prodotti e varianti» della RG Product Suite e precisata dall'agente ux-ui, per la
+pagina Prodotti: «mi sembra molto poco bello, non c'è modo per rendere tutto più esteticamente
+coerente?» (Lorenzo, 2026-11-16). Da mostrare a Lorenzo prima del rilascio.
+
+### La lente in `rg-search`
+
+Al posto del riquadro vuoto col filetto a 32 px, la lente del set (`rg-icon-cerca`) a 16 px, **senza
+markup in più**: un data URI come forma e una tinta `--rg-search-lens` fusa in `lighten` sopra di lei,
+perché un'immagine di sfondo non legge `currentColor`. Grigia a riposo, nera col fuoco, 400 da
+disabilitata. [forms](components/forms.md#ricerca-rg-search--la-lente-proposta-1560)
+
+### Il segmented a link
+
+`a.rg-segmented__item` è un controllo come il `<button>`: non sottolineato, 14 px, alto 34; la voce
+scelta la dice `aria-current`. Per le scelte che sono indirizzi («Cartelle | Tutti»).
+[forms](components/forms.md#segmented-a-link-proposta-1560)
+
+### Due comandi nella riga del risultato (`rg-filter-bar__settings`)
+
+Tiene insieme a destra la Vista e «Cartelle per» (o «Raggruppa per»); sotto i 680 px va a capo sotto
+le etichette e resta in vista. [filter-bar](components/filter-bar.md#più-comandi-di-come-si-guarda-rg-filter-bar__settings-proposta-1560)
+
+### La barra in testa a una section card
+
+`.rg-section-card > .rg-filter-bar`: barra e contenuto su un solo bianco. Senza filetto sopra, 24 ai
+lati, senza filetto sotto se il corpo comincia con una tabella (`:has()`). Unico caso di section card
+senza `__header`. [filter-bar](components/filter-bar.md#la-barra-in-testa-a-una-section-card-proposta-1560)
+
+### Le cartelle compatte (`rg-folder-grid--compact`) e l'icona `cartella`
+
+Tessera alta 72, padding 12, raggio 4, colonne da 200 con 12 di luce, icona del set a 24 in grigio,
+nome a 14. Il nome di **ogni** `rg-folder` ora va a capo invece di troncarsi.
+[folders](components/folders.md)
+
+### La fila di record (`rg-record-strip`)
+
+«Ultimi caricati»: tessere di record con le **stesse misure** della cartella compatta e la stessa
+griglia (si allineano), su una riga sola senza scorrimento: 6 da 1260 px di colonna, poi 5, 4, 3, e due
+per riga (quattro) sotto i 624; sotto i 412 senza miniatura. È un contenitore (`@container`).
+[record-strip](components/record-strip.md)
+
+Vetrina: tavola 64 `#list-page`, e la pagina intera `examples/rg-pagina-elenco.html` (cartelle,
+`?dentro`, `?elenco`). Verificato in Chrome a 1192, 900, 700 e 375 px: nessuno scorrimento di lato.
+
 ## 1.55.0 — 2026-11-16
 
 **Minor, additiva.** Un componente nuovo e tre aggiunte a componenti esistenti, nessun token nuovo,

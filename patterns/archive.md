@@ -19,6 +19,13 @@ scelta multipla con i conteggi, etichette dei valori scelti, «Raggruppa per» c
 vuoto che dice quale filtro lo svuota. Il pannello laterale resta la forma per un archivio con
 molti filtri da tenere tutti in vista.
 
+Dalla 1.56.0 (proposta) la pagina elenco sta **su una superficie sola**: una `rg-section-card` con la
+barra dei filtri come testa e, nel corpo, il percorso, gli ultimi caricati
+([`rg-record-strip`](../components/record-strip.md)) e le cartelle compatte
+([`rg-folder-grid--compact`](../components/folders.md)) — oppure la tabella, a filo. I comandi di
+«come si guarda» (Vista, «Cartelle per», «Raggruppa per») stanno a destra nella riga del risultato
+(`rg-filter-bar__settings`). Esempio intero: [examples/rg-pagina-elenco.html](../examples/rg-pagina-elenco.html).
+
 ## Sezioni esempio
 
 - Identità: titolo, codice, stagione, cliente/progetto secondo permessi

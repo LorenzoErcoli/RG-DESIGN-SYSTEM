@@ -145,6 +145,94 @@ Modificatori e stati:
 - L'elenco raggruppato usa la **riga di gruppo** di [rg-table](tables.md#riga-di-gruppo-rg-table__group-proposta-1550).
 - Non diventa un'etichetta da togliere: non è un filtro.
 
+### Più comandi di «come si guarda»: `rg-filter-bar__settings` (proposta 1.56.0)
+
+La pagina Prodotti ne ha due: la **Vista** «Cartelle | Tutti» (due indirizzi) e, accanto, «**Cartelle
+per**» (fra le cartelle: Cliente · Collezione + Anno · Anno · Categoria, anche questi indirizzi) oppure
+«**Raggruppa per**» (nell'elenco, il `<select>`). Nessuno dei due filtra, quindi stanno nella riga del
+risultato, a destra.
+
+- Con due `__setting` il `margin-inline-start: auto` di ognuno li staccherebbe l'uno dall'altro.
+  **`rg-filter-bar__settings`** li tiene **insieme**, a destra, a 16 px l'uno dall'altro, e va a capo
+  come un blocco solo. Dentro, ogni `__setting` perde l'auto.
+- Un comando con l'etichetta visibile è un `__setting` («Cartelle per» + il segmented, «Raggruppa per» +
+  il select). Un comando che si spiega da sé — la Vista: «Cartelle | Tutti» — è il suo
+  [`rg-segmented` a link](forms.md#segmented-a-link-proposta-1560), figlio diretto di `__settings`, con
+  `aria-label="Vista"`.
+- I segmented a link: `<a class="rg-segmented__item">`, la voce scelta con `aria-current`. Dentro
+  `__settings` il gruppo può andare a capo: «Cliente · Collezione + Anno · Anno · Categoria» a 375 px
+  non sta su una riga.
+- **Sul telefono restano in vista**: la riga del risultato non sta nel pannello «Filtri». Sotto i 680 px
+  `__settings` va a capo **sotto le etichette**, a tutta larghezza, un comando per riga; l'etichetta a
+  sinistra e il comando a destra, o sotto se non c'è posto.
+- Un solo comando? Resta valido il `__setting` da solo, come nella 1.55.0.
+
+```html
+<div class="rg-filter-bar__active">
+  <p class="rg-filter-bar__result"><strong>14</strong> cartelle · <strong>238</strong> articoli · 412 prodotti</p>
+  <div class="rg-filter-bar__settings">
+    <div class="rg-segmented" role="group" aria-label="Vista">
+      <a class="rg-segmented__item" href="/?view=folders" aria-current="page">Cartelle</a>
+      <a class="rg-segmented__item" href="/?view=all">Tutti</a>
+    </div>
+    <div class="rg-filter-bar__setting"><span id="cartelle-per">Cartelle per</span>
+      <div class="rg-segmented" role="group" aria-labelledby="cartelle-per">
+        <a class="rg-segmented__item" href="/?group=client" aria-current="true">Cliente</a>
+        <a class="rg-segmented__item" href="/?group=collection">Collezione + Anno</a>
+        <a class="rg-segmented__item" href="/?group=year">Anno</a>
+        <a class="rg-segmented__item" href="/?group=category">Categoria</a>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+Nella vista elenco, al posto del secondo `__setting`, il `<label class="rg-filter-bar__setting">Raggruppa
+per <select class="rg-select" name="raggruppa">…</select></label>` di sempre.
+
+### La barra in testa a una section card (proposta 1.56.0)
+
+Da sola la barra è una fascia bianca con un filetto sopra e uno sotto, e quello che viene dopo
+(percorso, cartelle, tabella) sta sul **fondo** grigio, che non è una superficie di lettura
+([design-rules §6](../design-rules.md#quale-superficie-a-quale-profondità)). Per avere barra e contenuto
+**su un solo bianco** la barra va **dentro** una [`rg-section-card`](section-card.md), come **primo
+figlio, al posto di `__header`**:
+
+- il filetto di sopra esce (lo fa il contorno della card), i lati salgono a **24**, il filo della testa
+  e del corpo della card;
+- il filetto di sotto **resta** e fa da linea fra testa e corpo — tranne quando il corpo comincia con
+  una tabella (`rg-section-card--flush` > `__body` > `rg-table-wrap` per primo): l'intestazione della
+  tabella porta già il suo filetto nero, e la barra toglie il suo da sola (`:has()`), senza classi;
+- nessuna classe nuova: la regola è contestuale (`.rg-section-card > .rg-filter-bar`). Una section card
+  **senza `__header` è ammessa solo così**.
+
+Il corpo: **standard** (24 di padding) quando il contenuto sono percorso, fila di record e cartelle;
+**`--flush`** quando è la tabella. Il modificatore lo sceglie il template a seconda della vista.
+
+```html
+<section class="rg-section-card" aria-label="Prodotti per cliente">
+  <form class="rg-filter-bar" method="get" action="/" role="search" aria-label="Filtri dell'elenco prodotti">
+    <div class="rg-filter-bar__row">…</div>
+    <div class="rg-filter-bar__active">…</div>
+  </form>
+  <div class="rg-section-card__body rg-stack">
+    <nav class="rg-breadcrumb" aria-label="Percorso nelle cartelle">…</nav>
+    <section class="rg-record-strip" aria-labelledby="ultimi">…</section>
+    <div class="rg-folder-grid rg-folder-grid--compact">…</div>
+  </div>
+</section>
+
+<section class="rg-section-card rg-section-card--flush" aria-label="Tutti i prodotti">
+  <form class="rg-filter-bar" …>…</form>
+  <div class="rg-section-card__body">
+    <div class="rg-table-wrap"><table class="rg-table">…</table></div>
+  </div>
+</section>
+```
+
+La pagina intera, nei tre stati (cartelle alla radice, dentro una cartella, elenco), è in
+[examples/rg-pagina-elenco.html](../examples/rg-pagina-elenco.html).
+
 ### Lo stato vuoto
 
 Quando i filtri non lasciano niente, al posto della tabella un [rg-empty](alerts.md) con le sue
@@ -217,7 +305,10 @@ form.rg-filter-bar                          method="get", role="search", aria-la
    ├─ p.rg-filter-bar__result
    ├─ ul.rg-filter-bar__tags > li > a.rg-chip.rg-chip--remove
    ├─ a.rg-button.rg-button--ghost          «Togli tutti»
-   └─ label.rg-filter-bar__setting          «Raggruppa per» + select.rg-select
+   ├─ label.rg-filter-bar__setting          «Raggruppa per» + select.rg-select   (un comando solo)
+   └─ .rg-filter-bar__settings              (1.56.0, piu comandi) al posto del __setting singolo
+      ├─ .rg-segmented[role=group][aria-label]  la Vista, a link (a.rg-segmented__item[aria-current])
+      └─ .rg-filter-bar__setting            «Cartelle per» + .rg-segmented a link, oppure «Raggruppa per» + select
 ```
 
 ### La barra

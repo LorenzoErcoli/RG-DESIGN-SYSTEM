@@ -47,6 +47,11 @@ blocco ricorre in ogni tab di più prodotti (§12 delle regole), è un component
   la pagina ha già la sua testata sopra i tab.
 - Non annidare una `rg-section-card` dentro un'altra: per sotto-sezioni interne usare
   `rg-disclosure--boxed` o separatori.
+- **Senza `__header`** (proposta 1.56.0) la section card è ammessa in **un caso solo**: quando la sua
+  testa è una [barra dei filtri](filter-bar.md#la-barra-in-testa-a-una-section-card-proposta-1560),
+  primo figlio, sopra il corpo. È la pagina elenco: barra, percorso, «Ultimi caricati» e cartelle (o la
+  tabella) su un solo bianco. La barra perde il filetto di sopra e prende i 24 ai lati da sola; non
+  serve una variante. Fuori da questo caso la testa resta `__header`.
 
 ### Enfasi (`--emphasis`) — una sola per vista
 

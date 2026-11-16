@@ -76,7 +76,23 @@
    max-width resta: li serve davvero. */
 .rg-field-with-unit .rg-input--numeric { max-width: none; }
 .rg-textarea { min-height: 96px; resize: vertical; }
-.rg-search { padding-left: 36px; background: var(--rg-color-white) linear-gradient(90deg, transparent 0 32px, var(--rg-color-border) 32px 33px, transparent 33px); }
+/* Ricerca — la LENTE nel campo (proposta 1.56.0). Fino alla 1.55.0 a sinistra c'era un riquadro vuoto:
+   un gradiente disegnava il filetto a 32 px e la lente non c'era, quindi il campo diceva «qui manca
+   qualcosa». Ora la lente e quella del set (rg-icon-cerca, stesso tracciato), a 16 px, 12 dal bordo,
+   e il testo parte a 36 (12 + 16 + 8). Il filetto non c'e piu: separava un vuoto.
+   SENZA MARKUP IN PIU: tutti gli input.rg-search della piattaforma la prendono da soli. Un'immagine di
+   sfondo non legge currentColor, e un colore scritto nel data URI sarebbe un valore fuori dai token;
+   percio il tracciato nel data URI e solo la FORMA (nero, il colore iniziale), e il colore lo da il
+   livello sopra: una tinta piena --rg-search-lens fusa in lighten. Dove la lente e nera prende la tinta,
+   dove e vuota il bianco (o il neutral-50 di disabled e readonly) resta il piu chiaro e non cambia.
+   Funziona finche il fondo del campo e piu chiaro della tinta: vale per tutte le superfici dei campi.
+   I longhand e non lo shorthand, e il selettore con :disabled e [readonly], perche le regole di quegli
+   stati scrivono `background:` e cancellerebbero l'immagine. La tinta: secondaria a riposo, nera col
+   fuoco, 400 da disabilitato. */
+.rg-search { --rg-search-lens: var(--rg-color-text-secondary); padding-left: calc(var(--rg-space-3) + var(--rg-space-4) + var(--rg-space-2)); }
+.rg-search, .rg-search:is(:disabled, [readonly]) { background-image: linear-gradient(var(--rg-search-lens), var(--rg-search-lens)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='square'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5l5 5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: var(--rg-space-3) 50%; background-size: var(--rg-space-4) var(--rg-space-4); background-blend-mode: lighten, normal; }
+.rg-search:focus-visible { --rg-search-lens: var(--rg-color-text-primary); }
+.rg-search:disabled { --rg-search-lens: var(--rg-color-neutral-400); }
 /* Etichette di controllo: 14 px come il controllo che accompagnano, non 16 del testo corrente. */
 .rg-choice { display: inline-flex; align-items: center; gap: var(--rg-space-2); font-size: var(--rg-font-size-sm); }
 /* Solo la casella e il pallino (v1.16.0). Il selettore era "input" nudo: un campo di testo dentro
@@ -98,8 +114,16 @@
 .rg-segmented__item { min-height: 34px; padding: 6px var(--rg-space-3); background: transparent; border: 0; border-radius: var(--rg-radius-sm); cursor: pointer; }
 .rg-segmented__item:hover { text-decoration: underline; text-underline-offset: 3px; }
 .rg-segmented__item:active { background: var(--rg-color-neutral-100); }
-.rg-segmented__item--active, .rg-segmented__item.is-selected, .rg-segmented__item[aria-pressed="true"] { color: var(--rg-color-white); background: var(--rg-color-black); text-decoration: none; }
+.rg-segmented__item--active, .rg-segmented__item.is-selected, .rg-segmented__item[aria-pressed="true"], .rg-segmented__item[aria-current]:not([aria-current="false"]) { color: var(--rg-color-white); background: var(--rg-color-black); text-decoration: none; }
 .rg-segmented__item:disabled { color: var(--rg-color-neutral-400); cursor: not-allowed; }
+/* Segmented a LINK (proposta 1.56.0) — quando le opzioni sono INDIRIZZI («Cartelle | Tutti»: due pagine,
+   non due stati della stessa), ogni voce e un <a> e la scelta la dice aria-current, non aria-pressed.
+   Fino alla 1.55.0 il DS non lo prevedeva: il link restava sottolineato a riposo (la lezione di
+   rg-button, 1.3.1), usciva a 16 px invece dei 14 dei controlli (rg-core li da solo ai <button>), e da
+   inline ignorava i 34 px di altezza. Il colore NON si scrive qui: a.rg-segmented__item peserebbe piu
+   di --active e la voce scelta perderebbe il testo bianco; lo da gia rg-core (a eredita).
+   L'hover resta quello della voce: sottolinea, e la voce scelta no (:hover pesa meno di [aria-current]). */
+a.rg-segmented__item { display: inline-flex; align-items: center; font-size: var(--rg-font-size-sm); text-decoration: none; }
 
 /* Autocomplete — input di testo con suggerimenti filtrati mentre si digita.
    Da preferire al <select> quando le opzioni sono molte (vedi components/forms.md).
@@ -1042,8 +1066,65 @@ a.rg-chip { text-decoration: none; }
 .rg-folder:focus-visible { outline: 2px solid var(--rg-color-focus); outline-offset: 2px; }
 .rg-folder__icon { flex-shrink: 0; color: var(--rg-color-accent-sand); }
 .rg-folder__body { display: flex; flex-direction: column; gap: var(--rg-space-1); min-width: 0; }
-.rg-folder__name { color: var(--rg-color-black); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-bold); font-size: var(--rg-font-size-md); text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Il nome VA A CAPO, non si tronca (proposta 1.56.0). Fino alla 1.55.0 restava su una riga coi
+   puntini: «BRUNELLO CUCINE…». Un nome troncato e un'informazione persa (patterns/archive.md, «codici
+   troncati»), e qui il nome e l'unica cosa che dice quale cartella e. La tessera cresce. */
+.rg-folder__name { color: var(--rg-color-black); font-family: var(--rg-font-identity); font-weight: var(--rg-weight-bold); font-size: var(--rg-font-size-md); text-transform: uppercase; overflow-wrap: anywhere; }
 .rg-folder__count { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); }
+
+/* ── LA TESSERA COMPATTA E LA FILA DI RECORD (proposta 1.56.0) ─────────────────────────────────────────
+   Due tessere DIVERSE con le STESSE misure: la cartella e un contenitore (apre un gruppo), la tessera
+   della fila e un record (apre un prodotto). Le distingue la figura — l'icona della cartella col
+   conteggio sotto, la miniatura col cliente sotto — non la cornice.
+   Chiesta dalla pagina Prodotti («mi sembra molto poco bello»): tessere grigie alte 96 a raggio 8 sotto
+   una barra e sopra una tabella a raggio 4, e una striscia di card bianche che scorreva di lato.
+   LE MISURE, una volta sola per le due: 72 px di altezza minima (la miniatura compatta da 48 + 12 sopra
+   e sotto), 12 di padding (riga densa, §5), raggio 4 (quello della barra, della tabella, della section
+   card), filetto neutro, superficie RIENTRANTE: stanno dentro la section card bianca della pagina
+   (§6: rientrante dentro sollevata; una tessera bianca sul bianco sarebbe una card nella card). Hover:
+   bianco e contorno nero, come la cartella di sempre.
+   LA GRIGLIA, una sola per le due: colonne da almeno --rg-tile-min (200 px) con 12 di luce. Cartelle e
+   fila stanno nello stesso corpo, quindi hanno le stesse colonne alla stessa larghezza e si allineano:
+   a 1110 px (la colonna della pagina con la barra laterale, meno i 24 della card) sono cinque da 213.
+   Provato a 168 (sei da 175): la miniatura lasciava al nome 90 px, e «Book Tote ricamo floreale»
+   andava su tre righe con «DIOR · SS / 2026» spezzato. Sei in fila da 1260 px di colonna. */
+.rg-folder-grid--compact, .rg-record-strip__list { --rg-tile-min: calc(var(--rg-space-24) * 2 + var(--rg-space-2)); grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--rg-tile-min)), 1fr)); gap: var(--rg-space-3); }
+.rg-folder-grid--compact > .rg-folder, .rg-record-strip__item { display: flex; align-items: center; gap: var(--rg-space-3); min-height: calc(var(--rg-space-16) + var(--rg-space-2)); padding: var(--rg-space-3); color: inherit; text-decoration: none; background: var(--rg-color-surface); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border); border-radius: var(--rg-radius-md); transition: background var(--rg-motion-fast), border-color var(--rg-motion-fast); }
+.rg-folder-grid--compact > .rg-folder:hover, .rg-record-strip__item:hover { background: var(--rg-color-surface-raised); border-color: var(--rg-color-black); }
+.rg-folder-grid--compact > .rg-folder:focus-visible, .rg-record-strip__item:focus-visible { outline: var(--rg-border-strong) var(--rg-border-style) var(--rg-color-focus); outline-offset: var(--rg-border-strong); }
+/* La cartella compatta: icona del set a 24 (rg-icon-cartella), in grigio secondario e nera all'hover.
+   Non in sabbia come la cartella grande: quella e una figura PIENA, questa un tratto da 1,5, e un tratto
+   sabbia sul grigio sta a ~2,3:1 — un segno che non si legge. Nome a 14 medium in maiuscolo con la
+   spaziatura da label (il corpo della cella di tabella), conteggio mono sotto. */
+.rg-folder-grid--compact .rg-folder__icon { --rg-icon-size: var(--rg-space-6); width: var(--rg-space-6); height: var(--rg-space-6); color: var(--rg-color-text-secondary); }
+.rg-folder-grid--compact > .rg-folder:hover .rg-folder__icon { color: var(--rg-color-black); }
+.rg-folder-grid--compact .rg-folder__name { font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); line-height: var(--rg-line-height-heading); }
+
+/* LA FILA DI RECORD (rg-record-strip) — «Ultimi caricati»: pochi record recenti come scorciatoia, sopra
+   le cartelle. UNA RIGA SOLA, senza scorrimento di lato: ne restano in vista quante ne stanno nelle
+   colonne della griglia, le altre si nascondono (display: none, quindi fuori anche dal tab e dal lettore
+   di schermo: chi le cerca le trova nell'elenco). Le soglie sono quelle in cui la griglia passa da n a
+   n + 1 colonne (n * 200 + (n - 1) * 12), letterali perche una condizione @container non legge le
+   variabili. Sotto i 624 px: due per riga e quattro in tutto; sotto i 412 anche senza miniatura (a 140 px la miniatura
+   lascerebbe 50 px al nome). La fila e un CONTENITORE (container-type): misura la colonna in cui sta,
+   non la finestra. */
+.rg-record-strip { min-width: 0; container-type: inline-size; }
+.rg-record-strip__title { margin: 0 0 var(--rg-space-2); color: var(--rg-color-text-label); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-xs); font-weight: var(--rg-weight-medium); letter-spacing: var(--rg-letter-label); text-transform: uppercase; }
+.rg-record-strip__list { display: grid; margin: 0; padding: 0; list-style: none; }
+.rg-record-strip__list > li { display: flex; min-width: 0; }
+.rg-record-strip__item { flex: 1 1 auto; min-width: 0; }
+.rg-record-strip__body { display: grid; gap: var(--rg-space-1); min-width: 0; }
+.rg-record-strip__name { color: var(--rg-color-text-primary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); font-weight: var(--rg-weight-medium); line-height: var(--rg-line-height-heading); overflow-wrap: anywhere; }
+.rg-record-strip__meta { color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-xs); line-height: var(--rg-line-height-technical); overflow-wrap: anywhere; }
+.rg-record-strip__code { color: var(--rg-color-text-secondary); font-family: var(--rg-font-mono); font-size: var(--rg-font-size-xs); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+@container (width < 624px) {
+  .rg-record-strip__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rg-record-strip__list > li:nth-child(n+5) { display: none; }
+}
+@container (width < 412px) { .rg-record-strip__item > .rg-record-strip__thumb { display: none; } }
+@container (624px <= width < 836px) { .rg-record-strip__list > li:nth-child(n+4) { display: none; } }
+@container (836px <= width < 1048px) { .rg-record-strip__list > li:nth-child(n+5) { display: none; } }
+@container (1048px <= width < 1260px) { .rg-record-strip__list > li:nth-child(n+6) { display: none; } }
 
 /* File input — caricamento file nella forma COMPATTA, da riga di form (v1.5.0).
    Non sostituisce rg-upload: quella e l'area di rilascio grande di una pagina (116px, tratteggio,
@@ -3039,6 +3120,26 @@ a.rg-icon-button { text-decoration: none; }
 .rg-filter-bar__more[open] > summary { border-color: var(--rg-color-black); }
 .rg-filter-bar__setting { display: inline-flex; align-items: center; gap: var(--rg-space-2); margin-inline-start: auto; color: var(--rg-color-text-secondary); font-family: var(--rg-font-identity); font-size: var(--rg-font-size-sm); white-space: nowrap; }
 .rg-filter-bar__setting .rg-select { width: auto; }
+/* PIU COMANDI DI «COME SI GUARDA» (proposta 1.56.0) — la pagina Prodotti ne ha due: la Vista «Cartelle |
+   Tutti» e, accanto, «Cartelle per» (fra le cartelle) o «Raggruppa per» (nell'elenco). Con due
+   __setting il margin-inline-start: auto di ognuno li staccherebbe l'uno dall'altro; __settings li tiene
+   INSIEME, a destra, e va a capo come un blocco solo. Dentro, ogni comando perde l'auto. Un comando
+   senza etichetta visibile (la Vista: le due parole bastano) e il suo rg-segmented, figlio diretto,
+   con aria-label. Il segmented puo andare a capo: «Cliente · Collezione + Anno · Anno · Categoria» a
+   375 px non sta su una riga. */
+.rg-filter-bar__settings { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--rg-space-2) var(--rg-space-4); margin-inline-start: auto; }
+.rg-filter-bar__settings > .rg-filter-bar__setting { margin-inline-start: 0; }
+.rg-filter-bar__settings .rg-segmented { flex-wrap: wrap; max-width: 100%; }
+/* LA BARRA IN TESTA A UNA SECTION CARD (proposta 1.56.0) — barra e contenuto su UNA superficie bianca.
+   La barra da sola e una fascia bianca con un filetto sopra e uno sotto, e sotto la pagina tornava
+   grigia: percorso, cartelle e tabella stavano sul fondo (§6: il fondo non e una superficie di
+   lettura). Dentro la section card la barra prende il posto della testa (__header): una section card
+   SENZA __header e ammessa SOLO cosi, con la barra come primo figlio. Si toglie il filetto di sopra (lo
+   fa gia il contorno della card) e i lati salgono a 24, il filo della testa e del corpo. Il filetto di
+   sotto resta, e fa da linea fra testa e corpo; esce solo se il corpo comincia con una tabella, perche
+   l'intestazione di rg-table porta gia il suo filetto nero e i due starebbero uno sopra l'altro. */
+.rg-section-card > .rg-filter-bar { padding-inline: var(--rg-space-6); border-top: 0; border-radius: var(--rg-radius-md) var(--rg-radius-md) 0 0; }
+.rg-section-card > .rg-filter-bar:has(+ .rg-section-card__body > .rg-table-wrap:first-child) { border-bottom: 0; }
 /* «Applica»: serve SENZA JavaScript (la ricerca si manda anche con Invio, «Raggruppa per» no). Il
    controller mette rg-filter-bar--live sul form e sopra i 680 px il bottone esce: li si invia da soli.
    Sul telefono resta, in fondo al pannello: li si sceglie in piu filtri e si applica una volta. */
@@ -3102,7 +3203,11 @@ a.rg-icon-button { text-decoration: none; }
   .rg-filter-bar__more { align-self: flex-start; margin-block: var(--rg-space-2); }
   .rg-filter-bar__more > summary { padding-inline: 0; }
   .rg-filter-bar__setting { flex: 1 1 100%; justify-content: space-between; margin-inline-start: 0; }
-  .rg-filter-bar__apply { align-self: stretch; margin-top: var(--rg-space-2); }
+  /* I comandi restano in vista: vanno a capo SOTTO le etichette, a tutta larghezza, uno per riga;
+     l'etichetta a sinistra e il comando a destra, o sotto se non c'e posto. */
+  .rg-filter-bar__settings { flex: 1 1 100%; flex-direction: column; align-items: stretch; margin-inline-start: 0; }
+  .rg-filter-bar__settings > .rg-filter-bar__setting { flex-wrap: wrap; white-space: normal; }
+  .rg-filter-bar__settings > .rg-segmented { align-self: flex-start; }  .rg-filter-bar__apply { align-self: stretch; margin-top: var(--rg-space-2); }
   .rg-filter-bar--live .rg-filter-bar__apply { display: inline-flex; }
 }
 @media (pointer: coarse) {

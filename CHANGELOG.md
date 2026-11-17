@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.56.0 — proposta (ramo `ds/pagina-elenco`, non rilasciata)
+## 1.56.0 — 2026-11-17
 
 **Minor.** Un componente nuovo, una variante, un elemento, un'icona, due regole contestuali; nessun
 token, nessuna classe rimossa o rinominata. **Tre cambi d'aspetto** per chi c'era già: la lente in

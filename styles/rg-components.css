@@ -3264,6 +3264,9 @@ a.rg-icon-button { text-decoration: none; }
 .rg-hotspots__page {
   position: relative;
   isolation: isolate;
+  /* Contenitore (1.57.0, anteprima del testo): 1cqw = 1% della larghezza della pagina, cosi il corpo
+     del testo stampato segue l'immagine. Solo inline-size: l'altezza la da aspect-ratio. */
+  container-type: inline-size;
   width: 100%;
   aspect-ratio: var(--ratio, 210 / 297);
   background: var(--rg-color-surface-raised);
@@ -3272,7 +3275,7 @@ a.rg-icon-button { text-decoration: none; }
 .rg-hotspots__image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
 .rg-hotspots__layer { position: absolute; inset: 0; }
 .rg-hotspots__wait, .rg-hotspots__error { display: none; }
-.rg-hotspots__page:is([data-stato="preparazione"], [data-stato="errore"]) > :is(.rg-hotspots__image, .rg-hotspots__layer) { visibility: hidden; }
+.rg-hotspots__page:is([data-stato="preparazione"], [data-stato="errore"]) > :is(.rg-hotspots__image, .rg-hotspots__preview, .rg-hotspots__layer) { visibility: hidden; }
 .rg-hotspots__page[data-stato="preparazione"] > .rg-hotspots__wait { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: var(--rg-space-4); margin: 0; padding: var(--rg-space-6); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); text-align: center; }
 .rg-hotspots__wait::before { content: ""; width: var(--rg-space-6); height: var(--rg-space-6); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-text-primary); border-inline-end-color: transparent; border-radius: 50%; animation: rg-chat-spin calc(var(--rg-motion-normal) * 4) linear infinite; }
 @media (prefers-reduced-motion: reduce) { .rg-hotspots__wait::before { animation: none; } }
@@ -3356,10 +3359,73 @@ a.rg-icon-button { text-decoration: none; }
 .rg-hotspots__spot[data-stato="incollato"] .rg-hotspots__label::before { content: ""; flex: none; box-sizing: border-box; width: calc(var(--rg-space-1) + var(--rg-border-strong) * 2); height: calc(var(--rg-space-1) + var(--rg-border-strong) * 2); border: var(--rg-border-hairline) var(--rg-border-style) currentColor; border-radius: 50%; }
 /* Aperto: un triangolo pieno dopo il numero, che punta verso il modulo. */
 .rg-hotspots__spot[data-aperto] .rg-hotspots__label::after { content: ""; flex: none; width: calc(var(--rg-space-1) + var(--rg-border-strong)); height: var(--rg-space-2); background: currentColor; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+/* L'ANTEPRIMA DEL TESTO STAMPATO (proposta 1.57.0, seconda richiesta): sulla pagina a sinistra si vede
+   gia il testo che la scheda compilata scrivera, mentre lo si scrive a destra (Lorenzo, 2026-11-18).
+   Uno strato SEPARATO dai riquadri: __preview sta fra l'immagine e __layer, non prende clic
+   (pointer-events: none) e i riquadri, coi loro stati, gli restano sopra. E aria-hidden: lo stesso
+   testo e nel modulo, e dentro un listbox stanno solo gruppi e opzioni.
+   IL BLOCCO (__block) porta --x --y --w --h in % della pagina, come i riquadri, ma la sua scatola e
+   TUTTA la pagina (inset: 0): cosi le righe dentro si posizionano in coordinate di PAGINA, come le
+   manda il server. Il fondo BIANCO pieno e il suo ::before, nel rettangolo x/y/w/h: copre cio che e
+   stampato li sotto, come la pulizia dell'export.
+   LA RIGA (__line): --left (% della larghezza della pagina), --base (% dell'ALTEZZA: la LINEA DI BASE,
+   non la cima), --size (corpo, NUMERO in % della larghezza: font-size = --size x 1cqw, la pagina e un
+   contenitore), --colore (dai dati: i colori delle teste T1/T2/T3 del PDF sono dati del foglio, non
+   colori del DS, e arrivano nello style come le coordinate). Carattere che imita il PDF, Helvetica:
+   eccezione dichiarata ai font del DS (§3), perche qui si mostra un documento d'altri, non l'interfaccia.
+   line-height 1 e white-space pre: gli a capo li ha gia fatti il server. La base: la riga parte con la
+   cima su --base e risale di --rg-hotspots-ascent em (0,85: con line-height 1 su Arial, che e
+   l'Helvetica di Windows, la base sta a 0,846 em dalla cima). E una manopola del componente, non un
+   token: se il carattere vero e un altro la pagina la cambia.
+   STATI DEL BLOCCO, attributi: data-stato="aggiorna" (il testo si ricalcola: righe sbiadite e un
+   contorno puntinato, discreto) e data-segue (non ci sta tutto: contorno tratteggiato nero spesso con
+   l'alone bianco, e sotto l'angolo destro un segno mono nero col testo di data-segue, «segue» se e
+   vuoto). In stampa niente; forced-colors: nero su bianco. */
+.rg-hotspots__preview { position: absolute; inset: 0; pointer-events: none; }
+.rg-hotspots__block { position: absolute; inset: 0; }
+.rg-hotspots__block::before { content: ""; position: absolute; left: var(--x, 0%); top: var(--y, 0%); width: var(--w, 0%); height: var(--h, 0%); background: var(--rg-color-white); }
+.rg-hotspots__line {
+  position: absolute;
+  left: var(--left, 0%);
+  top: var(--base, 0%);
+  translate: 0 calc(-1em * var(--rg-hotspots-ascent, 0.85));
+  margin: 0;
+  color: var(--colore, var(--rg-color-black));
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size, 1) * 1cqw);
+  font-weight: var(--rg-weight-regular);
+  font-style: normal;
+  font-synthesis: none;
+  letter-spacing: normal;
+  line-height: 1;
+  white-space: pre;
+}
+.rg-hotspots__block[data-stato="aggiorna"] > .rg-hotspots__line { opacity: 0.4; }
+.rg-hotspots__block[data-stato="aggiorna"]::before { outline: var(--rg-border-hairline) dotted var(--rg-color-border-medium); outline-offset: calc(-1 * var(--rg-border-hairline)); }
+.rg-hotspots__block[data-segue]::before { outline: var(--rg-border-strong) dashed var(--rg-color-black); outline-offset: 0; box-shadow: 0 0 0 calc(var(--rg-border-strong) + var(--rg-border-hairline)) var(--rg-color-white); }
+.rg-hotspots__block[data-segue]::after {
+  content: "segue";
+  position: absolute;
+  left: calc(var(--x, 0%) + var(--w, 0%));
+  top: calc(var(--y, 0%) + var(--h, 0%) + var(--rg-border-strong));
+  translate: -100% 0;
+  padding: 0 var(--rg-space-1);
+  color: var(--rg-color-white);
+  background: var(--rg-color-black);
+  outline: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-white);
+  font-family: var(--rg-font-mono);
+  font-size: var(--rg-font-size-xs);
+  line-height: var(--rg-space-4);
+  white-space: nowrap;
+}
+.rg-hotspots__block[data-segue]:not([data-segue=""])::after { content: attr(data-segue); }
 /* forced-colors: il riquadro sta su un'IMMAGINE, che il sistema non ricolora. Se le linee passassero ai
    colori di sistema (e le box-shadow sparissero) il contorno potrebbe confondersi col disegno: riquadri
-   ed etichette restano in nero e bianco, che contro un'immagine qualsiasi e il contrasto massimo. */
+   ed etichette restano in nero e bianco, che contro un'immagine qualsiasi e il contrasto massimo. Il
+   testo dell'anteprima resta nero su bianco. */
 @media (forced-colors: active) {
   .rg-hotspots__spot, .rg-hotspots__label, .rg-hotspots__label::before, .rg-hotspots__label::after { forced-color-adjust: none; }
+  .rg-hotspots__preview, .rg-hotspots__block::before, .rg-hotspots__block::after, .rg-hotspots__line { forced-color-adjust: none; }
+  .rg-hotspots__line { color: var(--rg-color-black); }
 }
-@media print { .rg-hotspots__layer { display: none !important; } }
+@media print { .rg-hotspots__layer, .rg-hotspots__preview { display: none !important; } }

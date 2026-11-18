@@ -45,6 +45,7 @@ Stati della **pagina** (`rg-hotspots__page`):
 | `rg-hotspots` | `role="listbox" aria-multiselectable="true" aria-label` | tutte le pagine; 24 px fra una e l'altra |
 | `rg-hotspots__page` | `<div style="--ratio: L / A">` | una pagina, col suo rapporto |
 | `rg-hotspots__image` | `<img alt="" width height>` | il PNG, a tutta scatola |
+| `rg-hotspots__preview` | `<div aria-hidden="true">` | lo strato del testo stampato (sotto, *L'anteprima del testo stampato*) |
 | `rg-hotspots__wait` | `<p aria-hidden="true">` | «Sto preparando la pagina 2» |
 | `rg-hotspots__error` | `<div aria-hidden="true">` con un `rg-alert--error` | che cosa non è riuscito e che cosa fare |
 | `rg-hotspots__layer` | `role="group" aria-label="Pagina N"` | lo strato dei riquadri, grande quanto la pagina |
@@ -107,6 +108,67 @@ bianco è il contrasto massimo, mentre i colori di sistema potrebbero confonders
 
 **Non è un visore.** Niente zoom, niente pan: la pagina è larga quanto la colonna. Se un riquadro è
 troppo piccolo per essere letto, la soluzione è allargare la colonna, non ingrandire il disegno.
+
+## L'anteprima del testo stampato (`__preview`) — proposta 1.57.0
+
+> Vedere già sulla pagina il testo che la scheda compilata scriverà, mentre lo si scrive a destra.
+> — Lorenzo, 2026-11-18
+
+Uno strato **separato dai riquadri**, fra l'immagine e `__layer`: non prende clic
+(`pointer-events: none`), e i riquadri coi loro stati gli restano sopra. È `aria-hidden`: lo stesso
+testo sta nel modulo.
+
+| Elemento | Su | Variabili | Ruolo |
+| --- | --- | --- | --- |
+| `rg-hotspots__preview` | `<div aria-hidden="true">`, fra `__image` e `__layer` | — | lo strato |
+| `rg-hotspots__block` | `<div>` | `--x --y --w --h` in % della pagina, come i riquadri | il fondo **bianco pieno** che copre ciò che è stampato lì sotto (come la pulizia dell'export) |
+| `rg-hotspots__line` | `<span>` dentro il blocco | `--left` (% della **larghezza** della pagina), `--base` (% dell'**altezza**: la **linea di base**, non la cima), `--size` (**numero**: corpo in % della larghezza), `--colore` (dai dati) | una riga di testo |
+
+| Attributo sul blocco | Segno |
+| --- | --- |
+| *(nessuno)* | fondo bianco, testo |
+| `data-stato="aggiorna"` | il testo si sta ricalcolando: righe sbiadite e un contorno puntinato grigio, discreto |
+| `data-segue="…"` | non ci sta tutto: contorno **tratteggiato nero spesso** con l'alone bianco, e sotto l'angolo destro un segno mono nero col testo dell'attributo («segue in legenda»); con `data-segue=""` scrive «segue» |
+
+**Coordinate di pagina, anche dentro il blocco.** La scatola del blocco è tutta la pagina
+(`inset: 0`) e il fondo bianco è il suo `::before` nel rettangolo `--x/--y/--w/--h`: così `--left` e
+`--base` delle righe sono percentuali della **pagina**, come le manda il server, e non del blocco.
+
+**Il corpo segue l'immagine.** La pagina è un contenitore (`container-type: inline-size`) e la riga ha
+`font-size: calc(var(--size) * 1cqw)`: `--size: 2.1` vuol dire 2,1% della larghezza della pagina. Per
+questo `--size` è un numero senza unità, mentre `--left` e `--base` vogliono il `%`.
+
+**La linea di base cade su `--base`.** La riga parte con la cima su `--base` e risale di
+`--rg-hotspots-ascent` em (default 0,85: con `line-height: 1` su Arial, che è l'Helvetica di Windows, la
+base sta a 0,846 em dalla cima). Misurato in Chrome: base a 0,6 px da quella chiesta, cioè
+l'arrotondamento del pixel. Se il carattere disponibile è un altro, la pagina cambia la manopola nel
+suo CSS.
+
+**Il carattere imita il PDF**: `Helvetica, Arial, sans-serif`, peso normale, `line-height: 1`,
+`white-space: pre` (gli a capo li ha già fatti il server; niente a capo del browser). È un'**eccezione
+dichiarata** ai font del DS (§3): qui si mostra un documento, non l'interfaccia. Lo stesso per
+`--colore`: i colori delle teste T1/T2/T3 del PDF (#111111, #0C447C, #993C1D, #3B6D11) sono **dati del
+foglio**, arrivano nello `style` come le coordinate, e non sono colori del DS. Senza `--colore` il
+testo è nero.
+
+**In stampa** lo strato non c'è; in una pagina in preparazione o in errore è nascosto con l'immagine.
+**forced-colors**: il testo resta nero su bianco.
+
+```html
+<div class="rg-hotspots__page" style="--ratio: 1240 / 1754">
+  <img class="rg-hotspots__image" src="…" alt="" width="1240" height="1754">
+  <div class="rg-hotspots__preview" aria-hidden="true">
+    <div class="rg-hotspots__block" style="--x:6.45%;--y:59.86%;--w:50%;--h:2.85%">
+      <span class="rg-hotspots__line" style="--left:6.45%;--base:61.57%;--size:2.1;--colore:#0C447C">3     2    MADEIRA 1147  4.120</span>
+    </div>
+    <div class="rg-hotspots__block" data-stato="aggiorna" data-segue="segue in legenda" style="--x:6.45%;--y:73.55%;--w:87.1%;--h:7.2%">
+      <span class="rg-hotspots__line" style="--left:8.5%;--base:76.4%;--size:2.1;--colore:#993C1D">NOTE: telaio 30 x 30, rinforzo in tela sotto il ricamo,</span>
+      <span class="rg-hotspots__line" style="--left:8.5%;--base:79.6%;--size:2.1;--colore:#993C1D">filo di bobina bianco su tutti gli stop chiari, tensione</span>
+    </div>
+  </div>
+  <div class="rg-hotspots__layer" role="group" aria-label="Pagina 1">…riquadri…</div>
+</div>
+```
 
 ## Misure
 

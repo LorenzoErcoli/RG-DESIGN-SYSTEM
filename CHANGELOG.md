@@ -40,6 +40,14 @@ sinistro o destro secondo la metà della pagina (`round()`), mai fuori pagina. A
 (eccezione dichiarata ai 40 del DS). forced-colors: resta nero e bianco; in stampa i riquadri non ci
 sono. [hotspots](components/hotspots.md)
 
+**L'anteprima del testo stampato** (seconda richiesta, Lorenzo 2026-11-18): uno strato `__preview` fra
+l'immagine e i riquadri, che non prende clic. Blocchi `__block` col fondo bianco pieno su
+`--x/--y/--w/--h` (coprono lo stampato sotto) e righe `__line` in coordinate di pagina: `--left`,
+`--base` (la linea di base, % dell'altezza), `--size` (numero, corpo in `cqw`: la pagina diventa un
+contenitore), `--colore` (dato del foglio). Carattere Helvetica/Arial, `line-height: 1`,
+`white-space: pre`: eccezione dichiarata ai font del DS. Stati `data-stato="aggiorna"` (sbiadito) e
+`data-segue` (tratteggio nero e segno «segue»). Manopola `--rg-hotspots-ascent` (0,85 em).
+
 Vetrina: tavole 65 `#review-split` e 66 `#hotspots`; pagina intera `examples/rg-review-split.html`, con
 il controller di riferimento della scelta. Misurato in Chrome a 1600, 1264, 1200, 1199 e 375 px.
 

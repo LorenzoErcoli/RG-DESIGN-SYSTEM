@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.57.0 — proposta (ramo `ds/review-split`, non rilasciata)
+## 1.57.0 — 2026-11-18
 
 **Minor.** Due componenti nuovi, nessun token, nessuna classe rimossa o rinominata, nessun cambio
 d'aspetto per chi c'era già. Chiesti dalla RG Product Suite per la pagina «Compila col PDF» (scheda di

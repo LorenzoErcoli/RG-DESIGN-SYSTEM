@@ -7,7 +7,7 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
-## 1.57.1 — proposta (ramo `ds/hotspots-zoom`, non rilasciata)
+## 1.57.1 — 2026-11-18
 
 **Patch.** Nessuna classe o token aggiunto, rimosso o rinominato; senza la variabile nuova la pagina è
 identica alla 1.57.0. Sarebbe una 1.58.0 se si contasse la manopola come parte del contratto: se Lorenzo

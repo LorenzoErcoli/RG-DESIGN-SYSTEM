@@ -72,6 +72,12 @@ soglia è `display: none`, sotto si vede sopra il modulo. Il testo lo scrive la 
 (il documento) e che cosa si può fare lo stesso (compilare il modulo). A 375 px nessuno scorrimento di
 lato: il modulo è largo quanto lo schermo, il resto è responsabilità dei suoi campi.
 
+**Sotto soglia il modulo è la pagina.** `__form` perde padding, bordo e fondo: torna un blocco
+normale, largo quanto la colonna della pagina (343 a 375 px, come la stessa pagina senza split), e la
+barra sticky perde i margini negativi e riprende il filetto di sotto. Una superficie in più attorno
+toglieva 34 px: a 375 il contenuto aveva 309 e una griglia a quattro colonne sforava (pagina larga 383).
+Resta la colonna con 24 px fra i blocchi.
+
 **La barra al piede della colonna.** Lo sticky vale per il contenitore che scorre più vicino: in due
 colonne è la colonna, in una colonna è il documento. La barra va da bordo a bordo della colonna (il
 DS annulla il padding), resta in fondo anche se il modulo è corto, e non ha il filetto di sotto
@@ -92,9 +98,13 @@ schiacciato a 2 px invece di far scorrere la colonna. Il contenuto eccede e scor
 **`overscroll-behavior: contain`** su tutte e due le colonne: la rotella arrivata in fondo a una
 colonna non fa scorrere la pagina sotto.
 
-**Superfici.** Documento sul fondo (`--rg-color-background`), pagine sollevate sopra; modulo sul
-bianco. Bordo e divisione con `--rg-color-border-medium`. Dentro il modulo niente `rg-section-card`
-(sarebbe un sollevato dentro un sollevato): sezioni aperte, `rg-stack` e titoli `rg-h3`.
+**Superfici.** Documento sul fondo (`--rg-color-background`), pagine sollevate sopra. Il modulo, in
+due colonne, è sul bianco con bordo e divisione `--rg-color-border-medium`; in una colonna non ha
+superficie propria e sta sul fondo della pagina. Quindi i suoi blocchi portano la loro superficie
+quando il modulo è una pagina vera (`rg-section-card`, `rg-disclosure--boxed`): in una colonna è la
+regola §6, in due colonne sono blocchi sollevati su una colonna bianca — un annidamento ammesso qui,
+perché la colonna fa le veci della pagina. Un modulo fatto solo di campi aperti (`rg-stack`, titoli
+`rg-h3`, come nell'esempio) in una colonna resta sul fondo: si accetta per un modulo corto.
 
 **In stampa** il documento e l'avviso spariscono, il modulo torna nel flusso senza colonne.
 

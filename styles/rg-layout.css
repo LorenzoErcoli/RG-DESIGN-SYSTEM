@@ -236,14 +236,17 @@ details.rg-param-section:not([open]) > .rg-param-section__header { margin-bottom
 /* La barra al piede della colonna: da bordo a bordo (annulla il padding), spinta in fondo anche se il
    modulo e corto, senza il filetto di sotto (lo fa il bordo della colonna). */
 .rg-review-split__form > .rg-action-bar--sticky { margin-block-start: auto; margin-inline: calc(-1 * var(--rg-space-6)); border-block-end: 0; }
+/* SOTTO SOGLIA il modulo E la pagina: torna un blocco normale, senza padding, bordo ne fondo propri.
+   I suoi blocchi (rg-section-card, rg-disclosure) hanno gia la loro superficie, e una superficie in piu
+   attorno toglieva 2 x 16 + 2 di larghezza: a 375 px il contenuto aveva 309 px invece dei 343 della
+   stessa pagina senza split, e una griglia a 4 colonne sforava (pagina larga 383). Resta la colonna
+   flex con la luce di 24 fra i blocchi; la barra sticky perde i margini negativi, che servivano solo
+   ad annullare il padding. */
 @container rg-review-split (max-width: 1135.98px) {
   .rg-review-split__source { display: none; }
   .rg-review-split__notice { display: block; flex: 1 1 100%; min-width: 0; margin-block-end: var(--rg-space-6); }
-  .rg-review-split__form { flex: 1 1 100%; min-width: 0; max-width: none; height: auto; overflow: visible; border-inline-start: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); }
-}
-@container rg-review-split (max-width: 680px) {
-  .rg-review-split__form { padding: var(--rg-space-4) var(--rg-space-4) 0; }
-  .rg-review-split__form > .rg-action-bar--sticky { margin-inline: calc(-1 * var(--rg-space-4)); }
+  .rg-review-split__form { flex: 1 1 100%; min-width: 0; max-width: none; height: auto; overflow: visible; padding: 0; background: transparent; border: 0; }
+  .rg-review-split__form > .rg-action-bar--sticky { margin-inline: 0; border-block-end: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black); }
 }
 /* Su carta: il modulo nel flusso, senza colonne che scorrono; il documento ha il suo PDF. */
 @media print {

@@ -7,6 +7,42 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.57.0 — proposta (ramo `ds/review-split`, non rilasciata)
+
+**Minor.** Due componenti nuovi, nessun token, nessuna classe rimossa o rinominata, nessun cambio
+d'aspetto per chi c'era già. Chiesti dalla RG Product Suite per la pagina «Compila col PDF» (scheda di
+ricamo, solo desktop). Da mostrare a Lorenzo prima del rilascio.
+
+### Lo split di revisione a tutta altezza (`rg-review-split`)
+
+Il «Desktop split view» di patterns/review.md, che non aveva classi. Due colonne sotto la testata di
+pagina, alte quanto la finestra, ognuna col suo scorrimento: a sinistra il documento con una testa
+ferma (`__head` su una `rg-toolbar`, stato in `__status`) e le pagine (`__pages`); a destra il `<form>`
+(`__form`) con la `rg-action-bar--sticky` al piede della **sua** colonna, e lo `scroll-padding` su di
+lei. Altezza `max(60dvh, 100dvh − --rg-review-split-offset)`: la manopola è del componente, letta con un
+ripiego, e la pagina la imposta nel suo CSS su qualsiasi antenato. Documento da 440 px, modulo fra 640
+e 880. Sotto 1136 px di **contenitore** (`@container rg-review-split`; 1200 di finestra nel guscio
+`rg-appshell`) resta il modulo nel flusso, e lo slot `__notice` mostra l'`rg-alert--info` della pagina.
+A 375 px nessuno scorrimento di lato. Sta in `rg-layout.css`, accanto a `rg-workspace` e
+`rg-action-bar`. [review-split](components/review-split.md)
+
+### I riquadri sulla pagina (`rg-hotspots`)
+
+Una pagina come immagine a tutta larghezza (`aspect-ratio: var(--ratio)` dal server, così niente salta
+quando il PNG arriva) e sopra N riquadri in percentuale (`--x --y --w --h`, eccezione «posizione su un
+disegno»). Listbox a scelta multipla: `role="listbox" aria-multiselectable` → `role="group"` per pagina →
+`role="option"` per riquadro. **Gli stati sono attributi**: `aria-selected="true"` (3 px + etichetta
+piena), `data-aperto` (secondo contorno staccato + triangolo), `data-stato="compilato"` (segno di
+conferma), `"vuoto"` (tratteggio, bianco fra i trattini), `"incollato"` (cerchietto della bozza); sulla
+pagina `data-stato="preparazione"` e `"errore"`. Contorno nero sopra un bianco con alone bianco: si vede
+su qualsiasi disegno, e non cambia mai colore. Etichetta mono 12 fuori dal riquadro, sull'angolo
+sinistro o destro secondo la metà della pagina (`round()`), mai fuori pagina. Area minima 24 × 24
+(eccezione dichiarata ai 40 del DS). forced-colors: resta nero e bianco; in stampa i riquadri non ci
+sono. [hotspots](components/hotspots.md)
+
+Vetrina: tavole 65 `#review-split` e 66 `#hotspots`; pagina intera `examples/rg-review-split.html`, con
+il controller di riferimento della scelta. Misurato in Chrome a 1600, 1264, 1200, 1199 e 375 px.
+
 ## 1.56.0 — 2026-11-17
 
 **Minor.** Un componente nuovo, una variante, un elemento, un'icona, due regole contestuali; nessun

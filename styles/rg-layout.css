@@ -149,3 +149,99 @@ details.rg-param-section:not([open]) > .rg-param-section__header { margin-bottom
   .rg-documentation { grid-template-columns: 1fr; }
 }
 
+
+/* ── SPLIT DI REVISIONE A TUTTA ALTEZZA (proposta 1.57.0): rg-review-split ─────────────────────────
+   Il «Desktop split view» di patterns/review.md, che fino alla 1.56.0 era una frase senza classi.
+   Chiesto dalla RG Product Suite per «Compila col PDF» (scheda di ricamo, desktop): a sinistra il
+   documento (le pagine della scheda macchina, con i riquadri rg-hotspots), a destra il modulo lungo
+   che si compila guardandolo. Non e rg-workspace (la tela di destra e pan/zoom con overflow hidden:
+   qui niente pan/zoom, le pagine scorrono) e non e rg-split-panel (non scorre).
+   DUE COLONNE CHE SCORRONO DA SOLE, sotto la testata di pagina. Sinistra (__source): una testa ferma
+   (__head, su una rg-toolbar: stato e bottoni) e sotto le pagine (__pages) che scorrono. Destra
+   (__form, sul <form>): il modulo, che scorre, e in fondo la rg-action-bar--sticky, che si incolla al
+   piede della SUA colonna (lo sticky vale per il contenitore che scorre piu vicino: la colonna).
+   ALTEZZA: la finestra meno testata dell'app e testata di pagina, mai meno di 60dvh. Quanto sono alte
+   lo sa la pagina: --rg-review-split-offset e una manopola del componente, non un token, letta con un
+   ripiego (default --rg-layout-header + 192, come rg-pdf-frame) e quindi impostabile su QUALSIASI
+   antenato, nel CSS della pagina, senza style=. dvh senza ripiego in vh: e una pagina da desktop.
+   LARGHEZZE: documento da 440 px in su, modulo fra 640 e 880; lo spazio in piu va a meta fra i due finche
+   il modulo arriva a 880, poi tutto al documento. Misure della richiesta, dichiarate qui. Sono anche le
+   BASI del flex: 440 + 640 = 1080 stanno sotto la soglia, e le due colonne non vanno mai a capo.
+   SOGLIA: e un CONTENITORE (container-name rg-review-split). Sotto 1136 px di larghezza propria —
+   1200 di finestra nel guscio rg-appshell, che ha 32 + 32 di padding; meno se la pagina ha una
+   sidebar, e per questo e un @container e non un @media — resta una colonna sola: il documento si
+   nasconde, compare lo slot __notice (la pagina ci mette un rg-alert--info) e il modulo torna nel
+   flusso del documento, dove la barra sticky usa lo scroll-padding di :root (gia nel DS, 1.47.0).
+   A 1136 il documento ha 468 e il modulo 668: un po sopra i minimi, perche due colonne al millimetro
+   non si leggono. Il valore e letterale perche una condizione @container non accetta var().
+   FOCUS NON COPERTO (WCAG 2.4.11): la colonna del modulo e lei il contenitore che scorre, quindi lo
+   scroll-padding sta su di lei e legge --rg-action-bar-clearance come la regola di :root.
+   overscroll-behavior: contain, perche la rotella arrivata in fondo a una colonna non faccia scorrere
+   la pagina sotto e non sposti la testata. */
+.rg-review-split {
+  --rg-review-split-height: max(60dvh, calc(100dvh - var(--rg-review-split-offset, calc(var(--rg-layout-header) + var(--rg-space-24) * 2))));
+  container: rg-review-split / inline-size;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  min-width: 0;
+}
+.rg-review-split__source {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  flex: 1 1 440px;
+  min-width: 440px;
+  height: var(--rg-review-split-height);
+  background: var(--rg-color-background);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium);
+}
+/* La testa ferma e una rg-toolbar: il filetto di sopra e gia il bordo della colonna. */
+.rg-review-split__head { border-block-start: 0; }
+.rg-review-split__status { margin: 0; color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); }
+.rg-review-split__status strong { color: var(--rg-color-text-primary); font-weight: var(--rg-weight-medium); }
+/* Le pagine: 24 di respiro, che e anche il posto per l'etichetta di un riquadro in cima alla pagina
+   (rg-hotspots la mette FUORI dal riquadro, sopra). Mai scorrimento di lato. */
+.rg-review-split__pages {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--rg-space-6);
+  scroll-padding-block: var(--rg-space-6);
+}
+.rg-review-split__notice { display: none; }
+.rg-review-split__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rg-space-6);
+  flex: 1 1 640px;
+  min-width: 640px;
+  max-width: 880px;
+  height: var(--rg-review-split-height);
+  margin: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--rg-space-6) var(--rg-space-6) 0;
+  background: var(--rg-color-surface-raised);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium);
+  border-inline-start: 0;
+  scroll-padding-block-start: var(--rg-space-6);
+  scroll-padding-block-end: var(--rg-action-bar-clearance, var(--rg-space-24));
+}
+/* La barra al piede della colonna: da bordo a bordo (annulla il padding), spinta in fondo anche se il
+   modulo e corto, senza il filetto di sotto (lo fa il bordo della colonna). */
+.rg-review-split__form > .rg-action-bar--sticky { margin-block-start: auto; margin-inline: calc(-1 * var(--rg-space-6)); border-block-end: 0; }
+@container rg-review-split (max-width: 1135.98px) {
+  .rg-review-split__source { display: none; }
+  .rg-review-split__notice { display: block; flex: 1 1 100%; min-width: 0; margin-block-end: var(--rg-space-6); }
+  .rg-review-split__form { flex: 1 1 100%; min-width: 0; max-width: none; height: auto; overflow: visible; border-inline-start: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium); }
+}
+@container rg-review-split (max-width: 680px) {
+  .rg-review-split__form { padding: var(--rg-space-4) var(--rg-space-4) 0; }
+  .rg-review-split__form > .rg-action-bar--sticky { margin-inline: calc(-1 * var(--rg-space-4)); }
+}
+/* Su carta: il modulo nel flusso, senza colonne che scorrono; il documento ha il suo PDF. */
+@media print {
+  .rg-review-split__source, .rg-review-split__notice { display: none !important; }
+  .rg-review-split__form { height: auto; overflow: visible; padding: 0; border: 0; }
+}

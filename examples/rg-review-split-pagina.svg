@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1754" width="1240" height="1754">
+  <!-- Pagina finta di una scheda macchina, solo per la vetrina (rg-review-split, rg-hotspots).
+       Ha di proposito zone nere piene e zone bianche: il contorno dei riquadri deve vedersi su tutte. -->
+  <rect width="1240" height="1754" fill="white"/>
+  <g font-family="Consolas, monospace" fill="black">
+    <text x="80" y="110" font-size="40">SCHEDA MACCHINA  ·  1296 DAV RIW OBLIQUE</text>
+    <text x="80" y="160" font-size="26">TAJIMA TMAR-K 1506  ·  12 aghi  ·  punti 48.212</text>
+  </g>
+  <rect x="80" y="190" width="1080" height="2" fill="black"/>
+  <!-- disegno del ricamo -->
+  <g fill="none" stroke="black" stroke-width="6">
+    <path d="M140 420 C300 240 520 240 620 420 S940 600 1100 420"/>
+    <circle cx="620" cy="420" r="70"/>
+  </g>
+  <rect x="140" y="560" width="300" height="220" fill="black"/>
+  <rect x="800" y="560" width="300" height="220" fill="none" stroke="black" stroke-width="4"/>
+  <g fill="black">
+    <circle cx="950" cy="670" r="60"/>
+  </g>
+  <!-- tabella degli stop -->
+  <g font-family="Consolas, monospace" font-size="26" fill="black">
+    <text x="80" y="900">STOP  AGO  COLORE        PUNTI</text>
+    <text x="80" y="960">1     2    MADEIRA 1000  6.120</text>
+    <text x="80" y="1020">2     5    MADEIRA 1147  12.448</text>
+    <text x="80" y="1080">3     2    MADEIRA 1000  3.904</text>
+    <text x="80" y="1140">4     7    MADEIRA 1800  9.300</text>
+    <text x="80" y="1200">5     1    MADEIRA 1001  16.440</text>
+  </g>
+  <rect x="80" y="920" width="1080" height="1" fill="black"/>
+  <rect x="80" y="1260" width="1080" height="420" fill="black"/>
+  <g font-family="Consolas, monospace" font-size="26" fill="white">
+    <text x="120" y="1320">NOTE DI MACCHINA</text>
+    <text x="120" y="1380">Telaio 30 x 30  ·  velocita 850 punti/min</text>
+  </g>
+</svg>

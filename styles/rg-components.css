@@ -3221,3 +3221,145 @@ a.rg-icon-button { text-decoration: none; }
   .rg-filter-bar__row, .rg-filter-bar__active > .rg-button { display: none; }
   .rg-chip--remove > .rg-icon { display: none; }
 }
+
+/* ── RIQUADRI CLICCABILI SU UN'IMMAGINE DI PAGINA (proposta 1.57.0): rg-hotspots ─────────────────────
+   Chiesti dalla RG Product Suite per «Compila col PDF»: ogni pagina della scheda macchina e un PNG a
+   tutta larghezza della colonna, e sopra stanno N riquadri, uno per stop (o per ago), che si scelgono
+   per compilarli nel modulo accanto (rg-review-split). Senza pan/zoom.
+   LA PAGINA TIENE IL SUO RAPPORTO PRIMA CHE L'IMMAGINE ARRIVI: aspect-ratio da --ratio, passato dal
+   server (style="--ratio: 1240 / 1754"; ripiego A4 verticale). Immagine e riquadri sono assoluti nella
+   stessa scatola: quando il PNG arriva niente si sposta. Il contorno della pagina e un outline, non un
+   border: un bordo entrerebbe nella scatola e sposterebbe i riquadri di un filetto.
+   I RIQUADRI: --x, --y, --w, --h in PERCENTUALE della pagina (style="--x:12.5%;--y:8%;--w:20%;--h:6%"),
+   dal server. E l'eccezione «posizione su un disegno»: una coordinata, non uno stile.
+   GLI STATI SONO ATTRIBUTI, cosi il JavaScript della pagina non dipende dalle classi:
+     aria-selected="true"   selezionato  -> contorno nero spesso (3) + etichetta piena
+     data-aperto            quello aperto a destra fra i selezionati -> in piu un secondo contorno
+                            sottile staccato e un triangolo nell'etichetta (punta verso il modulo)
+     data-stato="compilato" -> segno di conferma nell'etichetta
+     data-stato="vuoto"     -> contorno tratteggiato
+     data-stato="incollato" -> cerchietto vuoto nell'etichetta (la «bozza» di rg-badge--draft)
+   Mai il solo colore: spessore, tratteggio, doppio contorno e figure nell'etichetta. Il colore non
+   cambia affatto: tutto e nero e bianco, su qualsiasi disegno.
+   IL CONTORNO SI VEDE SU QUALSIASI DISEGNO: nero sopra un bianco, con un alone bianco fuori; anche il
+   tratteggio del vuoto si legge su un nero pieno (dettagli sopra la regola del riquadro).
+   AREA MINIMA 24x24 anche se il riquadro e piu piccolo: un ::before trasparente centrato che cresce
+   solo quando serve (min(0, (100% - 24) / 2)). E il minimo WCAG 2.5.8, non i 40 del DS (§11): un
+   riquadro e una posizione sul disegno e ingrandirlo mentirebbe sull'area. Eccezione dichiarata (§12),
+   con il modulo accanto come percorso alternativo.
+   L'ETICHETTA sta FUORI dal riquadro, sopra un angolo, e non copre il disegno dello stop: mono 12,
+   cifre tabulari. Sull'ANGOLO SINISTRO se il centro del riquadro e nella meta sinistra della pagina,
+   sull'ANGOLO DESTRO se e nella meta destra: cosi non esce mai dalla pagina. Lo decide il CSS da --x e
+   --w con round(): s = round(down, x + w/2, 50%) vale 0 o meta; left: 2s (in % del riquadro: 0 o tutta
+   la sua larghezza) e translate: -2s (in % dell'etichetta: 0 o tutta la sua). Senza round() resta
+   l'angolo sinistro. In cima alla pagina va nei 24 px di respiro fra le pagine (e del contenitore).
+   SOPRA GLI ALTRI se si sovrappongono: selezionato, poi aperto, poi sotto il puntatore, poi col fuoco.
+   La pagina e isolation: isolate, quindi i gradini sono locali e partono da --rg-z-base.
+   STATO DELLA PAGINA, sempre un attributo: data-stato="preparazione" (il PNG non c'e ancora: si vede
+   __wait col cerchio che gira) e data-stato="errore" (si vede __error). La scatola resta della sua
+   misura in tutti e due: le pagine sotto non saltano. Riquadri nascosti finche la pagina non e pronta.
+   forced-colors: riquadri ed etichette restano nero e bianco, perche stanno su un'immagine che il
+   sistema non ricolora (in fondo al blocco). In stampa i riquadri non esistono. */
+.rg-hotspots { display: grid; gap: var(--rg-space-6); min-width: 0; }
+.rg-hotspots__page {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  aspect-ratio: var(--ratio, 210 / 297);
+  background: var(--rg-color-surface-raised);
+  outline: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium);
+}
+.rg-hotspots__image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+.rg-hotspots__layer { position: absolute; inset: 0; }
+.rg-hotspots__wait, .rg-hotspots__error { display: none; }
+.rg-hotspots__page:is([data-stato="preparazione"], [data-stato="errore"]) > :is(.rg-hotspots__image, .rg-hotspots__layer) { visibility: hidden; }
+.rg-hotspots__page[data-stato="preparazione"] > .rg-hotspots__wait { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: var(--rg-space-4); margin: 0; padding: var(--rg-space-6); color: var(--rg-color-text-secondary); font-size: var(--rg-font-size-sm); line-height: var(--rg-line-height-technical); text-align: center; }
+.rg-hotspots__wait::before { content: ""; width: var(--rg-space-6); height: var(--rg-space-6); border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-text-primary); border-inline-end-color: transparent; border-radius: 50%; animation: rg-chat-spin calc(var(--rg-motion-normal) * 4) linear infinite; }
+@media (prefers-reduced-motion: reduce) { .rg-hotspots__wait::before { animation: none; } }
+.rg-hotspots__page[data-stato="errore"] > .rg-hotspots__error { position: absolute; inset: 0; display: grid; align-content: center; padding: var(--rg-space-6); }
+
+/* IL CONTORNO e due linee nello stesso posto: il BORDO bianco sotto, l'OUTLINE nero sopra (offset
+   negativo uguale allo spessore). Pieno, si vede il nero; tratteggiato (vuoto), i vuoti fra i trattini
+   sono bianchi e non il disegno: il tratteggio si legge anche su un nero pieno, dove un bordo
+   tratteggiato semplice sparirebbe. Fuori, un alone bianco di un filetto (box-shadow SENZA sfocatura:
+   una linea, non un'ombra). Lo spessore e uno solo, --rg-hotspots-line: 1 a riposo, 2 sotto il
+   puntatore, 3 selezionato.
+   Gli anelli esterni sono strati di box-shadow da due variabili, cosi gli stati si sommano: APERTO =
+   un secondo contorno sottile staccato (bianco 0-2, nero 2-3, bianco 3-4); FUOCO = un anello spesso
+   piu fuori (nero 4-6 col bianco sotto e intorno), --rg-color-focus. Un anello nero su un disegno nero
+   non si vedrebbe: per questo c'e sempre il bianco. */
+.rg-hotspots__spot {
+  --rg-hotspots-line: var(--rg-border-hairline);
+  --rg-hotspots-ring-open: 0 0 transparent;
+  --rg-hotspots-ring-focus: 0 0 transparent;
+  position: absolute;
+  left: var(--x, 0%);
+  top: var(--y, 0%);
+  width: var(--w, 0%);
+  height: var(--h, 0%);
+  box-sizing: border-box;
+  background: transparent;
+  border: var(--rg-hotspots-line) var(--rg-border-style) var(--rg-color-white);
+  outline: var(--rg-hotspots-line) var(--rg-border-style) var(--rg-color-black);
+  outline-offset: calc(-1 * var(--rg-hotspots-line));
+  box-shadow: 0 0 0 var(--rg-border-hairline) var(--rg-color-white), var(--rg-hotspots-ring-open), var(--rg-hotspots-ring-focus);
+  cursor: pointer;
+}
+/* L'area da 24x24: cresce solo se il riquadro e piu piccolo, centrata su di lui. */
+.rg-hotspots__spot::before { content: ""; position: absolute; inset-inline: min(0px, calc((100% - var(--rg-space-6)) / 2)); inset-block: min(0px, calc((100% - var(--rg-space-6)) / 2)); }
+.rg-hotspots__spot:hover { z-index: calc(var(--rg-z-base) + 3); --rg-hotspots-line: var(--rg-border-strong); background: color-mix(in srgb, var(--rg-color-black) 8%, transparent); }
+.rg-hotspots__spot[data-stato="vuoto"] { outline-style: dashed; }
+.rg-hotspots__spot[aria-selected="true"] { z-index: calc(var(--rg-z-base) + 1); --rg-hotspots-line: calc(var(--rg-border-strong) + var(--rg-border-hairline)); }
+.rg-hotspots__spot[data-aperto] {
+  z-index: calc(var(--rg-z-base) + 2);
+  --rg-hotspots-ring-open: 0 0 0 var(--rg-border-strong) var(--rg-color-white), 0 0 0 calc(var(--rg-border-strong) + var(--rg-border-hairline)) var(--rg-color-black), 0 0 0 var(--rg-space-1) var(--rg-color-white);
+}
+.rg-hotspots__spot:is([aria-selected="true"], [data-aperto]):hover { z-index: calc(var(--rg-z-base) + 3); }
+.rg-hotspots__spot:focus-visible {
+  z-index: calc(var(--rg-z-base) + 4);
+  --rg-hotspots-ring-focus: 0 0 0 var(--rg-space-1) var(--rg-color-white), 0 0 0 calc(var(--rg-space-1) + var(--rg-border-strong)) var(--rg-color-focus), 0 0 0 calc(var(--rg-space-1) + var(--rg-border-strong) + var(--rg-border-hairline)) var(--rg-color-white);
+}
+.rg-hotspots__label {
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-start: 0;
+  inset-inline-start: calc(round(down, var(--x, 0%) + var(--w, 0%) / 2, 50%) * 2);
+  translate: calc(round(down, var(--x, 0%) + var(--w, 0%) / 2, 50%) * -2) 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rg-space-1);
+  min-height: calc(var(--rg-space-4) + var(--rg-border-hairline) * 2);
+  padding: 0 var(--rg-space-1);
+  color: var(--rg-color-black);
+  background: var(--rg-color-white);
+  border: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-black);
+  font-family: var(--rg-font-mono);
+  font-size: var(--rg-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--rg-space-4);
+  white-space: nowrap;
+}
+.rg-hotspots__spot[aria-selected="true"] .rg-hotspots__label { color: var(--rg-color-white); background: var(--rg-color-black); }
+/* Compilato: il segno di conferma del set (rg-icon-conferma, stesso tracciato, tratto a 3/24 perche a
+   12 px quello da 1,5 sarebbe di tre quarti di pixel). Maschera: il colore e quello del testo. */
+.rg-hotspots__spot[data-stato="compilato"] .rg-hotspots__label::before {
+  content: "";
+  flex: none;
+  width: var(--rg-space-3);
+  height: var(--rg-space-3);
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='square'%3E%3Cpath d='M4.5 12.5l4.5 4.5 10.5-10.5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='square'%3E%3Cpath d='M4.5 12.5l4.5 4.5 10.5-10.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* Incollato: il cerchietto della bozza (rg-badge--draft), vuoto: valori presi da un altro stop e non
+   ancora rivisti. */
+.rg-hotspots__spot[data-stato="incollato"] .rg-hotspots__label::before { content: ""; flex: none; box-sizing: border-box; width: calc(var(--rg-space-1) + var(--rg-border-strong) * 2); height: calc(var(--rg-space-1) + var(--rg-border-strong) * 2); border: var(--rg-border-hairline) var(--rg-border-style) currentColor; border-radius: 50%; }
+/* Aperto: un triangolo pieno dopo il numero, che punta verso il modulo. */
+.rg-hotspots__spot[data-aperto] .rg-hotspots__label::after { content: ""; flex: none; width: calc(var(--rg-space-1) + var(--rg-border-strong)); height: var(--rg-space-2); background: currentColor; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+/* forced-colors: il riquadro sta su un'IMMAGINE, che il sistema non ricolora. Se le linee passassero ai
+   colori di sistema (e le box-shadow sparissero) il contorno potrebbe confondersi col disegno: riquadri
+   ed etichette restano in nero e bianco, che contro un'immagine qualsiasi e il contrasto massimo. */
+@media (forced-colors: active) {
+  .rg-hotspots__spot, .rg-hotspots__label, .rg-hotspots__label::before, .rg-hotspots__label::after { forced-color-adjust: none; }
+}
+@media print { .rg-hotspots__layer { display: none !important; } }

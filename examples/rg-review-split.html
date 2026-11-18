@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RG — Compila col PDF (split di revisione e riquadri sulla pagina)</title>
+  <!-- Base RG importata nello stesso ordine richiesto alle applicazioni. Qui NON c'e CSS locale.
+       La pagina «Compila col PDF» della RG Product Suite (proposta 1.57.0): sotto la testata di pagina,
+       rg-review-split. A sinistra il documento: la testa ferma (rg-toolbar) e le pagine della scheda
+       macchina, ognuna un'immagine con i suoi riquadri (rg-hotspots). A destra il modulo, con la barra
+       d'azioni ferma al piede della SUA colonna. Sotto i 1136 px di contenitore (1200 di finestra in
+       questo guscio) resta il modulo, e l'avviso prende il posto del documento.
+       La seconda pagina e «in preparazione», la terza «in errore»: due stati della pagina, dimostrati.
+       Il controller in fondo e di RIFERIMENTO: la pagina vera ha il suo. -->
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="stylesheet" href="../styles/rg-core.css">
+  <link rel="stylesheet" href="../styles/rg-typography.css">
+  <link rel="stylesheet" href="../styles/rg-components.css">
+  <link rel="stylesheet" href="../styles/rg-layout.css">
+  <link rel="stylesheet" href="../styles/rg-utilities.css">
+</head>
+<body>
+<div class="rg-appshell">
+  <header class="rg-topbar rg-topbar--app rg-topbar--sticky">
+    <a class="rg-topbar__brand" href="#">RG</a>
+    <p class="rg-topbar__title">Prodotti</p>
+  </header>
+
+  <main class="rg-appshell__main">
+    <header class="rg-page-header">
+      <div class="rg-page-header__main">
+        <div class="rg-page-header__heading">
+          <p class="rg-page-header__context"><strong>BOOK TOTE</strong> · DAVANTI · Ricamo normale</p>
+          <h1 class="rg-page-header__title">Compila col PDF</h1>
+        </div>
+        <div class="rg-page-header__actions"><a class="rg-button rg-button--ghost" href="#">Torna alla fase</a></div>
+      </div>
+    </header>
+
+    <div class="rg-review-split">
+
+      <!-- SINISTRA: il documento. Testa ferma + pagine che scorrono. -->
+      <section class="rg-review-split__source" aria-label="Scheda macchina">
+        <div class="rg-toolbar rg-review-split__head">
+          <p class="rg-review-split__status" role="status" id="stato"><strong>2 stop scelti</strong> · aperto Stop 3</p>
+          <div class="rg-cluster">
+            <button class="rg-button rg-button--secondary rg-button--small" type="button" id="scegli-vuoti">Scegli i vuoti</button>
+            <button class="rg-button rg-button--ghost rg-button--small" type="button" id="togli-scelta">Togli la scelta</button>
+          </div>
+        </div>
+        <div class="rg-review-split__pages">
+          <div class="rg-hotspots" role="listbox" aria-multiselectable="true" aria-label="Stop della scheda macchina" id="stop">
+
+            <div class="rg-hotspots__page" style="--ratio: 1240 / 1754">
+              <img class="rg-hotspots__image" src="rg-review-split-pagina.svg" alt="" width="1240" height="1754">
+              <div class="rg-hotspots__layer" role="group" aria-label="Pagina 1">
+                <div class="rg-hotspots__spot" role="option" tabindex="0" aria-selected="true" data-stato="compilato" aria-label="Stop 1, ago 2, compilato" style="--x:11.3%;--y:13.7%;--w:38.7%;--h:11.4%"><span class="rg-hotspots__label" aria-hidden="true">Stop 1 · ago 2</span></div>
+                <div class="rg-hotspots__spot" role="option" tabindex="-1" aria-selected="true" data-aperto data-stato="incollato" aria-label="Stop 3, ago 2, incollato, aperto" style="--x:44.35%;--y:19.95%;--w:11.29%;--h:7.98%"><span class="rg-hotspots__label" aria-hidden="true">Stop 3 · ago 2</span></div>
+                <div class="rg-hotspots__spot" role="option" tabindex="-1" aria-selected="false" data-stato="vuoto" aria-label="Stop 5, ago 1, vuoto" style="--x:90.3%;--y:13.7%;--w:1.13%;--h:0.8%"><span class="rg-hotspots__label" aria-hidden="true">5</span></div>
+                <div class="rg-hotspots__spot" role="option" tabindex="-1" aria-selected="false" data-stato="vuoto" aria-label="Stop 2, ago 5, vuoto" style="--x:11.29%;--y:31.93%;--w:24.19%;--h:12.54%"><span class="rg-hotspots__label" aria-hidden="true">Stop 2 · ago 5</span></div>
+                <div class="rg-hotspots__spot" role="option" tabindex="-1" aria-selected="false" data-stato="compilato" aria-label="Stop 4, ago 7, compilato" style="--x:64.52%;--y:31.93%;--w:24.19%;--h:12.54%"><span class="rg-hotspots__label" aria-hidden="true">Stop 4 · ago 7</span></div>
+                <div class="rg-hotspots__spot" role="option" tabindex="-1" aria-selected="false" data-stato="vuoto" aria-label="Stop 6, ago 3, vuoto" style="--x:6.45%;--y:71.84%;--w:87.1%;--h:23.95%"><span class="rg-hotspots__label" aria-hidden="true">Stop 6 · ago 3</span></div>
+              </div>
+            </div>
+
+            <div class="rg-hotspots__page" style="--ratio: 1240 / 1754" data-stato="preparazione">
+              <p class="rg-hotspots__wait" aria-hidden="true">Sto preparando la pagina 2</p>
+              <div class="rg-hotspots__layer" role="group" aria-label="Pagina 2"></div>
+            </div>
+
+            <div class="rg-hotspots__page" style="--ratio: 1240 / 1754" data-stato="errore">
+              <div class="rg-hotspots__error" aria-hidden="true">
+                <div class="rg-alert rg-alert--error"><div><p class="rg-alert__title">La pagina 3 non si è preparata</p><p class="rg-alert__message">Ricarica la pagina; se si ripete, avvisa l’amministratore. Gli stop della pagina 3 si compilano lo stesso nel modulo.</p></div></div>
+              </div>
+              <div class="rg-hotspots__layer" role="group" aria-label="Pagina 3"></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Lo slot dell'avviso: si vede solo sotto la soglia, al posto del documento. -->
+      <div class="rg-review-split__notice">
+        <div class="rg-alert rg-alert--info" role="note">
+          <div>
+            <p class="rg-alert__title">Il PDF si vede su uno schermo largo</p>
+            <p class="rg-alert__message">Sotto i 1200 px la scheda macchina non sta accanto al modulo: qui si compila il modulo da solo. Allarga la finestra per scegliere gli stop sul disegno.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESTRA: il modulo, che scorre da solo; la barra al piede della sua colonna. -->
+      <form class="rg-review-split__form" method="post" action="#" aria-label="Compilazione degli stop">
+        <section class="rg-stack">
+          <h2 class="rg-h3">Stop 3 · ago 2</h2>
+          <p class="rg-small">Valori incollati dallo Stop 1: da rivedere prima di salvare.</p>
+          <div class="rg-param-grid">
+            <label class="rg-field"><span class="rg-field__label">Colore filo</span><input class="rg-input rg-mono" type="text" value="MADEIRA 1000"></label>
+            <label class="rg-field"><span class="rg-field__label">Punti</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="3904"> <span>pt</span></span></label>
+            <label class="rg-field"><span class="rg-field__label">Velocità</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="850"> <span>pt/min</span></span></label>
+            <label class="rg-field"><span class="rg-field__label">Tensione</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="1,2"> <span>N</span></span></label>
+            <label class="rg-field rg-param-grid__wide"><span class="rg-field__label">Nota per il reparto</span><textarea class="rg-textarea" rows="3"></textarea></label>
+          </div>
+        </section>
+        <section class="rg-stack">
+          <h2 class="rg-h3">Stop 1 · ago 2</h2>
+          <div class="rg-param-grid">
+            <label class="rg-field"><span class="rg-field__label">Colore filo</span><input class="rg-input rg-mono" type="text" value="MADEIRA 1000"></label>
+            <label class="rg-field"><span class="rg-field__label">Punti</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="6120"> <span>pt</span></span></label>
+            <label class="rg-field"><span class="rg-field__label">Velocità</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="850"> <span>pt/min</span></span></label>
+            <label class="rg-field"><span class="rg-field__label">Tensione</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="decimal" value="1,2"> <span>N</span></span></label>
+            <label class="rg-field rg-param-grid__wide"><span class="rg-field__label">Nota per il reparto</span><textarea class="rg-textarea" rows="3"></textarea></label>
+          </div>
+        </section>
+        <section class="rg-stack">
+          <h2 class="rg-h3">Telaio e macchina</h2>
+          <div class="rg-param-grid">
+            <label class="rg-field"><span class="rg-field__label">Telaio</span><input class="rg-input" type="text" value="30 x 30"></label>
+            <label class="rg-field"><span class="rg-field__label">Teste</span><span class="rg-field-with-unit"><input class="rg-input rg-input--numeric" type="text" inputmode="numeric" value="6"> <span>n.</span></span></label>
+            <label class="rg-field rg-param-grid__wide"><span class="rg-field__label">Note di macchina</span><textarea class="rg-textarea" rows="4"></textarea></label>
+          </div>
+        </section>
+        <div class="rg-action-bar rg-action-bar--sticky">
+          <span class="rg-small">Si salvano i 2 stop scelti</span>
+          <div class="rg-cluster">
+            <a class="rg-button rg-button--secondary" href="#">Annulla</a>
+            <button class="rg-button rg-button--primary" type="submit">Salva 2 stop</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </main>
+</div>
+
+<!-- Controller di RIFERIMENTO per rg-hotspots (listbox a scelta multipla). La fonte di verita sono gli
+     attributi: aria-selected, data-aperto, tabindex. Nessuna classe toccata.
+     Clic = sceglie solo quello e lo apre; Ctrl/Cmd+clic = aggiunge o toglie dalla scelta.
+     Tastiera: frecce = sposta il fuoco (tabindex mobile), Spazio = aggiunge/toglie, Invio = apre,
+     Home/Fine = primo/ultimo. -->
+<script>
+(function () {
+  var box = document.getElementById('stop');
+  var stato = document.getElementById('stato');
+  function spots() { return Array.prototype.slice.call(box.querySelectorAll('[role="option"]')).filter(function (s) { return !s.closest('[data-stato="preparazione"], [data-stato="errore"]'); }); }
+  function nome(s) { return s.querySelector('.rg-hotspots__label').textContent; }
+  function aggiorna() {
+    var scelti = spots().filter(function (s) { return s.getAttribute('aria-selected') === 'true'; });
+    var aperto = box.querySelector('[data-aperto]');
+    stato.innerHTML = '<strong>' + scelti.length + (scelti.length === 1 ? ' stop scelto' : ' stop scelti') + '</strong>' + (aperto ? ' · aperto ' + nome(aperto) : '');
+  }
+  function apri(s) {
+    box.querySelectorAll('[data-aperto]').forEach(function (a) { a.removeAttribute('data-aperto'); });
+    if (s) s.setAttribute('data-aperto', '');
+  }
+  function fuoco(s) { spots().forEach(function (x) { x.tabIndex = -1; }); s.tabIndex = 0; s.focus(); }
+  function alterna(s) {
+    var on = s.getAttribute('aria-selected') === 'true';
+    s.setAttribute('aria-selected', String(!on));
+    if (on && s.hasAttribute('data-aperto')) apri(spots().filter(function (x) { return x.getAttribute('aria-selected') === 'true'; })[0]);
+    if (!on && !box.querySelector('[data-aperto]')) apri(s);
+  }
+  box.addEventListener('click', function (e) {
+    var s = e.target.closest('[role="option"]'); if (!s) return;
+    if (e.ctrlKey || e.metaKey) { alterna(s); }
+    else { spots().forEach(function (x) { x.setAttribute('aria-selected', String(x === s)); }); apri(s); }
+    fuoco(s); aggiorna();
+  });
+  box.addEventListener('keydown', function (e) {
+    var s = e.target.closest('[role="option"]'); if (!s) return;
+    var tutti = spots(), i = tutti.indexOf(s), dove = null;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') dove = tutti[Math.min(i + 1, tutti.length - 1)];
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') dove = tutti[Math.max(i - 1, 0)];
+    else if (e.key === 'Home') dove = tutti[0];
+    else if (e.key === 'End') dove = tutti[tutti.length - 1];
+    else if (e.key === ' ') { e.preventDefault(); alterna(s); aggiorna(); return; }
+    else if (e.key === 'Enter') { e.preventDefault(); s.setAttribute('aria-selected', 'true'); apri(s); aggiorna(); return; }
+    if (dove) { e.preventDefault(); fuoco(dove); }
+  });
+  document.getElementById('scegli-vuoti').addEventListener('click', function () {
+    spots().forEach(function (x) { if (x.dataset.stato === 'vuoto') x.setAttribute('aria-selected', 'true'); });
+    if (!box.querySelector('[data-aperto]')) apri(spots().filter(function (x) { return x.getAttribute('aria-selected') === 'true'; })[0]);
+    aggiorna();
+  });
+  document.getElementById('togli-scelta').addEventListener('click', function () {
+    spots().forEach(function (x) { x.setAttribute('aria-selected', 'false'); }); apri(null); aggiorna();
+  });
+  aggiorna();
+})();
+</script>
+</body>
+</html>

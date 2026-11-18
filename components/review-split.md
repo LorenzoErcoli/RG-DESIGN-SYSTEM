@@ -84,6 +84,11 @@ colonna e legge `--rg-action-bar-clearance` come la regola di `:root`; in una co
 che la pagina annuncia i cambi di scelta e lo stato delle pagine, perché dentro il `listbox` di
 `rg-hotspots` un `role="status"` non è ammesso.
 
+**I figli del modulo non si stringono** (`flex-shrink: 0`). La colonna è una flex a colonna con
+altezza fissa: senza questa regola un figlio con `overflow` diverso da `visible` — una
+`rg-disclosure--boxed` aperta, per esempio — avrebbe un'altezza minima automatica di 0 e verrebbe
+schiacciato a 2 px invece di far scorrere la colonna. Il contenuto eccede e scorre, non si riduce.
+
 **`overscroll-behavior: contain`** su tutte e due le colonne: la rotella arrivata in fondo a una
 colonna non fa scorrere la pagina sotto.
 

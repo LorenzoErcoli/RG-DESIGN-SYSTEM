@@ -228,6 +228,11 @@ details.rg-param-section:not([open]) > .rg-param-section__header { margin-bottom
   scroll-padding-block-start: var(--rg-space-6);
   scroll-padding-block-end: var(--rg-action-bar-clearance, var(--rg-space-24));
 }
+/* I figli del modulo NON si stringono: la colonna e una flex a colonna con altezza fissa, e un figlio
+   con overflow diverso da visible (rg-disclosure--boxed ha overflow: hidden) ha min-height automatico 0
+   e veniva schiacciato a 2 px invece di far scorrere la colonna (visto nella piattaforma a 1600x900,
+   form con scrollHeight 1875 e clientHeight 642). Il contenuto deve eccedere e scorrere, mai ridursi. */
+.rg-review-split__form > * { flex-shrink: 0; }
 /* La barra al piede della colonna: da bordo a bordo (annulla il padding), spinta in fondo anche se il
    modulo e corto, senza il filetto di sotto (lo fa il bordo della colonna). */
 .rg-review-split__form > .rg-action-bar--sticky { margin-block-start: auto; margin-inline: calc(-1 * var(--rg-space-6)); border-block-end: 0; }

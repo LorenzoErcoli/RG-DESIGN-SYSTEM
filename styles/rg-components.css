@@ -3265,9 +3265,15 @@ a.rg-icon-button { text-decoration: none; }
   position: relative;
   isolation: isolate;
   /* Contenitore (1.57.0, anteprima del testo): 1cqw = 1% della larghezza della pagina, cosi il corpo
-     del testo stampato segue l'immagine. Solo inline-size: l'altezza la da aspect-ratio. */
+     del testo stampato segue l'immagine. Solo inline-size: l'altezza la da aspect-ratio.
+     LARGHEZZA (1.57.1): --rg-hotspots-page-width, manopola del componente (default 100%), letta con
+     ripiego e quindi impostabile su qualsiasi antenato (la pagina mette 75% o 55% per vedere piu aghi);
+     la pagina si stringe centrata, il rapporto resta, riquadri e anteprima seguono da soli (% e cqw).
+     PAVIMENTO 288 px (3 x 96): le etichette restano a 12 px e dentro la pagina finche sono larghe meno
+     di meta pagina, e «Stop 3 · ago 2» ne misura ~124. Sotto, coprirebbero il disegno. Mai oltre 100%. */
   container-type: inline-size;
-  width: 100%;
+  width: min(100%, max(calc(var(--rg-space-24) * 3), var(--rg-hotspots-page-width, 100%)));
+  margin-inline: auto;
   aspect-ratio: var(--ratio, 210 / 297);
   background: var(--rg-color-surface-raised);
   outline: var(--rg-border-hairline) var(--rg-border-style) var(--rg-color-border-medium);

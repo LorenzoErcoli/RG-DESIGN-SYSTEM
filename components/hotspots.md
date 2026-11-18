@@ -170,6 +170,52 @@ testo è nero.
 </div>
 ```
 
+## La larghezza della pagina (`--rg-hotspots-page-width`) — 1.57.1
+
+> «Ridurre un po' la grandezza del PDF a sinistra, per vedere un po' più di aghi e non solo una fila.»
+> — Lorenzo, 2026-11-18
+
+La pagina è larga quanto la colonna (`100%`). Con **`--rg-hotspots-page-width`** si stringe, **centrata**
+nella colonna: il rapporto resta, e riquadri, etichette e anteprima del testo seguono da soli, perché
+sono in percentuale e in `cqw`. È una **manopola del componente**, non un token, letta con un ripiego:
+la pagina la imposta su qualsiasi antenato (`rg-hotspots`, `rg-review-split__pages`, lo split), nel suo
+CSS o da un attributo `style` che cambia col comando.
+
+| Valore | Pagina nella colonna del documento a 1600 px (540 utili) |
+| --- | --- |
+| `100%` (default) | 538 × 761 |
+| `75%` | 404 × 571 |
+| `55%` | 296 × 419 |
+| `40%` | 288 × 407 — è il pavimento |
+
+**Il pavimento è 288 px** (3 × 96), e il DS lo impone da solo:
+`width: min(100%, max(288px, var(--rg-hotspots-page-width, 100%)))`. Le etichette restano a **12 px**
+— il corpo non scende con la pagina, quindi restano leggibili — e stanno dentro la pagina finché sono
+larghe meno di metà pagina: «Stop 3 · ago 2» ne misura ~124, «5» ~17. Sotto i 288 px un'etichetta lunga
+uscirebbe dalla pagina e coprirebbe il disegno. Con molti stop vicini, sotto il 75% conviene
+l'etichetta corta («3») al posto di «Stop 3 · ago 2». Mai oltre il 100%: la pagina non sborda dalla
+colonna.
+
+**L'anteprima del testo si rimpicciolisce con la pagina** (2,1 cqw: 11,3 px al 100%, 6,2 al 55%): a quelle
+misure dice *dove* e *quanto* testo, non si legge. Il testo da leggere è nel modulo.
+
+**Il comando** che la sceglie sta nella testa ferma, `rg-review-split__head`: un `rg-segmented` con
+bottoni `aria-pressed` («Grande · Media · Piccola»). È la forma giusta: una scelta fra pochi valori
+di come si guarda, che non è un indirizzo (quello sarebbe `a.rg-segmented__item[aria-current]`).
+
+```html
+<div class="rg-segmented" role="group" aria-label="Grandezza della pagina">
+  <button class="rg-segmented__item" type="button" aria-pressed="true" data-larghezza="100%">Grande</button>
+  <button class="rg-segmented__item" type="button" aria-pressed="false" data-larghezza="75%">Media</button>
+  <button class="rg-segmented__item" type="button" aria-pressed="false" data-larghezza="55%">Piccola</button>
+</div>
+```
+
+```js
+// nella pagina: un solo posto dove scrivere la misura
+document.querySelector('.rg-hotspots').style.setProperty('--rg-hotspots-page-width', bottone.dataset.larghezza);
+```
+
 ## Misure
 
 Chrome headless, `examples/rg-review-split.html`:

@@ -7,6 +7,22 @@ Versionamento semver. I consumatori si agganciano a un **tag**, mai a un branch.
 - **minor** — nuovi componenti, nuove varianti, nuovi token additivi: aggiornamento sicuro.
 - **patch** — correzioni che non cambiano il contratto.
 
+## 1.57.1 — proposta (ramo `ds/hotspots-zoom`, non rilasciata)
+
+**Patch.** Nessuna classe o token aggiunto, rimosso o rinominato; senza la variabile nuova la pagina è
+identica alla 1.57.0. Sarebbe una 1.58.0 se si contasse la manopola come parte del contratto: se Lorenzo
+la vuole annunciare come novità, il contenuto non cambia, cambia solo il numero.
+
+### La pagina di `rg-hotspots` si stringe
+
+«Ridurre un po' la grandezza del PDF a sinistra, per vedere un po' più di aghi e non solo una fila»
+(Lorenzo, 2026-11-18). `--rg-hotspots-page-width` (default `100%`), manopola del componente letta con
+ripiego: la pagina si stringe **centrata**, il rapporto resta, riquadri e anteprima seguono (sono in % e
+`cqw`). Pavimento **288 px**, imposto dal DS: le etichette restano a 12 px e dentro la pagina. Il comando
+consigliato è un `rg-segmented` con `aria-pressed` nella testa ferma. Misurato in Chrome a 1600 e 1216
+px, al 100, 75, 55 e 40%: pagina centrata, etichette dentro e senza sovrapporsi, nessuno scorrimento di
+lato. [hotspots](components/hotspots.md#la-larghezza-della-pagina---rg-hotspots-page-width--1571)
+
 ## 1.57.0 — 2026-11-18
 
 **Minor.** Due componenti nuovi, nessun token, nessuna classe rimossa o rinominata, nessun cambio
